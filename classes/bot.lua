@@ -21,9 +21,11 @@ Bot = Class{
 
 function Bot:draw()
     Color.set(self.body_clr)
-    love.graphics.draw(self.body, self.rx, self.ry, self.r[1], self.sx, self.sy)
+    love.graphics.draw(self.body, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],
+        self.sx, self.sy, ROOM_CW, ROOM_CH)
     Color.set(self.head_clr)
-    love.graphics.draw(self.head, self.rx, self.ry, self.r[1], self.sx, self.sy)
+    love.graphics.draw(self.head, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],
+        self.sx, self.sy, ROOM_CW, ROOM_CH)
 end
 
 return bot

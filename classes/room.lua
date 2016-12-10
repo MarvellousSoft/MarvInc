@@ -39,7 +39,7 @@ Room = Class{
 
 
         -- Initial bot
-        local _bot = Bot(self.grid_obj, math.floor(self.grid_c/2), math.floor(self.grid_c/2))
+        self.bot = Bot(self.grid_obj, math.floor(self.grid_c/2), math.floor(self.grid_c/2))
 
         -- Border
         self.border_clr = Color.new(132, 137, 59)
@@ -99,7 +99,7 @@ function Room:draw()
         end
     end
 
-    --[[ Grid lines
+    -- Grid lines
     Color.set(self.grid_clr)
     local _r, _c = self.grid_r - 1, self.grid_c - 1
     for i=1, _r do
@@ -109,7 +109,7 @@ function Room:draw()
     for i=1, _c do
         local _w = i*self.grid_cw
         love.graphics.line(_w, 0, _w, self.grid_h)
-    end]]
+    end
 
     -- Objects
     for i=1, self.grid_r do
@@ -123,6 +123,16 @@ function Room:draw()
 
     -- Set origin to (0, 0)
     love.graphics.pop()
+end
+
+function Room:keyPressed(key)
+    if key == "space" then
+        self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
+    elseif key == "left" then
+        self.bot:clock()
+    elseif key == "right" then
+        self.bot:anti()
+    end
 end
 
 --UTILITY FUNCTIONS--
