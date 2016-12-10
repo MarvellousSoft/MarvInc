@@ -1,7 +1,8 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
--- Info TAB CLASS--
+
+-- INFO TAB CLASS--
 
 InfoTab = Class{
     __includes = {Tab},

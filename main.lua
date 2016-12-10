@@ -6,8 +6,8 @@ Camera    = require "hump.camera"
 Vector    = require "hump.vector"
 
 --MY MODULES
-Util            = require "util"
-local Draw      = require "draw"
+Util      = require "util"
+Draw      = require "draw"
 Setup     = require "setup"
 
 --CLASSES

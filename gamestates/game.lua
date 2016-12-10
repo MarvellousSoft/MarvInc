@@ -1,8 +1,7 @@
-local Util = require "util"
-local Draw = require "draw"
 local Rooms = require "classes.room"
 local PcBox = require "classes.pc-box"
 local Button = require "classes.button"
+local Mail = require "classes.tabs.email"
 
 --MODULE FOR THE GAMESTATE: GAME--
 
@@ -31,8 +30,14 @@ function state:draw()
 end
 
 function state:keypressed(key)
-    Util.defaultKeyPressed(key)
-    pc_box:keyPressed(key)
+
+    if key == 'f2' then
+        Mail.new("titulo", "blablabla", "ernesto")
+    else
+        Util.defaultKeyPressed(key)
+        pc_box:keyPressed(key)
+    end
+
 end
 
 function state:textinput(t)

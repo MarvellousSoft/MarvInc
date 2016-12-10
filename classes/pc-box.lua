@@ -45,6 +45,13 @@ PcBox = Class{
         self.buttons.info = But.create_gui(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
         h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(10,self.unfocus_saturation,self.unfocus_lightness))
 
+        -- Tab id's
+
+        tabs.email:setId("email_tab")
+        tabs.code:setId("code_tab")
+        tabs.info:setId("info_tab")
+
+
         self.tp = "pcbox"
     end
 }
