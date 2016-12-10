@@ -32,7 +32,7 @@ end
 function state:keypressed(key)
 
     if key == 'f2' then
-        Mail.new("titulo", "blablabla", "ernesto")
+        Mail.new("Título imponente e legal", "blablabla", "Ernesto B.")
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)

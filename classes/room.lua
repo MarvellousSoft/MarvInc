@@ -99,7 +99,7 @@ function Room:draw()
         end
     end
 
-    -- Grid lines
+    --[[ Grid lines
     Color.set(self.grid_clr)
     local _r, _c = self.grid_r - 1, self.grid_c - 1
     for i=1, _r do
@@ -109,7 +109,7 @@ function Room:draw()
     for i=1, _c do
         local _w = i*self.grid_cw
         love.graphics.line(_w, 0, _w, self.grid_h)
-    end
+    end]]
 
     -- Objects
     for i=1, self.grid_r do
