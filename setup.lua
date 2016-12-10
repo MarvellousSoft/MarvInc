@@ -31,6 +31,11 @@ function setup.config()
 
     --IMAGES--
 
+    -- Tiles
+    TILES_IMG = {}
+    TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
+    TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
+
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
 

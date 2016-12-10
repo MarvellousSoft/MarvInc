@@ -28,8 +28,9 @@ Room = Class{
           self.grid_floor[i] = {}
           self.grid_obj[i] = {}
           for j=1, self.grid_c do
-            self.grid_floor[i][j] = 0
-            self.grid_obj[i][j] = nil -- For readability
+            -- For readability
+            self.grid_floor[i][j] = math.random(2) % 2 == 0 and "white_floor" or "black_floor"
+            self.grid_obj[i][j] = nil
           end
         end
 
@@ -75,6 +76,21 @@ function Room:draw()
     Color.set(self.color)
     love.graphics.rectangle("fill", 0, 0, self.grid_w, self.grid_h)
 
+    -- Floor
+    for i=1, self.grid_r do
+      local _x = (i-1)*self.grid_cw
+      for j=1, self.grid_c do
+        local cell = self.grid_floor[i][j]
+        if cell ~= nil then
+          local img = TILES_IMG[cell]
+          local _y = (j-1)*self.grid_ch
+          local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
+          Color.set(Color.white())
+          love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+        end
+      end
+    end
+
     -- Grid lines
     Color.set(self.grid_clr)
     local _r, _c = self.grid_r - 1, self.grid_c - 1
@@ -85,6 +101,21 @@ function Room:draw()
     for i=1, _c do
       local _w = i*self.grid_cw
       love.graphics.line(_w, 0, _w, self.grid_h)
+    end
+
+    -- Objects
+    for i=1, self.grid_r do
+      local _x = (i-1)*self.grid_cw
+      for j=1, self.grid_c do
+        local cell = self.grid_floor[i][j]
+        if cell ~= nil then
+          local _y = (j-1)*self.grid_ch
+          local img = TILES_IMG[cell]
+          local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
+          Color.set(Color.white())
+          love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+        end
+      end
     end
 
     -- Set origin to (0, 0)
