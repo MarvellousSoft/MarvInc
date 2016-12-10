@@ -18,11 +18,12 @@ CodeTab = Class{
 
         -- Lines stuff
         self.line_h = math.ceil(1.2 * self.font_h)
-        self.line_max_char = 30
-        self.line_count = 25
-        self.h = self.line_count * self.line_h
+        self.max_char = 30 -- maximum number of chars in a line
+        self.line_cur = 1 -- current number of lines
+        self.line_number = 25 -- maximum number of lines
+        self.h = self.line_number * self.line_h
         self.lines = {}
-        for i = 1, self.line_count do self.lines[i] = "" end
+        for i = 1, self.line_number do self.lines[i] = "" end
 
         -- Cursor stuff
         -- i - line number
@@ -48,7 +49,7 @@ function CodeTab:draw()
     -- Draw lines
     Color.set(Color.green())
     love.graphics.setFont(self.font)
-    for i = 0, self.line_count - 1 do
+    for i = 0, self.line_number - 1 do
         love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y + i * self.line_h + (self.line_h - self.font_h) / 2)
     end
 
@@ -83,25 +84,84 @@ local function processAdd(s, j, c)
 end
 
 function CodeTab:keyPressed(key)
+    print(key)
     local c = self.cursor
     if key == 'backspace' then
-        if c.p == 1 then return end
-        c.p = c.p - 1
-        self.lines[c.i] = processDelete(self.lines[c.i], c.p)
+        if c.p == 1 and c.i == 1 then return end
+        if c.p == 1 then
+            if #self.lines[c.i - 1] + #self.lines[c.i] > self.max_char then return end
+            c.p = #self.lines[c.i - 1] + 1
+            self.lines[c.i - 1] = self.lines[c.i - 1] .. self.lines[c.i]
+            for i = c.i, self.line_number - 1 do self.lines[i] = self.lines[i + 1] end
+            self.lines[self.line_number] = ""
+            self.line_cur = self.line_cur - 1
+            c.i = c.i - 1
+        else
+            c.p = c.p - 1
+            self.lines[c.i] = processDelete(self.lines[c.i], c.p)
+        end
+
     elseif key == 'delete' then
-        if c.p == #self.lines[c.i] + 1 then return end
-        self.lines[c.i] = processDelete(self.lines[c.i], c.p)
+        if c.p == #self.lines[c.i] + 1 and c.i == self.line_cur then return end
+        if c.p == #self.lines[c.i] + 1 then 
+            if #self.lines[c.i] + #self.lines[c.i + 1] > self.max_char then return end
+            self.line_cur = self.line_cur - 1
+            self.lines[c.i] = self.lines[c.i]  .. self.lines[c.i + 1]
+            for i = c.i + 1, self.line_number - 1 do
+                self.lines[i] = self.lines[i + 1]
+            end
+            self.lines[self.line_number] = ""
+        else
+            self.lines[c.i] = processDelete(self.lines[c.i], c.p)
+        end
+
+    elseif key == 'return' then
+        if self.line_cur == self.line_number then return end
+        self.line_cur = self.line_cur + 1
+        for i = self.line_number, c.i + 2, -1 do
+            self.lines[i] = self.lines[i - 1]
+        end
+        self.lines[c.i + 1] = c.p == #self.lines[c.i] + 1 and "" or self.lines[c.i]:sub(c.p)
+        self.lines[c.i] = c.p == 1 and "" or self.lines[c.i]:sub(1, c.p - 1)
+        c.p = 1
+        c.i = c.i + 1
     elseif key == 'left' then
         if c.p > 1 then c.p = c.p - 1 end
+
     elseif key == 'right' then
         if c.p < #self.lines[c.i] + 1 then c.p = c.p + 1 end
+
+    elseif key == 'up' then
+        if c.i > 1 then
+            c.i = c.i - 1
+            if c.p > #self.lines[c.i] + 1 then
+                c.p = #self.lines[c.i] + 1
+            end
+        end
+
+    elseif key == 'down' then
+        if c.i < self.line_cur then
+            c.i = c.i + 1
+            if c.p > #self.lines[c.i] + 1 then
+                c.p = #self.lines[c.i] + 1
+            end
+        else
+            c.p = #self.lines[c.i] + 1
+        end
+
+    elseif key == 'home' then
+        c.p = 1
+
+    elseif key == 'end' then
+        c.p = #self.lines[c.i] + 1
     end
 end
 
 function CodeTab:textInput(t)
+    print(">", t)
     -- First, should check if it is valid
     local c = self.cursor
-    if #t + #self.lines[c.i] > self.line_max_char then return end
+    if #t + #self.lines[c.i] > self.max_char then return end
     t = t:lower()
     self.lines[c.i] = processAdd(self.lines[c.i], c.p, t)
     c.p = c.p + 1
