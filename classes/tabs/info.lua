@@ -2,7 +2,7 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 --INFO TAB CLASS--
 
-Info_Tab = Class{
+InfoTab = Class{
     __includes = {RECT},
 
     init = function(self)
@@ -11,11 +11,11 @@ Info_Tab = Class{
         color = Color.orange() -- Color of this tab
         RECT.init(self, b, b, W - H - b, H - 2 * b, Color.red())
 
-        self.tp = "email_tab"
+        self.tp = "info_tab"
     end
 }
 
-function Info_Tab:draw()
+function InfoTab:draw()
     local tab
 
     tab = self
@@ -25,6 +25,14 @@ function Info_Tab:draw()
 
 end
 
-function Info_Tab:update()
+function InfoTab:update()
+
+end
+
+function InfoTab:activate()
+
+end
+
+function InfoTab:deactivate()
 
 end

@@ -11,7 +11,7 @@ local button = {}
 --[[Text button with an invisible box behind (for collision)]]
 Button = Class{
     __includes = {RECT, WTXT},
-    init = function(self, _x, _y, _w, _h, _func, _text, _font, _overtext, _overfont)
+    init = function(self, _x, _y, _w, _h, _func, _text, _font, _overtext, _overfont, _color)
 
         RECT.init(self, _x, _y, _w, _h, Color.transp(), "fill") --Set atributes
 
@@ -23,7 +23,11 @@ Button = Class{
         self.overfont = _overfont --Font of overtext
         self.isOver = false --If mouse is over the self
 
+        self.color = _color
+
         button.tp = "button" --Type of this class
+
+        self:centralize()
     end
 }
 
@@ -55,13 +59,13 @@ function Button:draw()
 
     b = self
 
-
     --Draws button text
-    Color.set(Color.green())
+    Color.set(self.color)
 
-    love.graphics.rectangle("line", b.pos.x, b.pos.y, b.w, b.h)
+    love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h)
+    Color.set(Color.green())
     love.graphics.setFont(b.font)
-    love.graphics.print(b.text, b.pos.x , b.pos.y)
+    love.graphics.print(b.text, b.text_x , b.text_y)
 
     --Print overtext, aligned with center of the normal text
     if b.overtext and b.isOver then
@@ -73,12 +77,19 @@ function Button:draw()
 
 end
 
+-- Centralizes text on button
+function Button:centralize()
+    local tw, th = self.font:getWidth(self.text), self.font:getHeight()
+    self.text_x = self.pos.x + self.w / 2 - tw / 2
+    self.text_y = self.pos.y + self.h / 2 - th / 2
+end
+
 --UTILITY FUNCTIONS--
 
-function button.create_gui(x, y, w, h, func, text, font, overtext, overfont)
+function button.create_gui(x, y, w, h, func, text, font, overtext, overfont, color)
     local b
 
-    b = Button(x, y, w, h, func, text, font, overtext, overfont)
+    b = Button(x, y, w, h, func, text, font, overtext, overfont, color)
     b:addElement(DRAW_TABLE.GUI, "gui")
 
     return b

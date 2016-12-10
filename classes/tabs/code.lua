@@ -2,7 +2,7 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 -- CODE TAB CLASS--
 
-Code_Tab = Class{
+CodeTab = Class{
     __includes = {RECT},
 
     init = function(self)
@@ -11,11 +11,11 @@ Code_Tab = Class{
         color = Color.green() -- Color of this tab
         RECT.init(self, b, b, W - H - b, H - 2 * b, Color.red())
 
-        self.tp = "email_tab"
+        self.tp = "code_tab"
     end
 }
 
-function Code_Tab:draw()
+function CodeTab:draw()
     local tab
 
     tab = self
@@ -25,6 +25,14 @@ function Code_Tab:draw()
 
 end
 
-function Code_Tab:update()
+function CodeTab:update()
+
+end
+
+function CodeTab:activate()
+
+end
+
+function CodeTab:deactivate()
 
 end

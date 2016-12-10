@@ -6,6 +6,26 @@ local setup = {}
 --SETUP FUNCTIONS
 --------------------
 
+--GLOBAL VARIABLES--
+W = love.graphics.getWidth() --Current width of the game window
+H = love.graphics.getHeight() --Current height of the game window
+
+WIN_BORD = 20
+
+--FONTS--
+
+--Fira-mono table
+FIRA = {}
+--Global fonts table
+FONTS = {
+    fira = function(size)
+        if FIRA[size] then return FIRA[size] end
+
+        FIRA[size] = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", size)
+        return FIRA[size]
+    end,
+}
+
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
 
@@ -16,11 +36,6 @@ function setup.config()
 
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
-
-    W = love.graphics.getWidth() --Current width of the game window
-    H = love.graphics.getHeight() --Current height of the game window
-
-    WIN_BORD = 20
 
     --TIMERS--
     MAIN_TIMER = Timer.new()  --General Timer
@@ -49,19 +64,6 @@ function setup.config()
 
     --AUDIO--
 
-    --FONTS--
-
-    --Fira-mono table
-    FIRA = {}
-    --Global fonts table
-    FONTS = {
-        fira = function(size)
-            if FIRA[size] then return FIRA[size] end
-
-            FIRA[size] = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", size)
-            return FIRA[size]
-        end,
-    }
 
 end
 

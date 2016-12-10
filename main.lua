@@ -5,6 +5,10 @@ Class     = require "hump.class"
 Camera    = require "hump.camera"
 Vector    = require "hump.vector"
 
+--MY MODULES
+Util            = require "util"
+local Draw      = require "draw"
+Setup     = require "setup"
 
 --CLASSES
 
@@ -24,10 +28,6 @@ require "classes.pc-box"
 require "classes.room"
 
 
---MY MODULES
-Util            = require "util"
-local Draw      = require "draw"
-local Setup     = require "setup"
 
 
 --GAMESTATES

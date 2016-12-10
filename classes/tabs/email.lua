@@ -2,11 +2,13 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 --EMAIL TAB CLASS--
 
-Email_Tab = Class{
+EmailTab = Class{
     __includes = {RECT},
 
     init = function(self)
         local b = 20, color
+
+        print(WIN_BORD)
 
         color = Color.red() -- Color of this tab
         RECT.init(self, b, b, W - H - b, H - 2 * b, Color.red())
@@ -15,7 +17,7 @@ Email_Tab = Class{
     end
 }
 
-function Email_Tab:draw()
+function EmailTab:draw()
     local tab
 
     tab = self
@@ -25,6 +27,14 @@ function Email_Tab:draw()
 
 end
 
-function Email_Tab:update()
+function EmailTab:update()
+
+end
+
+function EmailTab:activate()
+
+end
+
+function EmailTab:deactivate()
 
 end
