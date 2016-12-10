@@ -25,12 +25,13 @@ Room = Class{
         self.grid_floor = {}
         self.grid_obj = {}
         for i=1, self.grid_r do
-          self.grid_floor[i] = {}
-          self.grid_obj[i] = {}
-          for j=1, self.grid_c do
-            self.grid_floor[i][j] = 0
-            self.grid_obj[i][j] = nil -- For readability
-          end
+            self.grid_floor[i] = {}
+            self.grid_obj[i] = {}
+            for j=1, self.grid_c do
+                -- For readability
+                self.grid_floor[i][j] = math.random(2) % 2 == 0 and "white_floor" or "black_floor"
+                self.grid_obj[i][j] = nil
+            end
         end
 
         -- Border
@@ -45,7 +46,7 @@ Room = Class{
         self.mrkr_x = self.w - self.grid_cw - self.mrkr_fnt:getWidth(self.mrkr_txt)
         self.mrkr_y = 0
         self.mrkr_timer = MAIN_TIMER.every(1, function()
-          self.mrkr_drw = not self.mrkr_drw
+            self.mrkr_drw = not self.mrkr_drw
         end)
         self.mrkr_drw = true
     end
@@ -63,7 +64,7 @@ function Room:draw()
     Color.set(self.mrkr_clr)
     love.graphics.print(self.mrkr_txt, self.mrkr_x, self.mrkr_y)
     if self.mrkr_drw then
-      love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
+        love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
     end
     love.graphics.pop()
 
@@ -75,16 +76,46 @@ function Room:draw()
     Color.set(self.color)
     love.graphics.rectangle("fill", 0, 0, self.grid_w, self.grid_h)
 
+    -- Floor
+    for i=1, self.grid_r do
+        local _x = (i-1)*self.grid_cw
+        for j=1, self.grid_c do
+            local cell = self.grid_floor[i][j]
+            if cell ~= nil then
+                local img = TILES_IMG[cell]
+                local _y = (j-1)*self.grid_ch
+                local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
+                Color.set(Color.white())
+                love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+            end
+        end
+    end
+
     -- Grid lines
     Color.set(self.grid_clr)
     local _r, _c = self.grid_r - 1, self.grid_c - 1
     for i=1, _r do
-      local _h = i*self.grid_ch
-      love.graphics.line(0, _h, self.grid_w, _h)
+        local _h = i*self.grid_ch
+        love.graphics.line(0, _h, self.grid_w, _h)
     end
     for i=1, _c do
-      local _w = i*self.grid_cw
-      love.graphics.line(_w, 0, _w, self.grid_h)
+        local _w = i*self.grid_cw
+        love.graphics.line(_w, 0, _w, self.grid_h)
+    end
+
+    -- Objects
+    for i=1, self.grid_r do
+        local _x = (i-1)*self.grid_cw
+          for j=1, self.grid_c do
+              local cell = self.grid_floor[i][j]
+              if cell ~= nil then
+                  local _y = (j-1)*self.grid_ch
+                  local img = TILES_IMG[cell]
+                  local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
+                  Color.set(Color.white())
+                  love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+              end
+        end
     end
 
     -- Set origin to (0, 0)
