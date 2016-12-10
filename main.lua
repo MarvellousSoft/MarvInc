@@ -9,10 +9,19 @@ Vector    = require "hump.vector"
 --CLASSES
 
 require "classes.primitive"
+
 require "classes.color.rgb"
 require "classes.color.hsl"
 require "classes.color.color"
-local Button = require "classes.button"
+
+Button = require "classes.button"
+
+require "classes.tabs.email"
+require "classes.tabs.code"
+require "classes.tabs.info"
+
+require "classes.pc-box"
+require "classes.room"
 
 
 --MY MODULES

@@ -1,6 +1,5 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
-local Button = require "classes.button"
 --PC-BOX CLASS--
 
 --PC-BOX functions table
