@@ -237,5 +237,10 @@ function util.defaultKeyPressed(key)
 
 end
 
+function util.pointInRect(x, y, rect)
+    return not (x < rect.pos.x or x > rect.pos.x + rect.w or
+       y < rect.pos.y or y > rect.pos.y + rect.h)
+end
+
 --Return functions
 return util

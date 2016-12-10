@@ -168,9 +168,21 @@ function CodeTab:textInput(t)
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
-       #t > 1 or not t:match("[a-zA-Z0-9!?]")
+       #t > 1 or not t:match("[a-zA-Z0-9!? ]")
         then return end
     t = t:lower()
     self.lines[c.i] = processAdd(self.lines[c.i], c.p, t)
     c.p = c.p + 1
+end
+
+function CodeTab:mousePressed(x, y, but)
+    if but ~= 1 or not Util.pointInRect(x, y, self) then return end
+    local dx = self.font:getWidth("20:") + 5
+    if x < self.pos.x + dx + 7 then return end
+    local w = self.font:getWidth("a")
+    local i = math.floor((y - self.pos.y) / self.line_h) + 1
+    local p = math.floor((x - self.pos.x - dx - 7) / w) + 1
+    if i > self.line_cur then return end
+    self.cursor.i = i
+    self.cursor.p = math.min(p, #self.lines[self.cursor.i] + 1)
 end
