@@ -9,7 +9,7 @@ PcBox = Class{
     __includes = {RECT},
     init = function(self)
         local b = 20
-        RECT.init(self, b, b, W - H, H - 2 * b, Color.red())
+        RECT.init(self, b, b, W - H - b, H - 2 * b, Color.red())
 
         self.tp = "pcbox"
     end

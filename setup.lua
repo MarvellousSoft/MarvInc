@@ -48,8 +48,8 @@ function setup.config()
     --AUDIO--
 
     --FONTS--
-    FONT = {
-        main = love.graphics.newFont("assets/fonts/fire-mono-regular.ttf", 90),
+    FONTS = {
+        main = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", 20),
     }
 
 end

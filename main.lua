@@ -12,10 +12,11 @@ require "classes.primitive"
 require "classes.color.rgb"
 require "classes.color.hsl"
 require "classes.color.color"
+local Button = require "classes.button"
 
 
 --MY MODULES
-local Util      = require "util"
+Util            = require "util"
 local Draw      = require "draw"
 local Setup     = require "setup"
 
@@ -43,10 +44,8 @@ end
 
 function love.mousepressed(x, y, button, istouch)
 
-    --[[
     if button == 1 then  --Left mouse button
         Button.checkCollision(x,y)
     end
-    ]]
 
 end
