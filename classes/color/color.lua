@@ -7,8 +7,17 @@ local Hsl = require "classes.color.hsl"
 local Color = {}
 
 --Create a new color with values (a,b,c).
+--A color can also be sent, and it will be copied to the new color.
 --Mode can be "hsl" (default) or "rgb"
 function Color.new(a, b, c, mode)
+    if type(a) == "table" then
+        if a.type == "RGB" then
+            return RGB(a.r, a.g, a.b)
+        else
+            return HSL(a.h, a.s, a.l)
+        end
+    end
+
     mode = mode or "hsl"
 
     if mode == "hsl" then
