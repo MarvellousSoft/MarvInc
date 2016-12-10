@@ -35,6 +35,19 @@ Room = Class{
 
         -- Border
         self.border_clr = Color.green()
+
+        -- Live marker
+        self.mrkr_txt = "LIVE"
+        self.mrkr_online = true
+        self.mrkr_fnt = FONTS.fira(28)
+        self.mrkr_clr = Color.red()
+        -- Relative to pos
+        self.mrkr_x = self.w - self.grid_cw - self.mrkr_fnt:getWidth(self.mrkr_txt)
+        self.mrkr_y = 0
+        self.mrkr_timer = MAIN_TIMER.every(1, function()
+          self.mrkr_drw = not self.mrkr_drw
+        end)
+        self.mrkr_drw = true
     end
 }
 
@@ -44,6 +57,14 @@ function Room:draw()
     love.graphics.push()
     love.graphics.translate(self.pos.x, self.pos.y)
     love.graphics.rectangle('fill', 0, 0, self.w, self.h)
+
+    -- Live marker
+    love.graphics.setFont(FONTS.fira(28))
+    Color.set(self.mrkr_clr)
+    love.graphics.print(self.mrkr_txt, self.mrkr_x, self.mrkr_y)
+    if self.mrkr_drw then
+      love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
+    end
     love.graphics.pop()
 
     -- Set origin to table position
@@ -69,7 +90,6 @@ function Room:draw()
     -- Set origin to (0, 0)
     love.graphics.pop()
 end
-
 
 --UTILITY FUNCTIONS--
 

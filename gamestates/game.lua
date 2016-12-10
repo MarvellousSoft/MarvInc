@@ -24,6 +24,7 @@ function state:update(dt)
     Util.updateSubTp(dt, "gui")
     Util.destroyAll()
 
+    Util.updateTimers(dt)
 end
 
 function state:draw()

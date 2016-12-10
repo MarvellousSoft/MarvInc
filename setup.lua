@@ -63,8 +63,6 @@ function setup.config()
     --SHADERS--
 
     --AUDIO--
-
-
 end
 
 --Return functions
