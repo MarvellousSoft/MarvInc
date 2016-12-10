@@ -29,13 +29,20 @@ Room = Class{
             self.grid_obj[i] = {}
             for j=1, self.grid_c do
                 -- For readability
-                self.grid_floor[i][j] = math.random(2) % 2 == 0 and "white_floor" or "black_floor"
+                self.grid_floor[i][j] = love.math.random(2) % 2 == 0 and "white_floor" or "black_floor"
                 self.grid_obj[i][j] = nil
             end
         end
+        -- Set global vars
+        ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
+        ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
+
+
+        -- Initial bot
+        local _bot = Bot(self.grid_obj, math.floor(self.grid_c/2), math.floor(self.grid_c/2))
 
         -- Border
-        self.border_clr = Color.green()
+        self.border_clr = Color.new(132, 137, 59)
 
         -- Live marker
         self.mrkr_txt = "LIVE"
@@ -49,6 +56,7 @@ Room = Class{
             self.mrkr_drw = not self.mrkr_drw
         end)
         self.mrkr_drw = true
+
     end
 }
 
@@ -105,15 +113,10 @@ function Room:draw()
 
     -- Objects
     for i=1, self.grid_r do
-        local _x = (i-1)*self.grid_cw
           for j=1, self.grid_c do
-              local cell = self.grid_floor[i][j]
-              if cell ~= nil then
-                  local _y = (j-1)*self.grid_ch
-                  local img = TILES_IMG[cell]
-                  local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
-                  Color.set(Color.white())
-                  love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+              local obj = self.grid_obj[i][j]
+              if obj ~= nil then
+                  obj:draw()
               end
         end
     end

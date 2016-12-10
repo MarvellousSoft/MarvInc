@@ -25,6 +25,8 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 
 require "classes.pc-box"
+require "classes.object"
+require "classes.bot"
 require "classes.room"
 
 

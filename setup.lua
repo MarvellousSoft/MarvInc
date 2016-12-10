@@ -36,11 +36,28 @@ function setup.config()
     TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
     TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
 
+    -- Bot images (assume array part only)
+    HEAD = {}
+    table.insert(HEAD, love.graphics.newImage("assets/images/body_1.png"))
+    BODY = {}
+    table.insert(BODY, love.graphics.newImage("assets/images/head_1.png"))
+
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
 
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
+
+    -- Move orientations
+    NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
+    SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
+
+    -- Rotational orientations
+    NORTH_R, EAST_R, SOUTH_R, WEST_R = {math.pi}, {3*math.pi/2}, {0}, {math.pi/2}
+    ORIENT_R = {NORTH_R, EAST_R, SOUTH_R, WEST_R}
+    for i=1, #ORIENT_R do
+        ORIENT_R[i][2] = i
+    end
 
     --TIMERS--
     MAIN_TIMER = Timer.new()  --General Timer
