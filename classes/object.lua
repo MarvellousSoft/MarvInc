@@ -7,9 +7,12 @@ local obj = {}
 
 Object = Class{
     __includes = {RECT},
-    init = function(self, grid, i, j)
+    init = function(self, grid, i, j, tp, bg)
         RECT.init(self, i, j, ROOM_CW, ROOM_CH, Color.white())
         self.r = SOUTH_R
+        self.tp = tp
+        -- Whether to draw background
+        self.bg = bg or false
         -- Real positions relative to grid's position
         self.rx = (i-1)*ROOM_CW
         self.ry = (j-1)*ROOM_CH
@@ -43,17 +46,25 @@ end
 
 -- Move towards. Must move to an adjacent cell. Orientation o is north, east, south or west.
 function Object:moveTo(grid, r, c, o)
-    if  self.pos.x + o.x > r or
-        self.pos.x + o.x < 1 or
-        self.pos.y + o.y > c or
-        self.pos.y + o.y < 1 then
+    local px, py = self.pos.x + o.x, self.pos.y + o.y
+    -- Out of bounds
+    if  px > r or
+        px < 1 or
+        py > c or
+        py < 1 then
         return
     end
+
+    -- Obstacle ahead
+    if grid[px][py] ~= nil and grid[px][py].tp == "obst" then
+        return
+    end
+
     grid[self.pos.x][self.pos.y] = nil
-    self.pos = self.pos + o
-    self.rx = (self.pos.x-1)*ROOM_CW
-    self.ry = (self.pos.y-1)*ROOM_CH
-    grid[self.pos.x][self.pos.y] = self
+    self.pos.x, self.pos.y = px, py
+    self.rx = (px-1)*ROOM_CW
+    self.ry = (py-1)*ROOM_CH
+    grid[px][py] = self
 end
 
 return obj

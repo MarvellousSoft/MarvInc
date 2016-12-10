@@ -9,7 +9,7 @@ Bot = Class{
     __includes = {Object},
     init = function(self, grid, i, j)
         -- i and j are 0-indexed positions in grid
-        Object.init(self, grid, i, j)
+        Object.init(self, grid, i, j, "bot", true)
         self.head = HEAD[love.math.random(#HEAD)]
         self.body = BODY[love.math.random(#BODY)]
         self.head_clr = Color.new(love.math.random(256) - 1, 200, 200)

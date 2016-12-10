@@ -24,19 +24,21 @@ Room = Class{
         self.grid_r, self.grid_c = self.grid_r - 2, self.grid_c - 2
         self.grid_floor = {}
         self.grid_obj = {}
+        -- Set global vars
+        ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
+        ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
+
         for i=1, self.grid_r do
             self.grid_floor[i] = {}
             self.grid_obj[i] = {}
             for j=1, self.grid_c do
                 -- For readability
-                self.grid_floor[i][j] = love.math.random(2) % 2 == 0 and "white_floor" or "black_floor"
-                self.grid_obj[i][j] = nil
+                self.grid_floor[i][j] = love.math.random(3) % 2 == 0 and
+                    "white_floor" or "black_floor"
+                self.grid_obj[i][j] = love.math.random(2) % 2 == 0 and
+                    Obstacle(self.grid_obj, i, j, "wall_o", false) or nil
             end
         end
-        -- Set global vars
-        ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
-        ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
-
 
         -- Initial bot
         self.bot = Bot(self.grid_obj, math.floor(self.grid_c/2), math.floor(self.grid_c/2))
@@ -80,46 +82,40 @@ function Room:draw()
     love.graphics.push()
     love.graphics.translate(self.grid_x, self.grid_y)
 
-    -- Table background
-    Color.set(self.color)
-    love.graphics.rectangle("fill", 0, 0, self.grid_w, self.grid_h)
-
     -- Floor
     for i=1, self.grid_r do
         local _x = (i-1)*self.grid_cw
         for j=1, self.grid_c do
+            local obj = self.grid_obj[i][j]
+            local _bg = true
+            if obj ~= nil then
+              _bg = obj.bg
+            end
             local cell = self.grid_floor[i][j]
-            if cell ~= nil then
+            if cell ~= nil and _bg then
                 local img = TILES_IMG[cell]
                 local _y = (j-1)*self.grid_ch
                 local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
                 Color.set(Color.white())
                 love.graphics.draw(img, _x, _y, nil, _sx, _sy)
             end
+            if obj ~= nil then
+                obj:draw()
+            end
         end
     end
 
     -- Grid lines
-    Color.set(self.grid_clr)
-    local _r, _c = self.grid_r - 1, self.grid_c - 1
-    for i=1, _r do
-        local _h = i*self.grid_ch
-        love.graphics.line(0, _h, self.grid_w, _h)
-    end
-    for i=1, _c do
-        local _w = i*self.grid_cw
-        love.graphics.line(_w, 0, _w, self.grid_h)
-    end
-
-    -- Objects
-    for i=1, self.grid_r do
-          for j=1, self.grid_c do
-              local obj = self.grid_obj[i][j]
-              if obj ~= nil then
-                  obj:draw()
-              end
-        end
-    end
+    --Color.set(self.grid_clr)
+    --local _r, _c = self.grid_r - 1, self.grid_c - 1
+    --for i=1, _r do
+        --local _h = i*self.grid_ch
+        --love.graphics.line(0, _h, self.grid_w, _h)
+    --end
+    --for i=1, _c do
+        --local _w = i*self.grid_cw
+        --love.graphics.line(_w, 0, _w, self.grid_h)
+    --end
 
     -- Set origin to (0, 0)
     love.graphics.pop()

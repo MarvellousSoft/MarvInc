@@ -33,8 +33,12 @@ function setup.config()
 
     -- Tiles
     TILES_IMG = {}
-    TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
     TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
+    TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
+
+    -- Objects
+    OBJS_IMG = {}
+    OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
 
     -- Bot images (assume array part only)
     HEAD = {}
