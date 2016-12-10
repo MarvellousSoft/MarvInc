@@ -14,7 +14,7 @@ require "classes.color.rgb"
 require "classes.color.hsl"
 require "classes.color.color"
 
-Button = require "classes.button"
+But = require "classes.button"
 
 require "classes.tabs.email"
 require "classes.tabs.code"
@@ -54,7 +54,7 @@ end
 function love.mousepressed(x, y, button, istouch)
 
     if button == 1 then  --Left mouse button
-        Button.checkCollision(x,y)
+        But.checkCollision(x,y)
     end
 
 end

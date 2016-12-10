@@ -22,11 +22,11 @@ PcBox = Class{
 
         -- Tab buttons
         local h = button_tab_height
-        self.email_b = Button.create_gui(self.pos.x, self.pos.y, self.w / 3, h,
+        self.email_b = But.create_gui(self.pos.x, self.pos.y, self.w / 3, h,
         function() print "email" end, "email", FONTS.fira(20))
-        self.code_b = Button.create_gui(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
+        self.code_b = But.create_gui(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
         function() print "terminal" end, "terminal", FONTS.fira(20))
-        self.info_b = Button.create_gui(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
+        self.info_b = But.create_gui(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
         h, function() print "info" end, "info", FONTS.fira(20))
 
         self.tp = "pcbox"
@@ -38,50 +38,8 @@ function PcBox:draw()
 
     p = self
 
-    tabs[p.current_tab].draw()
-
 end
 
---EMAIL Tab
-
-tabs.email.draw = function()
-
-    Color.set(Color.green())
-    love.graphics.rectangle("fill", p.pos.x, p.pos.y, p.w, p.h)
-
-end
-
-tabs.email.update = function()
-
-end
-
-
---CODE Tab
-
-tabs.code.draw = function()
-
-    Color.set(Color.orange())
-    love.graphics.rectangle("fill", p.pos.x, p.pos.y, p.w, p.h)
-
-end
-
-tabs.code.update = function()
-
-end
-
-
---INFO Tab
-
-tabs.info.draw = function()
-
-    Color.set(Color.blue())
-    love.graphics.rectangle("fill", p.pos.x, p.pos.y, p.w, p.h)
-
-end
-
-tabs.info.update = function()
-
-end
 
 --UTILITY FUNCTIONS--
 
