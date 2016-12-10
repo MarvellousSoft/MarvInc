@@ -30,3 +30,11 @@ end
 function Tab:deactivate()
 
 end
+
+function Tab:keyPressed(key)
+
+end
+
+function Tab:textInput(t)
+
+end

@@ -2,6 +2,7 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 
 --PC-BOX CLASS--
+-- Supposes only one instance is created
 
 --PC-BOX functions table
 local pcbox = {}
@@ -68,6 +69,14 @@ function PcBox:changeTo(tab)
     self.cur_tab = tab
 end
 
+function PcBox:keyPressed(key)
+    tabs[self.cur_tab]:keyPressed(key)
+end
+
+function PcBox:textInput(t)
+    tabs[self.cur_tab]:textInput(t)
+end
+
 --UTILITY FUNCTIONS--
 
 function pcbox.create()
@@ -76,7 +85,7 @@ function pcbox.create()
     p = PcBox()
     p:addElement(DRAW_TABLE.L1, nil, "pcbox")
 
-    return r
+    return p
 end
 
 return pcbox
