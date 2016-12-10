@@ -13,11 +13,9 @@ PcBox = Class{
     __includes = {RECT},
 
     init = function(self)
-        local b = 20
-
+        local b = WIN_BORD
         RECT.init(self, b, b, W - H - b, H - 2 * b, Color.red())
 
-        --
         self.current_tab = "email"
 
         -- Tab buttons
