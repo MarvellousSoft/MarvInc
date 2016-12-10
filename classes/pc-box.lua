@@ -22,10 +22,12 @@ PcBox = Class{
     init = function(self)
         local b = WIN_BORD
 
-        --Saturation when a tab is focused
-        self.focus_saturation = 120
-        --Saturation when a tab is not focused
-        self.unfocus_saturation = 50
+        --Saturation and lightness when a tab is focused
+        self.focus_saturation = 100
+        self.focus_lightness = 80
+        --Saturation and lightness when a tab is not focused
+        self.unfocus_saturation = 20
+        self.unfocus_lightness = 40
 
         -- Current tab active
         self.cur_tab = "email"
@@ -36,11 +38,11 @@ PcBox = Class{
         local h = button_tab_height
         self.buttons = {}
         self.buttons.email = But.create_gui(self.pos.x, self.pos.y, self.w / 3, h,
-        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(150,self.focus_saturation,80))
+        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness))
         self.buttons.code = But.create_gui(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
-        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(210,self.unfocus_saturation,80))
+        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(150,self.unfocus_saturation,self.unfocus_lightness))
         self.buttons.info = But.create_gui(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
-        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(110,self.unfocus_saturation,80))
+        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(10,self.unfocus_saturation,self.unfocus_lightness))
 
         self.tp = "pcbox"
     end
@@ -57,9 +59,11 @@ function PcBox:changeTo(tab)
     if tab == self.cur_tab then return end
     tabs[self.cur_tab]:deactivate()
     self.buttons[self.cur_tab].color.s = self.unfocus_saturation
+    self.buttons[self.cur_tab].color.l = self.unfocus_lightness
 
     tabs[tab]:activate()
     self.buttons[tab].color.s = self.focus_saturation
+    self.buttons[tab].color.l = self.focus_lightness
 
     self.cur_tab = tab
 end
