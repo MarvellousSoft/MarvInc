@@ -28,7 +28,6 @@ Button = Class{
 }
 
 function Button:update(dt)
-    print(self.isOver)
     local b, x, y
 
     b = self
@@ -37,7 +36,6 @@ function Button:update(dt)
 
     --Fix mouse position click to respective distance
     x, y = love.mouse.getPosition()
-    print(x, y)
 
     --If mouse is colliding with button, then show message below
     if x >= b.pos.x and

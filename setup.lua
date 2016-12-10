@@ -48,8 +48,17 @@ function setup.config()
     --AUDIO--
 
     --FONTS--
+
+    --Fira-mono table
+    FIRA = {}
+    --Global fonts table
     FONTS = {
-        main = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", 20),
+        fira = function(size)
+            if FIRA[size] then return FIRA[size] end
+
+            FIRA[size] = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", size)
+            return FIRA[size]
+        end,
     }
 
 end

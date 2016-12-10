@@ -12,7 +12,7 @@ local kill
 function state:enter()
     Rooms.create()
     PcBox.create()
-    kill = Button.create_gui(10, 10, 100, 100, function() print "hey" end, "hey", FONTS.main)
+    kill = Button.create_gui(10, 10, 100, 100, function() print "hey" end, "hey", FONTS.fira(20))
 end
 
 function state:leave()

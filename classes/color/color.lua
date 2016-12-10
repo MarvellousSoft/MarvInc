@@ -6,6 +6,18 @@ local Hsl = require "classes.color.hsl"
 
 local Color = {}
 
+--Create a new color with values (a,b,c).
+--Mode can be "hsl" (default) or "rgb"
+function Color.new(a, b, c, mode)
+    mode = mode or "hsl"
+
+    if mode == "hsl" then
+        return HSL(a,b,c)
+    else
+        return RGB(a,b,c)
+    end
+end
+
 --Return color values
 function Color.clr(c)
     if c.type == "RGB" then
