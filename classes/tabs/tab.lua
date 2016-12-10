@@ -38,3 +38,7 @@ end
 function Tab:textInput(t)
 
 end
+
+function Tab:mousePressed(x, y, but)
+
+end

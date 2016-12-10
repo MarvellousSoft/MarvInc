@@ -84,6 +84,10 @@ function PcBox:textInput(t)
     tabs[self.cur_tab]:textInput(t)
 end
 
+function PcBox:mousePressed(x, y, but)
+    tabs[self.cur_tab]:mousePressed(x, y, but)
+end
+
 --UTILITY FUNCTIONS--
 
 function pcbox.create()

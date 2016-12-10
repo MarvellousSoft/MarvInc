@@ -154,6 +154,12 @@ function CodeTab:keyPressed(key)
 
     elseif key == 'end' then
         c.p = #self.lines[c.i] + 1
+
+    elseif key == 'tab' then
+        if #self.lines[c.i] + 2 > self.max_char then return end
+        self.lines[c.i] = processAdd(self.lines[c.i], c.p, "  ")
+        c.p = c.p + 2
+
     end
 end
 
@@ -161,7 +167,9 @@ function CodeTab:textInput(t)
     print(">", t)
     -- First, should check if it is valid
     local c = self.cursor
-    if #t + #self.lines[c.i] > self.max_char then return end
+    if #t + #self.lines[c.i] > self.max_char or
+       #t > 1 or not t:match("[a-zA-Z0-9!?]")
+        then return end
     t = t:lower()
     self.lines[c.i] = processAdd(self.lines[c.i], c.p, t)
     c.p = c.p + 1
