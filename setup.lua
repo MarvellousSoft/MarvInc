@@ -20,6 +20,8 @@ function setup.config()
     W = love.graphics.getWidth() --Current width of the game window
     H = love.graphics.getHeight() --Current height of the game window
 
+    WIN_BORD = 20
+
     --TIMERS--
     MAIN_TIMER = Timer.new()  --General Timer
 
