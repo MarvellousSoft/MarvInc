@@ -5,11 +5,11 @@ local Color = require "classes.color.color"
 Tab = Class{
     __includes = {RECT},
 
-    init = function(self, color, eps, dy)
+    init = function(self, eps, dy)
         local b = WIN_BORD
 
         RECT.init(self, b + eps, b + eps + dy, W - H - b - 2 * eps, H - 2 * b - 2 * eps - dy,
-        Color.new(color))
+        Color.transp())
 
         self.tp = "tab"
     end

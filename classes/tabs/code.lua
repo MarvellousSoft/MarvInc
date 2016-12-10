@@ -6,8 +6,8 @@ require "classes.tabs.tab"
 CodeTab = Class{
     __includes = {Tab},
 
-    init = function(self, color, eps, dy)
-        Tab.init(self, color, eps, dy)
+    init = function(self, eps, dy)
+        Tab.init(self, eps, dy)
 
         self.tp = "code_tab"
     end

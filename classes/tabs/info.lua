@@ -6,14 +6,20 @@ require "classes.tabs.tab"
 InfoTab = Class{
     __includes = {Tab},
 
-    init = function(self, color, eps, dy)
-        Tab.init(self, color, eps, dy)
+    init = function(self, eps, dy)
+        Tab.init(self, eps, dy)
 
+        self.main_color =  Color.new(150, 200, 120)
         self.tp = "info_tab"
     end
 }
 
 function InfoTab:draw()
-    Color.set(Color.red())
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+    local t
+
+    t = self
+
+    Color.set(t.main_color)
+
+    love.graphics.rectangle("fill", t.pos.x, t.pos.y, t.w, t.h)
 end

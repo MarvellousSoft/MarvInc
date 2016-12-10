@@ -6,8 +6,8 @@ require "classes.tabs.tab"
 EmailTab = Class{
     __includes = {Tab},
 
-    init = function(self, color, eps, dy)
-        Tab.init(self, color, eps, dy)
+    init = function(self, eps, dy)
+        Tab.init(self, eps, dy)
 
         self.tp = "email_tab"
     end

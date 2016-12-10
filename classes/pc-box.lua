@@ -7,14 +7,13 @@ local Color = require "classes.color.color"
 local pcbox = {}
 local button_tab_height = 30
 
-local focus_color = Color.new(150, 0, 80)
 
 -- Each tab, with their own update and draw
 local inner_tab_border = 15
 local tabs = {
-    email = EmailTab(focus_color, inner_tab_border, button_tab_height),
-    code  = CodeTab(focus_color, inner_tab_border, button_tab_height),
-    info  = InfoTab(focus_color, inner_tab_border, button_tab_height)
+    email = EmailTab(inner_tab_border, button_tab_height),
+    code  = CodeTab(inner_tab_border, button_tab_height),
+    info  = InfoTab(inner_tab_border, button_tab_height)
 }
 
 PcBox = Class{
@@ -23,31 +22,32 @@ PcBox = Class{
     init = function(self)
         local b = WIN_BORD
 
-        self.focus_color = focus_color
-        self.unfocus_color = Color.new()
-        Color.copy(self.unfocus_color, self.focus_color)
-        self.unfocus_color.l = self.focus_color.l / 2
+        --Saturation when a tab is focused
+        self.focus_saturation = 120
+        --Saturation when a tab is not focused
+        self.unfocus_saturation = 50
 
-        RECT.init(self, b, b, W - H - b, H - 2 * b, self.focus_color)
-
+        -- Current tab active
         self.cur_tab = "email"
+
+        RECT.init(self, b, b, W - H - b, H - 2 * b, Color.transp())
 
         -- Tab buttons
         local h = button_tab_height
         self.buttons = {}
         self.buttons.email = But.create_gui(self.pos.x, self.pos.y, self.w / 3, h,
-        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, self.focus_color)
+        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(150,self.focus_saturation,80))
         self.buttons.code = But.create_gui(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
-        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, self.unfocus_color)
+        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(210,self.unfocus_saturation,80))
         self.buttons.info = But.create_gui(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
-        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, self.unfocus_color)
+        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(110,self.unfocus_saturation,80))
 
         self.tp = "pcbox"
     end
 }
 
 function PcBox:draw()
-    Color.set(self.focus_color)
+    Color.set(self.buttons[self.cur_tab].color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
     tabs[self.cur_tab]:draw()
 end
@@ -56,10 +56,10 @@ end
 function PcBox:changeTo(tab)
     if tab == self.cur_tab then return end
     tabs[self.cur_tab]:deactivate()
-    self.buttons[self.cur_tab].color = self.unfocus_color
+    self.buttons[self.cur_tab].color.s = self.unfocus_saturation
 
     tabs[tab]:activate()
-    self.buttons[tab].color = self.focus_color
+    self.buttons[tab].color.s = self.focus_saturation
 
     self.cur_tab = tab
 end
