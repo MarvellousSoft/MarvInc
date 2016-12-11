@@ -12,13 +12,8 @@ local StepManager = {
 
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:play()
-    print "heyo"
     self:stop()
     self.parser = Parser.parseCode()
-    if self.parser == nil then
-        print "fail"
-        return
-    end
     self.timer = MAIN_TIMER.every(1, function()
         self:step()
     end)
@@ -62,7 +57,7 @@ function StepManager:walk(x)
         end
         return r
     else
-        return ROOM:blocked()
+        return not ROOM:blocked()
     end
 end
 
@@ -76,8 +71,8 @@ function StepManager:clock()
     return false
 end
 
-function StepManager:anti()
-    ROOM:anti()
+function StepManager:counter()
+    ROOM:counter()
     return false
 end
 
@@ -86,6 +81,7 @@ function StepManager:stop()
         MAIN_TIMER.cancel(self.timer)
     end
     self.cmd = nil
+    --self.parser:stop()
     self.parser = nil
 end
 

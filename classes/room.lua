@@ -149,8 +149,8 @@ function Room:clock()
     self.bot:clock()
 end
 
-function Room:anti()
-    self.bot:anti()
+function Room:counter()
+    self.bot:counter()
 end
 
 function Room:turn(o)
@@ -158,7 +158,7 @@ function Room:turn(o)
 end
 
 function Room:blocked()
-    return self.bot:blocked(self.grid_obj)
+    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 --UTILITY FUNCTIONS--
