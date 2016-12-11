@@ -34,7 +34,7 @@ function Bot:blocked(grid, r, c)
         px > r or
         py < 1 or
         py > c then
-        return nil
+        return true
     end
     print("hue", grid[px][py])
     return grid[px][py]
