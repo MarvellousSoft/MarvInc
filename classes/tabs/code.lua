@@ -18,10 +18,10 @@ CodeTab = Class{
         self.font_h = self.font:getHeight()
 
         -- Lines stuff
-        self.line_h = math.ceil(1.2 * self.font_h)
+        self.line_h = math.ceil(1.1 * self.font_h)
         self.max_char = 30 -- maximum number of chars in a line
         self.line_cur = 1 -- current number of lines
-        self.line_number = 25 -- maximum number of lines
+        self.line_number = 20 -- maximum number of lines
         self.h = self.line_number * self.line_h
         self.lines = {}
         for i = 1, self.line_number do self.lines[i] = "" end
@@ -154,6 +154,7 @@ end
 local change_cursor = {up = true, down = true, left = true, right = true, home = true, ["end"] = true}
 
 function CodeTab:keyPressed(key)
+    if self.lock then return end
     local c = self.cursor
     if change_cursor[key] then
         if love.keyboard.isDown("lshift", "rshift") then
@@ -245,6 +246,7 @@ function CodeTab:keyPressed(key)
 end
 
 function CodeTab:textInput(t)
+    if self.lock then return end
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
@@ -257,6 +259,7 @@ function CodeTab:textInput(t)
 end
 
 function CodeTab:mousePressed(x, y, but)
+    if self.lock then return end
     if but ~= 1 or not Util.pointInRect(x, y, self) then return end
     local dx = self.font:getWidth("20:") + 5
     if x < self.pos.x + dx - 2 then return end

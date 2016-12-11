@@ -31,24 +31,33 @@ Code = Class{
         self.labs = labs
         self.cur = 1
         Util.findId("code_tab").exec_line = 1
+        Util.findId("code_tab").lock = true
+        TABS_LOCK = true
     end,
     step = function(self)
-        local lab = self.ops[self.cur]:execute()
-        if lab then
-            self.cur = self.labs[lab]
-        else
-            self.cur = self.cur + 1
-        end
-        if self.cur and self.cur <= #self.ops then
+        if self.cur <= #self.ops then
+            local lab = self.ops[self.cur]:execute()
             Util.findId("code_tab").exec_line = self.cur
+            if lab then
+                self.cur = self.labs[lab]
+            else
+                self.cur = self.cur + 1
+            end
         end
+        print("now", self.cur, "of", #self.ops)
         return self.cur and self.cur <= #self.ops
     end,
-    stop = function(self) Util.findId("code_tab").exec_line = nil end
+    stop = function(self)
+        Util.findId("code_tab").exec_line = nil
+        Util.findId("code_tab").lock = false
+        TABS_LOCK = false
+    end
 }
 
 function parser.parseAll(lines)
     local code, labs = {}, {}
+    -- labels that are referenced in the code
+    local ref_labels = {}
     for _, line in ipairs(lines) do
         local op, lab = parser.parseLine(line)
         if type(op) ~= "table" then
@@ -56,8 +65,14 @@ function parser.parseAll(lines)
             return
         end
         table.insert(code, op)
-        if lab and labs[lab] then return end
+        if lab and labs[lab] then
+            print("ERROR:", "two labels with the same name")
+            return
+        end
         if lab then labs[lab] = #code end
+    end
+    while #code > 0 and code[#code].type == "NOP" do
+        code[#code] = nil
     end
     return Code(code, labs)
 end

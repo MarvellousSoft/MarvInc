@@ -13,18 +13,28 @@ local StepManager = {
 
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:play()
-    if self.hdl then
-        self:stop()
-    else
-        self:stopNoKill()
-    end
+    self:stop()
     self.parser = Parser.parseCode()
-    self.hdl = self.timer.every(1, function()
+    if type(self.parser) ~= "table" then
+        self.parser = nil
+        return
+    end
+    -- Gambs for some reason...
+    self.call = function()
         self:step()
-    end)
+        if not self.parser then return end
+        self.timer.after(1, self.call)
+    end
+    self.timer.after(1, self.call)
+    print(self.timer)
 end
 
 function StepManager:step()
+    print "TURN"
+    if not self.parser then
+        print "whyyy"
+        return
+    end
     if self.busy then
         print("busy", self.r[1])
         if not self:cmd(unpack(self.args)) then
@@ -36,13 +46,15 @@ function StepManager:step()
     end
 
     if self.parser then
-        if not self.parser:step() then
+        print "try"
+        if not self.parser:step() and not self.busy then
             self:stop()
         end
     else self:stop() end
 end
 
 function StepManager:walk(x)
+    print("torooooo")
     self.busy = true
     self.cmd = self.walk
     if x then
@@ -63,6 +75,7 @@ function StepManager:walk(x)
         end
         return r
     else
+        print(self.busy)
         return not ROOM:blocked()
     end
 end
@@ -83,11 +96,7 @@ function StepManager:counter()
 end
 
 function StepManager:stopNoKill()
-    if self.hdl then
-        print "wat"
-        self.timer.clear()
-        self.hdl = nil
-    end
+    self.timer.clear()
     self.cmd = nil
     self.busy = false
     if self.parser then self.parser:stop() end
@@ -95,6 +104,7 @@ function StepManager:stopNoKill()
 end
 
 function StepManager:stop()
+    print "stop"
     self:stopNoKill()
     ROOM:kill()
 end
