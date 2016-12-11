@@ -6,6 +6,7 @@ Memory = Class{
     init = function(self, x, y, w, h, slots)
         RECT.init(self, x, y, w, h)
         self.tp = "memory"
+        self:setId("memory")
 
         self.unavailable_font = FONTS.fira(50)
 
@@ -36,10 +37,23 @@ function Memory:setSlots(slots)
 
     -- actual memory
     self.vec = {}
-    for i = 1, slots do self.vec[i] = math.floor(math.random() * 17) end
+    for i = 1, self.slots do self.vec[i] = math.floor(math.random() * 12) end
 end
 
 function Memory:reset()
+    -- get from levelmanager or make it zero or something
+    -- for i = 1, self.slots do self.vec[i] = math.floor(math.random() * 12) end
+end
+
+function Memory:get(pos)
+    return pos and pos >= 0 and pos < self.slots and self.vec[pos + 1]
+end
+
+function Memory:set(dst, src)
+    if dst < 0 or dst > self.slots then return false end
+    print("set", dst, src)
+    self.vec[dst + 1] = src
+    return true
 end
 
 function Memory:draw()
