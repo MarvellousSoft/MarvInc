@@ -34,11 +34,11 @@ function state:draw()
 end
 
 function state:keypressed(key)
-
+    local m
     if key == 'f2' then
         Mail.new("Hey, wanna meet some hotties??", "Sonic's birthday is coming up, but the gifts he might recieve aren't what he really wants. All he wants is his childhood friend and her love. Cream and Rouge make this possible. But what happened... Well, let's just say it fits the poem the older kids sanged. 'Roses are red, Lemons are sour, open your legs and give me an hour.'", "Jenny", true)
     elseif key == 'f3' then
-        Mail.new("So I heard you like chinchilas well I have some goodnew for you then", "They opened a door a revealed a fashionable pink and white living room with mixings of blue, they sat down and Amy leaned back as Rouge did so as well as she got out some Caramel flavoured Mud shakes, she handed one to Amy who undone the top and took a sip from the bottle 'Hmm, yumm!'' Amy said as she giggled again Rouge also giggled 'Hmm, yes very yum!'' they both giggled insanely at their incredibly unfunny jokes, Amy began stroking Rouges hair 'Rouge, have I ever told you, how beautiful you are?'' Rouge giggled and shook her head 'Not recently, no!' They laughed, Amy put her bottle on the table as she became a gigantic dinossaur", "Jason from Heavy Rain", true)
+        m = Mail.new("So I heard you like chinchilas well I have some goodnew for you then", "They opened a door a revealed a fashionable pink and white living room with mixings of blue, they sat down and Amy leaned back as Rouge did so as well as she got out some Caramel flavoured Mud shakes, she handed one to Amy who undone the top and took a sip from the bottle 'Hmm, yumm!'' Amy said as she giggled again Rouge also giggled 'Hmm, yes very yum!'' they both giggled insanely at their incredibly unfunny jokes, Amy began stroking Rouges hair 'Rouge, have I ever told you, how beautiful you are?'' Rouge giggled and shook her head 'Not recently, no!' They laughed, Amy put her bottle on the table as she became a gigantic dinossaur", "Jason from Heavy Rain", true, function() print("you replied"); Mail.disableReply(m.number) end)
     elseif key == 'f4' then
         StepManager:play()
     elseif key == 'f6' then

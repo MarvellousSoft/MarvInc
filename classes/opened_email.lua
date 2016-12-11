@@ -7,7 +7,7 @@ local opened_email_funcs = {}
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
@@ -27,7 +27,16 @@ OpenedEmail = Class{
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
 
-
+        self.reply_button_enabled_color = Color.new(150,80,120) --Color for reply button box when enabled
+        self.reply_button_enabled_text_color = Color.new(0,0,250) --Color for reply button text when enabled
+        self.reply_button_disabled_color = Color.new(0,0,80) --Color for reply button box when disabled
+        self.reply_button_disabled_text_color = Color.new(0,0,0) --Color for reply button text when disabled
+        self.reply_func = _reply_func -- Function to be called when you reply the email (if nil there won't be a reply button)
+        self.can_reply = _can_reply -- If the reply button is enabled
+        self.reply_x = self.pos.x + self.w/2 - 25 -- X position value of reply button (related to opened email pos)
+        self.reply_y = self.pos.y + self.h - 100 -- Y position value of reply button (related to opened email pos)
+        self.reply_w = 70 -- Width value of reply button
+        self.reply_h = 30 -- Height value of reply button
 
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
@@ -123,6 +132,29 @@ function OpenedEmail:draw()
         love.graphics.print("delete", e.delete_x + 8, e.delete_y + 7)
     end
 
+    -- Can be deleted button
+    if e.reply_func then
+        -- Make button box
+        if e.can_reply then
+            Color.set(e.reply_button_enabled_color)
+        else
+            Color.set(e.reply_button_disabled_color)
+        end
+        love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
+        Color.set(e.line_color_3)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
+
+        -- Make button text
+        love.graphics.setFont(FONTS.fira(15))
+        if e.can_reply then
+            Color.set(e.reply_button_enabled_text_color)
+        else
+            Color.set(e.reply_button_disabled_text_color)
+        end
+        love.graphics.print("reply", e.reply_x + 11, e.reply_y + 6)
+    end
+
 end
 
 function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker if you send his drawable table, if he has one)
@@ -174,14 +206,17 @@ function opened_email_funcs.mousePressed(x, y, but)
              local mailTab = Util.findId("email_tab")
              mailTab.deleteEmail(mailTab.email_list[e.number])
              e.death = true
+         elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
+                 --Clicked on the reply button
+                 e.reply_func()
          end
      end
 end
 
-function opened_email_funcs.create(number, title, text, author, time, can_be_deleted)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
     local e
 
-    e = OpenedEmail(number, title, text, author, time, can_be_deleted)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e

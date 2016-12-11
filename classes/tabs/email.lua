@@ -153,7 +153,7 @@ function EmailTab:mousePressed(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted)
+                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end
     else
@@ -183,7 +183,7 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author, _can_be_deleted, _number)
+    init = function(self, _title, _text, _author, _can_be_deleted, _reply_func, _number)
         local time
 
         self.number = _number
@@ -203,6 +203,8 @@ EmailObject = Class{
 
         self.was_read = false -- If email was read
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
+        self.reply_func = _reply_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
+        self.can_reply = true -- If email can be replyied
 
         -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
         self.time = os.date("%x, %I:%M %p")
@@ -215,7 +217,7 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, can_be_deleted, number)
+function email_funcs.new(title, text, author, can_be_deleted, reply_func)
     local e, mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -226,7 +228,7 @@ function email_funcs.new(title, text, author, can_be_deleted, number)
     tab.email_cur = tab.email_cur + 1
     number = tab.email_cur
 
-    e = EmailObject(title, text, author, can_be_deleted, number)
+    e = EmailObject(title, text, author, can_be_deleted, reply_func, number)
 
     -- Add fade-in effect to email
     e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
@@ -237,6 +239,33 @@ function email_funcs.new(title, text, author, can_be_deleted, number)
 
     return e
 end
+
+-- Get an email given his number
+function email_funcs.get(number)
+    return Util.findId("email_tab").email_list[number]
+end
+
+-- Get opened email, if any
+function email_funcs.getOpened()
+    return Util.findId("opened_email")
+end
+
+-- Disable reply in  a given email, and if he is opened, handle the opened email
+function email_funcs.disableReply(number)
+    local e, opened
+
+    e, opened = email_funcs.get(number), email_funcs.getOpened()
+
+    -- Disable reply on email
+    if e then e.can_reply = false end
+
+    -- Disable reply on opened
+    if opened and opened.number == number then
+        opened.can_reply = false
+    end
+end
+
+
 
 -- Return functions
 return email_funcs
