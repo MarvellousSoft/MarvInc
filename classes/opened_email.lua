@@ -32,7 +32,7 @@ OpenedEmail = Class{
 
 -- Draws opened email --
 function OpenedEmail:draw()
-    local e, font, font_w, font_h
+    local e, font, font_w, font_h, font_size, temp, text
 
     e = self
 
@@ -51,8 +51,14 @@ function OpenedEmail:draw()
 
     -- Title
     Color.set(e.title_color)
-    font = FONTS.fira(24)
+    font_size = 24
+    font = FONTS.fira(font_size)
+    while font:getWidth(e.title) > e.w - 20 do
+        font_size = font_size - 1
+        font = FONTS.fira(font_size)
+    end
     font_h = font:getHeight(e.title)
+    temp = font_h
     love.graphics.setFont(font)
     love.graphics.print(e.title,  e.pos.x + 10, e.pos.y + 10)
     -- Draw line
@@ -65,16 +71,22 @@ function OpenedEmail:draw()
     font = FONTS.fira(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
-    love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + 55)
+    love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + temp + 25)
     -- Draw line
     love.graphics.setLineWidth(1)
     Color.set(e.line_color_2)
-    love.graphics.line(e.pos.x + 10, e.pos.y + 55 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 55 + font_h + 5)
+    love.graphics.line(e.pos.x + 10, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
 
     -- Text
     Color.set(e.content_color)
     love.graphics.setFont(FONTS.fira(15))
-    love.graphics.printf(e.text,  e.pos.x + 10, e.pos.y + 120, e.w - 20)
+    -- If text is too long, contain text
+    if #e.text <= 600  then
+        text = e.text
+    else
+        text = string.sub(e.text, 1, 600).."..."
+    end
+    love.graphics.printf(text,  e.pos.x + 10, e.pos.y + 120, e.w - 20)
 
     -- Time
     Color.set(e.content_color)

@@ -54,7 +54,11 @@ function EmailTab:draw()
 
         -- Author
         font = FONTS.fira(16)
-        text = e.author.." - "
+        if #e.author <= 9  then
+            text = e.author.." | "
+        else
+            text = string.sub(e.author, 1, 9).."... | "
+        end
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
@@ -64,10 +68,15 @@ function EmailTab:draw()
 
         font = FONTS.fira(14)
         text = e.title
+        if #text <= 30  then
+            text = e.title
+        else
+            text = string.sub(text, 1, 30).."..."
+        end
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
+        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2)
 
         if not e.was_read then
             love.graphics.setFont(FONTS.fira(15))
