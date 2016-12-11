@@ -16,7 +16,7 @@ Turn = Class {
         self.dir = dir
     end,
     execute = function(self)
-        StepManager:turn(self.dir)
+        StepManager[self.dir](StepManager)
     end
 }
 

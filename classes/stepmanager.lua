@@ -81,7 +81,8 @@ function StepManager:stop()
         MAIN_TIMER.cancel(self.timer)
     end
     self.cmd = nil
-    --self.parser:stop()
+    self.busy = false
+    if self.parser then self.parser:stop() end
     self.parser = nil
 end
 
