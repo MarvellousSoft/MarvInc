@@ -23,6 +23,8 @@ function state:update(dt)
     Util.updateSubTp(dt, "gui")
     Util.destroyAll()
 
+    pc_box:update(dt)
+
     Util.updateTimers(dt)
 end
 

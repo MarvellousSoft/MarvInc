@@ -36,7 +36,6 @@ function EmailTab:draw()
 
     -- Draws email list
     for i,e in ipairs(t.email_list) do
-
         --Draw the email box
         if not e.was_read then
             Color.set(e.email_color)
@@ -84,8 +83,6 @@ function EmailTab:mousePressed(x, y, but)
         end
     end
 end
-
-
 
 -- EMAIL OBJECT --
 

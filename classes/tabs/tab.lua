@@ -19,7 +19,7 @@ function Tab:draw()
 
 end
 
-function Tab:update()
+function Tab:update(dt)
 
 end
 
