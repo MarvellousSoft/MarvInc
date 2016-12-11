@@ -34,11 +34,11 @@ function setup.config()
     -- Tiles
     TILES_IMG = {}
     TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
-    TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
 
     -- Objects
     OBJS_IMG = {}
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
+    OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
 
     -- Bot images (assume array part only)
     HEAD = {}
@@ -51,6 +51,13 @@ function setup.config()
 
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
+
+    -- Current room
+    ROOM = nil
+
+    NAMES = {"Barry", "Larry", "Terry", "Mary", "Fieri", "Danny", "Kenny", "Benny", "Kelly",
+        "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny", "Nancy",
+        "Manny", "Ellie", "Lenny" }
 
     -- Move orientations
     NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)

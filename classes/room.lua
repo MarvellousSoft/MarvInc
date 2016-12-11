@@ -27,21 +27,26 @@ Room = Class{
         -- Set global vars
         ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
         ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
+        INIT_POS = Vector(10, 10)
 
         for i=1, self.grid_r do
             self.grid_floor[i] = {}
             self.grid_obj[i] = {}
             for j=1, self.grid_c do
                 -- For readability
-                self.grid_floor[i][j] = love.math.random(3) % 2 == 0 and
-                    "white_floor" or "black_floor"
-                self.grid_obj[i][j] = love.math.random(2) % 2 == 0 and
+                self.grid_floor[i][j] = "white_floor"
+                self.grid_obj[i][j] = love.math.random(3) % 2 == 0 and
                     Obstacle(self.grid_obj, i, j, "wall_o", false) or nil
             end
         end
 
         -- Initial bot
-        self.bot = Bot(self.grid_obj, math.floor(self.grid_c/2), math.floor(self.grid_c/2))
+        self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+        Signal.register("death", function()
+            self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+        end)
+        -- Death obj
+        Dead(self.grid_obj, 12, 10, "black_block", false)
 
         -- Border
         self.border_clr = Color.new(132, 137, 59)
@@ -59,6 +64,11 @@ Room = Class{
         end)
         self.mrkr_drw = true
 
+        -- Room number and name
+        self.n = 1
+        self.name = "Minesweeper"
+
+        ROOM = self
     end
 }
 

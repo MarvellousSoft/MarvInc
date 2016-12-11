@@ -4,6 +4,7 @@ Timer     = require "hump.timer"
 Class     = require "hump.class"
 Camera    = require "hump.camera"
 Vector    = require "hump.vector"
+Signal    = require "hump.signal"
 
 --MY MODULES
 Util      = require "util"
@@ -27,6 +28,7 @@ require "classes.tabs.info"
 require "classes.pc-box"
 require "classes.object"
 require "classes.obstacle"
+require "classes.dead"
 require "classes.bot"
 require "classes.room"
 

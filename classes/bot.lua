@@ -16,8 +16,16 @@ Bot = Class{
         self.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
         self.sx = ROOM_CW/self.body:getWidth()
         self.sy = ROOM_CH/self.body:getHeight()
+
+        -- Get random name from list
+        self.name = NAMES[love.math.random(#NAMES)]
     end
 }
+
+function Bot:kill(grid)
+    Object.kill(self, grid)
+    Signal.emit("death")
+end
 
 function Bot:draw()
     Color.set(self.body_clr)
