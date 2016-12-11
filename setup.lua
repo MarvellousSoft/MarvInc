@@ -26,6 +26,10 @@ FONTS = {
     end,
 }
 
+--Other Tables
+SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)
+ID_TABLE = {} --Table with elements with Ids (for fast lookup)
+
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
 
@@ -88,10 +92,6 @@ function setup.config()
     L2   = {}, --Layer 2
     GUI  = {}  --Graphic User Interface (top layer, last to draw)
     }
-
-    --Other Tables
-    SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)
-    ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 
     --WINDOW CONFIG--
     love.window.setMode(W, H, {resizable = true, minwidth = 800, minheight = 600})

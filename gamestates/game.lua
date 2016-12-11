@@ -36,6 +36,8 @@ function state:keypressed(key)
 
     if key == 'f2' then
         Mail.new("Hey, wanna meet some hotties??", "Sonic's birthday is coming up, but the gifts he might recieve aren't what he really wants. All he wants is his childhood friend and her love. Cream and Rouge make this possible. But what happened... Well, let's just say it fits the poem the older kids sanged. 'Roses are red, Lemons are sour, open your legs and give me an hour.'", "Paulo Feof.")
+    elseif key == 'f4' then
+        StepManager:play()
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)

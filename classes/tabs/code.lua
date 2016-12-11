@@ -1,6 +1,7 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
+local Parser = require "classes.interpreter.parser"
 -- CODE TAB CLASS--
 
 CodeTab = Class{
@@ -13,7 +14,7 @@ CodeTab = Class{
         self.color = Color.new(0, 0, 10)
 
         -- Font stuff
-        self.font = FONTS.fira(15)
+        self.font = FONTS.fira(18)
         self.font_h = self.font:getHeight()
 
         -- Lines stuff
@@ -35,6 +36,9 @@ CodeTab = Class{
         self.cursor_timer = Timer.new()
 
         self.tp = "code_tab"
+        self:setId "code_tab"
+
+        Parser.parseLine("hey dude123 213a 123  ")
     end
 }
 
@@ -82,7 +86,7 @@ function CodeTab:draw()
     Color.set(c)
     local w = self.font:getWidth("a")
     local cu = self.cursor
-    love.graphics.rectangle("fill", self.pos.x + dx + 7 + w * (cu.p - 1), self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
     c.a = 80
     Color.set(c)
     local c1, c2 = self.cursor, self.cursor2 or self.cursor
@@ -91,7 +95,7 @@ function CodeTab:draw()
     end
     cu = {i = c1.i, p = c1.p}
     while cu.i ~= c2.i or cu.p ~= c2.p do
-        love.graphics.rectangle("fill", self.pos.x + dx + 7 + w * (cu.p - 1), self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+        love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
         cu.p = cu.p + 1
         if cu.p == #self.lines[cu.i] + 2 then
             cu.p = 1
@@ -239,7 +243,7 @@ function CodeTab:textInput(t)
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
-       #t > 1 or not t:match("[a-zA-Z0-9!? ]")
+       #t > 1 or not t:match("[a-zA-Z0-9: ]")
         then return end
     if self.cursor2 then deleteInterval(self, c, self.cursor2) end
     t = t:lower()
@@ -250,10 +254,10 @@ end
 function CodeTab:mousePressed(x, y, but)
     if but ~= 1 or not Util.pointInRect(x, y, self) then return end
     local dx = self.font:getWidth("20:") + 5
-    if x < self.pos.x + dx + 7 then return end
+    if x < self.pos.x + dx - 2 then return end
     local w = self.font:getWidth("a")
     local i = math.floor((y - self.pos.y) / self.line_h) + 1
-    local p = math.floor((x - self.pos.x - dx - 7) / w) + 1
+    local p = math.max(1, math.floor((x - self.pos.x - dx + 2) / w))
     if i > self.line_cur then return end
     self.cursor.i = i
     self.cursor.p = math.min(p, #self.lines[self.cursor.i] + 1)

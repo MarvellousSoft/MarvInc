@@ -28,9 +28,9 @@ function Bot:kill(grid)
 end
 
 function Bot:blocked(grid)
-    local p = ORIENT[self.f[2]]
+    local p = ORIENT[self.r[2]]
     local px, py = p.x, p.y
-    return grid[self.pos.x + px][self.pos.y + py] == not nil
+    return grid[self.pos.x + px][self.pos.y + py]
 end
 
 function Bot:draw()
