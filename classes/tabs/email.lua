@@ -23,7 +23,12 @@ EmailTab = Class{
         self.email_border = 5
 
         self.tp = "email_tab"
+    end,
+
+    deleteEmail = function(mail)
+        print("TODO: remove this email")
     end
+
 }
 
 function EmailTab:draw()
@@ -101,7 +106,7 @@ function EmailTab:mousePressed(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.title, mail.text, mail.author, mail.time)
+                e.email_opened = Opened.create(mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted)
             end
         end
     else
