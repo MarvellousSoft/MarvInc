@@ -55,6 +55,8 @@ function setup.config()
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
     OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
 
+    -- Spritesheets
+    SHEET_IMG = {}
 
     ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
 

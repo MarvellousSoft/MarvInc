@@ -12,6 +12,8 @@ Room = Class{
         RECT.init(self, W - (H - b), b, H - 2 * b, H - 2 * b, Color.orange())
 
         self.tp = "room"
+        -- Online or offline
+        self.mode = "online"
 
         -- Grid
         self.grid_clr = Color.blue()
@@ -38,17 +40,15 @@ Room = Class{
         self.border_clr = Color.new(132, 20, 30)
 
         -- Live marker
-        self.mrkr_txt = "LIVE"
-        self.mrkr_online = true
         self.mrkr_fnt = FONTS.fira(28)
         self.mrkr_clr = Color.red()
         -- Relative to pos
-        self.mrkr_x = self.w - self.grid_cw - self.mrkr_fnt:getWidth(self.mrkr_txt)
+        self.mrkr_x = self.w - self.grid_cw - self.mrkr_fnt:getWidth("LIVE")
         self.mrkr_y = 0
+        self.mrkr_drw = true
         self.mrkr_timer = MAIN_TIMER.every(1, function()
             self.mrkr_drw = not self.mrkr_drw
         end)
-        self.mrkr_drw = true
 
         -- Room number and name
         self.n = nil
@@ -142,9 +142,13 @@ function Room:draw()
     -- Live marker
     love.graphics.setFont(FONTS.fira(28))
     Color.set(self.mrkr_clr)
-    love.graphics.print(self.mrkr_txt, self.mrkr_x, self.mrkr_y)
-    if self.mrkr_drw then
-        love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
+    if self.mode == "online" then
+        love.graphics.print("LIVE", self.mrkr_x, self.mrkr_y)
+        if self.mrkr_drw then
+            love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
+        end
+    else
+        love.graphics.print("OFFLINE", self.mrkr_x, self.mrkr_y)
     end
     love.graphics.pop()
 
