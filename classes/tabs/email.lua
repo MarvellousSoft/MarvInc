@@ -23,7 +23,22 @@ EmailTab = Class{
         self.email_border = 5
 
         self.tp = "email_tab"
+    end,
+
+    deleteEmail = function(mail)
+        local mail_list
+
+        mail_list = Util.findId("email_tab").email_list
+        -- Shifts number of all emails greater than the mail to be deleted
+        for i, m in ipairs(mail_list) do
+            if m.number > mail.number then m.number = m.number - 1 end
+        end
+
+        --Remove mail from the list
+        table.remove(mail_list, mail.number)
+
     end
+
 }
 
 function EmailTab:draw()
@@ -101,7 +116,7 @@ function EmailTab:mousePressed(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.title, mail.text, mail.author, mail.time)
+                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted)
             end
         end
     else
@@ -114,8 +129,10 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author, _can_be_deleted)
+    init = function(self, _title, _text, _author, _can_be_deleted, _number)
         local time
+
+        self.number = _number
 
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
@@ -127,7 +144,7 @@ EmailObject = Class{
         self.was_read = false -- If email was read
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
 
-        -- Time the email was sent (Date (dd//mm/yy) and Time (hh/mm/ss))
+        -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
         self.time = os.date("%x, %I:%M %p")
 
         self.tp = "email_object"
@@ -138,11 +155,15 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, time, can_be_deleted)
-    local e
+function email_funcs.new(title, text, author, can_be_deleted, number)
+    local e, mail_list, number
 
-    e = EmailObject(title, text, author, time, can_be_deleted)
-    table.insert(Util.findId("email_tab").email_list, e)
+    mail_list = Util.findId("email_tab").email_list
+
+    number = Util.tableLen(mail_list) + 1
+
+    e = EmailObject(title, text, author, can_be_deleted, number)
+    table.insert(mail_list, e)
 
     UNREAD_EMAILS = UNREAD_EMAILS + 1
 

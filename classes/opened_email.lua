@@ -7,19 +7,31 @@ local opened_email_funcs = {}
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _title, _text, _author, _time)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted)
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 
+        self.number = _number --Number of email
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 
+        self.can_be_deleted = _can_be_deleted -- If email can be deleted
+        self.delete_button_color = Color.new(0,80,120) --Color for delete button box
+        self.delete_button_text_color = Color.new(0,0,250) --Color for delete button text
+        self.delete_x = self.pos.x + self.w/2 - 25 -- X position value of delete button (related to opened email pos)
+        self.delete_y = self.pos.y + self.h - 60 -- Y position value of delete button (related to opened email pos)
+        self.delete_w = 70 -- Width value of delete button
+        self.delete_h = 30 -- Height value of delete button
+
+
+
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
+        self.line_color_3 = Color.new(0,30,20) -- Color for outrlining delete button
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
         self.title_color = Color.new(150,180,80) -- Color for title
         self.content_color = Color.new(150,0,60) -- Color for rest of email content
@@ -96,6 +108,21 @@ function OpenedEmail:draw()
     love.graphics.setFont(font)
     love.graphics.print("received @ "..e.time,  e.pos.x + e.w - 5 - font_w, e.pos.y + e.h - font_h - 5)
 
+    -- Can be deleted button
+    if e.can_be_deleted then
+        -- Make button box
+        Color.set(e.delete_button_color)
+        love.graphics.rectangle("fill", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
+        Color.set(e.line_color_3)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
+
+        -- Make button text
+        love.graphics.setFont(FONTS.fira(15))
+        Color.set(e.delete_button_text_color)
+        love.graphics.print("delete", e.delete_x + 8, e.delete_y + 7)
+    end
+
 end
 
 function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker if you send his drawable table, if he has one)
@@ -142,14 +169,19 @@ function opened_email_funcs.mousePressed(x, y, but)
            --Clicked outside box
            e.death = true
      else
-         --Clicked inside
+         if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
+             --Clicked on the delete button
+             local mailTab = Util.findId("email_tab")
+             mailTab.deleteEmail(mailTab.email_opened)
+             e.death = true
+         end
      end
 end
 
-function opened_email_funcs.create(title, text, author, time)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted)
     local e
 
-    e = OpenedEmail(title, text, author, time)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e
