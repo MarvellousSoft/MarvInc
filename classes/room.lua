@@ -131,14 +131,16 @@ function Room:draw()
     love.graphics.pop()
 end
 
-function Room:keyPressed(key)
-    if key == "space" then
-        self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
-    elseif key == "left" then
-        self.bot:clock()
-    elseif key == "right" then
-        self.bot:anti()
-    end
+function Room:kill()
+    self.bot:kill(self.grid_obj)
+end
+
+function Room:walk()
+    self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
+end
+
+function Room:turn(o)
+    self.bot[o](self.bot)
 end
 
 --UTILITY FUNCTIONS--
