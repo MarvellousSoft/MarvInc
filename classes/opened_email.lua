@@ -18,7 +18,8 @@ OpenedEmail = Class{
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 
-        self.line_color = Color.new(150,180,60) -- Color for line outlining the email box
+        self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
+        self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
         self.title_color = Color.new(150,180,80) -- Color for title
         self.content_color = Color.new(150,0,60) -- Color for rest of email content
@@ -31,7 +32,7 @@ OpenedEmail = Class{
 
 -- Draws opened email --
 function OpenedEmail:draw()
-    local e
+    local e, font, font_w, font_h
 
     e = self
 
@@ -48,6 +49,40 @@ function OpenedEmail:draw()
 
     -- Draw email content
 
+    -- Title
+    Color.set(e.title_color)
+    font = FONTS.fira(24)
+    font_h = font:getHeight(e.title)
+    love.graphics.setFont(font)
+    love.graphics.print(e.title,  e.pos.x + 10, e.pos.y + 10)
+    -- Draw line
+    love.graphics.setLineWidth(5)
+    Color.set(e.line_color)
+    love.graphics.line(e.pos.x + 10, e.pos.y + 10 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5)
+
+    -- Author
+    Color.set(e.content_color)
+    font = FONTS.fira(20)
+    font_h = font:getHeight(e.title)
+    love.graphics.setFont(font)
+    love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + 55)
+    -- Draw line
+    love.graphics.setLineWidth(1)
+    Color.set(e.line_color_2)
+    love.graphics.line(e.pos.x + 10, e.pos.y + 55 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 55 + font_h + 5)
+
+    -- Text
+    Color.set(e.content_color)
+    love.graphics.setFont(FONTS.fira(15))
+    love.graphics.printf(e.text,  e.pos.x + 10, e.pos.y + 120, e.w - 20)
+
+    -- Time
+    Color.set(e.content_color)
+    font = FONTS.fira(13)
+    font_w = font:getWidth("received @ "..e.time)
+    font_h = font:getHeight("received @ "..e.time)
+    love.graphics.setFont(font)
+    love.graphics.print("received @ "..e.time,  e.pos.x + e.w - 5 - font_w, e.pos.y + e.h - font_h - 5)
 
 end
 
