@@ -2,6 +2,7 @@ local Parser = require "classes.interpreter.parser"
 
 local StepManager = {
     ic = 0,
+    running = false,
     timer = Timer.new(),
     hdl = nil,
     parser = nil,
@@ -11,9 +12,19 @@ local StepManager = {
     r = {}
 }
 
+-- Inits
+Signal.register("death", function()
+    StepManager:stopNoKill()
+end)
+
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:play()
-    self:stop()
+    if self.running then
+        self:stop()
+    else
+        self:stopNoKill()
+    end
+    self.running = false
     self.parser = Parser.parseCode()
     if type(self.parser) ~= "table" then
         self.parser = nil
@@ -26,6 +37,7 @@ function StepManager:play()
         self.timer.after(1, self.call)
     end
     self.timer.after(1, self.call)
+    self.running = true
     print(self.timer)
 end
 
@@ -49,8 +61,12 @@ function StepManager:step()
         print "try"
         if not self.parser:step() and not self.busy then
             self:stop()
+            self.running = false
         end
-    else self:stop() end
+    else
+        self:stop()
+        self.running = false
+    end
 end
 
 function StepManager:walk(x)
