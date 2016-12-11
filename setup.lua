@@ -60,6 +60,8 @@ function setup.config()
 
     TABS_LOCK = false -- If the tabs cant be clicked
 
+    UNREAD_EMAILS = 0 -- Number of unread emails
+
     -- Current room
     ROOM = nil
 

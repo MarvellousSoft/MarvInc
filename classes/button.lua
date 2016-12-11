@@ -75,6 +75,14 @@ function Button:draw()
         love.graphics.print(b.overtext, x, y)
     end
 
+    -- Display unread emails notification
+    if b.id == "email_tab_but" and UNREAD_EMAILS > 0 then
+        -- Draw number of unread emails
+        Color.set(Color.new(255,0,230))
+        love.graphics.setFont(FONTS.fira(14))
+        love.graphics.print("new!", b.pos.x + 140, b.pos.y + 6)
+    end
+
 end
 
 -- Centralizes text on button
@@ -86,11 +94,11 @@ end
 
 --UTILITY FUNCTIONS--
 
-function button.create_tab(x, y, w, h, func, text, font, overtext, overfont, color)
+function button.create_tab(x, y, w, h, func, text, font, overtext, overfont, color, id)
     local b
 
     b = Button(x, y, w, h, func, text, font, overtext, overfont, color)
-    b:addElement(DRAW_TABLE.L1u, "tabs")
+    b:addElement(DRAW_TABLE.L1u, "tabs", id)
 
     return b
 end

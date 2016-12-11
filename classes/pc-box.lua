@@ -39,7 +39,7 @@ PcBox = Class{
         local h = button_tab_height
         self.buttons = {}
         self.buttons.email = But.create_tab(self.pos.x, self.pos.y, self.w / 3, h,
-        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness))
+        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness), "email_tab_but")
         self.buttons.code = But.create_tab(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
         function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(150,self.unfocus_saturation,self.unfocus_lightness))
         self.buttons.info = But.create_tab(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,

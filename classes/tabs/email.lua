@@ -96,7 +96,10 @@ function EmailTab:mousePressed(x, y, but)
         --Check mouse colision with emails
         for i, mail in ipairs(e.email_list) do
             if Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
-                mail.was_read = true
+                if not mail.was_read then
+                    mail.was_read = true
+                    UNREAD_EMAILS = UNREAD_EMAILS - 1
+                end
                 TABS_LOCK = true -- Lock tabs until email is closed
                 e.email_opened = Opened.create(mail.title, mail.text, mail.author, mail.time)
             end
@@ -111,7 +114,7 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author)
+    init = function(self, _title, _text, _author, _can_be_deleted)
         local time
 
         self.title = _title -- Title of the email
@@ -122,6 +125,7 @@ EmailObject = Class{
         self.email_read_color = Color.new(150, 30, 150) -- Color of a already read email
 
         self.was_read = false -- If email was read
+        self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
 
         -- Time the email was sent (Date (dd//mm/yy) and Time (hh/mm/ss))
         self.time = os.date("%x, %I:%M %p")
@@ -134,11 +138,13 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, time)
+function email_funcs.new(title, text, author, time, can_be_deleted)
     local e
 
-    e = EmailObject(title, text, author, time)
+    e = EmailObject(title, text, author, time, can_be_deleted)
     table.insert(Util.findId("email_tab").email_list, e)
+
+    UNREAD_EMAILS = UNREAD_EMAILS + 1
 
     return e
 end
