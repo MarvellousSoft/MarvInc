@@ -13,7 +13,13 @@ EmailTab = Class{
         Tab.init(self, eps, dy)
 
         self.email_list = {} -- List of email inbox
-        self.main_color = Color.new(150, 30, 240)
+
+        self.email_opened = nil -- Email there is opened
+
+        self.main_color = Color.new(150, 30, 240) -- Color of box behind
+
+        self.email_height = 35
+        self.email_border = 5
 
         self.tp = "email_tab"
     end
@@ -21,7 +27,6 @@ EmailTab = Class{
 
 function EmailTab:draw()
     local t, font, font_w, font_h, text, size
-    local email_height, email_border = 35, 5
 
     t = self
 
@@ -29,7 +34,7 @@ function EmailTab:draw()
 
     love.graphics.rectangle("fill", t.pos.x, t.pos.y, t.w, t.h)
 
-
+    -- Draws email list
     for i,e in ipairs(t.email_list) do
 
         --Draw the email box
@@ -38,14 +43,14 @@ function EmailTab:draw()
         else
             Color.set(e.email_read_color)
         end
-        love.graphics.rectangle("fill", t.pos.x + email_border, t.pos.y + email_border*i+ email_height*(i-1), t.w-2*email_border, email_height)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + t.email_border*i+ t.email_height*(i-1), t.w-2*t.email_border, t.email_height)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10))
         font = FONTS.fira(12)
         font_w = font:getWidth(e.time)
         love.graphics.setFont(font)
-        love.graphics.print(e.time,  t.pos.x + t.w - email_border - font_w - 5, t.pos.y + email_border*i+ email_height*(i-1))
+        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + t.email_border*i+ t.email_height*(i-1))
 
         -- Author
         font = FONTS.fira(16)
@@ -53,7 +58,7 @@ function EmailTab:draw()
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + email_border + 5, t.pos.y + (email_height/2 - font_h/2) + email_border*i+ email_height*(i-1))
+        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
 
         -- Title
 
@@ -62,10 +67,24 @@ function EmailTab:draw()
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + email_border + size, t.pos.y + (email_height/2 - font_h/2) + email_border*i+ email_height*(i-1))
+        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
     end
 
 end
+
+function EmailTab:mousePressed(x, y, but)
+    local e, rect
+
+    e = self
+
+    --Check mouse colision with emails
+    for i, mail in ipairs(e.email_list) do
+        if Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
+
+        end
+    end
+end
+
 
 
 -- EMAIL OBJECT --
@@ -82,6 +101,8 @@ EmailObject = Class{
 
         self.email_color = Color.new(0, 40, 200) -- Color of a new email
         self.email_read_color = Color.new(150, 30, 150) -- Color of a already read email
+
+        self.was_read = false -- If email was read
 
         -- Time the email was sent (Date (dd//mm/yy) and Time (hh/mm/ss))
         self.time = os.date("%x, %I:%M %p")

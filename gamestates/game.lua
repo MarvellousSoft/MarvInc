@@ -42,6 +42,12 @@ function state:keypressed(key)
 
 end
 
+function state:mousepressed(x, y, but)
+
+    pc_box:mousePressed(x,y,but)
+    
+end
+
 function state:textinput(t)
     pc_box:textInput(t)
 end
