@@ -41,6 +41,8 @@ function state:keypressed(key)
         Mail.new("So I heard you like chinchilas well I have some goodnew for you then", "They opened a door a revealed a fashionable pink and white living room with mixings of blue, they sat down and Amy leaned back as Rouge did so as well as she got out some Caramel flavoured Mud shakes, she handed one to Amy who undone the top and took a sip from the bottle 'Hmm, yumm!'' Amy said as she giggled again Rouge also giggled 'Hmm, yes very yum!'' they both giggled insanely at their incredibly unfunny jokes, Amy began stroking Rouges hair 'Rouge, have I ever told you, how beautiful you are?'' Rouge giggled and shook her head 'Not recently, no!' They laughed, Amy put her bottle on the table as she became a gigantic dinossaur", "Jason from Heavy Rain", true)
     elseif key == 'f4' then
         StepManager:play()
+    elseif key ==  "f5" then
+        Mail.new("TOP SECRET EMAIL", "This email cant be deleted. Its top priority. Oh yes", "Security", false)
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)

@@ -7,12 +7,13 @@ local opened_email_funcs = {}
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _title, _text, _author, _time, _can_be_deleted)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted)
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 
+        self.number = _number --Number of email
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
@@ -20,7 +21,7 @@ OpenedEmail = Class{
 
         self.can_be_deleted = _can_be_deleted -- If email can be deleted
         self.delete_button_color = Color.new(0,80,120) --Color for delete button box
-        self.delete_button_text_color = Color.new(0,0,30) --Color for delete button text
+        self.delete_button_text_color = Color.new(0,0,250) --Color for delete button text
         self.delete_x = self.pos.x + self.w/2 - 25 -- X position value of delete button (related to opened email pos)
         self.delete_y = self.pos.y + self.h - 60 -- Y position value of delete button (related to opened email pos)
         self.delete_w = 70 -- Width value of delete button
@@ -177,10 +178,10 @@ function opened_email_funcs.mousePressed(x, y, but)
      end
 end
 
-function opened_email_funcs.create(title, text, author, time, can_be_deleted)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted)
     local e
 
-    e = OpenedEmail(title, text, author, time, can_be_deleted)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e
