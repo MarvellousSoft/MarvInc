@@ -30,6 +30,13 @@ FONTS = {
 SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)
 ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 
+-- Buttons Images
+BUTS_IMG = {}
+BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
+BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
+BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
+BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
+
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
 
@@ -43,6 +50,7 @@ function setup.config()
     OBJS_IMG = {}
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
     OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
+
 
     ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
 

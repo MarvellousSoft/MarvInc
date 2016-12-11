@@ -1,3 +1,4 @@
+require "classes.img_button"
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
@@ -13,8 +14,8 @@ CodeTab = Class{
         --Original size of code tab
         self.original_h = self.h
 
-        -- Where to start printing the lines
-        self.starting_y = self.pos.y
+        -- Quantity of lines scrolled
+        self.dy = 0
 
         self.color = Color.new(0, 0, 10)
 
@@ -27,7 +28,8 @@ CodeTab = Class{
         self.max_char = 30 -- maximum number of chars in a line
         self.line_cur = 1 -- current number of lines
         self.line_number = 35 -- maximum number of lines
-        self.h = self.line_number * self.line_h
+        self.lines_on_screen = 20
+        self.h = self.lines_on_screen * self.line_h -- height of the code box
         self.lines = {}
         for i = 1, self.line_number do self.lines[i] = "" end
 
@@ -42,12 +44,23 @@ CodeTab = Class{
         self.cursor_timer = Timer.new()
 
         -- Stencil function for scrolling
-        self.stencil = function() love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.original_h) end
+        self.stencil = function() love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h) end
+
+        -- Buttons
+        local bsz = 50
+        local by = self.pos.y + self.original_h - bsz
+        local bx = self.pos.x
+        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() print "stop" end)
+        bx = bx + bsz + 20
+        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() print "play" end)
+        bx = bx + bsz + 20
+        self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() print "pause" end)
+        bx = bx + bsz + 20
+        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() print "fast" end)
+        self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b}
 
         self.tp = "code_tab"
         self:setId "code_tab"
-
-        Parser.parseLine("hey dude123 213a 123  ")
     end
 }
 
@@ -71,7 +84,7 @@ end
 
 function CodeTab:draw()
     Color.set(self.color)
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, math.min(self.h,self.original_h))
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
 
     -- Set stencil for the rectangle containing the code
     love.graphics.stencil(self.stencil, "replace", 1)
@@ -82,7 +95,7 @@ function CodeTab:draw()
     Color.set(Color.green())
     love.graphics.setFont(self.font)
     for i = 0, self.line_number - 1 do
-        love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.starting_y + i * self.line_h + (self.line_h - self.font_h) / 2)
+        love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
     end
 
     -- Draw vertical line
@@ -100,7 +113,7 @@ function CodeTab:draw()
     Color.set(c)
     local w = self.font:getWidth("a")
     local cu = self.cursor
-    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.starting_y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
     c.a = 80
     Color.set(c)
     local c1, c2 = self.cursor, self.cursor2 or self.cursor
@@ -109,7 +122,7 @@ function CodeTab:draw()
     end
     cu = {i = c1.i, p = c1.p}
     while cu.i ~= c2.i or cu.p ~= c2.p do
-        love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.starting_y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+        love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
         cu.p = cu.p + 1
         if cu.p == #self.lines[cu.i] + 2 then
             cu.p = 1
@@ -119,11 +132,15 @@ function CodeTab:draw()
 
     if self.exec_line then
         Color.set(Color.white())
-        love.graphics.rectangle("fill", self.pos.x, self.starting_y + (self.exec_line - 1) * self.line_h, 10, 10)
+        love.graphics.rectangle("fill", self.pos.x, self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h, 10, 10)
     end
 
     -- Remove stencil
     love.graphics.setStencilTest()
+
+    -- Draw buttons
+    for _, b in ipairs(self.buttons) do b:draw() end
+    self.play_b:draw()
 end
 
 -- Delete the substring s[l..r] from string s
@@ -173,11 +190,6 @@ local change_cursor = {up = true, down = true, left = true, right = true, home =
 function CodeTab:keyPressed(key)
     if self.lock then return end
     local c = self.cursor
-    if key == 'pagedown' then
-        self.starting_y = self.starting_y - self.line_h
-    elseif key == "pageup" then
-        self.starting_y = self.starting_y + self.line_h
-    end
     if change_cursor[key] then
         if love.keyboard.isDown("lshift", "rshift") then
             self.cursor2 = self.cursor2 or {i = c.i, p = c.p}
@@ -265,6 +277,8 @@ function CodeTab:keyPressed(key)
         c.p = c.p + 2
 
     end
+    if self.cursor.i - 1 < self.dy then self.dy = self.cursor.i - 1 end
+    if self.cursor.i - self.lines_on_screen > self.dy then self.dy = self.cursor.i - self.lines_on_screen end
 end
 
 function CodeTab:textInput(t)
@@ -281,14 +295,28 @@ function CodeTab:textInput(t)
 end
 
 function CodeTab:mousePressed(x, y, but)
+    for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
+
     if self.lock then return end
     if but ~= 1 or not Util.pointInRect(x, y, self) then return end
+
+    -- mouse click on editor
+    y = y + self.dy * self.line_h
     local dx = self.font:getWidth("20:") + 5
     if x < self.pos.x + dx - 2 then return end
     local w = self.font:getWidth("a")
     local i = math.floor((y - self.pos.y) / self.line_h) + 1
     local p = math.max(1, math.floor((x - self.pos.x - dx + 2) / w))
-    if i > self.line_cur then return end
-    self.cursor.i = i
+    if i <= 0 or p <= 0 then return end
+    self.cursor.i = math.min(i, self.line_cur)
     self.cursor.p = math.min(p, #self.lines[self.cursor.i] + 1)
+end
+
+function CodeTab:mouseScroll(x, y)
+    local mx, my = love.mouse.getPosition()
+    if Util.pointInRect(mx, my, self) then
+        self.dy = self.dy - y
+    end
+    self.dy = math.min(self.dy, self.line_cur - 1)
+    self.dy = math.max(self.dy, -self.lines_on_screen + 1)
 end
