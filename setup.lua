@@ -67,7 +67,7 @@ function setup.config()
 
     NAMES = {"Barry", "Larry", "Terry", "Mary", "Fieri", "Danny", "Kenny", "Benny", "Kelly",
         "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny", "Nancy",
-        "Manny", "Ellie", "Lenny" }
+        "Manny", "Ellie", "Lenny", "Ziggy"}
 
     -- Move orientations
     NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)

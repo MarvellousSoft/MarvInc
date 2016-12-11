@@ -2,7 +2,8 @@ local Parser = require "classes.interpreter.parser"
 
 local StepManager = {
     ic = 0,
-    timer = nil,
+    timer = Timer.new(),
+    hdl = nil,
     parser = nil,
     cmd = nil,
     busy = false,
@@ -12,15 +13,18 @@ local StepManager = {
 
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:play()
-    self:stopNoKill()
+    if self.hdl then
+        self:stop()
+    else
+        self:stopNoKill()
+    end
     self.parser = Parser.parseCode()
-    self.timer = MAIN_TIMER.every(1, function()
+    self.hdl = self.timer.every(1, function()
         self:step()
     end)
 end
 
 function StepManager:step()
-    print "TURN"
     if self.busy then
         print("busy", self.r[1])
         if not self:cmd(unpack(self.args)) then
@@ -31,9 +35,11 @@ function StepManager:step()
         return
     end
 
-    if not self.parser:step() then
-        self:stop()
-    end
+    if self.parser then
+        if not self.parser:step() then
+            self:stop()
+        end
+    else self:stop() end
 end
 
 function StepManager:walk(x)
@@ -77,8 +83,10 @@ function StepManager:counter()
 end
 
 function StepManager:stopNoKill()
-    if self.timer then
-        MAIN_TIMER.cancel(self.timer)
+    if self.hdl then
+        print "wat"
+        self.timer.clear()
+        self.hdl = nil
     end
     self.cmd = nil
     self.busy = false
@@ -89,6 +97,10 @@ end
 function StepManager:stop()
     self:stopNoKill()
     ROOM:kill()
+end
+
+function StepManager:update(dt)
+    self.timer.update(dt)
 end
 
 return StepManager
