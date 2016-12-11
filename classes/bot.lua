@@ -27,6 +27,12 @@ function Bot:kill(grid)
     Signal.emit("death")
 end
 
+function Bot:blocked(grid)
+    local p = ORIENT[self.f[2]]
+    local px, py = p.x, p.y
+    return grid[self.pos.x + px][self.pos.y + py] == not nil
+end
+
 function Bot:draw()
     Color.set(self.body_clr)
     love.graphics.draw(self.body, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],

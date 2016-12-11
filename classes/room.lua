@@ -145,8 +145,20 @@ function Room:walk()
     self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
 end
 
+function Room:clock()
+    self.bot:clock()
+end
+
+function Room:anti()
+    self.bot:anti()
+end
+
 function Room:turn(o)
-    self.bot[o](self.bot)
+    self.bot:turn(o)
+end
+
+function Room:blocked()
+    return self.bot:blocked(self.grid_obj)
 end
 
 --UTILITY FUNCTIONS--
