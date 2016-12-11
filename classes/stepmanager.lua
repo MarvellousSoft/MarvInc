@@ -9,7 +9,10 @@ local StepManager = {
     cmd = nil,
     busy = false,
     args = {},
-    r = {}
+    r = {},
+
+    -- Event has as key the object and as value the condition function.
+    events = {}
 }
 
 -- Inits
@@ -25,41 +28,46 @@ function StepManager:play()
         self:stopNoKill()
     end
     self.running = false
-    self.parser = Parser.parseCode()
-    if type(self.parser) ~= "table" then
-        self.parser = nil
+    self.ic = 0
+    self.code = Parser.parseCode()
+    --self.code:start()
+    if type(self.code) ~= "table" then
+        self.code = nil
         return
     end
     -- Gambs for some reason...
     self.call = function()
         self:step()
-        if not self.parser then return end
+        -- Watch for events (e.g. Objectives)
+        for evt, evt_f in pairs(self.events) do
+            local done, obj = evt_f(evt)
+            if done then
+                evt.completed = true
+            end
+        end
+        if not self.code then return end
         self.timer.after(1, self.call)
     end
     self.timer.after(1, self.call)
     self.running = true
-    print(self.timer)
 end
 
 function StepManager:step()
-    print "TURN"
-    if not self.parser then
-        print "whyyy"
+    self.ic = self.ic + 1 
+
+    if not self.code then
         return
     end
     if self.busy then
-        print("busy", self.r[1])
         if not self:cmd(unpack(self.args)) then
-            print "done"
             self.busy = false
             self.cmd = nil
         end
         return
     end
 
-    if self.parser then
-        print "try"
-        if not self.parser:step() and not self.busy then
+    if self.code then
+        if not self.code:step() and not self.busy then
             self:stop()
             self.running = false
         end
@@ -70,7 +78,6 @@ function StepManager:step()
 end
 
 function StepManager:walk(x)
-    print("torooooo")
     self.busy = true
     self.cmd = self.walk
     if x then
@@ -91,7 +98,6 @@ function StepManager:walk(x)
         end
         return r
     else
-        print(self.busy)
         return not ROOM:blocked()
     end
 end
@@ -115,18 +121,32 @@ function StepManager:stopNoKill()
     self.timer.clear()
     self.cmd = nil
     self.busy = false
-    if self.parser then self.parser:stop() end
-    self.parser = nil
+    if self.code then self.code:stop() end
+    self.code = nil
 end
 
 function StepManager:stop()
-    print "stop"
     self:stopNoKill()
     ROOM:kill()
+    self:clear()
 end
 
 function StepManager:update(dt)
     self.timer.update(dt)
+end
+
+function StepManager:register(evt)
+    self.events[evt[1]] = evt[2]
+end
+
+function StepManager:clear()
+    for k, _ in pairs(self.events) do
+        k.completed = false
+    end
+end
+
+function StepManager:remove(obj)
+    self.events[obj] = nil
 end
 
 return StepManager

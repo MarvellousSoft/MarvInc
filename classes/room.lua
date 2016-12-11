@@ -69,6 +69,19 @@ Room = Class{
         self.n = 1
         self.name = "Minesweeper"
 
+        -- Room objectives
+        self.objs = {}
+        -- Objective marker
+        self.grid_floor[10][8] = "black_floor"
+        table.insert(self.objs, Objective(function(obj)
+            return (self.bot.pos.x == 10) and (self.bot.pos.y == 8)
+        end, "GET TO THE CHOPPAAAAAAAAAAAAA", function(obj)
+            print "GOT TO THE CHOPPAAAAAAAAAAAAAAAAA"
+        end))
+        for _, _obj in pairs(self.objs) do
+            _obj:activate()
+        end
+
         ROOM = self
     end
 }

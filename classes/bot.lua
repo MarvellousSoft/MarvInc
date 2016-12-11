@@ -36,7 +36,6 @@ function Bot:blocked(grid, r, c)
         py > c then
         return true
     end
-    print("hue", grid[px][py])
     return grid[px][py]
 end
 

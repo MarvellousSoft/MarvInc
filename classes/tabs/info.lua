@@ -44,5 +44,7 @@ function InfoTab:draw()
     love.graphics.print("Subject name: "..ROOM.bot.name, self.txt_x, _y)
     _y = _y + self.txt_dh
     love.graphics.print("Room #"..ROOM.n.." \""..ROOM.name.."\"", self.txt_x, _y)
+    _y = _y + self.txt_dh
+    love.graphics.printf("Objective: "..ROOM.objs[1].desc, self.txt_x, _y, 4*self.h/5, "left")
     love.graphics.pop()
 end
