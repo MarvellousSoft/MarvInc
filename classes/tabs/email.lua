@@ -1,6 +1,7 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
+local Opened = require "classes.opened_email"
 
 -- EMAIL TAB CLASS--
 
@@ -14,7 +15,7 @@ EmailTab = Class{
 
         self.email_list = {} -- List of email inbox
 
-        self.email_opened = nil -- Email there is opened
+        self.email_opened = nil -- If an email is opened
 
         self.main_color = Color.new(150, 30, 240) -- Color of box behind
 
@@ -77,11 +78,17 @@ function EmailTab:mousePressed(x, y, but)
 
     e = self
 
-    --Check mouse colision with emails
-    for i, mail in ipairs(e.email_list) do
-        if Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
-
+    if not e.email_opened and but == 1 then
+        --Check mouse colision with emails
+        for i, mail in ipairs(e.email_list) do
+            if Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
+                mail.was_read = true
+                TABS_LOCK = true -- Lock tabs until email is closed
+                e.email_opened = Opened.create(mail.title, mail.text, mail.author, mail.time)
+            end
         end
+    else
+        Opened.mousePressed(x, y, but)
     end
 end
 

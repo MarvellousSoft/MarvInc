@@ -86,11 +86,11 @@ end
 
 --UTILITY FUNCTIONS--
 
-function button.create_gui(x, y, w, h, func, text, font, overtext, overfont, color)
+function button.create_tab(x, y, w, h, func, text, font, overtext, overfont, color)
     local b
 
     b = Button(x, y, w, h, func, text, font, overtext, overfont, color)
-    b:addElement(DRAW_TABLE.GUI, "gui")
+    b:addElement(DRAW_TABLE.L1u, "tabs")
 
     return b
 end
@@ -111,9 +111,9 @@ end
 --Check if a mouse click collides with any inv button
 function checkButtonCollision(x,y)
 
-    if BUTTON_LOCK then return end --If buttons are locked, does nothing
+    if TABS_LOCK then return end --If buttons are locked, does nothing
     --Iterate on drawable buttons table
-    for b in pairs(Util.findSbTp "gui") do
+    for b in pairs(Util.findSbTp "tabs") do
         if x  <= b.pos.x + b.w and
           x >= b.pos.x and
           y  <= b.pos.y + b.h and

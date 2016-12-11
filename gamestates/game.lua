@@ -33,7 +33,7 @@ end
 function state:keypressed(key)
 
     if key == 'f2' then
-        Mail.new("titulo", "blablabla", "ernesto")
+        Mail.new("Hey, wanna meet some hotties??", "blablabla", "Paulo Feof.")
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)
@@ -45,7 +45,7 @@ end
 function state:mousepressed(x, y, but)
 
     pc_box:mousePressed(x,y,but)
-    
+
 end
 
 function state:textinput(t)

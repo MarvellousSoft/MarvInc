@@ -52,6 +52,8 @@ function setup.config()
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
 
+    TABS_LOCK = false -- If the tabs cant be clicked
+
     -- Move orientations
     NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
     SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
@@ -71,10 +73,11 @@ function setup.config()
 
     --Drawing Tables
     DRAW_TABLE = {
-    BG  = {}, --Background (bottom layer, first to draw)
-    L1  = {}, --Layer 1
-    L2  = {}, --Layer 2
-    GUI = {}  --Graphic User Interface (top layer, last to draw)
+    BG   = {}, --Background (bottom layer, first to draw)
+    L1   = {}, --Layer 1
+    L1u  = {}, --Layer 1 upper
+    L2   = {}, --Layer 2
+    GUI  = {}  --Graphic User Interface (top layer, last to draw)
     }
 
     --Other Tables

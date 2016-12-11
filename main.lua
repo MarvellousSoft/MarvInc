@@ -20,6 +20,7 @@ require "classes.color.color"
 
 But = require "classes.button"
 
+require "classes.tabs.tab"
 require "classes.tabs.email"
 require "classes.tabs.code"
 require "classes.tabs.info"
@@ -29,6 +30,7 @@ require "classes.object"
 require "classes.obstacle"
 require "classes.bot"
 require "classes.room"
+require "classes.opened_email"
 
 
 

@@ -15,6 +15,8 @@ function draw.allTables()
 
     DrawTable(DRAW_TABLE.L1)
 
+    DrawTable(DRAW_TABLE.L1u)
+
     DrawTable(DRAW_TABLE.L2)
 
     CAM:detach() --Stop tracking camera
