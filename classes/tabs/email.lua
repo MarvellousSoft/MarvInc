@@ -265,6 +265,21 @@ function email_funcs.disableReply(number)
     end
 end
 
+-- Enable reply in  a given email, and if he is opened, handle the opened email
+function email_funcs.enableReply(number)
+    local e, opened
+
+    e, opened = email_funcs.get(number), email_funcs.getOpened()
+
+    -- Disable reply on email
+    if e then e.can_reply = true end
+
+    -- Disable reply on opened
+    if opened and opened.number == number then
+        opened.can_reply = true
+    end
+end
+
 
 
 -- Return functions
