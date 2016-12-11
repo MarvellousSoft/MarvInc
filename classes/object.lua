@@ -27,7 +27,7 @@ end
 
 -- Turns the object to point to an orientation.
 function Object:turn(o)
-    self.r = o[1]
+    self.r = o
 end
 
 -- Turns clockwise.

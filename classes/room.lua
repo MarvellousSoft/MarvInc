@@ -154,7 +154,8 @@ function Room:kill()
     self.bot:kill(self.grid_obj)
 end
 
-function Room:walk()
+function Room:walk(dir)
+    if dir then self:turn(dir) end
     self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
 end
 
@@ -166,8 +167,8 @@ function Room:counter()
     self.bot:counter()
 end
 
-function Room:turn(o)
-    self.bot:turn(o)
+function Room:turn(dir)
+    self.bot:turn(_G[dir:upper() .. "_R"])
 end
 
 function Room:blocked()

@@ -1,4 +1,5 @@
 local Ops = require "classes.interpreter.operations"
+require "classes.interpreter.code"
 
 local parser = {}
 
@@ -25,60 +26,45 @@ function parser.parseLine(s)
     return Ops.read(t), label
 end
 
-Code = Class{
-    init = function(self, ops, labs)
-        self.ops = ops
-        self.labs = labs
-        self.cur = 1
-        Util.findId("code_tab").exec_line = 1
-        Util.findId("code_tab").lock = true
-        TABS_LOCK = true
-    end,
-    step = function(self)
-        if self.cur <= #self.ops then
-            local lab = self.ops[self.cur]:execute()
-            Util.findId("code_tab").exec_line = self.cur
-            if lab then
-                self.cur = self.labs[lab]
-            else
-                self.cur = self.cur + 1
-            end
-        end
-        print("now", self.cur, "of", #self.ops)
-        return self.cur and self.cur <= #self.ops
-    end,
-    stop = function(self)
-        Util.findId("code_tab").exec_line = nil
-        Util.findId("code_tab").lock = false
-        TABS_LOCK = false
-    end
-}
-
 function parser.parseAll(lines)
     local code, labs = {}, {}
     -- labels that are referenced in the code
     local ref_labels = {}
-    for _, line in ipairs(lines) do
+    local bad_lines = {}
+    for i, line in ipairs(lines) do
         local op, lab = parser.parseLine(line)
         if type(op) ~= "table" then
-            print("ERROR:", op)
-            return
+            --print(i, "ERROR:", op)
+            bad_lines[i] = true
         end
         table.insert(code, op)
         if lab and labs[lab] then
-            print("ERROR:", "two labels with the same name")
-            return
+            --print(i, "ERROR:", "two labels with the same name")
+            bad_lines[i] = true
+            bad_lines[labs[lab]] = true
         end
         if lab then labs[lab] = #code end
     end
     while #code > 0 and code[#code].type == "NOP" do
         code[#code] = nil
     end
+    for i, op in ipairs(code) do
+        if op.type == "JMP" and not labs[op.nxt] then
+            --print(i, "ERROR:", "invalid label for jump")
+            bad_lines[i] = true
+        end
+    end
+    if next(bad_lines) then return bad_lines end
+    if #code == 0 then
+        --print("ERROR:", "no code")
+        return
+    end
     return Code(code, labs)
 end
 
 function parser.parseCode()
-    return parser.parseAll(Util.findId("code_tab").lines)
+    local c = parser.parseAll(Util.findId("code_tab").lines)
+    if type(c) == 'table' and c.type == 'code' then return c end
 end
 
 return parser

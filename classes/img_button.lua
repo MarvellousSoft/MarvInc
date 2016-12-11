@@ -18,8 +18,18 @@ ImgButton = Class{
 
 
 function ImgButton:draw()
-    self.color.l = 20
+    local mx, my = love.mouse.getPosition()
+    local hover = Util.pointInRect(mx, my, self)
+
+    if hover then
+        self.color.l = 50
+        self.color.a = 50
+        Color.set(self.color)
+        love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+    end
+
     self.color.l = 255
+    self.color.a = 255
     Color.set(self.color)
     love.graphics.draw(self.img, self.pos.x, self.pos.y, 0, self.scale, self.scale)
 end

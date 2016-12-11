@@ -1,3 +1,4 @@
+require "classes.interpreter.memory"
 require "classes.img_button"
 require "classes.primitive"
 local Color = require "classes.color.color"
@@ -49,15 +50,18 @@ CodeTab = Class{
         -- Buttons
         local bsz = 50
         local by = self.pos.y + self.original_h - bsz
-        local bx = self.pos.x
-        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() print "stop" end)
+        local bx = self.pos.x + self.w / 4
+        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager:stop() end)
         bx = bx + bsz + 20
-        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() print "play" end)
+        self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() StepManager:pause() end)
         bx = bx + bsz + 20
-        self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() print "pause" end)
+        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager:play() end)
         bx = bx + bsz + 20
-        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() print "fast" end)
+        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager:fast() end)
         self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b}
+
+        -- Memory
+        self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 50)
 
         self.tp = "code_tab"
         self:setId "code_tab"
@@ -92,10 +96,19 @@ function CodeTab:draw()
     love.graphics.setStencilTest("greater", 0)
 
     -- Draw lines
-    Color.set(Color.green())
     love.graphics.setFont(self.font)
+    love.graphics.setLineWidth(.1)
+    local dx = self.font:getWidth("20:") + 5
     for i = 0, self.line_number - 1 do
+        Color.set(Color.green())
         love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
+        if self.bad_lines and self.bad_lines[i + 1] and self.cursor.i ~= i + 1 then
+            local c = Color.red()
+            c.a = 100
+            Color.set(c)
+            local y = self.pos.y - self.line_h * self.dy + (i + 0.9) * self.line_h
+            love.graphics.line(self.pos.x + dx + self.font:getWidth("o"), y, self.pos.x + self.font:getWidth("00: " .. self.lines[i + 1]), y)
+        end
     end
 
     -- Draw vertical line
@@ -103,7 +116,6 @@ function CodeTab:draw()
     c.l = c.l / 2
     Color.set(c)
     -- line number + vertical line size
-    local dx = self.font:getWidth("20:") + 5
     love.graphics.setLineWidth(.5)
     love.graphics.line(self.pos.x + dx, self.pos.y, self.pos.x + dx, self.pos.y + self.h)
 
@@ -141,6 +153,9 @@ function CodeTab:draw()
     -- Draw buttons
     for _, b in ipairs(self.buttons) do b:draw() end
     self.play_b:draw()
+
+    -- Draw memory
+    self.memory:draw()
 end
 
 -- Delete the substring s[l..r] from string s
@@ -279,6 +294,8 @@ function CodeTab:keyPressed(key)
     end
     if self.cursor.i - 1 < self.dy then self.dy = self.cursor.i - 1 end
     if self.cursor.i - self.lines_on_screen > self.dy then self.dy = self.cursor.i - self.lines_on_screen end
+
+    self:checkErrors()
 end
 
 function CodeTab:textInput(t)
@@ -292,6 +309,7 @@ function CodeTab:textInput(t)
     t = t:lower()
     self.lines[c.i] = processAdd(self.lines[c.i], c.p, t)
     c.p = c.p + 1
+    self:checkErrors()
 end
 
 function CodeTab:mousePressed(x, y, but)
@@ -310,6 +328,7 @@ function CodeTab:mousePressed(x, y, but)
     if i <= 0 or p <= 0 then return end
     self.cursor.i = math.min(i, self.line_cur)
     self.cursor.p = math.min(p, #self.lines[self.cursor.i] + 1)
+    self:checkErrors()
 end
 
 function CodeTab:mouseScroll(x, y)
@@ -319,4 +338,14 @@ function CodeTab:mouseScroll(x, y)
     end
     self.dy = math.min(self.dy, self.line_cur - 1)
     self.dy = math.max(self.dy, -self.lines_on_screen + 1)
+end
+
+-- Check invalid lines
+function CodeTab:checkErrors()
+    local c = Parser.parseAll(self.lines)
+    if type(c) == 'table' and c.type ~= 'code' then
+        self.bad_lines = c
+    else
+        self.bad_lines = nil
+    end
 end
