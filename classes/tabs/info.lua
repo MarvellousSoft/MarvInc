@@ -45,6 +45,6 @@ function InfoTab:draw()
     _y = _y + self.txt_dh
     love.graphics.print("Room #"..ROOM.n.." \""..ROOM.name.."\"", self.txt_x, _y)
     _y = _y + self.txt_dh
-    love.graphics.printf("Objective: "..ROOM.objs[1].desc, self.txt_x, _y, 4*self.h/5, "left")
+    love.graphics.printf("Objective: "..ROOM.objs[1].desc, self.txt_x, _y, 3*self.h/4, "left")
     love.graphics.pop()
 end

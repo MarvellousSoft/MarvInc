@@ -11,15 +11,16 @@ function parser.parseLine(s)
         local p = s:sub(1, i)
         s = s:sub(i + 1)
         if s:find(':') then return "Two or more ':'" end
-        for token in p:gmatch("%w+") do
+        for token in p:gmatch("%S+") do
             if label then return "Label Wrong" end
             label = token
         end
+        if label:match("%W") then return "Invalid Label" end
         if not label then return "No Label" end
     end
 
     local t = {}
-    for token in s:gmatch("%w+") do
+    for token in s:gmatch("%S+") do
         table.insert(t, token)
     end
 

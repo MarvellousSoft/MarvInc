@@ -15,39 +15,24 @@ Room = Class{
 
         -- Grid
         self.grid_clr = Color.blue()
-        self.grid_r, self.grid_c = 20, 20
+        self.grid_r, self.grid_c = ROWS + 2, ROWS + 2
         self.grid_cw = self.w/self.grid_r -- Cell width
         self.grid_ch = self.h/self.grid_c -- Cell height
         self.grid_w = self.w - 2*self.grid_cw
         self.grid_h = self.h - 2*self.grid_ch
         self.grid_x, self.grid_y = self.pos.x + self.grid_cw, self.pos.y + self.grid_ch
         self.grid_r, self.grid_c = self.grid_r - 2, self.grid_c - 2
-        self.grid_floor = {}
-        self.grid_obj = {}
+        self.grid_floor = nil
+        self.grid_obj = nil
 
         -- Set global vars
         ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
         ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
-        INIT_POS = Vector(10, 10)
-
-        for i=1, self.grid_r do
-            self.grid_floor[i] = {}
-            self.grid_obj[i] = {}
-            for j=1, self.grid_c do
-                -- For readability
-                self.grid_floor[i][j] = "white_floor"
-                self.grid_obj[i][j] = love.math.random() < 1/10. and
-                    Obstacle(self.grid_obj, i, j, "wall_o", false) or nil
-            end
-        end
 
         -- Initial bot
-        self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
         Signal.register("death", function()
             self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
         end)
-        -- Death obj
-        Dead(self.grid_obj, 12, 10, "black_block", false)
 
         -- Border
         self.border_clr = Color.new(132, 20, 30)
@@ -66,25 +51,85 @@ Room = Class{
         self.mrkr_drw = true
 
         -- Room number and name
-        self.n = 1
-        self.name = "Minesweeper"
+        self.n = nil
+        self.name = nil
 
         -- Room objectives
-        self.objs = {}
-        -- Objective marker
-        self.grid_floor[10][8] = "black_floor"
-        table.insert(self.objs, Objective(function(obj)
-            return (self.bot.pos.x == 10) and (self.bot.pos.y == 8)
-        end, "GET TO THE CHOPPAAAAAAAAAAAAA", function(obj)
-            print "GOT TO THE CHOPPAAAAAAAAAAAAAAAAA"
-        end))
-        for _, _obj in pairs(self.objs) do
-            _obj:activate()
-        end
+        self.objs = nil
+
+        Signal.register("end_turn", function()
+            self:apply()
+        end)
+
+        self:from(Reader("puzzles/test.lua"):get())
 
         ROOM = self
     end
 }
+
+function Room:from(puzzle)
+    self.name = puzzle.name
+    self.n = puzzle.n
+    INIT_POS = puzzle.init_pos
+
+    self.grid_obj = nil
+    self.grid_floor = nil
+    self.grid_obj = puzzle.grid_obj
+    self.grid_floor = puzzle.grid_floor
+
+    self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+    self.bot:turn(_G[puzzle.orient.."_R"])
+    print(self.grid_obj[INIT_POS.x][INIT_POS.y])
+
+    self.objs = nil
+    self.objs = {}
+    for k, v in ipairs(puzzle.objs) do
+        self.objs[k] = v
+        v:activate()
+    end
+end
+
+function Room:apply()
+    while #Room.queue > 0 do
+        local o = table.remove(Room.queue, 1)
+        if o.tp == "obst" then
+            Obstacle(self.grid_obj, o.x, o.y, o.key, o.bg)
+        elseif o.tp == "bot" then
+            Bot(self.grid_obj, o.x, o.y)
+        elseif o.tp == "dead" then
+            Dead(self.grid_obj, o.x, o.y, o.key, o.bg)
+        else
+            print("Type "..o.tp.." not found")
+        end
+    end
+end
+
+-- This is a room queue. Add a prototype of an object to the queue. At the next possible step, or
+-- when Room:apply is called, Room will add this to its object grid.
+Room.queue = {}
+function Room.enqueue(tp, bg, img_trail, x, y)
+    table.insert(Room.queue, {
+        tp = tp,
+        bg = bg,
+        key = img_trail,
+        x = x,
+        y = y
+    })
+end
+
+function Room:clear()
+    self.grid_obj = nil
+    self.grid_floor = nil
+    self.bot = nil
+    self.n = nil
+    self.name = nil
+    for k, _ in pairs(self.objs) do
+        self.objs[k] = nil
+    end
+    for k, _ in pairs(Room.queue) do
+        Room.queue[k] = nil
+    end
+end
 
 function Room:draw()
 
@@ -129,18 +174,6 @@ function Room:draw()
             end
         end
     end
-
-    -- Grid lines
-    --Color.set(self.grid_clr)
-    --local _r, _c = self.grid_r - 1, self.grid_c - 1
-    --for i=1, _r do
-        --local _h = i*self.grid_ch
-        --love.graphics.line(0, _h, self.grid_w, _h)
-    --end
-    --for i=1, _c do
-        --local _w = i*self.grid_cw
-        --love.graphics.line(_w, 0, _w, self.grid_h)
-    --end
 
     -- Set origin to (0, 0)
     love.graphics.pop()

@@ -10,13 +10,14 @@ Code = Class{
 }
 
 function Code:start()
-    Util.findId("code_tab").exec_line = 1
-    Util.findId("code_tab").lock = true
-    Util.findId("memory"):reset()
+    local ct = Util.findId("code_tab")
+    ct.exec_line = 1
+    ct.lock = true
+    ct.memory:reset()
 end
 
 function Code:step()
-    if self.cur <= #self.ops then
+    if self.cur and self.cur <= #self.ops then
         local lab = self.ops[self.cur]:execute()
         Util.findId("code_tab").exec_line = self.cur
         if lab then
@@ -29,6 +30,7 @@ function Code:step()
 end
 
 function Code:stop()
-    Util.findId("code_tab").exec_line = nil
-    Util.findId("code_tab").lock = false
+    local ct = Util.findId("code_tab")
+    ct.exec_line = nil
+    ct.lock = false
 end

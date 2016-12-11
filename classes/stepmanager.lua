@@ -37,11 +37,11 @@ function StepManager:do_play()
     self.running = false
     self.ic = 0
     self.code = Parser.parseCode()
-    --self.code:start()
     if type(self.code) ~= "table" then
         self.code = nil
         return
     end
+    self.code:start()
     -- Gambs for some reason...
     self.call = function()
         self:step()
@@ -52,6 +52,8 @@ function StepManager:do_play()
                 evt.completed = true
             end
         end
+        -- Emit an end turn signal
+        Signal.emit("end_turn")
         if not self.code then return end
         self.timer.after(self.delay, self.call)
     end
@@ -132,6 +134,7 @@ end
 
 function StepManager:stop()
     self:stopNoKill()
+    --if self.running then ROOM:kill() end
     ROOM:kill()
     self:clear()
 end
