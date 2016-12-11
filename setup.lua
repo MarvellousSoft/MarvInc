@@ -40,6 +40,8 @@ function setup.config()
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
     OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
 
+    ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
+
     -- Bot images (assume array part only)
     HEAD = {}
     table.insert(HEAD, love.graphics.newImage("assets/images/body_1.png"))

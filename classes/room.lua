@@ -24,6 +24,7 @@ Room = Class{
         self.grid_r, self.grid_c = self.grid_r - 2, self.grid_c - 2
         self.grid_floor = {}
         self.grid_obj = {}
+
         -- Set global vars
         ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
         ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
@@ -49,7 +50,7 @@ Room = Class{
         Dead(self.grid_obj, 12, 10, "black_block", false)
 
         -- Border
-        self.border_clr = Color.new(132, 137, 59)
+        self.border_clr = Color.new(132, 20, 30)
 
         -- Live marker
         self.mrkr_txt = "LIVE"
@@ -73,10 +74,11 @@ Room = Class{
 }
 
 function Room:draw()
+
     -- Border
-    Color.set(self.border_clr)
     love.graphics.push()
     love.graphics.translate(self.pos.x, self.pos.y)
+    Color.set(self.border_clr)
     love.graphics.rectangle('fill', 0, 0, self.w, self.h)
 
     -- Live marker
@@ -129,6 +131,10 @@ function Room:draw()
 
     -- Set origin to (0, 0)
     love.graphics.pop()
+
+    --Draw camera screen
+    Color.set(Color.white())
+    love.graphics.draw(ROOM_CAMERA_IMG, self.pos.x- 45, self.pos.y - 45)
 end
 
 function Room:kill()

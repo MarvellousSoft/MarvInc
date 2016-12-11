@@ -20,6 +20,9 @@ OpenedEmail = Class{
 
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
+        self.title_color = Color.new(150,180,80) -- Color for title
+        self.content_color = Color.new(150,0,60) -- Color for rest of email content
+
 
         self.tp = "opened_email"
     end
@@ -44,6 +47,7 @@ function OpenedEmail:draw()
     love.graphics.rectangle("line", e.pos.x, e.pos.y, e.w, e.h)
 
     -- Draw email content
+
 
 end
 

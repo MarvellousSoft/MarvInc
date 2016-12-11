@@ -68,6 +68,12 @@ function EmailTab:draw()
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
         love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
+
+        if not e.was_read then
+            love.graphics.setFont(FONTS.fira(15))
+            Color.set(Color.new(240, 2000, 80))
+            love.graphics.print("new",  t.pos.x + t.email_border + 8, t.pos.y - (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
+        end
     end
 
 end
