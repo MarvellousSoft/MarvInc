@@ -172,7 +172,7 @@ function opened_email_funcs.mousePressed(x, y, but)
          if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
              --Clicked on the delete button
              local mailTab = Util.findId("email_tab")
-             mailTab.deleteEmail(mailTab.email_opened)
+             mailTab.deleteEmail(mailTab.email_list[e.number])
              e.death = true
          end
      end

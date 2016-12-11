@@ -25,6 +25,7 @@ EmailTab = Class{
         self.tp = "email_tab"
     end,
 
+    -- Delete an email object mail from the email list
     deleteEmail = function(mail)
         local mail_list
 
@@ -35,8 +36,14 @@ EmailTab = Class{
         end
 
         --Remove mail from the list
-        Util.clearTimerTable(mail.handles, MAIN_TIMER)
-        table.remove(mail_list, mail.number)
+        mail.handles["fadeout"] = MAIN_TIMER.tween(.5, mail, {alpha = 0, juicy_bump = -5}, 'out-cubic',
+            function()
+                -- Clear timer handles
+                Util.clearTimerTable(mail.handles, MAIN_TIMER)
+                -- Remove from email list
+                table.remove(mail_list, mail.number)
+            end
+        )
 
     end
 
@@ -151,6 +158,7 @@ EmailObject = Class{
         self.email_read_color = Color.new(150, 30, 150) -- Color of a already read email
 
         self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
+        self.going_up_amount = 0 -- Amount to go up (for when an email above it is deleted)
 
         self.was_read = false -- If email was read
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
