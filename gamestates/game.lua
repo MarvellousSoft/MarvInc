@@ -58,5 +58,9 @@ function state:textinput(t)
     pc_box:textInput(t)
 end
 
+function state:wheelmoved(x, y)
+    pc_box:mouseScroll(x, y)
+end
+
 --Return state functions
 return state
