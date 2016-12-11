@@ -10,6 +10,11 @@ CodeTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        --Original size of code tab
+        self.original_h = self.h
+
+        -- Where to start printing the lines
+        self.starting_y = self.pos.y
 
         self.color = Color.new(0, 0, 10)
 
@@ -21,10 +26,11 @@ CodeTab = Class{
         self.line_h = math.ceil(1.1 * self.font_h)
         self.max_char = 30 -- maximum number of chars in a line
         self.line_cur = 1 -- current number of lines
-        self.line_number = 20 -- maximum number of lines
+        self.line_number = 35 -- maximum number of lines
         self.h = self.line_number * self.line_h
         self.lines = {}
         for i = 1, self.line_number do self.lines[i] = "" end
+
 
         -- Cursor stuff
         -- i - line number
@@ -34,6 +40,9 @@ CodeTab = Class{
 
         self.cursor_mult = 1
         self.cursor_timer = Timer.new()
+
+        -- Stencil function for scrolling
+        self.stencil = function() love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.original_h) end
 
         self.tp = "code_tab"
         self:setId "code_tab"
@@ -62,13 +71,18 @@ end
 
 function CodeTab:draw()
     Color.set(self.color)
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, math.min(self.h,self.original_h))
+
+    -- Set stencil for the rectangle containing the code
+    love.graphics.stencil(self.stencil, "replace", 1)
+    -- Only allow rendering on pixels which have a stencil value greater than 0.
+    love.graphics.setStencilTest("greater", 0)
 
     -- Draw lines
     Color.set(Color.green())
     love.graphics.setFont(self.font)
     for i = 0, self.line_number - 1 do
-        love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y + i * self.line_h + (self.line_h - self.font_h) / 2)
+        love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.starting_y + i * self.line_h + (self.line_h - self.font_h) / 2)
     end
 
     -- Draw vertical line
@@ -86,7 +100,7 @@ function CodeTab:draw()
     Color.set(c)
     local w = self.font:getWidth("a")
     local cu = self.cursor
-    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.starting_y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
     c.a = 80
     Color.set(c)
     local c1, c2 = self.cursor, self.cursor2 or self.cursor
@@ -95,7 +109,7 @@ function CodeTab:draw()
     end
     cu = {i = c1.i, p = c1.p}
     while cu.i ~= c2.i or cu.p ~= c2.p do
-        love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+        love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * cu.p, self.starting_y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
         cu.p = cu.p + 1
         if cu.p == #self.lines[cu.i] + 2 then
             cu.p = 1
@@ -105,8 +119,11 @@ function CodeTab:draw()
 
     if self.exec_line then
         Color.set(Color.white())
-        love.graphics.rectangle("fill", self.pos.x, self.pos.y + (self.exec_line - 1) * self.line_h, 10, 10)
+        love.graphics.rectangle("fill", self.pos.x, self.starting_y + (self.exec_line - 1) * self.line_h, 10, 10)
     end
+
+    -- Remove stencil
+    love.graphics.setStencilTest()
 end
 
 -- Delete the substring s[l..r] from string s
@@ -156,6 +173,11 @@ local change_cursor = {up = true, down = true, left = true, right = true, home =
 function CodeTab:keyPressed(key)
     if self.lock then return end
     local c = self.cursor
+    if key == 'pagedown' then
+        self.starting_y = self.starting_y - self.line_h
+    elseif key == "pageup" then
+        self.starting_y = self.starting_y + self.line_h
+    end
     if change_cursor[key] then
         if love.keyboard.isDown("lshift", "rshift") then
             self.cursor2 = self.cursor2 or {i = c.i, p = c.p}
@@ -182,7 +204,7 @@ function CodeTab:keyPressed(key)
 
     elseif not c2 and key == 'delete' then
         if c.p == #self.lines[c.i] + 1 and c.i == self.line_cur then return end
-        if c.p == #self.lines[c.i] + 1 then 
+        if c.p == #self.lines[c.i] + 1 then
             if #self.lines[c.i] + #self.lines[c.i + 1] > self.max_char then return end
             self.line_cur = self.line_cur - 1
             self.lines[c.i] = self.lines[c.i]  .. self.lines[c.i + 1]
