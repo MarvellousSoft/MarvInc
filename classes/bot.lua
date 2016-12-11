@@ -27,10 +27,17 @@ function Bot:kill(grid)
     Signal.emit("death")
 end
 
-function Bot:blocked(grid)
-    local p = ORIENT[self.f[2]]
-    local px, py = p.x, p.y
-    return grid[self.pos.x + px][self.pos.y + py] == not nil
+function Bot:blocked(grid, r, c)
+    local p = ORIENT[self.r[2]]
+    local px, py = self.pos.x + p.x, self.pos.y + p.y
+    if  px < 1 or
+        px > r or
+        py < 1 or
+        py > c then
+        return nil
+    end
+    print("hue", grid[px][py])
+    return grid[px][py]
 end
 
 function Bot:draw()

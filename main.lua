@@ -33,6 +33,7 @@ require "classes.dead"
 require "classes.bot"
 require "classes.room"
 require "classes.opened_email"
+StepManager = require "classes.stepmanager"
 
 
 

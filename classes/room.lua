@@ -36,7 +36,7 @@ Room = Class{
             for j=1, self.grid_c do
                 -- For readability
                 self.grid_floor[i][j] = "white_floor"
-                self.grid_obj[i][j] = love.math.random(3) % 2 == 0 and
+                self.grid_obj[i][j] = love.math.random() < 1/10. and
                     Obstacle(self.grid_obj, i, j, "wall_o", false) or nil
             end
         end
@@ -149,8 +149,8 @@ function Room:clock()
     self.bot:clock()
 end
 
-function Room:anti()
-    self.bot:anti()
+function Room:counter()
+    self.bot:counter()
 end
 
 function Room:turn(o)
@@ -158,7 +158,7 @@ function Room:turn(o)
 end
 
 function Room:blocked()
-    return self.bot:blocked(self.grid_obj)
+    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 --UTILITY FUNCTIONS--

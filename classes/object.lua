@@ -32,11 +32,13 @@ end
 
 -- Turns clockwise.
 function Object:clock()
+    print(self.r, self.r[1], self.r[2])
     self.r = ORIENT_R[(self.r[2] % #ORIENT_R) + 1]
+    print("yay", self.r)
 end
 
 -- Turns anti-clockwise.
-function Object:anti()
+function Object:counter()
     if self.r[2] == 1 then
         self.r = ORIENT_R[#ORIENT_R]
     else
