@@ -1,18 +1,18 @@
 require "classes.primitive"
-local Color = require "classes.color.color"
 
--- Obstacle class
+-- Dead class
+-- Object that kills bot on touch.
 
-local obst = {}
+local dead = {}
 
-Obstacle = Class{
+Dead = Class{
     __includes = {Object},
     init = function(self, grid, i, j, key, bg)
-        Object.init(self, grid, i, j, "obst", bg)
+        Object.init(self, grid, i, j, "dead", bg)
         self.img = OBJS_IMG[key]
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
     end
 }
 
-return obst
+return dead

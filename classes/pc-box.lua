@@ -51,7 +51,6 @@ PcBox = Class{
         tabs.code:setId("code_tab")
         tabs.info:setId("info_tab")
 
-
         self.tp = "pcbox"
     end
 }
@@ -86,6 +85,10 @@ end
 
 function PcBox:mousePressed(x, y, but)
     tabs[self.cur_tab]:mousePressed(x, y, but)
+end
+
+function PcBox:update(dt)
+    tabs[self.cur_tab]:update(dt)
 end
 
 --UTILITY FUNCTIONS--

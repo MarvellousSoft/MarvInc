@@ -29,6 +29,10 @@ CodeTab = Class{
         -- i - line number
         -- p - position in line -- may be one more than size of string
         self.cursor = {i = 1, p = 1}
+        self.cursor2 = nil
+
+        self.cursor_mult = 1
+        self.cursor_timer = Timer.new()
 
         self.tp = "code_tab"
     end
@@ -36,10 +40,20 @@ CodeTab = Class{
 
 function CodeTab:activate()
     love.keyboard.setKeyRepeat(true)
+    self.cursor_timer.after(1, function()
+        self.cursor_timer.tween(.1, self, {cursor_mult = 0}, 'out-linear')
+        self.cursor_timer.every(1.3, function() self.cursor_timer.tween(.1, self, {cursor_mult = 0}, 'out-linear') end)
+    end)
+    self.cursor_timer.every(1.3, function() self.cursor_timer.tween(.1, self, {cursor_mult = 1}, 'in-linear') end)
 end
 
 function CodeTab:deactivate()
     love.keyboard.setKeyRepeat(false)
+    self.cursor_timer.clear()
+end
+
+function CodeTab:update(dt)
+    self.cursor_timer.update(dt)
 end
 
 function CodeTab:draw()
@@ -63,16 +77,34 @@ function CodeTab:draw()
     love.graphics.line(self.pos.x + dx, self.pos.y, self.pos.x + dx, self.pos.y + self.h)
 
     -- Draw cursor
-    c.a = 100
+    c.a = 150 * self.cursor_mult
+    --print(self.cursor_mult)
     Color.set(c)
     local w = self.font:getWidth("a")
-    love.graphics.rectangle("fill", self.pos.x + dx + 7 + w * (self.cursor.p - 1), self.pos.y + (self.cursor.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+    local cu = self.cursor
+    love.graphics.rectangle("fill", self.pos.x + dx + 7 + w * (cu.p - 1), self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+    c.a = 80
+    Color.set(c)
+    local c1, c2 = self.cursor, self.cursor2 or self.cursor
+    if c1.i > c2.i or (c1.i == c2.i and c1.p > c2.p) then
+        c1, c2 = c2, c1
+    end
+    cu = {i = c1.i, p = c1.p}
+    while cu.i ~= c2.i or cu.p ~= c2.p do
+        love.graphics.rectangle("fill", self.pos.x + dx + 7 + w * (cu.p - 1), self.pos.y + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+        cu.p = cu.p + 1
+        if cu.p == #self.lines[cu.i] + 2 then
+            cu.p = 1
+            cu.i = cu.i + 1
+        end
+    end
 end
 
--- Delete the j-th character from string s (1-indexed)
-local function processDelete(s, j)
-    local pref = j == 1 and "" or s:sub(1, j - 1)
-    local suf = j == #s and "" or s:sub(j + 1)
+-- Delete the substring s[l..r] from string s
+local function processDelete(s, l, r)
+    r = r or l
+    local pref = l == 1 and "" or s:sub(1, l - 1)
+    local suf = r == #s and "" or s:sub(r + 1)
     return pref .. suf
 end
 
@@ -83,10 +115,47 @@ local function processAdd(s, j, c)
     return pref .. c .. suf
 end
 
+local function deleteInterval(self, c, c2)
+    if c.i == c2.i then
+        local mn = math.min(c.p, c2.p)
+        self.lines[c.i] = processDelete(self.lines[c.i], mn, c.p + c2.p - mn - 1)
+        c.p = mn
+    else
+        local a, b = c, c2
+        if a.i > b.i then a, b = b, a end
+        if a.p - 1 + #self.lines[b.i] - b.p + 1 > self.max_char then return end
+        local pref = a.p == 1 and "" or self.lines[a.i]:sub(1, a.p - 1)
+        local suf = b.p == #self.lines[b.i] + 1 and "" or self.lines[b.i]:sub(b.p)
+        self.lines[a.i] = pref .. suf
+
+        local rem = b.i - a.i
+        for i = a.i + 1, self.line_number - rem do
+            self.lines[i] = self.lines[i + rem]
+        end
+        for i = self.line_number - rem + 1, self.line_number do
+            self.lines[i] = ""
+        end
+
+        self.cursor = a
+        self.line_cur = self.line_cur - rem
+    end
+    self.cursor2 = nil
+end
+
+local change_cursor = {up = true, down = true, left = true, right = true, home = true, ["end"] = true}
+
 function CodeTab:keyPressed(key)
-    print(key)
     local c = self.cursor
-    if key == 'backspace' then
+    if change_cursor[key] then
+        if love.keyboard.isDown("lshift", "rshift") then
+            self.cursor2 = self.cursor2 or {i = c.i, p = c.p}
+        else
+            self.cursor2 = nil
+        end
+    end
+    if key == 'escape' then self.cursor2 = nil end
+    local c2 = self.cursor2
+    if not c2 and key == 'backspace' then
         if c.p == 1 and c.i == 1 then return end
         if c.p == 1 then
             if #self.lines[c.i - 1] + #self.lines[c.i] > self.max_char then return end
@@ -101,7 +170,7 @@ function CodeTab:keyPressed(key)
             self.lines[c.i] = processDelete(self.lines[c.i], c.p)
         end
 
-    elseif key == 'delete' then
+    elseif not c2 and key == 'delete' then
         if c.p == #self.lines[c.i] + 1 and c.i == self.line_cur then return end
         if c.p == #self.lines[c.i] + 1 then 
             if #self.lines[c.i] + #self.lines[c.i + 1] > self.max_char then return end
@@ -114,6 +183,9 @@ function CodeTab:keyPressed(key)
         else
             self.lines[c.i] = processDelete(self.lines[c.i], c.p)
         end
+
+    elseif c2 and (key == 'delete' or key == 'backspace') then
+        deleteInterval(self, c, c2)
 
     elseif key == 'return' then
         if self.line_cur == self.line_number then return end
@@ -164,12 +236,12 @@ function CodeTab:keyPressed(key)
 end
 
 function CodeTab:textInput(t)
-    print(">", t)
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
        #t > 1 or not t:match("[a-zA-Z0-9!? ]")
         then return end
+    if self.cursor2 then deleteInterval(self, c, self.cursor2) end
     t = t:lower()
     self.lines[c.i] = processAdd(self.lines[c.i], c.p, t)
     c.p = c.p + 1
