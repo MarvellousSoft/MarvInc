@@ -11,6 +11,11 @@ local StepManager = {
     args = {},
     r = {},
 
+    -- Temp code
+    tmp = nil,
+    delay = 1,
+    is_fast = false,
+
     -- Event has as key the object and as value the condition function.
     events = {}
 }
@@ -23,9 +28,18 @@ end)
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:play()
     if self.running then
-        self:stop()
-    else
-        self:stopNoKill()
+        self.delay = 1
+        return
+    elseif not self.is_fast then
+        self.delay = 1
+    end
+    if self.tmp then
+        self.ic = 0
+        self.running = true
+        self.code = self.tmp
+        self.tmp = nil
+        self.timer.after(self.delay, self.call)
+        return
     end
     self.running = false
     self.ic = 0
@@ -46,14 +60,30 @@ function StepManager:play()
             end
         end
         if not self.code then return end
-        self.timer.after(1, self.call)
+        self.timer.after(self.delay, self.call)
     end
-    self.timer.after(1, self.call)
     self.running = true
+    self.timer.after(self.delay, self.call)
+end
+
+function StepManager:fast()
+    self.delay = 0.1
+    if self.running then return end
+    self.is_fast = true
+    StepManager:play()
+    self.is_fast = false
+end
+
+function StepManager:pause()
+    if not self.running then return end
+    self.tmp = self.code
+    self.code = nil
+    self.timer.clear()
+    self.running = false
 end
 
 function StepManager:step()
-    self.ic = self.ic + 1 
+    self.ic = self.ic + 1
 
     if not self.code then
         return
@@ -69,11 +99,9 @@ function StepManager:step()
     if self.code then
         if not self.code:step() and not self.busy then
             self:stop()
-            self.running = false
         end
     else
         self:stop()
-        self.running = false
     end
 end
 
@@ -123,6 +151,7 @@ function StepManager:stopNoKill()
     self.busy = false
     if self.code then self.code:stop() end
     self.code = nil
+    self.running = false
 end
 
 function StepManager:stop()
