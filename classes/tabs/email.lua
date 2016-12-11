@@ -35,6 +35,7 @@ EmailTab = Class{
         end
 
         --Remove mail from the list
+        Util.clearTimerTable(mail.handles, MAIN_TIMER)
         table.remove(mail_list, mail.number)
 
     end
@@ -42,7 +43,7 @@ EmailTab = Class{
 }
 
 function EmailTab:draw()
-    local t, font, font_w, font_h, text, size
+    local t, font, font_w, font_h, text, size, color
 
     t = self
 
@@ -52,20 +53,25 @@ function EmailTab:draw()
 
     -- Draws email list
     for i,e in ipairs(t.email_list) do
+
         --Draw the email box
         if not e.was_read then
-            Color.set(e.email_color)
+            color = Color.new(e.email_color)
         else
-            Color.set(e.email_read_color)
+            color = Color.new(e.email_read_color)
         end
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + t.email_border*i+ t.email_height*(i-1), t.w-2*t.email_border, t.email_height)
+        --Set alpha
+        color.a = e.alpha
+
+        Color.set(color)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height)
 
         -- Timestamp on the email
-        Color.set(Color.new(0, 80, 10))
+        Color.set(Color.new(0, 80, 10,e.alpha))
         font = FONTS.fira(12)
         font_w = font:getWidth(e.time)
         love.graphics.setFont(font)
-        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + t.email_border*i+ t.email_height*(i-1))
+        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
 
         -- Author
         font = FONTS.fira(16)
@@ -77,7 +83,7 @@ function EmailTab:draw()
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
+        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
 
         -- Title
 
@@ -91,12 +97,12 @@ function EmailTab:draw()
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2)
+        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2 + e.juicy_bump)
 
         if not e.was_read then
             love.graphics.setFont(FONTS.fira(15))
-            Color.set(Color.new(240, 2000, 80))
-            love.graphics.print("new",  t.pos.x + t.email_border + 8, t.pos.y - (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1))
+            Color.set(Color.new(240, 180, 120, e.alpha))
+            love.graphics.print("new",  t.pos.x + t.email_border + 8, t.pos.y - (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
         end
     end
 
@@ -110,7 +116,7 @@ function EmailTab:mousePressed(x, y, but)
     if not e.email_opened and but == 1 then
         --Check mouse colision with emails
         for i, mail in ipairs(e.email_list) do
-            if Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
+            if mail.alpha > 250 and Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
                 if not mail.was_read then
                     mail.was_read = true
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
@@ -138,8 +144,13 @@ EmailObject = Class{
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
 
+        self.handles = {} -- Table containing timer handles related to this object
+
+        self.alpha = 0 -- Alpha value of email color
         self.email_color = Color.new(0, 40, 200) -- Color of a new email
         self.email_read_color = Color.new(150, 30, 150) -- Color of a already read email
+
+        self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
 
         self.was_read = false -- If email was read
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
@@ -163,6 +174,9 @@ function email_funcs.new(title, text, author, can_be_deleted, number)
     number = Util.tableLen(mail_list) + 1
 
     e = EmailObject(title, text, author, can_be_deleted, number)
+
+    e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
+
     table.insert(mail_list, e)
 
     UNREAD_EMAILS = UNREAD_EMAILS + 1
