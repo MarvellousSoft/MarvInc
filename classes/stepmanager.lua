@@ -134,7 +134,6 @@ end
 
 function StepManager:stop()
     self:stopNoKill()
-    --if self.running then ROOM:kill() end
     ROOM:kill()
     self:clear()
 end
