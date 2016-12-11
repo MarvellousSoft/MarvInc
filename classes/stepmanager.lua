@@ -37,11 +37,11 @@ function StepManager:do_play()
     self.running = false
     self.ic = 0
     self.code = Parser.parseCode()
-    --self.code:start()
     if type(self.code) ~= "table" then
         self.code = nil
         return
     end
+    self.code:start()
     -- Gambs for some reason...
     self.call = function()
         self:step()

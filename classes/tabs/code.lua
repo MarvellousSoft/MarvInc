@@ -61,7 +61,7 @@ CodeTab = Class{
         self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b}
 
         -- Memory
-        self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 50)
+        self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 12)
 
         self.tp = "code_tab"
         self:setId "code_tab"
@@ -97,14 +97,14 @@ function CodeTab:draw()
 
     -- Draw lines
     love.graphics.setFont(self.font)
-    love.graphics.setLineWidth(.1)
+    love.graphics.setLineWidth(.2)
     local dx = self.font:getWidth("20:") + 5
     for i = 0, self.line_number - 1 do
         Color.set(Color.green())
         love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
         if self.bad_lines and self.bad_lines[i + 1] and self.cursor.i ~= i + 1 then
             local c = Color.red()
-            c.a = 100
+            c.a = 170
             Color.set(c)
             local y = self.pos.y - self.line_h * self.dy + (i + 0.9) * self.line_h
             love.graphics.line(self.pos.x + dx + self.font:getWidth("o"), y, self.pos.x + self.font:getWidth("00: " .. self.lines[i + 1]), y)
@@ -268,6 +268,8 @@ function CodeTab:keyPressed(key)
             if c.p > #self.lines[c.i] + 1 then
                 c.p = #self.lines[c.i] + 1
             end
+        else
+            c.p = 1
         end
 
     elseif key == 'down' then
@@ -303,7 +305,7 @@ function CodeTab:textInput(t)
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
-       #t > 1 or not t:match("[a-zA-Z0-9: ]")
+       #t > 1 or not t:match("[a-zA-Z0-9: %[%]%-]")
         then return end
     if self.cursor2 then deleteInterval(self, c, self.cursor2) end
     t = t:lower()
