@@ -30,7 +30,7 @@ function lore.begin()
 
 
 
-timer.after(30, function()
+timer.after(.5, function()
     email1 = Mail.new("First Puzzle",
 [[There are many commands to control the test subjects. For now, you just need to know one: walk.
 

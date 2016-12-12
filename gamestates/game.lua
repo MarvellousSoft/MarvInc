@@ -1,8 +1,11 @@
+local Color = require "classes.color.color"
+
 local Rooms = require "classes.room"
 local PcBox = require "classes.pc-box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
 local LoreManager = require "classes.lore-manager"
+local PopManager = require "classes.popmanager"
 
 --MODULE FOR THE GAMESTATE: GAME--
 
@@ -52,8 +55,19 @@ function state:keypressed(key)
         StepManager:pause()
     elseif key == 'f7' then
         StepManager:fast()
-    elseif key ==  "f5" then
+    elseif key ==  'f5' then
         Mail.new("TOP SECRET EMAIL", "This email cant be deleted. Its top priority. Oh yes", "Security", false)
+    elseif key == 'f8' then
+        PopManager.new("ENHANCE YOUR PERFORMANCE", "IS this the end of VIAGRA? INCREASE your girth"
+            .." and size NOW. With LESS THAN 50$ guaranteed satisfaction of your partner. CLICK"
+            .." to get YOURS now. Details apply ENJOY a better sex life now! __ONLY__ 50$ with one"
+            .." CLICK. START NOW!!!", Color.red(), {
+                func = function()
+                    print("Your size has increased.")
+                end, text = "MAKE ME BIG", clr = Color.blue()}, {
+                func = function()
+                    print("You remain small.")
+                end, text = "remain small", clr = Color.red()})
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)
@@ -66,6 +80,10 @@ function state:mousepressed(x, y, but)
 
     pc_box:mousePressed(x,y,but)
 
+end
+
+function state:mousereleased(x, y, button, touch)
+    PopManager.mousereleased(x, y, button, touch)
 end
 
 function state:textinput(t)
