@@ -1,14 +1,21 @@
 local state = {}
 
 function state:enter()
+    local bg
+
+    -- Create background
+    bg = IMAGE(0, 0, BG_IMG)
+    bg:addElement(DRAW_TABLE.BG, nil, "background")
+
 end
 
 function state:update(dt)
 end
 
 function state:draw()
-    love.graphics.setColor(0, 10, 10)
-    love.graphics.rectangle("fill", 0, 0, W, H)
+
+    Draw.allTables()
+    
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(FONTS.fira(200))
     love.graphics.printf("room.hack", 0, 120, W, "center")

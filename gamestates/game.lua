@@ -10,8 +10,10 @@ local pc_box
 local room
 
 function state:enter()
+
     room = Rooms.create()
     pc_box = PcBox.create()
+
 end
 
 function state:leave()

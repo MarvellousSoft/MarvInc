@@ -61,13 +61,17 @@ function setup.config()
     -- Spritesheets
     SHEET_IMG = {}
 
+    -- Room Img
     ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
+    -- Background
+    BG_IMG = love.graphics.newImage("assets/images/background.png")
 
     -- Bot images (assume array part only)
     HEAD = {}
     table.insert(HEAD, love.graphics.newImage("assets/images/body_1.png"))
     BODY = {}
     table.insert(BODY, love.graphics.newImage("assets/images/head_1.png"))
+
 
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
