@@ -45,13 +45,12 @@ function Memory:reset()
 end
 
 function Memory:get(pos)
-    return pos and pos >= 0 and pos < self.slots and self.vec[pos + 1]
+    return type(pos) == 'number'and ((pos >= 0 and pos < self.slots) and self.vec[pos + 1] or ("Trying to access invalid register " .. pos)) or pos
 end
 
 function Memory:set(dst, src)
-    if dst < 0 or dst > self.slots then return false end
+    if dst < 0 or dst > self.slots then return "Trying to set register " .. dst end
     self.vec[dst + 1] = src
-    return true
 end
 
 function Memory:draw()

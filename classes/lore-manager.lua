@@ -8,11 +8,24 @@ local lore = {}
 local level_done = {}
 local timer = Timer.new()
 
-local read_first_email = false
+local function default_completed()
+    PopManager.new("Puzzle completed (again)",
+        "You did what you had already done, and possibly killed some more test subjects.\n\nGreat.",
+        Color.yellow(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Go back",
+            clr = Color.black()
+        })
 
-local email1
+end
+
+
+local email = {}
 function lore.begin()
 
+    local read_first_email = false
     timer.after(1, function()
     Mail.new("Welcome Employee #"..EMPLOYER_NUMBER,
     [[Greetings and Salutations!
@@ -25,19 +38,12 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, nil, false,
-        function()
-            if not read_first_email then
-                read_first_email = true
-                lore.after_first_email()
-            end
-        end
-    )
+    "Automated Introduction System", false, nil, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
     timer.after(1, function()
-        email1 = Mail.new("First Puzzle",
+        email.first = Mail.new("First Puzzle",
     [[There are many commands to control the test subjects. For now, you just need to know one: walk.
 
 You can provide a cardinal direction (such as north or west) or a regular direction (such as up or left). If you don't, your robot will walk to the direction it is facing. This command will make the test subject walk until it encounters an obstacle.
@@ -113,28 +119,20 @@ Carry on.]], "Automated Introduction System", true, nil)
 end
 
 function lore.first_done()
-    if level_done.first then return end
+    if level_done.first then default_completed() return end
     level_done.first = true
 
-    PopManager.new("Congratulations!",
-        "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
-        "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
-        "been added to the coffee room employee board under your name. Every month we select "..
-        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
-        "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
-        "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
-        "NEWELL JR].\n\n"..
-        "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
-        "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
-        Color.blue(), {
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = "Thank you for this wonderful opportunity",
-            clr = Color.blue()
+            text = "Ok",
+            clr = Color.black()
         })
 
-    email1.is_completed = true
+    email.first.is_completed = true
 
     Mail.new("Terminal Tips",
 [[The <terminal> is a powerful tool.
@@ -156,13 +154,15 @@ As we said before, you should use it just like any text editor. To mention some 
 Exploring is part of the job, so get used to it.
 
 Happy coding, and carry on.]],
-    "Automated Introduction System", true, nil)
+    "Automated Introduction System", true, nil, false, lore.after_terminal_email)
+end
 
-    timer.after(3.0, function()
-    Mail.new("Keep going",
+function lore.after_terminal_email()
+    timer.after(2, function()
+    email.walkx = Mail.new("Keep going",
 [[Well done.
 
-Besides directions, you can another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
+Besides directions, you can add another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
 
 Example:
     - walk 5
@@ -174,15 +174,33 @@ Keep up the good work, and carry on.]], "Automated Introduction System", false,
     function()
         ROOM:connect("walkx")
         OpenedMail:close()
+    end, true, function() Info.addCommand("walk <steps>") Info.addCommand("walk <direction> <steps>") end)
     end)
-    end)
-
 end
 
 function lore.walkx_done()
-    if level_done.walkx then return end
+    if level_done.walkx then default_completed() return end
     level_done.walkx = true
-    print("done")
+
+    email.walkx.is_completed = true
+
+    PopManager.new("Congratulations!",
+        "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
+        "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
+        "been added to the coffee room employee board under your name. Every month we select "..
+        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
+        "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
+        "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
+        "NEWELL JR].\n\n"..
+        "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
+        "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
+        Color.blue(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Thank you for this wonderful opportunity",
+            clr = Color.blue()
+        })
 end
 
 function lore.update(dt)

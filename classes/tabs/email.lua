@@ -203,6 +203,7 @@ function EmailTab:mousePressed(x, y, but)
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
                 e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.close_func)
+                mail.close_func = nil
             end
         end
     else

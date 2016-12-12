@@ -78,17 +78,25 @@ Room = Class{
         -- Death
         Signal.register("death", function()
             local n = Util.findId("info_tab").dead
+            SFX.fail:stop()
+            local death_func = function()
+                self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+                if self.default_bot_turn then
+                    self.bot:turn(self.default_bot_turn)
+                end
+            end
+            if self.block_pop_up then
+                self.block_pop_up = nil
+                death_func()
+                return
+            end
+            SFX.fail:play()
             PopManager.new("Bot #"..n.." has been destroyed!",
                 "Communications with test subject #"..n.." \""..self.bot.name.."\" have been "..
                 "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
                 "been dispatched to HR and this incident shall be added to your personal file.",
                  Color.red(), {
-                    func = function()
-                        self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
-                        if self.default_bot_turn then
-                            self.bot:turn(self.default_bot_turn)
-                        end
-                    end,
+                    func = death_func,
                     text = "I will be more careful next time",
                     clr = Color.blue()
                 })

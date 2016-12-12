@@ -1,4 +1,5 @@
 local Ops = require "classes.interpreter.operations"
+local Color = require "classes.color.color"
 
 Code = Class{
     init = function(self, ops, labs)
@@ -17,16 +18,30 @@ function Code:start()
 end
 
 function Code:step()
-    if self.cur and self.cur <= #self.ops then
+    if self.cur <= #self.ops then
         local lab = self.ops[self.cur]:execute()
         Util.findId("code_tab").exec_line = self.cur
         if lab then
             self.cur = self.labs[lab]
+            if not self.cur then
+                SFX.fail:play()
+                PopManager.new("Code Error!",
+                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. lab .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.",
+                Color.red(), {
+                    func = function()
+                        ROOM.block_pop_up = true
+                        StepManager:stop()
+                    end,
+                    text = "I'm sorry.",
+                    clr = Color.black()
+                })
+                return false
+            end
         else
             self.cur = self.cur + 1
         end
     end
-    return self.cur and self.cur <= #self.ops
+    return self.cur <= #self.ops
 end
 
 function Code:stop()

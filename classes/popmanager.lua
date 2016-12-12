@@ -77,9 +77,8 @@ function Popup:mousereleased(x, y, button, touch)
     if button == 1 then
         for _, v in ipairs(self.buttons) do
             if Util.pointInRect(x - self.pos.x, y - self.pos.y, v) then
-                v.func()
                 PopManager.quit()
-                self.death = true
+                v.func()
                 return
             end
         end
@@ -109,6 +108,7 @@ function PopManager.mousereleased(x, y, button, touch)
 end
 
 function PopManager.quit()
+    PopManager.pop.death = true
     PopManager.pop = nil
     TABS_LOCK = false
     EVENTS_LOCK = false

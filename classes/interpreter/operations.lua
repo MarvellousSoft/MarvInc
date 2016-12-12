@@ -93,7 +93,9 @@ function Walk:execute()
     if not self.x then StepManager:walk(nil, self.dir) return end
     local y = self.x:evaluate()
     -- invalid! is an invalid label (because of the '!')
-    if not y or y <= 0 then return "invalid!" end
+    if type(y) ~= 'number' then return y end
+    if y < 0 then return "Trying to walk " .. y .. " steps" end
+    if y == 0 then return end
     StepManager:walk(y, self.dir)
 end
 
@@ -172,9 +174,9 @@ end
 function Mov:execute()
     local dst = self.dst:evaluate()
     local val = self.val:evaluate()
-    if not dst or not val then return "invalid!" end
-    local mem = Util.findId("memory")
-    if not mem:set(dst, val) then return "invalid!" end
+    if type(dst) ~= 'number' then return dst end
+    if type(val) ~= 'number' then return val end
+    return Util.findId("memory"):set(dst, val)
 end
 
 -- Limits the values in the range -999 .. 999, wraping automatically
@@ -198,11 +200,12 @@ end
 function Add:execute()
     local dst = self.dst:evaluate()
     local val = self.val:evaluate()
-    if not dst or not val then return "invalid!" end
+    if type(dst) ~= 'number' then return dst end
+    if type(val) ~= 'number' then return val end
     local mem = Util.findId("memory")
     local prev = mem:get(dst)
-    if prev and mem:set(dst, mod(prev + val)) then return end
-    return "invalid!"
+    if type(prev) ~= 'number' then return prev end
+    return mem:set(dst, mod(prev + val))
 end
 
 -- Sub --
@@ -218,11 +221,12 @@ end
 function Sub:execute()
     local dst = self.dst:evaluate()
     local val = self.val:evaluate()
-    if not dst or not val then return "invalid!" end
+    if type(dst) ~= 'number' then return dst end
+    if type(val) ~= 'number' then return val end
     local mem = Util.findId("memory")
     local prev = mem:get(dst)
-    if prev and mem:set(dst, mod(prev - val)) then return end
-    return "invalid!"
+    if type(prev) ~= 'number' then return prev end
+    return mem:set(dst, mod(prev - val))
 end
 
 -- init for jgt jlt jge jle
@@ -234,7 +238,8 @@ end
 
 local function vvl_execute(self)
     local a, b = self.v1:evaluate(), self.v2:evaluate()
-    if not a or not b then return "invalid!" end
+    if type(a) ~= 'number' then return a end
+    if type(b) ~= 'number' then return b end
     if self.comp(a, b) then return self.lab end
 end
 

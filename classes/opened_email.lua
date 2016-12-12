@@ -220,7 +220,10 @@ function opened_email_funcs.close()
     local e
 
     e = Util.findId("opened_email")
-    if e.close_func then e.close_func() end
+    if e.close_func then
+        e.close_func()
+        e.close_func = nil
+    end
     e.death = true
 
 end

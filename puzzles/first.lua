@@ -5,7 +5,7 @@ name = "The Game"
 n = 1
 
 lines_on_terminal = 10
-memory_slots = 0
+memory_slots = 2
 
 -- Bot
 bot = {'b', "NORTH", {19, 20}}
