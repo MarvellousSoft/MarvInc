@@ -159,6 +159,16 @@ function StepManager:stop()
     self:clear()
 end
 
+function StepManager:pickup()
+    ROOM:pickup()
+    return false
+end
+
+function StepManager:drop()
+    ROOM:drop()
+    return false
+end
+
 function StepManager:update(dt)
     self.timer.update(dt)
 end

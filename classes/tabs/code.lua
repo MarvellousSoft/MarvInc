@@ -52,6 +52,10 @@ CodeTab = Class{
         self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager:superfast() end)
         self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b, self.superfast_b}
 
+        -- Inventory slot
+        self.inv_slot = nil
+
+
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 12)
 

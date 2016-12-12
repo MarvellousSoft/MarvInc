@@ -14,7 +14,8 @@ bot = {'b', "NORTH", {19, 20}}
 e = nil
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava"}
+k = {"bucket", true, "bucket"}
+l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args={bucketable = true}}
 
 -- options: obst, dead
 
@@ -48,7 +49,7 @@ grid_obj =  "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooelloooooooo"..
             "oooooooooelloooooooo"..
-            "oooooooooeeeeeeeeebo"
+            "ooooooookeeeeeeeeebo"
 
 -- Floor
 w = "white_floor"
@@ -74,4 +75,4 @@ grid_floor = "eeeeeeeeewvwvwvwvwvr"..
              "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeeveeeeeeeeee"..
              "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeevwvwvwvwvwe"
+             "eeeeeeeewvwvwvwvwvwe"

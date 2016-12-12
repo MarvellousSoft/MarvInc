@@ -71,6 +71,9 @@ Room = Class{
         -- Room objectives
         self.objs = nil
 
+        -- Current puzzle
+        self.puzzle = nil
+
         Signal.register("end_turn", function()
             self:apply()
         end)
@@ -80,6 +83,11 @@ Room = Class{
             local n = Util.findId("info_tab").dead
             SFX.fail:stop()
             local death_func = function()
+                local _term = Util.findId("code_tab")
+                _term:store()
+                self:disconnect(true)
+                _term:retrieve()
+                self:connect(self.puzzle)
                 self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
                 if self.default_bot_turn then
                     self.bot:turn(self.default_bot_turn)
@@ -192,6 +200,7 @@ function Room:connect(name)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:play()
 
+    self.puzzle = name
     self.static_on = true
     self.static_dhdl = MAIN_TIMER.after(0.0675, function()
         SFX.loud_static:stop()
@@ -384,6 +393,14 @@ end
 
 function Room:turn(dir)
     self.bot:turn(_G[dir:upper() .. "_R"])
+end
+
+function Room:pickup()
+    self.bot:pickup(self.grid_obj, self.grid_r, self.grid_c)
+end
+
+function Room:drop()
+    self.bot:drop(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 function Room:blocked()

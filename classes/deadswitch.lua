@@ -4,7 +4,7 @@ require "classes.primitive"
 
 DeadSwitch = Class{
     __includes = {SpriteObject, Dead},
-    init = function(self, grid, i, j, key, bg, delay, clr, skey)
+    init = function(self, grid, i, j, key, bg, delay, clr, skey, args)
         SpriteObject.init(self, grid, i, j, key, bg, delay, "dead", clr)
 
         -- skey is solid key image
@@ -12,6 +12,10 @@ DeadSwitch = Class{
 
         -- old floor
         self.of = nil
+
+        if args then
+            self.bucketable = args.bucketable
+        end
     end
 }
 

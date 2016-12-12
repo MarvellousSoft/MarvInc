@@ -298,6 +298,45 @@ function Write:execute()
     return console:write(val)
 end
 
+-- Pickup
+Pickup = Class{
+    init = Turn.init
+}
+
+function Pickup.create(t)
+    if #t > 2 then return end
+    local accepted = {north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
+    if t[2] and not accepted[t[2]] then return end
+    return Pickup(accepted[t[2]])
+end
+
+function Pickup:execute()
+    if self.dir then
+        StepManager:turn(self.dir)
+    end
+    StepManager:pickup()
+end
+
+Drop = Class{
+    init = Turn.init
+}
+
+function Drop.create(t)
+    if #t > 2 then return end
+    local accepted = {north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
+    if t[2] and not accepted[t[2]] then return end
+    return Drop(accepted[t[2]])
+end
+
+function Drop:execute()
+    if self.dir then
+        StepManager:turn(self.dir)
+    end
+    StepManager:drop()
+end
+
 function op.read(t)
     if #t == 0 then return Nop() end
     if t[1] == 'walk' then
@@ -331,6 +370,10 @@ function op.read(t)
         return Read:create(t)
     elseif t[1] == 'write' then
         return Write:create(t)
+    elseif t[1] == 'pickup' then
+        return Pickup.create(t)
+    elseif t[1] == 'drop' then
+        return Drop.create(t)
     end
 end
 

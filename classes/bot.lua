@@ -50,6 +50,9 @@ Bot = Class{
 
         -- Get random name from list
         self.name = NAMES[love.math.random(#NAMES)]
+
+        -- Inventory
+        self.inv = nil
     end
 }
 
@@ -72,6 +75,22 @@ function Bot:next_block(grid, r, c)
     return grid[px][py]
 end
 
+function Bot:pickup(grid, r, c)
+    local p = ORIENT[self.r[2]]
+    local px, py = self.pos.x + p.x, self.pos.y + p.y
+    local _o = grid[px][py]
+    if _o and _o.pickable then
+        self.inv = _o
+        grid[px][py] = nil
+    end
+end
+
+function Bot:drop(grid, r, c)
+    local p = ORIENT[self.r[2]]
+    if self.inv then
+        self.inv:use(self, grid, self.pos.x + p.x, self.pos.y + p.y)
+    end
+end
 
 function Bot:blocked(grid, r, c)
     local p = ORIENT[self.r[2]]
@@ -82,7 +101,8 @@ function Bot:blocked(grid, r, c)
         py > c then
         return true
     end
-    return grid[px][py] and grid[px][py].tp == 'obst'
+    local _o = grid[px][py]
+    return _o and (_o.tp == 'obst' or _o.tp == 'bucket')
 end
 
 function Bot:draw()

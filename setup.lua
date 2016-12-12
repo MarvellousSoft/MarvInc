@@ -61,6 +61,7 @@ function setup.config()
     OBJS_IMG["red_tile"] = TILES_IMG.red_tile
     OBJS_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
     OBJS_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
+    OBJS_IMG["bucket"] = love.graphics.newImage("assets/images/bucket.png")
 
     -- Spritesheets
     SHEET_IMG = {}

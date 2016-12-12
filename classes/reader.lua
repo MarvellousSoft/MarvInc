@@ -48,13 +48,15 @@ function Reader:read(filename)
                 local _proto = _t[_co]
                 local _clr = _proto[5] and Color[_proto[5]]() or nil
                 local args = {self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr,
-                    _proto[6]}
+                    _proto[6], _proto.args}
                 if _proto[1] == "obst" then
                     Obstacle(unpack(args))
                 elseif _proto[1] == "dead" then
                     Dead(unpack(args))
                 elseif _proto[1] == "dead_switch" then
                     DeadSwitch(unpack(args))
+                elseif _proto[1] == "bucket" then
+                    Bucket(unpack(args))
                 end
             end
             k = k + 1
