@@ -159,7 +159,12 @@ function OpenedEmail:draw()
         else
             Color.set(e.reply_button_disabled_text_color)
         end
-        love.graphics.print("reply", e.reply_x + 11, e.reply_y + 6)
+        if e.is_puzzle and e.is_completed then
+            text = "retry"
+        else
+            text = "reply"
+        end
+        love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
     end
 
 end

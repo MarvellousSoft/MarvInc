@@ -122,7 +122,6 @@ function EmailTab:draw()
         love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y - t.dy*(t.email_height + t.email_border) + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
 
         -- Title
-
         font = FONTS.fira(14)
         text = e.title
         if #text <= 30  then
@@ -135,11 +134,26 @@ function EmailTab:draw()
         love.graphics.setFont(font)
         love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y - t.dy*(t.email_height + t.email_border) + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2 + e.juicy_bump)
 
-        -- Print "new" label on new emails
+        -- Print label on emails
+
+        -- New
+        text = nil
         if not e.was_read then
-            love.graphics.setFont(FONTS.fira(15))
+            text = "new"
             Color.set(Color.new(240, 180, 120, e.alpha))
-            love.graphics.print("new",  t.pos.x + t.email_border + t.w - 40, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump + 15)
+        elseif e.is_puzzle then
+            if e.is_completed then
+                text = "completed"
+                Color.set(Color.new(150, 130, 70, e.alpha))
+            else
+                text = "not completed"
+                Color.set(Color.new(150, 130, 70, e.alpha))
+            end
+        end
+        if text then
+            font = FONTS.fira(15)
+            love.graphics.setFont(font)
+            love.graphics.print(text,  t.pos.x + t.email_border + t.w - 25 - font:getWidth(text), t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump + 15)
         end
     end
 
@@ -230,9 +244,8 @@ EmailObject = Class{
         self.alpha = 0 -- Alpha value of email color
         self.email_color = Color.new(0,0,230) -- Color of a new email
         self.email_read_color = Color.new(150, 50, 140) -- Color of a already read email
-        self.email_puzzle_complete_color = Color.new(70, 50, 200) -- Color of an completed puzzle
-        self.email_puzzle_uncompleted_color = Color.new(250, 50, 200) -- Color of an uncompleted puzzle
-
+        self.email_puzzle_complete_color = Color.new(70, 80, 200) -- Color of an completed puzzle
+        self.email_puzzle_uncompleted_color = Color.new(250, 80, 200) -- Color of an uncompleted puzzle
 
         self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
         self.going_up_amount = 0 -- Amount to go up (for when an email above it is deleted)
