@@ -14,8 +14,7 @@ bot = {'b', "NORTH", {19, 20}}
 e = nil
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-
-l = {"lava", false, "lava", 0.2, "white", "solid_lava"}
+l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava"}
 
 -- options: obst, dead
 

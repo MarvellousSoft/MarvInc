@@ -29,14 +29,8 @@ function Reader:read(filename)
     self.puz.n = _t.n
 
     local bot = _t.bot
-    for x = 1, COLS do
-        for y = 1, ROWS do
-            if _t.grid_obj:sub((y - 1) * COLS + x, (y - 1) * COLS + x) == bot[1] then
-                self.puz.init_pos = Vector(x, y)
-            end
-        end
-    end
-
+    local pos = bot[3]
+    self.puz.init_pos = Vector(pos[1], pos[2])
     self.puz.orient = bot[2]
 
     self.puz.grid_floor = {}
@@ -53,12 +47,14 @@ function Reader:read(filename)
             if _co ~= bot[1] and _t[_co] ~= nil then
                 local _proto = _t[_co]
                 local _clr = _proto[5] and Color[_proto[5]]() or nil
+                local args = {self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr,
+                    _proto[6]}
                 if _proto[1] == "obst" then
-                    Obstacle(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
+                    Obstacle(unpack(args))
                 elseif _proto[1] == "dead" then
-                    Dead(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
-                elseif _proto[1] == "lava" then
-                    Lava(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr, _proto[6])
+                    Dead(unpack(args))
+                elseif _proto[1] == "dead_switch" then
+                    DeadSwitch(unpack(args))
                 end
             end
             k = k + 1

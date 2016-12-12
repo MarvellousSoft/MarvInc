@@ -313,6 +313,51 @@ function Room:walk(dir)
     self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
 end
 
+-- Dorment objects (DeadSwitch).
+Room.dorments = {}
+
+function Room:sedate(ds, y)
+    if not y then
+        local px, py = ds.pos.x, ds.pos.y
+        if ds.bg then
+            ds.of = self.grid_floor[px][py]
+        end
+        self:paint(px, py, ds.skey)
+        self:extract(px, py)
+        Room.dorments[ds] = ds
+    else
+        local _d = self.grid_obj[ds][y]
+        if _d then
+            self:sedate(_d)
+        end
+    end
+end
+
+function Room:wakeup(ds, y)
+    if not y then
+        local px, py = ds.pos.x, ds.pos.y
+        if self.bot.pos.x == px and self.bot.pos.y == py then
+            self:kill()
+        end
+        if ds.bg then
+            self:paint(px, py, ds.of)
+        end
+        self.grid_obj[px][py] = ds
+        Room.dorments[ds] = nil
+    else
+        local px, py = ds, y
+        for k, _ in pairs(Room.dorments) do
+            if k.pos.x == px and k.pos.y == py then
+                if self.grid_obj[px][py] then
+                    self.grid_obj[px][py] = nil
+                end
+                self:wakeup(k)
+                return
+            end
+        end
+    end
+end
+
 function Room:clock()
     self.bot:clock()
 end
