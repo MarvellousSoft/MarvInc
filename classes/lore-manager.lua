@@ -38,7 +38,7 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, function() ROOM:connect("register") end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("pickup") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
@@ -296,7 +296,6 @@ function lore.register_done()
             clr = Color.black()
         })
 end
-
 
 function lore.update(dt)
     timer.update(dt)

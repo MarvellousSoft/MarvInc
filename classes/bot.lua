@@ -111,7 +111,7 @@ function Bot:blocked(grid, r, c)
         return true
     end
     local _o = grid[px][py]
-    return _o and (_o.tp == 'obst' or _o.tp == 'bucket')
+    return _o and (_o.tp ~= "dead" and _o.tp ~= "dead_switch")
 end
 
 function Bot:draw()

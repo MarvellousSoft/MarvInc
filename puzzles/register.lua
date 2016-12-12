@@ -2,7 +2,7 @@
 
 name = "Basic Programming"
 -- Puzzle number
-n = 5
+n = 6
 
 lines_on_terminal = 20
 memory_slots = 1

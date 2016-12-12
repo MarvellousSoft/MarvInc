@@ -26,6 +26,7 @@ function Console:input()
 end
 
 function Console:write(val)
-    if #self.out > 0 then return "Trying to write to input-only terminal" end
+    if #self.out > 0 then return "Trying to write to input-only console" end
+    if #self.inp >= 500 then return "Trying to put too many numbers on console" end
     table.insert(self.inp, val)
 end
