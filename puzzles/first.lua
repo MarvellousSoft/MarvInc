@@ -28,7 +28,7 @@ objs = {
 
 extra_info = nil
 
-grid_obj = "oooooooooeeeeeeeeeee"..
+grid_obj =  "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..

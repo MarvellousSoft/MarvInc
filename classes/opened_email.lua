@@ -191,6 +191,7 @@ function opened_email_funcs.close()
     local e
 
     e = Util.findId("opened_email")
+    if e.close_func then e.close_func() end
     e.death = true
 
 end
@@ -212,7 +213,7 @@ function opened_email_funcs.mousePressed(x, y, but)
              --Clicked on the delete button
              local mailTab = Util.findId("email_tab")
              mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
-             mailTab.email_opened.death = true
+             mailTab.email_opened.close()
          elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
                  --Clicked on the reply button
                  e.reply_func()

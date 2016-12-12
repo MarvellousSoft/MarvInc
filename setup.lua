@@ -100,8 +100,10 @@ function setup.config()
              "Nancy", "Manny", "Ellie", "Lenny", "Ziggy"
             }
     TRAITS = {"Hates Pizza", "Socially Awkward", "Likes Phantom Menace", "Collect Stamps", "Color Blind",
-              "Likes Puppies", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
-              "Germophobe", "Insomniac"
+              "Puppy Lover", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
+              "Germophobe", "Insomniac", "Lives with his Mom", "Has a Cool Car", "Listens to Emo Rock",
+              "Addicted to Caffeine", "Explorer at Heart", "Never Pays Service", "Jerk",
+              "Sympathetic", "Funny", "Cool", "11 Toes", "Logical", "Irrational", "Creepy"
              }
 
     -- Move orientations

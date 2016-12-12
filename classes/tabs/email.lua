@@ -216,7 +216,7 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author, _can_be_deleted, _reply_func, _number)
+    init = function(self, _title, _text, _author, _can_be_deleted, _reply_func, _close_func, _number)
         local time
 
         self.number = _number
@@ -242,6 +242,8 @@ EmailObject = Class{
         self.reply_func = _reply_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
         self.can_reply = true -- If email can be replyied
 
+        self.close_func = _close_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
+
         self.is_puzzle = false -- If this email is a puzzle invitation
         self.is_completed = false -- If the puzzle was completed already once
 
@@ -256,7 +258,7 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puzzle)
+function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puzzle, close_func)
     local e, mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -267,7 +269,7 @@ function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puz
     tab.email_cur = tab.email_cur + 1
     number = tab.email_cur
 
-    e = EmailObject(title, text, author, can_be_deleted, reply_func, number)
+    e = EmailObject(title, text, author, can_be_deleted, reply_func, close_func, number)
     e.is_puzzle = is_puzzle
     -- Add fade-in effect to email
     e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')

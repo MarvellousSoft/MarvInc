@@ -3,6 +3,7 @@ local Color = require "classes.color.color"
 require "classes.tabs.tab"
 
 -- INFO TAB CLASS--
+local info_funcs = {}
 
 InfoTab = Class{
     __includes = {Tab},
@@ -40,7 +41,7 @@ InfoTab = Class{
         self.text_color3 = Color.new(35,140,140)
 
         -- Known commands table
-        self.commands = {"walk", "walk <direction>", "walk <value>", "turn"}
+        self.commands = {}
 
     end
 }
@@ -167,3 +168,10 @@ function InfoTab:draw()
     end
 
 end
+
+-- UTILITY FUNCTIONS --
+function info_funcs.addCommand(string)
+    table.insert(self.commands, string)
+end
+
+return info_funcs

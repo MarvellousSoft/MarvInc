@@ -1,6 +1,7 @@
 
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
+local Info = require "classes.tabs.info"
 local lore = {}
 
 local level_done = {}
@@ -28,9 +29,9 @@ function lore.begin()
     )
     end)
 
-
-
-timer.after(.5, function()
+timer.after(30, function()
+    Info.addCommand("walk")
+    Info.addCommand("walk <direction>")
     email1 = Mail.new("First Puzzle",
 [[There are many commands to control the test subjects. For now, you just need to know one: walk.
 
