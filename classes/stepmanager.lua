@@ -151,6 +151,12 @@ function StepManager:register(evt)
     self.events[evt[1]] = evt[2]
 end
 
+function StepManager:removeAll()
+    for k, _ in pairs(self.events) do
+        self.events[k] = nil
+    end
+end
+
 function StepManager:clear()
     for k, _ in pairs(self.events) do
         k.completed = false

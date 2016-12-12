@@ -129,8 +129,14 @@ function Room:clear()
     self.bot = nil
     self.n = nil
     self.name = nil
+    if self.objs then
+        for k, _ in pairs(self.objs) do
+            StepManager:remove(k)
+        end
+    end
     self.objs = {}
     Room.queue = {}
+    StepManager:removeAll()
     StepManager:stopNoKill()
 end
 

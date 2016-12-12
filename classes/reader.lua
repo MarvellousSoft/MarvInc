@@ -50,7 +50,6 @@ function Reader:read(filename)
                 if _proto[1] == "obst" then
                     Obstacle(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
                 elseif _proto[1] == "dead" then
-                    print(j, i, _proto[3], _proto[2], _proto[4], _clr)
                     Dead(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
                 end
             end
