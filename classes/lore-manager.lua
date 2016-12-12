@@ -24,7 +24,7 @@ function lore.begin()
 
     Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", nil, nil,
+    "Automated Introduction System", false, nil, false,
         function()
             if not read_first_email then
                 read_first_email = true
