@@ -62,12 +62,12 @@ function lore.after_first_email()
         end)
     end)
 
-    timer.after(80, function()
+    timer.after(30, function()
         if level_done.first then return end
         Mail.new("Further instructions",
     [[It seems you have not understood this system completely. Let me explain it further.
 
-    There are three tabs: <email>, <terminal> and <info>. You are on the first one, and here you can read your emails. On the <terminal> tab you can write and run commands. For now you only need the one I taught you (walk) to solve this introductory puzzle. On the last tab, <info>, you can check the puzzle's objectives and the current test robot attributes.
+    There are three tabs: <email>, <terminal> and <info>. You are on the first one, and here you can read your emails. On the <terminal> tab you can write and run commands. For now you only need the one I taught you (walk) to solve this introductory puzzle. On the last tab, <info>, you can check the puzzle's objectives and the current test robot information.
 
     Whenever you're lost, you can reread these emails. Unless you've deleted them.
 
@@ -75,16 +75,16 @@ function lore.after_first_email()
     "Automated Introduction System", true, nil)
         end)
 
-    timer.after(130, function()
+    timer.after(60, function()
         if level_done.first then return end
         Mail.new("Even further clarifications",
     [[It seems you still haven't finished the puzzle. Let me make everything clear.
 
     You should head on to the <terminal> tab. No, not now. Finish reading this email first. There, you can code instructions to solve puzzles. You can only write one instruction per line, and you can use the <terminal> just as you would with any text editor.
 
-    After you write the instructions, use the buttons on the bottom of the <terminal> to run your code. You have three available speeds to choose from. Whenever your robot completes the objective or he dies, the puzzle will be finished automatically. If your code crashes or your robot dies, the simulation will be restarted and you'll receive a new test subject.
+    After you write the instructions, use the buttons on the bottom of the <terminal> to run your code. You have three available speeds to choose from. Whenever your robot completes the objective, the puzzle will be finished automatically. If your code crashes or your robot dies, the simulation will be restarted and you'll receive a new test subject.
 
-    After replying a puzzle proposal, read the <info> tab to better understand your objectives in the room. Since for now you only know the walk instruction, this first one shouldn't be that difficult.
+    After replying a puzzle or job proposal, read the <info> tab to better understand your objectives in the room.
 
     Any remaining doubts can be emailed to REDACTED.
 
@@ -92,7 +92,7 @@ function lore.after_first_email()
     "Automated Introduction System", true, nil)
         end)
 
-    timer.after(160, function()
+    timer.after(120, function()
         if level_done.first then return end
         Mail.new("Baby Steps",
     [[Well, we all have our hard days.
@@ -142,10 +142,15 @@ function lore.first_done()
     As we said before, you should use it just like any text editor. To mention some of its features, you can
 
     - Move the cursor with your mouse or arrow keys
+
     - Select text with the mouse or holding shift and pressing the arrow keys
+
     - Use the 'end' or 'home' keys
+
     - Copy, paste, cut, undo or redo with the usual shortcuts (ctrl+key)
+
     - Autocomplete text with tab
+
     - And much more!
 
     Exploring is part of the job, so get used to it.
