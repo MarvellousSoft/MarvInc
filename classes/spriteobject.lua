@@ -8,6 +8,7 @@ SpriteObject = Class{
     init = function(self, grid, i, j, key, bg, delay, tp, clr)
         Object.init(self, grid, i, j, tp, bg)
         Sprite.init(self, i, j, key, delay, clr)
+        self.tp = tp
         self.sx = ROOM_CW/self.w
         self.sy = ROOM_CH/self.h
     end

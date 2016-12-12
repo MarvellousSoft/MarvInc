@@ -51,6 +51,7 @@ function setup.config()
     TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
     TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
     TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")
+    TILES_IMG["solid_lava"] = love.graphics.newImage("assets/images/cold_lava_tile.png")
 
     -- Objects
     OBJS_IMG = {}
@@ -63,6 +64,7 @@ function setup.config()
     -- Spritesheets
     SHEET_IMG = {}
     SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
+    SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
 
     -- Room Img
     ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")

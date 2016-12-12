@@ -57,6 +57,8 @@ function Reader:read(filename)
                     Obstacle(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
                 elseif _proto[1] == "dead" then
                     Dead(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
+                elseif _proto[1] == "lava" then
+                    Lava(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr, _proto[6])
                 end
             end
             k = k + 1
