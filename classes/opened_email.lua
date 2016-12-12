@@ -4,6 +4,11 @@ local Color = require "classes.color.color"
 
 local opened_email_funcs = {}
 
+local function height(font, text, limit)
+    local w, txt = font:getWrap(text, limit)
+    return (#txt) * font:getHeight()
+end
+
 OpenedEmail = Class{
     __includes = {RECT},
 
@@ -11,9 +16,10 @@ OpenedEmail = Class{
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
-        self.text_font = FONTS.fira(16)
+        self.text_font = FONTS.fira(15)
 
-        box_height = math.max(self.text_font:getWrap(_text, box_width) + 100, 3 * H / 5)
+        local but_size = (_reply_func and 50 or 0) + (_can_be_deleted and 50 or 0)
+        box_height = math.max(height(self.text_font, _text, box_width) + 200 + but_size, 3 * H / 5)
 
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 

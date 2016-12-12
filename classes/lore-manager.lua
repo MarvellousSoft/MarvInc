@@ -17,13 +17,13 @@ function lore.begin()
     Mail.new("Welcome Employee #"..EMPLOYER_NUMBER,
     [[Greetings and Salutations!
 
-    We at Marvellous Inc. are happy to welcome one more member in our ever expanding AI company. We are all about Big Data, Internet of Things, Deep Data Mining Learning (DDML), real-time networks for cutting-edge technology and benchmarking cloud apps (built for scalability of course). We hope you can meet our standards, end-to-end.
+We at Marvellous Inc. are happy to welcome one more member in our ever expanding AI company. We are all about Big Data, Internet of Things, Deep Data Mining Learning (DDML), real-time networks for cutting-edge technology and benchmarking cloud apps (built for scalability of course). We hope you can meet our standards, end-to-end.
 
-    As you know, your assignment will be to test our newly developed Artificial Inteligence Humanoids, or "robots". You will have to program their behaviour with simple commands so they can fulfill simple tasks. On the right part of screen you have direct access to a camera filming The Room. Test subjects (the "robots" of course) will be placed inside The Room, but you can only control them via your <terminal>.
+As you know, your assignment will be to test our newly developed Artificial Inteligence Humanoids, or "robots". You will have to program their behaviour with simple commands so they can fulfill simple tasks. On the right part of screen you have direct access to a camera filming The Room. Test subjects (the "robots" of course) will be placed inside The Room, but you can only control them via your <terminal>.
 
-    This Automated System will guide you if you feel disoriented.
+This Automated System will guide you if you feel disoriented.
 
-    Most importantly, have fun and carry on :)]],
+Most importantly, have fun and carry on :)]],
 
     "Automated Introduction System", false, nil, false,
         function()
@@ -40,18 +40,18 @@ function lore.after_first_email()
         email1 = Mail.new("First Puzzle",
     [[There are many commands to control the test subjects. For now, you just need to know one: walk.
 
-    You can provide a cardinal direction (such as north or west) or a regular direction (such as up or left). If you don't, your robot will walk to the direction it is facing. This command will make the test subject walk until it encounters an obstacle.
+You can provide a cardinal direction (such as north or west) or a regular direction (such as up or left). If you don't, your robot will walk to the direction it is facing. This command will make the test subject walk until it encounters an obstacle.
 
-    Example:
-        - walk
-        - walk east
-        - walk down
+Example:
+    - walk
+    - walk east
+    - walk down
 
-    We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
+We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
 
-    Reply this email to start the puzzle.
+Reply this email to start the puzzle.
 
-    Best of Luck, and carry on.]], "Automated Introduction System", false,
+Best of Luck, and carry on.]], "Automated Introduction System", false,
         function()
             ROOM:connect("first")
             OpenedMail:close()
@@ -67,11 +67,11 @@ function lore.after_first_email()
         Mail.new("Further instructions",
     [[It seems you have not understood this system completely. Let me explain it further.
 
-    There are three tabs: <email>, <terminal> and <info>. You are on the first one, and here you can read your emails. On the <terminal> tab you can write and run commands. For now you only need the one I taught you (walk) to solve this introductory puzzle. On the last tab, <info>, you can check the puzzle's objectives and the current test robot information.
+There are three tabs: <email>, <terminal> and <info>. You are on the first one, and here you can read your emails. On the <terminal> tab you can write and run commands. For now you only need the one I taught you (walk) to solve this introductory puzzle. On the last tab, <info>, you can check the puzzle's objectives and the current test robot information.
 
-    Whenever you're lost, you can reread these emails. Unless you've deleted them.
+Whenever you're lost, you can reread these emails. Unless you've deleted them.
 
-    Good Luck, and carry on.]],
+Good Luck, and carry on.]],
     "Automated Introduction System", true, nil)
         end)
 
@@ -80,15 +80,15 @@ function lore.after_first_email()
         Mail.new("Even further clarifications",
     [[It seems you still haven't finished the puzzle. Let me make everything clear.
 
-    You should head on to the <terminal> tab. No, not now. Finish reading this email first. There, you can code instructions to solve puzzles. You can only write one instruction per line, and you can use the <terminal> just as you would with any text editor.
+You should head on to the <terminal> tab. No, not now. Finish reading this email first. There, you can code instructions to solve puzzles. You can only write one instruction per line, and you can use the <terminal> just as you would with any text editor.
 
-    After you write the instructions, use the buttons on the bottom of the <terminal> to run your code. You have three available speeds to choose from. Whenever your robot completes the objective, the puzzle will be finished automatically. If your code crashes or your robot dies, the simulation will be restarted and you'll receive a new test subject.
+After you write the instructions, use the buttons on the bottom of the <terminal> to run your code. You have three available speeds to choose from. Whenever your robot completes the objective, the puzzle will be finished automatically. If your code crashes or your robot dies, the simulation will be restarted and you'll receive a new test subject.
 
-    After replying a puzzle or job proposal, read the <info> tab to better understand your objectives in the room.
+After replying a puzzle or job proposal, read the <info> tab to better understand your objectives in the room.
 
-    Any remaining doubts can be emailed to REDACTED.
+Any remaining doubts can be emailed to REDACTED.
 
-    Carry on.]],
+Carry on.]],
     "Automated Introduction System", true, nil)
         end)
 
@@ -97,16 +97,16 @@ function lore.after_first_email()
         Mail.new("Baby Steps",
     [[Well, we all have our hard days.
 
-    The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your terminal, then
-    hit the play button to start the simulation.
+The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your terminal, then
+hit the play button to start the simulation.
 
-    walk left
-    walk up
-    walk right
+walk left
+walk up
+walk right
 
-    Was it that hard? Take your time to understand these instructions. This will not happen again.
+Was it that hard? Take your time to understand these instructions. This will not happen again.
 
-    Carry on.]], "Automated Introduction System", true, nil)
+Carry on.]], "Automated Introduction System", true, nil)
         end)
     end
 
@@ -137,9 +137,9 @@ function lore.first_done()
     email1.is_completed = true
 
     Mail.new("Terminal Tips",
-    [[The <terminal> is a powerful tool.
+[[The <terminal> is a powerful tool.
 
-    As we said before, you should use it just like any text editor. To mention some of its features, you can
+As we said before, you should use it just like any text editor. To mention some of its features, you can
 
     - Move the cursor with your mouse or arrow keys
 
@@ -153,19 +153,40 @@ function lore.first_done()
 
     - And much more!
 
-    Exploring is part of the job, so get used to it.
+Exploring is part of the job, so get used to it.
 
-    Carry on.]],
+Happy coding, and carry on.]],
     "Automated Introduction System", true, nil)
+
+    timer.after(3.0, function()
+    Mail.new("Keep going",
+[[Well done.
+
+Besides directions, you can another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
+
+Example:
+    - walk 5
+    - walk left 10
+
+Reply this email to start the experiment.
+
+Keep up the good work, and carry on.]], "Automated Introduction System", false,
+    function()
+        ROOM:connect("walkx")
+        OpenedMail:close()
+    end)
+    end)
 
 end
 
-function lore.puzzle3()
+function lore.walkx_done()
+    if level_done.walkx then return end
+    level_done.walkx = true
+    print("done")
 end
 
 function lore.update(dt)
     timer.update(dt)
 end
-
 
 return lore

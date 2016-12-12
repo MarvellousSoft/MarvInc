@@ -144,6 +144,7 @@ end
 function StepManager:stopNoKill()
     self.timer.clear()
     self.cmd = nil
+    if self.tmp then self.tmp, self.code = self.code, self.tmp end
     if self.code then self.code:stop() end
     self.code = nil
     self.running = false

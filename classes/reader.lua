@@ -29,8 +29,14 @@ function Reader:read(filename)
     self.puz.n = _t.n
 
     local bot = _t.bot
-    local pos = bot[3]
-    self.puz.init_pos = Vector(pos[1], pos[2])
+    for x = 1, COLS do
+        for y = 1, ROWS do
+            if _t.grid_obj:sub((y - 1) * COLS + x, (y - 1) * COLS + x) == bot[1] then
+                self.puz.init_pos = Vector(x, y)
+            end
+        end
+    end
+
     self.puz.orient = bot[2]
 
     self.puz.grid_floor = {}

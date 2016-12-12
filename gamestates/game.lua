@@ -5,7 +5,7 @@ local PcBox = require "classes.pc-box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
 local LoreManager = require "classes.lore-manager"
-local PopManager = require "classes.popmanager"
+PopManager = require "classes.popmanager"
 
 --MODULE FOR THE GAMESTATE: GAME--
 

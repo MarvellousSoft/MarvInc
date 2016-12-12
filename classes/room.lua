@@ -258,7 +258,7 @@ function Room:draw()
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
         love.graphics.setFont(self.back_fnt)
         Color.set(self.back_tclr)
-        love.graphics.printf("room.hack", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
+        love.graphics.printf("Marvellous Inc.", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
             "center")
     end
 
