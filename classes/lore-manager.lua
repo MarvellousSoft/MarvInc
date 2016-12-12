@@ -44,8 +44,32 @@ Good Luck, and carry on.]],
     timer.after(60, function()
     if level_done.first then return end
     Mail.new("Even further clarifications",
-[[It seems you still]],
+[[It seems you still haven't finished the puzzle. Let me make everything clear.
+
+You should head on to the Terminal tab. No, not now. Finish reading this email first. There, you can write your code to solve puzzles. Since for now you know only the walk instruction, it shouldn't be that complex.
+
+After you write the instructions, use the buttons on the bottom to run your code. You have three available speeds to choose from. Whenever your robot reaches the red tile, the puzzle will be finished automatically.
+
+Any remaining doubts can be emailed to REDACTED.
+
+Good Luck, and carry on.]],
 "Automated Introduction System", true, nil)
+    end)
+
+    timer.after(120, function()
+    if level_done.first then return end
+    Mail.new("Baby Steps",
+[[Well, we all have our hard days.
+
+The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct.
+
+walk left
+walk up
+walk right
+
+Was it that hard? Take your time to understand these instructions. This will not happen again.
+
+Carry on.]], "Automated Introduction System", true, nil)
     end)
 end
 

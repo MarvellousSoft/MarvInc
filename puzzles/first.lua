@@ -20,7 +20,7 @@ objs = {
     function(self, room)
         return room.bot.pos.x == 20 and room.bot.pos.y == 1
     end, "Just get to the red tile. It's not that hard.",
-    _G.LoreManager.puzzle2}
+    _G.LoreManager.first_done}
 }
 
 grid_obj = "oooooooooeeeeeeeeeee"..
@@ -47,8 +47,9 @@ grid_obj = "oooooooooeeeeeeeeeee"..
 -- Floor
 w = "white_floor"
 v = "black_floor"
+r = "red_tile"
 
-grid_floor = "eeeeeeeeewvwvwvwvwvw"..
+grid_floor = "eeeeeeeeewvwvwvwvwvr"..
              "eeeeeeeeeveeeeeeeeee"..
              "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeeveeeeeeeeee"..
