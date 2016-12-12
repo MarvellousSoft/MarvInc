@@ -11,6 +11,7 @@ bot = {'b', "NORTH", {19, 20}}
 e = nil
 -- name, draw background, image
 o = {"obst", false, "wall_o"}
+s = {"dead", true, "ray", 0.05, "green"}
 
 -- options: obst, dead
 
@@ -47,7 +48,7 @@ grid_obj = "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
+            "oooooooooesooooooooo"..
             "oooooooooeeeeeeeeebo"
 
 -- Floor
@@ -72,5 +73,5 @@ grid_floor = "eeeeeeeeewvwvwvwvwvw"..
              "eeeeeeeeeveeeeeeeeee"..
              "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
+             "eeeeeeeeewveeeeeeeee"..
              "eeeeeeeeevwvwvwvwvwe"

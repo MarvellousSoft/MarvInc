@@ -26,6 +26,7 @@ function state:update(dt)
     Util.destroyAll()
 
     pc_box:update(dt)
+    room:update(dt)
     StepManager:update(dt)
 
     Util.updateTimers(dt)

@@ -60,6 +60,7 @@ function setup.config()
 
     -- Spritesheets
     SHEET_IMG = {}
+    SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
 
     -- Room Img
     ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")

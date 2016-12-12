@@ -27,6 +27,8 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 
 require "classes.pc-box"
+require "classes.sprite"
+require "classes.spriteobject"
 require "classes.object"
 require "classes.obstacle"
 require "classes.dead"
@@ -37,9 +39,6 @@ require "classes.reader"
 require "classes.room"
 require "classes.opened_email"
 StepManager = require "classes.stepmanager"
-
-
-
 
 --GAMESTATES
 GS = {

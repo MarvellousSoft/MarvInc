@@ -190,6 +190,14 @@ function Room:draw()
     love.graphics.draw(ROOM_CAMERA_IMG, self.pos.x- 45, self.pos.y - 45)
 end
 
+function Room:update()
+    for _, v in pairs(self.grid_obj) do
+        if v.death and v.destroy then
+            v.destroy()
+        end
+    end
+end
+
 function Room:kill()
     self.bot:kill(self.grid_obj)
 end

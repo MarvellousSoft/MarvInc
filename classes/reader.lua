@@ -1,4 +1,5 @@
 require "classes.primitive"
+local Color = require "classes.color.color"
 
 -- Reader reads a .lua level and converts it into a Puzzle
 
@@ -45,10 +46,12 @@ function Reader:read(filename)
             self.puz.grid_floor[j][i] = _t[_t.grid_floor:sub(k, k)]
             if _co ~= bot[1] and _t[_co] ~= nil then
                 local _proto = _t[_co]
+                local _clr = _proto[5] and Color[_proto[5]]() or nil
                 if _proto[1] == "obst" then
-                    Obstacle(self.puz.grid_obj, j, i, _proto[3], _proto[2])
+                    Obstacle(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
                 elseif _proto[1] == "dead" then
-                    Dead(self.puz.grid_obj, j, i, _proto[3], _proto[2])
+                    print(j, i, _proto[3], _proto[2], _proto[4], _clr)
+                    Dead(self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr)
                 end
             end
             k = k + 1
