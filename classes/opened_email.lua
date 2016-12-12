@@ -188,7 +188,7 @@ end
 
 -- UTILITY FUNCTIONS
 
-function opened_email_funcs.closeOpenEmail()
+function opened_email_funcs.close()
     local mailTab = Util.findId("email_tab")
     mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
     mailTab.email_opened.death = true
