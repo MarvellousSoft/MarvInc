@@ -24,9 +24,9 @@ Popup = Class{
         local _bbord = 5 -- button border
         local _w, _h = 2*_bbord + self.fnt:getWidth(b1.text), self.fnt:getHeight() + _bbord
         -- Relative to popup box
-        local _x1 = self.border + (self.w - _w)/2 + _bbord
-        self.h = self.fnt:getHeight() * (self.fnt:getWidth(text) / w) +
-            self.title_fnt:getHeight() + _h + self.border + 100
+        local _x1 = (self.w - _w)/2
+        local _, _wh = self.fnt:getWrap(self.text, self.w - self.border)
+        self.h = #_wh*self.fnt:getHeight() + self.title_fnt:getHeight() + _h + self.border + 100
         local _y = self.h - _h - self.border
 
         if b2 then

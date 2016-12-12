@@ -40,6 +40,7 @@ require "classes.room"
 require "classes.opened_email"
 StepManager = require "classes.stepmanager"
 LoreManager = require "classes.lore-manager"
+PopManager  = require "classes.popmanager"
 
 --GAMESTATES
 GS = {

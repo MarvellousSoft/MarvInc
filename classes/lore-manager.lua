@@ -1,3 +1,4 @@
+local Color = require "classes.color.color"
 
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
@@ -114,6 +115,24 @@ end
 function lore.first_done()
     if level_done.first then return end
     level_done.first = true
+
+    PopManager.new("Congratulations!",
+        "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
+        "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
+        "been added to the coffee room employee board under your name. Every month we select "..
+        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
+        "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
+        "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
+        "NEWELL JR].\n\n"..
+        "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
+        "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
+        Color.blue(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Thank you for this wonderful opportunity",
+            clr = Color.blue()
+        })
 
     email1.is_completed = true
 

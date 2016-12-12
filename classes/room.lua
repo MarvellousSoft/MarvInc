@@ -31,14 +31,6 @@ Room = Class{
         ROOM_CW, ROOM_CH = self.grid_cw, self.grid_ch
         ROOM_ROWS, ROOM_COLS = self.grid_r, self.grid_c
 
-        -- Initial bot
-        Signal.register("death", function()
-            self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
-            if self.default_bot_turn then
-                self.bot:turn(self.default_bot_turn)
-            end
-        end)
-
         -- Border
         self.border_clr = Color.new(132, 20, 30)
 
@@ -83,6 +75,25 @@ Room = Class{
             self:apply()
         end)
 
+        -- Death
+        Signal.register("death", function()
+            local n = Util.findId("info_tab").dead
+            PopManager.new("Bot #"..n.." has been destroyed!",
+                "Communications with test subject #"..n.." \""..self.bot.name.."\" have been "..
+                "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
+                "been dispatched to HR and this incident shall be added to your personal file.",
+                 Color.red(), {
+                    func = function()
+                        self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+                        if self.default_bot_turn then
+                            self.bot:turn(self.default_bot_turn)
+                        end
+                    end,
+                    text = "I will be more careful next time",
+                    clr = Color.blue()
+                })
+        end)
+
         ROOM = self
     end
 }
@@ -111,7 +122,6 @@ function Room:from(puzzle)
     end
 
     self.extra_info = puzzle.extra_info
-
     Util.findId("code_tab"):reset(puzzle)
 end
 
