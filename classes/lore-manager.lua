@@ -231,7 +231,7 @@ Carry on.]], "Automated Introduction System", false,
 
 - Up Arrow/Down Arrow: Scrolls your email list.
 
-Remember them all. As we say here in Marvellous Inc. "Mouse are for chumps and Larry from accounting".
+Remember them all. As we say here in Marvellous Inc. "Mice are for chumps and Larry from accounting".
 
 Stay practical, and carry on.]],
 "Automated Introduction System", true)
@@ -357,41 +357,29 @@ function lore.pickup_done()
 
     timer.after(3, function()
     email.register = Mail.new("Using memory",
-[[Let's jump up a notch. You will now learn to use the registers in your terminal, the write and the add commands.
+[[Let's jump up a notch shall we? You will now learn to use the registers in your terminal, the write and the add commands.
 
-Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you would ahve to write [5].
+Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you would ahve to write [5]. You can see them just below your terminal notepad, with their respective numbers and contents.
 
-The add command receives two arguments: the first is the position
+The add command receives two arguments: the first is the adress of the register you will add a value. The second is the value you will add.
 
-add <position> <value>
-write <value> <direction>
-write <value>
+Example that adds 5 to the register 2:
+- add 2 5
 
-The new command is jmp. You provide a label, and it will jump to the line you defined the label on.
+Example that adds the content of the register 5 in the register 2:
+- add 2 [5]
 
-To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+In this last example, if the contents of the registers 2 and 5 were 30 and 100, the final content of the register 2 would be 130.
 
-After defining a label, you can write any one command in the same line, however the label must come before the command.
-But that is optional.
+Lastly, the write command receives a value argument, and a second optional direction argument. You'll use the write command to write values in a console, which are the big colorful computer objects in The Room. The direction will decide which direction the console is from the robot. If not provided, as usual, the robot will try to write in the tile towards the direction he is facing.
 
-Example that makes the bot walking in circles:
-- banana:
-- walk 2
-- turn counter
-- jmp banana
+Make sure to understand all these concepts. Or your stay here at Marvellous Inc. will be quite short. :)
 
-Example that makes the bot spining endlessly:
-    - awesomeLabel66: turn clock
-    - jmp awesomeLabel66
-
-Complete this puzzle quickly. We'd greatly appreciate.
-
-
-As always, carry on.]], "Automated Introduction System", false,
+Best of Luck. Carry on.]], "Automated Introduction System", false,
         function()
             ROOM:connect("register")
             OpenedMail:close()
-        end, true, function() Info.addCommand("add <position> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
+        end, true, function() Info.addCommand("add <adress> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
         end)
 
 end
@@ -432,22 +420,7 @@ function lore.register_done()
         })
 end
 
-function lore.jmp_done()
-    StepManager:pause()
-    if level_done.jmp then default_completed() return end
-    level_done.jmp = true
-    PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
-        Color.green(), {
-            func = function()
-                ROOM:disconnect()
-            end,
-            text = "Ok",
-            clr = Color.black()
-        })
-end
-
-function lore.register_done()
+function lore.bla_done()
     StepManager:pause()
     if level_done.register then default_completed() return end
     level_done.register = true
