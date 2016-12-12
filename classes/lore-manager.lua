@@ -134,7 +134,7 @@ function lore.first_done()
 
     email.first.is_completed = true
 
-    timer.after(1, function()
+    timer.after(3, function()
     email.walkx = Mail.new("Keep going",
 [[Well done.
 
@@ -153,23 +153,23 @@ Keep up the good work, and carry on.]], "Automated Introduction System", false,
             end, true, function() Info.addCommand("walk <steps>") Info.addCommand("walk <direction> <steps>") end)
         end)
 
-    timer.after(3, function()
+    timer.after(8, function()
     Mail.new("Terminal Tips",
 [[The <terminal> is a powerful tool.
 
 As we said before, you should use it just like any text editor. To mention some of its features, you can
 
-    - Move the cursor with your mouse or arrow keys
+- Move the cursor with your mouse or arrow keys
 
-    - Select text with the mouse or holding shift and pressing the arrow keys
+- Select text with the mouse or holding shift and pressing the arrow keys
 
-    - Use the 'end' or 'home' keys
+- Use the 'end' or 'home' keys
 
-    - Copy, paste, cut, undo or redo with the usual shortcuts (ctrl+key)
+- Copy, paste, cut, undo or redo with the usual shortcuts (ctrl+key)
 
-    - Autocomplete text with tab
+- Autocomplete text with tab
 
-    - And much more!
+- And much more!
 
 Exploring is part of the job, so get used to it.
 
@@ -195,11 +195,11 @@ function lore.walkx_done()
 
     email.walkx.is_completed = true
 
-    timer.after(2, function()
+    timer.after(3, function()
     email.turn = Mail.new("Making good progress",
-[[Good job, Employee #]]..EMPLOYER_NUMBER[[. Lets learn some new instructions.
+[[Good job, Employee #]].. EMPLOYER_NUMBER .. [[. Lets learn some new instructions.
 
-Use the turn command to, surprise, turn the test subject. You can provide a direction, or clock/counter to turn the robot clockwise or counterclockwise.
+Use the turn command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a direction, or clock/counter to turn the robot clockwise or counterclockwise.
 
 Example:
     - turn south
@@ -217,6 +217,26 @@ Carry on.]], "Automated Introduction System", false,
     end, true, function() Info.addCommand("turn clock") Info.addCommand("turn counter") Info.addCommand("turn <direction>") end)
     end)
 
+    timer.after(8, function()
+    Mail.new("Useful Shortcuts",
+[[Here are some useful shortcuts to enhance your working experience here at Marvellous Inc.
+
+- Ctrl + Enter: Starts the simulation.
+
+- Space: Toggle play or pause for the simulation if its already running.
+
+- PageDown/PageUp: Move between tabs.
+
+- Up Arrow/Down Arrow: Scrolls your email list.
+
+Remember them all. As we say here in Marvellous Inc. "Mouse are for chumps and Larry from accounting".
+
+Stay practical, and carry on.]],
+    "Automated Introduction System", true)
+    end
+    )
+
+
 end
 
 function lore.turn_done()
@@ -226,11 +246,11 @@ function lore.turn_done()
     email.turn.is_completed = true
 
     PopManager.new("Congratulations!",
-        "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
+        "You have passed basic training. We at Marvellous Inc. proud ourselves on our "..
         "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
         "been added to the coffee room employee board under your name. Every month we select "..
         "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
-        "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
+        "in the coffee room for this outstanding and obedient member of the Marvellous Inc. "..
         "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
         "NEWELL JR].\n\n"..
         "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..

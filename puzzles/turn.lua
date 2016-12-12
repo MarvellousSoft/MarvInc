@@ -21,7 +21,7 @@ o = {"obst", false, "wall_none"}
 objs = {
     {-- Condition function
     function(self, room)
-        return room.bot.pos.x == 14 and room.bot.pos.y == 15 and room.bor.r[2] == 0
+        return room.bot.pos.x == 14 and room.bot.pos.y == 16 and room.bot.r[2] == 1
     end, "Go to the green tile, stop, then look to the blue tile.",
     _G.LoreManager.turn_done}
 }
@@ -35,16 +35,16 @@ grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooo.ooooo"..
-            "oooooooooooooo.ooooo"..
-            "ooooooooooooo...oooo"..
-            "ooooooo.........oooo"..
-            "ooooooo.ooooo...oooo"..
-            "ooooooo.oooooooooooo"..
-            "ooob....oooooooooooo"..
+            "ooooooooooooo.oooooo"..
+            "ooooooooooooo.oooooo"..
+            "ooooooooooooo.oooooo"..
+            "ooooooooooooo.oooooo"..
+            "ooooooooooooo.oooooo"..
+            "oooooooooooo...ooooo"..
+            "oooooo.........ooooo"..
+            "oooooo.ooooo...ooooo"..
+            "oooooo.ooooooooooooo"..
+            "ooob...ooooooooooooo"..
             "oooooooooooooooooooo"
 
 -- Floor
@@ -61,10 +61,10 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
              ".............t......"..
+             ".............w......"..
+             ".............w......"..
+             ".............w......"..
              ".............w......"..
              "............www....."..
              "......wwwwwwwgw....."..

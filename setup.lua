@@ -51,6 +51,8 @@ function setup.config()
     TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
     TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
     TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")
+    TILES_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
+    TILES_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
     TILES_IMG["solid_lava"] = love.graphics.newImage("assets/images/cold_lava_tile.png")
 
     -- Objects
@@ -59,8 +61,8 @@ function setup.config()
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
     OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
     OBJS_IMG["red_tile"] = TILES_IMG.red_tile
-    OBJS_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
-    OBJS_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
+    OBJS_IMG["green_tile"] = TILES_IMG.green_tile
+    OBJS_IMG["blue_tile"] = TILES_IMG.blue_tile
     OBJS_IMG["bucket"] = love.graphics.newImage("assets/images/bucket.png")
     OBJS_IMG["console"] = love.graphics.newImage("assets/images/console.png")
 
