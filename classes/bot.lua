@@ -8,6 +8,7 @@ local bot = {}
 Bot = Class{
     __includes = {Object},
     init = function(self, grid, i, j)
+        self.steps = 0
         local trait1, trait2, trait3, trait_n
 
         -- i and j are 0-indexed positions in grid
@@ -73,6 +74,14 @@ function Bot:next_block(grid, r, c)
         return nil
     end
     return grid[px][py]
+end
+
+function Bot:move(grid, r, c)
+    local x, y = self.pos.x, self.pos.y
+    Object.move(self, grid, r, c)
+    if x ~= self.pos.x or y ~= self.pos.y then
+        self.steps = self.steps + 1
+    end
 end
 
 function Bot:pickup(grid, r, c)

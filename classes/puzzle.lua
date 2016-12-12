@@ -27,11 +27,11 @@ Puzzle = Class{
         self.objs = nil
 
         -- Lines allowed in terminal
-        self.lines_in_terminal = nil
+        self.lines_on_terminal = nil
         self.memory_slots = nil
     end,
     -- default values
-    lines_in_terminal = 20,
+    lines_on_terminal = 20,
     memory_slots = 10,
     extra_info = ""
 }

@@ -77,7 +77,7 @@ function Reader:read(filename)
         table.insert(self.puz.objs, Objective(v[1], v[2], v[3]))
     end
 
-    self.puz.lines_in_terminal = _t.lines_in_terminal
+    self.puz.lines_on_terminal = _t.lines_on_terminal
     self.puz.memory_slots = _t.memory_slots
     self.puz.extra_info = _t.extra_info
 end

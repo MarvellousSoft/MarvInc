@@ -244,6 +244,20 @@ function lore.turn_done()
         })
 end
 
+function lore.jmp_done()
+    if level_done.jmp then default_completed() return end
+    level_done.jmp = true
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Ok",
+            clr = Color.black()
+        })
+end
+
 function lore.update(dt)
     timer.update(dt)
 end

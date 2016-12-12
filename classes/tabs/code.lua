@@ -376,7 +376,7 @@ end
 
 -- Resets screen for a new puzzle
 function CodeTab:reset(puzzle)
-    self:reset_lines(puzzle.lines_in_terminal)
+    self:reset_lines(puzzle.lines_on_terminal)
     self.memory:setSlots(puzzle.memory_slots)
 end
 
