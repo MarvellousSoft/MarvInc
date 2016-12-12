@@ -24,11 +24,7 @@ function lore.begin()
 
     Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", nil,
-        function()
-            ROOM:connect("first")
-            OpenedMail:close()
-        end, true,
+    "Automated Introduction System", nil, nil,
         function()
             if not read_first_email then
                 read_first_email = true
