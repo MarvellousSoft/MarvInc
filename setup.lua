@@ -88,6 +88,8 @@ function setup.config()
 
     TABS_LOCK = false -- If the tabs cant be clicked
 
+    EMPLOYER_NUMBER = love.math.random(100, 99999)
+
     UNREAD_EMAILS = 0 -- Number of unread emails
 
     -- Current room

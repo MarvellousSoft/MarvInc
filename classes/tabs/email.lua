@@ -83,10 +83,18 @@ function EmailTab:draw()
     for i,e in ipairs(t.email_list) do
 
         --Draw the email box
-        if not e.was_read then
-            color = Color.new(e.email_color)
+        if e.is_puzzle then
+            if e.is_completed then
+                color = Color.new(e.email_puzzle_complete_color)
+            else
+                color = Color.new(e.email_puzzle_uncompleted_color)
+            end
         else
-            color = Color.new(e.email_read_color)
+            if not e.was_read then
+                color = Color.new(e.email_color)
+            else
+                color = Color.new(e.email_read_color)
+            end
         end
         --Set alpha
         color.a = e.alpha
@@ -220,8 +228,11 @@ EmailObject = Class{
         self.handles = {} -- Table containing timer handles related to this object
 
         self.alpha = 0 -- Alpha value of email color
-        self.email_color = Color.new(0, 0, 240) -- Color of a new email
-        self.email_read_color = Color.new(150, 30, 180) -- Color of a already read email
+        self.email_color = Color.new(0,0,230) -- Color of a new email
+        self.email_read_color = Color.new(150, 50, 140) -- Color of a already read email
+        self.email_puzzle_complete_color = Color.new(70, 50, 200) -- Color of an completed puzzle
+        self.email_puzzle_uncompleted_color = Color.new(250, 50, 200) -- Color of an uncompleted puzzle
+
 
         self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
         self.going_up_amount = 0 -- Amount to go up (for when an email above it is deleted)
@@ -230,6 +241,9 @@ EmailObject = Class{
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
         self.reply_func = _reply_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
         self.can_reply = true -- If email can be replyied
+
+        self.is_puzzle = false -- If this email is a puzzle invitation
+        self.is_completed = false -- If the puzzle was completed already once
 
         -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
         self.time = os.date("%x, %I:%M %p")
@@ -242,7 +256,7 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, can_be_deleted, reply_func)
+function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puzzle)
     local e, mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -254,7 +268,7 @@ function email_funcs.new(title, text, author, can_be_deleted, reply_func)
     number = tab.email_cur
 
     e = EmailObject(title, text, author, can_be_deleted, reply_func, number)
-
+    e.is_puzzle = is_puzzle
     -- Add fade-in effect to email
     e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
 
