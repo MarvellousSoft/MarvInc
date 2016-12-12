@@ -68,6 +68,10 @@ function setup.config()
     -- Background
     BG_IMG = love.graphics.newImage("assets/images/background.png")
 
+    -- Miscellaneous images
+    MISC_IMG = {}
+    MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
+
     -- Bot images (assume array part only)
     HEAD = {}
     table.insert(HEAD, love.graphics.newImage("assets/images/body_1.png"))

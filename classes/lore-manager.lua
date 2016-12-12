@@ -23,7 +23,7 @@ The following puzzle will help you understand these concepts. Please direct your
 
 Good Luck, and carry on.]], "Automated Introduction System", false,
     function()
-        ROOM:from(Reader("puzzles/first.lua"):get())
+        ROOM:connect("first")
         OpenedMail:close()
     end)
     end)

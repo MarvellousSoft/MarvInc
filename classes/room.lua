@@ -63,6 +63,15 @@ Room = Class{
         self.back_sx = self.grid_w/BG_IMG:getWidth()
         self.back_sy = self.grid_h/BG_IMG:getHeight()
 
+        -- Static transition
+        self.static_dhdl = nil
+        self.static_rhdl = nil
+        self.static_img = MISC_IMG["static"]
+        self.static_sx = self.grid_w / self.static_img:getWidth()
+        self.static_sy = self.grid_h / self.static_img:getHeight()
+        self.static_r = 0
+        self.static_on = false
+
         -- Room number and name
         self.n = nil
         self.name = nil
@@ -149,9 +158,26 @@ function Room:clear()
     StepManager:stopNoKill()
 end
 
+function Room:connect(name)
+    print("hey")
+    self.static_on = true
+    self.static_dhdl = MAIN_TIMER.after(1.5, function()
+        self.static_on = false
+        MAIN_TIMER.cancel(self.static_rhdl)
+        self:from(Reader("puzzles/"..name..".lua"):get())
+    end)
+    self.static_rhdl = MAIN_TIMER.every(0.05, function()
+        self.static_r = self.static_r + math.pi/2
+    end)
+end
+
 function Room:disconnect()
     self.mode = "offline"
     self:clear()
+end
+
+function Room:connected()
+    return self.mode == "online"
 end
 
 function Room:draw()
@@ -203,6 +229,15 @@ function Room:draw()
             end
         end
 
+    elseif self.static_on then
+        Color.set(self.back_clr)
+        love.graphics.push()
+        love.graphics.origin()
+        love.graphics.draw(self.static_img,
+            self.grid_x + self.grid_w/2, self.grid_h/2 + self.grid_y,
+            self.static_r, self.static_sx, self.static_sy,
+            self.static_img:getWidth()/2, self.static_img:getHeight()/2)
+        love.graphics.pop()
     else
         Color.set(self.back_clr)
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
