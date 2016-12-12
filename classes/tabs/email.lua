@@ -17,7 +17,7 @@ EmailTab = Class{
 
         self.email_opened = nil -- If an email is opened
 
-        self.main_color = Color.new(150, 30, 240) -- Color of box behind
+        self.main_color = Color.new(150, 30, 240, 60) -- Color of box behind
 
         -- Stencil function for scrolling
         self.stencil = function() love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h) end
@@ -92,7 +92,7 @@ function EmailTab:draw()
         color.a = e.alpha
 
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 5)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
@@ -127,10 +127,11 @@ function EmailTab:draw()
         love.graphics.setFont(font)
         love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y - t.dy*(t.email_height + t.email_border) + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2 + e.juicy_bump)
 
+        -- Print "new" label on new emails
         if not e.was_read then
             love.graphics.setFont(FONTS.fira(15))
             Color.set(Color.new(240, 180, 120, e.alpha))
-            love.graphics.print("new",  t.pos.x + t.email_border + 8, t.pos.y - t.dy*(t.email_height + t.email_border) - (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
+            love.graphics.print("new",  t.pos.x + t.email_border + t.w - 40, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump + 15)
         end
     end
 
@@ -195,8 +196,8 @@ EmailObject = Class{
         self.handles = {} -- Table containing timer handles related to this object
 
         self.alpha = 0 -- Alpha value of email color
-        self.email_color = Color.new(0, 40, 200) -- Color of a new email
-        self.email_read_color = Color.new(150, 30, 150) -- Color of a already read email
+        self.email_color = Color.new(0, 0, 240) -- Color of a new email
+        self.email_read_color = Color.new(150, 30, 180) -- Color of a already read email
 
         self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
         self.going_up_amount = 0 -- Amount to go up (for when an email above it is deleted)

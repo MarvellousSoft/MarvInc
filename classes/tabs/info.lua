@@ -10,7 +10,7 @@ InfoTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
-        self.main_color =  Color.new(150, 200, 120)
+        self.main_color =  Color.new(70, 100, 120, 60)
         self.tp = "info_tab"
 
         self.dead = 0

@@ -18,7 +18,7 @@ CodeTab = Class{
         -- Quantity of lines scrolled
         self.dy = 0
 
-        self.color = Color.new(0, 0, 10)
+        self.color = Color.new(0, 0, 10, 80)
 
         -- Font stuff
         self.font = FONTS.fira(18)

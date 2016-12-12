@@ -24,11 +24,11 @@ PcBox = Class{
         local b = WIN_BORD
 
         --Saturation and lightness when a tab is focused
-        self.focus_saturation = 100
-        self.focus_lightness = 80
+        self.focus_saturation = 180
+        self.focus_lightness = 180
         --Saturation and lightness when a tab is not focused
-        self.unfocus_saturation = 20
-        self.unfocus_lightness = 40
+        self.unfocus_saturation = 120
+        self.unfocus_lightness = 80
 
         -- Current tab active
         self.cur_tab = "email"
@@ -39,11 +39,11 @@ PcBox = Class{
         local h = button_tab_height
         self.buttons = {}
         self.buttons.email = But.create_tab(self.pos.x, self.pos.y, self.w / 3, h,
-        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness), "email_tab_but")
+        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness, 70), "email_tab_but")
         self.buttons.code = But.create_tab(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
-        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(150,self.unfocus_saturation,self.unfocus_lightness))
+        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(150,self.unfocus_saturation,self.unfocus_lightness, 70))
         self.buttons.info = But.create_tab(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
-        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(10,self.unfocus_saturation,self.unfocus_lightness))
+        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(60,self.unfocus_saturation,self.unfocus_lightness, 70))
 
         -- Tab id's
 
@@ -57,7 +57,7 @@ PcBox = Class{
 
 function PcBox:draw()
     Color.set(self.buttons[self.cur_tab].color)
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height)
     tabs[self.cur_tab]:draw()
 end
 
