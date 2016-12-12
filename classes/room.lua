@@ -13,7 +13,7 @@ Room = Class{
 
         self.tp = "room"
         -- Online or offline
-        self.mode = "online"
+        self.mode = "offline"
 
         -- Grid
         self.grid_clr = Color.blue()
@@ -47,11 +47,21 @@ Room = Class{
         self.mrkr_clr = Color.red()
         -- Relative to pos
         self.mrkr_x = self.w - self.grid_cw - self.mrkr_fnt:getWidth("LIVE")
+        self.mrkr_offx = self.w - self.grid_cw - self.mrkr_fnt:getWidth("OFFLINE")
         self.mrkr_y = 0
         self.mrkr_drw = true
         self.mrkr_timer = MAIN_TIMER.every(1, function()
             self.mrkr_drw = not self.mrkr_drw
         end)
+
+
+        -- Offline background
+        self.back_fnt = FONTS.fira(50)
+        self.back_clr = Color.white()
+        self.back_tclr = Color.white()
+        self.back_img = BG_IMG
+        self.back_sx = self.grid_w/BG_IMG:getWidth()
+        self.back_sy = self.grid_h/BG_IMG:getHeight()
 
         -- Room number and name
         self.n = nil
@@ -64,14 +74,13 @@ Room = Class{
             self:apply()
         end)
 
-        self:from(Reader("puzzles/test.lua"):get())
-
         ROOM = self
     end
 }
 
 function Room:from(puzzle)
     self:clear()
+    self.mode = "online"
     self.name = puzzle.name
     self.n = puzzle.n
     INIT_POS = puzzle.init_pos
@@ -140,6 +149,11 @@ function Room:clear()
     StepManager:stopNoKill()
 end
 
+function Room:disconnect()
+    self.mode = "offline"
+    self:clear()
+end
+
 function Room:draw()
 
     -- Border
@@ -157,7 +171,7 @@ function Room:draw()
             love.graphics.circle("fill", self.mrkr_x - 25, self.mrkr_y + 17, 10)
         end
     else
-        love.graphics.print("OFFLINE", self.mrkr_x, self.mrkr_y)
+        love.graphics.print("OFFLINE", self.mrkr_offx, self.mrkr_y)
     end
     love.graphics.pop()
 
@@ -165,27 +179,37 @@ function Room:draw()
     love.graphics.push()
     love.graphics.translate(self.grid_x, self.grid_y)
 
-    -- Floor
-    for i=1, self.grid_r do
-        local _x = (i-1)*self.grid_cw
-        for j=1, self.grid_c do
-            local obj = self.grid_obj[i][j]
-            local _bg = true
-            if obj ~= nil then
-              _bg = obj.bg
-            end
-            local cell = self.grid_floor[i][j]
-            if cell ~= nil and _bg then
-                local img = TILES_IMG[cell]
-                local _y = (j-1)*self.grid_ch
-                local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
-                Color.set(Color.white())
-                love.graphics.draw(img, _x, _y, nil, _sx, _sy)
-            end
-            if obj ~= nil then
-                obj:draw()
+    if self.mode == "online" then
+        -- Floor
+        for i=1, self.grid_r do
+            local _x = (i-1)*self.grid_cw
+            for j=1, self.grid_c do
+                local obj = self.grid_obj[i][j]
+                local _bg = true
+                if obj ~= nil then
+                  _bg = obj.bg
+                end
+                local cell = self.grid_floor[i][j]
+                if cell ~= nil and _bg then
+                    local img = TILES_IMG[cell]
+                    local _y = (j-1)*self.grid_ch
+                    local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
+                    Color.set(Color.white())
+                    love.graphics.draw(img, _x, _y, nil, _sx, _sy)
+                end
+                if obj ~= nil then
+                    obj:draw()
+                end
             end
         end
+
+    else
+        Color.set(self.back_clr)
+        love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
+        love.graphics.setFont(self.back_fnt)
+        Color.set(self.back_tclr)
+        love.graphics.printf("room.hack", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
+            "center")
     end
 
     -- Set origin to (0, 0)
@@ -197,10 +221,18 @@ function Room:draw()
 end
 
 function Room:update()
-    for _, v in pairs(self.grid_obj) do
-        if v.death and v.destroy then
-            v.destroy()
+    if self.mode == "online" then
+        for _, v in pairs(self.grid_obj) do
+            if v.death and v.destroy then
+                v.destroy()
+            end
         end
+    end
+end
+
+function Room:keyPressed(key)
+    if key == "f8" then
+        self:disconnect()
     end
 end
 

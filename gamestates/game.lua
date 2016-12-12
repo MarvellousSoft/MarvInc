@@ -56,6 +56,7 @@ function state:keypressed(key)
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)
+        room:keyPressed(key)
     end
 
 end
