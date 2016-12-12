@@ -26,6 +26,8 @@ objs = {
     _G.LoreManager.first_done}
 }
 
+extra_info = nil
+
 grid_obj = "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..

@@ -34,10 +34,13 @@ InfoTab = Class{
         self.portrait_w = 80
         self.portrait_h = 80
 
+        -- Colors
         self.text_color1 = Color.new(45,140,140)
         self.text_color2 = Color.new(80,140,140)
         self.text_color3 = Color.new(35,140,140)
 
+        -- Known commands table
+        self.commands = {"walk", "walk <direction>", "walk <value>", "turn"}
 
     end
 }
@@ -115,25 +118,50 @@ function InfoTab:draw()
         font = FONTS.fira(20)
         love.graphics.setFont(font)
         local h = 0
+        local _, wraptext
+
         Color.set(self.text_color3)
         -- Print all objectives descriptions
         for i,t in ipairs(ROOM.objs) do
             text = "- "..t.desc
             love.graphics.printf(text, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
-            h = h + font:getWrap(text, self.w - 20)
+            _, wraptext = font:getWrap(text, self.w - 20)
+            h = h + #wraptext*font:getHeight()
         end
 
         -- Extra Info
-        if ROOM.extra_info then
+        if ROOM.extra_info and ROOM.extra_info ~= "" then
             font = FONTS.fira(24)
             love.graphics.setFont(font)
             Color.set(self.text_color2)
-            love.graphics.print("Extra info:", self.pos.x + 10, self.pos.y + self.id_file_y + 400 + h)
+            love.graphics.print("Extra info:", self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
             font = FONTS.fira(20)
             love.graphics.setFont(font)
             Color.set(self.text_color3)
             -- Print the info
-            love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
+            love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 415 + h, self.w - 20)
+        end
+
+    else
+        --Outside a puzzle
+
+        -- Tab title
+        font = FONTS.fira(30)
+        text = "KNOWN COMMANDS"
+        font_w = font:getWidth(text)
+        love.graphics.setFont(font)
+        Color.set(self.text_color3)
+        love.graphics.print(text, self.pos.x + self.w/2 - font_w/2, self.pos.y + 20)
+
+        local h = 0
+        font = FONTS.fira(22)
+        love.graphics.setFont(font)
+        Color.set(self.text_color2)
+        -- List known commands
+        for i,t in ipairs(self.commands) do
+            text = "- "..t
+            love.graphics.print(text, self.pos.x + 10, self.pos.y + self.id_file_y + 60 + h)
+            h = h + font:getHeight(text)
         end
 
     end
