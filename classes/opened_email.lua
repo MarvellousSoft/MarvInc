@@ -7,7 +7,7 @@ local opened_email_funcs = {}
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply, _close_func)
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
@@ -41,6 +41,8 @@ OpenedEmail = Class{
         self.reply_y = self.pos.y + self.h - 100 -- Y position value of reply button (related to opened email pos)
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
+
+        self.close_func = _close_func -- Function to call when email is closed (or deleted)
 
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
@@ -207,7 +209,7 @@ function opened_email_funcs.mousePressed(x, y, but)
        y  > e.pos.y + e.h or
        y < e.pos.y then
            --Clicked outside box
-           e.death = true
+           opened_email_funcs.close()
      else
          if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
              --Clicked on the delete button
@@ -221,10 +223,10 @@ function opened_email_funcs.mousePressed(x, y, but)
      end
 end
 
-function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply, close_func)
     local e
 
-    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply, close_func)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e

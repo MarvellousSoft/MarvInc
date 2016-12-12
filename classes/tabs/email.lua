@@ -188,7 +188,7 @@ function EmailTab:mousePressed(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
+                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.close_func)
             end
         end
     else
