@@ -36,7 +36,7 @@ function Bot:blocked(grid, r, c)
         py > c then
         return true
     end
-    return grid[px][py]
+    return grid[px][py] and grid[px][py].tp == 'obst'
 end
 
 function Bot:draw()

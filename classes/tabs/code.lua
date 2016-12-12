@@ -27,19 +27,9 @@ CodeTab = Class{
         -- Lines stuff
         self.line_h = math.ceil(1.1 * self.font_h)
         self.max_char = 30 -- maximum number of chars in a line
-        self.line_cur = 1 -- current number of lines
-        self.line_number = 35 -- maximum number of lines
         self.lines_on_screen = 20
         self.h = self.lines_on_screen * self.line_h -- height of the code box
-        self.lines = {}
-        for i = 1, self.line_number do self.lines[i] = "" end
-
-
-        -- Cursor stuff
-        -- i - line number
-        -- p - position in line -- may be one more than size of string
-        self.cursor = {i = 1, p = 1}
-        self.cursor2 = nil
+        self:reset_lines(30)
 
         self.cursor_mult = 1
         self.cursor_timer = Timer.new()
@@ -67,6 +57,19 @@ CodeTab = Class{
         self:setId "code_tab"
     end
 }
+
+function CodeTab:reset_lines(line_total)
+    self.line_total = line_total -- maximum number of lines
+    self.line_cur = 1 -- current number of lines
+    self.lines = {}
+    for i = 1, self.line_total do self.lines[i] = "" end
+
+    -- Cursor stuff
+    -- i - line number
+    -- p - position in line -- may be one more than size of string
+    self.cursor = {i = 1, p = 1}
+    self.cursor2 = nil
+end
 
 function CodeTab:activate()
     love.keyboard.setKeyRepeat(true)
@@ -99,7 +102,7 @@ function CodeTab:draw()
     love.graphics.setFont(self.font)
     love.graphics.setLineWidth(.2)
     local dx = self.font:getWidth("20:") + 5
-    for i = 0, self.line_number - 1 do
+    for i = 0, self.line_cur - 1 do
         Color.set(Color.green())
         love.graphics.print(string.format("%2d: %s", i + 1, self.lines[i + 1]), self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
         if self.bad_lines and self.bad_lines[i + 1] and self.cursor.i ~= i + 1 then
@@ -187,10 +190,10 @@ local function deleteInterval(self, c, c2)
         self.lines[a.i] = pref .. suf
 
         local rem = b.i - a.i
-        for i = a.i + 1, self.line_number - rem do
+        for i = a.i + 1, self.line_total - rem do
             self.lines[i] = self.lines[i + rem]
         end
-        for i = self.line_number - rem + 1, self.line_number do
+        for i = self.line_total - rem + 1, self.line_total do
             self.lines[i] = ""
         end
 
@@ -220,8 +223,8 @@ function CodeTab:keyPressed(key)
             if #self.lines[c.i - 1] + #self.lines[c.i] > self.max_char then return end
             c.p = #self.lines[c.i - 1] + 1
             self.lines[c.i - 1] = self.lines[c.i - 1] .. self.lines[c.i]
-            for i = c.i, self.line_number - 1 do self.lines[i] = self.lines[i + 1] end
-            self.lines[self.line_number] = ""
+            for i = c.i, self.line_total - 1 do self.lines[i] = self.lines[i + 1] end
+            self.lines[self.line_total] = ""
             self.line_cur = self.line_cur - 1
             c.i = c.i - 1
         else
@@ -235,10 +238,10 @@ function CodeTab:keyPressed(key)
             if #self.lines[c.i] + #self.lines[c.i + 1] > self.max_char then return end
             self.line_cur = self.line_cur - 1
             self.lines[c.i] = self.lines[c.i]  .. self.lines[c.i + 1]
-            for i = c.i + 1, self.line_number - 1 do
+            for i = c.i + 1, self.line_total - 1 do
                 self.lines[i] = self.lines[i + 1]
             end
-            self.lines[self.line_number] = ""
+            self.lines[self.line_total] = ""
         else
             self.lines[c.i] = processDelete(self.lines[c.i], c.p)
         end
@@ -247,9 +250,9 @@ function CodeTab:keyPressed(key)
         deleteInterval(self, c, c2)
 
     elseif key == 'return' then
-        if self.line_cur == self.line_number then return end
+        if self.line_cur == self.line_total then return end
         self.line_cur = self.line_cur + 1
-        for i = self.line_number, c.i + 2, -1 do
+        for i = self.line_total, c.i + 2, -1 do
             self.lines[i] = self.lines[i - 1]
         end
         self.lines[c.i + 1] = c.p == #self.lines[c.i] + 1 and "" or self.lines[c.i]:sub(c.p)
@@ -350,4 +353,10 @@ function CodeTab:checkErrors()
     else
         self.bad_lines = nil
     end
+end
+
+-- Resets screen for a new puzzle
+function CodeTab:reset(puzzle)
+    self:reset_lines(puzzle.lines_in_terminal)
+    self.memory:setSlots(puzzle.memory_slots)
 end

@@ -133,28 +133,52 @@ Jmp = Class {
     type = "JMP"
 }
 
-Mov = Class {}
-
-local function mov_check(t)
+-- Used by all OP dst val commands
+local function dst_val_check(t)
     if #t ~= 3 then return end
     if not Number.create(t[2]) or not Number.create(t[3]) then return end
-    local m = Mov()
-    m.dst = Number.create(t[2])
-    m.src = Number.create(t[3])
-    if m.dst.indir == 0 and (m.dst.num < 0 or m.dst.num >= Util.findId("memory").slots) then return end
-    return m
+    local dst = Number.create(t[2])
+    local val = Number.create(t[3])
+    if dst.indir == 0 and (dst.num < 0 or dst.num >= Util.findId("memory").slots) then return end
+    return dst, val
 end
 
+-- Mov --
+Mov = Class {}
+
 function Mov.create(t)
-    return mov_check(t) or "Incorrect 'mov' parameters"
+    local m = Mov()
+    m.dst, m.val = dst_val_check(t)
+    if m.dst and m.val then return m end
+    return "Incorrect 'mov' parameters"
 end
 
 function Mov:execute()
     local dst = self.dst:evaluate()
-    local src = self.src:evaluate()
-    if not dst or not src then return "invalid!" end
+    local val = self.val:evaluate()
+    if not dst or not val then return "invalid!" end
     local mem = Util.findId("memory")
-    if not mem:set(dst, src) then return "invalid!" end
+    if not mem:set(dst, val) then return "invalid!" end
+end
+
+-- Add --
+Add = Class {}
+
+function Add.create(t)
+    local a = Add()
+    a.dst, a.val = dst_val_check(t)
+    if a.dst and a.val then return a end
+    return "Incorrect 'add' parameters"
+end
+
+function Add:execute()
+    local dst = self.dst:evaluate()
+    local val = self.val:evaluate()
+    if not dst or not val then return "invalid!" end
+    local mem = Util.findId("memory")
+    local prev = mem:get(dst)
+    if prev and mem:set(dst, prev + val) then return end
+    return "invalid!"
 end
 
 function op.read(t)
@@ -171,6 +195,8 @@ function op.read(t)
         return Jmp(t[2])
     elseif t[1] == 'mov' then
         return Mov.create(t)
+    elseif t[1] == 'add' then
+        return Add.create(t)
     end
 end
 

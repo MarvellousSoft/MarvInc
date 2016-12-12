@@ -8,15 +8,15 @@ function parser.parseLine(s)
     local label
     if i then
         if i == 1 then return "No Label" end
-        local p = s:sub(1, i)
+        local p = s:sub(1, i - 1)
         s = s:sub(i + 1)
         if s:find(':') then return "Two or more ':'" end
         for token in p:gmatch("%S+") do
             if label then return "Label Wrong" end
             label = token
         end
-        if label:match("%W") then return "Invalid Label" end
         if not label then return "No Label" end
+        if label:match("%w+") ~= label then return "Invalid Label" end
     end
 
     local t = {}

@@ -37,12 +37,11 @@ function Memory:setSlots(slots)
 
     -- actual memory
     self.vec = {}
-    for i = 1, self.slots do self.vec[i] = math.floor(math.random() * 12) end
+    for i = 1, self.slots do self.vec[i] = 0 end
 end
 
 function Memory:reset()
-    -- get from levelmanager or make it zero or something
-    -- for i = 1, self.slots do self.vec[i] = math.floor(math.random() * 12) end
+    for i = 1, self.slots do self.vec[i] = 0 end
 end
 
 function Memory:get(pos)

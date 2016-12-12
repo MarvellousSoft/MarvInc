@@ -1,6 +1,7 @@
 -- This is a test puzzle
 
 name = "The Game"
+-- Puzzle number
 n = 1
 
 -- Bot
@@ -8,7 +9,10 @@ bot = {'b', "NORTH", {19, 20}}
 
 -- Objects
 e = nil
+-- name, draw background, image
 o = {"obst", false, "wall_o"}
+
+-- options: obst, dead
 
 -- Objective
 objs = {
@@ -18,6 +22,10 @@ objs = {
     end, "Let off some steam, Bennet.",
     function(self, room)
         print("It's not a tumor!")
+        _G.MAIN_TIMER.after(1,
+        function()
+            _G.ROOM:from(_G.Reader("puzzles/maze1.lua"):get())
+        end)
     end}
 }
 

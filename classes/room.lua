@@ -68,6 +68,7 @@ Room = Class{
 }
 
 function Room:from(puzzle)
+    self:clear()
     self.name = puzzle.name
     self.n = puzzle.n
     INIT_POS = puzzle.init_pos
@@ -79,7 +80,6 @@ function Room:from(puzzle)
 
     self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
     self.bot:turn(_G[puzzle.orient.."_R"])
-    print(self.grid_obj[INIT_POS.x][INIT_POS.y])
 
     self.objs = nil
     self.objs = {}
@@ -87,6 +87,8 @@ function Room:from(puzzle)
         self.objs[k] = v
         v:activate()
     end
+
+    Util.findId("code_tab"):reset(puzzle)
 end
 
 function Room:apply()
@@ -123,12 +125,9 @@ function Room:clear()
     self.bot = nil
     self.n = nil
     self.name = nil
-    for k, _ in pairs(self.objs) do
-        self.objs[k] = nil
-    end
-    for k, _ in pairs(Room.queue) do
-        Room.queue[k] = nil
-    end
+    self.objs = {}
+    Room.queue = {}
+    StepManager:stopNoKill()
 end
 
 function Room:draw()

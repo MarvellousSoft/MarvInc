@@ -23,5 +23,12 @@ Puzzle = Class{
 
         -- Objectives
         self.objs = nil
-    end
+
+        -- Lines allowed in terminal
+        self.lines_in_terminal = nil
+        self.memory_slots = nil
+    end,
+    -- default values
+    lines_in_terminal = 20,
+    memory_slots = 10
 }
