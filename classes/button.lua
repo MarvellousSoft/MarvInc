@@ -62,7 +62,7 @@ function Button:draw()
     --Draws button text
     Color.set(self.color)
 
-    love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h)
+    love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h, 10)
     Color.set(Color.green())
     love.graphics.setFont(b.font)
     love.graphics.print(b.text, b.text_x , b.text_y)

@@ -57,7 +57,7 @@ PcBox = Class{
 
 function PcBox:draw()
     Color.set(self.buttons[self.cur_tab].color)
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height)
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height, 10)
     tabs[self.cur_tab]:draw()
 end
 
