@@ -9,7 +9,7 @@ local timer = Timer.new()
 local email1
 function lore.begin()
 
-    timer.after(2, function()
+    timer.after(0, function()
     Mail.new("Welcome Employee #"..EMPLOYER_NUMBER,
     [[Greetings and Salutations!
 
@@ -20,8 +20,13 @@ function lore.begin()
     This Automated System will guide you if you feel disoriented.
 
     Most importantly, have fun and carry on :)]],
-    "Automated Introduction System", false, nil)
-        end)
+    "Automated Introduction System", nil,
+        function()
+            ROOM:connect("first")
+            OpenedMail:close()
+        end, true
+    )
+    end)
 
 
 

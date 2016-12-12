@@ -21,17 +21,18 @@ InfoTab = Class{
 
         -- Id file for showing the bot
         self.id_file_color = Color.new(70, 90, 240, 120)
+        self.id_file_text_color = Color.new(0, 80, 10)
         self.id_file_x = 10
         self.id_file_y = 10
         self.id_file_w = self.w - 2*self.id_file_x
         self.id_file_h = 200
 
         -- Portrat of bot
-        self.id_file_color = Color.new(0, 0, 120, 240)
+        self.portrait_color = Color.new(0, 0, 2000)
         self.portrait_x = 10
         self.portrait_y = 10
-        self.portrait_w = 40
-        self.portrait_h = 40
+        self.portrait_w = 80
+        self.portrait_h = 80
 
         self.fnt = FONTS.fira(28)
         -- Relative to self.pos
@@ -44,30 +45,55 @@ InfoTab = Class{
 }
 
 function InfoTab:draw()
-    local font
+    local font, text
 
     -- Background for tab
     Color.set(self.main_color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
 
     -- Print bot id file
-    --if ROOM:connected() then
+    if ROOM:connected() then
         Color.set(self.id_file_color)
         love.graphics.rectangle("fill", self.pos.x + self.id_file_x, self.pos.y + self.id_file_y, self.id_file_w, self.id_file_h, 10)
+
+
         -- Bot number
         font = FONTS.fira(16)
         love.graphics.setFont(font)
-        --text = "Test subject #"..(self.dead + 1)
-        --font_w = font:getWidth(text)
-        --love.graphics.print("Test subject #"..(self.dead + 1), self.pos.x + self.id_file_x + self.id_file_w - , self.pos.y + self.id_file_y + 5)
+        text = "Test subject #"..(self.dead + 1)
+        font_w = font:getWidth(text)
+        Color.set(self.id_file_text_color)
+        love.graphics.print("Test Subject #"..(self.dead + 1), self.pos.x + self.id_file_x + self.id_file_w - font_w - 10, self.pos.y + self.id_file_y + 5)
+
         -- Bot name
+        love.graphics.setFont(FONTS.fira(25))
+        Color.set(self.id_file_text_color)
+        love.graphics.print("Subject Name:", self.pos.x + self.id_file_x + 110, self.pos.y + self.id_file_y + 30)
         love.graphics.setFont(FONTS.fira(20))
-        --love.graphics.print("Subject name: "..ROOM.bot.name, self.pos.x + self.id_file_x + 40, self.pos.y + self.id_file_y + 30)
+        love.graphics.print(ROOM.bot.name, self.pos.x + self.id_file_x + 310, self.pos.y + self.id_file_y + 35)
+
         -- Bot portrait
         Color.set(self.portrait_color)
-        love.graphics.rectangle("fill", self.portrait_x, self.portrait_y, self.portrait_w, self.portrait_h)
-        --draw bot here
-    --end
+        love.graphics.rectangle("fill", self.pos.x + self.portrait_x + 20, self.pos.y + self.portrait_y + 28, self.portrait_w, self.portrait_h, 5)
+        Color.set(ROOM.bot.body_clr)
+        love.graphics.draw(ROOM.bot.body, self.pos.x + self.portrait_x + 25, self.pos.y + self.portrait_y + 33)
+        Color.set(ROOM.bot.head_clr)
+        love.graphics.draw(ROOM.bot.head, self.pos.x + self.portrait_x + 25, self.pos.y + self.portrait_y + 33)
+
+        -- Bot traits
+        love.graphics.setFont(FONTS.fira(25))
+        Color.set(self.id_file_text_color)
+        love.graphics.print("Subject Traits:", self.pos.x + self.id_file_x + 110, self.pos.y + self.id_file_y + 75)
+        love.graphics.setFont(FONTS.fira(20))
+        text = ROOM.bot.traits[1]
+        for i,trait in ipairs(ROOM.bot.traits) do
+            if i > 1 then
+                text = text..", " ..trait
+            end
+        end
+        love.graphics.printf(text, self.pos.x + self.id_file_x + 10, self.pos.y + self.id_file_y + 120, self.id_file_w - 20, "center")
+
+    end
 
     Color.set(self.txt_clr)
     local _y = self.txt_y

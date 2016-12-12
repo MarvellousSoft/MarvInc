@@ -96,8 +96,13 @@ function setup.config()
     ROOM = nil
 
     NAMES = {"Barry", "Larry", "Terry", "Mary", "Fieri", "Danny", "Kenny", "Benny", "Kelly",
-        "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny", "Nancy",
-        "Manny", "Ellie", "Lenny", "Ziggy"}
+             "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny",
+             "Nancy", "Manny", "Ellie", "Lenny", "Ziggy"
+            }
+    TRAITS = {"Hates Pizza", "Socially Awkward", "Likes Phantom Menace", "Collect Stamps", "Color Blind",
+              "Likes Puppies", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
+              "Germophobe", "Insomniac"
+             }
 
     -- Move orientations
     NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
