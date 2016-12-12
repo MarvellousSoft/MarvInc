@@ -21,6 +21,7 @@ function lore.begin()
     This Automated System will guide you if you feel disoriented.
 
     Most importantly, have fun and carry on :)]],
+
     "Automated Introduction System", nil,
         function()
             ROOM:connect("first")
@@ -42,9 +43,9 @@ Example:
     - walk east
     - walk down
 
-We are assured you are an expert, so no more instructions are needed. The following puzzle will help you understand these concepts.
+We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
 
-Reply this email to start the experiment.
+Reply this email to start the puzzle.
 
 Best of Luck, and carry on.]], "Automated Introduction System", false,
     function()

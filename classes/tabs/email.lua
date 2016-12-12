@@ -259,6 +259,7 @@ EmailObject = Class{
 
 -- Creates a new email and add to the email list
 function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puzzle, close_func)
+
     local e, mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -270,6 +271,7 @@ function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puz
     number = tab.email_cur
 
     e = EmailObject(title, text, author, can_be_deleted, reply_func, close_func, number)
+
     e.is_puzzle = is_puzzle
     -- Add fade-in effect to email
     e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')

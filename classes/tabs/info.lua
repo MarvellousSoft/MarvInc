@@ -171,7 +171,7 @@ end
 
 -- UTILITY FUNCTIONS --
 function info_funcs.addCommand(string)
-    table.insert(self.commands, string)
+    table.insert(Util.findId("info_tab").commands, string)
 end
 
 return info_funcs
