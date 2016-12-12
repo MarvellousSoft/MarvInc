@@ -375,3 +375,15 @@ function CodeTab:reset(puzzle)
     self:reset_lines(puzzle.lines_in_terminal)
     self.memory:setSlots(puzzle.memory_slots)
 end
+
+
+local bak
+-- Store code data
+function CodeTab:store()
+    bak = {self.lines, self.line_cur, self.cursor, self.cursor2}
+end
+
+-- Retrieve code data
+function CodeTab:retrieve()
+    self.lines, self.line_cur, self.cursor, self.cursor2 = unpack(bak)
+end

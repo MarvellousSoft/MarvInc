@@ -189,7 +189,7 @@ function Room:clear()
 end
 
 function Room:connect(name)
-    if self.mode ~= "offline" then self:disconnect() end
+    if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:play()
 
     self.static_on = true
@@ -204,9 +204,25 @@ function Room:connect(name)
     end)
 end
 
-function Room:disconnect()
-    self.mode = "offline"
-    self:clear()
+function Room:disconnect(wait)
+    if wait == nil or wait then
+        SFX.loud_static:play()
+        self.mode = "offline"
+
+        self.static_on = true
+        self.static_dhdl = MAIN_TIMER.after(0.0675, function()
+            SFX.loud_static:stop()
+            self.static_on = false
+            MAIN_TIMER.cancel(self.static_rhdl)
+            self:disconnect(false)
+        end)
+        self.static_rhdl = MAIN_TIMER.every(0.05, function()
+            self.static_r = self.static_r + math.pi/2
+        end)
+    else
+        self.mode = "offline"
+        self:clear()
+    end
 end
 
 function Room:connected()
@@ -372,6 +388,10 @@ end
 
 function Room:blocked()
     return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c)
+end
+
+function Room:next_block()
+    return self.bot:next_block(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 --UTILITY FUNCTIONS--

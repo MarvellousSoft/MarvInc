@@ -21,6 +21,7 @@ end
 
 local function valid_num(x) return type(x) == 'number' and x >= -999 and x <= 999 end
 
+
 -- Returns a new Number created from string s, or nil if it is invalid
 function Number.create(s)
     if s:match("%a") or not s:match("%d") then return end
@@ -263,6 +264,39 @@ Jeq = Class {init = vvl_init, comp = function(a, b) return a == b end, execute =
 -- Jle - Jump lesser or equal --
 Jne = Class {init = vvl_init, comp = function(a, b) return a ~= b end, execute = vvl_execute}
 
+-- Read --
+Read = Class{}
+
+function Read:create(t)
+    if #t > 3 or #t <= 1 then return end
+    local obj = self()
+    local accepted = {north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
+    if t[3] and not accepted[t[3]] then return end
+    obj.reg, obj.dir = valid_register(t[2]), accepted[t[3]]
+    if obj.reg then return obj end
+end
+
+function Read:execute()
+    if self.dir then StepManager:turn(self.dir) end
+    local console = ROOM:next_block()
+    if not console or consoler.tp ~= "console" then return "Trying to read from non-console" end
+    local nx = console:input()
+    if not nx then return "No more input on console" end
+    return Util.findId("memory"):set(self.reg:evaluate(), nx)
+end
+
+-- Write --
+Write = Class{create = Read.create}
+
+function Write:execute()
+    if self.dir then StepManager:turn(self.dir) end
+    local console = ROOM:next_block()
+    if not console or consoler.tp ~= "console" then return "Trying to write to non-console" end
+    local val = Util.findId("memory"):get(self.reg:evaluate())
+    if type(val) ~= 'number' then return val end
+    return console:write(val)
+end
 
 function op.read(t)
     if #t == 0 then return Nop() end
@@ -293,6 +327,10 @@ function op.read(t)
         return vvl_check(t, Jeq)
     elseif t[1] == 'jne' then
         return vvl_check(t, Jne)
+    elseif t[1] == 'read' then
+        return Read:create(t)
+    elseif t[1] == 'write' then
+        return Write:create(t)
     end
 end
 
