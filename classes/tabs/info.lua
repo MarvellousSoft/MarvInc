@@ -43,8 +43,30 @@ InfoTab = Class{
         -- Known commands table
         self.commands = {}
 
+        -- Give up button
+        self.give_up_button_color = Color.new(0,80,120) --Color for give up button box
+        self.give_up_button_text_color = Color.new(0,20,220) --Color for give up button text
+        self.give_up_w = 95 -- Width value of give up button
+        self.give_up_h = 40 -- Height value of give up button
+        self.give_up_x = self.pos.x + self.w - self.give_up_w - 10 -- X position value of give up button (related to opened email pos)
+        self.give_up_y = self.pos.y + self.h - self.give_up_h - 10 -- Y position value of give up button (related to opened email pos)
+
+        self.line_color = Color.new(0,80,40)
+
     end
 }
+
+function InfoTab:mousePressed(x, y, but)
+    local i
+
+    i = self
+
+    -- Disconnect Room if give up button is pressed
+    if but == 1 and ROOM:connected() and Util.pointInRect(x, y, {pos = {x = i.give_up_x, y = i.give_up_y}, w = i.give_up_w, h = i.give_up_h}) then
+        ROOM:disconnect()
+    end
+
+end
 
 function InfoTab:draw()
     local font, text
@@ -142,6 +164,20 @@ function InfoTab:draw()
             -- Print the info
             love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 415 + h, self.w - 20)
         end
+        
+        -- Draw give up button
+
+        -- Make button box
+        Color.set(self.give_up_button_color)
+        love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+        Color.set(self.line_color)
+        love.graphics.setLineWidth(2)
+        love.graphics.rectangle("line", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+
+        -- Make button text
+        love.graphics.setFont(FONTS.fira(20))
+        Color.set(self.give_up_button_text_color)
+        love.graphics.print("give up", self.give_up_x + 6, self.give_up_y + 6)
 
     else
         --Outside a puzzle
@@ -150,15 +186,18 @@ function InfoTab:draw()
         font = FONTS.fira(30)
         text = "KNOWN COMMANDS"
         font_w = font:getWidth(text)
+        font_h = font:getHeight()
         love.graphics.setFont(font)
         Color.set(self.text_color3)
         love.graphics.print(text, self.pos.x + self.w/2 - font_w/2, self.pos.y + 20)
+        -- Draw line
+        love.graphics.line(self.pos.x + self.w/2 - font_w/2 - 10, self.pos.y + 20 + font_h + 5, self.pos.x + self.w/2 - font_w/2 + font_w + 10, self.pos.y + 20 + font_h + 5)
 
+        -- List known commands
         local h = 0
         font = FONTS.fira(22)
         love.graphics.setFont(font)
         Color.set(self.text_color2)
-        -- List known commands
         for i,t in ipairs(self.commands) do
             text = "- "..t
             love.graphics.print(text, self.pos.x + 10, self.pos.y + self.id_file_y + 60 + h)

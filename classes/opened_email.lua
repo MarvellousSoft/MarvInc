@@ -54,7 +54,7 @@ OpenedEmail = Class{
 
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
-        self.line_color_3 = Color.new(0,30,20) -- Color for outrlining delete button
+        self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
         self.title_color = Color.new(150,180,80) -- Color for title
         self.content_color = Color.new(150,0,60) -- Color for rest of email content
