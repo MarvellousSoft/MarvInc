@@ -28,6 +28,7 @@ function state:keypressed()
 end
 
 function state:mousepressed()
+    Gamestate.switch(GS.GAME)
 end
 
 return state

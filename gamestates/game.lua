@@ -2,6 +2,7 @@ local Rooms = require "classes.room"
 local PcBox = require "classes.pc-box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
+local LoreManager = require "classes.lore-manager"
 
 --MODULE FOR THE GAMESTATE: GAME--
 
@@ -9,11 +10,13 @@ local state = {}
 local pc_box
 local room
 
+-- DONT USE LEAVE BEFORE FIXING THIS
 function state:enter()
 
     room = Rooms.create()
     pc_box = PcBox.create()
 
+    LoreManager.begin()
 end
 
 function state:leave()

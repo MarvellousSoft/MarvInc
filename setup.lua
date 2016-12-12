@@ -37,6 +37,7 @@ ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 BUTS_IMG = {}
 BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
 BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
+BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
 BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
 BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
 

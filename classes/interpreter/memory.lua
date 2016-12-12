@@ -50,7 +50,6 @@ end
 
 function Memory:set(dst, src)
     if dst < 0 or dst > self.slots then return false end
-    print("set", dst, src)
     self.vec[dst + 1] = src
     return true
 end

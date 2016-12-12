@@ -76,6 +76,10 @@ function StepManager:fast()
     go_speed(self, .05)
 end
 
+function StepManager:superfast()
+    go_speed(self, .001)
+end
+
 function StepManager:pause()
     if not self.running then return end
     self.tmp = self.code

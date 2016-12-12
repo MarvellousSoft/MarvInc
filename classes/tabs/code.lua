@@ -40,7 +40,7 @@ CodeTab = Class{
         -- Buttons
         local bsz = 50
         local by = self.pos.y + self.original_h - bsz
-        local bx = self.pos.x + self.w / 4
+        local bx = self.pos.x + self.w / 5
         self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager:stop() end)
         bx = bx + bsz + 20
         self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() StepManager:pause() end)
@@ -48,7 +48,9 @@ CodeTab = Class{
         self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager:play() end)
         bx = bx + bsz + 20
         self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager:fast() end)
-        self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b}
+        bx = bx + bsz + 20
+        self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager:superfast() end)
+        self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b, self.superfast_b}
 
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 12)

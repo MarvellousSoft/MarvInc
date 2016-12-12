@@ -66,7 +66,8 @@ local function walk_check(t)
     end
     if nums > 1 or alps > 1 then return end
     local w = Walk()
-    local accepted = {north = true, west = true, south = true, east = true}
+    local accepted = {north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
     for i = 2, #t do
         if Number.create(t[i]) then
             w.x = Number.create(t[i])
@@ -77,7 +78,7 @@ local function walk_check(t)
             if not accepted[t[i]] then
                 return
             else
-                w.dir = t[i]
+                w.dir = accepted[t[i]]
             end
         end
     end
@@ -111,9 +112,10 @@ Turn = Class {
 
 local function turn_check(t)
     if #t ~= 2 then return end
-    local accepted = {counter = true, clock = true, north = true, west = true, east = true, south = true}
+    local accepted = {counter = "counter", clock = "clock", north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
     if not accepted[t[2]] then return end
-    return Turn(t[2])
+    return Turn(accepted[t[2]])
 end
 
 function Turn.create(t)
@@ -161,6 +163,14 @@ function Mov:execute()
     if not mem:set(dst, val) then return "invalid!" end
 end
 
+-- Limits the values in the range -999 .. 999, wraping automatically
+local function mod(val)
+    val = val + 999
+    if val < 0 then val = 999 - val end
+    val = val % 1999
+    return val - 999
+end
+
 -- Add --
 Add = Class {}
 
@@ -177,9 +187,31 @@ function Add:execute()
     if not dst or not val then return "invalid!" end
     local mem = Util.findId("memory")
     local prev = mem:get(dst)
-    if prev and mem:set(dst, prev + val) then return end
+    if prev and mem:set(dst, mod(prev + val)) then return end
     return "invalid!"
 end
+
+-- Sub --
+Sub = Class {}
+
+function Sub.create(t)
+    local a = Sub()
+    a.dst, a.val = dst_val_check(t)
+    if a.dst and a.val then return a end
+    return "Incorrect 'sub' parameters"
+end
+
+function Sub:execute()
+    local dst = self.dst:evaluate()
+    local val = self.val:evaluate()
+    if not dst or not val then return "invalid!" end
+    local mem = Util.findId("memory")
+    local prev = mem:get(dst)
+    if prev and mem:set(dst, mod(prev - val)) then return end
+    return "invalid!"
+end
+
+
 
 function op.read(t)
     if #t == 0 then return Nop() end
