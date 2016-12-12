@@ -54,6 +54,7 @@ function setup.config()
 
     -- Objects
     OBJS_IMG = {}
+    OBJS_IMG["wall_none"] = love.graphics.newImage("assets/images/wall_none.png")
     OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
     OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
     OBJS_IMG["red_tile"] = TILES_IMG.red_tile

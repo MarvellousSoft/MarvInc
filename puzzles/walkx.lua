@@ -13,7 +13,7 @@ bot = {'b', "NORTH"}
 -- Objects
 e = nil
 -- name, draw background, image
-o = {"obst", false, "wall_o"}
+o = {"obst", false, "wall_none"}
 
 -- options: obst, dead
 
