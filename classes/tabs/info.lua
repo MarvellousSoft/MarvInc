@@ -10,7 +10,7 @@ InfoTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
-        self.main_color =  Color.new(70, 100, 120, 60)
+        self.main_color =  Color.new(70, 100, 180, 60)
         self.tp = "info_tab"
 
         self.dead = 0
@@ -28,19 +28,17 @@ InfoTab = Class{
         self.id_file_h = 200
 
         -- Portrat of bot
-        self.portrait_color = Color.new(0, 0, 2000)
+        self.portrait_color = Color.new(0, 0, 200)
         self.portrait_x = 10
         self.portrait_y = 10
         self.portrait_w = 80
         self.portrait_h = 80
 
-        self.fnt = FONTS.fira(28)
-        -- Relative to self.pos
-        self.txt_x = 50
-        self.txt_y = 50
-        self.txt_h = self.fnt:getHeight()
-        self.txt_dh = self.txt_h + 10
-        self.txt_clr = Color.black()
+        self.text_color1 = Color.new(45,140,140)
+        self.text_color2 = Color.new(80,140,140)
+        self.text_color3 = Color.new(35,140,140)
+
+
     end
 }
 
@@ -93,13 +91,51 @@ function InfoTab:draw()
         end
         love.graphics.printf(text, self.pos.x + self.id_file_x + 10, self.pos.y + self.id_file_y + 120, self.id_file_w - 20, "center")
 
+        -- Room number
+        font = FONTS.fira(30)
+        text = "ROOM #"..ROOM.n
+        font_w = font:getWidth(text)
+        love.graphics.setFont(font)
+        Color.set(self.text_color1)
+        love.graphics.print(text, self.pos.x + self.w/2 - font_w/2, self.pos.y + 220)
+
+        -- Room name
+        font = FONTS.fira(26)
+        text = "\""..ROOM.name.."\""
+        font_w = font:getWidth(text)
+        love.graphics.setFont(font)
+        Color.set(self.text_color1)
+        love.graphics.print(text, self.pos.x + self.w/2 - font_w/2, self.pos.y + 260)
+
+        -- Objective
+        font = FONTS.fira(24)
+        love.graphics.setFont(font)
+        Color.set(self.text_color2)
+        love.graphics.print("Objective:", self.pos.x + 10, self.pos.y + self.id_file_y + 300)
+        font = FONTS.fira(20)
+        love.graphics.setFont(font)
+        local h = 0
+        Color.set(self.text_color3)
+        -- Print all objectives descriptions
+        for i,t in ipairs(ROOM.objs) do
+            text = "- "..t.desc
+            love.graphics.printf(text, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
+            h = h + font:getWrap(text, self.w - 20)
+        end
+
+        -- Extra Info
+        if ROOM.extra_info then
+            font = FONTS.fira(24)
+            love.graphics.setFont(font)
+            Color.set(self.text_color2)
+            love.graphics.print("Extra info:", self.pos.x + 10, self.pos.y + self.id_file_y + 400 + h)
+            font = FONTS.fira(20)
+            love.graphics.setFont(font)
+            Color.set(self.text_color3)
+            -- Print the info
+            love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
+        end
+
     end
 
-    Color.set(self.txt_clr)
-    local _y = self.txt_y
-    _y = _y + self.txt_dh
-    _y = _y + self.txt_dh
-    --love.graphics.print("Room #"..ROOM.n.." \""..ROOM.name.."\"", self.txt_x, _y)
-    _y = _y + self.txt_dh
-    --love.graphics.printf("Objective: "..ROOM.objs[1].desc, self.txt_x, _y, 3*self.h/4, "left")
 end
