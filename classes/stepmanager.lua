@@ -15,6 +15,9 @@ local StepManager = {
     delay = 1,
     is_fast = false,
 
+    waiting = false,
+    paused = false,
+
     -- Event has as key the object and as value the condition function.
     events = {}
 }
@@ -63,7 +66,10 @@ end
 
 local function go_speed(self, delay)
     self.delay = delay
-    if self.running then return end
+    if self.running and not self.waiting then return end
+    if self.waiting then self:stop() end
+    self.paused = false
+    self.waiting = false
     StepManager:do_play()
 end
 
@@ -86,9 +92,11 @@ function StepManager:pause()
     self.code = nil
     self.timer.clear()
     self.running = false
+    self.paused = true
 end
 
 function StepManager:step()
+    if self.waiting then return end
     self.ic = self.ic + 1
 
     if not self.code then
@@ -99,7 +107,7 @@ function StepManager:step()
     if self.cmd then
         self:cmd()
     elseif not self.code:step() and not self.cmd then
-        self:stop()
+        self.waiting = true
     end
 end
 
@@ -134,10 +142,12 @@ function StepManager:stopNoKill()
     if self.code then self.code:stop() end
     self.code = nil
     self.running = false
+    self.waiting = false
+    self.paused = false
 end
 
 function StepManager:stop()
-    if not self.running then return end
+    if not self.running and not self.paused then return end
     self:stopNoKill()
     ROOM:kill()
     self:clear()

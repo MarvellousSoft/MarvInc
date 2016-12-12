@@ -15,7 +15,7 @@ end
 function state:draw()
 
     Draw.allTables()
-    
+
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(FONTS.fira(200))
     love.graphics.printf("room.hack", 0, 120, W, "center")

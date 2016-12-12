@@ -161,7 +161,7 @@ end
 function Room:connect(name)
     print("hey")
     self.static_on = true
-    self.static_dhdl = MAIN_TIMER.after(1.5, function()
+    self.static_dhdl = MAIN_TIMER.after(0.0675, function()
         self.static_on = false
         MAIN_TIMER.cancel(self.static_rhdl)
         self:from(Reader("puzzles/"..name..".lua"):get())
