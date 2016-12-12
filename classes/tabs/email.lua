@@ -140,6 +140,32 @@ function EmailTab:draw()
 
 end
 
+-- Receives an integer 'v' and scrolls the email tab.
+-- Positive 'v' for scrolling up, negative for scrolling down.
+function EmailTab:scrollEmail(v)
+
+    -- Just enable scroll if there is too much mail in the inbox and mouse is over the inbox screen
+    if self.email_opened or self.email_cur - self.email_on_screen <= 0 then return end
+
+    -- Increases the difference of vertical position of the email list
+    self.dy = self.dy - v
+
+    -- Don't let the emails go below the first email
+    self.dy = math.max(self.dy, 0)
+    -- Don't let the emails go below the lowest email
+    self.dy = math.min(self.dy, self.email_cur- self.email_on_screen)
+end
+
+function EmailTab:keyPressed(key)
+
+    if key == "up" or key == "pageup" then
+        self:scrollEmail(1)
+    elseif key == "down" or key == "pagedown" then
+        self:scrollEmail(-1)
+    end
+
+end
+
 function EmailTab:mousePressed(x, y, but)
     local e, rect
 
@@ -165,19 +191,17 @@ end
 function EmailTab:mouseScroll(x, y)
     local mx, my
 
-    -- Just enable scroll if there is too much mail in the inbox and mouse is over the inbox screen
-    if self.email_cur - self.email_on_screen <= 0 then return end
     mx, my = love.mouse.getPosition()
 
     if Util.pointInRect(mx, my, self) then
-        self.dy = self.dy - y
+        self:scrollEmail(y)
     else
         return
     end
 
-    self.dy = math.max(self.dy, 0)
-    self.dy = math.min(self.dy, self.email_cur- self.email_on_screen)
 end
+
+
 
 -- EMAIL OBJECT --
 
