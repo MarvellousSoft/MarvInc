@@ -3,14 +3,29 @@ local Color = require "classes.color.color"
 
 -- Console class
 
-Color = Class{
+Console = Class{
     __includes = {Object},
-    init = function(self, grid, i, j, key, bg, delay, clr, args)
+    -- may receive a vector or a function that receives the coordinates and creates the vector
+    init = function(self, grid, i, j, key, bg, color, __, ___, args)
         Object.init(self, grid, i, j, "console", bg)
+        self.color = Color[color or "white"](Color)
         self.img = OBJS_IMG[key]
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
 
-        self.vec = type(args) == 'table' and args or args()
+        self.out = type(args) == 'table' and args or args(i, j)
+        self.inp = {}
+        self.i = 1
     end
 }
+
+function Console:input()
+    if self.i > #self.out then return end
+    self.i = self.i + 1
+    return self.out[self.i - 1]
+end
+
+function Console:write(val)
+    if #self.out > 0 then return "Trying to write to input-only terminal" end
+    table.insert(self.inp, val)
+end

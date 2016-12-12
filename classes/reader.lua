@@ -1,5 +1,6 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
+require "classes.console"
 
 -- Reader reads a .lua level and converts it into a Puzzle
 
@@ -29,8 +30,14 @@ function Reader:read(filename)
     self.puz.n = _t.n
 
     local bot = _t.bot
-    local pos = bot[3]
-    self.puz.init_pos = Vector(pos[1], pos[2])
+    for x = 1, COLS do
+        for y = 1, ROWS do
+            if _t.grid_obj:sub((y - 1) * COLS + x, (y - 1) * COLS + x) == bot[1] then
+                self.puz.init_pos = Vector(x, y)
+            end
+        end
+    end
+
     self.puz.orient = bot[2]
 
     self.puz.grid_floor = {}
@@ -57,6 +64,8 @@ function Reader:read(filename)
                     DeadSwitch(unpack(args))
                 elseif _proto[1] == "bucket" then
                     Bucket(unpack(args))
+                elseif _proto[1] == 'console' then
+                    Console(unpack(args))
                 end
             end
             k = k + 1

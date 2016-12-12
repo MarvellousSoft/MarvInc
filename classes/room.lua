@@ -85,13 +85,13 @@ Room = Class{
             local death_func = function()
                 local _term = Util.findId("code_tab")
                 _term:store()
-                self:disconnect(true)
-                _term:retrieve()
-                self:connect(self.puzzle)
-                self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
-                if self.default_bot_turn then
-                    self.bot:turn(self.default_bot_turn)
-                end
+                self:connect(self.puzzle, function()
+                    _term:retrieve()
+                    self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+                    if self.default_bot_turn then
+                        self.bot:turn(self.default_bot_turn)
+                    end
+                end)
             end
             if self.block_pop_up then
                 self.block_pop_up = nil
@@ -196,7 +196,7 @@ function Room:clear()
     StepManager:stopNoKill()
 end
 
-function Room:connect(name)
+function Room:connect(name, after)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:play()
 
@@ -207,6 +207,7 @@ function Room:connect(name)
         self.static_on = false
         MAIN_TIMER.cancel(self.static_rhdl)
         self:from(Reader("puzzles/"..name..".lua"):get())
+        if after then after() end
     end)
     self.static_rhdl = MAIN_TIMER.every(0.05, function()
         self.static_r = self.static_r + math.pi/2

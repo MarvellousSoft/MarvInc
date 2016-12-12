@@ -280,20 +280,30 @@ end
 function Read:execute()
     if self.dir then StepManager:turn(self.dir) end
     local console = ROOM:next_block()
-    if not console or consoler.tp ~= "console" then return "Trying to read from non-console" end
+    if not console or console.tp ~= "console" then return "Trying to read from non-console" end
     local nx = console:input()
     if not nx then return "No more input on console" end
     return Util.findId("memory"):set(self.reg:evaluate(), nx)
 end
 
 -- Write --
-Write = Class{create = Read.create}
+Write = Class{}
+
+function Write:create(t)
+    if #t > 3 or #t <= 1 then return end
+    local obj = self()
+    local accepted = {north = "north", west = "west", east = "east", south = "south",
+    up = "north", down = "south", left = "west", right = "east"}
+    if t[3] and not accepted[t[3]] then return end
+    obj.num, obj.dir = Number.create(t[2]), accepted[t[3]]
+    if obj.num then return obj end
+end
 
 function Write:execute()
     if self.dir then StepManager:turn(self.dir) end
     local console = ROOM:next_block()
-    if not console or consoler.tp ~= "console" then return "Trying to write to non-console" end
-    local val = Util.findId("memory"):get(self.reg:evaluate())
+    if not console or console.tp ~= "console" then return "Trying to write to non-console" end
+    local val = self.num:evaluate()
     if type(val) ~= 'number' then return val end
     return console:write(val)
 end

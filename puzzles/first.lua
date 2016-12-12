@@ -5,7 +5,7 @@ name = "The Game"
 n = 1
 
 lines_on_terminal = 10
-memory_slots = 0
+memory_slots = 10
 
 -- Bot
 bot = {'b', "NORTH", {19, 20}}
@@ -16,6 +16,10 @@ e = nil
 o = {"obst", false, "wall_none"}
 k = {"bucket", true, "bucket"}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args={bucketable = true}}
+
+t = {"console", false, "console", "red", args={1, 2, 10}}
+
+
 
 -- options: obst, dead
 
@@ -48,7 +52,7 @@ grid_obj =  "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
             "oooooooooelloooooooo"..
-            "oooooooooelloooooooo"..
+            "oooooooooellooooooto"..
             "ooooooookeeeeeeeeebo"
 
 -- Floor
