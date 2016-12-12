@@ -23,9 +23,10 @@ end
 
 function Objective:wrapper()
     local done = self:cond(ROOM)
-    if done then
+    if done and self.complete then
         self:complete(ROOM)
         self.completed = true
+        self.complete = nil
     end
     return done, self
 end

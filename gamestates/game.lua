@@ -70,6 +70,10 @@ function state:keypressed(key)
                 func = function()
                     print("You remain small.")
                 end, text = "remain small", clr = Color.red()})
+    elseif key == 'f9' then
+        print(room)
+        print(room.grid_obj[11][19])
+        room.grid_obj[11][19]:solidify()
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)

@@ -125,6 +125,16 @@ function Room:from(puzzle)
     Util.findId("code_tab"):reset(puzzle)
 end
 
+function Room:paint(i, j, floor)
+    self.grid_floor[i][j] = floor
+end
+
+function Room:extract(i, j)
+    local _e = self.grid_obj[i][j]
+    self.grid_obj[i][j] = nil
+    return _e
+end
+
 function Room:apply()
     while #Room.queue > 0 do
         local o = table.remove(Room.queue, 1)

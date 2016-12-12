@@ -15,6 +15,8 @@ e = nil
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 
+l = {"lava", false, "lava", 0.2, "white", "solid_lava"}
+
 -- options: obst, dead
 
 -- Objective
@@ -45,8 +47,8 @@ grid_obj =  "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
+            "oooooooooelloooooooo"..
+            "oooooooooelloooooooo"..
             "oooooooooeeeeeeeeebo"
 
 -- Floor
@@ -72,5 +74,5 @@ grid_floor = "eeeeeeeeewvwvwvwvwvr"..
              "eeeeeeeeeveeeeeeeeee"..
              "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeewveeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeevwvwvwvwvwe"
