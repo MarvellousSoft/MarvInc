@@ -47,29 +47,64 @@ function Reader:read(filename)
         self.puz.grid_floor[i] = {}
         self.puz.grid_obj[i] = {}
     end
+
+    -- Searches for emitters before other objects.
+    local emitters = {}
+    k = 1
+    for i=1, COLS do
+        for j=1, ROWS do
+            local _co = _t.grid_obj:sub(k, k)
+            if _t[_co] ~= nil then
+                local _proto = _t[_co]
+                if _proto[1] == "emitter" then
+                    if not emitters[_proto[4]] then emitters[_proto[4]] = {} end
+                    table.insert(emitters[_proto[4]], {self.puz.grid_obj, j, i, _proto[3], _proto[2],
+                        _proto[4], nil, nil, _proto.args})
+                end
+            end
+            k = k + 1
+        end
+    end
+
+    k = 1
     for i=1, COLS do
         for j=1, ROWS do
             local _co = _t.grid_obj:sub(k, k)
             self.puz.grid_floor[j][i] = _t[_t.grid_floor:sub(k, k)]
             if _co ~= bot[1] and _t[_co] ~= nil then
                 local _proto = _t[_co]
-                local _clr = _proto[5] and Color[_proto[5]]() or nil
-                local args = {self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4], _clr,
-                    _proto[6], _proto.args}
-                if _proto[1] == "obst" then
-                    Obstacle(unpack(args))
-                elseif _proto[1] == "dead" then
-                    Dead(unpack(args))
-                elseif _proto[1] == "dead_switch" then
-                    DeadSwitch(unpack(args))
-                elseif _proto[1] == "bucket" then
-                    Bucket(unpack(args))
-                elseif _proto[1] == 'console' then
-                    Console(unpack(args))
+                if _proto[1] ~= "emitter" then
+                    local args = {self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4],
+                        _proto[5], _proto[6], _proto.args}
+                    local _obj = nil
+                    if _proto[1] == "obst" then
+                        _obj = Obstacle(unpack(args))
+                    elseif _proto[1] == "dead" then
+                        _obj = Dead(unpack(args))
+                    elseif _proto[1] == "dead_switch" then
+                        _obj = DeadSwitch(unpack(args))
+                    elseif _proto[1] == "bucket" then
+                        _obj = Bucket(unpack(args))
+                    elseif _proto[1] == "console" then
+                        -- Adds emitters as clients to a console that shares color.
+                        _obj = Console(unpack(args))
+                        if emitters[_proto[4]] then
+                            for _, v in pairs(emitters[_proto[4]]) do
+                                _obj:addClient(Emitter(unpack(v)))
+                            end
+                            emitters[_proto[4]] = nil
+                        end
+                    end
+                    if _obj and _proto.dir then _obj.r = _G[_proto.dir.."_R"] end
                 end
             end
             k = k + 1
         end
+    end
+
+    -- Adds standalone emitters.
+    for _, v in pairs(emitters) do
+        Emitter(unpack(v))
     end
 
     self.puz.objs = {}

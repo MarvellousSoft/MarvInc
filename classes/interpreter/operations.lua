@@ -322,6 +322,7 @@ function Pickup.create(t)
 end
 
 function Pickup:execute()
+    if ROOM.bot.inv then return "Not enough free hands" end
     if self.dir then
         StepManager:turn(self.dir)
     end
@@ -341,6 +342,7 @@ function Drop.create(t)
 end
 
 function Drop:execute()
+    if not ROOM.bot.inv then return "There is nothing left to drop but my self esteem" end
     if self.dir then
         StepManager:turn(self.dir)
     end

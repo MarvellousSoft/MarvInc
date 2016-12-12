@@ -11,6 +11,7 @@ SpriteObject = Class{
         self.tp = tp
         self.sx = ROOM_CW/self.w
         self.sy = ROOM_CH/self.h
+        self.color = clr
     end
 }
 

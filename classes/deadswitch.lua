@@ -10,6 +10,8 @@ DeadSwitch = Class{
         -- skey is solid key image
         self.skey = skey
 
+        print(skey)
+
         -- old floor
         self.of = nil
 

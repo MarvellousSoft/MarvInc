@@ -54,7 +54,15 @@ CodeTab = Class{
 
         -- Inventory slot
         self.inv_slot = nil
-
+        self.inv_x = bx + bsz + 40
+        self.inv_y = by
+        self.inv_w = 50
+        self.inv_h = 50
+        self.inv_fnt = FONTS.fira(14)
+        self.inv_clr = Color.white()
+        self.inv_txt = "INVENTORY"
+        self.inv_txt_w = self.inv_fnt:getWidth(self.inv_txt)
+        self.inv_txt_h = self.inv_fnt:getHeight()
 
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.h + 10, self.w, by - 10 - (self.pos.y + self.h + 10), 12)
@@ -163,6 +171,16 @@ function CodeTab:draw()
     for _, b in ipairs(self.buttons) do b:draw() end
     self.play_b:draw()
 
+    love.graphics.rectangle("line", self.inv_x, self.inv_y, self.inv_w, self.inv_h)
+    love.graphics.setFont(self.inv_fnt)
+    love.graphics.print(self.inv_txt, self.inv_x + self.inv_w/2 - self.inv_txt_w/2,
+        self.inv_y + self.inv_h)
+    if ROOM.bot and ROOM.bot.inv then
+        local _img = ROOM.bot.inv.img
+        local _sx, _sy = self.inv_w/_img:getWidth(), self.inv_h/_img:getHeight()
+        love.graphics.draw(_img, self.inv_x, self.inv_y, nil, _sx, _sy)
+    end
+
     -- Draw memory
     self.memory:draw()
 end
@@ -265,7 +283,7 @@ function CodeTab:keyPressed(key)
         deleteInterval(self, c, c2)
 
     elseif key == 'return' then
-        if love.keyboard.isDown("lctrl", "rctrl") then 
+        if love.keyboard.isDown("lctrl", "rctrl") then
             StepManager:play()
             return
         end

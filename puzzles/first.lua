@@ -15,11 +15,15 @@ e = nil
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 k = {"bucket", true, "bucket"}
-l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args={bucketable = true}}
 
-t = {"console", false, "console", "red", args={1, 2, 10}}
-
-
+t = {"console", false, "console", "red", args={1, 2, 10,}}
+m = {"emitter", true, "emitter", "red", args={
+    x1 = 11, y1 = 18,
+    x2 = 11, y2 = 20,
+    t_args = {
+        "ray", true, 0.05, "red", nil
+    }
+}}
 
 -- options: obst, dead
 
@@ -50,9 +54,9 @@ grid_obj =  "oooooooooeeeeeeeeeee"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
             "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooelloooooooo"..
-            "oooooooooellooooooto"..
+            "oooooooooemooooooooo"..
+            "oooooooooeeeoooooooo"..
+            "oooooooooeeeooooooto"..
             "ooooooookeeeeeeeeebo"
 
 -- Floor
@@ -76,7 +80,7 @@ grid_floor = "eeeeeeeeewvwvwvwvwvr"..
              "eeeeeeeeeveeeeeeeeee"..
              "eeeeeeeeeweeeeeeeeee"..
              "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
+             "eeeeeeeeewveeeeeeeee"..
+             "eeeeeeeeevwveeeeeeee"..
+             "eeeeeeeeewvweeeeeeee"..
              "eeeeeeeewvwvwvwvwvwe"

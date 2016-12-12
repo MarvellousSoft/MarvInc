@@ -71,13 +71,7 @@ function state:keypressed(key)
                     print("You remain small.")
                 end, text = "remain small", clr = Color.red()})
     elseif key == 'f9' then
-        if room.grid_obj[11][19] and room.grid_obj[11][19] ~= room.bot then
-            print "sedating"
-            room:sedate(11, 19)
-        else
-            print "waking up"
-            room:wakeup(11, 19)
-        end
+        room.grid_obj[19][19]:toggleClients()
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)

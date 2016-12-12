@@ -347,7 +347,9 @@ function Room:sedate(ds, y)
         if ds.bg then
             ds.of = self.grid_floor[px][py]
         end
-        self:paint(px, py, ds.skey)
+        if ds.skey then
+            self:paint(px, py, ds.skey)
+        end
         self:extract(px, py)
         Room.dorments[ds] = ds
     else
@@ -364,7 +366,7 @@ function Room:wakeup(ds, y)
         if self.bot.pos.x == px and self.bot.pos.y == py then
             self:kill()
         end
-        if ds.bg then
+        if ds.bg and ds.skey then
             self:paint(px, py, ds.of)
         end
         self.grid_obj[px][py] = ds
