@@ -24,17 +24,10 @@ function Code:step()
         if lab then
             self.cur = self.labs[lab]
             if not self.cur then
-                SFX.fail:play()
-                PopManager.new("Code Error!",
-                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. lab .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.",
-                Color.red(), {
-                    func = function()
-                        ROOM.block_pop_up = true
-                        StepManager:stop()
-                    end,
-                    text = "I'm sorry.",
-                    clr = Color.black()
-                })
+                ROOM.fail_title = "Code Error!"
+                ROOM.fail_text = "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. lab .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced."
+                ROOM.fail_button = "I'm sorry."
+                StepManager:stop()
                 return false
             end
         else

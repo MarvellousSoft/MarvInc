@@ -194,4 +194,11 @@ function StepManager:remove(obj)
     self.events[obj] = nil
 end
 
+function StepManager:autofail(title, text, button)
+    ROOM.fail_title = title
+    ROOM.fail_text = text
+    ROOM.fail_button = button
+    self:stop()
+end
+
 return StepManager

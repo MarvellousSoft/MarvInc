@@ -38,7 +38,7 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, nil, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("register") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
@@ -119,6 +119,7 @@ Carry on.]], "Automated Introduction System", true, nil)
 end
 
 function lore.first_done()
+    StepManager:pause()
     if level_done.first then default_completed() return end
     level_done.first = true
 
@@ -180,6 +181,7 @@ Happy coding, and carry on.]],
 end
 
 function lore.walkx_done()
+    StepManager:pause()
     if level_done.walkx then default_completed() return end
     level_done.walkx = true
 
@@ -240,6 +242,7 @@ Stay practical, and carry on.]],
 end
 
 function lore.turn_done()
+    StepManager:pause()
     if level_done.turn then default_completed() return end
     level_done.turn = true
 
@@ -265,6 +268,7 @@ function lore.turn_done()
 end
 
 function lore.jmp_done()
+    StepManager:pause()
     if level_done.jmp then default_completed() return end
     level_done.jmp = true
     PopManager.new("Puzzle completed",
@@ -277,6 +281,22 @@ function lore.jmp_done()
             clr = Color.black()
         })
 end
+
+function lore.register_done()
+    StepManager:pause()
+    if level_done.register then default_completed() return end
+    level_done.register = true
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Ok",
+            clr = Color.black()
+        })
+end
+
 
 function lore.update(dt)
     timer.update(dt)
