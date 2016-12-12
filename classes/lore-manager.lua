@@ -1,5 +1,5 @@
 local Color = require "classes.color.color"
-
+local StepManager = require "classes.stepmanager"
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
 local Info = require "classes.tabs.info"
@@ -129,7 +129,7 @@ function lore.first_done()
             func = function()
                 ROOM:disconnect()
             end,
-            text = "Ok",
+            text = " Ok ",
             clr = Color.black()
         })
 
@@ -191,7 +191,7 @@ function lore.walkx_done()
             func = function()
                 ROOM:disconnect()
             end,
-            text = "Ok",
+            text = " Ok ",
             clr = Color.black()
         })
 
@@ -201,7 +201,7 @@ function lore.walkx_done()
     email.turn = Mail.new("Making good progress",
 [[Good job, Employee #]].. EMPLOYER_NUMBER .. [[. Lets learn some new instructions.
 
-Use the turn command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a direction, or clock/counter to turn the robot clockwise or counterclockwise.
+Use the turn command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a direction, or the special arguments clock or counter, to turn the robot clockwise or counterclockwise, respectively.
 
 Example:
     - turn south
@@ -234,7 +234,7 @@ Carry on.]], "Automated Introduction System", false,
 Remember them all. As we say here in Marvellous Inc. "Mouse are for chumps and Larry from accounting".
 
 Stay practical, and carry on.]],
-    "Automated Introduction System", true)
+"Automated Introduction System", true)
     end
     )
 
@@ -246,7 +246,172 @@ function lore.turn_done()
     if level_done.turn then default_completed() return end
     level_done.turn = true
 
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " Ok ",
+            clr = Color.black()
+        })
+
     email.turn.is_completed = true
+
+
+    timer.after(3, function()
+    email.jmp = Mail.new("Lets use some loops",
+[[Remember loops from Hacking101 classes? Well, you better.
+
+The new command is jmp. You provide a label, and it will jump to the line you defined the label on.
+
+To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+
+After defining a label, you can write any one command in the same line, however the label must come before the command.
+But that is optional.
+
+Example that makes the bot walking in circles:
+- banana:
+- walk 2
+- turn counter
+- jmp banana
+
+Example that makes the bot spining endlessly:
+    - awesomeLabel66: turn clock
+    - jmp awesomeLabel66
+
+Complete this puzzle quickly. We'd greatly appreciate. Don't forget the experiment ends ass soon as the objective requirements are completed.
+
+
+As always, carry on.]], "Automated Introduction System", false,
+        function()
+            ROOM:connect("jump")
+            OpenedMail:close()
+        end, true, function() Info.addCommand("jmp <label>") Info.addCommand("label:") end)
+        end)
+
+end
+
+function lore.jmp_done()
+    StepManager:pause()
+    if level_done.jmp then default_completed() return end
+    level_done.jmp = true
+
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " Ok ",
+            clr = Color.black()
+        })
+
+    email.jmp.is_completed = true
+
+    timer.after(3, function()
+    email.pickup = Mail.new("Working with a backpack",
+[[Did you know you have an inventory?
+
+You can pickup and drop objects, such as giant buckets, with the commands pickup and drop. They both receive the same optional argument, a direction. When provided, the pickup command will make the robot turn and pick any object facing that direction. If you don't provide a direction, the subject will try to pick something in the direction he is facing.
+
+The same is analogous for the drop command, but instead of picking objects, the robot will try to drop whatever he is holding in the inventory.
+
+Example that makes the bot pickup an object from his left and placing on his right:
+- pickup left
+- drop right
+
+The same example as above, if the robot was facing north:
+- turn left
+- pickup
+- turn right
+- drop
+
+IMPORTANT: If the robots tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw and error.
+
+Happy adventuring, and carry on.]], "Automated Introduction System", false,
+        function()
+            ROOM:connect("pickup")
+            OpenedMail:close()
+        end, true, function() Info.addCommand("pickup") Info.addCommand("pickup <direction>") Info.addCommand("drop") Info.addCommand("drop <direction>") end)
+        end)
+
+end
+
+function lore.pickup_done()
+    StepManager:pause()
+    if level_done.pickup then default_completed() return end
+    level_done.pickup = true
+
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " Ok ",
+            clr = Color.black()
+        })
+
+    email.pickup.is_completed = true
+
+    timer.after(3, function()
+    email.register = Mail.new("Using memory",
+[[Let's jump up a notch. You will now learn to use the registers in your terminal, the write and the add commands.
+
+Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you would ahve to write [5].
+
+The add command receives two arguments: the first is the position
+
+add <position> <value>
+write <value> <direction>
+write <value>
+
+The new command is jmp. You provide a label, and it will jump to the line you defined the label on.
+
+To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+
+After defining a label, you can write any one command in the same line, however the label must come before the command.
+But that is optional.
+
+Example that makes the bot walking in circles:
+- banana:
+- walk 2
+- turn counter
+- jmp banana
+
+Example that makes the bot spining endlessly:
+    - awesomeLabel66: turn clock
+    - jmp awesomeLabel66
+
+Complete this puzzle quickly. We'd greatly appreciate.
+
+
+As always, carry on.]], "Automated Introduction System", false,
+        function()
+            ROOM:connect("register")
+            OpenedMail:close()
+        end, true, function() Info.addCommand("add <position> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
+        end)
+
+end
+
+function lore.register_done()
+    StepManager:pause()
+    if level_done.register then default_completed() return end
+    level_done.register = true
+
+    -- PopManager.new("Puzzle completed",
+    --     "You will be emailed you next task shortly.",
+    --     Color.green(), {
+    --         func = function()
+    --             ROOM:disconnect()
+    --         end,
+    --         text = " Ok ",
+    --         clr = Color.black()
+    --     })
+
+    email.register.is_completed = true
 
     PopManager.new("Congratulations!",
         "You have passed basic training. We at Marvellous Inc. proud ourselves on our "..
