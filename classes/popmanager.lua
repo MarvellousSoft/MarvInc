@@ -43,10 +43,14 @@ Popup = Class{
         self.tp = "popup"
 
         self:addElement(DRAW_TABLE.L2, self.tp, self.tp)
+
+        self.back_clr = Color.new(0, 0, 40, 140)
     end
 }
 
 function Popup:draw()
+    Color.set(self.back_clr)
+    love.graphics.rectangle("fill", -5, -5, W+5, W+5)
     Color.set(self.color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
     Color.set(self.title_clr)
@@ -95,14 +99,19 @@ function PopManager.new(title, text, clr, b1, b2)
     local pop = Popup(title, text, clr, b1, b2)
     -- Pop the old pop. Stick with the new pop.
     PopManager.pop = pop
+    TABS_LOCK = true
+    EVENTS_LOCK = true
 end
 
 function PopManager.mousereleased(x, y, button, touch)
+    if not PopManager.pop then return end
     PopManager.pop:mousereleased(x, y, button, touch)
 end
 
 function PopManager.quit()
     PopManager.pop = nil
+    TABS_LOCK = false
+    EVENTS_LOCK = false
 end
 
 return PopManager

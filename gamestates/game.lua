@@ -44,6 +44,8 @@ function state:draw()
 end
 
 function state:keypressed(key)
+    if EVENTS_LOCK then return end
+
     local m
     if key == 'f2' then
         Mail.new("Hey, wanna meet some hotties??", "Sonic's birthday is coming up, but the gifts he might recieve aren't what he really wants. All he wants is his childhood friend and her love. Cream and Rouge make this possible. But what happened... Well, let's just say it fits the poem the older kids sanged. 'Roses are red, Lemons are sour, open your legs and give me an hour.'", "Jenny", true)
@@ -77,6 +79,7 @@ function state:keypressed(key)
 end
 
 function state:mousepressed(x, y, but)
+    if EVENTS_LOCK then return end
 
     pc_box:mousePressed(x,y,but)
 
@@ -87,10 +90,14 @@ function state:mousereleased(x, y, button, touch)
 end
 
 function state:textinput(t)
+    if EVENTS_LOCK then return end
+
     pc_box:textInput(t)
 end
 
 function state:wheelmoved(x, y)
+    if EVENTS_LOCK then return end
+
     pc_box:mouseScroll(x, y)
 end
 
