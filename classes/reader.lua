@@ -64,6 +64,7 @@ function Reader:read(filename)
 
     self.puz.lines_in_terminal = _t.lines_in_terminal
     self.puz.memory_slots = _t.memory_slots
+    self.puz.extra_info = _t.extra_info
 end
 
 function Reader:get()

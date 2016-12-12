@@ -110,6 +110,8 @@ function Room:from(puzzle)
         v:activate()
     end
 
+    self.extra_info = puzzle.extra_info
+
     Util.findId("code_tab"):reset(puzzle)
 end
 
@@ -159,8 +161,12 @@ function Room:clear()
 end
 
 function Room:connect(name)
+    if self.mode ~= "offline" then self:disconnect() end
+    SFX.loud_static:play()
+
     self.static_on = true
     self.static_dhdl = MAIN_TIMER.after(0.0675, function()
+        SFX.loud_static:stop()
         self.static_on = false
         MAIN_TIMER.cancel(self.static_rhdl)
         self:from(Reader("puzzles/"..name..".lua"):get())

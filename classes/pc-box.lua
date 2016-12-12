@@ -64,6 +64,8 @@ end
 -- Change to that tab
 function PcBox:changeTo(tab)
     if tab == self.cur_tab then return end
+    SFX.tab_switch:play()
+
     tabs[self.cur_tab]:deactivate()
     self.buttons[self.cur_tab].color.s = self.unfocus_saturation
     self.buttons[self.cur_tab].color.l = self.unfocus_lightness

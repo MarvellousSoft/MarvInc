@@ -139,6 +139,14 @@ function setup.config()
     --SHADERS--
 
     --AUDIO--
+    SFX = {}
+    SFX.loud_static = love.audio.newSource("assets/sound/pink_noise.wav", "static")
+    SFX.loud_static:setLooping(true)
+    SFX.tab_switch = love.audio.newSource("assets/sound/tab_switch.ogg", "static")
+    SFX.new_email = love.audio.newSource("assets/sound/new_email.wav", "static")
+    SFX.buzz = love.audio.newSource("assets/sound/buzz.ogg", "static")
+    SFX.fail = love.audio.newSource("assets/sound/fail.mp3", "static")
+    SFX.click = love.audio.newSource("assets/sound/click.wav", "static")
 end
 
 --Return functions

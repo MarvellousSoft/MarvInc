@@ -29,6 +29,10 @@ end)
 
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:do_play()
+    if not ROOM:connected() then
+        SFX.buzz:play()
+        return
+    end
     if self.tmp then
         self.ic = 0
         self.running = true
@@ -42,6 +46,7 @@ function StepManager:do_play()
     self.code = Parser.parseCode()
     if type(self.code) ~= "table" then
         self.code = nil
+        SFX.buzz:play()
         return
     end
     self.code:start()
@@ -73,7 +78,6 @@ local function go_speed(self, delay)
     StepManager:do_play()
 end
 
-
 function StepManager:play()
     go_speed(self, 1)
 end
@@ -98,6 +102,7 @@ end
 function StepManager:step()
     if self.waiting then return end
     self.ic = self.ic + 1
+    SFX.click:play()
 
     if not self.code then
         print "should not be here"

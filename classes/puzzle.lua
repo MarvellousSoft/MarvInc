@@ -10,6 +10,8 @@ Puzzle = Class{
         self.name = nil
         -- Puzzle number
         self.n = nil
+        -- Extra info
+        self.extra_info = nil
 
         -- Puzzle object grid
         self.grid_obj = nil
@@ -30,5 +32,6 @@ Puzzle = Class{
     end,
     -- default values
     lines_in_terminal = 20,
-    memory_slots = 10
+    memory_slots = 10,
+    extra_info = ""
 }

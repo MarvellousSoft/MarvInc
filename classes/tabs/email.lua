@@ -276,6 +276,9 @@ function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puz
 
     UNREAD_EMAILS = UNREAD_EMAILS + 1
 
+    SFX.new_email:stop()
+    SFX.new_email:play()
+
     return e
 end
 

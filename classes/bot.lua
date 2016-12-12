@@ -56,6 +56,8 @@ Bot = Class{
 function Bot:kill(grid)
     Object.kill(self, grid)
     Signal.emit("death")
+    --SFX.fail:stop()
+    --SFX.fail:play()
 end
 
 function Bot:blocked(grid, r, c)
