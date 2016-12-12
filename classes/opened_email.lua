@@ -66,8 +66,11 @@ OpenedEmail = Class{
 -- Draws opened email --
 function OpenedEmail:draw()
     local e, font, font_w, font_h, font_size, temp, text
+    local referenced_email
+
 
     e = self
+    referenced_email = Util.findId("email_tab").email_list[e.number]
 
     -- Draws black effect
     Color.set(e.background_color)
@@ -159,12 +162,20 @@ function OpenedEmail:draw()
         else
             Color.set(e.reply_button_disabled_text_color)
         end
-        if e.is_puzzle and e.is_completed then
+        if referenced_email.is_puzzle and referenced_email.is_completed then
             text = "retry"
         else
             text = "reply"
         end
+        -- Draw "COMPLETED" text
         love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
+        if referenced_email.is_puzzle and referenced_email.is_completed then
+            Color.set(Color.red())
+            font = FONTS.fira(30)
+            love.graphics.setFont(font)
+            text = "COMPLETED"
+            love.graphics.print(text, self.pos.x + self.w - font:getWidth(text) - 20, self.pos.y + self.h - font:getHeight(text)*2, -math.pi / 20)
+        end
     end
 
 end
