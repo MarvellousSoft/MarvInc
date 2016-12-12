@@ -11,6 +11,10 @@ OpenedEmail = Class{
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
+        self.text_font = FONTS.fira(16)
+
+        box_height = math.max(self.text_font:getWrap(_text, box_width) + 100, 3 * H / 5)
+
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 
         self.number = _number --Number of email
@@ -100,14 +104,9 @@ function OpenedEmail:draw()
 
     -- Text
     Color.set(e.content_color)
-    love.graphics.setFont(FONTS.fira(15))
-    -- If text is too long, contain text
-    if #e.text <= 600  then
-        text = e.text
-    else
-        text = string.sub(e.text, 1, 600).."..."
-    end
-    love.graphics.printf(text,  e.pos.x + 10, e.pos.y + 120, e.w - 20)
+    love.graphics.setFont(self.text_font)
+    text = e.text
+    love.graphics.printf(text,  e.pos.x + 10, e.pos.y + 110, e.w - 20)
 
     -- Time
     Color.set(e.content_color)
@@ -132,7 +131,7 @@ function OpenedEmail:draw()
         love.graphics.print("delete", e.delete_x + 8, e.delete_y + 7)
     end
 
-    -- Can be deleted button
+    -- Reply button
     if e.reply_func then
         -- Make button box
         if e.can_reply then
