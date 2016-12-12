@@ -33,24 +33,23 @@ function parser.parseAll(lines)
     local ref_labels = {}
     local bad_lines = {}
     for i, line in ipairs(lines) do
-        local op, lab = parser.parseLine(line)
-        if type(op) ~= "table" then
-            --print(i, "ERROR:", op)
-            bad_lines[i] = true
+        if line ~= "" then
+            local op, lab = parser.parseLine(line)
+            if type(op) ~= "table" then
+                --print(i, "ERROR:", op)
+                bad_lines[i] = true
+            end
+            table.insert(code, op)
+            if lab and labs[lab] then
+                --print(i, "ERROR:", "two labels with the same name")
+                bad_lines[i] = true
+                bad_lines[labs[lab]] = true
+            end
+            if lab then labs[lab] = #code end
         end
-        table.insert(code, op)
-        if lab and labs[lab] then
-            --print(i, "ERROR:", "two labels with the same name")
-            bad_lines[i] = true
-            bad_lines[labs[lab]] = true
-        end
-        if lab then labs[lab] = #code end
-    end
-    while #code > 0 and code[#code].type == "NOP" do
-        code[#code] = nil
     end
     for i, op in ipairs(code) do
-        if op.type == "JMP" and not labs[op.nxt] then
+        if op.lab and not labs[op.lab] then
             --print(i, "ERROR:", "invalid label for jump")
             bad_lines[i] = true
         end

@@ -208,7 +208,16 @@ end
 local change_cursor = {up = true, down = true, left = true, right = true, home = true, ["end"] = true}
 
 function CodeTab:keyPressed(key)
-    if self.lock then return end
+    if self.lock then
+        if key == 'space' then
+            if StepManager.running then
+                StepManager:pause()
+            else StepManager:play() end
+        elseif key == 'escape' then
+            StepManager:stop()
+        end
+        return
+    end
     local c = self.cursor
     if change_cursor[key] then
         if love.keyboard.isDown("lshift", "rshift") then
@@ -252,6 +261,10 @@ function CodeTab:keyPressed(key)
         deleteInterval(self, c, c2)
 
     elseif key == 'return' then
+        if love.keyboard.isDown("lctrl", "rctrl") then 
+            StepManager:play()
+            return
+        end
         if self.line_cur == self.line_total then return end
         self.line_cur = self.line_cur + 1
         for i = self.line_total, c.i + 2, -1 do

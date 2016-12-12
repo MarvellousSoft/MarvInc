@@ -171,6 +171,7 @@ function StepManager:clear()
     for k, _ in pairs(self.events) do
         k.completed = false
     end
+    Util.findId("code_tab").memory:reset()
 end
 
 function StepManager:remove(obj)

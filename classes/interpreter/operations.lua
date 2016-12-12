@@ -129,20 +129,34 @@ Nop = Class {
     type = "NOP"
 }
 
+-- check wheter s is a valid label, and in that case returns it
+local function valid_label(s)
+    if s:match("%w+") == s then return s end
+end
+
+-- Jmp --
 Jmp = Class {
-    init = function(self, nxt) self.nxt = nxt end,
-    execute = function(self) return self.nxt end,
-    type = "JMP"
+    init = function(self, lab) self.lab = lab end,
+    execute = function(self) return self.lab end
 }
+
+function Jmp.create(t)
+    if #t ~= 2 then return end
+    return valid_label(t[2]) and Jmp(t[2])
+end
+
+-- checks whether s is a valid register, and in that case returns it
+local function valid_register(s)
+    local v = Number.create(s)
+    if not v then return end
+    if v.indir == 0 and (v.num < 0 or v.num >= Util.findId("memory").slots) then return end
+    return v
+end
 
 -- Used by all OP dst val commands
 local function dst_val_check(t)
     if #t ~= 3 then return end
-    if not Number.create(t[2]) or not Number.create(t[3]) then return end
-    local dst = Number.create(t[2])
-    local val = Number.create(t[3])
-    if dst.indir == 0 and (dst.num < 0 or dst.num >= Util.findId("memory").slots) then return end
-    return dst, val
+    return valid_register(t[2]), Number.create(t[3])
 end
 
 -- Mov --
@@ -211,6 +225,38 @@ function Sub:execute()
     return "invalid!"
 end
 
+-- init for jgt jlt jge jle
+local function vvl_init(self, v1, v2, lab)
+    self.v1 = v1
+    self.v2 = v2
+    self.lab = lab
+end
+
+local function vvl_execute(self)
+    local a, b = self.v1:evaluate(), self.v2:evaluate()
+    if not a or not b then return "invalid!" end
+    if self.comp(a, b) then return self.lab end
+end
+
+-- Used by all val1 val2 lab operations
+local function vvl_check(t, class)
+    if #t ~= 4 then return end
+    local v1, v2, lab = Number.create(t[2]), Number.create(t[3]), valid_label(t[4])
+    if v1 and v2 and lab then return class(v1, v2, lab) end
+end
+
+-- Jgt - Jump greater than --
+Jgt = Class {init = vvl_init, comp = function(a, b) return a > b end, execute = vvl_execute}
+-- Jge - Jump greater or equal --
+Jge = Class {init = vvl_init, comp = function(a, b) return a >= b end, execute = vvl_execute}
+-- Jlt - Jump lesser than --
+Jlt = Class {init = vvl_init, comp = function(a, b) return a < b end, execute = vvl_execute}
+-- Jle - Jump lesser or equal --
+Jle = Class {init = vvl_init, comp = function(a, b) return a <= b end, execute = vvl_execute}
+-- Jle - Jump lesser or equal --
+Jeq = Class {init = vvl_init, comp = function(a, b) return a == b end, execute = vvl_execute}
+-- Jle - Jump lesser or equal --
+Jne = Class {init = vvl_init, comp = function(a, b) return a ~= b end, execute = vvl_execute}
 
 
 function op.read(t)
@@ -223,12 +269,25 @@ function op.read(t)
         if #t ~= 1 then return "Incorrect # of 'nop' parameters"  end
         return Nop()
     elseif t[1] == 'jmp' then
-        if #t ~= 2 then return "Incorrect # of 'jmp' parameters" end
-        return Jmp(t[2])
+        return Jmp.create(t)
     elseif t[1] == 'mov' then
         return Mov.create(t)
     elseif t[1] == 'add' then
         return Add.create(t)
+    elseif t[1] == 'sub' then
+        return Sub.create(t)
+    elseif t[1] == 'jgt' then
+        return vvl_check(t, Jgt)
+    elseif t[1] == 'jge' then
+        return vvl_check(t, Jge)
+    elseif t[1] == 'jlt' then
+        return vvl_check(t, Jlt)
+    elseif t[1] == 'jle' then
+        return vvl_check(t, Jle)
+    elseif t[1] == 'jeq' then
+        return vvl_check(t, Jeq)
+    elseif t[1] == 'jne' then
+        return vvl_check(t, Jne)
     end
 end
 

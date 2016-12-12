@@ -74,7 +74,10 @@ Carry on.]], "Automated Introduction System", true, nil)
 end
 
 function lore.first_done()
+    if level_done.first then return end
     level_done.first = true
+
+    timer.after(1, function() ROOM:connect("maze2") end)
 end
 
 function lore.puzzle3()

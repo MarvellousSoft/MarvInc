@@ -76,7 +76,15 @@ function PcBox:changeTo(tab)
 end
 
 function PcBox:keyPressed(key)
-    tabs[self.cur_tab]:keyPressed(key)
+    if key == 'pagedown' then
+        local nxt = {email = "code", code = "info", info = "email"}
+        self:changeTo(nxt[self.cur_tab])
+    elseif key == 'pageup' then
+        local prev = {email = "info", code = "email", info = "code"}
+        self:changeTo(prev[self.cur_tab])
+    else
+        tabs[self.cur_tab]:keyPressed(key)
+    end
 end
 
 function PcBox:textInput(t)
