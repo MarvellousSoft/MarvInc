@@ -190,8 +190,8 @@ end
 
 function opened_email_funcs.closeOpenEmail()
     local mailTab = Util.findId("email_tab")
-    mailTab.deleteEmail(mailTab.email_list[e.number])
-    e.death = true
+    mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
+    mailTab.email_opened.death = true
 end
 
 function opened_email_funcs.mousePressed(x, y, but)
