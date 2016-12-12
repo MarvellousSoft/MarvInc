@@ -83,19 +83,16 @@ function EmailTab:draw()
     for i,e in ipairs(t.email_list) do
 
         --Draw the email box
-        if e.is_puzzle then
-            if e.is_completed then
-                color = Color.new(e.email_puzzle_complete_color)
-            else
-                color = Color.new(e.email_puzzle_uncompleted_color)
-            end
+        if not e.was_read then
+            color = Color.new(e.email_color)
+        elseif not e.is_puzzle then
+            color = Color.new(e.email_read_color)
+        elseif e.is_completed then
+            color = Color.new(e.email_puzzle_complete_color)
         else
-            if not e.was_read then
-                color = Color.new(e.email_color)
-            else
-                color = Color.new(e.email_read_color)
-            end
+            color = Color.new(e.email_puzzle_uncompleted_color)
         end
+
         --Set alpha
         color.a = e.alpha
 

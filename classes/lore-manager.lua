@@ -134,6 +134,26 @@ function lore.first_done()
 
     email.first.is_completed = true
 
+    timer.after(1, function()
+    email.walkx = Mail.new("Keep going",
+[[Well done.
+
+Besides directions, you can add another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
+
+Example:
+- walk 5
+- walk left 10
+
+Reply this email to start the experiment.
+
+Keep up the good work, and carry on.]], "Automated Introduction System", false,
+        function()
+                ROOM:connect("walkx")
+                OpenedMail:close()
+            end, true, function() Info.addCommand("walk <steps>") Info.addCommand("walk <direction> <steps>") end)
+        end)
+
+    timer.after(3, function()
     Mail.new("Terminal Tips",
 [[The <terminal> is a powerful tool.
 
@@ -154,35 +174,56 @@ As we said before, you should use it just like any text editor. To mention some 
 Exploring is part of the job, so get used to it.
 
 Happy coding, and carry on.]],
-    "Automated Introduction System", true, nil, false, lore.after_terminal_email)
-end
-
-function lore.after_terminal_email()
-    timer.after(2, function()
-    email.walkx = Mail.new("Keep going",
-[[Well done.
-
-Besides directions, you can add another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
-
-Example:
-    - walk 5
-    - walk left 10
-
-Reply this email to start the experiment.
-
-Keep up the good work, and carry on.]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("walkx")
-        OpenedMail:close()
-    end, true, function() Info.addCommand("walk <steps>") Info.addCommand("walk <direction> <steps>") end)
-    end)
+    "Automated Introduction System", true)
+    end
+    )
 end
 
 function lore.walkx_done()
     if level_done.walkx then default_completed() return end
     level_done.walkx = true
 
+    PopManager.new("Puzzle completed",
+        "You will be emailed you next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Ok",
+            clr = Color.black()
+        })
+
     email.walkx.is_completed = true
+
+    timer.after(2, function()
+    email.turn = Mail.new("Making good progress",
+[[Good job, Employee #]]..EMPLOYER_NUMBER[[. Lets learn some new instructions.
+
+Use the turn command to, surprise, turn the test subject. You can provide a direction, or clock/counter to turn the robot clockwise or counterclockwise.
+
+Example:
+    - turn south
+    - turn clock
+    - turn counter
+
+You will need this for future tasks, so don't forget about it. Use the next room to apply this new command, and don't forget to check the objectives on the info tab.
+
+As always, reply this email to start the puzzle.
+
+Carry on.]], "Automated Introduction System", false,
+    function()
+        ROOM:connect("turn")
+        OpenedMail:close()
+    end, true, function() Info.addCommand("turn clock") Info.addCommand("turn counter") Info.addCommand("turn <direction>") end)
+    end)
+
+end
+
+function lore.turn_done()
+    if level_done.turn then default_completed() return end
+    level_done.turn = true
+
+    email.turn.is_completed = true
 
     PopManager.new("Congratulations!",
         "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
