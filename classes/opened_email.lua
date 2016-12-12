@@ -37,6 +37,8 @@ OpenedEmail = Class{
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
 
+        self.retry_button_color = Color.new(70,80,120) --Color for retry button box when opening an already completed puzzle
+
         self.reply_button_enabled_color = Color.new(150,80,120) --Color for reply button box when enabled
         self.reply_button_enabled_text_color = Color.new(0,0,250) --Color for reply button text when enabled
         self.reply_button_disabled_color = Color.new(0,0,80) --Color for reply button box when disabled
@@ -149,6 +151,9 @@ function OpenedEmail:draw()
             Color.set(e.reply_button_enabled_color)
         else
             Color.set(e.reply_button_disabled_color)
+        end
+        if referenced_email.is_puzzle and referenced_email.is_completed then
+            Color.set(e.retry_button_color)
         end
         love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
         Color.set(e.line_color_3)
