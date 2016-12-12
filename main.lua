@@ -43,10 +43,11 @@ StepManager = require "classes.stepmanager"
 
 --GAMESTATES
 GS = {
---MENU     = require "gamestate.menu",     --Menu Gamestate
+MENU     = require "gamestates.menu",     --Menu Gamestate
 GAME     = require "gamestates.game",     --Game Gamestate
 --PAUSE    = require "gamestate.pause",    --Pause Gamestate
 --GAMEOVER = require "gamestate.gameover"  --Gameover Gamestate
+SPLASH = require "gamestates.splash"
 }
 
 function love.load()
@@ -54,7 +55,7 @@ function love.load()
     Setup.config() --Configure your game
 
     Gamestate.registerEvents() --Overwrites love callbacks to call Gamestate as well
-    Gamestate.switch(GS.GAME) --Jump to the inicial state
+    Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
 end
 

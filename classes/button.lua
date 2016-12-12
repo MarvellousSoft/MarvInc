@@ -121,6 +121,7 @@ function checkButtonCollision(x,y)
 
     if TABS_LOCK then return end --If buttons are locked, does nothing
     --Iterate on drawable buttons table
+    if not Util.findSbTp "tabs" then return end
     for b in pairs(Util.findSbTp "tabs") do
         if x  <= b.pos.x + b.w and
           x >= b.pos.x and

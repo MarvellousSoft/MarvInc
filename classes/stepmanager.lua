@@ -133,6 +133,7 @@ function StepManager:stopNoKill()
 end
 
 function StepManager:stop()
+    if not self.running then return end
     self:stopNoKill()
     ROOM:kill()
     self:clear()

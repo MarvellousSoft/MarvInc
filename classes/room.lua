@@ -34,6 +34,9 @@ Room = Class{
         -- Initial bot
         Signal.register("death", function()
             self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
+            if self.default_bot_turn then
+                self.bot:turn(self.default_bot_turn)
+            end
         end)
 
         -- Border
@@ -79,7 +82,8 @@ function Room:from(puzzle)
     self.grid_floor = puzzle.grid_floor
 
     self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
-    self.bot:turn(_G[puzzle.orient.."_R"])
+    self.default_bot_turn = _G[puzzle.orient.."_R"]
+    self.bot:turn(self.default_bot_turn)
 
     self.objs = nil
     self.objs = {}
