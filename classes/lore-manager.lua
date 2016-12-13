@@ -644,9 +644,9 @@ aaanywho, youre probably itching for some ~real~ work huh?? we r tryin to tweak 
 
 don't forget to carry on ;))).
 
-Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
-]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false,
+jeNny Leubwoot
+chief astronaut at marvellous soft.s KICKASS dojo
+]], "Janine Leubwitz", false,
         function()
             ROOM:connect("maze1")
             OpenedMail:close()
@@ -654,19 +654,20 @@ Chief engineer at Marvellous Inc.s Robot Testing Department
         end)
 
 
-        timer.after(25, function()
-            email.lasers = Mail.new("Need help",
-        [[Hey man,
+    timer.after(25, function()
+    email.lasers = Mail.new("Need help",
+[[
+Hey man,
 
-        I'm Paul from the material engineering department. Look man, I got a situation here. Thing is, I told Lewis that I needed the new flux translator fluid for the gravitron kernel. Now, I know I too am to blame for relying on such a knucklehead as Lewis, but anyways. Well, Lewis told Kevin, the new intern, to go get the FTF. But what he forgot to mention was that we have a new security system that uses admantium-slicing lasers... And the FTF just happened to be tightly secured with motion sensor lasers... You see where this is going. As if it weren't bad enough having all the paperwork for dealing with an intern accidental death, the godamn lasers ended up setting the entrance to the bio chem lab on fire, which resulted in the BC guys ringing my phone all day demanding I put out the fire and send help. Anyways, Sarah got me your phone since you're in the "robots" department (seriously, what in the fuck do you guys do over there). I know you guys love challenges, so why not right? It's a win-win, huh? Look, I'll be in your debt forever if you do this for me. Like, I am totally tripping right now here, man. I can't deal with fire hazards right now, and Christoff is already asking questions around here. Give me a heads up if you're willing. And listen, man. Don't rat on me, bud, ok? I'll get you a stub once all this is over.
+I'm Paul from the material engineering department. Look man, I got a situation here. Thing is, I told Lewis that I needed the new flux translator fluid for the gravitron kernel. Now, I know I too am to blame for relying on such a knucklehead as Lewis, but anyways. Well, Lewis told Kevin, the new intern, to go get the FTF. But what he forgot to mention was that we have a new security system that uses admantium-slicing lasers... And the FTF just happened to be tightly secured with motion sensor lasers... You see where this is going. As if it weren't bad enough having all the paperwork for dealing with an intern accidental death, the godamn lasers ended up setting the entrance to the bio chem lab on fire, which resulted in the BC guys ringing my phone all day demanding I put out the fire and send help. Anyways, Sarah got me your phone since you're in the "robots" department (seriously, what in the fuck do you guys do over there). I know you guys love challenges, so why not right? It's a win-win, huh? Look, I'll be in your debt forever if you do this for me. Like, I am totally tripping right now here, man. I can't deal with fire hazards right now, and Christoff is already asking questions around here. Give me a heads up if you're willing. And listen, man. Don't rat on me, bud, ok? I'll get you a stub once all this is over.
 
-        Trip on, my man
+Trip on, my man
 
-        Paul Verkeufen
-        Chief engineer at Marvellous Inc.s Material Engineering Department
+Paul Verkeufen
+Chief engineer at Marvellous Inc.s Material Engineering Department
 
-        ~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
-        ]], "Paul Verkeufen (hempman@med.marv.com)", false,
+~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
+]], "Paul Verkeufen (hempman@med.marv.com)", false,
                 function()
                     ROOM:connect("lasers")
                     OpenedMail:close()
@@ -709,7 +710,56 @@ function lore.maze1_done()
             text = " i hope not ",
             clr = Color.black()
         })
+
+    timer.after(15, function()
+    email.maze2 = Mail.new("My sincere apologies",
+[[
+Hello Employee #]]..EMPLOYER_NUMBER..[[
+
+First of all, I own you my sincere apologies for my previous email. I had a little wine at my break hours, and I got carried away for a bit.
+
+If you could erase it and pretend that it never happened, I would be grateful.
+
+But at least the record show you have completed the beta version of our latest nIf Navigation System test room with perfection. I think you can handle the real deal now. Please let me know if you are willing to try it.
+
+Again, I'm sorry for my lack of profissionalism, it will not happen again.
+And please call me Janine at the work enviroment.
+
+Carry on, now and forever.
+
+Janine Leubwitz
+Chief engineer at Marvellous Inc.s Robot Testing Department
+]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false,
+        function()
+            ROOM:connect("maze2")
+            OpenedMail:close()
+        end, true, function()  end)
+        end)
+
 end
+
+function lore.maze2_done()
+    StepManager:pause()
+    if level_done.maze2 then default_completed() return end
+    level_done.maze2 = true
+    email.maze2.is_completed = true
+
+
+    PopManager.new("You've completed the job",
+[[
+Jenny will want to hear about this.
+
+You probably should call her Jenny.
+]],
+    Color.green(), {
+        func = function()
+            ROOM:disconnect()
+        end,
+        text = " ok ",
+        clr = Color.black()
+    })
+end
+
 
 
 function lore.update(dt)
