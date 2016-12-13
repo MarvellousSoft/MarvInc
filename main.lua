@@ -51,7 +51,8 @@ MENU     = require "gamestates.menu",     --Menu Gamestate
 GAME     = require "gamestates.game",     --Game Gamestate
 --PAUSE    = require "gamestate.pause",    --Pause Gamestate
 --GAMEOVER = require "gamestate.gameover"  --Gameover Gamestate
-SPLASH = require "gamestates.splash"
+SPLASH = require "gamestates.splash",
+CREDITS = require "gamestates.credits"
 }
 
 function love.load()

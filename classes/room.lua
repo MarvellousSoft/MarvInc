@@ -81,6 +81,10 @@ Room = Class{
         -- Death
 
         ROOM = self
+
+
+        -- OS Version
+        self.version = "1.0"
     end
 }
 
@@ -289,8 +293,11 @@ function Room:draw()
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
         love.graphics.setFont(self.back_fnt)
         Color.set(self.back_tclr)
-        love.graphics.printf("Marvellous Inc.", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
-            "center")
+        love.graphics.printf("Marvellous OS", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w, "center")
+
+        local dy = self.back_fnt:getHeight()
+        love.graphics.setFont(FONTS.fira(25))
+        love.graphics.printf(self.version, self.w * .75, (self.grid_h - self.back_fnt:getHeight()) / 2 + dy + 10, self.w / 4)
     end
     if self.static_on then
         Color.set(self.back_clr)

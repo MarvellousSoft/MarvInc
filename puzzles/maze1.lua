@@ -1,7 +1,10 @@
 -- Maze puzzle - with walls
 
 name = "Kind of messed up"
-n = 2
+n = "A.1"
+
+lines_on_terminal = 4
+memory_slots = 0
 
 -- Bot
 bot = {'b', "NORTH", {1, 20}}
@@ -18,19 +21,11 @@ objs = {-- Condition
     function(self, room)
         return room.bot.pos.x == 11 and room.bot.pos.y == 11
     end,
-    "Get to the center.",
-    function(self, room)
-        print("Congratz, champz.")
-        if not done then
-            done = true
-            _G.MAIN_TIMER.after(1,
-            function()
-                _G.ROOM:from(_G.Reader("puzzles/maze2.lua"):get())
-            end)
-       end
-    end
+    "Get to the center.", _G.LoreManager.maze1_done
     }
 }
+
+extra_info = [[Remember old commands.]]
 
 grid_obj = "xxxxxxxxxxxxxxxxxxxx"..
            "...................x"..

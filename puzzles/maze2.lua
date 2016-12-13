@@ -3,8 +3,11 @@
 name = "Kind of even more messed up"
 n = 3
 
+lines_on_terminal = 30
+memory_slots = 5
+
 -- Bot
-bot = {'b', "NORTH", {1, 20}}
+bot = {'b', "NORTH"}
 
 -- Objects
 _G.getfenv(0)['.'] = nil
@@ -16,10 +19,7 @@ objs = {-- Condition
     function(self, room)
         return room.bot.pos.x == 11 and room.bot.pos.y == 11
     end,
-    "Get to the center, but harder.",
-    function(self, room)
-        print("The guy is good.")
-    end
+    "Get to the center, but harder.", _G.LoreManager.maze2_done
     }
 }
 
@@ -42,7 +42,7 @@ grid_obj = "xxxxxxxxxxxxxxxxxxxx"..
            ".x.x.............x.x"..
            ".x.xxxxxxxxxxxxxxx.x"..
            ".x.................x"..
-           ".xxxxxxxxxxxxxxxxxxx"
+           "bxxxxxxxxxxxxxxxxxxx"
 
 -- Floor
 w = "white_floor"

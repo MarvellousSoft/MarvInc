@@ -40,7 +40,7 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
 
-    "Automated Introduction System", false, function() ROOM:connect("array_sep") end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("simple_sort") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
@@ -605,6 +605,12 @@ Never stop learning, and carry on.
 
 end
 
+local function after_pop()
+    ROOM:disconnect()
+    FX.full_static()
+    ROOM.version = "2.0"
+end
+
 function lore.square_done()
     StepManager:pause()
     if level_done.square then default_completed() return end
@@ -622,9 +628,7 @@ function lore.square_done()
          "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
          "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
         Color.blue(), {
-            func = function()
-                ROOM:disconnect()
-            end,
+            after_pop,
             text = "Thank you for this wonderful opportunity",
             clr = Color.blue()
         })

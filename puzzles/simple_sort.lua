@@ -4,7 +4,7 @@ name = "Sequence Separator"
 n = 7
 
 lines_on_terminal = 35
-memory_slots = 5
+memory_slots = 12
 
 -- Bot
 bot = {'b', "SOUTH"}
@@ -17,24 +17,20 @@ local function check_all(self, room)
     local cbs = {}
     local all = true
     for i = 1, 6 do
-        cbs[i] = g[3 + 2 * i][5]
+        cbs[i] = g[4 + 2 * i][5]
         if #cbs[i].inp > 3 then
             _G.StepManager:autofail("Wrong output", "More than 3 numbers in blue console " .. i, "Retry")
-                return false
+            return false
         end
         if #cbs[i].inp < 3 then all = false end
-    end
-    if not all then return false end
-
-    for i = 1, 6 do
         for j = 1, 3 do
-            if cbs[i][j] ~= vs[i][j] then
+            if cbs[i][j] and cbs[i][j] ~= vs[i][j] then
                 _G.StepManager:autofail("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
                 return false
             end
         end
     end
-    return true
+    return all
 end
 
 -- Objective

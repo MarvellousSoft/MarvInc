@@ -6,6 +6,7 @@ local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
 local LoreManager = require "classes.lore-manager"
 PopManager = require "classes.popmanager"
+local FX = require "classes.fx"
 
 --MODULE FOR THE GAMESTATE: GAME--
 
@@ -20,6 +21,7 @@ function state:enter()
     pc_box = PcBox.create()
 
     LoreManager.begin()
+    FX.intro()
 end
 
 function state:leave()
@@ -40,7 +42,9 @@ function state:update(dt)
 end
 
 function state:draw()
+    FX.pre_draw()
     Draw.allTables()
+    FX.post_draw()
 end
 
 function state:keypressed(key)
@@ -75,16 +79,11 @@ function state:keypressed(key)
     elseif key == 'f10' then
         -- REMOVE
         ALL_OK = true
+    elseif key == 'f12' then
+        FX.full_static()
     elseif key == 'f11' then
     code =
-[[
-walk
-read 0
-walk right
-write [0]
-walk left
-]]
---[=[
+[=[
 walk up
 walk left
 lp: read 0
@@ -93,7 +92,7 @@ read 2
 beg: mov 4 0
 mov 5 1
 jgt [0] [1] swp
-mov 0 2
+mov 4 2
 jgt [1] [2] swp
 mov 4 0
 jgt [0] [1] swp
@@ -104,7 +103,13 @@ mov [4] [[5]]
 mov [5] [6]
 jmp beg
 
-end: 
+end: add 7 2
+walk right [7]
+write [0] up
+write [1]
+write [2]
+walk left
+jmp lp
 ]=]
     for i = 1, #code do
         if code:sub(i, i) == '\n' then
