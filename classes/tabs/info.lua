@@ -21,7 +21,7 @@ InfoTab = Class{
         end)
 
         -- Id file for showing the bot
-        self.id_file_color = Color.new(70, 90, 240, 120)
+        self.id_file_color = Color.new(70, 90, 240, 110)
         self.id_file_text_color = Color.new(0, 80, 10)
         self.id_file_x = 10
         self.id_file_y = 10
@@ -126,7 +126,7 @@ function InfoTab:draw()
         love.graphics.print(text, self.pos.x + self.w/2 - font_w/2, self.pos.y + 220)
 
         -- Room name
-        font = FONTS.fira(26)
+        font = FONTS.fira(24)
         text = "\""..ROOM.name.."\""
         font_w = font:getWidth(text)
         love.graphics.setFont(font)
@@ -138,7 +138,7 @@ function InfoTab:draw()
         love.graphics.setFont(font)
         Color.set(self.text_color2)
         love.graphics.print("Objective:", self.pos.x + 10, self.pos.y + self.id_file_y + 300)
-        font = FONTS.fira(20)
+        font = FONTS.fira(18)
         love.graphics.setFont(font)
         local h = 0
         local _, wraptext
@@ -158,13 +158,13 @@ function InfoTab:draw()
             love.graphics.setFont(font)
             Color.set(self.text_color2)
             love.graphics.print("Extra info:", self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
-            font = FONTS.fira(20)
+            font = FONTS.fira(18)
             love.graphics.setFont(font)
             Color.set(self.text_color3)
             -- Print the info
             love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 415 + h, self.w - 20)
         end
-        
+
         -- Draw give up button
 
         -- Make button box
@@ -195,7 +195,7 @@ function InfoTab:draw()
 
         -- List known commands
         local h = 0
-        font = FONTS.fira(22)
+        font = FONTS.fira(18)
         love.graphics.setFont(font)
         Color.set(self.text_color2)
         for i,t in ipairs(self.commands) do

@@ -124,12 +124,12 @@ function lore.first_done()
     level_done.first = true
 
     PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
+        "You will be emailed your next task shortly.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = " Ok ",
+            text = " ok ",
             clr = Color.black()
         })
 
@@ -166,10 +166,6 @@ As we said before, you should use it just like any text editor. To mention some 
 
 - Use the 'end' or 'home' keys
 
-- Copy, paste, cut, undo or redo with the usual shortcuts (ctrl+key)
-
-- Autocomplete text with tab
-
 - And much more!
 
 Exploring is part of the job, so get used to it.
@@ -186,12 +182,12 @@ function lore.walkx_done()
     level_done.walkx = true
 
     PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
+        "You will be emailed your next task shortly.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = " Ok ",
+            text = " ok ",
             clr = Color.black()
         })
 
@@ -247,12 +243,12 @@ function lore.turn_done()
     level_done.turn = true
 
     PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
+        "You will be emailed your next task shortly.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = " Ok ",
+            text = " ok ",
             clr = Color.black()
         })
 
@@ -263,25 +259,22 @@ function lore.turn_done()
     email.jmp = Mail.new("Lets use some loops",
 [[Remember loops from Hacking101 classes? Well, you better.
 
-The new command is jmp. You provide a label, and it will jump to the line you defined the label on.
-
-To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+The new command is jmp. You provide a label, and it will jump to the line you defined the label on. To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
 
 After defining a label, you can write any one command in the same line, however the label must come before the command.
 But that is optional.
 
 Example that makes the bot walk in circles:
     - banana:
-      walk 2
-      turn counter
-      jmp banana
+    - walk 2
+    - turn counter
+    - jmp banana
 
 Example that makes the bot spin endlessly:
     - awesomeLabel66: turn clock
       jmp awesomeLabel66
 
-Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the experiment ends ass soon as the objective requirements are completed.
-
+Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the experiment ends as soon as the objective requirements are completed.
 
 As always, carry on.]], "Automated Introduction System", false,
         function()
@@ -298,12 +291,12 @@ function lore.jmp_done()
     level_done.jmp = true
 
     PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
+        "You will be emailed your next task shortly.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = " Ok ",
+            text = " ok ",
             clr = Color.black()
         })
 
@@ -313,7 +306,7 @@ function lore.jmp_done()
     email.pickup = Mail.new("Working with a backpack",
 [[Did you know you have an inventory?
 
-You can pickup and drop objects, such as giant buckets, with the commands pickup and drop. They both receive the same optional argument, a direction. When provided, the pickup command will make the robot turn and pick any object facing that direction. If you don't provide a direction, the subject will try to pick something in the direction he is facing.
+You can pickup and drop objects, such as giant buckets, with the commands pickup and drop. They both receive the same optional argument, a direction. When provided, the pickup command will make the robot turn and pick any object facing that direction. If you don't provide a direction, the subject will try to pick something in the direction he is facing. In both cases he puts the object in your inventory, located below your notepad in the terminal.
 
 The same is analogous for the drop command, but instead of picking objects, the robot will try to drop whatever he is holding in the inventory.
 
@@ -322,12 +315,10 @@ Example that makes the bot pickup an object from his left and placing on his rig
 - drop right
 
 The same example as above, if the robot was facing north:
-- turn left
+- turn counter
 - pickup
 - turn right
 - drop
-
-IMPORTANT: If the robots tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw and error.
 
 Happy adventuring, and carry on.]], "Automated Introduction System", false,
         function()
@@ -344,12 +335,12 @@ function lore.pickup_done()
     level_done.pickup = true
 
     PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
+        "You will be emailed your next task shortly.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = " Ok ",
+            text = " ok ",
             clr = Color.black()
         })
 
@@ -357,30 +348,42 @@ function lore.pickup_done()
 
     timer.after(3, function()
     email.register = Mail.new("Using memory",
-[[Let's jump up a notch shall we? You will now learn to use the registers in your terminal, the write and the add commands.
+[[Let's take it up a notch shall we? You will now learn to use the registers, and the write/add commands.
 
-Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you would ahve to write [5]. You can see them just below your terminal notepad, with their respective numbers and contents.
-
-The add command receives two arguments: the first is the adress of the register you will add a value. The second is the value you will add.
-
-Example that adds 5 to the register 2:
-- add 2 5
+Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you write [5]. You can see them just below your terminal notepad, with their respective numbers and contents.
+The add command receives two arguments: The adress of the register you will add a value, and the value you will add.
 
 Example that adds the content of the register 5 in the register 2:
 - add 2 [5]
 
-In this last example, if the contents of the registers 2 and 5 were 30 and 100, the final content of the register 2 would be 130.
+Finally, the write command receives a value argument, and a second optional direction argument. You'll use the write command to write values in a console, which are the big colorful computer objects in The Room. The direction determines which direction the console is. If not provided, as usual, the robot will try to write in the direction he is facing.
 
-Lastly, the write command receives a value argument, and a second optional direction argument. You'll use the write command to write values in a console, which are the big colorful computer objects in The Room. The direction will decide which direction the console is from the robot. If not provided, as usual, the robot will try to write in the tile towards the direction he is facing.
+Make sure to understand all these concepts. You can do it.
 
-Make sure to understand all these concepts. Or your stay here at Marvellous Inc. will be quite short. :)
-
-Best of Luck. Carry on.]], "Automated Introduction System", false,
+Best of Luck. Carry on. :)]], "Automated Introduction System", false,
         function()
             ROOM:connect("register")
             OpenedMail:close()
         end, true, function() Info.addCommand("add <adress> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
         end)
+
+    timer.after(8, function()
+    Mail.new("Some more register examples",
+[[Here are some more examples to get you used to the register, write command and add command.
+
+In this example, the bot will write to a console facing his left the content of the register #8
+    - turn left
+    - write [8]
+
+This next example does the same thing as before, but with less lines of code
+    - write [8] left
+
+Example of adding the number inside the register 10 by itself (aka multiplying it by two)
+    - add 10 [10]
+
+Shine on and carry on.]],  "Automated Introduction System", true)
+    end)
+
 
 end
 
@@ -389,17 +392,114 @@ function lore.register_done()
     if level_done.register then default_completed() return end
     level_done.register = true
 
-    -- PopManager.new("Puzzle completed",
-    --     "You will be emailed you next task shortly.",
-    --     Color.green(), {
-    --         func = function()
-    --             ROOM:disconnect()
-    --         end,
-    --         text = " Ok ",
-    --         clr = Color.black()
-    --     })
+    PopManager.new("Puzzle completed",
+        "You will be emailed your next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " ok ",
+            clr = Color.black()
+        })
 
     email.register.is_completed = true
+
+    timer.after(3, function()
+    email.array_sep = Mail.new("Comparing and jumping",
+[[We are almost finished with the introdutory puzzles.
+
+We now introduce the conditional jumps. There are several of them, and shortly you'll receive an email explaining what condition each one represent.
+
+They all receive three arguments: two values and a label. If the condition of the jump is satisfied, it will jump to the label, just like a normal jmp. If the condition returns false, it will just go to the next instruction as if nothing happened.
+
+For instance, the jgt command is the Greater Than Jump. So if the first value received is greater than the second one, it will jump to the label given as a third argument.
+
+Example where the bot will increase the value of the registry 1 until its greater than the value of the registry 2. Only then it will walk 1 tile.
+    - omar: add 1 1
+    - jgt [1] [2] omar
+    - walk 1
+
+Lastly you can use the read command to read input from a console. You provide a first argument with the address of the register to store the input read, and a second optional direction, analogous to the write.
+
+Carry on.]], "Automated Introduction System", false,
+        function()
+            ROOM:connect("array_sep")
+            OpenedMail:close()
+        end, true, function() Info.addCommand("jgt <value> <value> <label>") Info.addCommand("jge <value> <value> <label>") Info.addCommand("jlt <value> <value> <label>") Info.addCommand("jle <value> <value> <label>") Info.addCommand("jeq <value> <value> <label>") Info.addCommand("jne <value> <value> <label>") Info.addCommand("read <address>") Info.addCommand("read <address> <direction>") end)
+        end)
+
+
+    timer.after(8, function()
+    Mail.new("Conditional Jumps",
+[[Here are is a list of all conditional jumps and their meaning. You can also see them at the info tab when there isn't any simulation running.
+
+- jgt - Greater Than, jumps if first value is greater than the second
+
+- jge - Greater or Equal, jumps if first value is greater than or equal to the second
+
+- jlt - Lesser Than, jumps if first value is less than the second
+
+- jle - Lesser or Equal, jumps if first value is less than or equal to the second
+
+- jeq - Equal, jumps if first value is equal to the second
+
+- jne - Not Equal, jumps if first value is not equal to the second
+
+Always use the one most adequate to the situation. And don't forget that you can reference contents of registers.
+
+Stay fresh, and carry on.]],
+    "Automated Introduction System", true)
+        end
+        )
+
+    timer.after(8, function()
+    Mail.new("Some read command examples",
+[[In case you need some further guidance, here are some examples using the read command and conditional jumping.
+
+Example where the bot reads an input from the console below him, and writes in the console above him. In both cases he is using the register #0 to store the values.
+    - read 0 down
+    - write [0] up
+
+Example where the bot will keep reading the input from the console to his left (west) until it equals the input he got from the console to his right (east). Then he will be able to walk down
+    - read 0 east
+    - marv: read 1 west
+    - jne [0] [1] marv
+    - walk down
+
+With the read command you can read inputs from the consoles, while with the write you can output to the consoles.
+
+Use the conditional jumps to make logical loops for your programs. Understanding all this is essencial for every member of our company.
+
+Follow you dreams, and carry on.]],
+        "Automated Introduction System", true)
+    end)
+
+
+end
+
+function lore.array_sep_done()
+    StepManager:pause()
+    if level_done.array_sep then default_completed() return end
+    level_done.array_sep = true
+
+    PopManager.new("Puzzle completed",
+        "You will be emailed your next task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " ok ",
+            clr = Color.black()
+        })
+
+    email.array_sep.is_completed = true
+
+end
+
+function lore.square_done()
+    StepManager:pause()
+    if level_done.square then default_completed() return end
+    level_done.square = true
 
     PopManager.new("Congratulations!",
         "You have passed basic training. We at Marvellous Inc. proud ourselves on our "..
@@ -418,22 +518,9 @@ function lore.register_done()
             text = "Thank you for this wonderful opportunity",
             clr = Color.blue()
         })
+
 end
 
-function lore.bla_done()
-    StepManager:pause()
-    if level_done.register then default_completed() return end
-    level_done.register = true
-    PopManager.new("Puzzle completed",
-        "You will be emailed you next task shortly.",
-        Color.green(), {
-            func = function()
-                ROOM:disconnect()
-            end,
-            text = "Ok",
-            clr = Color.black()
-        })
-end
 
 function lore.update(dt)
     timer.update(dt)

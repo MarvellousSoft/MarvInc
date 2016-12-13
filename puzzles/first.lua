@@ -1,6 +1,6 @@
 -- This is a test puzzle
 
-name = "The Game"
+name = "Hello World"
 -- Puzzle number
 n = 1
 

@@ -22,11 +22,12 @@ end
 -- Objective
 objs = {
     {-- Condition function
-    check_all, "Get to the red tile. Extinguish all the lava in the way",
+    check_all, "Get to the red tile. Extinguish all the lava in the way using the giant buckets. Obviously.",
     _G.LoreManager.pickup_done}
 }
 
-extra_info = ""
+extra_info =
+[[If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

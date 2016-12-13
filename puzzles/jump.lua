@@ -22,7 +22,7 @@ objs = {
     _G.LoreManager.jmp_done}
 }
 
-extra_info = nil
+extra_info = "The experiment ends as soon as the objective requirements are completed."
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
