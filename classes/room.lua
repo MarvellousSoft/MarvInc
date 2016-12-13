@@ -352,6 +352,7 @@ function Room:sedate(ds, y)
             self:paint(px, py, ds.skey)
         end
         self:extract(px, py)
+        self.grid_obj[ds.pos.x][ds.pos.y] = nil
         Room.dorments[ds] = ds
     else
         local _d = self.grid_obj[ds][y]
@@ -367,9 +368,7 @@ function Room:wakeup(ds, y)
         if self.bot.pos.x == px and self.bot.pos.y == py then
             self:kill()
         end
-        if ds.bg and ds.skey then
-            self:paint(px, py, ds.of)
-        end
+        self:paint(px, py, ds.of)
         self.grid_obj[px][py] = ds
         Room.dorments[ds] = nil
     else

@@ -77,7 +77,6 @@ objs = {
             local _c = room.grid_obj[which.x][which.y]
             local _inp = _c.inp
             if #_inp > 0 then
-                print(which.pass, _inp[#_inp])
                 if which.pass == _inp[#_inp] then
                     _c:sleep()
                 else
