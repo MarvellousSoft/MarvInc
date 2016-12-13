@@ -232,7 +232,7 @@ function util.defaultKeyPressed(key)
     if  key == 'f9' then
         util.exit()
     elseif key == 'f1' then
-        util.toggleDebug()
+        --util.toggleDebug()
     end
 
 end
