@@ -629,7 +629,32 @@ function lore.square_done()
             clr = Color.blue()
         })
 
-        timer.after(20, function()
+    timer.after(6, function()
+    email.maze1 = Mail.new("Congraaaaattts!!1!",
+[[
+Hey theeeere!
+
+congrats on nailing the job man,  been a while since we had new slavs coming here kkkk jsut kiddin ;P
+
+im ur new boss, but no need to formalities right? hahaha call me jenny btw
+
+u probly realized we updated your OS to the 2.0 ver. it should have downloaded 1TB of RAM, so everything should run waaaay more smooth (y) .oh!and the updated office packge is off the roooof man! hahaha
+
+aaanywho, youre probably itching for some ~real~ work huh?? we r tryin to tweak some details on the nav sys of the "robots" kk, but we are having some tech troubles.The main test room is still 2 unstable for u to handle right now, but we can send u the beta version and see if you can handle. btw this one can only handle 4 lines of code soooooo yeahh can u handle this job??
+
+don't forget to carry on ;))).
+
+Janine Leubwitz
+Chief engineer at Marvellous Inc.s Robot Testing Department
+]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false,
+        function()
+            ROOM:connect("maze1")
+            OpenedMail:close()
+        end, true, function()  end)
+        end)
+
+
+        timer.after(25, function()
             email.lasers = Mail.new("Need help",
         [[Hey man,
 
@@ -638,7 +663,7 @@ function lore.square_done()
         Trip on, my man
 
         Paul Verkeufen
-        Chief engineer at Marvellous Inc's Material Engineering Department
+        Chief engineer at Marvellous Inc.s Material Engineering Department
 
         ~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
         ]], "Paul Verkeufen (hempman@med.marv.com)", false,
@@ -655,6 +680,9 @@ function lore.lasers_done()
     StepManager:pause()
     if level_done.lasers then default_completed() return end
     level_done.lasers = true
+    email.lasers.is_completed = true
+
+
     PopManager.new("You've fixed the fire hazard",
         "Paul will be relieved.",
         Color.green(), {
@@ -665,6 +693,24 @@ function lore.lasers_done()
             clr = Color.black()
         })
 end
+
+function lore.maze1_done()
+    StepManager:pause()
+    if level_done.maze1 then default_completed() return end
+    level_done.maze1 = true
+    email.maze1.is_completed = true
+
+    PopManager.new("You've completed the job",
+        "But is Jenny always this... energetic?",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = " i hope not ",
+            clr = Color.black()
+        })
+end
+
 
 function lore.update(dt)
     timer.update(dt)
