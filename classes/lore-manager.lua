@@ -38,7 +38,7 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, function() ROOM:connect("square") end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("array_sep") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()

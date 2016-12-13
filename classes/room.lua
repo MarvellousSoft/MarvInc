@@ -77,42 +77,41 @@ Room = Class{
         Signal.register("end_turn", function()
             self:apply()
         end)
-
+        
         -- Death
-        Signal.register("death", function()
-            local n = Util.findId("info_tab").dead
-            SFX.fail:stop()
-            local death_func = function()
-                local _term = Util.findId("code_tab")
-                _term:store()
-                self:connect(self.puzzle, function()
-                    _term:retrieve()
-                    self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
-                    if self.default_bot_turn then
-                        self.bot:turn(self.default_bot_turn)
-                    end
-                end)
-            end
-            if self.block_pop_up then
-                self.block_pop_up = nil
-                death_func()
-                return
-            end
-            SFX.fail:play()
-            PopManager.new("Bot #"..n.." has been destroyed!",
-                "Communications with test subject #"..n.." \""..self.bot.name.."\" have been "..
-                "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
-                "been dispatched to HR and this incident shall be added to your personal file.",
-                 Color.red(), {
-                    func = death_func,
-                    text = "I will be more careful next time",
-                    clr = Color.blue()
-                })
-        end)
 
         ROOM = self
     end
 }
+
+
+function Room:processDeath()
+    StepManager:stopNoKill()
+    local n = Util.findId("info_tab").dead
+    local death_func = function()
+        local _term = Util.findId("code_tab")
+        _term:store()
+        self:connect(self.puzzle)
+        _term:retrieve()
+        StepManager:check_start()
+    end
+    if StepManager.mrk_play then death_func() return end
+    local title = self.fail_title or "Bot #"..n.." has been destroyed!"
+    local text = self.fail_text or
+        ("Communications with test subject #"..n.." \""..self.bot.name.."\" have been "..
+        "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
+        "been dispatched to HR and this incident shall be added to your personal file.")
+    local button = self.fail_button or "I will be more careful next time"
+    self.fail_title, self.fail_text, self.fail_button = nil, nil, nil
+    SFX.fail:stop()
+    SFX.fail:play()
+    PopManager.new(title, text,
+         Color.red(), {
+            func = death_func,
+            text = button,
+            clr = Color.blue()
+        })
+end
 
 function Room:from(puzzle)
     self:clear()
@@ -206,33 +205,30 @@ function Room:connect(name, after)
         SFX.loud_static:stop()
         self.static_on = false
         MAIN_TIMER.cancel(self.static_rhdl)
-        self:from(Reader("puzzles/"..name..".lua"):get())
-        if after then after() end
     end)
     self.static_rhdl = MAIN_TIMER.every(0.05, function()
         self.static_r = self.static_r + math.pi/2
     end)
+
+    self:from(Reader("puzzles/"..name..".lua"):get())
 end
 
 function Room:disconnect(wait)
     if wait == nil or wait then
         SFX.loud_static:play()
-        self.mode = "offline"
 
         self.static_on = true
         self.static_dhdl = MAIN_TIMER.after(0.0675, function()
             SFX.loud_static:stop()
             self.static_on = false
             MAIN_TIMER.cancel(self.static_rhdl)
-            self:disconnect(false)
         end)
         self.static_rhdl = MAIN_TIMER.every(0.05, function()
             self.static_r = self.static_r + math.pi/2
         end)
-    else
-        self.mode = "offline"
-        self:clear()
     end
+    self.mode = "offline"
+    self:clear()
 end
 
 function Room:connected()
@@ -288,7 +284,15 @@ function Room:draw()
             end
         end
 
-    elseif self.static_on then
+    else
+        Color.set(self.back_clr)
+        love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
+        love.graphics.setFont(self.back_fnt)
+        Color.set(self.back_tclr)
+        love.graphics.printf("Marvellous Inc.", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
+            "center")
+    end
+    if self.static_on then
         Color.set(self.back_clr)
         love.graphics.push()
         love.graphics.origin()
@@ -297,13 +301,6 @@ function Room:draw()
             self.static_r, self.static_sx, self.static_sy,
             self.static_img:getWidth()/2, self.static_img:getHeight()/2)
         love.graphics.pop()
-    else
-        Color.set(self.back_clr)
-        love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
-        love.graphics.setFont(self.back_fnt)
-        Color.set(self.back_tclr)
-        love.graphics.printf("Marvellous Inc.", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w,
-            "center")
     end
 
     -- Set origin to (0, 0)

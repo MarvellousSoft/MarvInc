@@ -9,7 +9,7 @@ memory_slots = 5
 bot = {'b', "SOUTH"}
 
 
-local freq = {}
+local freq
 
 local function check_all(self, room)
     local g = room.grid_obj
@@ -24,6 +24,7 @@ local function check_all(self, room)
         fr[v] = (fr[v] or 0) + 1
         if not freq[v] or fr[v] > freq[v] then
             _G.StepManager:autofail("Wrong output", "Additional number " .. v .. " in blue console", "Retry")
+            return false
         end
     end
 
@@ -35,6 +36,7 @@ local function check_all(self, room)
         fr[v] = (fr[v] or 0) + 1
         if not freq[v] or fr[v] > freq[v] then
             _G.StepManager:autofail("Wrong output", "Additional number " .. v .. " in red console", "Retry")
+            return false
         end
     end
 
@@ -60,6 +62,7 @@ extra_info =
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 c = {"console", false, "console", "green", args = function()
+    freq = {}
     local vec = {}
     for i = 1, 50 do
         vec[i] = _G.love.math.random(-100, 100)

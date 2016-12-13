@@ -22,10 +22,6 @@ local StepManager = {
     events = {}
 }
 
--- Inits
-Signal.register("death", function()
-    StepManager:stopNoKill()
-end)
 
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:do_play()
@@ -72,10 +68,21 @@ end
 local function go_speed(self, delay)
     self.delay = delay
     if self.running and not self.waiting then return end
-    if self.waiting then self:stop() end
+    if self.waiting then
+        self.mrk_play = delay
+        self:stop()
+        return
+    end
     self.paused = false
     self.waiting = false
     StepManager:do_play()
+end
+
+function StepManager:check_start()
+    if self.mrk_play then
+        go_speed(self, self.mrk_play)
+        self.mrk_play = nil
+    end
 end
 
 function StepManager:play()
@@ -154,7 +161,6 @@ end
 
 function StepManager:stop()
     if not self.running and not self.paused then return end
-    self:stopNoKill()
     ROOM:kill()
     self:clear()
 end

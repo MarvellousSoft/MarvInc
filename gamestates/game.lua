@@ -77,7 +77,14 @@ function state:keypressed(key)
         ALL_OK = true
     elseif key == 'f11' then
     code =
-[=[
+[[
+walk
+read 0
+walk right
+write [0]
+walk left
+]]
+--[=[
 walk up
 walk left
 lp: read 0
@@ -86,12 +93,18 @@ read 2
 beg: mov 4 0
 mov 5 1
 jgt [0] [1] swp
-
+mov 0 2
+jgt [1] [2] swp
+mov 4 0
+jgt [0] [1] swp
+jmp end
 
 swp: mov 6 [[4]]
 mov [4] [[5]]
 mov [5] [6]
 jmp beg
+
+end: 
 ]=]
     for i = 1, #code do
         if code:sub(i, i) == '\n' then
