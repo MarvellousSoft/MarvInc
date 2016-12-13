@@ -75,6 +75,31 @@ function state:keypressed(key)
     elseif key == 'f10' then
         -- REMOVE
         ALL_OK = true
+    elseif key == 'f11' then
+    code =
+[=[
+walk up
+walk left
+lp: read 0
+read 1
+read 2
+beg: mov 4 0
+mov 5 1
+jgt [0] [1] swp
+
+
+swp: mov 6 [[4]]
+mov [4] [[5]]
+mov [5] [6]
+jmp beg
+]=]
+    for i = 1, #code do
+        if code:sub(i, i) == '\n' then
+            state:keypressed('return')
+        else
+            state:textinput(code:sub(i,i))
+        end
+    end
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)
