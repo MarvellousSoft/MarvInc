@@ -12,7 +12,8 @@ Reader = Class{
 
 function Reader:read(filename)
     -- Loads lua file and adds contents to table _t
-    local _f = loadfile(filename)
+    local _f, err = love.filesystem.load(filename)
+	if err then print(err) end
     local _t = {}
     setfenv(_f, _t)
 

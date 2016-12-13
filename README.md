@@ -52,7 +52,7 @@ For all the support they provided us in this 72 hours of sleep deprivation
 
 Marvellous Inc. needs LÖVE installed to be ran. It is avaiable on most operating systems, and all download links can be found here [https://love2d.org/].
 
-To run the game just run 'love .' on the main folder of the repository, or double click the .love file in the main directory.
+To run the game just run 'love game' on the main folder of the repository, or double click the marvellous.love file in the build directory.
 
 ----------------------------------------------------
 
