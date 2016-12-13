@@ -33,7 +33,7 @@ objs = {
 extra_info =
 [[Remember to use brackets.
 - You may need some copies of the same number. Try using mov.
-- If you haven't realized yet, the registers can only support values between -999 and 999.
+- If you haven't realized yet, the registers can only hold values between -999 and 999.
 ]]
 
 

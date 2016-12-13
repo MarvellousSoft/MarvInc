@@ -764,8 +764,7 @@ function lore.simple_sort_done()
 
 
     PopManager.new("You've completed the game (so far)",
-[[
-Send us an email and tell us what you think about the game!]],
+[[Send us an email and tell us what you think about the game!]],
     Color.green(), {
         func = function()
             ROOM:disconnect()
