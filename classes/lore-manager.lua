@@ -389,24 +389,39 @@ Best of Luck. Carry on. :)
         end, true, function() Info.addCommand("add <adress> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
         end)
 
+
+
     timer.after(8, function()
+    Mail.new("More about consoles",
+[[
+As we already told, consoles are the big colorful computers that can be sitting around The Room. The robot can interact with them, writing output for them to receive, or reading input pro a console if he has one, as you will learn in the future.
+
+The color of the console usually represents what he can influence in the room, such as lasers or even other consoles.
+
+The number above a console indicates how many inputs he still can provide to the bot. Use this for your advantage in planning programs.
+
+Thats it for now. Carry on.
+]],  "Automated Introduction System", true)
+        end)
+
+    timer.after(12, function()
     Mail.new("Some more register examples",
 [[
 Here are some more examples to get you used to the register, write command and add command.
 
 In this example, the bot will write to a console facing his left the content of the register #8
-    - turn left
-    - write [8]
+- turn left
+- write [8]
 
 This next example does the same thing as before, but with less lines of code
-    - write [8] left
+- write [8] left
 
 Example of adding the number inside the register 10 by itself (aka multiplying it by two)
-    - add 10 [10]
+- add 10 [10]
 
 Shine on and carry on.
 ]],  "Automated Introduction System", true)
-    end)
+end)
 
 
 end
