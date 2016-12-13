@@ -125,26 +125,6 @@ Carry on.
 ]], "Automated Introduction System", true, nil)
         end)
     end
-
-timer.after(3, function()
-    email.register = Mail.new("Need help",
-[[Hey man,
-
-I'm Paul from the material engineering department. Look man, I got a situation here. Thing is, I told Lewis that I needed the new flux translator fluid for the gravitron kernel. Now, I know I too am to blame for relying on such a knucklehead as Lewis, but anyways. Well, Lewis told Kevin, the new intern, to go get the FTF. But what he forgot to mention was that we have a new security system that uses admantium-slicing lasers... And the FTF just happened to be tightly secured with motion sensor lasers... You see where this is going. As if it weren't bad enough having all the paperwork for dealing with an intern accidental death, the godamn lasers ended up setting the entrance to the bio chem lab on fire, which resulted in the BC guys ringing my phone all day demanding I put out the fire and send help. Anyways, Sarah got me your phone since you're in the "robots" department (seriously, what in the fuck do you guys do over there). I know you guys love challenges, so why not right? It's a win-win, huh? Look, I'll be in your debt forever if you do this for me. Like, I am totally tripping right now here, man. I can't deal with fire hazards right now, and Christoff is already asking questions around here. Give me a heads up if you're willing. And listen, man. Don't rat on me, bud, ok? I'll get you a stub once all this is over.
-
-Trip on, my man
-
-Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
-
-~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
-]], "Paul Verkeufen (hempman@med.marv.com)", false,
-        function()
-            ROOM:connect("lasers")
-            OpenedMail:close()
-        end, true, function() end)
-    end)
-
 end
 
 function lore.first_done()
@@ -548,12 +528,12 @@ function lore.array_sep_done()
 [[
 This is it. The last things we have to teach you. The rest is on your own.
 
-The command move is used to move values to an address. The first argument is the address, and the second argument the value you'll add to that address.
+The command mov is used to move values to an address. The first argument is the address, and the second argument the value you'll add to that address.
 
 There is also the command sub. It works analogous to the add command, but instead of adding the second argument to the address provided in the first argument, it will subtract.
 
 Example where the bot will move the content of the register #7 to the register #3, and then subtract it by 4
-    - move 3 [7]
+    - mov 3 [7]
     - sub 3 4
 
 Prove yourself worthy, employee #]]..EMPLOYER_NUMBER..[[
@@ -565,13 +545,13 @@ Carry on.
             function()
                 ROOM:connect("square")
                 OpenedMail:close()
-            end, true, function() Info.addCommand("move <address> <value>") Info.addCommand("sub <address> <value>") end)
+            end, true, function() Info.addCommand("mov <address> <value>") Info.addCommand("sub <address> <value>") end)
             end)
 
 timer.after(8, function()
 Mail.new("New ways to handle values",
 [=[
-Since you've reached this far, you have proven yourself almost qualified to work on our most professional jobs, here at Marvellous Inc. Here are some advanced wayt to manipualte values and addresses.
+Since you've reached this far, you have proven yourself almost qualified to work on our most professional jobs, here at Marvellous Inc. Here are some advanced ways to manipulate values and addresses.
 
 You already know that [8] represents the value inside the register #8, but did you know you can also write [[8]]? This returns the content inside the register whose number is the content inside the register 8! This may sound confusing, but here is an example so you can better understand.
 
@@ -615,19 +595,39 @@ function lore.square_done()
             clr = Color.blue()
         })
 
+        timer.after(20, function()
+            email.lasers = Mail.new("Need help",
+        [[Hey man,
+
+        I'm Paul from the material engineering department. Look man, I got a situation here. Thing is, I told Lewis that I needed the new flux translator fluid for the gravitron kernel. Now, I know I too am to blame for relying on such a knucklehead as Lewis, but anyways. Well, Lewis told Kevin, the new intern, to go get the FTF. But what he forgot to mention was that we have a new security system that uses admantium-slicing lasers... And the FTF just happened to be tightly secured with motion sensor lasers... You see where this is going. As if it weren't bad enough having all the paperwork for dealing with an intern accidental death, the godamn lasers ended up setting the entrance to the bio chem lab on fire, which resulted in the BC guys ringing my phone all day demanding I put out the fire and send help. Anyways, Sarah got me your phone since you're in the "robots" department (seriously, what in the fuck do you guys do over there). I know you guys love challenges, so why not right? It's a win-win, huh? Look, I'll be in your debt forever if you do this for me. Like, I am totally tripping right now here, man. I can't deal with fire hazards right now, and Christoff is already asking questions around here. Give me a heads up if you're willing. And listen, man. Don't rat on me, bud, ok? I'll get you a stub once all this is over.
+
+        Trip on, my man
+
+        Paul Verkeufen
+        Chief engineer at Marvellous Inc's Material Engineering Department
+
+        ~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
+        ]], "Paul Verkeufen (hempman@med.marv.com)", false,
+                function()
+                    ROOM:connect("lasers")
+                    OpenedMail:close()
+                end, true, function() end)
+            end)
+
+
 end
 
 function lore.lasers_done()
     StepManager:pause()
     if level_done.lasers then default_completed() return end
     level_done.lasers = true
-    PopManager.new("Puzzle completed",
-        "You will be emailed a new task shortly.",
+    PopManager.new("You've fixed the fire hazard",
+        "Paul will be relieved.",
         Color.green(), {
             func = function()
                 ROOM:disconnect()
             end,
-            text = "Ok",
+            text = "trip on",
             clr = Color.black()
         })
 end
