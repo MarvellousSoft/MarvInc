@@ -84,10 +84,10 @@ function InfoTab:draw()
         -- Bot number
         font = FONTS.fira(16)
         love.graphics.setFont(font)
-        text = "Test subject #"..(self.dead + 1)
+        text = "Test subject #"..self.dead
         font_w = font:getWidth(text)
         Color.set(self.id_file_text_color)
-        love.graphics.print("Test Subject #"..(self.dead + 1), self.pos.x + self.id_file_x + self.id_file_w - font_w - 10, self.pos.y + self.id_file_y + 5)
+        love.graphics.print(text, self.pos.x + self.id_file_x + self.id_file_w - font_w - 10, self.pos.y + self.id_file_y + 5)
 
         -- Bot name
         love.graphics.setFont(FONTS.fira(25))

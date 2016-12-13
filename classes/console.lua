@@ -28,8 +28,8 @@ Console = Class{
 function Console:draw()
     Object.draw(self)
     local _tp = nil
-    if #self.inp > #self.out then _tp = #self.inp else _tp = #self.out end
-    love.graphics.print(_tp, self.rx + self.fnt:getWidth(_tp)/2, self.ry-self.fnt:getHeight()-5)
+    _tp = math.min(#self.inp, #self.out - self.i + 1)
+    love.graphics.print(_tp, self.rx - self.fnt:getWidth(_tp)/2, self.ry-self.fnt:getHeight()-5)
 end
 
 -- Signals all clients to sleep.
