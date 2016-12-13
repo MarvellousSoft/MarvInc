@@ -59,12 +59,14 @@ For all the support they provided us in this 72 hours of sleep deprivation
 
 #HOW TO PLAY
 
+Marvellous Inc. needs LÖVE installed to be ran. It is avaiable on most operating systems, and all download links can be found here [https://love2d.org/].
 
+To run the game just run 'love game' on the main folder of the repository, or double click the .love file in the build/ directory.
 
 ----------------------------------------------------
 
 
-## Plataform
+## Platform
 
 Made using LÖVE [https://love2d.org/] with the STEAMING game template [https://github.com/uspgamedev/STEAMING] integrated with library HUMP [http://hump.readthedocs.org/].
 Works in any SO that can run it.
@@ -73,7 +75,7 @@ Github
     ~ https://github.com/rilifon/Project-R1
 
 
-Found any bugs? Contact us at
+Found any bugs? Loved the game? Contact us at
 
 - renatogeh@gmail.com
 - pudimdefrutas@gmail.com
