@@ -435,6 +435,21 @@ function lore.bla_done()
         })
 end
 
+function lore.lasers_done()
+    StepManager:pause()
+    if level_done.lasers then default_completed() return end
+    level_done.lasers = true
+    PopManager.new("Puzzle completed",
+        "You will be emailed a new task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Ok",
+            clr = Color.black()
+        })
+end
+
 function lore.update(dt)
     timer.update(dt)
 end
