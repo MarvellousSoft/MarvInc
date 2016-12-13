@@ -16,33 +16,43 @@ Console = Class{
         -- Optional emitters
         self.clients = {}
         self.clients_awake = true
-        self.first = true
 
         self.out = type(args) == 'table' and args or args(i, j)
         self.inp = {}
         self.i = 1
+
+        self.fnt = FONTS.fira(20)
     end
 }
 
+function Console:draw()
+    Object.draw(self)
+    local _tp = nil
+    if #self.inp > #self.out then _tp = #self.inp else _tp = #self.out end
+    love.graphics.print(_tp, self.rx + self.fnt:getWidth(_tp)/2, self.ry-self.fnt:getHeight()-5)
+end
+
 -- Signals all clients to sleep.
 function Console:sleep()
+    if not self.clients_awake then return end
     for _, v in ipairs(self.clients) do
         v:sleep()
     end
-    self.awake = false
+    self.clients_awake = false
 end
 
 -- Signals all clients to wakeup.
 function Console:wakeup()
+    if self.clients_awake then return end
     for _, v in ipairs(self.clients) do
         v:wakeup()
     end
-    self.awake = true
+    self.clients_awake = true
 end
 
 -- Toggles clients to wakeup or sleep.
 function Console:toggleClients()
-    if self.awake then self:sleep() else self:wakeup() end
+    if self.clients_awake then self:sleep() else self:wakeup() end
 end
 
 -- Adds an emitter to this console.
