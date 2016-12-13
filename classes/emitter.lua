@@ -64,6 +64,7 @@ function Emitter:toggle()
 end
 
 function Emitter:sleep()
+    if not self.awake then return end
     for _, v in ipairs(self.traps) do
         ROOM:sedate(v)
     end
@@ -71,6 +72,7 @@ function Emitter:sleep()
 end
 
 function Emitter:wakeup()
+    if self.awake then return end
     for _, v in ipairs(self.traps) do
         ROOM:wakeup(v)
     end

@@ -99,32 +99,51 @@ After you write the instructions, use the buttons on the bottom of the <terminal
 
 After replying a puzzle or job proposal, read the <info> tab to better understand your objectives in the room.
 
-Any remaining doubts can be emailed to REDACTED.
+    Any remaining doubts can be emailed to REDACTED.
 
-Carry on.
-]],
-    "Automated Introduction System", true, nil)
+    Carry on.
+    ]],
+        "Automated Introduction System", true, nil)
+            end)
+
+        timer.after(120, function()
+            if level_done.first then return end
+            Mail.new("Baby Steps",
+    [[
+    Well, we all have our hard days.
+
+    The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your terminal, then
+    hit the play button to start the simulation.
+
+    walk left
+    walk up
+    walk right
+
+    Was it that hard? Take your time to understand these instructions. This will not happen again.
+
+    Carry on.
+    ]], "Automated Introduction System", true, nil)
+            end)
+        end
+
+        timer.after(3, function()
+            email.register = Mail.new("Need help",
+    [[Hey man,
+
+    I'm Paul from the material engineering department. Look man, I got a situation here. Thing is, I told Lewis that I needed the new flux translator fluid for the gravitron kernel. Now, I know I too am to blame for relying on such a knucklehead as Lewis, but anyways. Well, Lewis told Kevin, the new intern, to go get the FTF. But what he forgot to mention was that we have a new security system that uses admantium-slicing lasers... And the FTF just happened to be tightly secured with motion sensor lasers... You see where this is going. As if it weren't bad enough having all the paperwork for dealing with an intern accidental death, the godamn lasers ended up setting the entrance to the bio chem lab on fire, which resulted in the BC guys ringing my phone all day demanding I put out the fire and send help. Anyways, Sarah got me your phone since you're in the "robots" department (seriously, what in the fuck do you guys do over there). I know you guys love challenges, so why not right? It's a win-win, huh? Look, I'll be in your debt forever if you do this for me. Like, I am totally tripping right now here, man. I can't deal with fire hazards right now, and Christoff is already asking questions around here. Give me a heads up if you're willing. And listen, man. Don't rat on me, bud, ok? I'll get you a stub once all this is over.
+
+    Trip on, my man
+
+    Paul Verkeufen
+    Chief engineer at Marvellous Inc's Material Engineering Department
+
+    ~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
+    ]], "Paul Verkeufen (hempman@med.marv.com)", false,
+            function()
+                ROOM:connect("lasers")
+                OpenedMail:close()
+            end, true, function() end)
         end)
-
-    timer.after(120, function()
-        if level_done.first then return end
-        Mail.new("Baby Steps",
-[[
-Well, we all have our hard days.
-
-The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your terminal, then
-hit the play button to start the simulation.
-
-walk left
-walk up
-walk right
-
-Was it that hard? Take your time to understand these instructions. This will not happen again.
-
-Carry on.
-]], "Automated Introduction System", true, nil)
-        end)
-    end
 end
 
 function lore.first_done()
@@ -593,15 +612,15 @@ function lore.square_done()
     email.square.is_completed = true
 
     PopManager.new("Congratulations!",
-        "You have passed basic training. We at Marvellous Inc. proud ourselves on our "..
-        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
-        "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
-        "been added to the coffee room employee board under your name. Every month we select "..
-        "in the coffee room for this outstanding and obedient member of the Marvellous Inc. "..
-        "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
-        "NEWELL JR].\n\n"..
-        "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
-        "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
+    "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
+         "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
+         "been added to the coffee room employee board under your name. Every month we select "..
+         "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
+         "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
+         "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
+         "NEWELL JR].\n\n"..
+         "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
+         "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
         Color.blue(), {
             func = function()
                 ROOM:disconnect()
