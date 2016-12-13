@@ -45,7 +45,9 @@ objs = {
     _G.LoreManager.register_done}
 }
 
-extra_info = "After you outputted the 50 numbers, the code will stop automatically, so there is no need to do it manually."
+extra_info =
+  [[After you outputted the 50 numbers, the code will stop automatically, so there is no need to do it manually.
+- You can use write [X] to write to the console the value stored in register X (in this case there's only one).]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

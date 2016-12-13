@@ -95,7 +95,7 @@ function Reader:read(filename)
                             emitters[_proto[4]] = nil
                         end
                     end
-                    if _obj and _proto.dir then _obj.r = _G[_proto.dir.."_R"] end
+                    if _obj and _proto.dir then _obj.r = _G[_proto.dir:upper().."_R"] assert(_obj.r) end
                 end
             end
             k = k + 1

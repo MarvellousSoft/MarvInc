@@ -38,7 +38,7 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, function() ROOM:connect("pickup") end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("array_sep") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
@@ -270,17 +270,17 @@ To define a label, just write any single alphanumeric word (that means only lett
 After defining a label, you can write any one command in the same line, however the label must come before the command.
 But that is optional.
 
-Example that makes the bot walking in circles:
-- banana:
-- walk 2
-- turn counter
-- jmp banana
+Example that makes the bot walk in circles:
+    - banana:
+      walk 2
+      turn counter
+      jmp banana
 
-Example that makes the bot spining endlessly:
+Example that makes the bot spin endlessly:
     - awesomeLabel66: turn clock
-    - jmp awesomeLabel66
+      jmp awesomeLabel66
 
-Complete this puzzle quickly. We'd greatly appreciate. Don't forget the experiment ends ass soon as the objective requirements are completed.
+Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the experiment ends ass soon as the objective requirements are completed.
 
 
 As always, carry on.]], "Automated Introduction System", false,

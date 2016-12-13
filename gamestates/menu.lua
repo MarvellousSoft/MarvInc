@@ -22,8 +22,8 @@ function state:draw()
     Draw.allTables()
 
     love.graphics.setColor(255, 255, 255)
-    love.graphics.setFont(FONTS.fira(200))
-    love.graphics.printf("room.hack", 0, 120, W, "center")
+    love.graphics.setFont(FONTS.fira(120))
+    love.graphics.printf("Marvellous Inc.", 0, 200, W, "center")
     love.graphics.setFont(FONTS.fira(15))
     love.graphics.printf("press any key to continue...", W * .6, H - 100, W, "left")
 

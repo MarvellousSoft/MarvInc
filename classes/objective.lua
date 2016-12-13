@@ -22,6 +22,15 @@ function Objective:activate()
 end
 
 function Objective:wrapper()
+    if ALL_OK then
+        ALL_OK = nil
+        if self.complete then
+            self:complete(ROOM)
+            self.completed = true
+            self.complete = nil
+        end
+        return true, self
+    end
     local done = self:cond(ROOM)
     if done and self.complete then
         self:complete(ROOM)

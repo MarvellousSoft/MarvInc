@@ -72,6 +72,9 @@ function state:keypressed(key)
                 end, text = "remain small", clr = Color.red()})
     elseif key == 'f9' then
         room.grid_obj[19][19]:toggleClients()
+    elseif key == 'f10' then
+        -- REMOVE
+        ALL_OK = true
     else
         Util.defaultKeyPressed(key)
         pc_box:keyPressed(key)
