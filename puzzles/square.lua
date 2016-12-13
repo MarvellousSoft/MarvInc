@@ -32,7 +32,10 @@ objs = {
 
 extra_info =
 [[Remember to use brackets.
-- You may need some copies of the same number. Try using mov.]]
+- You may need some copies of the same number. Try using mov.
+- If you haven't realized yet, the registers can only support values between -999 and 999.
+]]
+
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}

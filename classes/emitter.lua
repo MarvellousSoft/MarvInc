@@ -34,7 +34,6 @@ Emitter = Class{
                 table.insert(self.traps, DeadSwitch(grid, args.x1, _min_y+(k-1),
                     unpack(args.t_args)))
                 self.traps[k].r = self.r
-                self.traps[k].first = true
             end
         elseif args.y1 == args.y2 then
             -- Horizontal
@@ -54,7 +53,6 @@ Emitter = Class{
                 table.insert(self.traps, DeadSwitch(grid, _min_x+(k-1), args.y1,
                     unpack(args.t_args)))
                 self.traps[k].r = self.r
-                self.traps[k].first = true
             end
         else print("ERROR! Emitter lines cannot be complex!") end
         self.awake = true

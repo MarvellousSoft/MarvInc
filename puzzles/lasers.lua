@@ -93,9 +93,14 @@ objs = {
     end, "A former unnatentive intern accidentally switched the lasers on. Unfortunately, we "..
         "forgot the password. We do know that the sum of the digits is 7 and the multiplication "..
         "is 12, with 3 being the first digit. Turn the lasers off with the consoles, get the "..
-        "bucket he was carrying and extinguish the fire to unblock the entrance. We expect "..
+        "bucket he was carrying, extinguish the fire to unblock the entrance and walk there. We expect "..
         "fewer accidents from now on, hopefully.", _G.LoreManager.lasers_done}
 }
+
+extra_info =[[
+Each monitor receives only one digit of the password, in order
+- The digits are all positive
+]]
 
 grid_obj =  "oooooooooooooooooooo"..
              "ooooopeooooooooooooo"..
@@ -143,4 +148,3 @@ grid_floor = "wwwwwwwwwwwwwwwwwwww"..
              "wwvwwwvwwwvwwwvwwwww"..
              "wvvvvvvvvvvvvvvvvvxw"..
              "wwwwwwwwwwwwwwwwwwww"
-

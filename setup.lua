@@ -97,9 +97,7 @@ function setup.config()
     TABS_LOCK = false -- If the tabs cant be clicked
     EVENTS_LOCK = false -- All events but popup mouse pressed are locked
 
-    EMPLOYER_NUMBER = love.math.random(100, 99999)
-
-    EMPLOYER_NUMBER = love.math.random(100, 99999)
+    EMPLOYER_NUMBER = love.math.random(200, 2000)
 
     UNREAD_EMAILS = 0 -- Number of unread emails
 
