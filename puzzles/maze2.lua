@@ -11,7 +11,7 @@ bot = {'b', "NORTH"}
 
 -- Objects
 _G.getfenv(0)['.'] = nil
-x = {"dead", false, "red_tile"}
+x = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Objective
 objs = {-- Condition

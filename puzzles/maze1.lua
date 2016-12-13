@@ -7,7 +7,7 @@ lines_on_terminal = 4
 memory_slots = 0
 
 -- Bot
-bot = {'b', "NORTH", {1, 20}}
+bot = {'b', "NORTH"}
 
 -- Objects
 _G.getfenv(0)['.'] = nil
@@ -46,7 +46,7 @@ grid_obj = "xxxxxxxxxxxxxxxxxxxx"..
            ".x.x.............x.x"..
            ".x.xxxxxxxxxxxxxxx.x"..
            ".x.................x"..
-           ".xxxxxxxxxxxxxxxxxxx"
+           "bxxxxxxxxxxxxxxxxxxx"
 
 -- Floor
 w = "white_floor"

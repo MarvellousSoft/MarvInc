@@ -191,6 +191,7 @@ function EmailTab:mousePressed(x, y, but)
     e = self
 
     if not e.email_opened and but == 1 then
+        if not Util.pointInRect(x, y, self) then return end
         --Check mouse colision with emails
         for i, mail in ipairs(e.email_list) do
             if mail.alpha > 250 and Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y - e.dy*(e.email_height + e.email_border) + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then

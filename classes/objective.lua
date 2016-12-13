@@ -23,7 +23,7 @@ end
 
 function Objective:wrapper()
     if ALL_OK then
-        ALL_OK = nil
+        --ALL_OK = nil
         if self.complete then
             self:complete(ROOM)
             self.completed = true
