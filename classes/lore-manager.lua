@@ -38,7 +38,7 @@ This Automated System will guide you if you feel disoriented.
 
 Most importantly, have fun and carry on :)]],
 
-    "Automated Introduction System", false, function() ROOM:connect("array_sep") end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("square") end, false, lore.after_first_email)
     end)
 
 function lore.after_first_email()
@@ -503,9 +503,9 @@ function lore.square_done()
 
     PopManager.new("Congratulations!",
         "You have passed basic training. We at Marvellous Inc. proud ourselves on our "..
+        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
         "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
         "been added to the coffee room employee board under your name. Every month we select "..
-        "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
         "in the coffee room for this outstanding and obedient member of the Marvellous Inc. "..
         "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
         "NEWELL JR].\n\n"..
@@ -521,6 +521,20 @@ function lore.square_done()
 
 end
 
+function lore.lasers_done()
+    StepManager:pause()
+    if level_done.lasers then default_completed() return end
+    level_done.lasers = true
+    PopManager.new("Puzzle completed",
+        "You will be emailed a new task shortly.",
+        Color.green(), {
+            func = function()
+                ROOM:disconnect()
+            end,
+            text = "Ok",
+            clr = Color.black()
+        })
+end
 
 function lore.update(dt)
     timer.update(dt)

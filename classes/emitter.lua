@@ -57,17 +57,24 @@ Emitter = Class{
                 self.traps[k].first = true
             end
         else print("ERROR! Emitter lines cannot be complex!") end
+        self.awake = true
     end
 }
+
+function Emitter:toggle()
+    if self.awake then self:sleep() else self:wakeup() end
+end
 
 function Emitter:sleep()
     for _, v in ipairs(self.traps) do
         ROOM:sedate(v)
     end
+    self.awake = false
 end
 
 function Emitter:wakeup()
     for _, v in ipairs(self.traps) do
         ROOM:wakeup(v)
     end
+    self.awake = true
 end
