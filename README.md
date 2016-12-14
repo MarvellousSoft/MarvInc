@@ -8,6 +8,21 @@ This game was made and submitted to the Ludum Dare 37 (http://ludumdare.com/), w
 
 ----------------------------------------------------
 
+## Downloading and Installing
+
+### Windows
+
+* [32-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win32/marvellous.exe).
+* [64-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win64/marvellous.exe).
+
+### Linux
+
+It is recommended that Linux users run the `love` file. A Debian package may be available in the near future.
+
+The raw `love` file has as dependency the Löve2D framework, and can be found [here](https://github.com/rilifon/Project-R1/raw/master/build/love/marvellous.love).
+
+----------------------------------------------------
+
 ## Lore
 
 Are you interested in working with cutting-edge, never before seen technology that has huge promise to change the way society works forever? Marvellous Incorporated is an international multi-conglomerate that puts YOU before profit. We at the MarvInc Family think that employees are people, and as such are entitled to ideas and thoughts* on how to make the MarvInc Family a better environment.
