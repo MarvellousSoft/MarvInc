@@ -12,8 +12,8 @@ This game was made and submitted to the Ludum Dare 37 (http://ludumdare.com/), w
 
 ### Windows
 
-* [32-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win32/marvellous.exe).
-* [64-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win64/marvellous.exe).
+* [32-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win32/marvellous-win32.zip).
+* [64-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win64/marvellous-win64.zip).
 
 You can also run the game using LÖVE.
 
