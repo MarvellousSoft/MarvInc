@@ -8,18 +8,26 @@ This game was made and submitted to the Ludum Dare 37 (http://ludumdare.com/), w
 
 ----------------------------------------------------
 
-## Downloading and Installing
+## Running
 
 ### Windows
 
 * [32-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win32/marvellous.exe).
 * [64-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win64/marvellous.exe).
 
-### Linux
+You can also run the game using LÖVE.
 
-It is recommended that Linux users run the `love` file. A Debian package may be available in the near future.
+### Linux / Mac OS
 
-The raw `love` file has as dependency the Löve2D framework, and can be found [here](https://github.com/rilifon/Project-R1/raw/master/build/love/marvellous.love).
+It is recommended that users run the game using LÖVE. It is avaiable on most operating systems, and all download links can be found on [their page](https://love2d.org/).
+To run the game just run 'love game' on the main folder of the repository, or double click the marvellous.love file in the build directory.
+
+A Debian package may be available in the near future.
+
+### Web Browser
+
+Marvellous can also be run on the browser! Checkout [here](https://linux.ime.usp.br/~yancouto/stuff/marvellous/) for the latest version.
+Downloading the desktop version, if possible, is recommended, since some features may not work in some browsers. Created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 ----------------------------------------------------
 
@@ -60,17 +68,6 @@ Maria Clara Cardoso
 Cotuba
 
 For all the support they provided us in this 72 hours of sleep deprivation
-
-----------------------------------------------------
-
-## HOW TO PLAY
-
-Marvellous Inc. needs LÖVE installed to be ran. It is avaiable on most operating systems, and all download links can be found on [their page](https://love2d.org/).
-
-To run the game just run 'love game' on the main folder of the repository, or double click the marvellous.love file in the build directory.
-
-Marvellous can also be run on the browser! Checkout [here](https://linux.ime.usp.br/~yancouto/stuff/marvellous/) for the latest version.
-Downloading the desktop version is recommended since some features may not work in some browsers. Created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 ----------------------------------------------------
 
