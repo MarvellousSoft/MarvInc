@@ -52,6 +52,7 @@ PcBox = Class{
         tabs.info:setId("info_tab")
 
         self.tp = "pcbox"
+        self:setId("pcbox")
     end
 }
 

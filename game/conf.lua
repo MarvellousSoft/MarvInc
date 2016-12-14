@@ -41,4 +41,35 @@ function love.conf(t)
     t.modules.video = true              -- Enable the video module (boolean)
     t.modules.window = true             -- Enable the window module (boolean)
     t.modules.thread = true             -- Enable the thread module (boolean)
+
+    -- Stuff for love-release
+    t.releases = {
+        title = "Marvellous Inc.",                          -- The project title (string)
+        package = "marvellous",                             -- The project command and package name (string)
+        loveVersion = t.version,                            -- The project LÖVE version
+        version = "0.1",                                    -- The project version
+        author = "Marvellous Soft",                         -- Your name (string)
+        email = "marvellous.amoeba@gmail.com",              -- Your email (string)
+        description = [[
+Are you interested in working with cutting-edge, never before seen technology that has huge promise to change the way society works forever? Marvellous Incorporated is an international multi-conglomerate that puts YOU before profit. We at the MarvInc Family think that employees are people, and as such are entitled to ideas and thoughts* on how to make the MarvInc Family a better environment.
+
+Our research department is lead by the greatest computer scientists all over the globe, who just recently developed an innovative and front line Artificial Inteligence that can follow simple, yet profound scripts to perform any task imaginable! Your role at our company, may you pass all our rigorous requirements and expectations, shall be to program and test those AI's to complete assignments.
+
+As our employee, you will:
+
+- Code programs in our exclusive and top-of-the-line terminal
+- Receive constant emails detailing assignments and jobs for you complete
+- Enjoy yourself** as you improve our technology!
+
+Simple puzzles will ease-out any new programmers or enthusiasts in the job, so don't worry about not having any previous programming skill.
+
+Join our Family now, and help us CHANGE the world.
+
+* By accepting this contract you agree to seize any and all intellectual property you produce to the Marvellous Incorporated (Copyright 2016) Research Department.
+
+** You will not be paid for enjoying yourself.]],           -- The project description (string)
+        homepage = "https://github.com/rilifon/Project-R1", -- The project homepage (string)
+        identifier = nil,                                   -- The project Uniform Type Identifier (string)
+        releaseDirectory = "../build",                      -- Where to store the project releases (string)
+    }
 end

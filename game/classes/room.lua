@@ -95,7 +95,7 @@ function Room:processDeath()
     local death_func = function()
         local _term = Util.findId("code_tab")
         _term:store()
-        self:connect(self.puzzle)
+        self:connect(self.puzzle, false)
         _term:retrieve()
         StepManager:check_start()
     end
@@ -199,7 +199,7 @@ function Room:clear()
     StepManager:stopNoKill()
 end
 
-function Room:connect(name, after)
+function Room:connect(name, changeToInfo)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:play()
 
@@ -215,6 +215,7 @@ function Room:connect(name, after)
     end)
 
     self:from(Reader("puzzles/"..name..".lua"):get())
+    if changeToInfo == nil or changeToInfo == true then Util.findId("pcbox"):changeTo("info") end
 end
 
 function Room:disconnect(wait)

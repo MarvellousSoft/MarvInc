@@ -755,7 +755,11 @@ We will (possibly) add more content in the near future, so keep tuned to the git
 
 This last puzzle is the hardest so far, but many harder will come later. Play on!
 
-And, as always, carry on.]], "Marvellous Soft", false, function() ROOM:connect("simple_sort") end, false)
+And, as always, carry on.]], "Marvellous Soft", false,
+    function()
+        ROOM:connect("simple_sort")
+        OpenedMail:close()
+    end, false)
 end
 
 function lore.simple_sort_done()
@@ -766,8 +770,7 @@ function lore.simple_sort_done()
 
 
     PopManager.new("You've completed the game (so far)",
-[[
-Send us an email and tell us what you think about the game!]],
+[[Send us an email and tell us what you think about the game!]],
     Color.green(), {
         func = function()
             ROOM:disconnect()

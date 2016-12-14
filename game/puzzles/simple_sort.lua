@@ -1,7 +1,6 @@
--- WIP
-name = "Sequence Separator"
+name = "Simple Sort"
 -- Puzzle number
-n = 7
+n = "A.3"
 
 lines_on_terminal = 35
 memory_slots = 12
@@ -36,12 +35,12 @@ end
 -- Objective
 objs = {
     {-- Condition function
-    check_all, "Read 5 sequences of 3 numbers from the green console, and write to the blue consoles, from left to right.",
+    check_all, "Read 6 sequences of 3 numbers from the green console, then write them to the 6 blue consoles, from left to right. You must sort these sequences.",
     _G.LoreManager.simple_sort_done}
 }
 
 extra_info =
-[[]]
+[[Each sequence of 3 numbers must be sorted, not the whole sequence of 18 numbers.]]
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}

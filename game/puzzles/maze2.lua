@@ -1,9 +1,9 @@
 -- Maze puzzle - with walls
 
 name = "Kind of even more messed up"
-n = 3
+n = "A.2"
 
-lines_on_terminal = 30
+lines_on_terminal = 15
 memory_slots = 5
 
 -- Bot
