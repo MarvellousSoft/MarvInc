@@ -86,7 +86,7 @@ function StepManager:check_start()
 end
 
 function StepManager:play()
-    go_speed(self, 1)
+    go_speed(self, 0.5)
 end
 
 function StepManager:fast()

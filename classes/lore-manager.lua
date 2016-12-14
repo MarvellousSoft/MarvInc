@@ -59,6 +59,8 @@ Example:
 
 We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
 
+Use the two buttons to the right of the play button to move your bot faster.
+
 Reply this email to start the puzzle.
 
 Best of Luck, and carry on.

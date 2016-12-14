@@ -8,7 +8,7 @@ lines_on_terminal = 100
 memory_slots = 0
 
 -- Bot
-bot = {'b', "NORTH", {19, 20}}
+bot = {'b', "WEST", {19, 20}}
 
 -- Objects
 e = nil
