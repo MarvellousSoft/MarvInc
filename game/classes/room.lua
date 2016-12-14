@@ -215,6 +215,7 @@ function Room:connect(name, after)
     end)
 
     self:from(Reader("puzzles/"..name..".lua"):get())
+    Util.findId("pcbox"):changeTo("info")
 end
 
 function Room:disconnect(wait)

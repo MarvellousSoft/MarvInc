@@ -333,6 +333,10 @@ function CodeTab:keyPressed(key)
         self.lines[c.i] = processAdd(self.lines[c.i], c.p, "  ")
         c.p = c.p + 2
 
+    elseif key == 'space' then
+        -- Necessary to work on browsers
+        self:textInput(' ', true)
+
     end
     if self.cursor.i - 1 < self.dy then self.dy = self.cursor.i - 1 end
     if self.cursor.i - self.lines_on_screen > self.dy then self.dy = self.cursor.i - self.lines_on_screen end
@@ -340,12 +344,12 @@ function CodeTab:keyPressed(key)
     self:checkErrors()
 end
 
-function CodeTab:textInput(t)
+function CodeTab:textInput(t, isSpace)
     if self.lock then return end
     -- First, should check if it is valid
     local c = self.cursor
     if #t + #self.lines[c.i] > self.max_char or
-       #t > 1 or not t:match("[a-zA-Z0-9: %[%]%-]")
+       #t > 1 or not (t:match("[a-zA-Z0-9:x%[%]%-]") or (t == " " and isSpace))
         then return end
     if self.cursor2 then deleteInterval(self, c, self.cursor2) end
     t = t:lower()

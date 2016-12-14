@@ -24,7 +24,7 @@ Simple puzzles will ease-out any new programmers or enthusiasts in the job, so d
 
 Join our Family now, and help us CHANGE the world.
 
-* By accepting this contract you agree to seize any and all intellectual property you produce to the Marvellous Incorporated (Copyright 2016) Research Department.
+\* By accepting this contract you agree to seize any and all intellectual property you produce to the Marvellous Incorporated (Copyright 2016) Research Department.
 
 ** You will not be paid for enjoying yourself.
 
@@ -48,19 +48,22 @@ For all the support they provided us in this 72 hours of sleep deprivation
 
 ----------------------------------------------------
 
-#HOW TO PLAY
+## HOW TO PLAY
 
-Marvellous Inc. needs LÖVE installed to be ran. It is avaiable on most operating systems, and all download links can be found here [https://love2d.org/].
+Marvellous Inc. needs LÖVE installed to be ran. It is avaiable on most operating systems, and all download links can be found on [their page](https://love2d.org/).
 
 To run the game just run 'love game' on the main folder of the repository, or double click the marvellous.love file in the build directory.
+
+Marvellous can also be run on the browser! Checkout [here](https://linux.ime.usp.br/~yancouto/stuff/marvellous/) for the latest version.
+Downloading the desktop version is recommended since some features may not work in some browsers. Created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 ----------------------------------------------------
 
 
 ## Platform
 
-Made using LÖVE [https://love2d.org/] with the STEAMING game template [https://github.com/uspgamedev/STEAMING] integrated with library HUMP [http://hump.readthedocs.org/].
-Works in any SO that can run it.
+Made using [LÖVE](https://love2d.org/) with the [STEAMING](https://github.com/uspgamedev/STEAMING) game template integrated with library [HUMP](http://hump.readthedocs.org/).
+Works in any SO that can run it. Web version created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 Github
     ~ https://github.com/rilifon/Project-R1
