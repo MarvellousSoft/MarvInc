@@ -55,6 +55,10 @@ function state:keypressed(key)
     pc_box:keyPressed(key)
     room:keyPressed(key)
 
+    if key == "f10" then
+        ALL_OK = true
+    end
+
 end
 
 function state:mousepressed(x, y, but)

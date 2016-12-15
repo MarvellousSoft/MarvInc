@@ -20,6 +20,15 @@ Object = Class{
     end
 }
 
+-- Careful when calling this function!
+function Object:teleport(grid, i, j)
+    grid[self.pos.x][self.pos.y] = nil
+    self.pos.x, self.pos.y = i, j
+    self.rx = (i-1)*ROOM_CW
+    self.ry = (j-1)*ROOM_CH
+    grid[i][j] = self
+end
+
 -- Kills this object.
 function Object:kill(grid)
     grid[self.pos.x][self.pos.y] = nil

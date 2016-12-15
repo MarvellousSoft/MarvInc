@@ -77,7 +77,7 @@ Room = Class{
         Signal.register("end_turn", function()
             self:apply()
         end)
-        
+
         -- Death
 
         ROOM = self
@@ -339,6 +339,11 @@ function Room:kill()
     self.bot:kill(self.grid_obj)
 end
 
+-- Careful when calling this function!
+function Room:put(obj, i, j)
+    obj:teleport(self.grid_obj, i, j)
+end
+
 function Room:walk(dir)
     if dir then self:turn(dir) end
     self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
@@ -410,12 +415,12 @@ function Room:drop()
     self.bot:drop(self.grid_obj, self.grid_r, self.grid_c)
 end
 
-function Room:blocked()
-    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c)
+function Room:blocked(o)
+    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c, o)
 end
 
-function Room:next_block()
-    return self.bot:next_block(self.grid_obj, self.grid_r, self.grid_c)
+function Room:next_block(o)
+    return self.bot:next_block(self.grid_obj, self.grid_r, self.grid_c, o)
 end
 
 --UTILITY FUNCTIONS--

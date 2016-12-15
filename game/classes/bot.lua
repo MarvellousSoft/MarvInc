@@ -65,8 +65,11 @@ function Bot:kill(grid)
     --SFX.fail:play()
 end
 
-function Bot:next_block(grid, r, c)
-    local p = ORIENT[self.r[2]]
+function Bot:next_block(grid, r, c, o)
+    local p = o
+    if not o then
+        p = ORIENT[self.r[2]]
+    end
     local px, py = self.pos.x + p.x, self.pos.y + p.y
     if  px < 1 or
         px > r or
@@ -102,8 +105,11 @@ function Bot:drop(grid, r, c)
     end
 end
 
-function Bot:blocked(grid, r, c)
-    local p = ORIENT[self.r[2]]
+function Bot:blocked(grid, r, c, o)
+    local p = o
+    if not o then
+        p = ORIENT[self.r[2]]
+    end
     local px, py = self.pos.x + p.x, self.pos.y + p.y
     if  px < 1 or
         px > r or

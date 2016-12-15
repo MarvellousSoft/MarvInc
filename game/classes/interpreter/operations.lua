@@ -308,6 +308,13 @@ function Write:execute()
     return console:write(val)
 end
 
+local DIR_CONV = {
+    north = NORTH, up = NORTH,
+    east = EAST, right = EAST,
+    south = SOUTH, down = SOUTH,
+    west = WEST, left = WEST
+}
+
 -- Pickup
 Pickup = Class{
     init = Turn.init
@@ -323,6 +330,7 @@ end
 
 function Pickup:execute()
     if ROOM.bot.inv then return "Not enough free hands" end
+    if not ROOM:next_block(DIR_CONV[self.dir]).pickable then return "Unpickable object" end
     if self.dir then
         StepManager:turn(self.dir)
     end
@@ -343,6 +351,7 @@ end
 
 function Drop:execute()
     if not ROOM.bot.inv then return "There is nothing left to drop but my self esteem" end
+    if ROOM:blocked(DIR_CONV[self.dir]) then return "Dropping obstructed by object" end
     if self.dir then
         StepManager:turn(self.dir)
     end

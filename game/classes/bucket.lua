@@ -18,6 +18,8 @@ function Bucket:use(bot, grid, i, j)
     local _o = grid[i][j]
     if _o and _o.bucketable then
         _o:sleep()
+    elseif not _o then
+        ROOM:put(bot.inv, i, j)
     end
     bot.inv = nil
 end

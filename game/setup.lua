@@ -41,6 +41,18 @@ BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.p
 BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
 BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
 
+-- Move orientations
+NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
+SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
+ORIENT = {NORTH, EAST, SOUTH, WEST}
+
+-- Rotational orientations
+NORTH_R, EAST_R, SOUTH_R, WEST_R = {math.pi}, {3*math.pi/2}, {0}, {math.pi/2}
+ORIENT_R = {NORTH_R, EAST_R, SOUTH_R, WEST_R}
+for i=1, #ORIENT_R do
+    ORIENT_R[i][2] = i
+end
+
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
 
@@ -106,7 +118,8 @@ function setup.config()
 
     NAMES = {"Barry", "Larry", "Terry", "Mary", "Fieri", "Danny", "Kenny", "Benny", "Kelly",
              "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny",
-             "Nancy", "Manny", "Ellie", "Lenny", "Ziggy"
+             "Nancy", "Manny", "Ellie", "Lenny", "Ziggy", "Tammy", "Kerry", "Gerry", "Bonnie",
+             "Tony"
             }
     TRAITS = {"Hates Pizza", "Socially Awkward", "Likes Phantom Menace", "Collect Stamps", "Color Blind",
               "Puppy Lover", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
@@ -114,18 +127,6 @@ function setup.config()
               "Addicted to Caffeine", "Explorer at Heart", "Never Pays Service", "Jerk",
               "Sympathetic", "Funny", "Cool", "11 Toes", "Logical", "Irrational", "Creepy"
              }
-
-    -- Move orientations
-    NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
-    SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
-    ORIENT = {NORTH, EAST, SOUTH, WEST}
-
-    -- Rotational orientations
-    NORTH_R, EAST_R, SOUTH_R, WEST_R = {math.pi}, {3*math.pi/2}, {0}, {math.pi/2}
-    ORIENT_R = {NORTH_R, EAST_R, SOUTH_R, WEST_R}
-    for i=1, #ORIENT_R do
-        ORIENT_R[i][2] = i
-    end
 
     --TIMERS--
     MAIN_TIMER = Timer.new()  --General Timer
