@@ -28,7 +28,7 @@ Console = Class{
 function Console:draw()
     Object.draw(self)
     local _tp = nil
-    _tp = math.min(#self.inp, #self.out - self.i + 1)
+    _tp = math.max(#self.inp, #self.out - self.i + 1)
     love.graphics.print(_tp, self.rx - self.fnt:getWidth(_tp)/2, self.ry-self.fnt:getHeight()-5)
 end
 
