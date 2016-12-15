@@ -5,7 +5,7 @@ local PcBox = require "classes.pc-box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
 local LoreManager = require "classes.lore-manager"
-PopManager = require "classes.popmanager"
+local PopManager = require "classes.popmanager"
 local FX = require "classes.fx"
 
 --MODULE FOR THE GAMESTATE: GAME--
@@ -48,6 +48,7 @@ function state:draw()
 end
 
 function state:keypressed(key)
+    PopManager.keypressed(key)
     if EVENTS_LOCK then return end
 
     Util.defaultKeyPressed(key)

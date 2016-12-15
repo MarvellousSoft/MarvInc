@@ -85,6 +85,13 @@ function Popup:mousereleased(x, y, button, touch)
     end
 end
 
+function Popup:keypressed(key)
+    if key == "return" and not self.buttons[2] then
+        PopManager.quit()
+        self.buttons[1].func()
+    end
+end
+
 PopManager = {
     -- Current active popup
     pop = nil
@@ -105,6 +112,11 @@ end
 function PopManager.mousereleased(x, y, button, touch)
     if not PopManager.pop then return end
     PopManager.pop:mousereleased(x, y, button, touch)
+end
+
+function PopManager.keypressed(key)
+    if not PopManager.pop then return end
+    PopManager.pop:keypressed(key)
 end
 
 function PopManager.quit()
