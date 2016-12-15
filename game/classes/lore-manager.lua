@@ -41,8 +41,9 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
 
-    "Automated Introduction System", false, nil, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("pickup") OpenedMail:close() end, false, lore.after_first_email)
     end)
+end
 
 function lore.after_first_email()
     timer.after(1, function()
@@ -88,7 +89,7 @@ Whenever you're lost, you can reread these emails. Unless you've deleted them.
 Good Luck, and carry on.
 ]],
     "Automated Introduction System", true, nil)
-        end)
+    end)
 
     timer.after(60, function()
         if level_done.first then return end
@@ -107,11 +108,11 @@ Any remaining doubts can be emailed to REDACTED.
 Carry on.
 ]],
         "Automated Introduction System", true, nil)
-            end)
+    end)
 
-        timer.after(120, function()
-            if level_done.first then return end
-            Mail.new("Baby Steps",
+    timer.after(120, function()
+        if level_done.first then return end
+        Mail.new("Baby Steps",
 [[
 Well, we all have our hard days.
 
@@ -126,9 +127,7 @@ Was it that hard? Take your time to understand these instructions. This will not
 
 Carry on.
 ]], "Automated Introduction System", true, nil)
-            end)
-        end
-
+    end)
 end
 
 function lore.first_done()
@@ -189,8 +188,7 @@ Exploring is part of the job, so get used to it.
 Happy coding, and carry on.
 ]],
     "Automated Introduction System", true)
-    end
-    )
+    end)
 end
 
 function lore.walkx_done()
@@ -251,9 +249,7 @@ Remember them all. As we say here in Marvellous Inc. "Mice are for chumps and La
 
 Stay practical, and carry on.
 ]], "Automated Introduction System", true)
-    end
-    )
-
+    end)
 
 end
 
@@ -303,7 +299,7 @@ As always, carry on.
             ROOM:connect("jump")
             OpenedMail:close()
         end, true, function() Info.addCommand("jmp <label>") Info.addCommand("label:") end)
-        end)
+    end)
 
 end
 
@@ -349,7 +345,7 @@ Happy adventuring, and carry on.
             ROOM:connect("pickup")
             OpenedMail:close()
         end, true, function() Info.addCommand("pickup") Info.addCommand("pickup <direction>") Info.addCommand("drop") Info.addCommand("drop <direction>") end)
-        end)
+    end)
 
 end
 
@@ -391,8 +387,7 @@ Best of Luck. Carry on. :)
             ROOM:connect("register")
             OpenedMail:close()
         end, true, function() Info.addCommand("add <adress> <value>") Info.addCommand("write <value>") Info.addCommand("write <value> <direction>") end)
-        end)
-
+    end)
 
 
     timer.after(8, function()
@@ -406,7 +401,7 @@ The number above a console indicates how many inputs he still can provide to the
 
 Thats it for now. Carry on.
 ]],  "Automated Introduction System", true)
-        end)
+    end)
 
     timer.after(12, function()
     Mail.new("Some more register examples",
@@ -425,8 +420,7 @@ Example of adding the number inside the register 10 by itself (aka multiplying i
 
 Shine on and carry on.
 ]],  "Automated Introduction System", true)
-end)
-
+    end)
 
 end
 
@@ -471,7 +465,7 @@ Carry on.
             ROOM:connect("array_sep")
             OpenedMail:close()
         end, true, function() Info.addCommand("jgt <value> <value> <label>") Info.addCommand("jge <value> <value> <label>") Info.addCommand("jlt <value> <value> <label>") Info.addCommand("jle <value> <value> <label>") Info.addCommand("jeq <value> <value> <label>") Info.addCommand("jne <value> <value> <label>") Info.addCommand("read <address>") Info.addCommand("read <address> <direction>") end)
-        end)
+    end)
 
 
     timer.after(8, function()
@@ -495,8 +489,7 @@ Always use the one most adequate to the situation. And don't forget that you can
 
 Stay fresh, and carry on.]],
     "Automated Introduction System", true)
-        end
-        )
+    end)
 
     timer.after(14, function()
     Mail.new("Some read command examples",
@@ -520,7 +513,6 @@ Use the conditional jumps to make logical loops for your programs. Understanding
 Follow you dreams, and carry on.
 ]], "Automated Introduction System", true)
     end)
-
 
 end
 
@@ -585,8 +577,7 @@ As an almost professional in this area, you should learn well this technique, si
 
 Never stop learning, and carry on.
 ]=], "Automated Introduction System", true)
-        end)
-
+    end)
 
 end
 
@@ -640,7 +631,7 @@ chief astronaut at marvellous soft.s KICKASS dojo
             ROOM:connect("maze1")
             OpenedMail:close()
         end, true, function()  end)
-        end)
+    end)
 
 
     timer.after(25, function()
@@ -657,11 +648,11 @@ Chief engineer at Marvellous Inc.s Material Engineering Department
 
 ~ Puff puff puff I go / a joint a joint I roll for / so high puff puff puff ~
 ]], "Paul Verkeufen (hempman@med.marv.com)", false,
-                function()
-                    ROOM:connect("lasers")
-                    OpenedMail:close()
-                end, true, function() end)
-            end)
+        function()
+            ROOM:connect("lasers")
+            OpenedMail:close()
+        end, true, function() end)
+    end)
 
 
 end
@@ -723,7 +714,7 @@ Chief engineer at Marvellous Inc.s Robot Testing Department
             ROOM:connect("maze2")
             OpenedMail:close()
         end, true, function()  end)
-        end)
+    end)
 
 end
 
