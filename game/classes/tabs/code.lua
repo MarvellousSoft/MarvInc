@@ -284,7 +284,11 @@ function CodeTab:keyPressed(key)
 
     elseif key == 'return' then
         if love.keyboard.isDown("lctrl", "rctrl") then
-            StepManager:play()
+            if StepManager.running then
+                StepManager:pause()
+            else
+                StepManager:play()
+            end
             return
         end
         if self.line_cur == self.line_total then return end
@@ -338,6 +342,7 @@ function CodeTab:keyPressed(key)
         self:textInput(' ', true)
 
     end
+
     if self.cursor.i - 1 < self.dy then self.dy = self.cursor.i - 1 end
     if self.cursor.i - self.lines_on_screen > self.dy then self.dy = self.cursor.i - self.lines_on_screen end
 
@@ -345,6 +350,14 @@ function CodeTab:keyPressed(key)
 end
 
 function CodeTab:textInput(t, isSpace)
+    if t == '>' then
+        StepManager:increase()
+        return
+    elseif t == '<' then
+        StepManager:decrease()
+        return
+    end
+
     if self.lock then return end
     -- First, should check if it is valid
     local c = self.cursor

@@ -15,6 +15,13 @@ local StepManager = {
     delay = 1,
     is_fast = false,
 
+    -- 0 is not running
+    -- 1 is normal speed
+    -- 2 is fast
+    -- 3 is very fast
+    -- Pausing does not change this variable
+    how_fast = 0,
+
     waiting = false,
     paused = false,
 
@@ -86,15 +93,30 @@ function StepManager:check_start()
 end
 
 function StepManager:play()
+    self.how_fast = 1
     go_speed(self, 0.5)
 end
 
 function StepManager:fast()
+    self.how_fast = 2
     go_speed(self, .05)
 end
 
 function StepManager:superfast()
+    self.how_fast = 3
     go_speed(self, .001)
+end
+
+function StepManager:increase()
+    if self.how_fast == 2 then self:superfast()
+    elseif self.how_fast == 1 then self:fast()
+    elseif self.how_fast == 0 then self:play() end
+end
+
+function StepManager:decrease()
+    if self.how_fast == 3 then self:fast()
+    elseif self.how_fast == 2 then self:play()
+    elseif self.how_fast == 1 then self:pause() end
 end
 
 function StepManager:pause()
@@ -161,6 +183,7 @@ end
 
 function StepManager:stop()
     if not self.running and not self.paused then return end
+    self.how_fast = 0
     ROOM:kill()
     self:clear()
 end
