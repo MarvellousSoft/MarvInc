@@ -393,13 +393,13 @@ Best of Luck. Carry on. :)
     timer.after(8, function()
     Mail.new("More about consoles",
 [[
-As we already told, consoles are the big colorful computers that can be sitting around The Room. The robot can interact with them, writing output for them to receive, or reading input pro a console if he has one, as you will learn in the future.
+As you were already told, consoles are the big colorful computers sitting around The Room. The robot can interact with them, writing output for them to receive, or reading input from them, as you will see in the future.
 
-The color of the console usually represents what he can influence in the room, such as lasers or even other consoles.
+The color of the console usually represents what it can influence in the room, such as lasers or even other consoles.
 
-The number above a console indicates how many inputs he still can provide to the bot. Use this for your advantage in planning programs.
+The number above a console indicates how many inputs it can still provide to the bot, or how many outputs it has received from the bot. Use this for your advantage in planning programs.
 
-Thats it for now. Carry on.
+That's it for now. Carry on.
 ]],  "Automated Introduction System", true)
     end)
 
@@ -539,15 +539,15 @@ function lore.array_sep_done()
 [[
 This is it. The last things we have to teach you. The rest is on your own.
 
-The command mov is used to move values to an address. The first argument is the address, and the second argument the value you'll add to that address.
+The command mov is used to move values to an address. The first argument is the address, and the second argument the value you'll move to that address.
 
 There is also the command sub. It works analogous to the add command, but instead of adding the second argument to the address provided in the first argument, it will subtract.
 
 Example where the bot will move the content of the register #7 to the register #3, and then subtract it by 4
     - mov 3 [7]
-    - sub 3 4
+      sub 3 4
 
-Prove yourself worthy, employee #]]..EMPLOYER_NUMBER..[[
+Prove yourself worthy, employee #]]..EMPLOYER_NUMBER..[[.
 
 We are waiting you.
 
@@ -582,7 +582,7 @@ Never stop learning, and carry on.
 end
 
 local function after_pop()
-    ROOM:disconnect()
+    ROOM:disconnect(false)
     FX.full_static()
     ROOM.version = "2.0"
 end
