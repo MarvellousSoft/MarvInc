@@ -60,8 +60,7 @@ function love.load()
     Setup.config() --Configure your game
 
     Gamestate.registerEvents() --Overwrites love callbacks to call Gamestate as well
-    --Gamestate.switch(GS.SPLASH) --Jump to the inicial state
-    Gamestate.switch(GS.CREDITS) --Jump to the inicial state
+    Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
 end
 

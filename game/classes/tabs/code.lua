@@ -159,6 +159,7 @@ function CodeTab:draw()
         end
     end
 
+    -- Drawing current line
     if self.exec_line then
         Color.set(Color.white())
         love.graphics.rectangle("fill", self.pos.x, self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h, 10, 10)

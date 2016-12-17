@@ -18,9 +18,9 @@ function Code:start()
 end
 
 function Code:step()
+    Util.findId("code_tab").exec_line = self.cur
     if self.cur <= #self.ops then
         local lab = self.ops[self.cur]:execute()
-        Util.findId("code_tab").exec_line = self.cur
         if lab then
             self.cur = self.labs[lab]
             if not self.cur then
