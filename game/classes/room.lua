@@ -82,6 +82,9 @@ Room = Class{
 
         ROOM = self
 
+        -- Star
+        self.star_color = Color.new(255, 10, 170)
+        self.draw_star = false
 
         -- OS Version
         self.version = "1.0"
@@ -317,6 +320,14 @@ function Room:draw()
     --Draw camera screen
     Color.set(Color.white())
     love.graphics.draw(ROOM_CAMERA_IMG, self.pos.x- 45, self.pos.y - 45)
+
+
+    -- Star
+    if self.draw_star then
+        Color.set(self.star_color)
+        local star = MISC_IMG.star
+        love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 80 / star:getWidth())
+    end
 end
 
 function Room:update()

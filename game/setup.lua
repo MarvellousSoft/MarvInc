@@ -92,6 +92,7 @@ function setup.config()
     -- Miscellaneous images
     MISC_IMG = {}
     MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
+    MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 
     -- Bot images (assume array part only)
     HEAD = {}

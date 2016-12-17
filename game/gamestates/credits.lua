@@ -4,7 +4,7 @@ local state = {}
 
 -- CREDTIS SCREEN --
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
-
+state.duration = 15
 
 -- Changing the text is ok too, no need to change anything else
 local credits = [[
@@ -23,13 +23,13 @@ Maria Clara
 Cotuba
 ]]
 
+
 function state:enter()
     local bg
 
     self.dy = H + 100
     self.credits_font = FONTS.fira(50)
 
-    self.duration = 15
     -- number of lines + 4 to give some time before and after the text arrives
     self.scroll_size = (4 + #credits:gsub("%C", "")) * self.credits_font:getHeight() + H
     self.cur_time = 0

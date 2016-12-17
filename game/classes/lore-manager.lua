@@ -41,7 +41,7 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
 
-    "Automated Introduction System", false, function() ROOM:connect("pickup") OpenedMail:close() end, false, lore.after_first_email)
+    "Automated Introduction System", false, function() ROOM:connect("square") OpenedMail:close() end, false, lore.after_first_email)
     end)
 end
 
@@ -585,6 +585,8 @@ local function after_pop()
     ROOM:disconnect(false)
     FX.full_static()
     ROOM.version = "2.0"
+    ROOM.draw_star = true
+    lore.square_done2()
 end
 
 function lore.square_done()
@@ -608,7 +610,9 @@ function lore.square_done()
             text = "Thank you for this wonderful opportunity",
             clr = Color.blue()
         })
+end
 
+function lore.square_done2()
     timer.after(6, function()
     email.maze1 = Mail.new("Congraaaaattts!!1!",
 [[
