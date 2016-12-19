@@ -20,7 +20,7 @@ function state:enter()
     room = Rooms.create()
     pc_box = PcBox.create()
 
-    LoreManager.begin()
+    LoreManager.init()
     FX.intro()
 end
 
@@ -54,10 +54,6 @@ function state:keypressed(key)
     Util.defaultKeyPressed(key)
     pc_box:keyPressed(key)
     room:keyPressed(key)
-
-    if key == "f10" then
-        ALL_OK = true
-    end
 
 end
 

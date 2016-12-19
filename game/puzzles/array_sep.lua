@@ -11,7 +11,9 @@ bot = {'b', "SOUTH"}
 
 local freq
 
-local function check_all(self, room)
+-- Objective
+objective_text = "Read up to 50 numbers from the green console, and write the negative numbers to the blue console, and the non-negative numbers to the red console."
+function objective_checker(room)
     local g = room.grid_obj
     local cg, cb, cr = g[10][18], g[4][17], g[16][17]
     ------
@@ -48,12 +50,6 @@ local function check_all(self, room)
     return true
 end
 
--- Objective
-objs = {
-    {-- Condition function
-    check_all, "Read up to 50 numbers from the green console, and write the negative numbers to the blue console, and the non-negative numbers to the red console.",
-    _G.LoreManager.array_sep_done}
-}
 
 extra_info =
 [[The conditional jumps are jgt, jge, jlt, jle, jeq and jne; to check for greater than, greater or equal, ...you get it.

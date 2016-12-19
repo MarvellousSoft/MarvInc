@@ -71,30 +71,33 @@ k = {"bucket", true, "bucket"}
 init_pos = {6, 2}
 
 -- Objective
-objs = {
-    { function(self, room)
-        local _test = function(which)
-            local _c = room.grid_obj[which.x][which.y]
-            local _inp = _c.inp
-            if #_inp > 0 then
-                if which.pass == _inp[#_inp] then
-                    _c:sleep()
-                else
-                    _c:wakeup()
-                end
-            end
-        end
-        _test(b)
-        _test(r)
-        _test(g)
+objective_text = "A former unnatentive intern accidentally switched the lasers on. Unfortunately, we "..
+                 "forgot the password. We do know that the sum of the digits is 7 and the multiplication "..
+                 "is 12, with 3 being the first digit. Turn the lasers off with the consoles, get the "..
+                 "bucket he was carrying, extinguish the fire to unblock the entrance and walk there. We expect "..
+                 "fewer accidents from now on, hopefully."
 
-        return room.bot.pos.x == 19 and room.bot.pos.y == 19
-    end, "A former unnatentive intern accidentally switched the lasers on. Unfortunately, we "..
-        "forgot the password. We do know that the sum of the digits is 7 and the multiplication "..
-        "is 12, with 3 being the first digit. Turn the lasers off with the consoles, get the "..
-        "bucket he was carrying, extinguish the fire to unblock the entrance and walk there. We expect "..
-        "fewer accidents from now on, hopefully.", _G.LoreManager.lasers_done}
-}
+
+local function test(room, which)
+    local _c = room.grid_obj[which.x][which.y]
+    local _inp = _c.inp
+    if #_inp > 0 then
+        if which.pass == _inp[#_inp] then
+            _c:sleep()
+        else
+            _c:wakeup()
+        end
+    end
+end
+
+function objective_checker(room)
+    test(room, b)
+    test(room, r)
+    test(room, g)
+
+    return room.bot.pos.x == 19 and room.bot.pos.y == 19
+end
+
 
 extra_info =[[
 Each monitor receives only one digit of the password, in order
@@ -147,3 +150,16 @@ grid_floor = "wwwwwwwwwwwwwwwwwwww"..
              "wwvwwwvwwwvwwwvwwwww"..
              "wvvvvvvvvvvvvvvvvvxw"..
              "wwwwwwwwwwwwwwwwwwww"
+
+
+function first_completed()
+    _G.PopManager.new("You've fixed the fire hazard",
+        "Paul will be relieved.",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = "trip on",
+            clr = _G.Color.black()
+        })
+end

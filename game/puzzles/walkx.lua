@@ -1,5 +1,3 @@
--- This is a test puzzle
-
 name = "Going all the way is not always good"
 -- Puzzle number
 n = 2
@@ -18,13 +16,10 @@ o = {"obst", false, "wall_none"}
 -- options: obst, dead
 
 -- Objective
-objs = {
-    {-- Condition function
-    function(self, room)
-        return room.bot.pos.x == 14 and room.bot.pos.y == 7
-    end, "Just get to the red tile. Again.",
-    _G.LoreManager.walkx_done}
-}
+objective_text = "Just get to the red tile. Again."
+function objective_checker(room)
+    return room.bot.pos.x == 14 and room.bot.pos.y == 7
+end
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

@@ -63,6 +63,10 @@ function Memory:draw()
         love.graphics.setFont(self.unavailable_font)
         love.graphics.print("UNAVAILABLE", self.pos.x + self.w / 5, self.pos.y + self.h / 2, -math.pi / 20)
     else
+        -- centering cells
+        local dx = (self.w - self.columns * self.ssize) / 2
+        love.graphics.translate(dx, 0)
+
         color.l = 230
         color.s = 140
         color.a = 255
@@ -88,5 +92,7 @@ function Memory:draw()
             local c = i - r * self.columns - 1
             love.graphics.printf(self.vec[i], self.pos.x + 2 + c * self.ssize, self.pos.y + r * self.ssize + self.ssize / 4, self.ssize, "center")
         end
+
+        love.graphics.translate(-dx, 0)
     end
 end

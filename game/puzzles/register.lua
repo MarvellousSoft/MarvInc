@@ -1,5 +1,3 @@
--- This is a test puzzle
-
 name = "Basic Programming"
 -- Puzzle number
 n = 6
@@ -16,7 +14,9 @@ c = {"console", false, "console", "green", args = {}, dir = "west"}
 
 local con
 
-local function check_all(self, room)
+-- Objective
+objective_text = "Write all numbers from 1 to 50 on the green console."
+function objective_checker(room)
     if not con then
         for i = 1, 20 do
             for j = 1, 20 do
@@ -38,12 +38,6 @@ local function check_all(self, room)
     return #con.inp >= 50
 end
 
--- Objective
-objs = {
-    {-- Condition function
-    check_all, "Write all numbers from 1 to 50 on the green console.",
-    _G.LoreManager.register_done}
-}
 
 extra_info =
   [[After you outputted the 50 numbers, the code will stop automatically, so there is no need to do it manually.

@@ -10,7 +10,9 @@ bot = {'b', "SOUTH"}
 
 local vs = {}
 
-local function check_all(self, room)
+-- Objective
+objective_text = "Read 6 sequences of 3 numbers from the green console, then write them to the 6 blue consoles, from left to right. You must sort these sequences."
+function objective_checker(room)
     local g = room.grid_obj
     local cg = g[3][6]
     local cbs = {}
@@ -31,13 +33,6 @@ local function check_all(self, room)
     end
     return all
 end
-
--- Objective
-objs = {
-    {-- Condition function
-    check_all, "Read 6 sequences of 3 numbers from the green console, then write them to the 6 blue consoles, from left to right. You must sort these sequences.",
-    _G.LoreManager.simple_sort_done}
-}
 
 extra_info =
 [[Each sequence of 3 numbers must be sorted, not the whole sequence of 18 numbers.]]
@@ -104,3 +99,15 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."
+
+function first_completed()
+    _G.PopManager.new("You've completed the game (so far)",
+[[Send us an email and tell us what you think about the game!]],
+    _G.Color.green(), {
+        func = function()
+            _G.ROOM:disconnect()
+        end,
+        text = " ok ",
+        clr = _G.Color.black()
+    })
+end

@@ -24,9 +24,6 @@ local StepManager = {
 
     waiting = false,
     paused = false,
-
-    -- Event has as key the object and as value the condition function.
-    events = {}
 }
 
 
@@ -56,13 +53,8 @@ function StepManager:do_play()
     -- Gambs for some reason...
     self.call = function()
         self:step()
-        -- Watch for events (e.g. Objectives)
-        for evt, evt_f in pairs(self.events) do
-            local done, obj = evt_f(evt)
-            if done then
-                evt.completed = true
-            end
-        end
+        -- Check the objectives
+        ROOM.puzzle:manage_objectives()
         -- Emit an end turn signal
         Signal.emit("end_turn")
         if not self.code then return end
@@ -203,25 +195,8 @@ function StepManager:update(dt)
     self.timer.update(dt)
 end
 
-function StepManager:register(evt)
-    self.events[evt[1]] = evt[2]
-end
-
-function StepManager:removeAll()
-    for k, _ in pairs(self.events) do
-        self.events[k] = nil
-    end
-end
-
 function StepManager:clear()
-    for k, _ in pairs(self.events) do
-        k.completed = false
-    end
     Util.findId("code_tab").memory:reset()
-end
-
-function StepManager:remove(obj)
-    self.events[obj] = nil
 end
 
 function StepManager:autofail(title, text, button)

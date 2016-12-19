@@ -4,16 +4,13 @@ require "classes.console"
 
 -- Reader reads a .lua level and converts it into a Puzzle
 
-Reader = Class{
-    init = function(self, filename)
-        self:read(filename)
-    end
-}
+local reader = {}
 
-function Reader:read(filename)
+-- Reads and returns the puzzle with id puzzle_id
+function reader.read(puzzle_id)
     -- Loads lua file and adds contents to table _t
-    local _f, err = love.filesystem.load(filename)
-	if err then print(err) end
+    local _f, err = love.filesystem.load("puzzles/" .. puzzle_id .. ".lua")
+    if err then print(err) end
     local _t = {}
     setfenv(_f, _t)
 
@@ -26,27 +23,28 @@ function Reader:read(filename)
     -- Runs the puzzle script
     _f()
 
-    self.puz = Puzzle()
-    self.puz.name = _t.name
-    self.puz.n = _t.n
+    local puz = Puzzle()
+    puz.name = _t.name
+    puz.id = puzzle_id
+    puz.n = _t.n
 
     local bot = _t.bot
     for x = 1, COLS do
         for y = 1, ROWS do
             if _t.grid_obj:sub((y - 1) * COLS + x, (y - 1) * COLS + x) == bot[1] then
-                self.puz.init_pos = Vector(x, y)
+                puz.init_pos = Vector(x, y)
             end
         end
     end
 
-    self.puz.orient = bot[2]
+    puz.orient = bot[2]
 
-    self.puz.grid_floor = {}
-    self.puz.grid_obj = {}
+    puz.grid_floor = {}
+    puz.grid_obj = {}
     local k = 1
     for i=1, ROWS do
-        self.puz.grid_floor[i] = {}
-        self.puz.grid_obj[i] = {}
+        puz.grid_floor[i] = {}
+        puz.grid_obj[i] = {}
     end
 
     -- Searches for emitters before other objects.
@@ -59,7 +57,7 @@ function Reader:read(filename)
                 local _proto = _t[_co]
                 if _proto[1] == "emitter" then
                     if not emitters[_proto[4]] then emitters[_proto[4]] = {} end
-                    table.insert(emitters[_proto[4]], {self.puz.grid_obj, j, i, _proto[3], _proto[2],
+                    table.insert(emitters[_proto[4]], {puz.grid_obj, j, i, _proto[3], _proto[2],
                         _proto[4], nil, nil, _proto.args})
                 end
             end
@@ -71,11 +69,11 @@ function Reader:read(filename)
     for i=1, COLS do
         for j=1, ROWS do
             local _co = _t.grid_obj:sub(k, k)
-            self.puz.grid_floor[j][i] = _t[_t.grid_floor:sub(k, k)]
+            puz.grid_floor[j][i] = _t[_t.grid_floor:sub(k, k)]
             if _co ~= bot[1] and _t[_co] ~= nil then
                 local _proto = _t[_co]
                 if _proto[1] ~= "emitter" then
-                    local args = {self.puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4],
+                    local args = {puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4],
                         _proto[5], _proto[6], _proto.args}
                     local _obj = nil
                     if _proto[1] == "obst" then
@@ -108,16 +106,16 @@ function Reader:read(filename)
         Emitter(unpack(v))
     end
 
-    self.puz.objs = {}
-    for _, v in pairs(_t.objs) do
-        table.insert(self.puz.objs, Objective(v[1], v[2], v[3]))
-    end
+    puz.objective_text = _t.objective_text
+    puz.objective_checker = _t.objective_checker
+    puz.first_completed = _t.first_completed
+    puz.already_completed = _t.already_completed
 
-    self.puz.lines_on_terminal = _t.lines_on_terminal
-    self.puz.memory_slots = _t.memory_slots
-    self.puz.extra_info = _t.extra_info
+    puz.lines_on_terminal = _t.lines_on_terminal
+    puz.memory_slots = _t.memory_slots
+    puz.extra_info = _t.extra_info
+
+    return puz
 end
 
-function Reader:get()
-    return self.puz
-end
+return reader

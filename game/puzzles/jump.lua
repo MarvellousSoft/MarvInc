@@ -14,13 +14,11 @@ bot = {'b', "NORTH"}
 o = {"obst", false, "wall_none"}
 
 -- Objective
-objs = {
-    {-- Condition function
-    function(self, room)
-        return room.bot.steps >= 200
-    end, "Get tired. Walk 200 steps.",
-    _G.LoreManager.jmp_done}
-}
+objective_text = "Get tired. Walk 200 steps."
+
+function objective_checker(room)
+    return room.bot.steps >= 200
+end
 
 extra_info = "The experiment ends as soon as the objective requirements are completed."
 

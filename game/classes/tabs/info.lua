@@ -119,7 +119,7 @@ function InfoTab:draw()
 
         -- Room number
         font = FONTS.fira(30)
-        text = "ROOM #"..ROOM.n
+        text = "ROOM #" .. ROOM.puzzle.n
         font_w = font:getWidth(text)
         love.graphics.setFont(font)
         Color.set(self.text_color1)
@@ -127,7 +127,7 @@ function InfoTab:draw()
 
         -- Room name
         font = FONTS.fira(24)
-        text = "\""..ROOM.name.."\""
+        text = '"' .. ROOM.puzzle.name .. '"'
         font_w = font:getWidth(text)
         love.graphics.setFont(font)
         Color.set(self.text_color1)
@@ -144,13 +144,10 @@ function InfoTab:draw()
         local _, wraptext
 
         Color.set(self.text_color3)
-        -- Print all objectives descriptions
-        for i,t in ipairs(ROOM.objs) do
-            text = "- "..t.desc
-            love.graphics.printf(text, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
-            _, wraptext = font:getWrap(text, self.w - 20)
-            h = h + #wraptext*font:getHeight()
-        end
+        text = "- " .. ROOM.puzzle.objective_text
+        love.graphics.printf(text, self.pos.x + 10, self.pos.y + self.id_file_y + 350 + h, self.w - 20)
+        _, wraptext = font:getWrap(text, self.w - 20)
+        h = h + #wraptext*font:getHeight()
 
         -- Extra Info
         if ROOM.extra_info and ROOM.extra_info ~= "" then

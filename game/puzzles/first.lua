@@ -1,4 +1,4 @@
--- This is a test puzzle
+-- First puzzle
 
 name = "Hello World"
 -- Puzzle number
@@ -18,14 +18,13 @@ o = {"obst", false, "wall_none"}
 -- options: obst, dead
 
 -- Objective
-objs = {
-    {-- Condition function
-    function(self, room)
-        return room.bot.pos.x == 20 and room.bot.pos.y == 1
-    end, "Just get to the red tile. It's not that hard.",
-    _G.LoreManager.first_done}
-}
+objective_text = "Just get to the red tile. It's not that hard."
 
+function objective_checker(room)
+    return room.bot.pos.x == 20 and room.bot.pos.y == 1
+end
+
+-- Extra info to be displayed
 extra_info = nil
 
 grid_obj =  "oooooooooeeeeeeeeeee"..

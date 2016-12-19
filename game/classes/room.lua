@@ -1,5 +1,6 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
+local Reader = require "classes.reader"
 --ROOM CLASS--
 
 --Room functions table
@@ -64,15 +65,11 @@ Room = Class{
         self.static_r = 0
         self.static_on = false
 
-        -- Room number and name
-        self.n = nil
-        self.name = nil
-
         -- Room objectives
         self.objs = nil
 
-        -- Current puzzle
-        self.puzzle = nil
+        -- Current puzzle id
+        self.puzzle_id = nil
 
         Signal.register("end_turn", function()
             self:apply()
@@ -98,7 +95,9 @@ function Room:processDeath()
     local death_func = function()
         local _term = Util.findId("code_tab")
         _term:store()
-        self:connect(self.puzzle, false)
+        -- Just to be sure we aren't forgetting to clean anything
+        -- And this should be a pretty fast procedure
+        self:connect(self.puzzle_id, false)
         _term:retrieve()
         StepManager:check_start()
     end
@@ -122,26 +121,16 @@ end
 
 function Room:from(puzzle)
     self:clear()
+    self.puzzle = puzzle
     self.mode = "online"
-    self.name = puzzle.name
-    self.n = puzzle.n
     INIT_POS = puzzle.init_pos
 
-    self.grid_obj = nil
-    self.grid_floor = nil
     self.grid_obj = puzzle.grid_obj
     self.grid_floor = puzzle.grid_floor
 
     self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
     self.default_bot_turn = _G[puzzle.orient.."_R"]
     self.bot:turn(self.default_bot_turn)
-
-    self.objs = nil
-    self.objs = {}
-    for k, v in ipairs(puzzle.objs) do
-        self.objs[k] = v
-        v:activate()
-    end
 
     self.extra_info = puzzle.extra_info
     Util.findId("code_tab"):reset(puzzle)
@@ -189,24 +178,15 @@ function Room:clear()
     self.grid_obj = nil
     self.grid_floor = nil
     self.bot = nil
-    self.n = nil
-    self.name = nil
-    if self.objs then
-        for k, _ in pairs(self.objs) do
-            StepManager:remove(k)
-        end
-    end
-    self.objs = {}
     Room.queue = {}
-    StepManager:removeAll()
     StepManager:stopNoKill()
 end
 
-function Room:connect(name, changeToInfo)
+function Room:connect(id, changeToInfo)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:play()
 
-    self.puzzle = name
+    self.puzzle_id = id
     self.static_on = true
     self.static_dhdl = MAIN_TIMER.after(0.0675, function()
         SFX.loud_static:stop()
@@ -217,7 +197,7 @@ function Room:connect(name, changeToInfo)
         self.static_r = self.static_r + math.pi/2
     end)
 
-    self:from(Reader("puzzles/"..name..".lua"):get())
+    self:from(Reader.read(id))
     if changeToInfo == nil or changeToInfo == true then Util.findId("pcbox"):changeTo("info") end
 end
 

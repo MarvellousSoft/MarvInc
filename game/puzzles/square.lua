@@ -10,7 +10,9 @@ bot = {'b', "WEST"}
 
 local bk = {}
 
-local function check_all(self, room)
+-- Objective
+objective_text = "For each number in the green console, write its square to the blue console. All numbers are non-negative and not greater than 30."
+function objective_checker(room)
     local g = room.grid_obj
     local cg, cb = g[8][8], g[13][8]
     for i = 1, #cb.inp do
@@ -22,13 +24,6 @@ local function check_all(self, room)
     end
     return #cb.inp >= #bk
 end
-
--- Objective
-objs = {
-    {-- Condition function
-    check_all, "For each number in the green console, write its square to the blue console. All numbers are non-negative and not greater than 30.",
-    _G.LoreManager.square_done}
-}
 
 extra_info =
 [[Remember to use brackets.
@@ -95,3 +90,31 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."
+
+local function after_pop()
+    _G.ROOM:disconnect(false)
+    _G.FX.full_static()
+    _G.ROOM.version = "2.0"
+    _G.ROOM.draw_star = true
+    -- Fake puzzle, may change this later
+    _G.LoreManager.puzzle_done.tutorial = true
+    _G.LoreManager.check_all()
+end
+
+function first_completed()
+    _G.PopManager.new("Congratulations!",
+    "You have passed basic training. We at Marvellous Inc proud ourselves on our "..
+    "award-winning hands-on personnel training. A congratulatory golden star sticker has "..
+    "been added to the coffee room employee board under your name. Every month we select "..
+    "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
+    "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
+    "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
+    "NEWELL JR].\n\n"..
+    "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
+    "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
+    _G.Color.blue(), {
+        func = after_pop,
+        text = "Thank you for this wonderful opportunity",
+        clr = _G.Color.blue()
+    })
+end

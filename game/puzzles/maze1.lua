@@ -16,14 +16,10 @@ x = {"obst", false, "wall_o"}
 
 local done = false
 -- Objective
-objs = {-- Condition
-       {
-    function(self, room)
-        return room.bot.pos.x == 11 and room.bot.pos.y == 11
-    end,
-    "Get to the center.", _G.LoreManager.maze1_done
-    }
-}
+objective_text = "Get to the center."
+function objective_checker(room)
+    return room.bot.pos.x == 11 and room.bot.pos.y == 11
+end
 
 extra_info = [[Remember old commands.]]
 
@@ -72,3 +68,15 @@ grid_floor = "...................."..
              "w.w...............w."..
              "w.wwwwwwwwwwwwwwwww."..
              "w..................."
+
+function first_completed()
+    _G.PopManager.new("You've completed the job",
+        "But is Jenny always this... energetic?",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I hope not ",
+            clr = _G.Color.black()
+        })
+end

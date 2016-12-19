@@ -14,14 +14,10 @@ _G.getfenv(0)['.'] = nil
 x = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Objective
-objs = {-- Condition
-       {
-    function(self, room)
-        return room.bot.pos.x == 11 and room.bot.pos.y == 11
-    end,
-    "Get to the center, but harder.", _G.LoreManager.maze2_done
-    }
-}
+objective_text = "Get to the center, but harder."
+function objective_checker(room)
+    return room.bot.pos.x == 11 and room.bot.pos.y == 11
+end
 
 grid_obj = "xxxxxxxxxxxxxxxxxxxx"..
            "...................x"..
@@ -68,3 +64,19 @@ grid_floor = "...................."..
              "w.w...............w."..
              "w.wwwwwwwwwwwwwwwww."..
              "w..................."
+
+function first_completed()
+    _G.PopManager.new("You've completed the job",
+[[
+Jenny will want to hear about this.
+
+You probably should call her Jenny.
+]],
+    _G.Color.green(), {
+        func = function()
+            _G.ROOM:disconnect()
+        end,
+        text = " ok ",
+        clr = _G.Color.black()
+    })
+end
