@@ -34,6 +34,9 @@ Puzzle = Class{
     lines_on_terminal = 20,
     memory_slots = nil,
 
+    -- Called when the puzzle is started
+    on_start = nil,
+
     -- When completed -- used by LoreManager
     -- called when solving the puzzle for the first time
     first_completed = LoreManager.default_completed,

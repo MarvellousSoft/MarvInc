@@ -24,7 +24,7 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
 
-    "Automated Introduction System", false, function() ROOM:connect("move_items") OpenedMail:close() end, false, after_intro_email)
+    "Automated Introduction System", false, function() ROOM:connect("reverse") OpenedMail:close() end, false, after_intro_email)
 end
 
 function after_intro_email()

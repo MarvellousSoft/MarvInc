@@ -134,6 +134,10 @@ function Room:from(puzzle)
 
     self.extra_info = puzzle.extra_info
     Util.findId("code_tab"):reset(puzzle)
+
+    if puzzle.on_start then
+        puzzle.on_start(self)
+    end
 end
 
 function Room:paint(i, j, floor)

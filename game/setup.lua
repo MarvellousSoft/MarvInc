@@ -126,7 +126,8 @@ function setup.config()
               "Puppy Lover", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
               "Germophobe", "Insomniac", "Lives with his Mom", "Has a Cool Car", "Listens to Emo Rock",
               "Addicted to Caffeine", "Explorer at Heart", "Never Pays Service", "Jerk",
-              "Sympathetic", "Funny", "Cool", "11 Toes", "Logical", "Irrational", "Creepy"
+              "Sympathetic", "Funny", "Cool", "11 Toes", "Logical", "Irrational", "Creepy", "Nice Cook",
+              "Liked Lost's Ending", "Bought an Ouya", "Hates Soda", "Has Heterochromia", "Artistic"
              }
 
     --TIMERS--

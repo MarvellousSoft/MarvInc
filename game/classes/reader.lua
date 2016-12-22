@@ -115,6 +115,8 @@ function reader.read(puzzle_id)
     puz.memory_slots = _t.memory_slots
     puz.extra_info = _t.extra_info
 
+    puz.on_start = _t.on_start
+
     return puz
 end
 
