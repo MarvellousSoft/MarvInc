@@ -71,12 +71,14 @@ function Object:moveTo(grid, r, c, o)
 
     -- Obstacle ahead
     if grid[px][py] ~= nil then
-        if grid[px][py].tp == "obst" then
+        local t = grid[px][py].tp
+        -- refactor me plz
+        if t == "obst" or t == "console" or t == "bucket" then
             return
         end
 
         -- Don't dead open inside
-        if grid[px][py].tp == "dead" then
+        if t == "dead" then
             self:kill(grid)
             return
         end

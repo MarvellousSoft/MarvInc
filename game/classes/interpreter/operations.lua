@@ -96,8 +96,11 @@ function Walk:execute()
     -- invalid! is an invalid label (because of the '!')
     if type(y) ~= 'number' then return y end
     if y < 0 then return "Trying to walk " .. y .. " steps" end
-    if y == 0 then return end
-    StepManager:walk(y, self.dir)
+    if y == 0 then
+        if self.dir then StepManager:turn(self.dir) end
+    else
+        StepManager:walk(y, self.dir)
+    end
 end
 
 Turn = Class {

@@ -55,6 +55,21 @@ function state:keypressed(key)
     pc_box:keyPressed(key)
     room:keyPressed(key)
 
+    -- Pressing f11 will type some text on the terminal
+    if key == 'f11' then
+        code = [=[
+Your code here
+]=]
+        for i = 1, #code do
+            if code:sub(i, i) == '\n' then
+                state:keypressed('return')
+            elseif code:sub(i, i) == ' ' then
+                state:keypressed('space')
+            else
+                state:textinput(code:sub(i,i))
+            end
+        end
+    end
 end
 
 function state:mousepressed(x, y, but)

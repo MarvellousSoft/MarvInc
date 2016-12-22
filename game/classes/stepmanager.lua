@@ -134,7 +134,10 @@ function StepManager:step()
         self:cmd()
     elseif not self.code:step() and not self.cmd then
         self.waiting = true
-        Util.findId("code_tab").exec_line = #self.code.ops + 1
+        if self.code then
+            -- in this case the code finished normally
+            Util.findId("code_tab").exec_line = #self.code.ops + 1
+        end
     end
 end
 
