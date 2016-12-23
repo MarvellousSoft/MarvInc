@@ -85,6 +85,14 @@ function Button:draw()
 
 end
 
+function Button:checkCollides(x, y)
+    if x < self.pos.x then return false end
+    if x > self.pos.x + self.w then return false end
+    if y < self.pos.y then return false end
+    if y > self.pos.y + self.h then return false end
+    self:func()
+end
+
 -- Centralizes text on button
 function Button:centralize()
     local tw, th = self.font:getWidth(self.text), self.font:getHeight()
@@ -123,13 +131,7 @@ function checkButtonCollision(x,y)
     --Iterate on drawable buttons table
     if not Util.findSbTp "tabs" then return end
     for b in pairs(Util.findSbTp "tabs") do
-        if x  <= b.pos.x + b.w and
-          x >= b.pos.x and
-          y  <= b.pos.y + b.h and
-          y >= b.pos.y then
-            b:func()
-            return
-        end
+        b:checkCollides()
     end
 
 end

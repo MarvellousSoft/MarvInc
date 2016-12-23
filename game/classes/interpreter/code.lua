@@ -12,13 +12,13 @@ Code = Class{
 
 function Code:start()
     local ct = Util.findId("code_tab")
-    ct.exec_line = 1
+    ct:showLine(1)
     ct.lock = true
     ct.memory:reset()
 end
 
 function Code:step()
-    Util.findId("code_tab").exec_line = self.cur
+    Util.findId("code_tab"):showLine(self.cur)
     if self.cur <= #self.ops then
         local lab = self.ops[self.cur]:execute()
         if lab then
@@ -39,6 +39,6 @@ end
 
 function Code:stop()
     local ct = Util.findId("code_tab")
-    ct.exec_line = nil
+    ct:showLine(nil)
     ct.lock = false
 end

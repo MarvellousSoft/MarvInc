@@ -26,7 +26,6 @@ local StepManager = {
     paused = false,
 }
 
-
 -- Plays a set of instructions until step can no longer parse.
 function StepManager:do_play()
     if not ROOM:connected() then
@@ -136,7 +135,7 @@ function StepManager:step()
         self.waiting = true
         if self.code then
             -- in this case the code finished normally
-            Util.findId("code_tab").exec_line = #self.code.ops + 1
+            Util.findId("code_tab"):showLine(#self.code.ops + 1)
         end
     end
 end

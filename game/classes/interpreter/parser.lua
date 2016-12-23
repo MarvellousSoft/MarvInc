@@ -63,7 +63,7 @@ function parser.parseAll(lines)
 end
 
 function parser.parseCode()
-    local c = parser.parseAll(Util.findId("code_tab").lines)
+    local c = parser.parseAll(Util.findId("code_tab"):getLines())
     if type(c) == 'table' and c.type == 'code' then return c end
 end
 
