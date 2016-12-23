@@ -22,7 +22,7 @@ require "classes.color.color"
 But = require "classes.button"
 
 require "classes.tabs.tab"
-require "classes.tabs.email"
+Mail = require "classes.tabs.email"
 require "classes.tabs.code"
 require "classes.tabs.info"
 

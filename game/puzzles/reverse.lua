@@ -24,16 +24,31 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = create_vec, dir = "west"}
-d = {"console", false, "console", "blue", args = {}, dir = "east"}
+c = {"console", false, "console", "green", args = create_vec, dir = "east"}
+d = {"console", false, "console", "blue", args = {}, dir = "west"}
 
-local con
+-- console objects
+local gr, bl
 
 local ans = {}
 
 -- create ans vector
 function on_start(room)
-    local v, i = room.grid_obj[10][6].out, 1
+    -- finds consoles
+    for i = 1, 20 do
+        for j = 1, 20 do
+            local o = room.grid_obj[i][j]
+            if o and o.tp == 'console' then
+                if #o.out > 0 then
+                    gr = o
+                else
+                    bl = o
+                end
+            end
+        end
+    end
+    -- creates answer
+    local v, i = gr.out, 1
     while i <= #v do
         local n = v[i]
         _G.table.insert(ans, n)
@@ -46,11 +61,8 @@ end
 
 -- Objective
 objective_text = [[
-Read sequences from the green console and write them reversed to the blue console.]]
+Read sequences from the green console and write them, reversed, to the blue console.]]
 function objective_checker(room)
-    local gr, bl = room.grid_obj[10][6], room.grid_obj[11][6]
-    _G.assert(gr.tp == 'console')
-
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
         _G.StepManager:autofail("Wrong output", "Too many numbers!", "Retry")
@@ -68,52 +80,88 @@ end
 
 extra_info = [[
 Each sequence is given by its size and then its elements.
-- Example: 2 1 2 1 3 is sequence (1,2) and  (3) and the output should be 1 2 1 1 3.
+- Example: 2 1 2 1 3 is sequence (1,2) and  (3) and the output should be 2 2 1 1 3.
 - Sequences will have at most 20 elements.]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooo.....bcd......ooo"..
-            "ooo..oooooooooo..ooo"..
-            "ooo.oooooooooooo.ooo"..
-            "ooo.oooooooooooo.ooo"..
-            "ooo.oooooooooooo.ooo"..
-            "ooo..oooooooooo..ooo"..
-            "ooo..............ooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "oooooc.....doooooooo"..
+            "oooooooooo.ooooooooo"..
+            "ooooo......ooooooooo"..
+            "ooooo.oooooooooooooo"..
+            "ooooo........ooooooo"..
+            "oooooooooooo.ooooooo"..
+            "oooo.........ooooooo"..
+            "oooo.ooooooooooooooo"..
+            "oooo........oooooooo"..
+            "ooooooooooo.oooooooo"..
+            "ooooo.......oooooooo"..
+            "ooooo.oooooooooooooo"..
+            "ooooo......ooooooooo"..
+            "oooooooooo.ooooooooo"..
+            "oooooo.....ooooooooo"..
+            "oooooo.ooooooooooooo"..
+            "oooooo....oooooooooo"..
+            "ooooooooo.oooooooooo"..
+            "oooooooo..oooooooooo"..
+            "oooooooobooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...wwwwwwwwwwwwww..."..
-             "...ww..........ww..."..
-             "...w............w..."..
-             "...w............w..."..
-             "...w............w..."..
-             "...ww..........ww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"..
+             "wvwvwvwvwvwvwvwvwvwv"..
+             "vwvwvwvwvwvwvwvwvwvw"
+
+
+function first_completed()
+    _G.PopManager.new("Nice!",
+        "But Gabe did it faster :B\n -- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I'll get better ",
+            clr = _G.Color.blue()
+        },
+        {
+            func = function()
+                _G.ROOM:disconnect()
+                _G.LoreManager.timer.after(3, function()
+                    _G.Mail.new("Bad attitude",
+[[
+We here at Marvellous Inc. do not encourage the type of behavior you have shown. Please refrain from using profane vocabulary in the workspace, as it is unprofessional.
+
+Worry not, it was a first offense and this email is just a warning*.
+
+Be polite, and carry on.
+
+
+
+* A note has been added to you personal file
+]]
+                    , "Auto Mod (noreply@marv.com)", true)
+                end)
+                -- maybe Liv should say something
+            end,
+            text = " Well, fuck him ",
+            clr = _G.Color.black()
+        })
+end
