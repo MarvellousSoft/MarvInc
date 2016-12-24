@@ -131,7 +131,7 @@ function checkButtonCollision(x,y)
     --Iterate on drawable buttons table
     if not Util.findSbTp "tabs" then return end
     for b in pairs(Util.findSbTp "tabs") do
-        b:checkCollides()
+        b:checkCollides(x, y)
     end
 
 end

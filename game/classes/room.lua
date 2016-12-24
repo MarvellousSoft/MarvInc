@@ -16,6 +16,11 @@ Room = Class{
         -- Online or offline
         self.mode = "offline"
 
+        -- Grid numbering
+        self.grid_fnt = FONTS.fira(20)
+        self.grid_fnt_clr = Color.white()
+        self.grid_fnt_h = self.grid_fnt:getHeight()
+
         -- Grid
         self.grid_clr = Color.blue()
         self.grid_r, self.grid_c = ROWS + 2, ROWS + 2
@@ -275,7 +280,6 @@ function Room:draw()
                 end
             end
         end
-
     else
         Color.set(self.back_clr)
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
@@ -297,6 +301,28 @@ function Room:draw()
             self.static_img:getWidth()/2, self.static_img:getHeight()/2)
         love.graphics.pop()
     end
+
+    -- Grid numbering
+    Color.set(self.grid_fnt_clr)
+    love.graphics.setFont(self.grid_fnt)
+    for i=1, self.grid_r do
+        local _s = tostring(i)
+        --if i < 10 then _s = '0'.._s end
+        love.graphics.printf(_s, -self.grid_cw, self.grid_ch*(i-1) + self.grid_fnt_h/2 - 5,
+            30, "right")
+        love.graphics.line(-self.grid_cw, self.grid_ch*(i-1), 0, self.grid_ch*(i-1))
+    end
+    love.graphics.line(-self.grid_cw, self.grid_ch*self.grid_r, 0, self.grid_ch*self.grid_r)
+    for i=1, self.grid_c do
+        local _s = tostring(i)
+        --if i < 10 then _s = '0'.._s end
+        love.graphics.print(_s, self.grid_cw*(i-0.5) - self.grid_fnt:getWidth(_s)/2,
+            self.grid_h + self.grid_ch/2 - self.grid_fnt_h/2)
+        love.graphics.line(self.grid_cw*(i-1), self.grid_h+2,
+            self.grid_cw*(i-1), self.grid_h+self.grid_ch)
+    end
+    love.graphics.line(self.grid_cw*self.grid_c, self.grid_h+2,
+        self.grid_cw*self.grid_c, self.grid_h+self.grid_ch)
 
     -- Set origin to (0, 0)
     love.graphics.pop()
