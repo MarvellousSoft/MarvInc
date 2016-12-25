@@ -160,26 +160,18 @@ end
 -- Resets screen for a new puzzle
 function CodeTab:reset(puzzle)
     self.term:reset_lines(puzzle.lines_on_terminal)
+    self.term:typeString(puzzle.code)
     self.memory:setSlots(puzzle.memory_slots)
 end
 
 function CodeTab:getLines()
-    return self.term.lines
+    local l = {}
+    for i = 1, self.term.line_cur do
+        l[i] = self.term.lines[i]
+    end
+    return l
 end
 
 function CodeTab:showLine(i)
     self.term.exec_line = i
-end
-
-
--- Gambs
-local bak
--- Store code data
-function CodeTab:store()
-    bak = {self.term.lines, self.term.line_cur, self.term.cursor, self.term.cursor2}
-end
-
--- Retrieve code data
-function CodeTab:retrieve()
-    self.term.lines, self.term.line_cur, self.term.cursor, self.term.cursor2 = unpack(bak)
 end

@@ -362,3 +362,15 @@ function TextBox:mouseScroll(x, y)
     self.dy = math.min(self.dy, self.line_cur - 1)
     self.dy = math.max(self.dy, -self.lines_on_screen + 1)
 end
+
+function TextBox:typeString(str)
+    for c in str:gmatch(".") do
+        if c == '\n' then
+            self:keyPressed('return')
+        elseif c == ' ' then
+            self:keyPressed('space')
+        else
+            self:textInput(c)
+        end
+    end
+end

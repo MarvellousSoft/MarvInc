@@ -37,17 +37,32 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
     end
 end
 
-function sm.save()
-    local user = sm.current_user
-    if not user then return end
+function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
         f.createDirectory('saves/'.. user)
     end
+end
+
+function sm.save()
+    local user = sm.current_user
+    if not user then return end
+    sm.base_user_save(user)
     local data = {}
     data.puzzle_done = LoreManager.puzzle_done
     -- ...
 
-    f.write("saves/" .. user .. "/save_file", binser.serialize(data))
+    f.write('saves/' .. user .. '/save_file', binser.serialize(data))
+end
+
+function sm.load_code(puzzle)
+    local filename = 'saves/' .. sm.current_user .. '/' .. puzzle .. '.code'
+    if f.exists(filename) then return f.read(filename) end
+end
+
+function sm.save_code(puzzle, str)
+    sm.base_user_save(sm.current_user)
+    local filename = 'saves/' .. sm.current_user .. '/' .. puzzle .. '.code'
+    f.write(filename, str)
 end
 
 return sm

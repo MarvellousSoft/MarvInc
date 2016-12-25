@@ -98,12 +98,9 @@ function Room:processDeath()
     StepManager:stopNoKill()
     local n = Util.findId("info_tab").dead
     local death_func = function()
-        local _term = Util.findId("code_tab")
-        _term:store()
         -- Just to be sure we aren't forgetting to clean anything
         -- And this should be a pretty fast procedure
         self:connect(self.puzzle_id, false)
-        _term:retrieve()
         StepManager:check_start()
     end
     if StepManager.mrk_play then death_func() return end
@@ -211,6 +208,7 @@ function Room:connect(id, changeToInfo)
 end
 
 function Room:disconnect(wait)
+    SaveManager.save_code(self.puzzle_id, table.concat(Util.findId("code_tab"):getLines(), "\n"))
     if wait == nil or wait then
         SFX.loud_static:play()
 

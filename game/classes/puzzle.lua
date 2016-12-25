@@ -37,6 +37,9 @@ Puzzle = Class{
     -- Called when the puzzle is started
     on_start = nil,
 
+    -- previous code for the puzzle (if saved)
+    code = "",
+
     -- When completed -- used by LoreManager
     -- called when solving the puzzle for the first time
     first_completed = LoreManager.default_completed,

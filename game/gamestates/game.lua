@@ -67,16 +67,9 @@ function state:keypressed(key)
     if key == 'f11' then
         code = [=[
 Your code here
+hahah
 ]=]
-        for i = 1, #code do
-            if code:sub(i, i) == '\n' then
-                state:keypressed('return')
-            elseif code:sub(i, i) == ' ' then
-                state:keypressed('space')
-            else
-                state:textinput(code:sub(i,i))
-            end
-        end
+        Util.findId("code_tab").term:typeString(code)
     end
 end
 
