@@ -1,3 +1,4 @@
+## Lore Events
 Lore events are triggered by completing puzzles. They should mainly be used to send new emails that add new puzzles.
 
 To create a new Lore Event, create a .lua file in this folder, and it should return a table that has the following fields:
