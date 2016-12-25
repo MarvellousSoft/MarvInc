@@ -32,6 +32,7 @@ end
 
 -- Check for events that may trigger now
 function lore.check_all()
+    if not events then return end
     for evt in pairs(events) do
         local all_done = true
         for _, puzzle in ipairs(evt.require_puzzles) do

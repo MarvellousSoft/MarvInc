@@ -15,13 +15,21 @@ local pc_box
 local room
 
 -- DONT USE LEAVE BEFORE FIXING THIS
-function state:enter()
-
+-- see what should be on init and what should be on enter
+function state:init()
     room = Rooms.create()
     pc_box = PcBox.create()
 
     LoreManager.init()
     FX.intro()
+
+    -- autosave every 2 min
+    -- in case of a crash or something
+    MAIN_TIMER.every(120, SaveManager.save)
+end
+
+function state:enter(prev, user)
+    SaveManager.login(user)
 end
 
 function state:leave()

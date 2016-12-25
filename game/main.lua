@@ -44,6 +44,7 @@ FX = require "classes.fx"
 StepManager = require "classes.stepmanager"
 LoreManager = require "classes.lore-manager"
 PopManager  = require "classes.popmanager"
+SaveManager = require "save_manager"
 
 --GAMESTATES
 GS = {
@@ -62,6 +63,8 @@ function love.load()
     Gamestate.registerEvents() --Overwrites love callbacks to call Gamestate as well
     Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
+    SaveManager.load()
+
 end
 
 -----------------
@@ -74,4 +77,8 @@ function love.mousepressed(x, y, button, istouch)
         But.checkCollision(x,y)
     end
 
+end
+
+function love.quit()
+    SaveManager.save()
 end

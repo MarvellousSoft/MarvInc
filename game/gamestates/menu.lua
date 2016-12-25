@@ -8,8 +8,7 @@ local function try_login()
         SFX.buzz:stop()
         SFX.buzz:play()
     else
-        USER_NAME = state.box.lines[1]
-        Gamestate.switch(GS.GAME)
+        Gamestate.switch(GS.GAME, state.box.lines[1])
     end
 end
 
