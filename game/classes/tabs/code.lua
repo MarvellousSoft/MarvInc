@@ -13,7 +13,19 @@ CodeTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
-        self.term = TextBox(self.pos.x, self.pos.y, self.w, 30, 20, 30, true)
+        -- chars accepted in terminal
+        local acc = {}
+        for i = 1, 26 do
+            local c_lower, c_upper = string.char(97 + i - 1), string.char(65 + i - 1)
+            acc[c_lower] = c_lower
+            acc[c_upper] = c_lower
+        end
+        local other = "+-: []0123456789"
+        for c in other:gmatch(".") do
+            acc[c] = c
+        end
+
+        self.term = TextBox(self.pos.x, self.pos.y, self.w, 30, 20, 30, true, FONTS.fira(18), acc)
 
         -- Buttons
         local bsz = 50
