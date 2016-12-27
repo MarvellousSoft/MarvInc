@@ -91,15 +91,15 @@ function Walk.create(t)
 end
 
 function Walk:execute()
-    if not self.x then StepManager:walk(nil, self.dir) return end
+    if not self.x then StepManager.walk(nil, self.dir) return end
     local y = self.x:evaluate()
     -- invalid! is an invalid label (because of the '!')
     if type(y) ~= 'number' then return y end
     if y < 0 then return "Trying to walk " .. y .. " steps" end
     if y == 0 then
-        if self.dir then StepManager:turn(self.dir) end
+        if self.dir then StepManager.turn(self.dir) end
     else
-        StepManager:walk(y, self.dir)
+        StepManager.walk(y, self.dir)
     end
 end
 
@@ -111,7 +111,7 @@ Turn = Class {
         if self.dir == "counter" or self.dir == "clock" then
             StepManager[self.dir](StepManager)
         else
-            StepManager:turn(self.dir)
+            StepManager.turn(self.dir)
         end
     end
 }
@@ -281,7 +281,7 @@ function Read:create(t)
 end
 
 function Read:execute()
-    if self.dir then StepManager:turn(self.dir) end
+    if self.dir then StepManager.turn(self.dir) end
     local console = ROOM:next_block()
     if not console or console.tp ~= "console" then return "Trying to read from non-console" end
     local nx = console:input()
@@ -303,7 +303,7 @@ function Write:create(t)
 end
 
 function Write:execute()
-    if self.dir then StepManager:turn(self.dir) end
+    if self.dir then StepManager.turn(self.dir) end
     local console = ROOM:next_block()
     if not console or console.tp ~= "console" then return "Trying to write to non-console" end
     local val = self.num:evaluate()
@@ -335,9 +335,9 @@ function Pickup:execute()
     if ROOM.bot.inv then return "Not enough free hands" end
     if not ROOM:next_block(DIR_CONV[self.dir]).pickable then return "Unpickable object" end
     if self.dir then
-        StepManager:turn(self.dir)
+        StepManager.turn(self.dir)
     end
-    StepManager:pickup()
+    StepManager.pickup()
 end
 
 Drop = Class{
@@ -356,9 +356,9 @@ function Drop:execute()
     if not ROOM.bot.inv then return "There is nothing left to drop but my self esteem" end
     if ROOM:blocked(DIR_CONV[self.dir]) then return "Dropping obstructed by object" end
     if self.dir then
-        StepManager:turn(self.dir)
+        StepManager.turn(self.dir)
     end
-    StepManager:drop()
+    StepManager.drop()
 end
 
 function op.read(t)

@@ -1,211 +1,239 @@
 local Parser = require "classes.interpreter.parser"
 
-local StepManager = {
-    ic = 0,
-    running = false,
-    timer = Timer.new(),
-    hdl = nil,
-    parser = nil,
-    cmd = nil,
-    args = {},
-    r = {},
+-- StepManager
+--[[ Handles play/stop/etc. button presses and also commands from the code (walk,pickup,etc.)
+The execution of code is always on one of four states:
+stopped - code not running, code not even 'compiled' or initialized
+playing - code running automatically (a turn every x seconds)
+paused - code is executing, but turns do not happend automatically
+waiting - code has ended, waiting for some signal to reset or stop
 
-    -- Temp code
-    tmp = nil,
+It always starts in stopped, and changes according to the functions called (play, fast, superfast, step, stop, pause)
+play, fast, superfast - If code is stopped, compiles it and starts it. If it is paused, starts doing turns automatically. If it is waiting, stops it then restarts it. The state always change to playing after these calls.
+step - similar to above, but only one turn is executed, and the state is changed to paused.
+pause - If playing, stops turns from happening automatically, and changes state to paused. Otherwise does nothing.
+stop - Stops turns from happening automatically, clears memory, and changes the state to stopped.
+
+]]
+
+
+local sm = {
+    -- instruction counter
+    ic = 0,
+    timer = Timer.new(),
+
+    state =  "stopped",
+
+    -- command to be executed instead of next instructions
+    -- (used by instructions that take more than one turn (walk))
+    cmd = nil,
+
+    -- how long a turn takes
     delay = 1,
-    is_fast = false,
 
     -- 0 is not running
     -- 1 is normal speed
     -- 2 is fast
     -- 3 is very fast
-    -- Pausing does not change this variable
     how_fast = 0,
-
-    waiting = false,
-    paused = false,
+    speeds = {.5, .05, .001, [0] = 0}
 }
 
--- Plays a set of instructions until step can no longer parse.
-function StepManager:do_play()
-    if not ROOM:connected() then
-        SFX.buzz:play()
-        return
-    end
-    if self.tmp then
-        self.ic = 0
-        self.running = true
-        self.code = self.tmp
-        self.tmp = nil
-        self.timer.after(self.delay, self.call)
-        return
-    end
-    self.running = false
-    self.ic = 0
-    self.code = Parser.parseCode()
-    if type(self.code) ~= "table" then
-        self.code = nil
-        SFX.buzz:play()
-        return
-    end
-    self.code:start()
-    -- Gambs for some reason...
-    self.call = function()
-        self:step()
-        -- Check the objectives
-        ROOM.puzzle:manage_objectives()
-        -- Emit an end turn signal
-        Signal.emit("end_turn")
-        if not self.code then return end
-        self.timer.after(self.delay, self.call)
-    end
-    self.running = true
-    self.timer.after(self.delay, self.call)
-end
+-- BUTTONS/STATE COMMANDS
 
-local function go_speed(self, delay)
-    self.delay = delay
-    if self.running and not self.waiting then return end
-    if self.waiting then
-        self.mrk_play = delay
-        self:stop()
-        return
-    end
-    self.paused = false
-    self.waiting = false
-    StepManager:do_play()
-end
-
-function StepManager:check_start()
-    if self.mrk_play then
-        go_speed(self, self.mrk_play)
-        self.mrk_play = nil
-    end
-end
-
-function StepManager:play()
-    self.how_fast = 1
-    go_speed(self, 0.5)
-end
-
-function StepManager:fast()
-    self.how_fast = 2
-    go_speed(self, .05)
-end
-
-function StepManager:superfast()
-    self.how_fast = 3
-    go_speed(self, .001)
-end
-
-function StepManager:increase()
-    if self.how_fast == 2 then self:superfast()
-    elseif self.how_fast == 1 then self:fast()
-    elseif self.how_fast == 0 then self:play() end
-end
-
-function StepManager:decrease()
-    if self.how_fast == 3 then self:fast()
-    elseif self.how_fast == 2 then self:play()
-    elseif self.how_fast == 1 then self:pause() end
-end
-
-function StepManager:pause()
-    if not self.running then return end
-    self.tmp = self.code
-    self.code = nil
-    self.timer.clear()
-    self.running = false
-    self.paused = true
-end
-
-function StepManager:step()
-    if self.waiting then return end
-    self.ic = self.ic + 1
+local function stepCallback()
+    sm.ic = sm.ic + 1
     SFX.click:play()
 
-    if not self.code then
+    if not sm.code then
         print "should not be here"
         return
     end
 
-    if self.cmd then
-        self:cmd()
-    elseif not self.code:step() and not self.cmd then
-        self.waiting = true
-        if self.code then
-            -- in this case the code finished normally
-            Util.findId("code_tab"):showLine(#self.code.ops + 1)
+    if sm.cmd then
+        sm.cmd()
+    else
+        local ret = sm.code:step()
+        if ret == 'halt' then
+            if not sm.cmd then
+                -- in this case the code finished normally
+                sm.state = 'waiting'
+                Util.findId("code_tab"):showLine(#sm.code.ops + 1)
+            end
+        elseif ret == 'error' then
+            -- state will be changed automatically by the function call
+            return
         end
     end
+
+    ROOM.puzzle:manage_objectives()
+    if sm.state ~= 'playing' then return end
+    sm.timer.after(sm.delay, stepCallback)
 end
 
--- Assumes x > 0 or x == nil
-function StepManager:walk(x, dir)
-    self.cmd = function() self:walk(x and x - 1, dir) end
-    ROOM:walk(dir)
-    if x == 1 then self.cmd = nil end
-    if not x and ROOM:blocked() then
-        self.cmd = nil
+-- Plays a set of instructions until step can no longer parse.
+local function doPlay(how_fast)
+    if not ROOM:connected() then
+        SFX.buzz:play()
+        return
+    end
+
+
+    if sm.state == 'playing' then sm.timer.clear() end
+
+    if sm.state == 'waiting' then sm.stop(nil, nil, nil, how_fast) return end
+    if sm.state == 'stopped' then
+        sm.ic = 0
+        sm.code = Parser.parseCode()
+        if type(sm.code) ~= "table" then
+            sm.code = nil
+            SFX.buzz:play()
+            return
+        end
+        sm.code:start()
+
+    end
+
+    sm.state = how_fast == 0 and 'paused' or 'playing'
+    sm.how_fast = how_fast
+    sm.delay = sm.speeds[how_fast]
+    sm.timer.after(sm.delay, stepCallback)
+end
+
+function sm.play()
+    doPlay(1)
+end
+
+function sm.fast()
+    doPlay(2)
+end
+
+function sm.superfast()
+    doPlay(3)
+end
+
+function sm.increase()
+    if sm.how_fast == 2 then sm.superfast()
+    elseif sm.how_fast == 1 then sm.fast()
+    elseif sm.how_fast == 0 then sm.play() end
+end
+
+function sm.decrease()
+    if sm.how_fast == 3 then sm.fast()
+    elseif sm.how_fast == 2 then sm.play()
+    elseif sm.how_fast == 1 then sm.pause() end
+end
+
+function sm.step()
+    doPlay(0)
+end
+
+function sm.pause()
+    if not ROOM:connected() then
+        SFX.buzz:play()
+        return
+    end
+
+    if sm.state == 'playing' then
+        sm.timer.clear()
+        sm.how_fast = 0
+        sm.state = 'paused'
     end
 end
 
-function StepManager:turn(dir)
+function sm.stop(fail_title, fail_text, fail_button, replay_speed)
+    if not ROOM:connected() then
+        SFX.buzz:play()
+        return
+    end
+
+    sm.clear()
+    ROOM:kill()
+
+    -- display popup
+    local callback = function()
+        -- Just to be sure we aren't forgetting to clean anything
+        -- And this should be a pretty fast procedure
+        ROOM:connect(ROOM.puzzle_id, false)
+        if replay_speed then doPlay(replay_speed) end
+    end
+
+    if show_popup == false then
+        callback()
+        return
+    end
+
+    local n = Util.findId("info_tab").dead
+    local title = fail_title or "Bot #"..n.." has been destroyed!"
+    local text = fail_text or
+        ("Communications with test subject #"..n.." \""..ROOM.bot.name.."\" have been "..
+        "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
+        "been dispatched to HR and this incident shall be added to your personal file.")
+    local button = fail_button or "I will be more careful next time"
+    SFX.fail:stop()
+    SFX.fail:play()
+    PopManager.new(title, text,
+         Color.red(), {
+            func = callback,
+            text = button,
+            clr = Color.blue()
+        })
+
+end
+
+function sm.clear()
+    if sm.state == 'stopped' then return end
+    if sm.state == 'playing' then sm.timer.clear() end
+    if sm.code then
+        sm.code:stop()
+        sm.code = nil
+    end
+    sm.state = 'stopped'
+    sm.how_fast = 0
+    Util.findId("code_tab").memory:reset()
+end
+
+-- CODE COMMANDS
+
+-- Assumes x > 0 or x == nil
+function sm.walk(x, dir)
+    sm.cmd = function() sm.walk(x and x - 1, dir) end
+    ROOM:walk(dir)
+    if x == 1 then sm.cmd = nil end
+    if not x and ROOM:blocked() then
+        sm.cmd = nil
+    end
+end
+
+function sm.turn(dir)
     ROOM:turn(dir)
     return false
 end
 
-function StepManager:clock()
+function sm.clock()
     ROOM:clock()
     return false
 end
 
-function StepManager:counter()
+function sm.counter()
     ROOM:counter()
     return false
 end
 
-function StepManager:stopNoKill()
-    self.timer.clear()
-    self.cmd = nil
-    if self.tmp then self.tmp, self.code = self.code, self.tmp end
-    if self.code then self.code:stop() end
-    self.code = nil
-    self.running = false
-    self.waiting = false
-    self.paused = false
-end
-
-function StepManager:stop()
-    if not self.running and not self.paused then return end
-    self.how_fast = 0
-    ROOM:kill()
-    self:clear()
-end
-
-function StepManager:pickup()
+function sm.pickup()
     ROOM:pickup()
     return false
 end
 
-function StepManager:drop()
+function sm.drop()
     ROOM:drop()
     return false
 end
 
-function StepManager:update(dt)
-    self.timer.update(dt)
+-- EXTRA
+
+function sm.update(dt)
+    sm.timer.update(dt)
 end
 
-function StepManager:clear()
-    Util.findId("code_tab").memory:reset()
-end
-
-function StepManager:autofail(title, text, button)
-    ROOM.fail_title = title
-    ROOM.fail_text = text
-    ROOM.fail_button = button
-    self:stop()
-end
-
-return StepManager
+return sm

@@ -59,7 +59,6 @@ Bot = Class{
 
 function Bot:kill(grid)
     Object.kill(self, grid)
-    ROOM:processDeath()
     Signal.emit("death")
     --SFX.fail:stop()
     --SFX.fail:play()

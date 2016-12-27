@@ -30,17 +30,19 @@ CodeTab = Class{
         -- Buttons
         local bsz = 50
         local by = self.pos.y + self.h - bsz
-        local bx = self.pos.x + self.w / 5
-        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager:stop() end)
+        local bx = self.pos.x + self.w / 10
+        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop() end)
         bx = bx + bsz + 20
-        self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() StepManager:pause() end)
+        self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() StepManager.pause() end)
         bx = bx + bsz + 20
-        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager:play() end)
+        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager.play() end)
         bx = bx + bsz + 20
-        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager:fast() end)
+        self.step_b = ImgButton(bx, by, bsz, BUTS_IMG.step, function() StepManager.step() end)
         bx = bx + bsz + 20
-        self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager:superfast() end)
-        self.buttons = {self.play_b, self.stop_b, self.pause_b, self.fast_b, self.superfast_b}
+        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager.fast() end)
+        bx = bx + bsz + 20
+        self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager.superfast() end)
+        self.buttons = {self.stop_b, self.pause_b, self.play_b, self.step_b, self.fast_b, self.superfast_b}
 
         -- Inventory slot
         self.inv_slot = nil
@@ -95,23 +97,22 @@ function CodeTab:draw()
 end
 
 function CodeTab:keyPressed(key)
-    if key == 'c' then self.term.show_line_num = not self.term.show_line_num end
     if self.lock then
         if key == 'space' then
             if StepManager.running then
-                StepManager:pause()
-            else StepManager:play() end
+                StepManager.pause()
+            else StepManager.play() end
         elseif key == 'escape' then
-            StepManager:stop()
+            StepManager.stop()
         end
         return
     end
     if key == 'return' then
         if love.keyboard.isDown("lctrl", "rctrl") then
             if StepManager.running then
-                StepManager:pause()
+                StepManager.pause()
             else
-                StepManager:play()
+                StepManager.play()
             end
             return
         end
@@ -123,10 +124,10 @@ end
 
 function CodeTab:textInput(t)
     if t == '>' then
-        StepManager:increase()
+        StepManager.increase()
         return
     elseif t == '<' then
-        StepManager:decrease()
+        StepManager.decrease()
         return
     end
 

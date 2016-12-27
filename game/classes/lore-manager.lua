@@ -51,7 +51,7 @@ end
 
 -- Marks that a puzzle was completed
 function lore.mark_completed(puzzle)
-    StepManager:pause()
+    StepManager.pause()
     if lore.puzzle_done[puzzle.id] then
         puzzle.already_completed()
     else

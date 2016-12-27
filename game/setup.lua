@@ -40,6 +40,7 @@ BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
 BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
 BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
 BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
+BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
 
 -- Move orientations
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)

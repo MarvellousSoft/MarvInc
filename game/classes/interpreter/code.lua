@@ -24,17 +24,15 @@ function Code:step()
         if lab then
             self.cur = self.labs[lab]
             if not self.cur then
-                ROOM.fail_title = "Code Error!"
-                ROOM.fail_text = "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. lab .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced."
-                ROOM.fail_button = "I'm sorry."
-                StepManager:stop()
-                return false
+                StepManager.stop("Code Error!",
+                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. lab .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.", "I'm sorry.")
+                return 'error'
             end
         else
             self.cur = self.cur + 1
         end
     end
-    return self.cur <= #self.ops
+    if self.cur > #self.ops then return 'halt' end
 end
 
 function Code:stop()

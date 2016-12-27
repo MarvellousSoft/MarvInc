@@ -76,10 +76,6 @@ Room = Class{
         -- Current puzzle id
         self.puzzle_id = nil
 
-        Signal.register("end_turn", function()
-            self:apply()
-        end)
-
         -- Death
 
         ROOM = self
@@ -92,34 +88,6 @@ Room = Class{
         self.version = "1.0"
     end
 }
-
-
-function Room:processDeath()
-    StepManager:stopNoKill()
-    local n = Util.findId("info_tab").dead
-    local death_func = function()
-        -- Just to be sure we aren't forgetting to clean anything
-        -- And this should be a pretty fast procedure
-        self:connect(self.puzzle_id, false)
-        StepManager:check_start()
-    end
-    if StepManager.mrk_play then death_func() return end
-    local title = self.fail_title or "Bot #"..n.." has been destroyed!"
-    local text = self.fail_text or
-        ("Communications with test subject #"..n.." \""..self.bot.name.."\" have been "..
-        "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
-        "been dispatched to HR and this incident shall be added to your personal file.")
-    local button = self.fail_button or "I will be more careful next time"
-    self.fail_title, self.fail_text, self.fail_button = nil, nil, nil
-    SFX.fail:stop()
-    SFX.fail:play()
-    PopManager.new(title, text,
-         Color.red(), {
-            func = death_func,
-            text = button,
-            clr = Color.blue()
-        })
-end
 
 function Room:from(puzzle)
     self:clear()
@@ -152,40 +120,11 @@ function Room:extract(i, j)
     return _e
 end
 
-function Room:apply()
-    while #Room.queue > 0 do
-        local o = table.remove(Room.queue, 1)
-        if o.tp == "obst" then
-            Obstacle(self.grid_obj, o.x, o.y, o.key, o.bg)
-        elseif o.tp == "bot" then
-            Bot(self.grid_obj, o.x, o.y)
-        elseif o.tp == "dead" then
-            Dead(self.grid_obj, o.x, o.y, o.key, o.bg)
-        else
-            print("Type "..o.tp.." not found")
-        end
-    end
-end
-
--- This is a room queue. Add a prototype of an object to the queue. At the next possible step, or
--- when Room:apply is called, Room will add this to its object grid.
-Room.queue = {}
-function Room.enqueue(tp, bg, img_trail, x, y)
-    table.insert(Room.queue, {
-        tp = tp,
-        bg = bg,
-        key = img_trail,
-        x = x,
-        y = y
-    })
-end
-
 function Room:clear()
     self.grid_obj = nil
     self.grid_floor = nil
     self.bot = nil
-    Room.queue = {}
-    StepManager:stopNoKill()
+    StepManager.clear()
 end
 
 function Room:connect(id, changeToInfo)

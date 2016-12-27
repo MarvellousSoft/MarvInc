@@ -43,7 +43,7 @@ function state:update(dt)
 
     pc_box:update(dt)
     room:update(dt)
-    StepManager:update(dt)
+    StepManager.update(dt)
     LoreManager.update(dt)
 
     Util.updateTimers(dt)

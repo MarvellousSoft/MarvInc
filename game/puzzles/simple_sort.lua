@@ -20,13 +20,13 @@ function objective_checker(room)
     for i = 1, 6 do
         cbs[i] = g[4 + 2 * i][5]
         if #cbs[i].inp > 3 then
-            _G.StepManager:autofail("Wrong output", "More than 3 numbers in blue console " .. i, "Retry")
+            _G.StepManager.stop("Wrong output", "More than 3 numbers in blue console " .. i, "Retry")
             return false
         end
         if #cbs[i].inp < 3 then all = false end
         for j = 1, 3 do
             if cbs[i][j] and cbs[i][j] ~= vs[i][j] then
-                _G.StepManager:autofail("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
+                _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
                 return false
             end
         end
