@@ -1,4 +1,4 @@
-Marvellous Inc. version 0.1
+Marvellous Inc.
 
 A GAME BY MARVELLOUS SOFT . 2016
 
@@ -10,24 +10,7 @@ This game was made and submitted to the Ludum Dare 37 (http://ludumdare.com/), w
 
 ## Running
 
-### Windows
-
-* [32-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win32/marvellous-win32.zip).
-* [64-bit Windows](https://github.com/rilifon/Project-R1/raw/master/build/win64/marvellous-win64.zip).
-
-You can also run the game using LÖVE.
-
-### Linux / Mac OS
-
-It is recommended that users run the game using LÖVE. It is avaiable on most operating systems, and all download links can be found on [their page](https://love2d.org/).
-To run the game just run 'love game' on the main folder of the repository, or double click the marvellous.love file in the build directory.
-
-A Debian package may be available in the near future.
-
-### Web Browser
-
-Marvellous can also be run on the browser! Checkout [here](https://linux.ime.usp.br/~yancouto/stuff/marvellous/) for the latest version.
-Downloading the desktop version, if possible, is recommended, since some features may not work in some browsers. Created using [love.js](https://github.com/TannerRogalsky/love.js).
+Marvellous Inc. runs on Windows, Linux, MacOS, and even on web, checkout our [releases page](https://github.com/MarvellousSoft/MarvInc/releases) for all releases and instructions on how to run them.
 
 ----------------------------------------------------
 
@@ -75,10 +58,10 @@ For all the support they provided us in this 72 hours of sleep deprivation
 ## Platform
 
 Made using [LÖVE](https://love2d.org/) with the [STEAMING](https://github.com/uspgamedev/STEAMING) game template integrated with library [HUMP](http://hump.readthedocs.org/).
-Works in any SO that can run it. Web version created using [love.js](https://github.com/TannerRogalsky/love.js).
+Works in any OS that can run it. Web version created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 Github
-    ~ https://github.com/rilifon/Project-R1
+    ~ https://github.com/MarvellousSoft/MarvInc
 
 
 Found any bugs? Loved the game? Contact us at
