@@ -30,7 +30,7 @@ Keep up the good work, and carry on.
         Info.addCommand("walk <direction> <steps>")
     end)
 
-    LoreManager.timer.after(5, function()
+    LoreManager.timer:after(5, function()
     Mail.new("Terminal Tips",
 [[
 The <terminal> is a powerful tool.

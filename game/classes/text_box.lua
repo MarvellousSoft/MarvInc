@@ -92,21 +92,21 @@ end
 function TextBox:activate()
     self.hadKeyRepeat = love.keyboard.hasKeyRepeat()
     love.keyboard.setKeyRepeat(true)
-    self.cursor_timer.after(1, function()
-        self.cursor_timer.tween(.1, self, {cursor_mult = 0}, 'out-linear')
-        self.cursor_timer.every(1.3, function() self.cursor_timer.tween(.1, self, {cursor_mult = 0}, 'out-linear') end)
+    self.cursor_timer:after(1, function()
+        self.cursor_timer:tween(.1, self, {cursor_mult = 0}, 'out-linear')
+        self.cursor_timer:every(1.3, function() self.cursor_timer:tween(.1, self, {cursor_mult = 0}, 'out-linear') end)
     end)
-    self.cursor_timer.every(1.3, function() self.cursor_timer.tween(.1, self, {cursor_mult = 1}, 'in-linear') end)
+    self.cursor_timer:every(1.3, function() self.cursor_timer:tween(.1, self, {cursor_mult = 1}, 'in-linear') end)
 end
 
 -- call this after using the box
 function TextBox:deactivate()
     love.keyboard.setKeyRepeat(self.hadKeyRepeat)
-    self.cursor_timer.clear()
+    self.cursor_timer:clear()
 end
 
 function TextBox:update(dt)
-    self.cursor_timer.update(dt)
+    self.cursor_timer:update(dt)
 end
 
 function TextBox:draw(bad_lines)

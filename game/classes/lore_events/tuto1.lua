@@ -28,7 +28,7 @@ Most importantly, have fun and carry on :)
 end
 
 function after_intro_email()
-    LoreManager.timer.after(1, function()
+    LoreManager.timer:after(1, function()
         LoreManager.email.first = Mail.new("First Puzzle",
 [[
 There are many commands to control the test subjects. For now, you just need to know one: walk.
@@ -54,7 +54,7 @@ Best of Luck, and carry on.
         end)
     end)
 
-    LoreManager.timer.after(30, function()
+    LoreManager.timer:after(30, function()
         if LoreManager.puzzle_done.first then return end
         Mail.new("Further instructions",
 [[
@@ -69,7 +69,7 @@ Good Luck, and carry on.
     "Automated Introduction System", true)
     end)
 
-    LoreManager.timer.after(60, function()
+    LoreManager.timer:after(60, function()
         if LoreManager.puzzle_done.first then return end
         Mail.new("Even further clarifications",
 [[
@@ -88,7 +88,7 @@ Carry on.
         "Automated Introduction System", true)
     end)
 
-    LoreManager.timer.after(120, function()
+    LoreManager.timer:after(120, function()
         if LoreManager.puzzle_done.first then return end
         Mail.new("Baby Steps",
 [[

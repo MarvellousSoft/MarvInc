@@ -48,7 +48,7 @@ Room = Class{
         self.mrkr_offx = self.w - self.grid_cw - self.mrkr_fnt:getWidth("OFFLINE")
         self.mrkr_y = 0
         self.mrkr_drw = true
-        self.mrkr_timer = MAIN_TIMER.every(1, function()
+        self.mrkr_timer = MAIN_TIMER:every(1, function()
             self.mrkr_drw = not self.mrkr_drw
         end)
 
@@ -133,12 +133,12 @@ function Room:connect(id, changeToInfo)
 
     self.puzzle_id = id
     self.static_on = true
-    self.static_dhdl = MAIN_TIMER.after(0.0675, function()
+    self.static_dhdl = MAIN_TIMER:after(0.0675, function()
         SFX.loud_static:stop()
         self.static_on = false
-        MAIN_TIMER.cancel(self.static_rhdl)
+        MAIN_TIMER:cancel(self.static_rhdl)
     end)
-    self.static_rhdl = MAIN_TIMER.every(0.05, function()
+    self.static_rhdl = MAIN_TIMER:every(0.05, function()
         self.static_r = self.static_r + math.pi/2
     end)
 
@@ -152,12 +152,12 @@ function Room:disconnect(wait)
         SFX.loud_static:play()
 
         self.static_on = true
-        self.static_dhdl = MAIN_TIMER.after(0.0675, function()
+        self.static_dhdl = MAIN_TIMER:after(0.0675, function()
             SFX.loud_static:stop()
             self.static_on = false
-            MAIN_TIMER.cancel(self.static_rhdl)
+            MAIN_TIMER:cancel(self.static_rhdl)
         end)
-        self.static_rhdl = MAIN_TIMER.every(0.05, function()
+        self.static_rhdl = MAIN_TIMER:every(0.05, function()
             self.static_r = self.static_r + math.pi/2
         end)
     end

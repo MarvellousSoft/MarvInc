@@ -15,7 +15,7 @@ Sprite = Class{
         self.h = self.img:getHeight()
         self.delay = delay
         self.i = 0
-        self.hdl = MAIN_TIMER.every(self.delay, function()
+        self.hdl = MAIN_TIMER:every(self.delay, function()
             self.i = (self.i + 1) % self.n
             self.quad:setViewport(self.i*self.w, 0, self.w, self.h)
         end)
@@ -25,7 +25,7 @@ Sprite = Class{
 }
 
 function Sprite:destroy()
-    MAIN_TIMER.cancel(self.hdl)
+    MAIN_TIMER:cancel(self.hdl)
 end
 
 function Sprite:draw()

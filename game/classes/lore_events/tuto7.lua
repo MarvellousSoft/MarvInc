@@ -42,7 +42,7 @@ Carry on.
     end)
 
 
-    LoreManager.timer.after(5, function()
+    LoreManager.timer:after(5, function()
     Mail.new("Conditional Jumps",
 [[
 Here are is a list of all conditional jumps and their meaning. You can also see them at the info tab when there isn't any simulation running.
@@ -65,7 +65,7 @@ Stay fresh, and carry on.]],
     "Automated Introduction System", true)
     end)
 
-    LoreManager.timer.after(11, function()
+    LoreManager.timer:after(11, function()
     Mail.new("Some read command examples",
 [[
 In case you need some further guidance, here are some examples using the read command and conditional jumping.

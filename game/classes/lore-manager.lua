@@ -44,7 +44,7 @@ function lore.check_all()
         if all_done then
             events[evt] = nil
             old_events[evt] = true
-            timer.after(evt.wait or 0, evt.run)
+            timer:after(evt.wait or 0, evt.run)
         end
     end
 end
@@ -92,7 +92,7 @@ function lore.default_completed()
 end
 
 function lore.update(dt)
-    timer.update(dt)
+    timer:update(dt)
 end
 
 return lore

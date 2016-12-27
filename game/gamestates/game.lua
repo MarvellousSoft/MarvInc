@@ -25,7 +25,7 @@ function state:init()
 
     -- autosave every 2 min
     -- in case of a crash or something
-    MAIN_TIMER.every(120, SaveManager.save)
+    MAIN_TIMER:every(120, SaveManager.save)
 end
 
 function state:enter(prev, user)

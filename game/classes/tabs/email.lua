@@ -50,7 +50,7 @@ EmailTab = Class{
         end
 
         --Remove mail from the list
-        mail.handles["fadeout"] = MAIN_TIMER.tween(.5, mail, {alpha = 0, juicy_bump = -5}, 'out-cubic',
+        mail.handles["fadeout"] = MAIN_TIMER:tween(.5, mail, {alpha = 0, juicy_bump = -5}, 'out-cubic',
             function()
                 -- Clear timer handles
                 Util.clearTimerTable(mail.handles, MAIN_TIMER)
@@ -285,7 +285,7 @@ function email_funcs.new(title, text, author, can_be_deleted, puzzle_id, open_fu
     e = EmailObject(title, text, author, can_be_deleted, puzzle_id, open_func, reply_func, number)
 
     -- Add fade-in effect to email
-    e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
+    e.handles["fadein"] = MAIN_TIMER:tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
 
     table.insert(mail_list, e)
 

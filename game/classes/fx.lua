@@ -11,10 +11,10 @@ function fx.full_static()
     fx.ang = 0
     fx.h = H
     fx.w = W
-    MAIN_TIMER.after(1.2, function() MAIN_TIMER.tween(.2, fx, {h = 10}) end)
-    MAIN_TIMER.after(1.4, function() MAIN_TIMER.tween(.38, fx, {w = 0}, "out-cubic") end)
-    MAIN_TIMER.after(1.8, function() SFX.loud_static:stop() end)
-    MAIN_TIMER.after(2.9, function()
+    MAIN_TIMER:after(1.2, function() MAIN_TIMER:tween(.2, fx, {h = 10}) end)
+    MAIN_TIMER:after(1.4, function() MAIN_TIMER:tween(.38, fx, {w = 0}, "out-cubic") end)
+    MAIN_TIMER:after(1.8, function() SFX.loud_static:stop() end)
+    MAIN_TIMER:after(2.9, function()
         SFX.loud_static:stop()
         full_s = false
         Gamestate.push(GS.CREDITS)
@@ -26,10 +26,10 @@ function fx.intro()
     fx.w = 0
     fx.h = 10
     fx.alp = 255
-    MAIN_TIMER.tween(.4, fx, {w = W}, "in-cubic")
-    MAIN_TIMER.after(.4, function() MAIN_TIMER.tween(.3, fx, {h = H}) end)
-    MAIN_TIMER.after(1.5, function() intro = false EVENTS_LOCK = false end)
-    MAIN_TIMER.tween(1.5, fx, {alp = 0}, "out-quad")
+    MAIN_TIMER:tween(.4, fx, {w = W}, "in-cubic")
+    MAIN_TIMER:after(.4, function() MAIN_TIMER:tween(.3, fx, {h = H}) end)
+    MAIN_TIMER:after(1.5, function() intro = false EVENTS_LOCK = false end)
+    MAIN_TIMER:tween(1.5, fx, {alp = 0}, "out-quad")
 end
 
 local function stencil()

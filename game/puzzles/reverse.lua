@@ -144,7 +144,7 @@ function first_completed()
         {
             func = function()
                 _G.ROOM:disconnect()
-                _G.LoreManager.timer.after(3, function()
+                _G.LoreManager.timer:after(3, function()
                     _G.Mail.new("Bad attitude",
 [[
 We here at Marvellous Inc. do not encourage the type of behavior you have shown. Please refrain from using profane vocabulary in the workspace, as it is unprofessional.

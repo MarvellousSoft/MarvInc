@@ -34,7 +34,7 @@ Carry on.
         Info.addCommand("turn <direction>")
     end)
 
-    LoreManager.timer.after(4, function()
+    LoreManager.timer:after(4, function()
     Mail.new("Useful Shortcuts",
 [[
 Here are some useful shortcuts to enhance your working experience here at Marvellous Inc.

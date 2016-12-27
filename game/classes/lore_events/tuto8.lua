@@ -34,7 +34,7 @@ Carry on.
         Info.addCommand("sub <address> <value>")
     end)
 
-    LoreManager.timer.after(5, function()
+    LoreManager.timer:after(5, function()
     Mail.new("New ways to handle values",
 [=[
 Since you've reached this far, you have proven yourself almost qualified to work on our most professional jobs, here at Marvellous Inc. Here are some advanced ways to manipulate values and addresses.

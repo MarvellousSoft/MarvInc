@@ -68,7 +68,7 @@ local function stepCallback()
 
     ROOM.puzzle:manage_objectives()
     if sm.state ~= 'playing' then return end
-    sm.timer.after(sm.delay, stepCallback)
+    sm.timer:after(sm.delay, stepCallback)
 end
 
 -- Plays a set of instructions until step can no longer parse.
@@ -79,7 +79,7 @@ local function doPlay(how_fast)
     end
 
 
-    if sm.state == 'playing' then sm.timer.clear() end
+    if sm.state == 'playing' then sm.timer:clear() end
 
     if sm.state == 'waiting' then sm.stop(nil, nil, nil, how_fast) return end
     if sm.state == 'stopped' then
@@ -97,7 +97,7 @@ local function doPlay(how_fast)
     sm.state = how_fast == 0 and 'paused' or 'playing'
     sm.how_fast = how_fast
     sm.delay = sm.speeds[how_fast]
-    sm.timer.after(sm.delay, stepCallback)
+    sm.timer:after(sm.delay, stepCallback)
 end
 
 function sm.play()
@@ -135,7 +135,7 @@ function sm.pause()
     end
 
     if sm.state == 'playing' then
-        sm.timer.clear()
+        sm.timer:clear()
         sm.how_fast = 0
         sm.state = 'paused'
     end
@@ -183,7 +183,7 @@ end
 
 function sm.clear()
     if sm.state == 'stopped' then return end
-    if sm.state == 'playing' then sm.timer.clear() end
+    if sm.state == 'playing' then sm.timer:clear() end
     if sm.code then
         sm.code:stop()
         sm.code = nil
@@ -233,7 +233,7 @@ end
 -- EXTRA
 
 function sm.update(dt)
-    sm.timer.update(dt)
+    sm.timer:update(dt)
 end
 
 return sm

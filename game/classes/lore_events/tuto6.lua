@@ -34,7 +34,7 @@ Best of Luck. Carry on. :)
     end)
 
 
-    LoreManager.timer.after(8, function()
+    LoreManager.timer:after(8, function()
     Mail.new("More about consoles",
 [[
 As you were already told, consoles are the big colorful computers sitting around The Room. The robot can interact with them, writing output for them to receive, or reading input from them, as you will see in the future.
@@ -47,7 +47,7 @@ That's it for now. Carry on.
 ]],  "Automated Introduction System", true)
     end)
 
-    LoreManager.timer.after(12, function()
+    LoreManager.timer:after(12, function()
     Mail.new("Some more register examples",
 [[
 Here are some more examples to get you used to the register, write command and add command.
