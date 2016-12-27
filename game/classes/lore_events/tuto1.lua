@@ -24,7 +24,7 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
 
-    "Automated Introduction System", false, function() ROOM:connect("reverse") OpenedMail:close() end, false, after_intro_email)
+    "Automated Introduction System", false, 'reverse', after_intro_email)
 end
 
 function after_intro_email()
@@ -47,11 +47,7 @@ Use the two buttons to the right of the play button to move your bot faster.
 Reply this email to start the puzzle.
 
 Best of Luck, and carry on.
-]], "Automated Introduction System", false,
-        function()
-            ROOM:connect("first")
-            OpenedMail:close()
-        end, true,
+]], "Automated Introduction System", false, 'first',
         function()
             Info.addCommand("walk")
             Info.addCommand("walk <direction>")
@@ -70,7 +66,7 @@ Whenever you're lost, you can reread these emails. Unless you've deleted them.
 
 Good Luck, and carry on.
 ]],
-    "Automated Introduction System", true, nil)
+    "Automated Introduction System", true)
     end)
 
     LoreManager.timer.after(60, function()
@@ -89,7 +85,7 @@ Any remaining doubts can be emailed to REDACTED.
 
 Carry on.
 ]],
-        "Automated Introduction System", true, nil)
+        "Automated Introduction System", true)
     end)
 
     LoreManager.timer.after(120, function()
@@ -108,7 +104,7 @@ walk right
 Was it that hard? Take your time to understand these instructions. This will not happen again.
 
 Carry on.
-]], "Automated Introduction System", true, nil)
+]], "Automated Introduction System", true)
     end)
 end
 

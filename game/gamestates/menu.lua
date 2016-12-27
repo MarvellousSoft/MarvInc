@@ -60,7 +60,7 @@ function state:draw()
 end
 
 function state:keypressed(key)
-    if key == 'return' then
+    if key == 'return' or key == 'kpenter' then
         try_login()
         return
     end

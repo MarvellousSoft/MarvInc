@@ -26,11 +26,7 @@ Remember to use the brackets operator, my most beautiful creation. It may be use
 Code on, and carry on!
 
 -- Liv
-]], "Olivia Kavanagh (liv.k@sdd.marv.com)", false,
-    function()
-        ROOM:connect("reverse")
-        OpenedMail:close()
-    end, true, function() end)
+]], "Olivia Kavanagh (liv.k@sdd.marv.com)", false, 'reverse')
 end
 
 return liv

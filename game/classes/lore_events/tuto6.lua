@@ -26,11 +26,7 @@ Finally, the write command receives a value argument, and a second optional dire
 Make sure to understand all these concepts. You can do it.
 
 Best of Luck. Carry on. :)
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("register")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'register',
     function()
         Info.addCommand("add <adress> <value>")
         Info.addCommand("write <value>")

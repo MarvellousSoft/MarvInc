@@ -85,9 +85,9 @@ function EmailTab:draw()
         --Draw the email box
         if not e.was_read then
             color = Color.new(e.email_color)
-        elseif not e.is_puzzle then
+        elseif not e.puzzle_id then
             color = Color.new(e.email_read_color)
-        elseif e.is_completed then
+        elseif LoreManager.puzzle_done[e.puzzle_id] then
             color = Color.new(e.email_puzzle_complete_color)
         else
             color = Color.new(e.email_puzzle_uncompleted_color)
@@ -138,13 +138,12 @@ function EmailTab:draw()
         if not e.was_read then
             text = "new"
             Color.set(Color.new(240, 180, 120, e.alpha))
-        elseif e.is_puzzle then
-            if e.is_completed then
+        elseif e.puzzle_id then
+            Color.set(Color.new(150, 130, 70, e.alpha))
+            if LoreManager.puzzle_done[e.puzzle_id] then
                 text = "completed"
-                Color.set(Color.new(150, 130, 70, e.alpha))
             else
                 text = "not completed"
-                Color.set(Color.new(150, 130, 70, e.alpha))
             end
         end
         if text then
@@ -200,8 +199,11 @@ function EmailTab:mousePressed(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.close_func)
-                mail.close_func = nil
+                if mail.open_func then
+                    mail.open_func()
+                    mail.open_func = nil
+                end
+                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end
     else
@@ -229,7 +231,7 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author, _can_be_deleted, _reply_func, _close_func, _number)
+    init = function(self, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number)
         local time
 
         self.number = _number
@@ -251,13 +253,11 @@ EmailObject = Class{
 
         self.was_read = false -- If email was read
         self.can_be_deleted = _can_be_deleted or false -- If this email has a delete button
+        self.open_func = _open_func -- called when this email is opened for the first time (looses its 'unread')
+        self.puzzle_id = _puzzle_id -- the id of the puzzle this email opens, or nil if it does not open one
+        if _puzzle_id and not _reply_func then _reply_func = function() end end
         self.reply_func = _reply_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
         self.can_reply = true -- If email can be replyied
-
-        self.close_func = _close_func -- Function to be called when replying te email (if nil wil not have a reply button on email)
-
-        self.is_puzzle = false -- If this email is a puzzle invitation
-        self.is_completed = false -- If the puzzle was completed already once
 
         -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
         self.time = os.date("%x, %I:%M %p")
@@ -270,7 +270,7 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puzzle, close_func)
+function email_funcs.new(title, text, author, can_be_deleted, puzzle_id, open_func, reply_func)
 
     local e, mail_list, number, tab
 
@@ -282,9 +282,8 @@ function email_funcs.new(title, text, author, can_be_deleted, reply_func, is_puz
     tab.email_cur = tab.email_cur + 1
     number = tab.email_cur
 
-    e = EmailObject(title, text, author, can_be_deleted, reply_func, close_func, number)
+    e = EmailObject(title, text, author, can_be_deleted, puzzle_id, open_func, reply_func, number)
 
-    e.is_puzzle = is_puzzle
     -- Add fade-in effect to email
     e.handles["fadein"] = MAIN_TIMER.tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
 

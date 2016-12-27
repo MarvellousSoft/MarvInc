@@ -27,11 +27,7 @@ You will need this for future tasks, so don't forget about it. Use the next room
 As always, reply this email to start the puzzle.
 
 Carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("turn")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'turn',
     function()
         Info.addCommand("turn clock")
         Info.addCommand("turn counter")

@@ -28,11 +28,7 @@ Carry on, now and forever.
 
 Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
-]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false,
-    function()
-        ROOM:connect("maze2")
-        OpenedMail:close()
-    end, true, function() end)
+]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false, 'maze2')
 end
 
 return jen

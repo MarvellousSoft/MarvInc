@@ -28,11 +28,7 @@ don't forget to carry on ;))).
 
 jeNny Leubwoot
 chief astronaut at marvellous soft.s KICKASS dojo
-]], "Janine Leubwitz", false,
-    function()
-        ROOM:connect("maze1")
-        OpenedMail:close()
-    end, true, function() end)
+]], "Janine Leubwitz", false, 'maze1')
 end
 
 return jen

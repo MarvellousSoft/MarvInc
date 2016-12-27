@@ -28,11 +28,7 @@ Prove yourself worthy, employee #]] .. EMPLOYER_NUMBER .. [[.
 We are waiting you.
 
 Carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("square")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'square',
     function()
         Info.addCommand("mov <address> <value>")
         Info.addCommand("sub <address> <value>")

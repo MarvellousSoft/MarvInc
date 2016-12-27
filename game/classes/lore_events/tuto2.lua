@@ -24,11 +24,7 @@ Example:
 Reply this email to start the experiment.
 
 Keep up the good work, and carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("walkx")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'walkx',
     function()
         Info.addCommand("walk <steps>")
         Info.addCommand("walk <direction> <steps>")

@@ -29,11 +29,7 @@ Example where the bot will increase the value of the register 1 until its greate
 Lastly you can use the read command to read input from a console. You provide a first argument with the address of the register to store the input read, and a second optional direction, analogous to the write.
 
 Carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("array_sep")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'array_sep',
     function()
         Info.addCommand("jgt <value> <value> <label>")
         Info.addCommand("jge <value> <value> <label>")

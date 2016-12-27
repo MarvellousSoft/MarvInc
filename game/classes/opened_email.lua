@@ -12,7 +12,7 @@ end
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply, _close_func)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
         local box_width, box_height = 2*W/5, 3*H/5
 
@@ -50,8 +50,6 @@ OpenedEmail = Class{
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
 
-        self.close_func = _close_func -- Function to call when email is closed (or deleted)
-
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
         self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
@@ -59,6 +57,7 @@ OpenedEmail = Class{
         self.title_color = Color.new(150,180,80) -- Color for title
         self.content_color = Color.new(150,0,60) -- Color for rest of email content
 
+        self.referenced_email =  Util.findId("email_tab").email_list[self.number]
 
         self.tp = "opened_email"
     end
@@ -72,7 +71,7 @@ function OpenedEmail:draw()
 
 
     e = self
-    referenced_email = Util.findId("email_tab").email_list[e.number]
+    referenced_email = e.referenced_email
 
     -- Draws black effect
     Color.set(e.background_color)
@@ -152,7 +151,8 @@ function OpenedEmail:draw()
         else
             Color.set(e.reply_button_disabled_color)
         end
-        if referenced_email.is_puzzle and referenced_email.is_completed then
+        local complete = referenced_email.puzzle_id and LoreManager.puzzle_done[referenced_email.puzzle_id]
+        if complete then
             Color.set(e.retry_button_color)
         end
         love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
@@ -167,14 +167,14 @@ function OpenedEmail:draw()
         else
             Color.set(e.reply_button_disabled_text_color)
         end
-        if referenced_email.is_puzzle and referenced_email.is_completed then
+        if complete then
             text = "retry"
         else
             text = "reply"
         end
         -- Draw "COMPLETED" text
         love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
-        if referenced_email.is_puzzle and referenced_email.is_completed then
+        if complete then
             Color.set(Color.red())
             font = FONTS.fira(30)
             love.graphics.setFont(font)
@@ -220,10 +220,6 @@ function opened_email_funcs.close()
     local e
 
     e = Util.findId("opened_email")
-    if e.close_func then
-        e.close_func()
-        e.close_func = nil
-    end
     e.death = true
 
 end
@@ -247,16 +243,20 @@ function opened_email_funcs.mousePressed(x, y, but)
              mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
              opened_email_funcs.close()
          elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
-                 --Clicked on the reply button
-                 e.reply_func()
+             --Clicked on the reply button
+             e.reply_func()
+             if e.referenced_email.puzzle_id then
+                 ROOM:connect(e.referenced_email.puzzle_id)
+            end
+            opened_email_funcs.close()
          end
      end
 end
 
-function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply, close_func)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
     local e
 
-    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply, close_func)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e

@@ -30,11 +30,7 @@ The same example as above, if the robot was facing north:
 - drop
 
 Happy adventuring, and carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("pickup")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'pickup',
     function()
         Info.addCommand("pickup")
         Info.addCommand("pickup <direction>")

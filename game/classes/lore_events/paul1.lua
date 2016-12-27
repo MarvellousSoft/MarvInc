@@ -24,11 +24,7 @@ Paul Verkeufen
 Chief engineer at Marvellous Inc.s Material Engineering Department
 
 ~ Puff puff puff I go / a joint a stub do I roll / so high puff puff puff ~
-]], "Paul Verkeufen (hempman@med.marv.com)", false,
-    function()
-        ROOM:connect("lasers")
-        OpenedMail:close()
-    end, true, function() end)
+]], "Paul Verkeufen (hempman@med.marv.com)", false, 'lasers')
 end
 
 return paul

@@ -33,11 +33,7 @@ Example that makes the bot spin endlessly:
 Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the experiment ends as soon as the objective requirements are completed.
 
 As always, carry on.
-]], "Automated Introduction System", false,
-    function()
-        ROOM:connect("jump")
-        OpenedMail:close()
-    end, true,
+]], "Automated Introduction System", false, 'jump',
     function()
         Info.addCommand("jmp <label>")
         Info.addCommand("label:")
