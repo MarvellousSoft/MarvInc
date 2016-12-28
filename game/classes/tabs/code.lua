@@ -148,6 +148,10 @@ function CodeTab:mouseScroll(x, y)
     self.term:mouseScroll(x, y)
 end
 
+function CodeTab:mouseReleased(x, y, but)
+    self.term:mouseReleased(x, y, but)
+end
+
 -- Check invalid lines
 function CodeTab:checkErrors()
     local c = Parser.parseAll(self.term.lines)

@@ -76,6 +76,10 @@ function state:mousepressed(x, y, but)
     if but == 1 then self.login:checkCollides(x, y) end
 end
 
+function state:mousereleased(x, y, but)
+    self.box:mouseReleased(x, y, but)
+end
+
 function state:update(dt)
     Timer.update(dt)
     self.box:update(dt)

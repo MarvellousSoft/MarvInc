@@ -43,6 +43,10 @@ function Tab:mousePressed(x, y, but)
 
 end
 
+function Tab:mouseReleased(x, y, but)
+
+end
+
 function Tab:mouseScroll(x, y)
 
 end

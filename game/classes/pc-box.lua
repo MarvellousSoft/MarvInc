@@ -98,6 +98,10 @@ function PcBox:mousePressed(x, y, but)
     tabs[self.cur_tab]:mousePressed(x, y, but)
 end
 
+function PcBox:mouseReleased(x, y, but)
+    tabs[self.cur_tab]:mouseReleased(x, y, but)
+end
+
 function PcBox:mouseScroll(x, y)
     tabs[self.cur_tab]:mouseScroll(x, y)
 end

@@ -75,7 +75,6 @@ function state:keypressed(key)
     if key == 'f11' then
         code = [=[
 Your code here
-hahah
 ]=]
         Util.findId("code_tab").term:typeString(code)
     end
@@ -90,6 +89,7 @@ end
 
 function state:mousereleased(x, y, button, touch)
     PopManager.mousereleased(x, y, button, touch)
+    pc_box:mouseReleased(x, y, button)
 end
 
 function state:textinput(t)
