@@ -129,6 +129,7 @@ end
 
 function Room:connect(id, changeToInfo)
     if self.mode ~= "offline" then self:disconnect(false) end
+    SFX.loud_static:stop()
     SFX.loud_static:play()
 
     self.puzzle_id = id
@@ -149,6 +150,7 @@ end
 function Room:disconnect(wait)
     SaveManager.save_code(self.puzzle_id, table.concat(Util.findId("code_tab"):getLines(), "\n"))
     if wait == nil or wait then
+        SFX.loud_static:stop()
         SFX.loud_static:play()
 
         self.static_on = true

@@ -1,19 +1,6 @@
-local LoreManager = require "classes.lore-manager"
-local Mail = require "classes.tabs.email"
-local OpenedMail = require "classes.opened_email"
-local Info = require "classes.tabs.info"
-
-local jen = {}
-
--- Add Jen
-
--- tutorial is a fake puzzle
-jen.require_puzzles = {"tutorial"}
-jen.wait = 6
-
-function jen.run()
-    LoreManager.email.maze1 = Mail.new("Congraaaaattts!!1!",
-[[
+return {
+    title = "Congraaaaattts!!1!",
+    text = [[
 Hey theeeere!
 
 congrats on nailing the job man,  been a while since we had new slavs coming here kkkk jsut kiddin ;P
@@ -28,7 +15,7 @@ don't forget to carry on ;))).
 
 jeNny Leubwoot
 chief astronaut at marvellous soft.s KICKASS dojo
-]], "Janine Leubwitz", false, 'maze1')
-end
-
-return jen
+]],
+    author = "Janine Leubwitz",
+    puzzle_id = 'maze1'
+}

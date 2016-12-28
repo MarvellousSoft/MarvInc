@@ -1,9 +1,64 @@
 local LoreManager = require "classes.lore-manager"
+local BotManager = require 'classes.bot'
 binser = require "binser"
 
 local sm = {}
 local f = love.filesystem -- used a lot
 sm.user_data = {}
+
+-- used to improve compatibilty
+local current_save_version = "1"
+
+function sm.base_user_save(user)
+    if not f.exists('saves/' .. user) then
+        f.createDirectory('saves/'.. user)
+        f.write('saves/' .. user .. '/version', current_save_version)
+    end
+end
+
+function sm.save()
+    local user = sm.current_user
+    if not user then return end
+    sm.base_user_save(user)
+    local data = {}
+
+    -- DATA TO BE SAVED
+
+    -- LoreManager stuff
+
+    -- we will first trigger all events made by lore events
+    -- assumes all events are created with 'after'
+    -- checkout hump/timer.lua for better understanding :)
+    while next(LoreManager.timer.functions) do
+        local handle = next(LoreManager.timer.functions)
+        LoreManager.timer.functions[handle] = nil -- removes from timer
+        handle.after(handle.after) -- calls function manually
+        -- rinse and repeat until there are no more events (even if one creates another)
+    end
+
+    data.puzzle_done = LoreManager.puzzle_done
+    data.done_events = LoreManager.done_events
+
+    -- saving emails
+    data.emails = {}
+    for _, email in ipairs(Util.findId('email_tab').email_list) do
+        table.insert(data.emails, {id = email.id, read = email.was_read, can_reply = email.can_reply})
+    end
+
+
+    -- Other stuff
+    local info = Util.findId('info_tab')
+    data.known_commands = info.commands
+    data.bots_dead = info.dead
+    data.last_bot = BotManager.current_bot
+    --------------------
+
+    f.write('saves/' .. user .. '/save_file', binser.serialize(data))
+
+    if ROOM:connected() then
+        sm.save_code(ROOM.puzzle_id, table.concat(Util.findId("code_tab"):getLines(), "\n"))
+    end
+end
 
 function sm.login(user)
     if sm.current_user then sm.logout() end
@@ -11,8 +66,23 @@ function sm.login(user)
     local data = sm.user_data[user]
     if data then
         LoreManager.puzzle_done = data.puzzle_done
-        LoreManager.check_all()
+        LoreManager.set_done_events(data.done_events)
+
+        -- loading emails
+        for _, email in ipairs(data.emails) do
+            local e = Mail.new(email.id, true)
+            e.was_read = email.read
+            e.can_reply = email.can_reply
+        end
+
+        local info = Util.findId('info_tab')
+        info.commands = data.known_commands
+        info.dead = data.bots_dead
+        BotManager.current_bot = data.last_bot
+    else
+        -- without save
     end
+    LoreManager.check_all()
 
 end
 
@@ -33,25 +103,12 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         f.createDirectory("saves")
     end
     for _, user in pairs(f.getDirectoryItems("saves")) do
+        local ver = f.read('saves/' .. user .. '/version')
+        if ver ~= current_save_version then
+            -- deal with old save versions
+        end
         sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
     end
-end
-
-function sm.base_user_save(user)
-    if not f.exists('saves/' .. user) then
-        f.createDirectory('saves/'.. user)
-    end
-end
-
-function sm.save()
-    local user = sm.current_user
-    if not user then return end
-    sm.base_user_save(user)
-    local data = {}
-    data.puzzle_done = LoreManager.puzzle_done
-    -- ...
-
-    f.write('saves/' .. user .. '/save_file', binser.serialize(data))
 end
 
 function sm.load_code(puzzle)
@@ -63,6 +120,11 @@ function sm.save_code(puzzle, str)
     sm.base_user_save(sm.current_user)
     local filename = 'saves/' .. sm.current_user .. '/' .. puzzle .. '.code'
     f.write(filename, str)
+end
+
+-- returns whether saving would trigger unwanted events
+function sm.safeToSave()
+    return not next(LoreManager.timer.functions)
 end
 
 return sm

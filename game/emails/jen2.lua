@@ -1,18 +1,6 @@
-local LoreManager = require "classes.lore-manager"
-local Mail = require "classes.tabs.email"
-local OpenedMail = require "classes.opened_email"
-local Info = require "classes.tabs.info"
-
-local jen = {}
-
--- Add puzzle "maze2"
-
-jen.require_puzzles = {"maze1"}
-jen.wait = 15
-
-function jen.run()
-    LoreManager.email.maze2 = Mail.new("My sincere apologies",
-[[
+return {
+    title = "My sincere apologies",
+    text = [[
 Hello Employee #]]..EMPLOYER_NUMBER..[[
 
 First of all, I own you my sincere apologies for my previous email. I had a little wine at my break hours, and I got carried away for a bit.
@@ -28,7 +16,7 @@ Carry on, now and forever.
 
 Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
-]], "Janine Leubwitz (leubwitz@rtd.marv.com)", false, 'maze2')
-end
-
-return jen
+]],
+    author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
+    puzzle_id = 'maze2'
+}

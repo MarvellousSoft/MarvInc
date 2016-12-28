@@ -1,18 +1,6 @@
-local LoreManager = require "classes.lore-manager"
-local Mail = require "classes.tabs.email"
-local OpenedMail = require "classes.opened_email"
-local Info = require "classes.tabs.info"
-
-local liv = {}
-
--- Add puzzle "reverse"
-
-liv.require_puzzles = {"maze2", "lasers"}
-liv.wait = 10
-
-function liv.run()
-    LoreManager.email.reverse = Mail.new("Heard you're good",
-[[
+return {
+    title = "Heard you're good",
+    text = [[
 Heya
 
 This is Liv, from Software Development. You may not know me but you know well my creation. Yep, the language you use everyday to control the bots was my idea. Hope you're liking it, it was some hard work :P. Sure, other people here helped, but let's get to the point
@@ -26,7 +14,7 @@ Remember to use the brackets operator, my most beautiful creation. It may be use
 Code on, and carry on!
 
 -- Liv
-]], "Olivia Kavanagh (liv.k@sdd.marv.com)", false, 'reverse')
-end
-
-return liv
+]],
+    author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
+    puzzle_id = 'reverse'
+}

@@ -5,52 +5,66 @@ local Color = require "classes.color.color"
 
 local bot = {}
 
+-- copies bot attributes if it didn't die
+-- if nil then create a new one
+bot.current_bot = nil
+
 Bot = Class{
     __includes = {Object},
     init = function(self, grid, i, j)
         self.steps = 0
-        local trait1, trait2, trait3, trait_n
 
         -- i and j are 0-indexed positions in grid
         Object.init(self, grid, i, j, "bot", true)
-        self.head = HEAD[love.math.random(#HEAD)]
-        self.body = BODY[love.math.random(#BODY)]
-        self.head_clr = Color.new(love.math.random(256) - 1, 200, 200)
-        self.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
 
-        --Create 1-3 traits
-        self.traits = {}
+        local head_i, body_i
+        if bot.current_bot then
+            local b = bot.current_bot
+            -- get previous bot
+            head_i, body_i = b.head_i, b.body_i
+            self.head_clr = Color.new(b.head_clr, 200, 200)
+            self.body_clr = Color.new(b.body_clr, 200, 200)
+            self.name = b.name
+            self.traits = b.traits
+        else
+            -- random body
+            head_i = love.math.random(#HEAD)
+            self.head_clr = Color.new(love.math.random(256) - 1, 200, 200)
+            body_i = love.math.random(#BODY)
+            self.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
 
-        -- Number of traits
-        trait_n = love.math.random(3)
+            -- Get random name from list
+            self.name = NAMES[love.math.random(#NAMES)]
 
-        -- Trait 1
-        trait1 = TRAITS[love.math.random(#TRAITS)]
-        table.insert(self.traits, trait1)
+            --Create 1-3 traits
+            self.traits = {}
 
-        -- Trait 2
-        if trait_n > 1 then
-            trait2 = TRAITS[love.math.random(#TRAITS)]
-            while trait2 == trait1 do
-                trait2 = TRAITS[love.math.random(#TRAITS)]
+            -- Number of traits
+            local trait_n = love.math.random(3)
+
+            -- beginning of a knuth shuffle
+            while #self.traits < trait_n do
+                local i = love.math.random(#self.traits + 1, #TRAITS)
+                TRAITS[i], TRAITS[#self.traits] = TRAITS[#self.traits], TRAITS[i]
+                table.insert(self.traits, TRAITS[#self.traits])
             end
-            table.insert(self.traits, trait2)
         end
 
-        -- Trait 3
-        if trait_n > 2 then
-            trait3 = TRAITS[love.math.random(#TRAITS)]
-            while trait3 == trait1 or trait3 == trait2 do
-                trait3 = TRAITS[love.math.random(#TRAITS)]
-            end
-            table.insert(self.traits, trait3)
-        end
+        -- copy it to bot.current_bot
+        bot.current_bot = {
+            head_i = head_i,
+            body_i = body_i,
+            head_clr = self.head_clr.h,
+            body_clr = self.body_clr.h,
+            name = self.name,
+            traits = self.traits
+        }
+
+        self.head = HEAD[head_i]
+        self.body = BODY[body_i]
 
         self.sx = ROOM_CW/self.body:getWidth()
         self.sy = ROOM_CH/self.body:getHeight()
-
-        -- Get random name from list
-        self.name = NAMES[love.math.random(#NAMES)]
 
         -- Inventory
         self.inv = nil
@@ -59,6 +73,7 @@ Bot = Class{
 
 function Bot:kill(grid)
     Object.kill(self, grid)
+    bot.current_bot = nil -- erase current bot
     Signal.emit("death")
     --SFX.fail:stop()
     --SFX.fail:play()

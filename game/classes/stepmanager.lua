@@ -6,10 +6,9 @@ The execution of code is always on one of four states:
 stopped - code not running, code not even 'compiled' or initialized
 playing - code running automatically (a turn every x seconds)
 paused - code is executing, but turns do not happend automatically
-waiting - code has ended, waiting for some signal to reset or stop
 
 It always starts in stopped, and changes according to the functions called (play, fast, superfast, step, stop, pause)
-play, fast, superfast - If code is stopped, compiles it and starts it. If it is paused, starts doing turns automatically. If it is waiting, stops it then restarts it. The state always change to playing after these calls.
+play, fast, superfast - If code is stopped, compiles it and starts it. If it is paused, starts doing turns automatically. The state always change to playing after these calls.
 step - similar to above, but only one turn is executed, and the state is changed to paused.
 pause - If playing, stops turns from happening automatically, and changes state to paused. Otherwise does nothing.
 stop - Stops turns from happening automatically, clears memory, and changes the state to stopped.
@@ -50,15 +49,17 @@ local function stepCallback()
         return
     end
 
+    local code_over = false
+
     if sm.cmd then
         sm.cmd()
     else
         local ret = sm.code:step()
         if ret == 'halt' then
             if not sm.cmd then
-                -- in this case the code finished normally
-                sm.state = 'waiting'
+                -- in this case the code finished normally, but didn't succeed
                 Util.findId("code_tab"):showLine(#sm.code.ops + 1)
+                code_over = true
             end
         elseif ret == 'error' then
             -- state will be changed automatically by the function call
@@ -68,6 +69,18 @@ local function stepCallback()
 
     ROOM.puzzle:manage_objectives()
     if sm.state ~= 'playing' then return end
+    if code_over then
+        local n = Util.findId("info_tab").dead
+        local title = "Code not successful"
+        local text =
+            "Your code finished but the objectives weren't completed. " ..
+            "Test subject #"..n.." \""..ROOM.bot.name.."\" had to be sacrificed. " ..
+            "Another unit has been dispatched to replace #"..n..".\nA notification has "..
+            "been dispatched to HR and this incident shall be added to your personal file."
+        local button = "I will be more successful next time"
+        sm.stop(title, text, button)
+        return
+    end
     sm.timer:after(sm.delay, stepCallback)
 end
 
@@ -141,7 +154,7 @@ function sm.pause()
     end
 end
 
-function sm.stop(fail_title, fail_text, fail_button, replay_speed)
+function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
     if not ROOM:connected() then
         SFX.buzz:play()
         return

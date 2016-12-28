@@ -25,7 +25,15 @@ function state:init()
 
     -- autosave every 2 min
     -- in case of a crash or something
-    MAIN_TIMER:every(120, SaveManager.save)
+    -- WARNING: saving may trigger unwanted events so we have to handle that case
+    Timer.after(120, function(itself)
+        if SaveManager.safeToSave() then
+            SaveManager.save()
+            Timer.after(120, itself)
+        else
+            Timer.after(10, itself)
+        end
+    end)
 end
 
 function state:enter(prev, user)

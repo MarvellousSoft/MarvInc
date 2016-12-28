@@ -5,6 +5,11 @@ local OpenedMail = require "classes.opened_email"
 local Info = require "classes.tabs.info"
 local FX = require "classes.fx"
 
+--[[ LoreManager
+Used to handle all lore events.
+Lore events are events that are triggered by completing puzzles. Checkout lore_events/README.md for more info.
+]]
+
 local lore = {}
 
 -- Timer used for everything related to lore
@@ -12,28 +17,33 @@ local timer = Timer.new()
 lore.timer = timer
 -- Events triggered by completing puzzles
 local events = {}
-local old_events = {}
+lore.done_events = {} -- list of finished events
 -- Puzzles already completed
 lore.puzzle_done = {}
--- Emails sent that are puzzles -- Edited by the lore events
-lore.email = {}
 
 -- Automatically adds all .lua's in classes/lore_events
 function lore.init()
-    local evts = love.filesystem.getDirectoryItems("classes/lore_events")
+    local evts = love.filesystem.getDirectoryItems("lore_events")
     for _, file in ipairs(evts) do
         if #file > 4 and file:sub(-4) == '.lua' then
             file = file:sub(1, -5)
-            events[require("classes.lore_events." .. file)] = true
+            events[file] = require("lore_events." .. file)
         end
     end
-    lore.check_all() -- events without requisites
+end
+
+-- Used to remove events already done by the user (in a previous game)
+function lore.set_done_events(done_events)
+    lore.done_events = done_events
+    for _, id in ipairs(done_events) do
+        events[id] = nil
+    end
 end
 
 -- Check for events that may trigger now
 function lore.check_all()
     if not events then return end
-    for evt in pairs(events) do
+    for id, evt in pairs(events) do
         local all_done = true
         for _, puzzle in ipairs(evt.require_puzzles) do
             if not lore.puzzle_done[puzzle] then
@@ -42,8 +52,8 @@ function lore.check_all()
             end
         end
         if all_done then
-            events[evt] = nil
-            old_events[evt] = true
+            events[id] = nil
+            table.insert(lore.done_events, id)
             timer:after(evt.wait or 0, evt.run)
         end
     end
@@ -57,9 +67,6 @@ function lore.mark_completed(puzzle)
     else
         lore.puzzle_done[puzzle.id] = true
         puzzle.first_completed()
-        if lore.email[puzzle.id] then
-            lore.email[puzzle.id].is_completed = true
-        end
 
         lore.check_all()
     end

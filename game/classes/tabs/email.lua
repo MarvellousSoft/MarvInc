@@ -195,14 +195,11 @@ function EmailTab:mousePressed(x, y, but)
         for i, mail in ipairs(e.email_list) do
             if mail.alpha > 250 and Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y - e.dy*(e.email_height + e.email_border) + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
                 if not mail.was_read then
+                    if mail.open_func then mail.open_func() end
                     mail.was_read = true
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 TABS_LOCK = true -- Lock tabs until email is closed
-                if mail.open_func then
-                    mail.open_func()
-                    mail.open_func = nil
-                end
                 e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end
@@ -231,10 +228,11 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number)
+    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number)
         local time
 
         self.number = _number
+        self.id = _id
 
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
@@ -270,9 +268,10 @@ EmailObject = Class{
 -- UTILITY FUNCTIONS --
 
 -- Creates a new email and add to the email list
-function email_funcs.new(title, text, author, can_be_deleted, puzzle_id, open_func, reply_func)
+function email_funcs.new(id, silent)
 
-    local e, mail_list, number, tab
+    local e = require('emails.' .. id)
+    local mail_list, number, tab
 
     tab = Util.findId("email_tab")
 
@@ -282,19 +281,21 @@ function email_funcs.new(title, text, author, can_be_deleted, puzzle_id, open_fu
     tab.email_cur = tab.email_cur + 1
     number = tab.email_cur
 
-    e = EmailObject(title, text, author, can_be_deleted, puzzle_id, open_func, reply_func, number)
+    local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number)
 
     -- Add fade-in effect to email
-    e.handles["fadein"] = MAIN_TIMER:tween(.5, e, {alpha = 255, juicy_bump = 0}, 'out-quad')
+    email.handles["fadein"] = MAIN_TIMER:tween(.5, email, {alpha = 255, juicy_bump = 0}, 'out-quad')
 
-    table.insert(mail_list, e)
+    table.insert(mail_list, email)
 
     UNREAD_EMAILS = UNREAD_EMAILS + 1
 
-    SFX.new_email:stop()
-    SFX.new_email:play()
+    if not silent then
+        SFX.new_email:stop()
+        SFX.new_email:play()
+    end
 
-    return e
+    return email
 end
 
 -- Get an email given his number
