@@ -127,4 +127,18 @@ function sm.safeToSave()
     return not next(LoreManager.timer.functions)
 end
 
+local function recDelete(file)
+    if f.isDirectory(file) then
+        for _, child in ipairs(f.getDirectoryItems(file)) do
+            recDelete(file .. '/' .. child)
+        end
+    end
+    love.filesystem.remove(file)
+end
+
+function sm.deleteUser(user)
+    recDelete('saves/' .. user)
+    sm.user_data[user] = nil
+end
+
 return sm

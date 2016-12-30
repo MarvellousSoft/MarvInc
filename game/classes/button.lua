@@ -11,11 +11,11 @@ local button = {}
 --[[Text button with an invisible box behind (for collision)]]
 Button = Class{
     __includes = {RECT, WTXT},
-    init = function(self, _x, _y, _w, _h, _func, _text, _font, _overtext, _overfont, _color)
+    init = function(self, _x, _y, _w, _h, _callback, _text, _font, _overtext, _overfont, _color)
 
         RECT.init(self, _x, _y, _w, _h, Color.transp(), "fill") --Set atributes
 
-        self.func  = _func  --Function to call when pressed
+        self.callback  = _callback  --Function to call when pressed
 
         WTXT.init(self, _text, _font, nil) --Set text
 
@@ -90,7 +90,7 @@ function Button:checkCollides(x, y)
     if x > self.pos.x + self.w then return false end
     if y < self.pos.y then return false end
     if y > self.pos.y + self.h then return false end
-    self:func()
+    self:callback()
 end
 
 -- Centralizes text on button
@@ -102,10 +102,10 @@ end
 
 --UTILITY FUNCTIONS--
 
-function button.create_tab(x, y, w, h, func, text, font, overtext, overfont, color, id)
+function button.create_tab(x, y, w, h, callback, text, font, overtext, overfont, color, id)
     local b
 
-    b = Button(x, y, w, h, func, text, font, overtext, overfont, color)
+    b = Button(x, y, w, h, callback, text, font, overtext, overfont, color)
     b:addElement(DRAW_TABLE.L1u, "tabs", id)
 
     return b
