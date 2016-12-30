@@ -66,9 +66,7 @@ Github
 
 Found any bugs? Loved the game? Contact us at
 
-- renatogeh@gmail.com
-- pudimdefrutas@gmail.com
-- yancouto@gmail.com
+- `marvellous.amoeba@gmail.com`
 
 Want to know about incoming projects, new releases and other cool stuff? Of course you do!
 
