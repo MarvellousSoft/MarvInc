@@ -13,5 +13,5 @@ Chief engineer at Marvellous Inc.s Material Engineering Department
 ~ Puff puff puff I go / a joint a stub do I roll / so high puff puff puff ~
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
-    puzzle_id = 'lasers'
+    puzzle_id = 'paul1'
 }

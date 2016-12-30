@@ -5,7 +5,7 @@ local turn = {}
 
 -- Adds the puzzle that teaches turn
 
-turn.require_puzzles = {"walkx"}
+turn.require_puzzles = {'tuto2'}
 turn.wait = 4
 
 function turn.run()

@@ -5,7 +5,7 @@ local register = {}
 
 -- Adds the puzzle that teaches using registers
 
-register.require_puzzles = {"pickup"}
+register.require_puzzles = {'tuto5'}
 register.wait = 4
 
 function register.run()

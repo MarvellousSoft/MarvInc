@@ -22,7 +22,7 @@ The same example as above, if the robot was facing north:
 Happy adventuring, and carry on.
 ]],
     author = "Automated Introduction System", 
-    puzzle_id = 'pickup',
+    puzzle_id = 'tuto5',
     open_func =
         function()
             Info.addCommand("pickup")

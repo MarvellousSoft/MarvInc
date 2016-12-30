@@ -18,7 +18,7 @@ Make sure to understand all these concepts. You can do it.
 Best of Luck. Carry on. :)
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'register',
+    puzzle_id = 'tuto6',
     open_func =
         function()
             Info.addCommand("add <adress> <value>")

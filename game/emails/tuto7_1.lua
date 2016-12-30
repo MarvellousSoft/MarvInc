@@ -13,15 +13,15 @@ For instance, the jgt command is the Greater Than Jump. So if the first value re
 
 Example where the bot will increase the value of the register 1 until its greater than the value of the register 2. Only then it will walk 1 tile.
     - omar: add 1 1
-    - jgt [1] [2] omar
-    - walk 1
+      jgt [1] [2] omar
+      walk 1
 
 Lastly you can use the read command to read input from a console. You provide a first argument with the address of the register to store the input read, and a second optional direction, analogous to the write.
 
 Carry on.
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'array_sep',
+    puzzle_id = 'tuto7',
     open_func =
         function()
             Info.addCommand("jgt <value> <value> <label>")

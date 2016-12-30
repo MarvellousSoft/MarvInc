@@ -17,5 +17,5 @@ jeNny Leubwoot
 chief astronaut at marvellous soft.s KICKASS dojo
 ]],
     author = "Janine Leubwitz",
-    puzzle_id = 'maze1'
+    puzzle_id = 'jen1'
 }

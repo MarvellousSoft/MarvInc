@@ -5,7 +5,7 @@ local array_sep = {}
 
 -- Adds the puzzle "Array Separator"
 
-array_sep.require_puzzles = {"register"}
+array_sep.require_puzzles = {'tuto6'}
 array_sep.wait = 4
 
 function array_sep.run()

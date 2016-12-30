@@ -20,7 +20,7 @@ We are waiting you.
 Carry on.
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'square',
+    puzzle_id = 'tuto8',
     open_func =
         function()
             Info.addCommand("mov <address> <value>")

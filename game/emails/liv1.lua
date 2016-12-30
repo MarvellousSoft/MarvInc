@@ -16,5 +16,5 @@ Code on, and carry on!
 -- Liv
 ]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'reverse'
+    puzzle_id = 'liv1'
 }

@@ -21,7 +21,7 @@ Reply this email to start the puzzle.
 Best of Luck, and carry on.
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'first',
+    puzzle_id = 'tuto1',
     open_func =
         function()
             Info.addCommand("walk")

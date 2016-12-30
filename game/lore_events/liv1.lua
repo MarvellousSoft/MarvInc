@@ -2,9 +2,9 @@ local Mail = require "classes.tabs.email"
 
 local liv = {}
 
--- Add puzzle "reverse"
+-- Add puzzle 'liv1'
 
-liv.require_puzzles = {"maze2", "lasers"}
+liv.require_puzzles = {'maze2', 'paul1'}
 liv.wait = 10
 
 function liv.run()

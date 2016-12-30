@@ -7,7 +7,7 @@ local walkx = {}
 
 -- Adds the puzzle that teaches using walk X
 
-walkx.require_puzzles = {"first"}
+walkx.require_puzzles = {'tuto1'}
 walkx.wait = 4
 
 function walkx.run()

@@ -4,7 +4,7 @@ local jump = {}
 
 -- Adds the puzzle that teaches jmp
 
-jump.require_puzzles = {"turn"}
+jump.require_puzzles = {'tuto3'}
 jump.wait = 4
 
 function jump.run()

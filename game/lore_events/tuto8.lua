@@ -5,7 +5,7 @@ local square = {}
 
 -- Adds the puzzle "Squaring"
 
-square.require_puzzles = {"array_sep"}
+square.require_puzzles = {'tuto7'}
 square.wait = 4
 
 function square.run()

@@ -12,9 +12,9 @@ But that is optional.
 
 Example that makes the bot walk in circles:
     - banana:
-    - walk 2
-    - turn counter
-    - jmp banana
+      walk 2
+      turn counter
+      jmp banana
 
 Example that makes the bot spin endlessly:
     - awesomeLabel66: turn clock
@@ -25,7 +25,7 @@ Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the exper
 As always, carry on.
 ]],
     author = "Automated Introduction System", 
-    puzzle_id = 'jump',
+    puzzle_id = 'tuto4',
     open_func =
         function()
             Info.addCommand("jmp <label>")

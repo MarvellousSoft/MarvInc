@@ -5,7 +5,7 @@ local jen = {}
 -- Add Jen
 
 -- tutorial is a fake puzzle
-jen.require_puzzles = {"tutorial"}
+jen.require_puzzles = {'tutorial'}
 jen.wait = 6
 
 function jen.run()

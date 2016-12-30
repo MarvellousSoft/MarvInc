@@ -19,7 +19,7 @@ As always, reply this email to start the puzzle.
 Carry on.
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'turn',
+    puzzle_id = 'tuto3',
     open_func =
         function()
             Info.addCommand("turn clock")

@@ -18,5 +18,5 @@ Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
-    puzzle_id = 'maze2'
+    puzzle_id = 'jen2'
 }
