@@ -11,8 +11,8 @@ They all receive three arguments: two values and a label. If the condition of th
 
 For instance, the jgt command is the Greater Than Jump. So if the first value received is greater than the second one, it will jump to the label given as a third argument.
 
-Example where the bot will increase the value of the register 1 until its greater than the value of the register 2. Only then it will walk 1 tile.
-    - omar: add 1 1
+Example where the bot will increase the value of the register #1 until its greater than the value of the register #2. Only then it will walk 1 tile.
+    - omar: add [1] 1 1
       jgt [1] [2] omar
       walk 1
 

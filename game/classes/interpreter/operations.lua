@@ -43,6 +43,7 @@ function Number.create(s)
     if bak ~= 0 or not suff_start then return end
     local num = tonumber(s:sub(lvl + 1, #s - lvl))
     if num < -999 or num > 999 then return end
+    if lvl > 0 and (num < 0 or num >= Util.findId('memory').slots) then return end
     return Number(num, lvl)
 end
 
@@ -159,18 +160,13 @@ local function valid_register(s)
     return v
 end
 
--- Used by all OP dst val commands
-local function dst_val_check(t)
-    if #t ~= 3 then return end
-    return valid_register(t[2]), Number.create(t[3])
-end
-
 -- Mov --
 Mov = Class {}
 
 function Mov.create(t)
+    if #t ~= 3 then return end
     local m = Mov()
-    m.dst, m.val = dst_val_check(t)
+    m.val, m.dst = Number.create(t[2]), valid_register(t[3])
     if m.dst and m.val then return m end
     return "Incorrect 'mov' parameters"
 end
@@ -191,46 +187,51 @@ local function mod(val)
     return val - 999
 end
 
+
+
+--=============================--
+--    UTILS FOR ADD/SUB        --
+--=============================--
+local function add_sub_create(obj, t)
+    if #t ~= 4 then return nil end
+    obj.val1, obj.val2, obj.dst = Number.create(t[2]), Number.create(t[3]), valid_register(t[4])
+    if obj.val1 and obj.val2 and obj.dst then
+        return obj
+    end
+end
+
+local function add_func(a, b) return mod(a + b) end
+local function sub_func(a, b) return mod(a - b) end
+
+local function add_sub_execute(obj, func)
+    local val1, val2, dst = obj.val1:evaluate(), obj.val2:evaluate(), obj.dst:evaluate()
+    if type(val1) ~= 'number' then return val1 end
+    if type(val2) ~= 'number' then return val2 end
+    if type(dst) ~= 'number' then return dst end
+    local mem = Util.findId('memory')
+    return mem:set(dst, func(val1, val2))
+end
+
 -- Add --
 Add = Class {}
 
 function Add.create(t)
-    local a = Add()
-    a.dst, a.val = dst_val_check(t)
-    if a.dst and a.val then return a end
-    return "Incorrect 'add' parameters"
+    return add_sub_create(Add(), t) or "Incorrect 'add' parameters"
 end
 
 function Add:execute()
-    local dst = self.dst:evaluate()
-    local val = self.val:evaluate()
-    if type(dst) ~= 'number' then return dst end
-    if type(val) ~= 'number' then return val end
-    local mem = Util.findId("memory")
-    local prev = mem:get(dst)
-    if type(prev) ~= 'number' then return prev end
-    return mem:set(dst, mod(prev + val))
+    return add_sub_execute(self, add_func)
 end
 
 -- Sub --
 Sub = Class {}
 
 function Sub.create(t)
-    local a = Sub()
-    a.dst, a.val = dst_val_check(t)
-    if a.dst and a.val then return a end
-    return "Incorrect 'sub' parameters"
+    return add_sub_create(Sub(), t) or "Incorrect 'sub' parameters"
 end
 
 function Sub:execute()
-    local dst = self.dst:evaluate()
-    local val = self.val:evaluate()
-    if type(dst) ~= 'number' then return dst end
-    if type(val) ~= 'number' then return val end
-    local mem = Util.findId("memory")
-    local prev = mem:get(dst)
-    if type(prev) ~= 'number' then return prev end
-    return mem:set(dst, mod(prev - val))
+    return add_sub_execute(self, sub_func)
 end
 
 -- init for jgt jlt jge jle

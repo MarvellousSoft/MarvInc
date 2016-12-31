@@ -88,7 +88,7 @@ end
 function Popup:keypressed(key)
     if key == "return" and not self.buttons[2] then
         PopManager.quit()
-        self.buttons[1].func()
+        self.buttons[1].callback()
     end
 end
 

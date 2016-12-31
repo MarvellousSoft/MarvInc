@@ -7,7 +7,7 @@ There are many commands to control the test subjects. For now, you just need to 
 
 You can provide a cardinal direction (such as north or west) or a regular direction (such as up or left). If you don't, your robot will walk to the direction it is facing. This command will make the test subject walk until it encounters an obstacle.
 
-Example:
+Examples:
     - walk
     - walk east
     - walk down

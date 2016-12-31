@@ -7,9 +7,9 @@ Well done.
 
 Besides directions, you can add another modifier to the walk command, a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
 
-Example:
-- walk 5
-- walk left 10
+Examples:
+    - walk 5
+    - walk left 10
 
 Reply this email to start the experiment.
 

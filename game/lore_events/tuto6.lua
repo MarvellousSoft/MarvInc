@@ -9,7 +9,7 @@ register.require_puzzles = {'tuto5'}
 register.wait = 4
 
 function register.run()
-    Mail.new('tuto6_1.lua')
+    Mail.new('tuto6_1')
 
     LoreManager.timer:after(8, function() Mail.new('tuto6_2') end)
 

@@ -7,7 +7,7 @@ Good job, Employee #]].. EMPLOYER_NUMBER .. [[. Lets learn some new instructions
 
 Use the turn command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a direction, or the special arguments clock or counter, to turn the robot clockwise or counterclockwise, respectively.
 
-Example:
+Examples:
     - turn south
     - turn clock
     - turn counter

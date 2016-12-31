@@ -5,13 +5,13 @@ In case you need some further guidance, here are some examples using the read co
 
 Example where the bot reads an input from the console below him, and writes in the console above him. In both cases he is using the register #0 to store the values.
     - read 0 down
-    - write [0] up
+      write [0] up
 
 Example where the bot will keep reading the input from the console to his left (west) until it equals the input he got from the console to his right (east). Then he will be able to walk down
     - read 0 east
-    - marv: read 1 west
-    - jne [0] [1] marv
-    - walk down
+      marv: read 1 west
+      jne [0] [1] marv
+      walk down
 
 With the read command you can read inputs from the consoles, while with the write you can output to the consoles.
 
