@@ -136,20 +136,40 @@ Nop = Class {
     type = "NOP"
 }
 
+--==========================--
+--       LABEL              --
+--==========================--
+Label = Class{}
+
 -- check wheter s is a valid label, and in that case returns it
-local function valid_label(s)
-    if s:match("%w+") == s then return s end
+function Label.create(s)
+    local l = Label()
+    local num = Number.create(s)
+    if num and num.indir > 0 then l.lab = num
+    elseif s:match("%w+") == s then l.lab = s
+    else return end
+    return l
+end
+
+function Label:evaluate()
+    if type(self.lab) == 'string' then return self.lab end
+    return tostring(self.lab:evaluate()) -- error or actual number
 end
 
 -- Jmp --
 Jmp = Class {
-    init = function(self, lab) self.lab = lab end,
-    execute = function(self) return self.lab end
+    init = function(self, lab) self.lab = lab end
 }
 
 function Jmp.create(t)
     if #t ~= 2 then return end
-    return valid_label(t[2]) and Jmp(t[2])
+    local l = Label.create(t[2])
+    return l and Jmp(l) or "incorrect 'jump' parameters"
+end
+
+function Jmp:execute()
+    local l = self.lab:evaluate()
+    return l, "Tried to access invalid label '" .. l .. "'"
 end
 
 -- checks whether s is a valid register, and in that case returns it
@@ -245,13 +265,13 @@ local function vvl_execute(self)
     local a, b = self.v1:evaluate(), self.v2:evaluate()
     if type(a) ~= 'number' then return a end
     if type(b) ~= 'number' then return b end
-    if self.comp(a, b) then return self.lab end
+    if self.comp(a, b) then return self.lab:evaluate() end
 end
 
 -- Used by all val1 val2 lab operations
 local function vvl_check(t, class)
     if #t ~= 4 then return end
-    local v1, v2, lab = Number.create(t[2]), Number.create(t[3]), valid_label(t[4])
+    local v1, v2, lab = Number.create(t[2]), Number.create(t[3]), Label.create(t[4])
     if v1 and v2 and lab then return class(v1, v2, lab) end
 end
 

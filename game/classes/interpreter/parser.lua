@@ -4,7 +4,9 @@ require "classes.interpreter.code"
 local parser = {}
 
 function parser.parseLine(s)
-    local i = s:find(':')
+    local i = s:find('#')
+    if i then s = s:sub(1, i - 1) end
+    i = s:find(':')
     local label
     if i then
         if i == 1 then return "No Label" end
@@ -49,7 +51,7 @@ function parser.parseAll(lines)
         end
     end
     for i, op in ipairs(code) do
-        if op.lab and not labs[op.lab] then
+        if op.lab and type(op.lab.lab) == 'string' and not labs[op.lab.lab] then
             --print(i, "ERROR:", "invalid label for jump")
             bad_lines[i] = true
         end

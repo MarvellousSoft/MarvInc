@@ -20,7 +20,7 @@ CodeTab = Class{
             acc[c_lower] = c_lower
             acc[c_upper] = c_lower
         end
-        local other = "+-: []0123456789"
+        local other = "+-: []0123456789#"
         for c in other:gmatch(".") do
             acc[c] = c
         end
