@@ -22,9 +22,9 @@ end
 local function valid_num(x) return type(x) == 'number' and x >= -999 and x <= 999 end
 
 
--- Returns a new Number created from string s, or nil if it is invalid
+-- Returns a new Number created from string s, or nil or a string error if it is invalid
 function Number.create(s)
-    if s:match("%a") or not s:match("%d") then return end
+    if s:match("%a") or not s:match("%d") then return "wrong characters on number" end
     if not s:match("[%[%]]") then return valid_num(tonumber(s)) and Number(tonumber(s), 0) end
     if s:match("[%[%]0-9]+") ~= s then return end
     local lvl, bak = 0, 0
@@ -35,15 +35,15 @@ function Number.create(s)
             suff_start = true
             bak = lvl
         end
-        if (pref_ok and s:sub(i, i) == '[') or (not pref_ok and s:sub(i, i) == ']') then return end
-        if suff_start and s:sub(i, i) ~= ']' then return end
+        if (pref_ok and s:sub(i, i) == '[') or (not pref_ok and s:sub(i, i) == ']') then return 'brackets wrong' end
+        if suff_start and s:sub(i, i) ~= ']' then return "brackets wrong" end
         if s:sub(i, i) == '[' then lvl = lvl + 1 end
         if s:sub(i, i) == ']' then bak = bak - 1 end
     end
-    if bak ~= 0 or not suff_start then return end
+    if bak ~= 0 or not suff_start then return "brackets wrong"  end
     local num = tonumber(s:sub(lvl + 1, #s - lvl))
     if num < -999 or num > 999 then return end
-    if lvl > 0 and (num < 0 or num >= Util.findId('memory').slots) then return end
+    if lvl > 0 and (num < 0 or num >= Util.findId('memory').slots) then return "invalid register on number" end
     return Number(num, lvl)
 end
 
@@ -54,15 +54,15 @@ execute - function that executes the operation, and returns the label of the nex
 
 Walk = Class {}
 
-local function walk_check(t)
+function Walk.create(t)
     if #t > 3 then return end
     if #t == 1 then return Walk() end
     local nums, alps = 0, 0
     for i = 2, #t do
-        if t[i]:match("%a+") ~= t[i] and not Number.create(t[i]) then
+        if t[i]:match("%a+") ~= t[i] and type(Number.create(t[i])) ~= 'table' then
             return
         else
-            nums = nums + (Number.create(t[i]) and 1 or 0)
+            nums = nums + (type(Number.create(t[i])) == 'table' and 1 or 0)
             alps = alps + (t[i]:match("%a+") == t[i] and 1 or 0)
         end
     end
@@ -71,7 +71,7 @@ local function walk_check(t)
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
     for i = 2, #t do
-        if Number.create(t[i]) then
+        if type(Number.create(t[i])) == 'table' then
             w.x = Number.create(t[i])
             if w.x.indir == 0 and w.x.num <= 0 then
                 return
@@ -87,14 +87,9 @@ local function walk_check(t)
     return w
 end
 
-function Walk.create(t)
-    return walk_check(t) or "Wrong 'walk' parameters"
-end
-
 function Walk:execute()
     if not self.x then StepManager.walk(nil, self.dir) return end
     local y = self.x:evaluate()
-    -- invalid! is an invalid label (because of the '!')
     if type(y) ~= 'number' then return y end
     if y < 0 then return "Trying to walk " .. y .. " steps" end
     if y == 0 then
@@ -126,7 +121,7 @@ local function turn_check(t)
 end
 
 function Turn.create(t)
-    return turn_check(t) or "Wrong 'turn' parameters"
+    return turn_check(t)
 end
 
 
@@ -145,9 +140,9 @@ Label = Class{}
 function Label.create(s)
     local l = Label()
     local num = Number.create(s)
-    if num and num.indir > 0 then l.lab = num
+    if type(num) == 'table' and num.indir > 0 then l.lab = num
     elseif s:match("%w+") == s then l.lab = s
-    else return end
+    else return "Invalid label" end
     return l
 end
 
@@ -164,7 +159,8 @@ Jmp = Class {
 function Jmp.create(t)
     if #t ~= 2 then return end
     local l = Label.create(t[2])
-    return l and Jmp(l) or "incorrect 'jump' parameters"
+    if type(l) ~= 'table' then return l end
+    return Jmp(l)
 end
 
 function Jmp:execute()
@@ -175,8 +171,8 @@ end
 -- checks whether s is a valid register, and in that case returns it
 local function valid_register(s)
     local v = Number.create(s)
-    if not v then return end
-    if v.indir == 0 and (v.num < 0 or v.num >= Util.findId("memory").slots) then return end
+    if type(v) ~= 'table' then return v end
+    if v.indir == 0 and (v.num < 0 or v.num >= Util.findId("memory").slots) then return "Invalid register" end
     return v
 end
 
@@ -187,8 +183,9 @@ function Mov.create(t)
     if #t ~= 3 then return end
     local m = Mov()
     m.val, m.dst = Number.create(t[2]), valid_register(t[3])
-    if m.dst and m.val then return m end
-    return "Incorrect 'mov' parameters"
+    if type(m.val) ~= 'table' then return m.val end
+    if type(m.dst) ~= 'table' then return m.dst end
+    return m
 end
 
 function Mov:execute()
@@ -215,9 +212,10 @@ end
 local function add_sub_create(obj, t)
     if #t ~= 4 then return nil end
     obj.val1, obj.val2, obj.dst = Number.create(t[2]), Number.create(t[3]), valid_register(t[4])
-    if obj.val1 and obj.val2 and obj.dst then
-        return obj
-    end
+    if type(obj.val1) ~= 'table' then return obj.val1 end
+    if type(obj.val2) ~= 'table' then return obj.val2 end
+    if type(obj.dst) ~= 'table' then return obj.dst end
+    return obj
 end
 
 local function add_func(a, b) return mod(a + b) end
@@ -236,7 +234,7 @@ end
 Add = Class {}
 
 function Add.create(t)
-    return add_sub_create(Add(), t) or "Incorrect 'add' parameters"
+    return add_sub_create(Add(), t)
 end
 
 function Add:execute()
@@ -247,7 +245,7 @@ end
 Sub = Class {}
 
 function Sub.create(t)
-    return add_sub_create(Sub(), t) or "Incorrect 'sub' parameters"
+    return add_sub_create(Sub(), t)
 end
 
 function Sub:execute()
@@ -272,7 +270,10 @@ end
 local function vvl_check(t, class)
     if #t ~= 4 then return end
     local v1, v2, lab = Number.create(t[2]), Number.create(t[3]), Label.create(t[4])
-    if v1 and v2 and lab then return class(v1, v2, lab) end
+    if type(v1) ~= 'table' then return v1 end
+    if type(v2) ~= 'table' then return v2 end
+    if type(lab) ~= 'table' then return lab end
+    return class(v1, v2, lab)
 end
 
 -- Jgt - Jump greater than --
@@ -298,7 +299,8 @@ function Read:create(t)
     up = "north", down = "south", left = "west", right = "east"}
     if t[3] and not accepted[t[3]] then return end
     obj.reg, obj.dir = valid_register(t[2]), accepted[t[3]]
-    if obj.reg then return obj end
+    if type(obj.reg) ~= 'table' then return obj.reg end
+    return obj
 end
 
 function Read:execute()
@@ -320,7 +322,8 @@ function Write:create(t)
     up = "north", down = "south", left = "west", right = "east"}
     if t[3] and not accepted[t[3]] then return end
     obj.num, obj.dir = Number.create(t[2]), accepted[t[3]]
-    if obj.num then return obj end
+    if type(obj.num) ~= 'table' then return obj.num end
+    return obj
 end
 
 function Write:execute()
@@ -383,14 +386,13 @@ function Drop:execute()
 end
 
 function op.read(t)
-    if #t == 0 then return Nop() end
-    if t[1] == 'walk' then
+    if #t == 0 then return Nop()
+    elseif t[1] == 'walk' then
         return Walk.create(t)
     elseif t[1] == 'turn' then
         return Turn.create(t)
     elseif t[1] == 'nop' then
-        if #t ~= 1 then return "Incorrect # of 'nop' parameters"  end
-        return Nop()
+        if #t == 1 then return Nop() end
     elseif t[1] == 'jmp' then
         return Jmp.create(t)
     elseif t[1] == 'mov' then
@@ -419,7 +421,7 @@ function op.read(t)
         return Pickup.create(t)
     elseif t[1] == 'drop' then
         return Drop.create(t)
-    end
+    else return "Unknown command " .. t[1] end
 end
 
 return op

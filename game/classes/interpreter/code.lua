@@ -2,9 +2,10 @@ local Ops = require "classes.interpreter.operations"
 local Color = require "classes.color.color"
 
 Code = Class{
-    init = function(self, ops, labs)
+    init = function(self, ops, labs, real_line)
         self.ops = ops
         self.labs = labs
+        self.real_line = real_line
         self.cur = 1
     end,
     type = 'code'
@@ -18,7 +19,7 @@ function Code:start()
 end
 
 function Code:step()
-    Util.findId("code_tab"):showLine(self.cur)
+    Util.findId("code_tab"):showLine(self.real_line[self.cur])
     if self.cur <= #self.ops then
         local lab, err = self.ops[self.cur]:execute()
         if lab then

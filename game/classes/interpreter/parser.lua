@@ -26,24 +26,31 @@ function parser.parseLine(s)
         table.insert(t, token)
     end
 
-    return Ops.read(t), label
+    local op = Ops.read(t)
+    if not op and #t > 0 then op = "Invalid '" .. t[1] .. "' parameters" end
+
+    return op, label
 end
 
 function parser.parseAll(lines)
     local code, labs = {}, {}
+    -- instruction code[i] is on line real_line[i] (may be different than i if there are empty lines)
+    local real_line = {}
     -- labels that are referenced in the code
     local ref_labels = {}
     local bad_lines = {}
+    local err_line, err_msg
     for i, line in ipairs(lines) do
         if line ~= "" then
             local op, lab = parser.parseLine(line)
             if type(op) ~= "table" then
-                --print(i, "ERROR:", op)
+                err_line, err_msg = err_line or i, err_msg or (op or "Compilation Error")
                 bad_lines[i] = true
             end
             table.insert(code, op)
+            table.insert(real_line, i)
             if lab and labs[lab] then
-                --print(i, "ERROR:", "two labels with the same name")
+                err_line, err_msg = err_line or i, err_msg or ": two labels with the same name"
                 bad_lines[i] = true
                 bad_lines[labs[lab]] = true
             end
@@ -52,16 +59,15 @@ function parser.parseAll(lines)
     end
     for i, op in ipairs(code) do
         if op.lab and type(op.lab.lab) == 'string' and not labs[op.lab.lab] then
-            --print(i, "ERROR:", "invalid label for jump")
+            err_line, err_msg = err_line or i, err_msg or ": invalid label"
             bad_lines[i] = true
         end
     end
-    if next(bad_lines) then return bad_lines end
+    if next(bad_lines) then return bad_lines, err_line, err_msg end
     if #code == 0 then
-        --print("ERROR:", "no code")
         return
     end
-    return Code(code, labs)
+    return Code(code, labs, real_line)
 end
 
 function parser.parseCode()

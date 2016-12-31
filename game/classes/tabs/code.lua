@@ -77,6 +77,11 @@ function CodeTab:update(dt)
 end
 
 function CodeTab:draw()
+    if self.err_msg and self.err_line ~= self.term.cursor.i then
+        love.graphics.setColor(100, 0, 0)
+        love.graphics.setFont(FONTS.fira(13))
+        love.graphics.print("Line " .. self.err_line .. ": " .. self.err_msg, self.term.pos.x, self.term.pos.y - FONTS.fira(13):getHeight())
+    end
     self.term:draw(self.bad_lines)
 
     -- Draw buttons
@@ -154,11 +159,15 @@ end
 
 -- Check invalid lines
 function CodeTab:checkErrors()
-    local c = Parser.parseAll(self.term.lines)
-    if type(c) == 'table' and c.type ~= 'code' then
+    local c, err_l, err_m = Parser.parseAll(self.term.lines)
+    if err_l or not c then
         self.bad_lines = c
+        self.err_line = err_l
+        self.err_msg = err_m
     else
         self.bad_lines = nil
+        self.err_line = nil
+        self.err_msg = nil
     end
 end
 
