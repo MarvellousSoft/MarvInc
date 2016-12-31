@@ -45,6 +45,7 @@ StepManager = require "classes.stepmanager"
 LoreManager = require "classes.lore-manager"
 PopManager  = require "classes.popmanager"
 SaveManager = require "save_manager"
+ResManager = require "res_manager"
 
 --GAMESTATES
 GS = {
@@ -60,7 +61,15 @@ function love.load()
 
     Setup.config() --Configure your game
 
-    Gamestate.registerEvents() --Overwrites love callbacks to call Gamestate as well
+    local callbacks = {'errhand', 'update'}
+    for c in pairs(love.handlers) do
+        if c ~= 'mousepressed' and c ~= 'mousereleased' and c ~= 'mousemoved' then
+            table.insert(callbacks, c)
+        end
+    end
+    -- draw, mousereleased and mousepressed are called manually
+    -- mousemoved is ignored
+    Gamestate.registerEvents(callbacks) --Overwrites love callbacks to call Gamestate as well
     Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
     SaveManager.load()
@@ -71,12 +80,28 @@ end
 --MOUSE FUNCTIONS
 -----------------
 
-function love.mousepressed(x, y, button, istouch)
+function love.draw()
+    ResManager.preDraw()
+    Gamestate.draw()
+    ResManager.postDraw()
+end
 
-    if button == 1 then  --Left mouse button
+function love.mousereleased(x, y, ...)
+    x, y = love.mouse.getPosition() -- fixed
+    Gamestate.mousereleased(x, y, ...)
+end
+
+function love.mousepressed(x, y, but, ...)
+    x, y = love.mouse.getPosition() -- fixed
+    Gamestate.mousepressed(x, y, but, ...)
+
+    if but == 1 then  --Left mouse button
         But.checkCollision(x,y)
     end
+end
 
+function love.resize(w, h)
+    ResManager.adjustWindow(w, h)
 end
 
 function love.quit()

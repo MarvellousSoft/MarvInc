@@ -146,10 +146,12 @@ function setup.config()
     }
 
     --WINDOW CONFIG--
-    love.window.setMode(W, H, {resizable = false, minwidth = 800, minheight = 600})
+    love.window.setMode(W, H, {resizable = true, minwidth = 800, minheight = 600})
+    ResManager.init()
+    ResManager.adjustWindow(W, H)
 
     --CAMERA--
-    CAM = Camera(love.graphics.getWidth()/2, love.graphics.getHeight()/2) --Set camera position to center of screen
+    CAM = Camera(W/2, H/2) --Set camera position to center of screen
 
     --SHADERS--
 

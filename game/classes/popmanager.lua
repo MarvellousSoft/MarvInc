@@ -78,7 +78,7 @@ function Popup:mousereleased(x, y, button, touch)
         for _, v in ipairs(self.buttons) do
             if Util.pointInRect(x - self.pos.x, y - self.pos.y, v) then
                 PopManager.quit()
-                v.func()
+                v.callback()
                 return
             end
         end
