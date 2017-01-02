@@ -71,12 +71,16 @@ Bot = Class{
     end
 }
 
-function Bot:kill(grid)
-    Object.kill(self, grid)
+function Bot:cleanAndKill()
+    Object.kill(self, ROOM.grid_obj)
     bot.current_bot = nil -- erase current bot
     Signal.emit("death")
     --SFX.fail:stop()
     --SFX.fail:play()
+end
+
+function Bot:kill(grid)
+    StepManager.stop()
 end
 
 function Bot:next_block(grid, r, c, o)

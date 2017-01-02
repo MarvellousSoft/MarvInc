@@ -296,7 +296,7 @@ function Room:keyPressed(key)
 end
 
 function Room:kill()
-    self.bot:kill(self.grid_obj)
+    self.bot:cleanAndKill(self.grid_obj)
 end
 
 -- Careful when calling this function!
