@@ -209,12 +209,25 @@ end
 -- CODE COMMANDS
 
 -- Assumes x > 0 or x == nil
-function sm.walk(x, dir)
-    sm.cmd = function() sm.walk(x and x - 1, dir) end
-    ROOM:walk(dir)
+function sm.walk(x)
+    sm.cmd = function() sm.walk(x and x - 1) end
+    ROOM:walk()
     if x == 1 then sm.cmd = nil end
     if not x and ROOM:blocked() then
         sm.cmd = nil
+    end
+end
+
+function sm.walkc(op, count)
+    if not ROOM:blocked() then
+        ROOM:walk()
+        count = count + 1
+    end
+    if ROOM:blocked() then
+        sm.cmd = nil
+        op:finishWalk(count)
+    else
+        sm.cmd = function() sm.walkc(op, count) end
     end
 end
 

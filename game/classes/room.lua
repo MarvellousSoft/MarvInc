@@ -304,8 +304,7 @@ function Room:put(obj, i, j)
     obj:teleport(self.grid_obj, i, j)
 end
 
-function Room:walk(dir)
-    if dir then self:turn(dir) end
+function Room:walk()
     self.bot:move(self.grid_obj, self.grid_r, self.grid_c)
 end
 

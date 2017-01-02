@@ -49,7 +49,8 @@ function Memory:get(pos)
 end
 
 function Memory:set(dst, src)
-    if dst < 0 or dst > self.slots then return "Trying to set register " .. dst end
+    if type(dst) == 'string' then return dst end
+    if not dst or type(dst) ~= 'number' or dst < 0 or dst > self.slots then return "Trying to set register " .. (dst or 'nil') end
     self.vec[dst + 1] = src
 end
 

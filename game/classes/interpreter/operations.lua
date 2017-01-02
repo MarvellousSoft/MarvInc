@@ -88,14 +88,13 @@ function Walk.create(t)
 end
 
 function Walk:execute()
-    if not self.x then StepManager.walk(nil, self.dir) return end
+    if self.dir then StepManager.turn(self.dir) end
+    if not self.x then StepManager.walk(nil) return end
     local y = self.x:evaluate()
     if type(y) ~= 'number' then return y end
     if y < 0 then return "Trying to walk " .. y .. " steps" end
-    if y == 0 then
-        if self.dir then StepManager.turn(self.dir) end
-    else
-        StepManager.walk(y, self.dir)
+    if y > 0 then
+        StepManager.walk(y)
     end
 end
 
@@ -312,6 +311,19 @@ function Read:execute()
     return Util.findId("memory"):set(self.reg:evaluate(), nx)
 end
 
+-- WalkC --
+WalkC = Class{create = Read.create}
+
+function WalkC:execute()
+    if self.dir then StepManager.turn(self.dir) end
+    StepManager.walkc(self, 0)
+end
+
+function WalkC:finishWalk(count)
+    local err = Util.findId('memory'):set(self.reg:evaluate(), count)
+    if err then StepManager.stop("Code Error!", "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. err .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.", "I'm sorry.") end
+end
+
 -- Write --
 Write = Class{}
 
@@ -421,6 +433,8 @@ function op.read(t)
         return Pickup.create(t)
     elseif t[1] == 'drop' then
         return Drop.create(t)
+    elseif t[1] == 'walkc' then
+        return WalkC:create(t)
     else return "Unknown command " .. t[1] end
 end
 
