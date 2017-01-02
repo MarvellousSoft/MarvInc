@@ -31,17 +31,29 @@ CodeTab = Class{
         local bsz = 50
         local by = self.pos.y + self.h - bsz
         local bx = self.pos.x + self.w / 10
+        local hf = function(self) return StepManager.state == self.highlight_state and (not self.how_fast or self.how_fast == StepManager.how_fast)  end
         self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop() end)
+        self.stop_b.highlight, self.stop_b.highlight_state = hf, 'stopped'
+
         bx = bx + bsz + 20
         self.pause_b = ImgButton(bx, by, bsz, BUTS_IMG.pause, function() StepManager.pause() end)
+        self.pause_b.highlight, self.pause_b.highlight_state = hf, 'paused'
+
         bx = bx + bsz + 20
         self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager.play() end)
+        self.play_b.highlight, self.play_b.highlight_state, self.play_b.how_fast = hf, 'playing', 1
+
         bx = bx + bsz + 20
         self.step_b = ImgButton(bx, by, bsz, BUTS_IMG.step, function() StepManager.step() end)
+
         bx = bx + bsz + 20
         self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager.fast() end)
+        self.fast_b.highlight, self.fast_b.highlight_state, self.fast_b.how_fast = hf, 'playing', 2
+
         bx = bx + bsz + 20
         self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager.superfast() end)
+        self.superfast_b.highlight, self.superfast_b.highlight_state, self.superfast_b.how_fast = hf, 'playing', 3
+
         self.buttons = {self.stop_b, self.pause_b, self.play_b, self.step_b, self.fast_b, self.superfast_b}
 
         -- Inventory slot
