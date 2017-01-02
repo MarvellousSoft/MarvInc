@@ -369,7 +369,8 @@ end
 
 function Pickup:execute()
     if ROOM.bot.inv then return "Not enough free hands" end
-    if not ROOM:next_block(DIR_CONV[self.dir]).pickable then return "Unpickable object" end
+    local _n = ROOM:next_block(DIR_CONV[self.dir])
+    if not _n and not _n.pickable then return "Unpickable object" end
     if self.dir then
         StepManager.turn(self.dir)
     end
