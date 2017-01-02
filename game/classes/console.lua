@@ -25,11 +25,44 @@ Console = Class{
     end
 }
 
-function Console:draw()
-    Object.draw(self)
+function Console:postDraw()
+    --[[
     local _tp = nil
     _tp = math.max(#self.inp, #self.out - self.i + 1)
     love.graphics.print(_tp, self.rx - self.fnt:getWidth(_tp)/2, self.ry-self.fnt:getHeight()-5)
+    ]]
+    love.graphics.setFont(self.fnt)
+    local fw, fh = self.fnt:getWidth("a"), self.fnt:getHeight()
+    Color.set(self.color)
+    local r, g, b = love.graphics.getColor()
+
+    local nums = {}
+    if #self.out > 0 then
+        for i = 0, math.min(2, #self.out - self.i), 1 do
+            table.insert(nums, self.out[self.i + i])
+        end
+    else
+        for i = 0, math.min(2, #self.inp - 1), 1 do
+            table.insert(nums, self.inp[#self.inp - i])
+        end
+    end
+    local cx, cy
+    if     self.r[2] == 1 then cx, cy = self.rx + ROOM.grid_cw, self.ry + ROOM.grid_cw
+    elseif self.r[2] == 2 then cx, cy = self.rx, self.ry + (ROOM.grid_cw - fh) / 2
+    elseif self.r[2] == 3 then cx, cy = self.rx + ROOM.grid_cw, self.ry - fh
+    elseif self.r[2] == 4 then cx, cy = self.rx + ROOM.grid_cw, self.ry + (ROOM.grid_cw - fh) / 2
+    end
+    for i = 1, #nums, 1 do
+        love.graphics.setColor(r, g, b, 270 - 70 * i)
+        if self.r[2] == 4 then
+            cx = cx + self.fnt:getWidth(nums[i]) * 1.2
+        end
+        love.graphics.printf(nums[i], -100, cy, cx + 100, 'right')
+        cy = cy - ORIENT[self.r[2]].y * fh
+        if self.r[2] == 2 then
+            cx = cx - self.fnt:getWidth(nums[i]) * 1.2
+        end
+    end
 end
 
 -- Signals all clients to sleep.

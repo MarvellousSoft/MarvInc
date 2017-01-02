@@ -219,6 +219,15 @@ function Room:draw()
                 end
             end
         end
+        -- post draw (for drawing things on top of the other objs)
+        for i=1, self.grid_r do
+            for j=1, self.grid_c do
+                local obj = self.grid_obj[i][j]
+                if obj ~= nil and obj.postDraw then
+                    obj:postDraw()
+                end
+            end
+        end
     else
         Color.set(self.back_clr)
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
