@@ -21,7 +21,7 @@ Console = Class{
         self.inp = {}
         self.i = 1
 
-        self.fnt = FONTS.fira(20)
+        self.fnt = FONTS.firaBold(20)
     end
 }
 

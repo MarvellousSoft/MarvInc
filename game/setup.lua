@@ -19,6 +19,8 @@ WIN_BORD = 20
 
 --Fira-mono table
 FIRA = {}
+--Fira-mono bold table
+FIRA_BOLD = {}
 --Global fonts table
 FONTS = {
     fira = function(size)
@@ -26,6 +28,11 @@ FONTS = {
 
         FIRA[size] = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", size)
         return FIRA[size]
+    end,
+    firaBold = function(size)
+        if FIRA_BOLD[size] then return FIRA_BOLD[size] end
+        FIRA_BOLD[size] = love.graphics.newFont("assets/fonts/fira-mono-bold.ttf", size)
+        return FIRA_BOLD[size]
     end,
 }
 
