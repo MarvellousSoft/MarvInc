@@ -391,11 +391,15 @@ function TextBox:keyPressed(key)
         c.p = #self.lines[c.i] + 1
 
     elseif key == 'tab' then
-        self:tryWrite('  ')
+        if self.accepted_chars[' '] then
+            self:tryWrite(self.accepted_chars[' '] .. self.accepted_chars[' '])
+        end
 
     elseif key == 'space' then
         -- Necessary to work on browsers - it doesn't trigger textinput
-        self:tryWrite(' ')
+        if self.accepted_chars[' '] then
+            self:tryWrite(self.accepted_chars[' '])
+        end
 
     elseif key == 'a' and ctrl then
         -- select all text
