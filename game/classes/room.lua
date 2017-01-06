@@ -20,6 +20,24 @@ Room = Class{
         self.grid_fnt = FONTS.fira(20)
         self.grid_fnt_clr = Color.white()
         self.grid_fnt_h = self.grid_fnt:getHeight()
+        self.grid_alpha = false
+        self.grid_foc_clr = Color.white()
+        self.grid_transFunc = function() -- Transition function
+            Color.set(self.grid_foc_clr)
+            if self.grid_alpha then
+                self.grid_foc_clr.a = self.grid_foc_clr.a + 2
+                if self.grid_foc_clr.a > 255 then
+                    self.grid_foc_clr.a = 255
+                    self.grid_alpha = false
+                end
+            else
+                self.grid_foc_clr.a = self.grid_foc_clr.a - 2
+                if self.grid_foc_clr.a < 0 then
+                    self.grid_foc_clr.a = 0
+                    self.grid_alpha = true
+                end
+            end
+        end
 
         -- Grid
         self.grid_clr = Color.blue()
@@ -256,16 +274,20 @@ function Room:draw()
     for i=1, self.grid_r do
         local _s = tostring(i)
         --if i < 10 then _s = '0'.._s end
+        if self.mode == "online" and i == self.bot.pos.y then self.grid_transFunc() end
         love.graphics.printf(_s, -self.grid_cw, self.grid_ch*(i-1) + self.grid_fnt_h/2 - 5,
             30, "right")
+        if self.mode == "online" and i == self.bot.pos.y then Color.set(self.grid_fnt_clr) end
         love.graphics.line(-self.grid_cw, self.grid_ch*(i-1), 0, self.grid_ch*(i-1))
     end
     love.graphics.line(-self.grid_cw, self.grid_ch*self.grid_r, 0, self.grid_ch*self.grid_r)
     for i=1, self.grid_c do
         local _s = tostring(i)
         --if i < 10 then _s = '0'.._s end
+        if self.mode == "online" and i == self.bot.pos.x then self.grid_transFunc() end
         love.graphics.print(_s, self.grid_cw*(i-0.5) - self.grid_fnt:getWidth(_s)/2,
             self.grid_h + self.grid_ch/2 - self.grid_fnt_h/2)
+        if self.mode == "online" and i == self.bot.pos.x then Color.set(self.grid_fnt_clr) end
         love.graphics.line(self.grid_cw*(i-1), self.grid_h+2,
             self.grid_cw*(i-1), self.grid_h+self.grid_ch)
     end
