@@ -8,7 +8,7 @@ liv.require_puzzles = {'jen2', 'paul1'}
 liv.wait = 10
 
 function liv.run()
-    Mail.new('liv1')
+    Mail.new('liv1_1')
 end
 
 return liv

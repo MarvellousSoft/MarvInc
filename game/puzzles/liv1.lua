@@ -145,19 +145,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
                 _G.LoreManager.timer:after(3, function()
-                    _G.Mail.new("Bad attitude",
-[[
-We here at Marvellous Inc. do not encourage the type of behavior you have shown. Please refrain from using profane vocabulary in the workspace, as it is unprofessional.
-
-Worry not, it was a first offense and this email is just a warning*.
-
-Be polite, and carry on.
-
-
-
-* A note has been added to you personal file
-]]
-                    , "Auto Mod (noreply@marv.com)", true)
+                    _G.Mail.new('liv1_2')
                 end)
                 -- maybe Liv should say something
             end,
