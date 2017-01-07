@@ -99,15 +99,3 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."
-
-function first_completed()
-    _G.PopManager.new("You've completed the game (so far)",
-[[Send us an email and tell us what you think about the game!]],
-    _G.Color.green(), {
-        func = function()
-            _G.ROOM:disconnect()
-        end,
-        text = " ok ",
-        clr = _G.Color.black()
-    })
-end
