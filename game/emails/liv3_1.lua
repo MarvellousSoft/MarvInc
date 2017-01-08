@@ -22,7 +22,7 @@ Make us proud, and carry on.
 
 -- Liv]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'liv3',
+    puzzle_id = 'liv3a',
     open_func =
         function()
             Info.addCommand("walkc <address>")

@@ -17,5 +17,5 @@ Power through, and carry on.
 
 -- Liv]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'liv5'
+    puzzle_id = 'liv3c'
 }

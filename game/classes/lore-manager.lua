@@ -44,14 +44,14 @@ end
 function lore.check_all()
     if not events then return end
     for id, evt in pairs(events) do
-        local all_done = true
+        local count_done = 0
         for _, puzzle in ipairs(evt.require_puzzles) do
-            if not lore.puzzle_done[puzzle] then
-                all_done = false
-                break
+            if lore.puzzle_done[puzzle] then
+                count_done = count_done + 1
             end
         end
-        if all_done then
+        local at_least = evt.require_puzzles.at_least or #evt.require_puzzles
+        if count_done >= at_least then
             events[id] = nil
             table.insert(lore.done_events, id)
             timer:after(evt.wait or 0, evt.run)
