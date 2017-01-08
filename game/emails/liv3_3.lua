@@ -3,7 +3,7 @@ return {
     text = [[
 Shit just keeps piling up. I'm sending you one more.
 
-Look, I know this is not fair. If you solve 2 out of these 3 tasks I sent you, I will solve the hardest and we can hopefully get Christoff off our asses.
+Look, I know this is not fair. If you solve 2 out of these 3 tasks I sent you, I will solve the hardest and we can hopefully get Franz off our asses.
 
 As for Carl and Gabe, well, they won't forget this little episode
 

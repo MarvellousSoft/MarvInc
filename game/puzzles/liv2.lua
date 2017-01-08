@@ -102,7 +102,7 @@ grid_floor = "...................."..
 
 function first_completed()
     _G.PopManager.new("Tks",
-        "Christoff just got here\n-- Liv",
+        "Franz just got here\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()

@@ -11,14 +11,14 @@ bot = {'b', "SOUTH"}
 local ans = {}
 
 local function create_vec()
-    local v, st, ops = {}, {}, 0
+    local v, st, as_char, ops = {}, {}, 0
     for i = 1, 30 do
         local x = _G.love.math.random() <= .7 and 43 or 45
         if #st == 0 then x = 43 end
         if #st == 20 then x = 45 end
         _G.table.insert(v, x)
         if x == 43 then
-            _G.table.insert(v, _G.love.math.random(-999, 999))
+            _G.table.insert(v, _G.love.math.random(0, 999))
             _G.table.insert(st, v[#v])
         else
             _G.table.insert(ans, st[#st])
@@ -38,7 +38,7 @@ local function create_vec()
         if #st == 20 then x = 45 end
         _G.table.insert(v, x)
         if x == 43 then
-            _G.table.insert(v, _G.love.math.random(-999, 999))
+            _G.table.insert(v, _G.love.math.random(0, 999))
             _G.table.insert(st, v[#v])
         else
             _G.table.insert(ans, st[#st])
@@ -49,10 +49,24 @@ local function create_vec()
     return v
 end
 
+local function create_as_char(v)
+    local as_char, i = {}, 1
+    while i <= #v do
+        if v[i] == 43 then
+            as_char[i], as_char[i + 1] = true, false
+            i = i + 2
+        else
+            as_char[i] = true
+            i = i + 1
+        end
+    end
+    return as_char
+end
+
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = create_vec, dir = "east"}
+c = {"console", false, "console", "green", args = create_vec, dir = "east", as_char = create_as_char}
 d = {"console", false, "console", "blue", args = {}, dir = "west"}
 
 -- console objects

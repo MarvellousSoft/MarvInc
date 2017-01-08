@@ -24,6 +24,7 @@ local function valid_num(x) return type(x) == 'number' and x >= -999 and x <= 99
 
 -- Returns a new Number created from string s, or nil or a string error if it is invalid
 function Number.create(s)
+    if #s == 1 and not s:match("%d") and s:byte() >= 32 and s:byte() <= 126 then return Number(s:byte(), 0) end
     if s:match("%a") or not s:match("%d") then return "wrong characters on number" end
     if not s:match("[%[%]]") then return valid_num(tonumber(s)) and Number(tonumber(s), 0) end
     if s:match("[%[%]0-9]+") ~= s then return end
@@ -62,8 +63,11 @@ function Walk.create(t)
         if t[i]:match("%a+") ~= t[i] and type(Number.create(t[i])) ~= 'table' then
             return
         else
-            nums = nums + (type(Number.create(t[i])) == 'table' and 1 or 0)
-            alps = alps + (t[i]:match("%a+") == t[i] and 1 or 0)
+            if type(Number.create(t[i])) == 'table' then
+                nums = nums + 1
+            else
+                alps = alps + 1
+            end
         end
     end
     if nums > 1 or alps > 1 then return end

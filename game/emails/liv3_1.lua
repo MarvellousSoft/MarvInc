@@ -16,7 +16,7 @@ Example:
       walk [12]
 This will walk until it hits an obstacle, then return to the initial position. GOSH alright I'm done explaining
 
-Just do this puzzle so we can impress Christoff. He'll be watching.
+Just do this puzzle so we can impress Franz. He'll be watching.
 
 Make us proud, and carry on.
 

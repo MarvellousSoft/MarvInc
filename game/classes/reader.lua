@@ -74,7 +74,7 @@ function reader.read(puzzle_id)
                 local _proto = _t[_co]
                 if _proto[1] ~= "emitter" then
                     local args = {puz.grid_obj, j, i, _proto[3], _proto[2], _proto[4],
-                        _proto[5], _proto[6], _proto.args}
+                        _proto[5], _proto[6], _proto.args, _proto}
                     local _obj = nil
                     if _proto[1] == "obst" then
                         _obj = Obstacle(unpack(args))
