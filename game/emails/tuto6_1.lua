@@ -23,7 +23,7 @@ Best of Luck. Carry on. :)
     puzzle_id = 'tuto6',
     open_func =
         function()
-            Info.addCommand("add <adress> <value>")
+            Info.addCommand("add <value1> <value2> <address>")
             Info.addCommand("write <value>")
             Info.addCommand("write <value> <direction>")
         end

@@ -1,6 +1,6 @@
 name = "Simple Sort"
 -- Puzzle number
-n = "A.3"
+n = "C.2"
 
 lines_on_terminal = 35
 memory_slots = 12
@@ -99,3 +99,15 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."
+
+function first_completed()
+    _G.PopManager.new("Tks",
+        "Christoff just got here\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I'll help you ",
+            clr = _G.Color.blue()
+        })
+end

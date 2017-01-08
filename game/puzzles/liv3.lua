@@ -1,5 +1,5 @@
 name = "Tile Organizer"
-n = "not decided"
+n = "C.3A"
 
 lines_on_terminal = 40
 memory_slots = 5
@@ -28,7 +28,9 @@ function objective_checker(room)
     return true
 end
 
-extra_info = "Remember you can't walk through a bucket"
+extra_info = [[Remember you can't walk through a bucket
+- Use our *productive* new command 'walkc'
+- Mirrored by the black line means, if there is a bucket, in column X, 3 rows above the black line, then it should be moved to the same column, but 3 rows *below* the black line]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

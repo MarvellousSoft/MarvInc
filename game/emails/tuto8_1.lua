@@ -23,7 +23,7 @@ Carry on.
     puzzle_id = 'tuto8',
     open_func =
         function()
-            Info.addCommand("mov <address> <value>")
-            Info.addCommand("sub <address> <value>")
+            Info.addCommand("mov <value> <address>")
+            Info.addCommand("sub <value1> <value2> <address>")
         end
 }

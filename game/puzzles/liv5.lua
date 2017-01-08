@@ -1,28 +1,50 @@
-
-name = "Hard Sort"
+name = "Stacker"
 -- Puzzle number
-n = "?"
+n = "C.3C"
 
-lines_on_terminal = 30
-memory_slots = 16
+lines_on_terminal = 35
+memory_slots = 30
 
 -- Bot
 bot = {'b', "SOUTH"}
 
-extra_info = [[
-Each sequence is given by its size and then its elements.
-- Example: 3 3 1 2 1 3 is sequence (3,1,2) and  (3) and the output should be 3 1 2 3 1 3.
-- Sequences will have at most 50 elements (does not fit on registers).
-- Each number in the sequence will be between 0 and 9.]]
+local ans = {}
 
 local function create_vec()
-    local v = {}
-    local szs = {3, 4, 1, 5, 50, 35}
-    for _, sz in _G.ipairs(szs) do
-        _G.table.insert(v, sz)
-        for i = 1, sz do
-            _G.table.insert(v, _G.love.math.random(0, 9))
+    local v, st, ops = {}, {}, 0
+    for i = 1, 30 do
+        local x = _G.love.math.random() <= .7 and 43 or 45
+        if #st == 0 then x = 43 end
+        if #st == 20 then x = 45 end
+        _G.table.insert(v, x)
+        if x == 43 then
+            _G.table.insert(v, _G.love.math.random(-999, 999))
+            _G.table.insert(st, v[#v])
+        else
+            _G.table.insert(ans, st[#st])
+            st[#st] = nil
         end
+    end
+    ops = 30
+    while #st > 0 do
+        _G.table.insert(v, 45)
+        _G.table.insert(ans, st[#st])
+        st[#st] = nil
+        ops = ops + 1
+    end
+    while ops < 100 do
+        local x = _G.love.math.random() <= (1 - .8 * #v / 100) and 43 or 45
+        if #st == 0 then x = 43 end
+        if #st == 20 then x = 45 end
+        _G.table.insert(v, x)
+        if x == 43 then
+            _G.table.insert(v, _G.love.math.random(-999, 999))
+            _G.table.insert(st, v[#v])
+        else
+            _G.table.insert(ans, st[#st])
+            st[#st] = nil
+        end
+        ops = ops + 1
     end
     return v
 end
@@ -35,8 +57,6 @@ d = {"console", false, "console", "blue", args = {}, dir = "west"}
 
 -- console objects
 local gr, bl
-
-local ans = {}
 
 -- create ans vector
 function on_start(room)
@@ -53,26 +73,13 @@ function on_start(room)
             end
         end
     end
-    -- creates answer
-    local v, i = gr.out, 1
-    while i <= #v do
-        local n = v[i]
-        _G.table.insert(ans, n)
-        local tmp = {}
-        for j = 1, n do
-            _G.table.insert(tmp, v[i + j])
-        end
-        _G.table.sort(tmp)
-        for j = 1, n do
-            _G.table.insert(ans, tmp[j])
-        end
-        i = i + n + 1
-    end
 end
 
 -- Objective
 objective_text = [[
-Read sequences from the green console and write them, sorted, to the blue console.]]
+You must implement a stack. This stack is a list, and supports the following operations, read from the green console.
+    +: read a number from the green console and add it to the end of the list.
+    -: remove the last number from the list and write it to the blue console.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
@@ -87,6 +94,11 @@ function objective_checker(room)
     end
     return #bl.inp == #ans
 end
+
+extra_info = [[
+Example: "+ 2 + 3 - + 5 - -" should output "3 5 2"
+- The stack will have at most 20 elements on it at a time
+- There will be at most 100 operations]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

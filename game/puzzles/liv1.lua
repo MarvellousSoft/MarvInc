@@ -144,7 +144,7 @@ function first_completed()
         {
             func = function()
                 _G.ROOM:disconnect()
-                _G.LoreManager.timer:after(3, function()
+                _G.LoreManager.timer:after(1, function()
                     _G.Mail.new('liv1_2')
                 end)
                 -- maybe Liv should say something
