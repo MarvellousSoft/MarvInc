@@ -1,11 +1,11 @@
 local Color = require "classes.color.color"
 
 local Rooms = require "classes.room"
-local PcBox = require "classes.pc-box"
+local PcBox = require "classes.pc_box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
-local LoreManager = require "classes.lore-manager"
-local PopManager = require "classes.popmanager"
+local LoreManager = require "classes.lore_manager"
+local PopManager = require "classes.pop_manager"
 local FX = require "classes.fx"
 
 --MODULE FOR THE GAMESTATE: GAME--

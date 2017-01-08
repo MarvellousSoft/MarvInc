@@ -1,4 +1,4 @@
-local LoreManager = require "classes.lore-manager"
+local LoreManager = require "classes.lore_manager"
 local BotManager = require 'classes.bot'
 binser = require "binser"
 

@@ -1,5 +1,5 @@
 local Color = require "classes.color.color"
-local StepManager = require "classes.stepmanager"
+local StepManager = require "classes.step_manager"
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
 local Info = require "classes.tabs.info"

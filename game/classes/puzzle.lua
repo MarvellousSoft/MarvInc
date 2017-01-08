@@ -1,5 +1,5 @@
 require "classes.primitive"
-local LoreManager = require "classes.lore-manager"
+local LoreManager = require "classes.lore_manager"
 
 -- Puzzle stores the values for a new room.
 

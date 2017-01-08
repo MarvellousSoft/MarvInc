@@ -1,4 +1,4 @@
-local LoreManager = require "classes.lore-manager"
+local LoreManager = require "classes.lore_manager"
 local Mail = require "classes.tabs.email"
 
 local square = {}

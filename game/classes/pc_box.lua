@@ -1,10 +1,10 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 
---PC-BOX CLASS--
+--PC_BOX CLASS--
 -- Supposes only one instance is created
 
---PC-BOX functions table
+--PC_BOX functions table
 local pcbox = {}
 local button_tab_height = 30
 
