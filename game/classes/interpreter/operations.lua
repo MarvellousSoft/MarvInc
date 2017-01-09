@@ -199,12 +199,14 @@ function Mov:execute()
     return Util.findId("memory"):set(dst, val)
 end
 
--- Limits the values in the range -999 .. 999, wraping automatically
+-- Limits the values in the range -999 .. 999, wrapping automatically
 local function mod(val)
-    val = val + 999
-    if val < 0 then val = 999 - val end
-    val = val % 1999
-    return val - 999
+    if val > 999 then
+        val = -999 + ((val - 1000) % 1999)
+    elseif val < -999 then
+        val = 999 - ((-1000 - val) % 1999)
+    end
+    return val
 end
 
 
