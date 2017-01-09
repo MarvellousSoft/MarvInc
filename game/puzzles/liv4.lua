@@ -1,6 +1,6 @@
-name = "Stacker"
+name = "Dequer"
 -- Puzzle number
-n = "C.3C"
+n = "C.4"
 
 lines_on_terminal = 35
 memory_slots = 30
@@ -10,40 +10,42 @@ bot = {'b', "SOUTH"}
 
 local ans = {}
 
+local function add_op(v, dq, x)
+    _G.table.insert(v, x)
+    if x == '+' then
+        _G.table.insert(v, _G.love.math.random(0, 999))
+        dq.r = dq.r + 1
+        dq[dq.r] = v[#v]
+    elseif x == '<' then
+        _G.table.insert(ans, dq[dq.l])
+        dq.l = dq.l + 1
+    else
+        _G.table.insert(ans, dq[dq.r])
+        dq.r = dq.r - 1
+    end
+end
+
 local function create_vec()
-    local v, st = {}, {}
+    local v, dq = {}, {l = 1, r = 0}
     for i = 1, 30 do
-        local x = _G.love.math.random() <= .9 and '+' or '-'
+        local m = _G.love.math.random() <= .5 and '<' or '>'
+        local x = _G.love.math.random() <= .85 and '+' or m
         if #st == 0 then x = '+' end
-        if #st == 20 then x = '-' end
-        _G.table.insert(v, x)
-        if x == '+' then
-            _G.table.insert(v, _G.love.math.random(0, 999))
-            _G.table.insert(st, v[#v])
-        else
-            _G.table.insert(ans, st[#st])
-            st[#st] = nil
-        end
+        if #st == 20 then x = m end
+        add_op(v, dq, x)
     end
     local ops = 30
     while #st > 0 do
-        _G.table.insert(v, '-')
-        _G.table.insert(ans, st[#st])
-        st[#st] = nil
+        local m = _G.love.math.random() <= .5 and '<' or '>'
+        add_op(v, dq, m)
         ops = ops + 1
     end
     while ops < 100 do
-        local x = _G.love.math.random() <= (1 - .8 * ops / 100) and '+' or '-'
+        local m = _G.love.math.random() <= .5 and '<' or '>'
+        local x = _G.love.math.random() <= (1 - .8 * ops / 100) and '+' or m
         if #st == 0 then x = '+' end
-        if #st == 20 then x = '-' end
-        _G.table.insert(v, x)
-        if x == '+' then
-            _G.table.insert(v, _G.love.math.random(0, 999))
-            _G.table.insert(st, v[#v])
-        else
-            _G.table.insert(ans, st[#st])
-            st[#st] = nil
-        end
+        if #st == 20 then x = m end
+        add_op(v, dq, x)
         ops = ops + 1
     end
     return v
@@ -76,9 +78,10 @@ end
 
 -- Objective
 objective_text = [[
-You must implement a stack. This stack is a list, and supports the following operations, read from the green console.
+You must implement a deque. This deque is a list, and supports the following operations, read from the green console.
     +: read a number from the green console and add it to the end of the list.
-    -: remove the last number from the list and write it to the blue console.]]
+    <: remove the first number from the list and write it to the blue console.
+    >: remove the last number from the list and write it to the blue console.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
@@ -95,8 +98,8 @@ function objective_checker(room)
 end
 
 extra_info = [[
-Example: "+ 2 + 3 - + 5 - -" should output "3 5 2"
-- The stack will have at most 20 elements on it at a time
+Example: "+ 2 + 3 < + 5 > <" should output "2 5 3"
+- The deque will have at most 20 elements on it at a time
 - There will be at most 100 operations]]
 
 grid_obj =  "oooooooooooooooooooo"..

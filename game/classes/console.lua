@@ -6,7 +6,7 @@ local Color = require "classes.color.color"
 Console = Class{
     __includes = {Object},
     -- may receive a vector or a function that receives the coordinates and creates the vector
-    init = function(self, grid, i, j, key, bg, color, __, ___, args, extra)
+    init = function(self, grid, i, j, key, bg, color, __, ___, args)
         Object.init(self, grid, i, j, "console", bg)
         self.color = Color[color or "white"](Color)
         self.img = OBJS_IMG[key]
@@ -19,10 +19,6 @@ Console = Class{
 
         self.out = type(args) == 'table' and args or args(i, j)
         self.inp = {}
-        self.as_char = extra.as_char -- numbers that should be printed as chars
-        if type(self.as_char) == 'function' then
-            self.as_char = self.as_char(self.out)
-        end
         self.i = 1
 
         self.fnt = FONTS.firaBold(20)
@@ -38,22 +34,11 @@ function Console:postDraw()
     local nums = {}
     if #self.out > 0 then
         for i = 0, math.min(2, #self.out - self.i), 1 do
-            local v = self.out[self.i + i]
-            if self.as_char and self.as_char[self.i + i] and v >= 32 and v <= 126 then
-                table.insert(nums, string.char(v))
-            else
-                table.insert(nums, v)
-            end
+            table.insert(nums, self.out[self.i + i])
         end
     else
         for i = 0, math.min(2, #self.inp - 1), 1 do
-            local v = self.inp[#self.inp - i]
-            local v = self.out[self.i + i]
-            if self.as_char and self.as_char[#self.inp - i] and v >= 32 and v <= 126 then
-                table.insert(nums, string.char(v))
-            else
-                table.insert(nums, v)
-            end
+            table.insert(nums, self.inp[#self.inp - i])
         end
     end
     local cx, cy
@@ -105,8 +90,9 @@ end
 
 function Console:input()
     if self.i > #self.out then return end
+    local v = self.out[self.i]
     self.i = self.i + 1
-    return self.out[self.i - 1]
+    return type(v) == 'string' and v:byte() or v
 end
 
 function Console:write(val)
