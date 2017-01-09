@@ -13,7 +13,7 @@ local ans = {}
 local function create_vec()
     local v, st = {}, {}
     for i = 1, 30 do
-        local x = _G.love.math.random() <= .9 and '+' or '-'
+        local x = _G.love.math.random() <= .85 and '+' or '-'
         if #st == 0 then x = '+' end
         if #st == 20 then x = '-' end
         _G.table.insert(v, x)
@@ -33,7 +33,7 @@ local function create_vec()
         ops = ops + 1
     end
     while ops < 100 do
-        local x = _G.love.math.random() <= (1 - .8 * ops / 100) and '+' or '-'
+        local x = _G.love.math.random() <= (1 - .6 * ops / 100) and '+' or '-'
         if #st == 0 then x = '+' end
         if #st == 20 then x = '-' end
         _G.table.insert(v, x)

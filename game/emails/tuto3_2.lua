@@ -11,7 +11,7 @@ Here are some useful shortcuts to enhance your working experience here at Marvel
 
 - Up Arrow/Down Arrow: Scrolls your email list.
 
-- '>', '<': Increase or decrease simulation speed.
+- Ctrl + Right/Left Arrow: Increase/Decrease simulation speed.
 
 Remember them all. As we say here in Marvellous Inc. "Mice are for chumps and Larry from accounting".
 

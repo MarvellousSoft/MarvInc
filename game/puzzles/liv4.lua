@@ -30,21 +30,21 @@ local function create_vec()
     for i = 1, 30 do
         local m = _G.love.math.random() <= .5 and '<' or '>'
         local x = _G.love.math.random() <= .85 and '+' or m
-        if #st == 0 then x = '+' end
-        if #st == 20 then x = m end
+        if dq.r < dq.l then x = '+' end
+        if dq.r - dq.l + 1 == 20 then x = m end
         add_op(v, dq, x)
     end
     local ops = 30
-    while #st > 0 do
-        local m = _G.love.math.random() <= .5 and '<' or '>'
-        add_op(v, dq, m)
+    while dq.r >= dq.l do
+        local x = _G.love.math.random() <= .5 and '<' or '>'
+        add_op(v, dq, x)
         ops = ops + 1
     end
     while ops < 100 do
         local m = _G.love.math.random() <= .5 and '<' or '>'
-        local x = _G.love.math.random() <= (1 - .8 * ops / 100) and '+' or m
-        if #st == 0 then x = '+' end
-        if #st == 20 then x = m end
+        local x = _G.love.math.random() <= (1 - .6 * ops / 100) and '+' or m
+        if dq.r < dq.l then x = '+' end
+        if dq.r - dq.l + 1 == 20 then x = m end
         add_op(v, dq, x)
         ops = ops + 1
     end

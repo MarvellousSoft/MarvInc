@@ -108,6 +108,15 @@ function CodeTab:draw()
 end
 
 function CodeTab:keyPressed(key)
+    if love.keyboard.isDown("lctrl", "rctrl") then
+        if key == 'right' then
+            StepManager.increase()
+            return
+        elseif key == 'left' then
+            StepManager.decrease()
+            return
+        end
+    end
     if self.lock then
         if key == 'space' then
             if StepManager.running then
@@ -118,8 +127,8 @@ function CodeTab:keyPressed(key)
         end
         return
     end
-    if key == 'return' then
-        if love.keyboard.isDown("lctrl", "rctrl") then
+    if love.keyboard.isDown("lctrl", "rctrl") then
+        if key == 'return' then
             if StepManager.running then
                 StepManager.pause()
             else
@@ -134,14 +143,6 @@ function CodeTab:keyPressed(key)
 end
 
 function CodeTab:textInput(t)
-    if t == '>' then
-        StepManager.increase()
-        return
-    elseif t == '<' then
-        StepManager.decrease()
-        return
-    end
-
     if self.lock then return end
     self.term:textInput(t)
     self:checkErrors()
