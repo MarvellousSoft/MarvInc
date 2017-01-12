@@ -3,7 +3,7 @@ name = "Complete Brainfuck Interpreter"
 n = "C.6"
 
 lines_on_terminal = 60
-memory_slots = 40
+memory_slots = 120
 
 -- Bot
 bot = {'b', "NORTH"}
@@ -12,17 +12,33 @@ local ans = {}
 local v_code, v_in
 
 local function create_ans()
-    local mem, i = {}, 1 -- data and data pointer
-    for j = 1, 20 do mem[j] = 0 end
-    local inp = 1 -- next position of v_in to read
-    for _, op in _G.ipairs(v_code) do
-        if     op == '+' then mem[i] = mem[i] + 1
-        elseif op == '-' then mem[i] = mem[i] - 1
-        elseif op == '.' then _G.table.insert(ans, mem[i])
-        elseif op == ',' then mem[i] = v_in[inp]; inp = inp + 1
-        elseif op == '<' then i = i == 1 and 20 or i - 1
-        elseif op == '>' then i = i == 20 and 1 or i + 1
-        else assert(false) end
+    local mem, dp = {}, 1 -- data and data pointer
+    for i = 1, 20 do mem[i] = 0 end
+
+    -- processing matching brackets
+    local match = {} -- stores matching brackets
+    do
+        local st = {} -- stack for loops
+        for i, op in _G.ipairs(v_code) do
+            if     op == '[' then _G.table.insert(st, i)
+            elseif op == ']' then match[st[#st]] = i; match[i] = st[#st]; st[#st] = nil
+            end
+        end
+    end
+
+    local inp, ip = 1, 1 -- next position of v_in and v_code to read
+    while v_code[ip] ~= 0 do
+        local op = v_code[ip]
+        if     op == '+' then mem[dp] = mem[dp] + 1
+        elseif op == '-' then mem[dp] = mem[dp] - 1
+        elseif op == '.' then _G.table.insert(ans, mem[dp])
+        elseif op == ',' then mem[dp] = v_in[inp]; inp = inp + 1
+        elseif op == '<' then dp = dp == 1  and 20 or dp - 1
+        elseif op == '>' then dp = dp == 20 and 1  or dp + 1
+        elseif op == '[' then ip = mem[dp] == 0 and match[ip] or ip
+        elseif op == ']' then ip = mem[dp] ~= 0 and match[ip] or ip
+        else _G.assert(false) end
+        ip = ip + 1
     end
 end
 
@@ -36,42 +52,33 @@ local function add(code, x)
 end
 
 local function ins(code, str)
-    for c in str:gmatch('.') do
-        _G.table.insert(code, c)
+    if _G.type(str) == 'number' then
+        _G.table.insert(code, str)
+    else
+        for c in str:gmatch('.') do
+            _G.table.insert(code, c)
+        end
     end
 end
 
+local function rnd() return _G.love.math.random(5, 10) end
+
 local function create_vecs()
     v_code, v_in = {}, {}
-    for i = 1, 2 do
-        ins(v_code, ',')
-        _G.table.insert(v_in, _G.love.math.random(-99, 99))
-        add(v_code, _G.love.math.random(-2, 2))
-        if i == 1 then ins(v_code, '>') end
-    end
-    ins(v_code, '.<.')
-    for i = 1, 20 do
-        ins(v_code, '<')
-        if _G.love.math.random() < .2  then
-            ins(v_code, ',')
-            _G.table.insert(v_in, _G.love.math.random(-99, 99))
-        end
-        if _G.love.math.random() < .25 then ins(v_code, '+') end
-        if _G.love.math.random() < .25 then ins(v_code, '-') end
-        if _G.love.math.random() < .25 then ins(v_code, '.') end
-        add(v_code, _G.love.math.random(-2, 2))
-    end
-    for i = 1, 23 do
-        ins(v_code, '.>')
-        if _G.love.math.random() < .2 then ins(v_code, '-') end
-    end
-    local pos = {'<', '>', '+', '-', '.', ',', '.', '.'}
-    for i = 1, 32 do
-        local op = pos[_G.love.math.random(1, #pos)]
-        ins(v_code, op)
-        if op == ',' then _G.table.insert(v_in, _G.love.math.random(-99, 99)) end
+    ins(v_code, ",[>,][+]<[->+++<<++>]<.>>.>")
+    for i = 1, _G.love.math.random(5, 9) do ins(v_in, rnd()) end
+    ins(v_in, 0)
+    add(v_code, 2)
+    for i = 1, 5 do
+        ins(v_code, '[->')
+        add(v_code, _G.love.math.random() < .6 and 1 or 2)
     end
     ins(v_code, '.')
+    for i = 1, 5 do
+        ins(v_code, '<]')
+    end
+    ins(v_code, "<<<[.<]")
+    ins(v_code, 0)
     create_ans()
 end
 
@@ -133,8 +140,9 @@ end
 
 extra_info = [[
 The size of the cyclic memory should be exactly 20.
-- There will be at most 100 instructions.
+- There will be at most 80 instructions.
 - The will be at most 5 levels of nested loops.
+- You have 120 register positions.
 - Refer to Liv's email for details on the instructions and language.]]
 
 grid_obj =  "oooooooooooooooooooo"..

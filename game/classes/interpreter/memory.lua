@@ -19,7 +19,7 @@ function Memory:setSlots(slots)
     -- Decide draw
     local best_r = 1
     local best_ssize = math.min(self.h, self.w / self.slots)
-    for i = 2, 5 do
+    for i = 2, 7 do
         local columns = math.ceil(slots / i)
         local cs = math.min(self.h / i, self.w / columns)
         if cs > best_ssize then
