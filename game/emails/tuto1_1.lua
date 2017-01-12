@@ -1,7 +1,7 @@
 local tuto1 = require 'lore_events.tuto1'
 
 return {
-    title = "Welcome Employee #" .. EMPLOYER_NUMBER,
+    title = "Welcome Employee #" .. EMPLOYEE_NUMBER,
     text = [[
 Greetings and Salutations!
 

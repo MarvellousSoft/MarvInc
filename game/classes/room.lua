@@ -306,7 +306,7 @@ function Room:draw()
     if self.draw_star then
         Color.set(self.star_color)
         local star = MISC_IMG.star
-        love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 80 / star:getWidth())
+        love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 40 / star:getWidth())
     end
 end
 

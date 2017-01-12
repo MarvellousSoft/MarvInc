@@ -51,6 +51,12 @@ function sm.save()
     data.known_commands = info.commands
     data.bots_dead = info.dead
     data.last_bot = BotManager.current_bot
+
+    data.employee_id = EMPLOYEE_NUMBER
+    -- whether to draw star on the corner of the screen
+    data.draw_star = ROOM.draw_star
+    -- Marvellous OS version
+    data.os_version = ROOM.version
     --------------------
 
     f.write('saves/' .. user .. '/save_file', binser.serialize(data))
@@ -75,10 +81,15 @@ function sm.login(user)
             e.can_reply = email.can_reply
         end
 
+        -- Other stuff
         local info = Util.findId('info_tab')
         info.commands = data.known_commands
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
+
+        EMPLOYEE_NUMBER = data.employee_id
+        ROOM.draw_star = data.draw_star
+        ROOM.version = data.os_version
     else
         -- without save
     end
@@ -103,11 +114,13 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         f.createDirectory("saves")
     end
     for _, user in pairs(f.getDirectoryItems("saves")) do
-        local ver = f.read('saves/' .. user .. '/version')
-        if ver ~= current_save_version then
-            -- deal with old save versions
+        if f.exists('saves/' .. user .. '/save_file') then
+            local ver = f.read('saves/' .. user .. '/version')
+            if ver ~= current_save_version then
+                -- deal with old save versions
+            end
+            sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
         end
-        sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
     end
 end
 

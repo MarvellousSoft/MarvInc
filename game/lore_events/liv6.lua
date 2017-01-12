@@ -4,7 +4,7 @@ local liv = {}
 
 -- Add puzzle 'liv6'
 
-liv.require_puzzles = {'liv4'}
+liv.require_puzzles = {'liv5'}
 liv.wait = 5
 
 function liv.run()

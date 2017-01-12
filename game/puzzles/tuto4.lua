@@ -20,7 +20,8 @@ function objective_checker(room)
     return room.bot.steps >= 200
 end
 
-extra_info = "The experiment ends as soon as the objective requirements are completed."
+extra_info = [[The experiment ends as soon as the objective requirements are completed.
+- You can use the Fast (>>) or Very Fast (>>>) speed buttons to make the turns go faster.]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..

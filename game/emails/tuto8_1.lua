@@ -13,7 +13,7 @@ Example where the bot will move the content of the register #7 to the register #
     - mov [7] 3
       sub [7] 4 7
 
-Prove yourself worthy, employee #]] .. EMPLOYER_NUMBER .. [[.
+Prove yourself worthy, employee #]] .. EMPLOYEE_NUMBER .. [[.
 
 We are waiting you.
 

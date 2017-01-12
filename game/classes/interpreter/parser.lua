@@ -44,23 +44,23 @@ function parser.parseAll(lines)
         if line ~= "" then
             local op, lab = parser.parseLine(line)
             if type(op) ~= "table" then
-                err_line, err_msg = err_line or i, err_msg or (op or "Compilation Error")
+                err_line, err_msg = err_line or i, err_msg or (op or "compilation error")
                 bad_lines[i] = true
             end
             table.insert(code, op)
             table.insert(real_line, i)
             if lab and labs[lab] then
-                err_line, err_msg = err_line or i, err_msg or ": two labels with the same name"
+                err_line, err_msg = err_line or i, err_msg or "two labels with the same name"
                 bad_lines[i] = true
-                bad_lines[labs[lab]] = true
+                bad_lines[real_line[labs[lab]]] = true
             end
             if lab then labs[lab] = #code end
         end
     end
     for i, op in ipairs(code) do
         if op.lab and type(op.lab.lab) == 'string' and not labs[op.lab.lab] then
-            err_line, err_msg = err_line or i, err_msg or ": invalid label"
-            bad_lines[i] = true
+            err_line, err_msg = err_line or real_line[i], err_msg or "invalid label"
+            bad_lines[real_line[i]] = true
         end
     end
     if next(bad_lines) then return bad_lines, err_line, err_msg end
