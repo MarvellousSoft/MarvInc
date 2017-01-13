@@ -71,6 +71,8 @@ function sm.login(user)
     sm.current_user = user
     local data = sm.user_data[user]
     if data then
+        EMPLOYEE_NUMBER = data.employee_id
+
         LoreManager.puzzle_done = data.puzzle_done
         LoreManager.set_done_events(data.done_events)
 
@@ -87,7 +89,6 @@ function sm.login(user)
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
 
-        EMPLOYEE_NUMBER = data.employee_id
         ROOM.draw_star = data.draw_star
         ROOM.version = data.os_version
     else

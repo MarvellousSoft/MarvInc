@@ -2,7 +2,7 @@ name = "Maze Sprinter"
 -- Puzzle number
 n = "undecided"
 
-lines_on_terminal = 40
+lines_on_terminal = 30
 memory_slots = 6
 
 -- Bot

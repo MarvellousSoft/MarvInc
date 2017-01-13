@@ -16,6 +16,6 @@ don't forget to carry on ;))).
 jeNny Leubwoot
 chief astronaut at marvellous soft.s KICKASS dojo
 ]],
-    author = "Janine Leubwitz",
+    author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen1'
 }
