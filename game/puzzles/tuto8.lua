@@ -108,8 +108,8 @@ function first_completed()
     "been added to the coffee room employee board under your name. Every month we select "..
     "the highest golden sticker ranking employee and hang an Employee of the Month picture "..
     "in the coffee room for this outstanding and obedient member of the Marvellous Inc "..
-    "family. The current Employee of the Month for department [ROBOT TESTING] is [GABE "..
-    "NEWELL JR].\n\n"..
+    "family. The current Employee of the Month for department [ROBOT TESTING] is [FERGUS "..
+    "GERHARD JACOBSEN].\n\n"..
     "And remember, efficiency means lower costs. And lower costs means fewer layoffs.\n\n"..
     "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
     _G.Color.blue(), {

@@ -19,7 +19,7 @@ Good luck, you'll need it. Carry on.
 
 -- Liv
 
-* If you're a real L++ expert, you'll see that this works even if the value is negative, since -999 - 1 = 999 (though, it will take a LOT of time).
+* If you're a real L++ expert, you'll see that this works even if the value is negative, since -999 - 1 = 999 (it will take a LOT of time, though).
 ]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
     puzzle_id = 'liv6'

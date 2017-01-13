@@ -82,3 +82,15 @@ grid_floor = "oooooooooooooooooooo"..
              "o,,,,,,,,,,,,,,,,,,o"..
              "oooooooooooooooooooo"
 floor = grid_floor
+
+function first_completed()
+    _G.PopManager.new("Task completed",
+        "Cool new command, right?\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " Yep ",
+            clr = _G.Color.blue()
+        })
+end
