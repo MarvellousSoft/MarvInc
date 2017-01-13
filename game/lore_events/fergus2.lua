@@ -4,7 +4,7 @@ local fergus = {}
 
 -- Add puzzle 'fergus2'
 
-fergus.require_puzzles = {'fergus1', 'jen1'}
+fergus.require_puzzles = {'fergus1'}
 fergus.wait = 6
 
 function fergus.run()

@@ -9,7 +9,7 @@ You see, I have a great number of tasks here, but I think they would just be TOO
 
 Keep improving yourself, and carry on.
 
-    Written from my iPhone
+    Sent from my iPhone
 
 ========================================
 
