@@ -1,4 +1,5 @@
 local Color = require "classes.color.color"
+local ScrollWindow = require "classes.scroll_window"
 
 -- OPENED EMAIL CLASS--
 
@@ -14,12 +15,11 @@ OpenedEmail = Class{
 
     init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
-        local box_width, box_height = 2*W/5, 3*H/5
+        local box_width, box_height = 2.2*W/5, 4*H/5
 
         self.text_font = FONTS.fira(15)
 
         local but_size = (_reply_func and 50 or 0) + (_can_be_deleted and 50 or 0)
-        box_height = math.max(height(self.text_font, _text, box_width) + 200 + but_size, 3 * H / 5)
 
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 
@@ -28,6 +28,17 @@ OpenedEmail = Class{
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
+
+        -- Text ScrollWindow
+
+        self.text_height = height(self.text_font, _text, self.w - 20)
+        local obj = {
+            getHeight = function() return self.text_height end,
+            draw = function(o) love.graphics.printf(self.text, o.pos.x, o.pos.y, self.w - 20) end,
+            pos = Vector(self.pos.x + 10, self.pos.y + 110)
+        }
+
+        self.text_scroll = ScrollWindow(self.w - 20, 21 * self.text_font:getHeight(), obj, self.text_font:getHeight())
 
         self.can_be_deleted = _can_be_deleted -- If email can be deleted
         self.delete_button_color = Color.new(0,80,120) --Color for delete button box
@@ -117,8 +128,7 @@ function OpenedEmail:draw()
     -- Text
     Color.set(e.content_color)
     love.graphics.setFont(self.text_font)
-    text = e.text
-    love.graphics.printf(text,  e.pos.x + 10, e.pos.y + 110, e.w - 20)
+    self.text_scroll:draw()
 
     -- Time
     Color.set(e.content_color)
@@ -213,6 +223,12 @@ function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker 
     Util.findId("email_tab").email_opened = nil
 
 end
+
+function OpenedEmail:mouseMoved(...) self.text_scroll:mouseMoved(...) end
+function OpenedEmail:mouseScroll(...) self.text_scroll:mouseScroll(...) end
+function OpenedEmail:mousePressed(...) self.text_scroll:mousePressed(...) end
+function OpenedEmail:mouseReleased(...) self.text_scroll:mouseReleased(...) end
+function OpenedEmail:update(...) self.text_scroll:update(...) end
 
 -- UTILITY FUNCTIONS
 

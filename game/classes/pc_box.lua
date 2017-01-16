@@ -110,6 +110,10 @@ function PcBox:update(dt)
     tabs[self.cur_tab]:update(dt)
 end
 
+function PcBox:mouseMoved(x, y)
+    tabs[self.cur_tab]:mouseMoved(x, y)
+end
+
 --UTILITY FUNCTIONS--
 
 function pcbox.create()

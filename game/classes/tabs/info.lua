@@ -2,6 +2,8 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
 
+local ScrollWindow = require "classes.scroll_window"
+
 -- INFO TAB CLASS--
 local info_funcs = {}
 
@@ -48,32 +50,61 @@ InfoTab = Class{
         self.give_up_button_text_color = Color.new(0,20,220) --Color for give up button text
         self.give_up_w = 95 -- Width value of give up button
         self.give_up_h = 40 -- Height value of give up button
-        self.give_up_x = self.pos.x + self.w - self.give_up_w - 10 -- X position value of give up button (related to opened email pos)
-        self.give_up_y = self.pos.y + self.h - self.give_up_h - 10 -- Y position value of give up button (related to opened email pos)
+        self.give_up_x, self.give_up_y = 0, 0
 
         self.line_color = Color.new(0,80,40)
+
+        self.last_h = 0
+        local obj = {
+            pos = self.pos,
+            getHeight = function() return self.last_h end,
+            draw = function() self:trueDraw() end,
+            mousePressed = function(obj, ...) self:trueMousePressed(...) end
+        }
+        self.box = ScrollWindow(self.w, self.h, obj)
 
     end
 }
 
 function InfoTab:mousePressed(x, y, but)
+    self.box:mousePressed(x, y, but)
+end
+
+function InfoTab:mouseMoved(x, y)
+    self.box:mouseMoved(x, y)
+end
+
+function InfoTab:trueMousePressed(x, y, but)
     local i
-
     i = self
-
     -- Disconnect Room if give up button is pressed
-    if but == 1 and ROOM:connected() and Util.pointInRect(x, y, {pos = {x = i.give_up_x, y = i.give_up_y}, w = i.give_up_w, h = i.give_up_h}) then
+    if but == 1 and ROOM:connected() and Util.pointInRect(x, y, i.give_up_x, i.give_up_y, i.give_up_w, i.give_up_h) then
         ROOM:disconnect()
     end
+end
 
+function InfoTab:mouseReleased(x, y, but)
+    self.box:mouseReleased(x, y, but)
+end
+
+function InfoTab:update(dt)
+    self.box:update(dt)
+end
+
+function InfoTab:mouseScroll(x, y)
+    self.box:mouseScroll(x, y)
 end
 
 function InfoTab:draw()
-    local font, text
-
     -- Background for tab
     Color.set(self.main_color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+
+    self.box:draw()
+end
+
+function InfoTab:trueDraw()
+    local font, text
 
     -- Print bot id file
     if ROOM:connected() then
@@ -159,17 +190,26 @@ function InfoTab:draw()
             love.graphics.setFont(font)
             Color.set(self.text_color3)
             -- Print the info
-            love.graphics.printf("- "..ROOM.extra_info, self.pos.x + 10, self.pos.y + self.id_file_y + 415 + h, self.w - 20)
+            text = "- "..ROOM.extra_info
+            love.graphics.printf(text, self.pos.x + 10, self.pos.y + self.id_file_y + 415 + h, self.w - 20)
+            h = h + #(select(2, font:getWrap(text, self.w - 20))) * font:getHeight()
+            self.last_h = self.id_file_y + 415 + h
+        else
+            self.last_h = self.id_file_y + 350 + h
         end
 
         -- Draw give up button
 
         -- Make button box
+        self.give_up_x = self.pos.x + self.w - self.give_up_w - 10
+        self.give_up_y = self.pos.y + self.last_h + 10
         Color.set(self.give_up_button_color)
         love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
         Color.set(self.line_color)
         love.graphics.setLineWidth(2)
         love.graphics.rectangle("line", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+
+        self.last_h = self.last_h + 20 + self.give_up_h
 
         -- Make button text
         love.graphics.setFont(FONTS.fira(20))
@@ -200,6 +240,8 @@ function InfoTab:draw()
             love.graphics.print(text, self.pos.x + 10, self.pos.y + self.id_file_y + 60 + h)
             h = h + font:getHeight(text)
         end
+
+        self.last_h = self.id_file_y + 60 + h
 
     end
 

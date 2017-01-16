@@ -50,3 +50,7 @@ end
 function Tab:mouseScroll(x, y)
 
 end
+
+function Tab:mouseMoved(x, y)
+
+end

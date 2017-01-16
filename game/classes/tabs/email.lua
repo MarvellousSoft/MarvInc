@@ -184,7 +184,14 @@ function EmailTab:keyPressed(key)
 
 end
 
+function EmailTab:mouseMoved(...)
+    local o = Util.findId('opened_email')
+    if o then o:mouseMoved(...) end
+end
+
 function EmailTab:mousePressed(x, y, but)
+    local o = Util.findId('opened_email')
+    if o then o:mousePressed(x, y, but) end
     local e, rect
 
     e = self
@@ -208,7 +215,14 @@ function EmailTab:mousePressed(x, y, but)
     end
 end
 
+function EmailTab:mouseReleased(x, y, but)
+    local o = Util.findId('opened_email')
+    if o then o:mouseReleased(x, y, but) end
+end
+
 function EmailTab:mouseScroll(x, y)
+    local o = Util.findId('opened_email')
+    if o then o:mouseScroll(x, y) end
     local mx, my
 
     mx, my = love.mouse.getPosition()
@@ -219,6 +233,11 @@ function EmailTab:mouseScroll(x, y)
         return
     end
 
+end
+
+function EmailTab:update(...)
+    local o = Util.findId('opened_email')
+    if o then o:update(...) end
 end
 
 

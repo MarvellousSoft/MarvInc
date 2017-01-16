@@ -21,6 +21,13 @@ function res.init()
     end
 end
 
+function res.toRealCoords(x, y)
+    return tx + x * scale, ty + y * scale
+end
+
+function res.scale() return scale end
+
+
 function res.adjustWindow(w, h)
     local sx, sy = w / W, h / H
     scale = math.min(sx, sy)

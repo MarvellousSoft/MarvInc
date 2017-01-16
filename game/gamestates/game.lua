@@ -92,6 +92,10 @@ function state:mousereleased(x, y, button, touch)
     pc_box:mouseReleased(x, y, button)
 end
 
+function state:mousemoved(x, y)
+    pc_box:mouseMoved(x, y)
+end
+
 function state:textinput(t)
     if EVENTS_LOCK then return end
 

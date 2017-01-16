@@ -54,6 +54,10 @@ NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
 SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
 ORIENT = {NORTH, EAST, SOUTH, WEST}
 
+
+--TIMERS--
+MAIN_TIMER = Timer.new()  --General Timer
+
 -- Rotational orientations
 NORTH_R, EAST_R, SOUTH_R, WEST_R = {math.pi}, {3*math.pi/2}, {0}, {math.pi/2}
 ORIENT_R = {NORTH_R, EAST_R, SOUTH_R, WEST_R}
@@ -140,8 +144,6 @@ function setup.config()
               "Smells", "Inconvenient", "Hates Sports", "Uses Hashtags", "Rad Dance Moves"
              }
 
-    --TIMERS--
-    MAIN_TIMER = Timer.new()  --General Timer
 
     --INITIALIZING TABLES--
 

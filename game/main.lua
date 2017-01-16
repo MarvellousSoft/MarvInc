@@ -100,6 +100,12 @@ function love.mousepressed(x, y, but, ...)
     end
 end
 
+function love.mousemoved(x, y, dx, dy, ...)
+    x, y = love.mouse.getPosition() -- fixed
+    dx, dy = dx * ResManager.scale(), dy * ResManager.scale()
+    Gamestate.mousemoved(x, y, dx, dy, ...)
+end
+
 function love.resize(w, h)
     ResManager.adjustWindow(w, h)
 end
