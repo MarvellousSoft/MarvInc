@@ -1,7 +1,7 @@
 -- Lasers, Consoles and Emitters
 
 name = "Guess the Password"
-n = 6
+n = "B.1"
 
 lines_on_terminal=30
 memory_slots=4
