@@ -17,7 +17,7 @@ consoles = {y_c, n_c, a_c}
 
 local function create_votes()
     -- Total number of votes.
-    local votes = 400
+    local votes = 125
     -- The true vote partition.
     local p = {0.4, 0.5, 0.1}
 
@@ -145,7 +145,8 @@ local function test(room)
             end
         end
     end
-    return #(room.grid_obj[s_x][s_y].out) == 0
+    local _s = room.grid_obj[s_x][s_y]
+    return _s.i > #_s.out
 end
 
 function objective_checker(room)

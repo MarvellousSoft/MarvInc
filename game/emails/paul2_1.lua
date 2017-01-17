@@ -1,6 +1,6 @@
 local p = require 'lore_events.paul2'
 
-return {
+local email = {
     title = "Great shit!",
     text = [[
 And I don't mean it just literally man (Andy went absolutely nutters, right?). Great time man. Glad you, Liv, Bill, Miles and all you geekier folks upstairs were there. Gets dull talking only to physics, engineers and chemists.
@@ -16,5 +16,11 @@ Chief engineer at Marvellous Inc's Material Engineering Department
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
     can_be_deleted = true,
-    open_func = p.open
+    open_func = function()
+        email.can_reply = false
+        email.can_be_deleted = true
+        p.open()
+    end
 }
+
+return email
