@@ -147,7 +147,7 @@ grid_floor = "...................."..
              "...................."
 
 function first_completed()
-    _G.PopManager.new("Task completed",
+    _G.PopManager.new("Stack completed",
         "This will be useful in the future, keep it in mind.\n-- Liv",
         _G.Color.green(), {
             func = function()

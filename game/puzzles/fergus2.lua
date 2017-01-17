@@ -93,3 +93,15 @@ grid_floor = "wwwwww.wwwwwwwwwwwww"..
              ".......w............"..
              "...................."
 floor = grid_floor
+
+function first_completed()
+    _G.PopManager.new("Well done",
+        "I'm sure this was a real challenge for you.",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " go back ",
+            clr = _G.Color.blue()
+        })
+end

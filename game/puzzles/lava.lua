@@ -1,4 +1,4 @@
-name = "Fire Fighter"
+name = "Advanced Firefighting"
 n = "not decided"
 
 lines_on_terminal = 30

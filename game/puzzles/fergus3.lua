@@ -1,6 +1,6 @@
-name = "Basic Interior Design"
+name = "Interior Design"
 -- Puzzle number
-n = "C.1"
+n = "D.3"
 
 lines_on_terminal = 20
 memory_slots = 5
@@ -15,7 +15,7 @@ k = {"bucket", true, "bucket"}
 local floor
 
 -- Objective
---This obviously won't be buckets in the final game.
+--This obviously won't be buckets in the final game... I hope.
 objective_text = "Complete the buckets on the Marvellous logo"
 function objective_checker(room)
     for i = 1, 20 do
@@ -80,3 +80,15 @@ grid_floor = "...................."..
              "...................."..
              "...................."
 floor = grid_floor
+
+function first_completed()
+    _G.PopManager.new("THANK YOU my friend",
+        "You really are the bigger person",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " Glad to help ",
+            clr = _G.Color.blue()
+        })
+end

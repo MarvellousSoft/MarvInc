@@ -40,18 +40,29 @@ function lore.set_done_events(done_events)
     end
 end
 
+local function checkTable(tab)
+    local count_done = 0
+    for _, puzzle in ipairs(tab) do
+        if lore.puzzle_done[puzzle] then
+            count_done = count_done + 1
+        end
+    end
+    local at_least = tab.at_least or #tab
+    return count_done >= at_least
+end
+
 -- Check for events that may trigger now
 function lore.check_all()
     if not events then return end
     for id, evt in pairs(events) do
-        local count_done = 0
-        for _, puzzle in ipairs(evt.require_puzzles) do
-            if lore.puzzle_done[puzzle] then
-                count_done = count_done + 1
+        local tab = evt.require_puzzles
+        local ok = true
+        if type(tab[1]) == 'table' then
+            for _, t in ipairs(tab) do
+                ok = ok and checkTable(t)
             end
-        end
-        local at_least = evt.require_puzzles.at_least or #evt.require_puzzles
-        if count_done >= at_least then
+        else ok = checkTable(tab) end
+        if ok then
             events[id] = nil
             table.insert(lore.done_events, id)
             timer:after(evt.wait or 0, evt.run)

@@ -1,9 +1,9 @@
-name = "Bucket Mover"
+name = "Firefighting"
 -- Puzzle number
-n = "D.1"
+n = "D.4"
 
-lines_on_terminal = 100
-memory_slots = 100
+lines_on_terminal = 20
+memory_slots = 5
 
 -- Bot
 bot = {'b', "EAST"}
@@ -11,26 +11,16 @@ bot = {'b', "EAST"}
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 k = {"bucket", true, "bucket"}
-
-local floor
+l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Objective
-objective_text = "Move the buckets to the green tiles."
+objective_text = "Get to the green tile."
 function objective_checker(room)
-    for i = 1, 20 do
-        for j = 1, 20 do
-            if floor:sub(20 * (i - 1) + j, 20 * (i - 1) + j) == ',' then
-                local o = room.grid_obj[j][i]
-                if not o or o.tp ~= 'bucket' then
-                    return false
-                end
-            end
-        end
-    end
-    return true
+    return room.bot.pos.x == 18 and room.bot.pos.y == 10
 end
 
-extra_info = "Extra registers and lines of code in case you need it."
+extra_info =
+[[Buckets can be dropped on the floor after being picked up.]]
 
 grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
@@ -41,7 +31,7 @@ grid_obj =  "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
-            "ooo......b.....kkooo"..
+            "oobkkkkkkklllllll.oo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
             "oooooooooooooooooooo"..
@@ -55,7 +45,8 @@ grid_obj =  "oooooooooooooooooooo"..
 
 -- Floor
 w = "white_floor"
-_G.getfenv()[','] = "green_tile"
+v = "black_floor"
+g = "green_tile"
 
 grid_floor = "...................."..
              "...................."..
@@ -66,7 +57,7 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."..
-             "...,,wwwwwwwwwwww..."..
+             "..wwwwwwwwwwwwwwwg.."..
              "...................."..
              "...................."..
              "...................."..
@@ -77,16 +68,15 @@ grid_floor = "...................."..
              "...................."..
              "...................."..
              "...................."
-floor = grid_floor
 
 function first_completed()
-    _G.PopManager.new("Congratulations",
-        "Senior Tester Fergus will contact you at his earliest disposure.",
+    _G.PopManager.new("I appreciate it",
+        "Now I'll get back to the rest before that bitch sends me more!",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " hm.... ok ",
+            text = " ... ",
             clr = _G.Color.blue()
         })
 end

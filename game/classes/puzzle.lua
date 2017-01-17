@@ -49,7 +49,7 @@ Puzzle = Class{
 
 function Puzzle:manage_objectives()
     if self.completed then return end
-    if self.objective_checker(ROOM) or love.keyboard.isDown("f10") then
+    if self.objective_checker(ROOM) or love.keyboard.isDown("f10") --[[TODO: REMOVE IN RELEASE]] then 
         self.completed = true
         LoreManager.mark_completed(self)
     end
