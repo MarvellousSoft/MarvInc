@@ -250,21 +250,21 @@ function opened_email_funcs.mousePressed(x, y, but)
        x > e.pos.x + e.w or
        y  > e.pos.y + e.h or
        y < e.pos.y then
-           --Clicked outside box
-           opened_email_funcs.close()
+        --Clicked outside box
+        opened_email_funcs.close()
      else
          if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
-             --Clicked on the delete button
-             local mailTab = Util.findId("email_tab")
-             mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
-             opened_email_funcs.close()
-         elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
-             --Clicked on the reply button
-             e.reply_func()
-             if e.referenced_email.puzzle_id then
-                 ROOM:connect(e.referenced_email.puzzle_id)
-            end
+            --Clicked on the delete button
+            local mailTab = Util.findId("email_tab")
+            mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
             opened_email_funcs.close()
+         elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
+            --Clicked on the reply button
+            e.reply_func(e)
+            if e.referenced_email.puzzle_id then
+                ROOM:connect(e.referenced_email.puzzle_id)
+                opened_email_funcs.close()
+            end
          end
      end
 end

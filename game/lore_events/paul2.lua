@@ -4,28 +4,26 @@ local paul = {}
 
 paul.require_puzzles = {'paul1'}
 paul.wait = 2
-paul.last = nil
 
 function paul.run()
-    local email = Mail.new('paul2')
-    paul.last = email
+    Mail.new('paul2')
 end
 
-function paul.after()
-    Mail.disableReply(paul.last.number)
-    paul.last.can_be_deleted = true
+function paul.after(email)
+    Mail.disableReply(email.number)
+    email.can_be_deleted = true
     LoreManager.timer:after(5, function()
-        local email = Mail.new('wdinvite')
-        paul.last = email
+        Mail.new('wdinvite')
     end)
 end
 
-function paul.partied()
-    Mail.disableReply(paul.last.number)
-    paul.last.can_be_deleted = true
+function paul.partied(email)
+    Mail.disableReply(email.number)
+    email.can_be_deleted = true
+    email.referenced_email.can_be_deleted = true
     -- This is a year from now. Temp solution.
     LoreManager.timer:after(31536000, function()
-        local email = Mail.new('paul2_1')
+        Mail.new('paul2_1')
     end)
 end
 

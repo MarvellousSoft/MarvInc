@@ -42,7 +42,13 @@ function sm.save()
     -- saving emails
     data.emails = {}
     for _, email in ipairs(Util.findId('email_tab').email_list) do
-        table.insert(data.emails, {id = email.id, read = email.was_read, can_reply = email.can_reply})
+        table.insert(data.emails, {
+            id = email.id,
+            read = email.was_read,
+            can_reply = email.can_reply,
+            can_be_deleted = email.can_be_deleted,
+            time_received = email.time
+        })
     end
 
 
@@ -81,6 +87,8 @@ function sm.login(user)
             local e = Mail.new(email.id, true)
             e.was_read = email.read
             e.can_reply = email.can_reply
+            e.can_be_deleted = email.can_be_deleted
+            e.time = email.time_received
         end
 
         -- Other stuff

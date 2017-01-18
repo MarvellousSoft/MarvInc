@@ -202,7 +202,7 @@ function EmailTab:mousePressed(x, y, but)
         for i, mail in ipairs(e.email_list) do
             if mail.alpha > 250 and Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y - e.dy*(e.email_height + e.email_border) + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
                 if not mail.was_read then
-                    if mail.open_func then mail.open_func() end
+                    if mail.open_func then mail:open_func() end
                     mail.was_read = true
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
