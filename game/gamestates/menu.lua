@@ -118,7 +118,7 @@ function state:mousepressed(x, y, but)
             local i = math.floor((y - ub.y) / self.font:getHeight())
             if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
                 local press = love.window.showMessageBox("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
-                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2})
+                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2}, 'warning')
                 if press == 1 then
                     SaveManager.deleteUser(ub[i].user)
                     self:initUsernames()

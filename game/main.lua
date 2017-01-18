@@ -63,7 +63,7 @@ function love.load()
 
     local callbacks = {'errhand', 'update'}
     for c in pairs(love.handlers) do
-        if c ~= 'mousepressed' and c ~= 'mousereleased' and c ~= 'mousemoved' then
+        if c ~= 'mousepressed' and c ~= 'mousereleased' and c ~= 'mousemoved' and c ~= 'quit' then
             table.insert(callbacks, c)
         end
     end
@@ -110,6 +110,17 @@ function love.resize(w, h)
     ResManager.adjustWindow(w, h)
 end
 
+local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true}
 function love.quit()
+    if PopManager.pop or not ok_state[Gamestate.current()] or CLOSE_LOCK  then
+        local press = love.window.showMessageBox('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.", {"Close the game, I like to play with fire", "Do not close, I will take the safe approach", escapebutton = 2}, 'warning')
+        if press == 2 then
+            return true
+        end
+    end
+    if PopManager.pop then
+        PopManager.pop.buttons[1].callback()
+        PopManager.quit()
+    end
     SaveManager.save()
 end

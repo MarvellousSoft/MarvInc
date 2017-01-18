@@ -7,6 +7,7 @@ local intro = false
 function fx.full_static()
     full_s = true
     EVENTS_LOCK = true
+    CLOSE_LOCK = true
     SFX.loud_static:play()
     fx.ang = 0
     fx.h = H
@@ -18,6 +19,7 @@ function fx.full_static()
         SFX.loud_static:stop()
         full_s = false
         Gamestate.push(GS.CREDITS)
+        CLOSE_LOCK = false
     end)
 end
 
