@@ -112,6 +112,7 @@ function Bot:pickup(grid, r, c)
     local _o = grid[px][py]
     if _o and _o.pickable then
         self.inv = _o
+        _o.pos = nil
         grid[px][py] = nil
     end
 end

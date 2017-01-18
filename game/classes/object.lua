@@ -22,7 +22,11 @@ Object = Class{
 
 -- Careful when calling this function!
 function Object:teleport(grid, i, j)
-    grid[self.pos.x][self.pos.y] = nil
+    if self.pos then
+        grid[self.pos.x][self.pos.y] = nil
+    else
+        self.pos = Vector()
+    end
     self.pos.x, self.pos.y = i, j
     self.rx = (i-1)*ROOM_CW
     self.ry = (j-1)*ROOM_CH
