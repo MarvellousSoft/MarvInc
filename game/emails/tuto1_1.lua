@@ -14,6 +14,6 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
     author = "Automated Introduction System",
-    puzzle_id = 'paul2', -- TODO: REMOVE IN RELEASE
+    puzzle_id = 'tuto8',
     open_func = tuto1.after_intro_email
 }
