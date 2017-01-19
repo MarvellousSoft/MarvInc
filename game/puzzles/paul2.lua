@@ -2,67 +2,73 @@ name = "True Democracy"
 n = "B.2"
 
 lines_on_terminal=20
-memory_slots=2
+memory_slots=3
 
 -- Bot
-bot = {'b', "EAST"}
+bot = {'b', "SOUTH"}
 
 o = {"obst", false, "wall_none"}
 e = nil
 
-y_c = {c = 'y', x=-1, y=-1, l=1, s = 0}
-n_c = {c = 'm', x=-1, y=-1, l=0, s = 0}
-a_c = {c = 'a', x=-1, y=-1, l=-1, s = 0}
-consoles = {y_c, n_c, a_c}
-
+local ans
 local function create_votes()
-    -- Total number of votes.
-    local votes = 125
-    -- The true vote partition.
-    local p = {0.4, 0.5, 0.1}
-
-    local _r = 0
-    for i in _G.ipairs(p) do
-        p[i] = _G.math.floor(p[i]*votes)
-        _r = _r + p[i]
+    -- sizes and distibution of votes
+    local szs = { 5, 10,   7, 40, 13,   1,  2, 3,  4,  5,  6,   7}
+    local p0  = {.5, .2,  .7, -1, .3,  .6, .3, 0, .5, .7, .1, .05}
+    local p1  = {.5, .6, .25, -1, .7, .35, .3, 0, .3, .2, .2, .05}
+    -- randomizing order, except the first
+    for i = 2, #szs do
+        local j = _G.love.math.random(i, #szs)
+        szs[i], szs[j] = szs[j], szs[i]
+        p0[i], p0[j] = p0[j], p0[i]
+        p1[i], p1[j] = p1[j], p1[i]
     end
-    p[2] = p[2] + votes-_r
 
-    -- Add all votes to v.
     local v = {}
-    local _n = #p
-    for i=1, _n do
-        for j=1, p[i] do
-            _G.table.insert(v, consoles[i].l)
+    ans = {}
+    local add = _G.table.insert
+    for si, sz in _G.ipairs(szs) do
+        add(v, sz)
+        if sz == 40 then
+            -- size 40 should be a tie
+            local eq = _G.love.math.random(10, 18)
+            local vot = {}
+            for i = 1, eq do add(vot, 0); add(vot, 1); end
+            while #vot < sz do add(vot, -1) end
+            for i = 1, sz do
+                local j = _G.love.math.random(i, sz)
+                vot[i], vot[j] = vot[j], vot[i]
+                add(v, vot[i])
+            end
+            add(ans, -1)
+        else
+            local c0, c1 = 0, 0
+            for i = 1, sz do
+                local r = _G.love.math.random()
+                if r <= p0[si] then
+                    add(v, 0)
+                    c0 = c0 + 1
+                elseif r <= p0[si] + p1[si] then
+                    add(v, 1)
+                    c1 = c1 + 1
+                else
+                    add(v, -1)
+                end
+            end
+            if     c0 > c1 then add(ans, 0)
+            elseif c1 > c0 then add(ans, 1)
+            else add(ans, -1) end
         end
-    end
-
-    -- Shuffle v.
-    _n = votes
-    while _n > 1 do
-        local i = _G.math.random(_n)
-        v[i], v[_n] = v[_n], v[i]
-        _n = _n - 1
     end
 
     return v
 end
 
 -- Stack
-s = {"console", true, "console", "orange", args = create_votes(), dir = "NORTH"}
+s = {"console", true, "console", "orange", args = create_votes, dir = "NORTH"}
 
--- Yay
+-- Results
 y = {"console", true, "console", "green", args = {}, dir = "SOUTH"}
--- Nay
-m = {"console", true, "console", "red", args = {}, dir = "SOUTH"}
--- Abstention
-a = {"console", true, "console", "white", args = {}, dir = "SOUTH"}
-
-objective_text = "- The orange console contains the votes. Each number is a label of a vote. "..
-                   "Store them on their respective consoles.\n"..
-                 "- The white console stores the abstentions(label=-1).\n"..
-                 "- The red console stores the nays (label=0).\n"..
-                 "- The green console stores the yays (label=1).\n"
 
 extra_info = "LEGALIZE!"
 
@@ -80,7 +86,7 @@ grid_obj = "oooooooooooooooooooo"..
            "oeeeeeeeeeeeeeeeeeeo"..
            "oeeeeeeeeeeeeeeeeeeo"..
            "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeyameeeeeeeo"..
+           "oeeeeeeeeeyeeeeeeeeo"..
            "oeeeeeeeeeeeeeeeeeeo"..
            "oeeeeeeeeebeeeeeeeeo"..
            "oeeeeeeeeeeeeeeeeeeo"..
@@ -113,42 +119,45 @@ grid_floor = "vvvvvvvvvvvvvvvvvvvv"..
            "vvvvvvvvvvDDvvvvvvvv"..
            "vvvvvvvvvvvvvvvvvvvv"
 
--- Find the positions of each console.
-local x, y = 0, 1
-local s_x, s_y = -1, -1
-for i = 1, ROWS*COLS do
-    x = x % ROWS + 1
-    if i % COLS == 0 then
-        y = y + 1
-    end
-    for _, v in _G.ipairs(consoles) do
-        if grid_obj:sub(i, i) == v.c then
-            v.x = x
-            v.y = y
-        elseif grid_obj:sub(i, i) == 's' then
-            s_x, s_y = x, y
-        end
-    end
-end
+-- console objects
+local bl
 
-local function test(room)
-    for _, v in _G.ipairs(consoles) do
-        local _c = room.grid_obj[v.x][v.y]
-        local _inp = _c.inp
-        if #_inp > 0 then
-            local _l  = _inp[#_inp]
-            if _l == v.l then
-                v.s = v.s + 1
-            else
-                _G.StepManager.stop("Wrong output", "Expected " .. v.l .. " got " .. _l, "Retry")
-                return false
+
+-- create ans vector
+function on_start(room)
+    -- finds consoles
+    for i = 1, 20 do
+        for j = 1, 20 do
+            local o = room.grid_obj[i][j]
+            if o and o.tp == 'console' then
+                if #o.out == 0 then
+                    bl = o
+                end
             end
         end
     end
-    local _s = room.grid_obj[s_x][s_y]
-    return _s.i > #_s.out
 end
 
+-- Objective
+objective_text = [[
+The orange console contains sequences of votes. For each sequence write to the green console the result.
+- A nay is represented by a 0.
+- A yay is represented by a 1.
+- An abstention is represented by a -1. These votes should be ignored.
+- For each sequence, write 0 if the nays win, 1 if the yays win, and -1 if there is a tie.]]
+
+
 function objective_checker(room)
-    return test(room)
+    if #bl.inp == 0 then return false end
+    if #bl.inp > #ans then
+        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        return false
+    end
+    for i = 1, #bl.inp do
+        if bl.inp[i] ~= ans[i] then
+            _G.StepManager.stop("Wrong output", "Expected " .. ans[i] .. " got " .. bl.inp[i], "Retry")
+            return false
+        end
+    end
+    return #bl.inp == #ans
 end
