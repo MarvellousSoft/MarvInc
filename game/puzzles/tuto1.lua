@@ -21,13 +21,13 @@ o = {"obst", false, "wall_none"}
 objective_text = "Just get to the red tile. It's not that hard."
 
 function objective_checker(room)
-    return room.bot.pos.x == 20 and room.bot.pos.y == 1
+    return room.bot.pos.x == 21 and room.bot.pos.y == 1
 end
 
 -- Extra info to be displayed
 extra_info = nil
 
-grid_obj =  "oooooooooeeeeeeeeeeeo"..
+grid_obj =  "oooooooooeeeeeeeeeeee"..
             "oooooooooeooooooooooo"..
             "oooooooooeooooooooooo"..
             "oooooooooeooooooooooo"..
@@ -46,32 +46,32 @@ grid_obj =  "oooooooooeeeeeeeeeeeo"..
             "oooooooooeooooooooooo"..
             "oooooooooeooooooooooo"..
             "oooooooooeooooooooooo"..
-            "oooooooooeeeeeeeeeboo"..
-            "ooooooooooooooooooooo"
+            "oooooooooeooooooooooo"..
+            "oooooooooeeeeeeeeeeeb"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "eeeeeeeeewvwvwvwvwvre"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeeee"..
-             "eeeeeeeewvwvwvwvwvwee"..
-             "eeeeeeeeeeeeeeeeeeeee"
+grid_floor = "vwvwvwvwvwvwvwvwvwvwr"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvww"

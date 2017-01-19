@@ -40,7 +40,7 @@ function on_start(room)
     -- finds consoles
     for i = 1, ROWS do
         for j = 1, COLS do
-            local o = room.grid_obj[i][j]
+            local o = room.grid_obj[j][i]
             if o and o.tp == 'console' then
                 if #o.out == 0 then
                     bl = o
@@ -81,14 +81,14 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "oooo............ooooo"..
-            "ooocb...........ooooo"..
-            "oooo............ooooo"..
-            "ooooooooooooo...ooooo"..
-            "ooooooooooooo...ooooo"..
-            "oooo............ooooo"..
-            "oood............ooooo"..
-            "oooo............ooooo"..
+            "ooooooooooooooooooooo"..
+            "oooo.............oooo"..
+            "ooocb............oooo"..
+            "oooo.............oooo"..
+            "oooooooooooo.....oooo"..
+            "oooo.............oooo"..
+            "oood.............oooo"..
+            "oooo.............oooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

@@ -18,8 +18,8 @@ objective_text = "Move the buckets from the top gray tiles to the bottom gray ti
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
-            local p = ROWS * (i - 1) + j
-            local o = room.grid_obj[j][(COLS + 2)- i]
+            local p = COLS * (i - 1) + j
+            local o = room.grid_obj[j][(ROWS + 1)- i]
             if objs:sub(p, p) == 'k' and (not o or o.tp ~= 'bucket') then
                 return false
             end
@@ -32,27 +32,27 @@ extra_info = [[Remember you can't walk through a bucket
 - Use our *productive* new command 'walkc'
 - Mirrored by the black line means, if there is a bucket, in column X, 3 rows above the black line, then it should be moved to the same column, but 3 rows *below* the black line]]
 
-grid_obj =  "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "o...................o"..
-            "o.k.kk....k.k.kkkk..o".. -- 4
-            "o...kk..k....kk.kk..o".. -- 5
-            "o.kkkkk.....k..k....o".. -- 6
-            "o....k...k.kk.kk....o".. -- 7
-            "o.kk.kk....kkkk.kk..o".. -- 8
-            "o.kkkk..k..k.kkk.k..o".. -- 9
-            "o..k.k..k.kkk.kkkk..o".. -- 10
-            "o.b,,,,,,,,,,,,,,,..o".. -- 11 -- MIRROR
-            "o...................o".. -- 12
-            "o...................o".. -- 13
-            "o...................o".. -- 14
-            "o...................o".. -- 15
-            "o...................o".. -- 16
-            "o...................o".. -- 17
-            "o...................o".. -- 18
-            "o...................o"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"
+grid_obj =  "....................."..
+            "..kk.k..k..k.kk.k.k.."..
+            ".....kk....k..kk.k.k."..
+            ".kk.kk....k.k.kkkk...".. -- 4
+            ".k..kk..k....kk.kk.k.".. -- 5
+            ".kkkkkk.....k..k...k.".. -- 6
+            ".k...k...k.kk.kk...k.".. -- 7
+            ".kkk.kk....kkkk.kk...".. -- 8
+            "..kkkk..k..k.kkk.k.k.".. -- 9
+            "...k.k..k.kkk.kkkkk..".. -- 10
+            "b,,,,,,,,,,,,,,,,,,,.".. -- 11 -- MIRROR
+            ".....................".. -- 12
+            ".....................".. -- 13
+            ".....................".. -- 14
+            ".....................".. -- 15
+            ".....................".. -- 16
+            ".....................".. -- 17
+            ".....................".. -- 18
+            "....................."..
+            "....................."..
+            "....................."
 objs = grid_obj
 
 -- Floor
@@ -62,27 +62,27 @@ r = "grey_tile"
 g = "grey_tile"
 
 
-grid_floor = "ooooooooooooooooooooo"..
-             "ooooooooooooooooooooo"..
-             "o,,,,,,,,,,,,,,,,,,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,gggggggggggggggg,,o"..
-             "o,,,,,,,,,,,,,,,,,,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,rrrrrrrrrrrrrrrr,,o"..
-             "o,,,,,,,,,,,,,,,,,,,o"..
-             "ooooooooooooooooooooo"..
-             "ooooooooooooooooooooo"
+grid_floor = ",,,,,,,,,,,,,,,,,,,,,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",ggggggggggggggggggg,"..
+             ",,,,,,,,,,,,,,,,,,,,,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",rrrrrrrrrrrrrrrrrrr,"..
+             ",,,,,,,,,,,,,,,,,,,,,"
 floor = grid_floor
 
 function first_completed()

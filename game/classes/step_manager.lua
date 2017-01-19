@@ -52,7 +52,9 @@ local function stepCallback()
     local code_over = false
 
     if sm.cmd then
-        sm.cmd()
+        local func = sm.cmd
+        sm.cmd = nil
+        func()
     else
         local ret = sm.code:step()
         if ret == 'halt' then
@@ -201,6 +203,7 @@ function sm.clear()
         sm.code:stop()
         sm.code = nil
     end
+    sm.cmd = nil
     sm.state = 'stopped'
     sm.how_fast = 0
     Util.findId("code_tab").memory:reset()

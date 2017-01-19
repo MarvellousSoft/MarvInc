@@ -49,16 +49,16 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo....c....d....oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo...........b..oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo....c....d.....ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo............b..ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -76,16 +76,16 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              ".....w.w.w.w.w.w....."..
-             "..wwwwwwwwwwwwwww...."..
-             "...wwwwwwwwwwwwww...."..
-             "...wwwwwwwwwwwwww...."..
-             "...w,wwwww,wwwwww...."..
-             "...w,,www,,wwwwww...."..
-             "...w,w,w,w,www,ww...."..
-             "...w,ww,ww,wwwwww...."..
-             "...w,wwwww,www,ww...."..
-             "...w,wwwww,www,ww...."..
-             "...wwwwwwwwwwwwww...."..
+             "..wwwwwwwwwwwwwwww..."..
+             "...wwwwwwwwwwwwwww..."..
+             "...wwwwwwwwwwwwwww..."..
+             "...ww,wwwww,wwwwww..."..
+             "...ww,,www,,wwwwww..."..
+             "...ww,w,w,w,www,ww..."..
+             "...ww,ww,ww,wwwwww..."..
+             "...ww,wwwww,www,ww..."..
+             "...ww,wwwww,www,ww..."..
+             "...wwwwwwwwwwwwwww..."..
              "....................."..
              "....................."..
              "....................."..

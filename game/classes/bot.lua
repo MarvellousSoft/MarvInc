@@ -141,12 +141,14 @@ function Bot:blocked(grid, r, c, o)
 end
 
 function Bot:draw()
+    local w, h = self.body:getWidth(), self.body:getHeight()
+    local dw, dh = ROOM_CW / 2, ROOM_CH / 2
     Color.set(self.body_clr)
-    love.graphics.draw(self.body, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],
-        self.sx, self.sy, ROOM_CW, ROOM_CH)
+    love.graphics.draw(self.body, self.rx + dw, self.ry + dh, self.r[1],
+                       self.sx, self.sy, w / 2, h / 2)
     Color.set(self.head_clr)
-    love.graphics.draw(self.head, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],
-        self.sx, self.sy, ROOM_CW, ROOM_CH)
+    love.graphics.draw(self.head, self.rx + dw, self.ry + dh, self.r[1],
+                       self.sx, self.sy, w / 2, h / 2)
 end
 
 return bot

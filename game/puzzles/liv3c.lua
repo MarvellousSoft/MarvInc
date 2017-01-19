@@ -6,7 +6,7 @@ lines_on_terminal = 35
 memory_slots = 30
 
 -- Bot
-bot = {'b', "SOUTH"}
+bot = {'b', "WEST"}
 
 local ans = {}
 
@@ -62,7 +62,7 @@ function on_start(room)
     -- finds consoles
     for i = 1, ROWS do
         for j = 1, COLS do
-            local o = room.grid_obj[i][j]
+            local o = room.grid_obj[j][i]
             if o and o.tp == 'console' then
                 if #o.out > 0 then
                     gr = o
@@ -104,16 +104,16 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooooo..........oooooo"..
-            "ooooc....b.....dooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
-            "ooooo..........oooooo"..
+            "ooooo...........ooooo"..
+            "ooooc....b......doooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
+            "ooooo...........ooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -131,16 +131,16 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
-             ".....wwwwwwwwww......"..
-             "....wwwwwwwwww,w....."..
-             ".....wwwwwwwwww......"..
-             ".....w,wwwww,w,......"..
-             ".....w,,www,,w,......"..
-             ".....w,w,w,w,ww......"..
-             ".....w,ww,ww,ww......"..
-             ".....w,wwwww,ww......"..
-             ".....w,wwwww,ww......"..
-             ".....wwwwwwwwww......"..
+             ".....wwwwwwwwwww....."..
+             "....wwwwwwwwww,ww...."..
+             ".....wwwwwwwwwww....."..
+             ".....w,wwwww,w,w....."..
+             ".....w,,www,,w,w....."..
+             ".....w,w,w,w,www....."..
+             ".....w,ww,ww,www....."..
+             ".....w,wwwww,www....."..
+             ".....w,wwwww,www....."..
+             ".....wwwwwwwwwww....."..
              "....................."..
              "....................."..
              "....................."..

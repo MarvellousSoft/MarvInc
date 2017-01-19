@@ -41,7 +41,7 @@ Room = Class{
 
         -- Grid
         self.grid_clr = Color.blue()
-        self.grid_r, self.grid_c = ROWS + 2, ROWS + 2
+        self.grid_r, self.grid_c = ROWS + 2, COLS + 2
         self.grid_cw = self.w/self.grid_r -- Cell width
         self.grid_ch = self.h/self.grid_c -- Cell height
         self.grid_w = self.w - 2*self.grid_cw

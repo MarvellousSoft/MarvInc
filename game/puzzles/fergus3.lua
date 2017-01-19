@@ -38,17 +38,17 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooobkkkkkkkkkkkk.oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo..............oooo"..
-            "ooo..k...k.......oooo"..
-            "ooo...k.k.....k..oooo"..
-            "ooo....k.........oooo"..
-            "ooo...........k..oooo"..
-            "ooo...........k..oooo"..
-            "ooo..............oooo"..
-            "ooooooooooooooooooooo"..
+            "ooo.bkkkkkkkkkkkk.ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...k...k.......ooo"..
+            "ooo....k.k.....k..ooo"..
+            "ooo.....k.........ooo"..
+            "ooo............k..ooo"..
+            "ooo............k..ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -65,17 +65,17 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
-             "...wwwwwwwwwwwwww...."..
-             "...wwwwwwwwwwwwww...."..
-             "...wwwwwwwwwwwwww...."..
-             "...w,wwwww,wwwwww...."..
-             "...w,,www,,wwwwww...."..
-             "...w,w,w,w,www,ww...."..
-             "...w,ww,ww,wwwwww...."..
-             "...w,wwwww,www,ww...."..
-             "...w,wwwww,www,ww...."..
-             "...wwwwwwwwwwwwww...."..
-             "....................."..
+             "...wwwwwwwwwwwwwww..."..
+             "...wwwwwwwwwwwwwww..."..
+             "...wwwwwwwwwwwwwww..."..
+             "...ww,wwwww,wwwwww..."..
+             "...ww,,www,,wwwwww..."..
+             "...ww,w,w,w,www,ww..."..
+             "...ww,ww,ww,wwwwww..."..
+             "...ww,wwwww,www,ww..."..
+             "...ww,wwwww,www,ww..."..
+             "...wwwwwwwwwwwwwww..."..
+             "...wwwwwwwwwwwwwww..."..
              "....................."..
              "....................."..
              "....................."..

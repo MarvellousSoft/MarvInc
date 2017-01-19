@@ -1,9 +1,9 @@
-name = "Firefighting"
+name = "Corridor Organizer"
 -- Puzzle number
-n = "D.4"
+n = "undecided"
 
-lines_on_terminal = 20
-memory_slots = 5
+lines_on_terminal = 12
+memory_slots = 4
 
 -- Bot
 bot = {'b', "EAST"}
@@ -11,25 +11,8 @@ bot = {'b', "EAST"}
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 k = {"bucket", true, "bucket"}
-l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
--- Objective
-objective_text = "Extinguish all lava."
-function objective_checker(room)
-    for i = 1, ROWS do
-        for j = 1, COLS do
-            local p = ROWS * (i - 1) + j
-            local o = room.grid_obj[j][i]
-            if objs:sub(p, p) == 'l' and o and o.tp == 'dead' then
-                return false
-            end
-        end
-    end
-    return true
-end
-
-extra_info =
-[[Buckets can be dropped on the floor after being picked up.]]
+local floor
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -41,7 +24,7 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "oobkkkkkkkklllllllloo"..
+            "bkkkkkkkkkkkkkkkkkkkk"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -55,7 +38,7 @@ grid_obj =  "ooooooooooooooooooooo"..
 
 -- Floor
 w = "white_floor"
-v = "black_floor"
+_G.getfenv()[','] = "black_floor"
 g = "green_tile"
 
 grid_floor = "....................."..
@@ -68,7 +51,7 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
-             "..wwwwwwwwwwwwwwwww.."..
+             "wwwwwwwwwwwwwwwwwwwww"..
              "....................."..
              "....................."..
              "....................."..
@@ -80,14 +63,42 @@ grid_floor = "....................."..
              "....................."..
              "....................."
 
+for i = 2, COLS do
+    local y = _G.love.math.random() <= .5 and 12 or 10
+    local p = (y - 1) * COLS + i
+    grid_obj = grid_obj:sub(1, p - 1) .. '.' .. grid_obj:sub(p + 1, ROWS * COLS)
+    grid_floor = grid_floor:sub(1, p - 1) .. 'g' .. grid_floor:sub(p + 1, ROWS * COLS)
+end
+
+-- Objective
+--This obviously won't be buckets in the final game... I hope.
+objective_text = "Move the buckets to the green tiles."
+function objective_checker(room)
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if grid_floor:sub(20 * (i - 1) + j, 20 * (i - 1) + j) == 'g' then
+                local o = room.grid_obj[j][i]
+                if not o or o.tp ~= 'bucket' then
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end
+
+extra_info = [[
+There is a tile directly above or below each bucket. They are generated randomly.
+- Remeber walkc.]]
+
 function first_completed()
-    _G.PopManager.new("I appreciate it",
-        "Now I'll get back to the rest before that bitch sends me more!",
+    _G.PopManager.new("blahblahblah",
+        "blahblahblahblah",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " ... ",
+            text = " blah ",
             clr = _G.Color.blue()
         })
 end

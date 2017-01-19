@@ -14,8 +14,8 @@ Object = Class{
         -- Whether to draw background
         self.bg = bg or false
         -- Real positions relative to grid's position
-        self.rx = (i-1)*ROOM_CW
-        self.ry = (j-1)*ROOM_CH
+        self.rx = (i - 1)*ROOM_CW
+        self.ry = (j - 1)*ROOM_CH
         grid[i][j] = self
     end
 }
@@ -97,8 +97,8 @@ end
 
 function Object:draw()
     Color.set(self.color)
-    love.graphics.draw(self.img, self.rx + ROOM_CW/2, self.ry + ROOM_CW/2, self.r[1],
-        self.sx, self.sy, ROOM_CW, ROOM_CH)
+    love.graphics.draw(self.img, self.rx + ROOM_CW / 2, self.ry + ROOM_CH / 2, self.r[1],
+                       self.sx, self.sy, self.img:getWidth()/2, self.img:getHeight()/2)
 end
 
 return obj

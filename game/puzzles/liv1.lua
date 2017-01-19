@@ -37,7 +37,7 @@ function on_start(room)
     -- finds consoles
     for i = 1, ROWS do
         for j = 1, COLS do
-            local o = room.grid_obj[i][j]
+            local o = room.grid_obj[j][i]
             if o and o.tp == 'console' then
                 if #o.out > 0 then
                     gr = o
@@ -83,26 +83,26 @@ Each sequence is given by its size and then its elements.
 - Example: 2 1 2 1 3 is sequence (1,2) and  (3) and the output should be 2 2 1 1 3.
 - Sequences will have at most 20 elements.]]
 
-grid_obj =  "oooooc.....dooooooooo"..
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooc.......doooooo"..
             "oooooooooo.oooooooooo"..
-            "ooooo......oooooooooo"..
-            "ooooo.ooooooooooooooo"..
-            "ooooo........oooooooo"..
-            "oooooooooooo.oooooooo"..
-            "oooo.........oooooooo"..
-            "oooo.oooooooooooooooo"..
-            "oooo........ooooooooo"..
-            "ooooooooooo.ooooooooo"..
-            "ooooo.......ooooooooo"..
-            "ooooo.ooooooooooooooo"..
-            "ooooo......oooooooooo"..
             "oooooooooo.oooooooooo"..
-            "oooooo.....oooooooooo"..
-            "oooooo.oooooooooooooo"..
-            "oooooo....ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "oooooooo..ooooooooooo"..
-            "ooooooooboooooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "ooooooooooboooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
 
 -- Floor

@@ -21,6 +21,6 @@ function SpriteObject:draw()
         return
     end
     Color.set(self.color)
-    love.graphics.draw(self.img, self.quad, self.rx + ROOM_CW/2, self.ry + ROOM_CH/2, self.r[1],
-        self.sx, self.sy, ROOM_CW, ROOM_CH)
+    love.graphics.draw(self.img, self.quad, self.rx + ROOM_CW / 2, self.ry + ROOM_CH / 2, self.r[1],
+                       self.sx, self.sy, self.w / 2, self.h / 2)
 end

@@ -14,7 +14,7 @@ l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketabl
 
 local objs
 
-objective_text = "Extinguish all lava"
+objective_text = "Extinguish all lava."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
@@ -31,25 +31,25 @@ end
 extra_info = nil
 
 grid_obj =  "ooooooooooooooooooooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "oooooooooooooooolkooo"..
-            "okkkkkkkkbllllllllooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooklooo"..
-            "ooooooooooooooooooooo"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "oooooooooooooooooolko"..
+            "okkkkkkkkkblllllllllo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
+            "ooooooooooooooooooklo"..
             "ooooooooooooooooooooo"
 objs = grid_obj
 

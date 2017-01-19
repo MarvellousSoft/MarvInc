@@ -6,7 +6,7 @@ lines_on_terminal = 50
 memory_slots = 50
 
 -- Bot
-bot = {'b', "NORTH"}
+bot = {'b', "WEST"}
 
 local ans = {}
 local v_code, v_in
@@ -103,7 +103,7 @@ function on_start(room)
     -- finds consoles
     for i = 1, ROWS do
         for j = 1, COLS do
-            local o = room.grid_obj[i][j]
+            local o = room.grid_obj[j][i]
             if o and o.tp == 'console' and #o.out == 0 then
                 bl = o
             end
@@ -134,17 +134,17 @@ extra_info = [[
 The size of the cyclic memory should be exactly 20.
 - Refer to Liv's email for details on the instructions and language.]]
 
-grid_obj =  "ooooooooooooooooooooo"..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........oo.........."..
-            ".........eo.........."..
-            "oooooooocbdoooooooooo"..
-            "wwwwwwwwwwwwwwwwwwwww"..
+grid_obj =  "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "....................."..
+            "ooooooooocbdooooooooo"..
             "wwwwwwwwwwwwwwwwwwwww"..
             "wwwwwwwwwwwwwwwwwwwww"..
             "wwwwwwwwwwwwwwwwwwwww"..
@@ -162,23 +162,23 @@ _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
 grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
-             "ww,,wwwwwllwwwww,,www"..
-             "www,,wwwwllwwww,,wwww"..
-             "wwww,,wwwllwww,,wwwww"..
-             "wwwww,,wwllww,,wwwwww"..
-             "wwwww,,wwllww,,wwwwww"..
-             "wwww,,wwwllwww,,wwwww"..
-             "www,,wwwwllwwww,,wwww"..
-             "ww,,wwwwwwwwwwww,,www"..
-             "lllllllllwwllllllllll"..
+             "www,,wwwwwwwwwww,,www"..
+             "wwww,,wwwwwwwww,,wwww"..
+             "wwwww,,wwwwwww,,wwwww"..
+             "wwwwww,,wwwww,,wwwwww"..
+             "wwwwww,,wwwww,,wwwwww"..
+             "wwwww,,wwwwwww,,wwwww"..
+             "wwww,,wwwwwwwww,,wwww"..
+             "www,,wwwwwwwwwww,,www"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwww,,wwwwwwwwwwwww"..
              "wwwwww,,wwwwwwwwwwwww"..
-             "wwww,,,,,,w,,,,,wwwww"..
-             "wwww,,,,,,w,,,,,wwwww"..
-             "w,,www,,wwwwwwwww,,ww"..
-             "w,,www,,wwwwwwwww,,ww"..
-             "wwwwwwwwwwwwwwwwww,ww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwww,,,,,,w,,,,,,wwww"..
+             "wwww,,,,,,w,,,,,,wwww"..
+             "w,,www,,wwwwwwwwww,,w"..
+             "w,,www,,wwwwwwwwww,,w"..
+             "wwwwwwwwwwwwwwwwwww,w"..
              "wwwwwwwwwwwwwwwwwwwww"

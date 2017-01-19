@@ -71,8 +71,8 @@ e = {"console", false, "console", "red", args = {}, dir = "west"}
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
             "ooooooooobooooooooooo"..
-            "ooooooooo.ooooooooooo"..
             "ooooooooo.ooooooooooo"..
             "ooooooooo.ooooooooooo"..
             "ooooooooo.ooooooooooo"..

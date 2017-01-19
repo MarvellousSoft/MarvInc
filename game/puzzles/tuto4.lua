@@ -39,8 +39,8 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooo.ooooooooooo"..
             "ooooooooo.ooooooooooo"..
             "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
             "ooooooooobooooooooooo"..
-            "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
@@ -67,7 +67,7 @@ grid_floor = "....................."..
              ".........w..........."..
              ".........v..........."..
              ".........w..........."..
-             "....................."..
+             ".........v..........."..
              "....................."..
              "....................."..
              "....................."

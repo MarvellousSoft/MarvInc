@@ -44,14 +44,14 @@ end
 
 extra_info = nil
 
-grid_obj =  "b.....o.............o"..
-            "ooooo.o.ooooooooooo.o"..
-            "ooooo.o.o........lo.o"..
-            "ooooo.....oooooo.oo.o"..
+grid_obj =  "b.....l.............l"..
+            "ooooo.o.olooooooooo.o"..
+            "ooooo.o.l........lo.o"..
+            "ooool.....looooo.oo.o"..
             "ooooolo.oooooooo.oo.o"..
             "ooooooo.oooooooo.oo.o"..
-            "ooooooo.oooooooo....o"..
-            "ooooooo.ooooooooloooo"..
+            "ooooooo.oooooool....l"..
+            "ooooooo.ooooooooloolo"..
             "ooooooo.ooooooooooooo"..
             "ooooooo.kkklooolllooo"..
             "ooooooo....loool.looo"..
@@ -59,10 +59,10 @@ grid_obj =  "b.....o.............o"..
             "ooooooo....loooo.oooo"..
             "ooooooo.oooooooo.oooo"..
             "ooooooo.oloooooo.oooo"..
-            "ooooooo.o....ooo.oooo"..
-            "ooooooo...oo..oo.oooo"..
-            "ooooooolooooo....looo"..
-            "ooooooooooooooooooooo"..
+            "ooooooo.o....loo.oooo"..
+            "ooooooo...lo..lo.oooo"..
+            "ooooooolooool....looo"..
+            "ooooooooooooolooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
 
@@ -73,27 +73,27 @@ r = "red_tile"
 g = "green_tile"
 b = "blue_tile"
 
-grid_floor = "wwwwww.wwwwwwwwwwwwww"..
-             ".....w.w...........w."..
-             ".....w.w.wwwwwwwww.w."..
-             ".....wwwww......w..w."..
-             ".....w.w........w..w."..
-             ".....w.w........w..w."..
-             ".....w.w........wrww."..
-             ".......w........w...."..
-             ".......w............."..
-             ".......wwww....www..."..
-             ".......wwww....wbw..."..
-             ".......wwww....www..."..
-             ".......wggg.....w...."..
-             ".......w........w...."..
-             ".......w.w......w...."..
-             ".......w.wwww...w...."..
-             ".......www..ww..w...."..
-             ".......w.....wwwwww.."..
-             ".......w............."..
-             "....................."..
-             "....................."
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwrwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwbwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwgggwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"
 
 floor = grid_floor
 

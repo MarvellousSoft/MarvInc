@@ -24,52 +24,52 @@ end
 extra_info = [[Remember old commands.]]
 
 grid_obj = "xxxxxxxxxxxxxxxxxxxxx"..
-           "...................xx"..
-           ".xxxxxxxxxxxxxxxxx.xx"..
-           ".x...............x.xx"..
-           ".x.xxxxxxxxxxxxx.x.xx"..
-           ".x.x...........x.x.xx"..
-           ".x.x.xxxxxxxxx.x.x.xx"..
-           ".x.x.x.......x.x.x.xx"..
-           ".x.x.x.xxxxx.x.x.x.xx"..
-           ".x.x.x.x...x.x.x.x.xx"..
-           ".x.x.x.x.x.x.x.x.x.xx"..
-           ".x.x.x.x.xxx.x.x.x.xx"..
-           ".x.x.x.x.....x.x.x.xx"..
-           ".x.x.x.xxxxxxx.x.x.xx"..
-           ".x.x.x.........x.x.xx"..
-           ".x.x.xxxxxxxxxxx.x.xx"..
-           ".x.x.............x.xx"..
-           ".x.xxxxxxxxxxxxxxx.xx"..
-           ".x.................xx"..
-           "bxxxxxxxxxxxxxxxxxxxx"..
-           "xxxxxxxxxxxxxxxxxxxxx"
+           "....................x"..
+           ".xxxxxxxxxxxxxxxxxx.x"..
+           ".x................x.x"..
+           ".x.xxxxxxxxxxxxxx.x.x"..
+           ".x.x............x.x.x"..
+           ".x.x.xxxxxxxxxx.x.x.x"..
+           ".x.x.x........x.x.x.x"..
+           ".x.x.x.xxxxxx.x.x.x.x"..
+           ".x.x.x.x....x.x.x.x.x"..
+           ".x.x.x.x.xx.x.x.x.x.x"..
+           ".x.x.x.x.x..x.x.x.x.x"..
+           ".x.x.x.x.xxxx.x.x.x.x"..
+           ".x.x.x.x......x.x.x.x"..
+           ".x.x.x.xxxxxxxx.x.x.x"..
+           ".x.x.x..........x.x.x"..
+           ".x.x.xxxxxxxxxxxx.x.x"..
+           ".x.x..............x.x"..
+           ".x.xxxxxxxxxxxxxxxx.x"..
+           ".x..................x"..
+           "bxxxxxxxxxxxxxxxxxxxx"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 
-grid_floor = "....................."..
-             "wwwwwwwwwwwwwwwwwww.."..
-             "w.................w.."..
-             "w.wwwwwwwwwwwwwww.w.."..
-             "w.w.............w.w.."..
-             "w.w.wwwwwwwwwww.w.w.."..
-             "w.w.w.........w.w.w.."..
-             "w.w.w.wwwwwww.w.w.w.."..
-             "w.w.w.w.....w.w.w.w.."..
-             "w.w.w.w.www.w.w.w.w.."..
-             "w.w.w.w.w.w.w.w.w.w.."..
-             "w.w.w.w.w...w.w.w.w.."..
-             "w.w.w.w.wwwww.w.w.w.."..
-             "w.w.w.w.......w.w.w.."..
-             "w.w.w.wwwwwwwww.w.w.."..
-             "w.w.w...........w.w.."..
-             "w.w.wwwwwwwwwwwww.w.."..
-             "w.w...............w.."..
-             "w.wwwwwwwwwwwwwwwww.."..
-             "w...................."..
-             "....................."
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
     _G.PopManager.new("You've completed the job",
