@@ -23,49 +23,51 @@ end
 extra_info = [[The experiment ends as soon as the objective requirements are completed.
 - You can use the Fast (>>) or Very Fast (>>>) speed buttons to make the turns go faster.]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "oooooooooboooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooobooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             ".........v.........."..
-             ".........w.........."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             ".........v..........."..
+             ".........w..........."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."

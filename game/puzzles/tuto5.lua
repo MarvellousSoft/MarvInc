@@ -22,49 +22,51 @@ end
 extra_info =
 [[If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooookooooooooooooo"..
-            "oooook.l...koooooooo"..
-            "oooooo.ooooloooooooo"..
-            "oooooobooooloooooooo"..
-            "oooooooo....oooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooookoooooooooooooo"..
+            "oooook.l...kooooooooo"..
+            "oooooo.oooolooooooooo"..
+            "ooooooboooolooooooooo"..
+            "oooooooo....ooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "......w............."..
-             ".....wwwwwww........"..
-             "......w....w........"..
-             "......w....w........"..
-             "........rwww........"..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "......w.............."..
+             ".....wwwwwww........."..
+             "......w....w........."..
+             "......w....w........."..
+             "........rwww........."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."

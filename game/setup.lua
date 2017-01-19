@@ -10,8 +10,8 @@ local setup = {}
 W = love.graphics.getWidth() --Current width of the game window
 H = love.graphics.getHeight() --Current height of the game window
 
-ROWS = 20
-COLS = 20
+ROWS = 21
+COLS = 21
 
 WIN_BORD = 20
 

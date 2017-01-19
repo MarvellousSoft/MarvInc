@@ -18,8 +18,8 @@ local con
 objective_text = "Write all numbers from 1 to 50 on the green console."
 function objective_checker(room)
     if not con then
-        for i = 1, 20 do
-            for j = 1, 20 do
+        for i = 1, ROWS do
+            for j = 1, COLS do
                 local o = room.grid_obj[i][j]
                 if o and o.tp == "console" then
                     con = o
@@ -43,49 +43,51 @@ extra_info =
   [[After you outputted the 50 numbers, the code will stop automatically, so there is no need to do it manually.
 - You can use write [X] to write to the console the value stored in register X (in this case there's only one).]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooooooo.....cooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "oooooooooboooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooo.....coooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooobooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             ".........wwwwww....."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             ".........wwwwww......"..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."

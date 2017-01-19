@@ -27,49 +27,51 @@ end
 -- Extra info to be displayed
 extra_info = nil
 
-grid_obj =  "oooooooooeeeeeeeeeee"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeoooooooooo"..
-            "oooooooooeeeeeeeeebo"
+grid_obj =  "oooooooooeeeeeeeeeeeo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeooooooooooo"..
+            "oooooooooeeeeeeeeeboo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "eeeeeeeeewvwvwvwvwvr"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeeeveeeeeeeeee"..
-             "eeeeeeeeeweeeeeeeeee"..
-             "eeeeeeeewvwvwvwvwvwe"
+grid_floor = "eeeeeeeeewvwvwvwvwvre"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeeeveeeeeeeeeee"..
+             "eeeeeeeeeweeeeeeeeeee"..
+             "eeeeeeeewvwvwvwvwvwee"..
+             "eeeeeeeeeeeeeeeeeeeee"

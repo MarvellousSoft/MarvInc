@@ -17,9 +17,9 @@ local floor
 -- Objective
 objective_text = "Move the buckets to the green tiles."
 function objective_checker(room)
-    for i = 1, 20 do
-        for j = 1, 20 do
-            if floor:sub(20 * (i - 1) + j, 20 * (i - 1) + j) == ',' then
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if floor:sub(ROWS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
                 local o = room.grid_obj[j][i]
                 if not o or o.tp ~= 'bucket' then
                     return false
@@ -32,51 +32,53 @@ end
 
 extra_info = "Extra registers and lines of code in case you need it."
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooo......b.....kkooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooo......b.....kkoooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "green_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...,,wwwwwwwwwwww..."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "...,,wwwwwwwwwwww...."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
 floor = grid_floor
 
 function first_completed()

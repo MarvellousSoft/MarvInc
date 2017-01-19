@@ -16,9 +16,9 @@ local objs
 
 objective_text = "Extinguish all lava"
 function objective_checker(room)
-    for i = 1, 20 do
-        for j = 1, 20 do
-            local p = 20 * (i - 1) + j
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            local p = ROWS * (i - 1) + j
             local o = room.grid_obj[j][i]
             if objs:sub(p, p) == 'l' and o and o.tp == 'dead' then
                 return false
@@ -30,26 +30,27 @@ end
 
 extra_info = nil
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "oooooooooooooooolkoo"..
-            "okkkkkkkkblllllllloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "ooooooooooooooookloo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "oooooooooooooooolkooo"..
+            "okkkkkkkkbllllllllooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooklooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 objs = grid_obj
 
 -- Floor
@@ -59,23 +60,24 @@ r = "grey_tile"
 g = "grey_tile"
 
 
-grid_floor = "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"..
-             "w,w,w,w,w,w,w,w,w,w,"..
-             ",w,w,w,w,w,w,w,w,w,w"
+grid_floor = "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"..
+             ",w,w,w,w,w,w,w,w,w,w,"..
+             "w,w,w,w,w,w,w,w,w,w,w"

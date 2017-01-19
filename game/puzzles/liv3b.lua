@@ -53,52 +53,54 @@ c = {"console", false, "console", "green", args = function()
 end, dir = "east"}
 d = {"console", false, "console", "blue", args = {}, dir = "south"}
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooododododododoooo"..
-            "ooc..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo...........b..ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooododododododooooo"..
+            "ooc..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo...........b..oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             ".....w.w.w.w.w.w...."..
-             "..wwwwwwwwwwwwwww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...w,wwwww,wwwwww..."..
-             "...w,,www,,wwwwww..."..
-             "...w,w,w,w,www,ww..."..
-             "...w,ww,ww,wwwwww..."..
-             "...w,wwwww,www,ww..."..
-             "...w,wwwww,www,ww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             ".....w.w.w.w.w.w....."..
+             "..wwwwwwwwwwwwwww...."..
+             "...wwwwwwwwwwwwww...."..
+             "...wwwwwwwwwwwwww...."..
+             "...w,wwwww,wwwwww...."..
+             "...w,,www,,wwwwww...."..
+             "...w,w,w,w,www,ww...."..
+             "...w,ww,ww,wwwwww...."..
+             "...w,wwwww,www,ww...."..
+             "...w,wwwww,www,ww...."..
+             "...wwwwwwwwwwwwww...."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
 
 function first_completed()
     _G.PopManager.new("",

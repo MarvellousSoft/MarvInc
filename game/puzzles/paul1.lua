@@ -104,52 +104,54 @@ Each monitor receives only one digit of the password, in order
 - The digits are all positive
 ]]
 
-grid_obj =  "oooooooooooooooooooo"..
-             "ooooopeooooooooooooo"..
-             "oooooeeooooooooooooo"..
-             "oooooeeooooooooooooo"..
-             "oooooeeooooooooooooo"..
-             "oooooeeooooooooooooo"..
-             "ooooobeooooooooooooo"..
-             "ooeeeeeeeeeeeeecoooo"..
-             "ooeeeeeeeeegoooooooo"..
-             "ooeeeeeeeeeeeeehoooo"..
-             "ooeeeeeeeeeroooooooo"..
-             "ooeeeeeeeeeeeeesoooo"..
-             "ooeeeeeeeeeeeeeooooo"..
-             "oodoooioootoooeooooo"..
-             "ooeoooeoooeoooeooooo"..
-             "ooeoooeoooeoooeooooo"..
-             "ooeoooeoooeoooeooooo"..
-             "ooeoooeoooeoooeooooo"..
-             "okeeeeeeeeeeeeeeeleo"..
-             "oooooooooooooooooooo"
+grid_obj =   "ooooooooooooooooooooo"..
+             "ooooopeoooooooooooooo"..
+             "oooooeeoooooooooooooo"..
+             "oooooeeoooooooooooooo"..
+             "oooooeeoooooooooooooo"..
+             "oooooeeoooooooooooooo"..
+             "ooooobeoooooooooooooo"..
+             "ooeeeeeeeeeeeeecooooo"..
+             "ooeeeeeeeeegooooooooo"..
+             "ooeeeeeeeeeeeeehooooo"..
+             "ooeeeeeeeeerooooooooo"..
+             "ooeeeeeeeeeeeeesooooo"..
+             "ooeeeeeeeeeeeeeoooooo"..
+             "oodoooioootoooeoooooo"..
+             "ooeoooeoooeoooeoooooo"..
+             "ooeoooeoooeoooeoooooo"..
+             "ooeoooeoooeoooeoooooo"..
+             "ooeoooeoooeoooeoooooo"..
+             "okeeeeeeeeeeeeeeeleoo"..
+             "ooooooooooooooooooooo"..
+             "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 x = "red_tile"
 
-grid_floor = "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwvvwwwwwwwwwwwww"..
-             "wwwwwvvwwwwwwwwwwwww"..
-             "wwwwwvvwwwwwwwwwwwww"..
-             "wwwwwvvwwwwwwwwwwwww"..
-             "wwwwwvvwwwwwwwwwwwww"..
-             "wwwwwwvwwwwwwwwwwwww"..
-             "wwvvvvvvvvvvvvvvwwww"..
-             "wwvvvvvvvvvwwwwwwwww"..
-             "wwvvvvvvvvvvvvvvwwww"..
-             "wwvvvvvvvvvwwwwwwwww"..
-             "wwvvvvvvvvvvvvvvwwww"..
-             "wwvvvvvvvvvvvvvwwwww"..
-             "wwvwwwvwwwvwwwvwwwww"..
-             "wwvwwwvwwwvwwwvwwwww"..
-             "wwvwwwvwwwvwwwvwwwww"..
-             "wwvwwwvwwwvwwwvwwwww"..
-             "wwvwwwvwwwvwwwvwwwww"..
-             "wvvvvvvvvvvvvvvvvvxw"..
-             "wwwwwwwwwwwwwwwwwwww"
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwvvwwwwwwwwwwwwww"..
+             "wwwwwvvwwwwwwwwwwwwww"..
+             "wwwwwvvwwwwwwwwwwwwww"..
+             "wwwwwvvwwwwwwwwwwwwww"..
+             "wwwwwvvwwwwwwwwwwwwww"..
+             "wwwwwwvwwwwwwwwwwwwww"..
+             "wwvvvvvvvvvvvvvvwwwww"..
+             "wwvvvvvvvvvwwwwwwwwww"..
+             "wwvvvvvvvvvvvvvvwwwww"..
+             "wwvvvvvvvvvwwwwwwwwww"..
+             "wwvvvvvvvvvvvvvvwwwww"..
+             "wwvvvvvvvvvvvvvwwwwww"..
+             "wwvwwwvwwwvwwwvwwwwww"..
+             "wwvwwwvwwwvwwwvwwwwww"..
+             "wwvwwwvwwwvwwwvwwwwww"..
+             "wwvwwwvwwwvwwwvwwwwww"..
+             "wwvwwwvwwwvwwwvwwwwww"..
+             "wvvvvvvvvvvvvvvvvvxww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"
 
 
 function first_completed()

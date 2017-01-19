@@ -22,52 +22,54 @@ end
 extra_info =
 [[Buckets can be dropped on the floor after being picked up.]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oobkkkkkkklllllll.oo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "oobkkkkkkklllllll.ooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 g = "green_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "..wwwwwwwwwwwwwwwg.."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "..wwwwwwwwwwwwwwwg..."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
 
 function first_completed()
     _G.PopManager.new("I appreciate it",

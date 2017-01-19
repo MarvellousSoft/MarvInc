@@ -72,52 +72,54 @@ y = {"console", true, "console", "green", args = {}, dir = "SOUTH"}
 
 extra_info = "LEGALIZE!"
 
-grid_obj = "oooooooooooooooooooo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeyeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeebeeeeeeeeo"..
-           "oeeeeeeeeeeeeeeeeeeo"..
-           "oeeeeeeeeeseeeeeeeeo"..
-           "oooooooooooooooooooo"
+grid_obj = "ooooooooooooooooooooo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeyeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeebeeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "oeeeeeeeeeseeeeeeeeeo"..
+           "oeeeeeeeeeeeeeeeeeeeo"..
+           "ooooooooooooooooooooo"
 
 -- Floor
 D = "white_floor"
 v = "black_floor"
 x = "red_tile"
 
-grid_floor = "vvvvvvvvvvvvvvvvvvvv"..
-           "vvvvvvvvvvvvvvvvvvvv"..
-           "vvvvvvvvvvDDvvvvvvvv"..
-           "vvvvvvvvvvDDvvvvvvvv"..
-           "vvvvDvvvvvDDvvvvvDvv"..
-           "vvvvDDvvvvDDvvvvDDvv"..
-           "vvvvvDDvvvDDvvvDDvvv"..
-           "vvvvvDDDvvDDvvDDDvvv"..
-           "vvvvvvDDvvDDvvDDvvvv"..
-           "vvvvvvDDvvDDvvDDvvvv"..
-           "vvDvvvvDDvDDvDDvvvDv"..
-           "vvDDvvvDDvDDvDDvvDDv"..
-           "vvvvDDvvDDDDDDvvDDvv"..
-           "vvvvvDDDDDDDDDDDDDvv"..
-           "vvvvvvvDDDDDDDDvvvvv"..
-           "vvvvvvDDDvDDvDDDvvvv"..
-           "vvvvvDDvvvDDvvvDDvvv"..
-           "vvvvvvvvvvDDvvvvvvvv"..
-           "vvvvvvvvvvDDvvvvvvvv"..
-           "vvvvvvvvvvvvvvvvvvvv"
+grid_floor = "vvvvvvvvvvvvvvvvvvvvv"..
+             "vvvvvvvvvvvvvvvvvvvvv"..
+             "vvvvvvvvvvDDvvvvvvvvv"..
+             "vvvvvvvvvvDDvvvvvvvvv"..
+             "vvvvDvvvvvDDvvvvvDvvv"..
+             "vvvvDDvvvvDDvvvvDDvvv"..
+             "vvvvvDDvvvDDvvvDDvvvv"..
+             "vvvvvDDDvvDDvvDDDvvvv"..
+             "vvvvvvDDvvDDvvDDvvvvv"..
+             "vvvvvvDDvvDDvvDDvvvvv"..
+             "vvDvvvvDDvDDvDDvvvDvv"..
+             "vvDDvvvDDvDDvDDvvDDvv"..
+             "vvvvDDvvDDDDDDvvDDvvv"..
+             "vvvvvDDDDDDDDDDDDDvvv"..
+             "vvvvvvvDDDDDDDDvvvvvv"..
+             "vvvvvvDDDvDDvDDDvvvvv"..
+             "vvvvvDDvvvDDvvvDDvvvv"..
+             "vvvvvvvvvvDDvvvvvvvvv"..
+             "vvvvvvvvvvDDvvvvvvvvv"..
+             "vvvvvvvvvvvvvvvvvvvvv"..
+             "vvvvvvvvvvvvvvvvvvvvv"
 
 -- console objects
 local bl

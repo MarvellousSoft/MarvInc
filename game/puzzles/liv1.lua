@@ -35,8 +35,8 @@ local ans = {}
 -- create ans vector
 function on_start(room)
     -- finds consoles
-    for i = 1, 20 do
-        for j = 1, 20 do
+    for i = 1, ROWS do
+        for j = 1, COLS do
             local o = room.grid_obj[i][j]
             if o and o.tp == 'console' then
                 if #o.out > 0 then
@@ -83,52 +83,54 @@ Each sequence is given by its size and then its elements.
 - Example: 2 1 2 1 3 is sequence (1,2) and  (3) and the output should be 2 2 1 1 3.
 - Sequences will have at most 20 elements.]]
 
-grid_obj =  "oooooc.....doooooooo"..
-            "oooooooooo.ooooooooo"..
-            "ooooo......ooooooooo"..
-            "ooooo.oooooooooooooo"..
-            "ooooo........ooooooo"..
-            "oooooooooooo.ooooooo"..
-            "oooo.........ooooooo"..
-            "oooo.ooooooooooooooo"..
-            "oooo........oooooooo"..
-            "ooooooooooo.oooooooo"..
-            "ooooo.......oooooooo"..
-            "ooooo.oooooooooooooo"..
-            "ooooo......ooooooooo"..
-            "oooooooooo.ooooooooo"..
-            "oooooo.....ooooooooo"..
-            "oooooo.ooooooooooooo"..
-            "oooooo....oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "oooooooo..oooooooooo"..
-            "oooooooobooooooooooo"
+grid_obj =  "oooooc.....dooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "ooooo......oooooooooo"..
+            "ooooo.ooooooooooooooo"..
+            "ooooo........oooooooo"..
+            "oooooooooooo.oooooooo"..
+            "oooo.........oooooooo"..
+            "oooo.oooooooooooooooo"..
+            "oooo........ooooooooo"..
+            "ooooooooooo.ooooooooo"..
+            "ooooo.......ooooooooo"..
+            "ooooo.ooooooooooooooo"..
+            "ooooo......oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooo.....oooooooooo"..
+            "oooooo.oooooooooooooo"..
+            "oooooo....ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "oooooooo..ooooooooooo"..
+            "ooooooooboooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"..
-             "wvwvwvwvwvwvwvwvwvwv"..
-             "vwvwvwvwvwvwvwvwvwvw"
+grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"
 
 
 function first_completed()

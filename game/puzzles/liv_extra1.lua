@@ -34,8 +34,8 @@ local ans = {}
 -- create ans vector
 function on_start(room)
     -- finds consoles
-    for i = 1, 20 do
-        for j = 1, 20 do
+    for i = 1, ROWS do
+        for j = 1, COLS do
             local o = room.grid_obj[i][j]
             if o and o.tp == 'console' then
                 if #o.out > 0 then
@@ -71,49 +71,51 @@ You only have 10 lines and 1 register
 - It is guaranteed numbers are divisible by 125
 - Numbers may be negative or 0]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooooooocbdoooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooocbdooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "....wwwwwwwwwwww...."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....wwwwwwwwwwww....."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."

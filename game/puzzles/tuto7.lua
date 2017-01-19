@@ -69,49 +69,51 @@ end, dir = "north"}
 d = {"console", false, "console", "blue", args = {}, dir = "east"}
 e = {"console", false, "console", "red", args = {}, dir = "west"}
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooboooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "ooooooooo.oooooooooo"..
-            "oood...........eoooo"..
-            "ooooooooocoooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooobooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "ooooooooo.ooooooooooo"..
+            "oood...........eooooo"..
+            "ooooooooocooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             ".........w.........."..
-             "...wwwwwwwwwwwww...."..
-             ".........w.........."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             ".........w..........."..
+             "...wwwwwwwwwwwww....."..
+             ".........w..........."..
+             "....................."..
+             "....................."..
+             "....................."

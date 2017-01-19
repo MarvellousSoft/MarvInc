@@ -18,9 +18,9 @@ local floor
 --This obviously won't be buckets in the final game... I hope.
 objective_text = "Complete the buckets on the Marvellous logo"
 function objective_checker(room)
-    for i = 1, 20 do
-        for j = 1, 20 do
-            if floor:sub(20 * (i - 1) + j, 20 * (i - 1) + j) == ',' then
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if floor:sub(ROWS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
                 local o = room.grid_obj[j][i]
                 if not o or o.tp ~= 'bucket' then
                     return false
@@ -33,52 +33,55 @@ end
 
 extra_info = "You have 20 lines of code"
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooobkkkkkkkkkkkk.ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..............ooo"..
-            "ooo..k...k.......ooo"..
-            "ooo...k.k.....k..ooo"..
-            "ooo....k.........ooo"..
-            "ooo...........k..ooo"..
-            "ooo...........k..ooo"..
-            "ooo..............ooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooobkkkkkkkkkkkk.oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..............oooo"..
+            "ooo..k...k.......oooo"..
+            "ooo...k.k.....k..oooo"..
+            "ooo....k.........oooo"..
+            "ooo...........k..oooo"..
+            "ooo...........k..oooo"..
+            "ooo..............oooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...wwwwwwwwwwwwww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...w,wwwww,wwwwww..."..
-             "...w,,www,,wwwwww..."..
-             "...w,w,w,w,www,ww..."..
-             "...w,ww,ww,wwwwww..."..
-             "...w,wwwww,www,ww..."..
-             "...w,wwwww,www,ww..."..
-             "...wwwwwwwwwwwwww..."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "...wwwwwwwwwwwwww...."..
+             "...wwwwwwwwwwwwww...."..
+             "...wwwwwwwwwwwwww...."..
+             "...w,wwwww,wwwwww...."..
+             "...w,,www,,wwwwww...."..
+             "...w,w,w,w,www,ww...."..
+             "...w,ww,ww,wwwwww...."..
+             "...w,wwwww,www,ww...."..
+             "...w,wwwww,www,ww...."..
+             "...wwwwwwwwwwwwww...."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
+
 floor = grid_floor
 
 function first_completed()

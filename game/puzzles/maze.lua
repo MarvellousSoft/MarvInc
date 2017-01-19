@@ -22,52 +22,54 @@ end
 extra_info = [[
 Be smart. You can solve this so it works on any maze.]]
 
-grid_obj =  "bo.....o...........o"..
-            ".o.ooo.ooo.o.ooooo.o"..
-            "...o.o...o.o...o.o.o"..
-            ".ooo.ooo.o.ooo.o.o.o"..
-            "...o...o.o...o.o...o"..
-            "oo.o.o.o.ooooo.ooooo"..
-            ".o.o.o.o.....o.....o"..
-            ".o.o.o.ooooo.ooooo.o"..
-            ".o.o.o.o...o.....o.o"..
-            ".o.o.o.o.o.ooooooo.o"..
-            "...o.o...o...o.....o"..
-            ".ooooooooooo.o.ooo.o"..
-            "...........o.o.o...o"..
-            "oooooooooo.o.o.o.ooo"..
-            ".o.....o...o...o...o"..
-            ".o.ooo.o.ooooooooo.o"..
-            ".o.o.o...o...o.....o"..
-            ".o.o.ooooo.o.o.ooo.o"..
-            "...........o...o...o"..
-            "oooooooooooooooooooo"
+grid_obj =  "bo.....o...........oo"..
+            ".o.ooo.ooo.o.ooooo.oo"..
+            "...o.o...o.o...o.o.oo"..
+            ".ooo.ooo.o.ooo.o.o.oo"..
+            "...o...o.o...o.o...oo"..
+            "oo.o.o.o.ooooo.oooooo"..
+            ".o.o.o.o.....o.....oo"..
+            ".o.o.o.ooooo.ooooo.oo"..
+            ".o.o.o.o...o.....o.oo"..
+            ".o.o.o.o.o.ooooooo.oo"..
+            "...o.o...o...o.....oo"..
+            ".ooooooooooo.o.ooo.oo"..
+            "...........o.o.o...oo"..
+            "oooooooooo.o.o.o.oooo"..
+            ".o.....o...o...o...oo"..
+            ".o.ooo.o.ooooooooo.oo"..
+            ".o.o.o...o...o.....oo"..
+            ".o.o.ooooo.o.o.ooo.oo"..
+            "...........o...o...oo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 g = "green_tile"
 
-grid_floor = "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwgwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwgwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"
 
 
 function first_completed()

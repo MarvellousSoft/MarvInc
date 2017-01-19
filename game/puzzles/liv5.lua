@@ -101,8 +101,8 @@ local bl
 -- create ans vector
 function on_start(room)
     -- finds consoles
-    for i = 1, 20 do
-        for j = 1, 20 do
+    for i = 1, ROWS do
+        for j = 1, COLS do
             local o = room.grid_obj[i][j]
             if o and o.tp == 'console' and #o.out == 0 then
                 bl = o
@@ -134,49 +134,51 @@ extra_info = [[
 The size of the cyclic memory should be exactly 20.
 - Refer to Liv's email for details on the instructions and language.]]
 
-grid_obj =  "oooooooooooooooooooo"..
-            ".........oo........."..
-            ".........oo........."..
-            ".........oo........."..
-            ".........oo........."..
-            ".........oo........."..
-            ".........oo........."..
-            ".........oo........."..
-            ".........eo........."..
-            "oooooooocbdooooooooo"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwww"
+grid_obj =  "ooooooooooooooooooooo"..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........oo.........."..
+            ".........eo.........."..
+            "oooooooocbdoooooooooo"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"..
+            "wwwwwwwwwwwwwwwwwwwww"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
-grid_floor = "wwwwwwwwwwwwwwwwwwww"..
-             "ww,,wwwwwllwwwww,,ww"..
-             "www,,wwwwllwwww,,www"..
-             "wwww,,wwwllwww,,wwww"..
-             "wwwww,,wwllww,,wwwww"..
-             "wwwww,,wwllww,,wwwww"..
-             "wwww,,wwwllwww,,wwww"..
-             "www,,wwwwllwwww,,www"..
-             "ww,,wwwwwwwwwwww,,ww"..
-             "lllllllllwwlllllllll"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwww,,wwwwwwwwwwww"..
-             "wwwwww,,wwwwwwwwwwww"..
-             "wwww,,,,,,w,,,,,wwww"..
-             "wwww,,,,,,w,,,,,wwww"..
-             "w,,www,,wwwwwwwww,,w"..
-             "w,,www,,wwwwwwwww,,w"..
-             "wwwwwwwwwwwwwwwwww,w"..
-             "wwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwww"
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+             "ww,,wwwwwllwwwww,,www"..
+             "www,,wwwwllwwww,,wwww"..
+             "wwww,,wwwllwww,,wwwww"..
+             "wwwww,,wwllww,,wwwwww"..
+             "wwwww,,wwllww,,wwwwww"..
+             "wwww,,wwwllwww,,wwwww"..
+             "www,,wwwwllwwww,,wwww"..
+             "ww,,wwwwwwwwwwww,,www"..
+             "lllllllllwwllllllllll"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwww,,wwwwwwwwwwwww"..
+             "wwwwww,,wwwwwwwwwwwww"..
+             "wwww,,,,,,w,,,,,wwwww"..
+             "wwww,,,,,,w,,,,,wwwww"..
+             "w,,www,,wwwwwwwww,,ww"..
+             "w,,www,,wwwwwwwww,,ww"..
+             "wwwwwwwwwwwwwwwwww,ww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"

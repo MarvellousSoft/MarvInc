@@ -40,8 +40,8 @@ local ans = {}
 -- create ans vector
 function on_start(room)
     -- finds consoles
-    for i = 1, 20 do
-        for j = 1, 20 do
+    for i = 1, ROWS do
+        for j = 1, COLS do
             local o = room.grid_obj[i][j]
             if o and o.tp == 'console' then
                 if #o.out > 0 then
@@ -87,49 +87,51 @@ function objective_checker(room)
     return #bl.inp == #ans
 end
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "ooooo..........ooooo"..
-            "ooooc....b.....doooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "ooooo..........ooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooo..........oooooo"..
+            "ooooc....b.....dooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooo..........oooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             ".....wwwwwwwwww....."..
-             "....wwwwwwwwww,w...."..
-             ".....wwwwwwwwww....."..
-             ".....w,wwwww,w,....."..
-             ".....w,,www,,w,....."..
-             ".....w,w,w,w,ww....."..
-             ".....w,ww,ww,ww....."..
-             ".....w,wwwww,ww....."..
-             ".....w,wwwww,ww....."..
-             ".....wwwwwwwwww....."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             ".....wwwwwwwwww......"..
+             "....wwwwwwwwww,w....."..
+             ".....wwwwwwwwww......"..
+             ".....w,wwwww,w,......"..
+             ".....w,,www,,w,......"..
+             ".....w,w,w,w,ww......"..
+             ".....w,ww,ww,ww......"..
+             ".....w,wwwww,ww......"..
+             ".....w,wwwww,ww......"..
+             ".....wwwwwwwwww......"..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."

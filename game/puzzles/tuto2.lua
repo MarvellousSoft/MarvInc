@@ -21,49 +21,51 @@ function objective_checker(room)
     return room.bot.pos.x == 14 and room.bot.pos.y == 7
 end
 
-grid_obj =  "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooo.ooooooooooo"..
-            "oooooooo......oooooo"..
-            "oooooooo.ooooooooooo"..
-            "oooooooo.ooooooooooo"..
-            "oooooooo.ooooooooooo"..
-            "oooooooo.ooooooooooo"..
-            "oooooooobooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"..
-            "oooooooooooooooooooo"
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "oooooooo.oooooooooooo"..
+            "oooooooo......ooooooo"..
+            "oooooooo.oooooooooooo"..
+            "oooooooo.oooooooooooo"..
+            "oooooooo.oooooooooooo"..
+            "oooooooo.oooooooooooo"..
+            "ooooooooboooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
 v = "black_floor"
 r = "red_tile"
 
-grid_floor = "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "........w..........."..
-             "........vwvwvr......"..
-             "........w..........."..
-             "........v..........."..
-             "........w..........."..
-             "........v..........."..
-             "........w..........."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."..
-             "...................."
+grid_floor = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "........w............"..
+             "........vwvwvr......."..
+             "........w............"..
+             "........v............"..
+             "........w............"..
+             "........v............"..
+             "........w............"..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
