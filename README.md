@@ -44,11 +44,11 @@ Join our Family now, and help us CHANGE the world.
 
 ## Special Thanks
 
-Yan's mom
-Fast-food
-Mayte Mirio
-Maria Clara Cardoso
-Cotuba
+- Yan's mom
+- Fast-food
+- Mayte Mirio
+- Maria Clara Cardoso
+- Cotuba
 
 For all the support they provided us in this 72 hours of sleep deprivation
 

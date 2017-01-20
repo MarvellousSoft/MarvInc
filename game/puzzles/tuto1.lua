@@ -74,4 +74,4 @@ grid_floor = "vwvwvwvwvwvwvwvwvwvwr"..
              "wvwvwvwvwvwvwvwvwvwvw"..
              "vwvwvwvwvwvwvwvwvwvww"..
              "wvwvwvwvwvwvwvwvwvwvw"..
-             "vwvwvwvwvwvwvwvwvwvww"
+             "vwvwvwvwvwvwvwvwvwvwv"
