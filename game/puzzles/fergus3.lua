@@ -10,43 +10,25 @@ bot = {'b', "EAST"}
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-k = {"bucket", true, "bucket"}
+k = {'bucket', true, 'bucket', args = {content = 'empty'}}
+c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint'}}
 
 local floor
-
--- Objective
---This obviously won't be buckets in the final game... I hope.
-objective_text = "Complete the buckets on the Marvellous logo"
-function objective_checker(room)
-    for i = 1, ROWS do
-        for j = 1, COLS do
-            if floor:sub(ROWS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
-                local o = room.grid_obj[j][i]
-                if not o or o.tp ~= 'bucket' then
-                    return false
-                end
-            end
-        end
-    end
-    return true
-end
-
-extra_info = "You have 20 lines of code"
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooo.bkkkkkkkkkkkk.ooo"..
+            "oocbk.............ooo"..
             "ooo...............ooo"..
             "ooo...............ooo"..
             "ooo...............ooo"..
-            "ooo...k...k.......ooo"..
-            "ooo....k.k.....k..ooo"..
-            "ooo.....k.........ooo"..
-            "ooo............k..ooo"..
-            "ooo............k..ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
+            "ooo...............ooo"..
             "ooo...............ooo"..
             "ooo...............ooo"..
             "ooooooooooooooooooooo"..
@@ -59,21 +41,22 @@ grid_obj =  "ooooooooooooooooooooo"..
 w = "white_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
+g = "black_floor"
 
 grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
              "....................."..
+             "..wwwwwwwwwwwwwwww..."..
              "...wwwwwwwwwwwwwww..."..
              "...wwwwwwwwwwwwwww..."..
-             "...wwwwwwwwwwwwwww..."..
-             "...ww,wwwww,wwwwww..."..
-             "...ww,,www,,wwwwww..."..
-             "...ww,w,w,w,www,ww..."..
-             "...ww,ww,ww,wwwwww..."..
-             "...ww,wwwww,www,ww..."..
-             "...ww,wwwww,www,ww..."..
+             "...wwgwwwwwgwwwwww..."..
+             "...wwg,www,gwwwwww..."..
+             "...wwgw,w,wgwww,ww..."..
+             "...wwgww,wwgwwwwww..."..
+             "...wwgwwwwwgwww,ww..."..
+             "...wwgwwwwwgwww,ww..."..
              "...wwwwwwwwwwwwwww..."..
              "...wwwwwwwwwwwwwww..."..
              "....................."..
@@ -83,6 +66,36 @@ grid_floor = "....................."..
              "....................."
 
 floor = grid_floor
+
+function on_start(room)
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
+                room.color_floor[j][i] = _G.Color.new(0, 0, 30)
+            end
+        end
+    end
+end
+
+-- Objective
+objective_text = "Complete the painting of the Marvellous logo"
+function objective_checker(room)
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'g' then
+                if not room.color_floor[j][i] then
+                    return false
+                end
+            end
+        end
+    end
+    return true
+end
+
+extra_info =
+[[You have 20 lines of code
+- The bucket to your right is empty, you can refill it any number of times in the paint container to your left. To refill, use pickup on the container while holding the bucket.
+- When you use drop and the bucket is full of paint, the floor in front of the bot will be painted and the bucket will stay in you inventory, now empty.]]
 
 function first_completed()
     _G.PopManager.new("THANK YOU my friend",

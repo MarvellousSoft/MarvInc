@@ -65,54 +65,56 @@ for i=1, #ORIENT_R do
     ORIENT_R[i][2] = i
 end
 
+--IMAGES--
+
+-- Tiles
+TILES_IMG = {}
+TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
+TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
+TILES_IMG["grey_tile"] = love.graphics.newImage("assets/images/grey_tile.png")
+TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")
+TILES_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
+TILES_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
+TILES_IMG["solid_lava"] = love.graphics.newImage("assets/images/cold_lava_tile.png")
+
+-- Objects
+OBJS_IMG = {}
+OBJS_IMG["wall_none"] = love.graphics.newImage("assets/images/wall_none.png")
+OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
+OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
+OBJS_IMG["red_tile"] = TILES_IMG.red_tile
+OBJS_IMG["green_tile"] = TILES_IMG.green_tile
+OBJS_IMG["blue_tile"] = TILES_IMG.blue_tile
+OBJS_IMG["bucket"] = love.graphics.newImage("assets/images/bucket.png")
+OBJS_IMG["bucket_content"] = love.graphics.newImage("assets/images/bucket_content.png")
+OBJS_IMG["console"] = love.graphics.newImage("assets/images/console.png")
+OBJS_IMG["emitter"] = love.graphics.newImage("assets/images/emitter.png")
+
+-- Spritesheets
+SHEET_IMG = {}
+SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
+SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
+SHEET_IMG["paint"] = {love.graphics.newImage("assets/images/paint_sheet.png"), 4}
+
+-- Room Img
+ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
+-- Background
+BG_IMG = love.graphics.newImage("assets/images/background.png")
+
+-- Miscellaneous images
+MISC_IMG = {}
+MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
+MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
+
+-- Bot images (assume array part only)
+HEAD = {}
+table.insert(HEAD, love.graphics.newImage("assets/images/head_1.png"))
+BODY = {}
+table.insert(BODY, love.graphics.newImage("assets/images/body_1.png"))
+
+
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
-
-    --IMAGES--
-
-    -- Tiles
-    TILES_IMG = {}
-    TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
-    TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
-    TILES_IMG["grey_tile"] = love.graphics.newImage("assets/images/grey_tile.png")
-    TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")
-    TILES_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
-    TILES_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
-    TILES_IMG["solid_lava"] = love.graphics.newImage("assets/images/cold_lava_tile.png")
-
-    -- Objects
-    OBJS_IMG = {}
-    OBJS_IMG["wall_none"] = love.graphics.newImage("assets/images/wall_none.png")
-    OBJS_IMG["wall_o"] = love.graphics.newImage("assets/images/wall_o.png")
-    OBJS_IMG["black_block"] = love.graphics.newImage("assets/images/black_tile.png")
-    OBJS_IMG["red_tile"] = TILES_IMG.red_tile
-    OBJS_IMG["green_tile"] = TILES_IMG.green_tile
-    OBJS_IMG["blue_tile"] = TILES_IMG.blue_tile
-    OBJS_IMG["bucket"] = love.graphics.newImage("assets/images/bucket.png")
-    OBJS_IMG["console"] = love.graphics.newImage("assets/images/console.png")
-    OBJS_IMG["emitter"] = love.graphics.newImage("assets/images/emitter.png")
-
-    -- Spritesheets
-    SHEET_IMG = {}
-    SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
-    SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
-
-    -- Room Img
-    ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
-    -- Background
-    BG_IMG = love.graphics.newImage("assets/images/background.png")
-
-    -- Miscellaneous images
-    MISC_IMG = {}
-    MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
-    MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
-
-    -- Bot images (assume array part only)
-    HEAD = {}
-    table.insert(HEAD, love.graphics.newImage("assets/images/head_1.png"))
-    BODY = {}
-    table.insert(BODY, love.graphics.newImage("assets/images/body_1.png"))
-
 
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )

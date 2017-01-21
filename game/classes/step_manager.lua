@@ -178,7 +178,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
         return
     end
 
-    local n = Util.findId("info_tab").dead
+    local n = Util.findId("info_tab").dead - 1
     local title = fail_title or "Bot #"..n.." has been destroyed!"
     local text = fail_text or
         ("Communications with test subject #"..n.." \""..ROOM.bot.name.."\" have been "..
@@ -250,13 +250,11 @@ function sm.counter()
 end
 
 function sm.pickup()
-    ROOM:pickup()
-    return false
+    return ROOM:pickup()
 end
 
 function sm.drop()
-    ROOM:drop()
-    return false
+    return ROOM:drop()
 end
 
 -- EXTRA

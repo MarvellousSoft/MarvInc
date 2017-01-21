@@ -10,26 +10,8 @@ bot = {'b', "EAST"}
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-k = {"bucket", true, "bucket"}
+k = {'bucket', true, 'bucket', args = {content = 'water'}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
-
--- Objective
-objective_text = "Extinguish all lava."
-function objective_checker(room)
-    for i = 1, ROWS do
-        for j = 1, COLS do
-            local p = ROWS * (i - 1) + j
-            local o = room.grid_obj[j][i]
-            if objs:sub(p, p) == 'l' and o and o.tp == 'dead' then
-                return false
-            end
-        end
-    end
-    return true
-end
-
-extra_info =
-[[Buckets can be dropped on the floor after being picked up.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -79,6 +61,25 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."
+
+-- Objective
+objective_text = "Extinguish all lava."
+function objective_checker(room)
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            local p = ROWS * (i - 1) + j
+            local o = room.grid_obj[j][i]
+            if grid_obj:sub(p, p) == 'l' and o and o.tp == 'dead' then
+                return false
+            end
+        end
+    end
+    return true
+end
+
+extra_info =
+[[Buckets can be dropped on the floor after being picked up.]]
+
 
 function first_completed()
     _G.PopManager.new("I appreciate it",

@@ -7,11 +7,11 @@ SpriteObject = Class{
     __includes = {Sprite, Object},
     init = function(self, grid, i, j, key, bg, delay, tp, clr)
         Object.init(self, grid, i, j, tp, bg)
-        Sprite.init(self, i, j, key, delay, clr)
+        Sprite.init(self, i, j, key, delay, Color[clr]())
         self.tp = tp
         self.sx = ROOM_CW/self.w
         self.sy = ROOM_CH/self.h
-        self.color = clr
+        self.color = Color[clr]()
     end
 }
 

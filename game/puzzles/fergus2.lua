@@ -10,7 +10,7 @@ bot = {'b', "EAST"}
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-k = {"bucket", true, "bucket"}
+k = {'bucket', true, 'bucket', args = {content = 'water'}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 local floor

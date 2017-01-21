@@ -9,7 +9,7 @@ bot = {'b', 'EAST'}
 
 -- name, draw background, image
 o = {'obst', false, 'wall_none'}
-k = {'bucket', true, 'bucket'}
+k = {'bucket', true, 'bucket', args = {content = 'water'}}
 
 local floor, objs
 

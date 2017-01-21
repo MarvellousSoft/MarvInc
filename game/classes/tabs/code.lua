@@ -93,14 +93,13 @@ function CodeTab:draw()
     -- Draw buttons
     for _, b in ipairs(self.buttons) do b:draw() end
 
+    -- Inventory
     love.graphics.rectangle("line", self.inv_x, self.inv_y, self.inv_w, self.inv_h)
     love.graphics.setFont(self.inv_fnt)
     love.graphics.print(self.inv_txt, self.inv_x + self.inv_w/2 - self.inv_txt_w/2,
         self.inv_y + self.inv_h)
     if ROOM.bot and ROOM.bot.inv then
-        local _img = ROOM.bot.inv.img
-        local _sx, _sy = self.inv_w/_img:getWidth(), self.inv_h/_img:getHeight()
-        love.graphics.draw(_img, self.inv_x, self.inv_y, nil, _sx, _sy)
+        ROOM.bot.inv:draw(self.inv_x, self.inv_y, self.inv_w, self.inv_h)
     end
 
     -- Draw memory

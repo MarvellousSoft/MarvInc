@@ -374,13 +374,12 @@ function Pickup.create(t)
 end
 
 function Pickup:execute()
-    if ROOM.bot.inv then return "Not enough free hands" end
     local _n = ROOM:next_block(DIR_CONV[self.dir])
-    if not _n and not _n.pickable then return "Unpickable object" end
+    if not _n or not _n.pickable then return "Unpickable object" end
     if self.dir then
         StepManager.turn(self.dir)
     end
-    StepManager.pickup()
+    return StepManager.pickup()
 end
 
 Drop = Class{
@@ -397,11 +396,10 @@ end
 
 function Drop:execute()
     if not ROOM.bot.inv then return "There is nothing left to drop but my self esteem" end
-    if ROOM:blocked(DIR_CONV[self.dir]) then return "Dropping obstructed by object" end
     if self.dir then
         StepManager.turn(self.dir)
     end
-    StepManager.drop()
+    return StepManager.drop()
 end
 
 function op.read(t)

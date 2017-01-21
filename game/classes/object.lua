@@ -82,8 +82,8 @@ function Object:moveTo(grid, r, c, o)
         end
 
         -- Don't dead open inside
-        if t == "dead" then
-            self:kill(grid)
+        if t == "dead" or t == "container" then
+            self:kill(grid, t)
             return
         end
     end
@@ -95,10 +95,15 @@ function Object:moveTo(grid, r, c, o)
     grid[px][py] = self
 end
 
-function Object:draw()
+-- img must have the same size as the objects image
+function Object:drawImg(img, x, y, w, h)
+    love.graphics.draw(img, (x or self.rx) + (w or ROOM_CW) / 2, (y or self.ry) + (h or ROOM_CH) / 2, self.r[1],
+                       (w and (w / self.img:getWidth()) or self.sx), (h and (h / self.img:getHeight()) or self.sy), self.img:getWidth()/2, self.img:getHeight()/2)
+end
+
+function Object:draw(x, y, w, h)
     Color.set(self.color)
-    love.graphics.draw(self.img, self.rx + ROOM_CW / 2, self.ry + ROOM_CH / 2, self.r[1],
-                       self.sx, self.sy, self.img:getWidth()/2, self.img:getHeight()/2)
+    self:drawImg(self.img, x, y, w, h)
 end
 
 return obj

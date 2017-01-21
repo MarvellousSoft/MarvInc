@@ -115,6 +115,10 @@ function Room:from(puzzle)
 
     self.grid_obj = puzzle.grid_obj
     self.grid_floor = puzzle.grid_floor
+    self.color_floor = {}
+    for i = 1, self.grid_r do
+        self.color_floor[i] = {}
+    end
 
     self.bot = Bot(self.grid_obj, INIT_POS.x, INIT_POS.y)
     self.default_bot_turn = _G[puzzle.orient.."_R"]
@@ -229,7 +233,7 @@ function Room:draw()
                     local img = TILES_IMG[cell]
                     local _y = (j-1)*self.grid_ch
                     local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
-                    Color.set(Color.white())
+                    Color.set(self.color_floor[i][j] or Color.white())
                     love.graphics.draw(img, _x, _y, nil, _sx, _sy)
                 end
                 if obj ~= nil then
@@ -398,11 +402,11 @@ function Room:turn(dir)
 end
 
 function Room:pickup()
-    self.bot:pickup(self.grid_obj, self.grid_r, self.grid_c)
+    return self.bot:pickup(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 function Room:drop()
-    self.bot:drop(self.grid_obj, self.grid_r, self.grid_c)
+    return self.bot:drop(self.grid_obj, self.grid_r, self.grid_c)
 end
 
 function Room:blocked(o)

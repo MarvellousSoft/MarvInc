@@ -79,8 +79,13 @@ function Bot:cleanAndKill()
     --SFX.fail:play()
 end
 
-function Bot:kill(grid)
-    StepManager.stop()
+function Bot:kill(grid, t)
+    if t == 'container' then
+        local n = Util.findId('info_tab').dead
+        StepManager.stop(nil, "You somehow let Bot #" .. n .. " fall into a paint container. That's embarassing. Another unit has been dispatched to replace #"..n..". A notification has been dispatched to HR and this incident shall be added to your personal file.")
+    else
+        StepManager.stop()
+    end
 end
 
 function Bot:next_block(grid, r, c, o)
@@ -109,18 +114,23 @@ end
 function Bot:pickup(grid, r, c)
     local p = ORIENT[self.r[2]]
     local px, py = self.pos.x + p.x, self.pos.y + p.y
-    local _o = grid[px][py]
-    if _o and _o.pickable then
-        self.inv = _o
-        _o.pos = nil
-        grid[px][py] = nil
+    if self.inv then
+        if self.inv.pickup_other then
+            return self.inv:pickup_other(self, grid, px, py)
+        else
+            return "Not enough free hands"
+        end
+    end
+    local o = grid[px][py]
+    if o and o.pickable then
+        return o:toInventory(self)
     end
 end
 
 function Bot:drop(grid, r, c)
     local p = ORIENT[self.r[2]]
     if self.inv then
-        self.inv:use(self, grid, self.pos.x + p.x, self.pos.y + p.y)
+        return self.inv:use(self, grid, self.pos.x + p.x, self.pos.y + p.y, self:blocked(grid, r, c))
     end
 end
 

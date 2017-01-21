@@ -66,7 +66,7 @@ d = {"emitter", true, "emitter", "blue", args={
 e = nil
 
 -- Bucket
-k = {"bucket", true, "bucket"}
+k = {'bucket', true, 'bucket', args = {content = 'water'}}
 
 init_pos = {6, 2}
 
