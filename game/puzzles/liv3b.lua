@@ -39,7 +39,7 @@ extra_info =
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = function()
+c = {"console", false, "console", "green", args = {vec = function()
     local vec = {}
     for i = 1, 6 do
         vs[i] = {}
@@ -50,8 +50,8 @@ c = {"console", false, "console", "green", args = function()
         _G.table.sort(vs[i])
     end
     return vec
-end, dir = "east"}
-d = {"console", false, "console", "blue", args = {}, dir = "south"}
+end}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "south"}
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

@@ -9,7 +9,7 @@ liv.wait = 5
 
 function liv.run()
     Mail.new('liv6_1')
-    LoreManager.timer:after(5, function() Mail.new('liv6_2') end)
+    LoreManager.timer:after(10, function() Mail.new('liv6_2') end)
 end
 
 return liv

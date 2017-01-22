@@ -65,10 +65,10 @@ local function create_votes()
 end
 
 -- Stack
-s = {"console", true, "console", "orange", args = create_votes, dir = "NORTH"}
+s = {"console", true, "console", "orange", args = {vec = create_votes}, dir = "NORTH"}
 
 -- Results
-y = {"console", true, "console", "green", args = {}, dir = "SOUTH"}
+y = {"console", true, "console", "green", args = {vec = 'output'}, dir = "SOUTH"}
 
 extra_info = "LEGALIZE!"
 

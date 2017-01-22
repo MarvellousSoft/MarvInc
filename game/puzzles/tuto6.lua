@@ -10,7 +10,7 @@ bot = {'b', "NORTH"}
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {}, dir = "west"}
+c = {"console", false, "console", "green", args = {vec = 'output'}, dir = "west"}
 
 local con
 

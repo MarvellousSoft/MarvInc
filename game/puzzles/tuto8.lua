@@ -34,15 +34,15 @@ extra_info =
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = function()
+c = {"console", false, "console", "green", args = {vec = function()
     local vec = {}
     for i = 1, 10 do
         vec[i] = _G.love.math.random(1, 30)
         bk[i] = vec[i]
     end
     return vec
-end, dir = "east"}
-d = {"console", false, "console", "blue", args = {}, dir = "west"}
+end}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

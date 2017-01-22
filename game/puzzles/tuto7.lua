@@ -57,7 +57,7 @@ extra_info =
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = function()
+c = {"console", false, "console", "green", args = {vec = function()
     freq = {}
     local vec = {}
     for i = 1, 50 do
@@ -65,9 +65,9 @@ c = {"console", false, "console", "green", args = function()
         freq[vec[i]] = (freq[vec[i]] or 0) + 1
     end
     return vec
-end, dir = "north"}
-d = {"console", false, "console", "blue", args = {}, dir = "east"}
-e = {"console", false, "console", "red", args = {}, dir = "west"}
+end}, dir = "north"}
+d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "east"}
+e = {"console", false, "console", "red", args = {vec = 'output'}, dir = "west"}
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

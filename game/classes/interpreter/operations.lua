@@ -313,7 +313,7 @@ function Read:execute()
     local console = ROOM:next_block()
     if not console or console.tp ~= "console" then return "Trying to read from non-console" end
     local nx = console:input()
-    if not nx then return "No more input on console" end
+    if not nx then return "No input on console" end
     return Util.findId("memory"):set(self.reg:evaluate(), nx)
 end
 

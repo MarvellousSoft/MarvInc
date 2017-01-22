@@ -17,12 +17,25 @@ Console = Class{
         self.clients = {}
         self.clients_awake = true
 
-        self.out = type(args) == 'table' and args or args(i, j)
+        if type(args.vec) == 'table' then
+            self.out = args.vec
+            self.ctype = 'input'
+        elseif type(args.vec) == 'function' then
+            self.out = args.vec(i, j)
+            self.ctype = 'input'
+        elseif type(args.vec) == 'string' then
+            self.ctype = args.vec
+            self.out = {}
+        else
+            assert(false)
+        end
         self.inp = {}
         self.i = 1
+        self.show_nums = args.show_nums
 
         self.fnt = FONTS.firaBold(20)
-    end
+    end,
+    show_nums = 3 -- amount of numbers to show on postDraw
 }
 
 function Console:postDraw()
@@ -32,12 +45,13 @@ function Console:postDraw()
     local r, g, b = love.graphics.getColor()
 
     local nums = {}
+
     if #self.out > 0 then
-        for i = 0, math.min(2, #self.out - self.i), 1 do
+        for i = 0, math.min(self.show_nums - 1, #self.out - self.i), 1 do
             table.insert(nums, self.out[self.i + i])
         end
     else
-        for i = 0, math.min(2, #self.inp - 1), 1 do
+        for i = 0, math.min(self.show_nums - 1, #self.inp - 1), 1 do
             table.insert(nums, self.inp[#self.inp - i])
         end
     end
@@ -48,7 +62,7 @@ function Console:postDraw()
     elseif self.r[2] == 4 then cx, cy = self.rx + ROOM.grid_cw, self.ry + (ROOM.grid_cw - fh) / 2
     end
     for i = 1, #nums, 1 do
-        love.graphics.setColor(r, g, b, 270 - 70 * i)
+        love.graphics.setColor(r, g, b, 270 - 70 * (3 / self.show_nums) * i)
         if self.r[2] == 4 then
             cx = cx + self.fnt:getWidth(nums[i]) + self.fnt:getWidth('-') * .5
         end
@@ -89,6 +103,7 @@ function Console:addClient(e)
 end
 
 function Console:input()
+    if self.ctype == 'output' then return "Trying to read from output-only console" end
     if self.i > #self.out then return end
     local v = self.out[self.i]
     self.i = self.i + 1
@@ -96,7 +111,13 @@ function Console:input()
 end
 
 function Console:write(val)
-    if #self.out > 0 then return "Trying to write to input-only console" end
-    if #self.inp >= 500 then return "Trying to put too many numbers on console" end
-    table.insert(self.inp, val)
+    if self.ctype == 'IO' then
+        if #self.out >= 500 then return "Trying to put too many numbers on console" end
+        table.insert(self.out, val)
+    elseif self.ctype == 'input' then
+        return "Trying to write to input-only console"
+    else
+        if #self.inp >= 500 then return "Trying to put too many numbers on console" end
+        table.insert(self.inp, val)
+    end
 end

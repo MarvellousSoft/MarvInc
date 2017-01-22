@@ -1,106 +1,68 @@
-name = "Complete Brainfuck Interpreter"
+name = "List Handler II"
 -- Puzzle number
 n = "C.6"
 
-lines_on_terminal = 60
-memory_slots = 120
+lines_on_terminal = 40
+memory_slots = 130
 
 -- Bot
-bot = {'b', "WEST"}
+bot = {'b', "NORTH"}
 
 local ans = {}
-local v_code, v_in
-
-local function create_ans()
-    local mem, dp = {}, 1 -- data and data pointer
-    for i = 1, 20 do mem[i] = 0 end
-
-    -- processing matching brackets
-    local match = {} -- stores matching brackets
-    do
-        local st = {} -- stack for loops
-        for i, op in _G.ipairs(v_code) do
-            if     op == '[' then _G.table.insert(st, i)
-            elseif op == ']' then match[st[#st]] = i; match[i] = st[#st]; st[#st] = nil
-            end
+local function create_vec()
+    local v = {}
+    local sz = {3, 19, 3, 10, 1, 0, 2, 5}
+    _G.table.insert(v, 50)
+    local tmp = {}
+    local rem = 50 - (3 + 19 + 3 + 10 + 1 + 0 + 2 + 5)
+    for i = 1, 8 do
+        local j = _G.love.math.random(i, 8)
+        sz[i], sz[j] = sz[j], sz[i]
+        for x = 1, sz[i] do
+            _G.table.insert(tmp, i)
         end
     end
-
-    local inp, ip = 1, 1 -- next position of v_in and v_code to read
-    while v_code[ip] ~= 0 do
-        local op = v_code[ip]
-        if     op == '+' then mem[dp] = mem[dp] + 1
-        elseif op == '-' then mem[dp] = mem[dp] - 1
-        elseif op == '.' then _G.table.insert(ans, mem[dp])
-        elseif op == ',' then mem[dp] = v_in[inp]; inp = inp + 1
-        elseif op == '<' then dp = dp == 1  and 20 or dp - 1
-        elseif op == '>' then dp = dp == 20 and 1  or dp + 1
-        elseif op == '[' then ip = mem[dp] == 0 and match[ip] or ip
-        elseif op == ']' then ip = mem[dp] ~= 0 and match[ip] or ip
-        else _G.assert(false) end
-        ip = ip + 1
-    end
-end
-
-local function add(code, x)
-    for i = 1, x, 1 do
-        _G.table.insert(code, '+')
-    end
-    for i = -1, x, -1 do
-        _G.table.insert(code, '-')
-    end
-end
-
-local function ins(code, str)
-    if _G.type(str) == 'number' then
-        _G.table.insert(code, str)
-    else
-        for c in str:gmatch('.') do
-            _G.table.insert(code, c)
+    local seq = {}
+    for i = 1, 8 do seq[i] = {} end
+    for i = 1, #tmp do
+        local j = _G.love.math.random(i, #tmp)
+        tmp[i], tmp[j] = tmp[j], tmp[i]
+        _G.table.insert(v, tmp[i])
+        _G.table.insert(v, _G.love.math.random(-99, 99))
+        _G.table.insert(seq[tmp[i]], v[#v])
+        if rem > 0 and _G.love.math.random() <= .1 then
+            local pos = {}
+            for x = 1, 8 do if #seq[x] > 0 then _G.table.insert(pos, x) end end
+            j = pos[_G.love.math.random(1, #pos)]
+            _G.table.insert(v, -1)
+            _G.table.insert(v, j)
+            seq[j][#seq[j]] = nil
+            rem = rem - 1
         end
     end
+    while rem > 0 do
+        local pos = {}
+        for x = 1, 8 do if #seq[x] > 0 then _G.table.insert(pos, x) end end
+        j = pos[_G.love.math.random(1, #pos)]
+        _G.table.insert(v, -1)
+        _G.table.insert(v, j)
+        seq[j][#seq[j]] = nil
+        rem = rem - 1
+    end
+    for i = 1, 8 do
+        _G.table.insert(ans, #seq[i])
+        for j = #seq[i], 1, -1 do
+            _G.table.insert(ans, seq[i][j])
+        end
+    end
+    return v
 end
 
-local function rnd() return _G.love.math.random(5, 10) end
-
-local function create_vecs()
-    v_code, v_in = {}, {}
-    ins(v_code, ",[>,][+]<[->+++<<++>]<.>>.>")
-    for i = 1, _G.love.math.random(5, 9) do ins(v_in, rnd()) end
-    ins(v_in, 0)
-    add(v_code, 2)
-    for i = 1, 5 do
-        ins(v_code, '[->')
-        add(v_code, _G.love.math.random() < .6 and 1 or 2)
-    end
-    ins(v_code, '.')
-    for i = 1, 5 do
-        ins(v_code, '<]')
-    end
-    ins(v_code, "<<<[.<]")
-    ins(v_code, 0)
-    create_ans()
-end
-
-local function create_code()
-    if not v_code then
-        create_vecs()
-    end
-    return v_code
-end
-
-local function create_in()
-    if not v_code then
-        create_vecs()
-    end
-    return v_in
-end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = create_in, dir = "east"}
-d = {"console", false, "console", "blue", args = {}, dir = "west"}
-e = {"console", false, "console", "white", args = create_code, dir = "south"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums=10}, dir = "south"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums=10}, dir = "north"}
 
 -- console objects
 local bl
@@ -111,7 +73,7 @@ function on_start(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             local o = room.grid_obj[j][i]
-            if o and o.tp == 'console' and #o.out == 0 then
+            if o and o.tp == 'console' and o.ctype == 'output' then
                 bl = o
             end
         end
@@ -119,12 +81,15 @@ function on_start(room)
 end
 
 -- Objective
-objective_text = [[
-You must implement a brainfuck interpreter. The instructions will be on the white console, the input on the green console and the output must be written to the blue console.
-- It should support the instructions ,.<>+-[]
-- After the instructions, there will be a number 0 on the white console.]]
+objective_text = 
+[[You have to maintain 8 lists, they all start empty.
+- Read a sequence of queries from the green console, that means first a number N and then N queries.
+- Each query has two number A and B.
+  - If A is between 1 and 8, this means you should add number B to the *beginning* of the Ath list.
+  - Otherwise A is -1, and you should remove the first number from the Bth list.
+- Once the queries are over, output all lists, from the first to the eighth, to the blue console.]]
+
 function objective_checker(room)
-    if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
         _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
         return false
@@ -135,61 +100,75 @@ function objective_checker(room)
             return false
         end
     end
+    print(#bl.inp .. "  out of " .. #ans)
     return #bl.inp == #ans
 end
 
-extra_info = [[
-The size of the cyclic memory should be exactly 20.
-- There will be at most 80 instructions.
-- The will be at most 5 levels of nested loops.
-- You have 120 register positions.
-- Refer to Liv's email for details on the instructions and language.]]
 
-grid_obj =  "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "ooooooooocbdooooooooo"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"..
-            "wwwwwwwwwwwwwwwwwwwww"
+extra_info =
+[[Example: Input 4 1 2 2 3 -1 1 1 -2 means adding 2, removing it, and then adding -2 to the first list and adding 3 to the second list, and should output 1 -2 1 3 0 0 0 0 0 0
+- There will be at most 50 queries.
+- There are no input/output consoles, but you have 130 registers.
+- The numbers can be stored however you like in the registers, what matters is the output.]]
+
+grid_obj =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "oooooooooocoooooooooo"..
+            "ooooooooooboooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooodoooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
 
 -- Floor
 w = "white_floor"
-_G.getfenv()[','] = "black_floor"
+v = "black_floor"
 r = "red_tile"
 
-grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
-             "www,,wwwwwwwwwww,,www"..
-             "wwww,,wwwwwwwww,,wwww"..
-             "wwwww,,wwwwwww,,wwwww"..
-             "wwwwww,,wwwww,,wwwwww"..
-             "wwwwww,,wwwww,,wwwwww"..
-             "wwwww,,wwwwwww,,wwwww"..
-             "wwww,,wwwwwwwww,,wwww"..
-             "www,,wwwwwwwwwww,,www"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwww,,wwwwwwwwwwwww"..
-             "wwwwww,,wwwwwwwwwwwww"..
-             "wwww,,,,,,w,,,,,,wwww"..
-             "wwww,,,,,,w,,,,,,wwww"..
-             "w,,www,,wwwwwwwwww,,w"..
-             "w,,www,,wwwwwwwwww,,w"..
-             "wwwwwwwwwwwwwwwwwww,w"..
-             "wwwwwwwwwwwwwwwwwwwww"
+grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwwwwwwwwwwwwwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwwwwwwwwwwwwwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwwwwwwwwwwwwwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwwwwwwwwwwwwwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwwwwwwwwwwwwwvwvw"..
+             "vwvwvwwwwwwwwwwwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"..
+             "vwvwvwvwvwvwvwvwvwvwv"..
+             "wvwvwvwvwvwvwvwvwvwvw"
+
+
+function first_completed()
+    _G.PopManager.new("Well done",
+        "You beat Vega :D\nAnd Franz just got here\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I'll help you ",
+            clr = _G.Color.blue()
+        })
+end
