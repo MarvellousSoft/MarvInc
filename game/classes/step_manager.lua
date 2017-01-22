@@ -169,8 +169,10 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
     local callback = function()
         -- Just to be sure we aren't forgetting to clean anything
         -- And this should be a pretty fast procedure
+        local bk = Util.findId('code_tab').term.backups -- does not loose history
         ROOM:connect(ROOM.puzzle_id, false)
         if replay_speed then doPlay(replay_speed) end
+        Util.findId('code_tab').term.backups = bk
     end
 
     if show_popup == false then
