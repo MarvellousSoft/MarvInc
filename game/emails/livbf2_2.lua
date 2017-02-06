@@ -1,7 +1,7 @@
 return {
     title = "More brainfuck examples",
     text = [[
-Hello, this is Rick again. I'll send some more brainfuck examples, now with loops. Make sure you understand all of these. I always assume the data pointer starts at position 0, and all data is 0 (unless stated).
+Hello, this is Richard again. I'll send some more brainfuck examples, now with loops. Make sure you understand all of these. I always assume the data pointer starts at position 0, and all data is 0 (unless otherwise stated).
 
     "[>]"
 This will point DP (data pointer) to the next position that has value 0.
@@ -18,7 +18,7 @@ Assuming everything else except the value in position 0 is 0, will endlessly mov
     "++++++++[[>],[<]>-]"
 This will read 8 values from the input and place them in positions 1..8, assuming none of them are 0.
 
-Hope you got it. If you need more help, don't ask Liv because she will mock you.
+Hope you got it. If you need more help, don't ask Olivia because she will mock you.
 
 Thank you for your attention, carry on.
 

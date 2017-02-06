@@ -20,7 +20,10 @@ Just do this puzzle so we can impress Franz. He'll be watching.
 
 Make us proud, and carry on.
 
--- Liv]],
+-- Liv
+
+
+(Great party @ Paul's, right? You have nice dance moves)]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
     puzzle_id = 'liv3a',
     open_func =
