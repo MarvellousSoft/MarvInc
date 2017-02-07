@@ -87,6 +87,7 @@ end
 
 function CodeTab:update(dt)
     self.term:update(dt)
+    self.memory:update(dt)
 end
 
 function CodeTab:draw()
@@ -168,6 +169,10 @@ end
 
 function CodeTab:mouseReleased(x, y, but)
     self.term:mouseReleased(x, y, but)
+end
+
+function CodeTab:mouseMoved(x, y)
+    self.memory:mouseMoved(x, y)
 end
 
 -- Check invalid lines

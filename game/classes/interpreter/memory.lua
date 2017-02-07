@@ -9,6 +9,7 @@ Memory = Class{
         self:setId("memory")
 
         self.unavailable_font = FONTS.fira(50)
+        self.time_since_move = 0
 
         self:setSlots(slots)
     end
@@ -54,6 +55,14 @@ function Memory:set(dst, src)
     self.vec[dst + 1] = src
 end
 
+function Memory:mouseMoved()
+    self.time_since_move = 0
+end
+
+function Memory:update(dt)
+    self.time_since_move = self.time_since_move + dt
+end
+
 function Memory:draw()
     local color = Color.white()
 
@@ -72,6 +81,7 @@ function Memory:draw()
         color.s = 140
         color.a = 255
         love.graphics.setFont(self.index_font)
+        local collide_slot = -1
         for i = 1, self.slots do
             local r = math.ceil(i / self.columns) - 1
             local c = i - r * self.columns - 1
@@ -79,6 +89,12 @@ function Memory:draw()
             color.a = 255
             Color.set(color)
             love.graphics.rectangle("line", self.pos.x + c * self.ssize, self.pos.y + r * self.ssize, self.ssize, self.ssize)
+
+            -- Checking mouse colision, should probably be somewhere else.
+            local mx, my = love.mouse.getPosition()
+            if self.time_since_move > .1 and Util.pointInRect(mx, my, self.pos.x + c * self.ssize + dx, self.pos.y + r * self.ssize, self.ssize, self.ssize) then
+                collide_slot = i
+            end
 
             color.a = 100
             Color.set(color)
@@ -92,6 +108,29 @@ function Memory:draw()
             local r = math.ceil(i / self.columns) - 1
             local c = i - r * self.columns - 1
             love.graphics.printf(self.vec[i], self.pos.x + 2 + c * self.ssize, self.pos.y + r * self.ssize + self.ssize / 4, self.ssize, "center")
+        end
+
+        -- Drawing zoomed in slot
+        if collide_slot > 0 then
+            local i, bsz = collide_slot, 70
+            local r = math.ceil(i / self.columns) - 1
+            local c = i - r * self.columns - 1
+            local mx, my = love.mouse.getPosition()
+            love.graphics.setColor(0, 0, 0, 160)
+            love.graphics.rectangle('fill', mx - dx, my - bsz, bsz, bsz)
+            Color.set(color)
+            love.graphics.rectangle('line', mx - dx, my - bsz, bsz, bsz)
+
+            local index_font = FONTS.fira(bsz / 3)
+            local value_font = FONTS.fira(bsz * .4)
+
+            love.graphics.setFont(index_font)
+            color.a = 100
+            Color.set(color)
+            love.graphics.print(i - 1, mx - dx + 2 * bsz / self.ssize, my - bsz)
+            love.graphics.setFont(value_font)
+            love.graphics.printf(self.vec[i], mx - dx + 2 * bsz / self.ssize, my - bsz + bsz / 4, bsz, "center")
+            color.a = 255
         end
 
         love.graphics.translate(-dx, 0)
