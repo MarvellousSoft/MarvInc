@@ -1,27 +1,44 @@
-name = "Hard Sort"
+name = "Least Common Multiple"
 -- Puzzle number
 n = "undecided"
 
-lines_on_terminal = 30
-memory_slots = 16
+lines_on_terminal = 35
+memory_slots = 8
 
 -- Bot
-bot = {'b', "SOUTH"}
+bot = {'b', "NORTH"}
 
-extra_info = [[
-Each sequence is given by its size and then its elements.
-- Example: 3 3 1 2 1 3 is sequence (3,1,2) and  (3) and the output should be 3 1 2 3 1 3.
-- Sequences will have at most 50 elements (does not fit on registers).
-- Each number in the sequence will be between 0 and 9.]]
+local function gcd(a, b) return b == 0 and a or gcd(b, a % b) end
 
+local ans
 local function create_vec()
+    ans = {}
     local v = {}
-    local szs = {3, 4, 1, 5, 50, 35}
-    for _, sz in _G.ipairs(szs) do
-        _G.table.insert(v, sz)
-        for i = 1, sz do
-            _G.table.insert(v, _G.love.math.random(0, 9))
+    local lim = {{1, 30}, {10, 120}, {200, 440}, {400, 600}, {500, 999}}
+    local mx = {30, 999, 999, 999, 999}
+    local tim = {3, 2, 1, 6, 7}
+    _G.table.insert(v, 1)
+    _G.table.insert(v, 1)
+    _G.table.insert(ans, 1)
+    for i = 1, #tim do
+        for j = 1, tim[i] do
+            local x = _G.love.math.random(lim[i][1], lim[i][2])
+            local pos = {}
+            for k = 1, x do
+                if (x % k) == 0 then
+                    _G.table.insert(pos, k)
+                end
+            end
+            _G.table.insert(v, _G.math.max(_G.love.math.random(1, #pos), _G.love.math.random(1, #pos)))
+            _G.table.insert(v, _G.math.max(_G.love.math.random(1, #pos), _G.love.math.random(1, #pos)))
+            _G.table.insert(ans, v[#v] * v[#v - 1] / gcd(v[#v], v[#v - 1]))
         end
+    end
+    local rest = {{31, 29}, {19 * 2, 23 * 2}, {25 * 7, 25 * 3}, {31 * 2 * 5, 31 * 3 * 5}, {9 * 37, 27}}
+    for _, t in _G.ipairs(rest) do
+        _G.table.insert(v, t[1])
+        _G.table.insert(v, t[2])
+        _G.table.insert(ans, v[#v] * v[#v - 1] / gcd(v[#v], v[#v - 1]))
     end
     return v
 end
@@ -29,13 +46,11 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 6}, dir = "south"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 6}, dir = "south"}
 
 -- console objects
-local gr, bl
-
-local ans = {}
+local bl
 
 -- create ans vector
 function on_start(room)
@@ -43,35 +58,17 @@ function on_start(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             local o = room.grid_obj[i][j]
-            if o and o.tp == 'console' then
-                if #o.out > 0 then
-                    gr = o
-                else
-                    bl = o
-                end
+            if o and o.tp == 'console' and o.ctype == 'output' then
+                bl = o
             end
         end
-    end
-    -- creates answer
-    local v, i = gr.out, 1
-    while i <= #v do
-        local n = v[i]
-        _G.table.insert(ans, n)
-        local tmp = {}
-        for j = 1, n do
-            _G.table.insert(tmp, v[i + j])
-        end
-        _G.table.sort(tmp)
-        for j = 1, n do
-            _G.table.insert(ans, tmp[j])
-        end
-        i = i + n + 1
     end
 end
 
 -- Objective
 objective_text = [[
-Read sequences from the green console and write them, sorted, to the blue console.]]
+For each pair of numbers (x, y) in the green console, write their least common multiple to the blue console.
+- The least common multiple of x and y is the smallest number z such that both x and y divide z.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
@@ -87,13 +84,17 @@ function objective_checker(room)
     return #bl.inp == #ans
 end
 
+extra_info = [[
+All numbers are between 1 and 999.
+- The answer is always between 1 and 999.]]
+
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
+            "ooooooocooodooooooooo"..
+            "ooooo..b.......oooooo"..
             "ooooo..........oooooo"..
-            "ooooc....b.....dooooo"..
             "ooooo..........oooooo"..
             "ooooo..........oooooo"..
             "ooooo..........oooooo"..
@@ -118,7 +119,7 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
-             "....................."..
+             "......wwwwwwww......."..
              ".....wwwwwwwwwww....."..
              "....wwwwwwwwww,ww...."..
              ".....wwwwwwwwwww....."..

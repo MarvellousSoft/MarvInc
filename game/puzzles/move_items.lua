@@ -76,7 +76,7 @@ objective_text = "Move the buckets to the green tiles."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
-            if grid_floor:sub(20 * (i - 1) + j, 20 * (i - 1) + j) == 'g' then
+            if grid_floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'g' then
                 local o = room.grid_obj[j][i]
                 if not o or o.tp ~= 'bucket' then
                     return false

@@ -70,7 +70,6 @@ function paint:drop(bot, grid, i, j, blocked)
     if _o then
         return "Dropping obstructed"
     else
-        -- paint somehow
         ROOM.color_floor[i][j] = self.color
         self.uses = self.uses - 1
         if self.uses == 0 then

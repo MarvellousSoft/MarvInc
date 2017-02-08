@@ -128,13 +128,11 @@ local bl
 -- create ans vector
 function on_start(room)
     -- finds consoles
-    for i = 1, 20 do
-        for j = 1, 20 do
+    for i = 1, ROWS do
+        for j = 1, COLS do
             local o = room.grid_obj[i][j]
-            if o and o.tp == 'console' then
-                if #o.out == 0 then
-                    bl = o
-                end
+            if o and o.tp == 'console' and o.ctype == 'output' then
+                bl = o
             end
         end
     end
