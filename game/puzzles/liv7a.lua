@@ -1,6 +1,6 @@
-name = "Hard Sort"
+name = "Hard Sort I"
 -- Puzzle number
-n = "undecided"
+n = "C.7A"
 
 lines_on_terminal = 30
 memory_slots = 16
@@ -29,8 +29,8 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 5}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 5}, dir = "west"}
 
 -- console objects
 local gr, bl
@@ -135,3 +135,21 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."
+
+function first_completed()
+    _G.PopManager.new("Great!",
+        "You used counting sort, right?\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " yes ",
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " nope ",
+            clr = _G.Color.black()
+        })
+end

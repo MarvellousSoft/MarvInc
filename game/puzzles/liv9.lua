@@ -1,6 +1,6 @@
 name = "Complete Brainfuck Interpreter"
 -- Puzzle number
-n = "C.?"
+n = "C.9"
 
 lines_on_terminal = 60
 memory_slots = 120
@@ -193,3 +193,21 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "w,,www,,wwwwwwwwww,,w"..
              "wwwwwwwwwwwwwwwwwww,w"..
              "wwwwwwwwwwwwwwwwwwwww"
+
+function first_completed()
+    _G.PopManager.new("Interpreter Completed",
+        "Great! That wasn't easy.\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " i'm da bomb ",
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " you're too kind ",
+            clr = _G.Color.black()
+        })
+end

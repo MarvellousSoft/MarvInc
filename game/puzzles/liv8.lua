@@ -1,6 +1,6 @@
 name = "Simple Brainfuck Interpreter"
 -- Puzzle number
-n = "C.?"
+n = "C.8"
 
 lines_on_terminal = 50
 memory_slots = 50
@@ -182,3 +182,15 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "w,,www,,wwwwwwwwww,,w"..
              "wwwwwwwwwwwwwwwwwww,w"..
              "wwwwwwwwwwwwwwwwwwwww"
+
+function first_completed()
+    _G.PopManager.new("Interpreter working",
+        "Perfect! Now let's make it better!\n-- Liv",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " ok ",
+            clr = _G.Color.blue()
+        })
+end

@@ -100,7 +100,6 @@ function objective_checker(room)
             return false
         end
     end
-    print(#bl.inp .. "  out of " .. #ans)
     return #bl.inp == #ans
 end
 
@@ -162,13 +161,19 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
 
 
 function first_completed()
-    _G.PopManager.new("Well done",
-        "You beat Vega :D\nAnd Franz just got here\n-- Liv",
+    _G.PopManager.new("GET HYPE",
+        "REMEMBER THE PARTY IS TODAY\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " I'll help you ",
+            text = " PARTY HARD ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I'll be there ",
+            clr = _G.Color.black()
         })
 end

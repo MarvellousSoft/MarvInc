@@ -13,7 +13,7 @@ A simple example: suppose the value pointed by the DP is positive*, then using "
 
 If instead you write "[->+<]", then what you're actually doing is zeroing the position DP and adding that value do position DP+1. Notice that there can be loops inside loops! (This will make the interpreter much harder than the previous one :P)
 
-We'll give you enough registers to store the whole code in memory, relax. The white console output will be ended by a 0, so you will know when to stop copying stuff.
+We'll give you enough registers to store the whole code in memory, relax. The white console output will be ended by a 0, so you will know when to stop reading the code.
 
 Good luck, you'll need it. Carry on.
 
@@ -22,5 +22,5 @@ Good luck, you'll need it. Carry on.
 * If you're a real L++ expert, you'll see that this works even if the value is negative, since -999 - 1 = 999 (it will take a LOT of time, though).
 ]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'livbf2'
+    puzzle_id = 'liv9'
 }

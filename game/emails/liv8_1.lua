@@ -23,5 +23,5 @@ The code is on the white console. Let's use the size of the array as 20 for our 
 
 ps. I know this language is useless, but saying there's a big project always make the higher ups excited, no matter how shit the project is. And trying out new languages is fun, so that's a win-win]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'livbf1'
+    puzzle_id = 'liv8'
 }
