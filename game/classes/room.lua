@@ -166,7 +166,8 @@ function Room:connect(id, changeToInfo)
     end)
 
     self:from(Reader.read(id))
-    if changeToInfo == nil or changeToInfo == true then Util.findId("pcbox"):changeTo("info") end
+    local pc = Util.findId("pcbox")
+    if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end
 end
 
 function Room:disconnect(wait)
@@ -184,6 +185,7 @@ function Room:disconnect(wait)
         self.static_rhdl = MAIN_TIMER:every(0.05, function()
             self.static_r = self.static_r + math.pi/2
         end)
+        Util.findId("pcbox"):changeTabs(Util.findId("pcbox").menu_tabs, "email")
     end
     self.mode = "offline"
     self:clear()
@@ -275,6 +277,7 @@ function Room:draw()
     -- Grid numbering
     Color.set(self.grid_fnt_clr)
     love.graphics.setFont(self.grid_fnt)
+    love.graphics.setLineWidth(.5)
     for i=1, self.grid_r do
         local _s = tostring(i)
         --if i < 10 then _s = '0'.._s end

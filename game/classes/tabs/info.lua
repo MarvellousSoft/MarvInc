@@ -10,6 +10,8 @@ local info_funcs = {}
 InfoTab = Class{
     __includes = {Tab},
 
+    button_color = 60,
+
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
@@ -63,6 +65,7 @@ InfoTab = Class{
         }
         self.box = ScrollWindow(self.w, self.h, obj)
 
+        self:setId("info_tab")
     end
 }
 

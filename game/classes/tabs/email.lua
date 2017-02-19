@@ -10,6 +10,8 @@ local email_funcs = {}
 EmailTab = Class{
     __includes = {Tab},
 
+    button_color = 250,
+
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
@@ -34,6 +36,7 @@ EmailTab = Class{
         self.email_border = 5
 
         self.tp = "email_tab"
+        self:setId("email_tab")
     end,
 
     -- Delete an email object mail from the email list

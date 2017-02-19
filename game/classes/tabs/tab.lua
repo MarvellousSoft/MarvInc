@@ -5,6 +5,8 @@ local Color = require "classes.color.color"
 Tab = Class{
     __includes = {RECT},
 
+    button_color = 0,
+
     init = function(self, eps, dy)
         local b = WIN_BORD
 

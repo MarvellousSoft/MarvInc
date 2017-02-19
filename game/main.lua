@@ -95,10 +95,6 @@ end
 function love.mousepressed(x, y, but, ...)
     x, y = love.mouse.getPosition() -- fixed
     Gamestate.mousepressed(x, y, but, ...)
-
-    if but == 1 then  --Left mouse button
-        But.checkCollision(x,y)
-    end
 end
 
 function love.mousemoved(x, y, dx, dy, ...)

@@ -11,17 +11,23 @@ local button_tab_height = 30
 
 -- Each tab, with their own update and draw
 local inner_tab_border = 15
-local tabs = {
-    email = EmailTab(inner_tab_border, button_tab_height),
-    code  = CodeTab(inner_tab_border, button_tab_height),
-    info  = InfoTab(inner_tab_border, button_tab_height)
-}
+
+local tabs, tabs_raw = nil, nil
 
 PcBox = Class{
     __includes = {RECT},
 
+
     init = function(self)
         local b = WIN_BORD
+        PcBox.menu_tabs = {
+            {"email", EmailTab(inner_tab_border, button_tab_height)},
+            {"info", InfoTab(inner_tab_border, button_tab_height)}
+        }
+        PcBox.puzzle_tabs = {
+            {"code", CodeTab(inner_tab_border, button_tab_height)},
+            PcBox.menu_tabs[2]
+        }
 
         --Saturation and lightness when a tab is focused
         self.focus_saturation = 180
@@ -30,26 +36,9 @@ PcBox = Class{
         self.unfocus_saturation = 120
         self.unfocus_lightness = 80
 
-        -- Current tab active
-        self.cur_tab = "email"
-
         RECT.init(self, b, b, W - H - b, H - 2 * b, Color.transp())
 
-        -- Tab buttons
-        local h = button_tab_height
-        self.buttons = {}
-        self.buttons.email = But.create_tab(self.pos.x, self.pos.y, self.w / 3, h,
-        function() self:changeTo "email" end, "email", FONTS.fira(20), nil, nil, Color.new(250,self.focus_saturation,self.focus_lightness, 70), "email_tab_but")
-        self.buttons.code = But.create_tab(self.pos.x + self.w / 3, self.pos.y, self.w / 3, h,
-        function() self:changeTo "code" end, "terminal", FONTS.fira(20), nil, nil, Color.new(150,self.unfocus_saturation,self.unfocus_lightness, 70))
-        self.buttons.info = But.create_tab(self.pos.x + 2 * self.w / 3, self.pos.y, self.w / 3,
-        h, function() self:changeTo "info" end, "info", FONTS.fira(20), nil, nil, Color.new(60,self.unfocus_saturation,self.unfocus_lightness, 70))
-
-        -- Tab id's
-
-        tabs.email:setId("email_tab")
-        tabs.code:setId("code_tab")
-        tabs.info:setId("info_tab")
+        self:changeTabs(PcBox.menu_tabs, "email")
 
         self.tp = "pcbox"
         self:setId("pcbox")
@@ -59,7 +48,33 @@ PcBox = Class{
 function PcBox:draw()
     Color.set(self.buttons[self.cur_tab].color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height, 10)
+    for _, b in pairs(self.buttons) do
+        b:draw()
+    end
     tabs[self.cur_tab]:draw()
+end
+
+function PcBox:changeTabs(new_tabs, default)
+    if tabs_raw == new_tabs then return end
+    if tabs and self.cur_tab then
+        tabs[self.cur_tab]:deactivate()
+    end
+    tabs_raw = new_tabs
+    tabs = {}
+
+    -- Tab buttons
+    local h = button_tab_height
+    self.buttons = {}
+    local x = self.pos.x
+    for _, t in ipairs(tabs_raw) do
+        tabs[t[1]] = t[2]
+        self.buttons[t[1]] = But.create_tab(x, self.pos.y, self.w / #tabs_raw, h, function() self:changeTo(t[1]) end, t[1],
+            FONTS.fira(20), nil, nil, Color.new(t[2].button_color, self.unfocus_saturation, self.unfocus_lightness, 70))
+        x = x + self.w / #tabs_raw
+    end
+
+    self.cur_tab = nil
+    self:changeTo(default)
 end
 
 -- Change to that tab
@@ -67,9 +82,11 @@ function PcBox:changeTo(tab)
     if tab == self.cur_tab then return end
     SFX.tab_switch:play()
 
-    tabs[self.cur_tab]:deactivate()
-    self.buttons[self.cur_tab].color.s = self.unfocus_saturation
-    self.buttons[self.cur_tab].color.l = self.unfocus_lightness
+    if self.cur_tab then
+        tabs[self.cur_tab]:deactivate()
+        self.buttons[self.cur_tab].color.s = self.unfocus_saturation
+        self.buttons[self.cur_tab].color.l = self.unfocus_lightness
+    end
 
     tabs[tab]:activate()
     self.buttons[tab].color.s = self.focus_saturation
@@ -80,11 +97,19 @@ end
 
 function PcBox:keyPressed(key)
     if key == 'pagedown' then
-        local nxt = {email = "code", code = "info", info = "email"}
-        self:changeTo(nxt[self.cur_tab])
+        for i = 1, #tabs_raw do
+            if tabs_raw[i][1] == self.cur_tab then
+                self:changeTo(tabs[(i % #tabs_raw) + 1])
+                break
+            end
+        end
     elseif key == 'pageup' then
-        local prev = {email = "info", code = "email", info = "code"}
-        self:changeTo(prev[self.cur_tab])
+        for i = 1, #tabs_raw do
+            if tabs_raw[i][1] == self.cur_tab then
+                self:changeTo(tabs[((i + #tabs_raw - 2) % #tabs_raw) + 1])
+                break
+            end
+        end
     else
         tabs[self.cur_tab]:keyPressed(key)
     end
@@ -96,6 +121,11 @@ end
 
 function PcBox:mousePressed(x, y, but)
     tabs[self.cur_tab]:mousePressed(x, y, but)
+    if not TABS_LOCK and but == 1 then
+        for _, b in pairs(self.buttons) do
+            b:checkCollides(x, y)
+        end
+    end
 end
 
 function PcBox:mouseReleased(x, y, but)

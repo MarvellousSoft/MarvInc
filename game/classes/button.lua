@@ -103,38 +103,9 @@ end
 --UTILITY FUNCTIONS--
 
 function button.create_tab(x, y, w, h, callback, text, font, overtext, overfont, color, id)
-    local b
-
-    b = Button(x, y, w, h, callback, text, font, overtext, overfont, color)
-    b:addElement(DRAW_TABLE.L1u, "tabs", id)
-
-    return b
+    return Button(x, y, w, h, callback, text, font, overtext, overfont, color)
 end
 
-
----------------------
---COLLISION FUNCTIONS
----------------------
-
---Check if a mouse click collides with any button
-function button.checkCollision(x,y)
-    --Fix mouse position click to respective distance
-
-    checkButtonCollision(x,y)
-
-end
-
---Check if a mouse click collides with any inv button
-function checkButtonCollision(x,y)
-
-    if TABS_LOCK then return end --If buttons are locked, does nothing
-    --Iterate on drawable buttons table
-    if not Util.findSbTp "tabs" then return end
-    for b in pairs(Util.findSbTp "tabs") do
-        b:checkCollides(x, y)
-    end
-
-end
 
 --Return functions
 return button

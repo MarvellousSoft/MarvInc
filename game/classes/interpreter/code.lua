@@ -23,10 +23,11 @@ function Code:step()
     if self.cur <= #self.ops then
         local lab, err = self.ops[self.cur]:execute()
         if lab then
+            local line = self.real_line[self.cur]
             self.cur = self.labs[lab]
             if not self.cur then
                 StepManager.stop("Code Error!",
-                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. (err or lab) .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.", "I'm sorry.")
+                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ") on line " .. line ..  "\n\nError message: \"" .. (err or lab) .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.", "I'm sorry.")
                 return 'error'
             end
         else
