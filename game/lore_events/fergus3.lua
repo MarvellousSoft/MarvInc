@@ -4,8 +4,7 @@ local fergus = {}
 
 -- Add puzzle 'fergus3'
 
-fergus.require_puzzles = {{'fergus2'},
-    {'liv3a', 'liv3b', 'liv3c', at_least = 2}}
+fergus.require_puzzles = {'liv3a', 'liv3b', 'liv3c', at_least = 2}
 fergus.wait = 10
 
 function fergus.run()

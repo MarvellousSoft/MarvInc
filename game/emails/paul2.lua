@@ -1,4 +1,4 @@
-local p = require 'lore_events.paul2'
+local p = require 'lore_events.paul1_2'
 
 return {
     title = "Lifesaver",

@@ -6,7 +6,7 @@ lines_on_terminal = 40
 memory_slots = 25
 
 -- Bot
-bot = {'b', "EAST"}
+bot = {'b', "NORTH"}
 
 
 local function create_vec()

@@ -99,14 +99,14 @@ function PcBox:keyPressed(key)
     if key == 'pagedown' then
         for i = 1, #tabs_raw do
             if tabs_raw[i][1] == self.cur_tab then
-                self:changeTo(tabs[(i % #tabs_raw) + 1])
+                self:changeTo(tabs_raw[(i % #tabs_raw) + 1][1])
                 break
             end
         end
     elseif key == 'pageup' then
         for i = 1, #tabs_raw do
             if tabs_raw[i][1] == self.cur_tab then
-                self:changeTo(tabs[((i + #tabs_raw - 2) % #tabs_raw) + 1])
+                self:changeTo(tabs_raw[((i + #tabs_raw - 2) % #tabs_raw) + 1][1])
                 break
             end
         end

@@ -13,8 +13,8 @@ o = {"obst", false, "wall_none"}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Green block
-g = {"console", true, "console", "green", args={}, dir="WEST", x=12, y=11, pass=2}
-h = {"emitter", true, "emitter", "green", args={
+g = {"console", true, "console", "green", args={vec = 'output'}, dir="WEST", x=12, y=11, pass=2}
+h = {"emitter", true, "emitter", "green", args= {
     x1 = 15, y1 = 10,
     x2 = 3, y2 = 10,
     t_args = {
@@ -30,7 +30,7 @@ i = {"emitter", true, "emitter", "green", args={
 }, dir="SOUTH"}
 
 -- Red block
-r = {"console", true, "console", "red", args={}, dir="WEST", x=12, y=9, pass=2}
+r = {"console", true, "console", "red", args={ vec = 'output' }, dir="WEST", x=12, y=9, pass=2}
 s = {"emitter", true, "emitter", "red", args={
     x1 = 15, y1 = 12,
     x2 = 3, y2 = 12,
@@ -47,7 +47,7 @@ t = {"emitter", true, "emitter", "red", args={
 }, dir="SOUTH"}
 
 -- Blue block
-b = {"console", true, "console", "blue", args ={}, dir="NORTH", x=6, y=7, pass=3}
+b = {"console", true, "console", "blue", args ={ vec = 'output' }, dir="NORTH", x=6, y=7, pass=3}
 c = {"emitter", true, "emitter", "blue", args={
     x1 = 15, y1 = 8,
     x2 = 3, y2 = 8,

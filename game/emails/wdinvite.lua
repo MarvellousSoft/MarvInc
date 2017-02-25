@@ -13,5 +13,5 @@ Contact and address information is attached.
 This is an automatic invitation sent by MarvCalendar. Reply to set your status as Going.
 ]],
     author = "Marvellous Calendar (calendar-notification@marv.com)",
-    reply_func = p.partied
+    can_be_deleted = true
 }

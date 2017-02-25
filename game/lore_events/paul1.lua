@@ -4,9 +4,8 @@ local paul = {}
 
 -- Add paul
 
--- tutorial is a fake puzzle
-paul.require_puzzles = {'tutorial'}
-paul.wait = 30
+paul.require_puzzles = {'fergus1', 'jen1', at_least = 1}
+paul.wait = 10
 
 function paul.run()
     Mail.new('paul1')

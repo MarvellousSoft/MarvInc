@@ -1,5 +1,3 @@
-local p = require 'lore_events.paul2'
-
 return {
     title = "Great shit!",
     text = [[
@@ -15,7 +13,6 @@ Chief engineer at Marvellous Inc's Material Engineering Department
 ~ LEGALIZE ~
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
-    can_be_deleted = true,
-    open_func = p.open
+    can_be_deleted = true
 }
 
