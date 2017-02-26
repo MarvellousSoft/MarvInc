@@ -1,9 +1,9 @@
-name = "Explorer"
+name = "Clever Cleaning"
 -- Puzzle number
-n = "undecided"
+n = "A.3"
 
-lines_on_terminal = 25
-memory_slots = 6
+lines_on_terminal = 15
+memory_slots = 4
 
 -- Bot
 bot = {'b', "NORTH"}
@@ -83,16 +83,16 @@ function objective_checker(room)
     return cur >= fl
 end
 
-extra_info = nil
+extra_info = [[You have few lines to use. Be smart.]]
 
 function first_completed()
-    _G.PopManager.new("blahblahblah",
-        "blahblahblahblah",
+    _G.PopManager.new("Well done",
+        "You have proven yourself to be an efficient and valuable employee so far.\n\nIt's time to carry on.\n--Jen",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " blah ",
+            text = "I am ready",
             clr = _G.Color.blue()
         })
 end

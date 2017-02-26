@@ -12,7 +12,7 @@ But at least the record show you have completed the beta version of our latest n
 Again, I'm sorry for my lack of profissionalism, it will not happen again.
 And please call me Janine at the work enviroment.
 
-Carry on, now and forever.
+Suit up and carry on.
 
 Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
