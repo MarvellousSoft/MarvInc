@@ -8,6 +8,12 @@ This game was made and submitted to the Ludum Dare 37 (http://ludumdare.com/), w
 
 ----------------------------------------------------
 
+## Running
+
+Marvellous Inc. runs on Windows, Linux, MacOS, and even on web, checkout our [releases page](https://github.com/MarvellousSoft/MarvInc/releases) for all releases and instructions on how to run them.
+
+----------------------------------------------------
+
 ## Lore
 
 Are you interested in working with cutting-edge, never before seen technology that has huge promise to change the way society works forever? Marvellous Incorporated is an international multi-conglomerate that puts YOU before profit. We at the MarvInc Family think that employees are people, and as such are entitled to ideas and thoughts* on how to make the MarvInc Family a better environment.
@@ -24,7 +30,7 @@ Simple puzzles will ease-out any new programmers or enthusiasts in the job, so d
 
 Join our Family now, and help us CHANGE the world.
 
-* By accepting this contract you agree to seize any and all intellectual property you produce to the Marvellous Incorporated (Copyright 2016) Research Department.
+\* By accepting this contract you agree to seize any and all intellectual property you produce to the Marvellous Incorporated (Copyright 2016) Research Department.
 
 ** You will not be paid for enjoying yourself.
 
@@ -38,11 +44,11 @@ Join our Family now, and help us CHANGE the world.
 
 ## Special Thanks
 
-Yan's mom
-Fast-food
-Mayte Mirio
-Maria Clara Cardoso
-Cotuba
+- Yan's mom
+- Fast-food
+- Mayte Mirio
+- Maria Clara Cardoso
+- Cotuba
 
 For all the support they provided us in this 72 hours of sleep deprivation
 
@@ -56,21 +62,18 @@ To run the game just run 'love .' on the main folder of the repository, or doubl
 
 ----------------------------------------------------
 
-
 ## Platform
 
-Made using LÖVE [https://love2d.org/] with the STEAMING game template [https://github.com/uspgamedev/STEAMING] integrated with library HUMP [http://hump.readthedocs.org/].
-Works in any SO that can run it.
+Made using [LÖVE](https://love2d.org/) with the [STEAMING](https://github.com/uspgamedev/STEAMING) game template integrated with library [HUMP](http://hump.readthedocs.org/).
+Works in any OS that can run it. Web version created using [love.js](https://github.com/TannerRogalsky/love.js).
 
 Github
-    ~ https://github.com/rilifon/Project-R1
+    ~ https://github.com/MarvellousSoft/MarvInc
 
 
 Found any bugs? Loved the game? Contact us at
 
-- renatogeh@gmail.com
-- pudimdefrutas@gmail.com
-- yancouto@gmail.com
+- `marvellous.amoeba@gmail.com`
 
 Want to know about incoming projects, new releases and other cool stuff? Of course you do!
 
