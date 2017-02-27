@@ -332,7 +332,6 @@ end
 
 -- Disable reply in  a given email, and if he is opened, handle the opened email
 function email_funcs.disableReply(number)
-    print(number)
     local e, opened
 
     e, opened = email_funcs.get(number), email_funcs.getOpened()
