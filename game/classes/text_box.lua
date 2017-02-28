@@ -425,14 +425,14 @@ function TextBox:keyPressed(key)
         if not self:redo() then buzz() end
 
     elseif key == 'c' and ctrl and c2 then
-        self.clipboard = intervalAsString(self, c, c2)
+        love.system.setClipboardText(intervalAsString(self, c, c2))
 
     elseif key == 'x' and ctrl and c2 then
-        self.clipboard = intervalAsString(self, c, c2)
+        love.system.setClipboardText(intervalAsString(self, c, c2))
         self:tryWrite('')
 
-    elseif key == 'v' and ctrl and self.clipboard then
-        self:tryWrite(self.clipboard)
+    elseif key == 'v' and ctrl then
+        self:tryWrite(love.system.getClipboardText())
 
     end
 
