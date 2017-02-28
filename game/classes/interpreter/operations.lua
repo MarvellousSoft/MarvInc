@@ -23,15 +23,16 @@ local function valid_num(x) return type(x) == 'number' and x >= -999 and x <= 99
 
 
 -- Returns a new Number created from string s, or nil or a string error if it is invalid
-function Number.create(s)
+function Number.create(s, rnms, is_register)
+    if #s == 1 and not s:match("%d") and is_register and rnms[s] then return Number(rnms[s], 0) end
     if #s == 1 and not s:match("%d") and s:byte() >= 32 and s:byte() <= 126 then return Number(s:byte(), 0) end
-    if s:match("%a") or not s:match("%d") then return "wrong characters on number" end
+    if not s:match("[%[%]]") and is_register and rnms[s] then return valid_num(rnms[s]) and Number(rnms[s], 0) end
     if not s:match("[%[%]]") then return valid_num(tonumber(s)) and Number(tonumber(s), 0) end
-    if s:match("[%[%]0-9]+") ~= s then return end
+    if s:match("[%[%]0-9a-zA-Z]+") ~= s then return nil end
     local lvl, bak = 0, 0
     local pref_ok, suff_start = false, false
     for i = 1, #s do
-        if s:sub(i, i):match("%d") then pref_ok = true end
+        if s:sub(i, i):match("[^%[%]]") then pref_ok = true end
         if s:sub(i, i) == ']' and not suff_start then
             suff_start = true
             bak = lvl
@@ -42,8 +43,14 @@ function Number.create(s)
         if s:sub(i, i) == ']' then bak = bak - 1 end
     end
     if bak ~= 0 or not suff_start then return "brackets wrong"  end
-    local num = tonumber(s:sub(lvl + 1, #s - lvl))
-    if num < -999 or num > 999 then return end
+    local nums = s:sub(lvl + 1, #s - lvl)
+    local num = nil
+    if nums:match("%a") then
+        num = rnms[nums]
+    else
+        num = tonumber(nums)
+    end
+    if not num or num < -999 or num > 999 then return nil end
     if lvl > 0 and (num < 0 or num >= Util.findId('memory').slots) then return "invalid register on number" end
     return Number(num, lvl)
 end
@@ -55,15 +62,15 @@ execute - function that executes the operation, and returns the label of the nex
 
 Walk = Class {}
 
-function Walk.create(t)
+function Walk.create(t, rnms)
     if #t > 3 then return end
     if #t == 1 then return Walk() end
     local nums, alps = 0, 0
     for i = 2, #t do
-        if t[i]:match("%a+") ~= t[i] and type(Number.create(t[i])) ~= 'table' then
+        if t[i]:match("%a+") ~= t[i] and type(Number.create(t[i], rnms)) ~= 'table' then
             return
         else
-            if type(Number.create(t[i])) == 'table' then
+            if type(Number.create(t[i], rnms)) == 'table' then
                 nums = nums + 1
             else
                 alps = alps + 1
@@ -75,8 +82,8 @@ function Walk.create(t)
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
     for i = 2, #t do
-        if type(Number.create(t[i])) == 'table' then
-            w.x = Number.create(t[i])
+        if type(Number.create(t[i], rnms)) == 'table' then
+            w.x = Number.create(t[i], rnms)
             if w.x.indir == 0 and w.x.num <= 0 then
                 return
             end
@@ -123,7 +130,7 @@ local function turn_check(t)
     return Turn(accepted[t[2]])
 end
 
-function Turn.create(t)
+function Turn.create(t, rnms)
     return turn_check(t)
 end
 
@@ -140,9 +147,9 @@ Nop = Class {
 Label = Class{}
 
 -- check wheter s is a valid label, and in that case returns it
-function Label.create(s)
+function Label.create(s, rnms)
     local l = Label()
-    local num = Number.create(s)
+    local num = Number.create(s, rnms)
     if type(num) == 'table' and num.indir > 0 then l.lab = num
     elseif s:match("%w+") == s then l.lab = s
     else return "Invalid label" end
@@ -159,9 +166,9 @@ Jmp = Class {
     init = function(self, lab) self.lab = lab end
 }
 
-function Jmp.create(t)
+function Jmp.create(t, rnms)
     if #t ~= 2 then return end
-    local l = Label.create(t[2])
+    local l = Label.create(t[2], rnms)
     if type(l) ~= 'table' then return l end
     return Jmp(l)
 end
@@ -172,8 +179,8 @@ function Jmp:execute()
 end
 
 -- checks whether s is a valid register, and in that case returns it
-local function valid_register(s)
-    local v = Number.create(s)
+local function valid_register(s, rnms)
+    local v = Number.create(s, rnms, true)
     if type(v) ~= 'table' then return v end
     if v.indir == 0 and (v.num < 0 or v.num >= Util.findId("memory").slots) then return "Invalid register" end
     return v
@@ -182,10 +189,10 @@ end
 -- Mov --
 Mov = Class {}
 
-function Mov.create(t)
+function Mov.create(t, rnms)
     if #t ~= 3 then return end
     local m = Mov()
-    m.val, m.dst = Number.create(t[2]), valid_register(t[3])
+    m.val, m.dst = Number.create(t[2], rnms), valid_register(t[3], rnms)
     if type(m.val) ~= 'table' then return m.val end
     if type(m.dst) ~= 'table' then return m.dst end
     return m
@@ -214,9 +221,9 @@ end
 --=============================--
 --    UTILS FOR ADD/SUB        --
 --=============================--
-local function add_sub_create(obj, t)
+local function add_sub_create(obj, t, rnms)
     if #t ~= 4 then return nil end
-    obj.val1, obj.val2, obj.dst = Number.create(t[2]), Number.create(t[3]), valid_register(t[4])
+    obj.val1, obj.val2, obj.dst = Number.create(t[2], rnms), Number.create(t[3], rnms), valid_register(t[4], rnms)
     if type(obj.val1) ~= 'table' then return obj.val1 end
     if type(obj.val2) ~= 'table' then return obj.val2 end
     if type(obj.dst) ~= 'table' then return obj.dst end
@@ -238,8 +245,8 @@ end
 -- Add --
 Add = Class {}
 
-function Add.create(t)
-    return add_sub_create(Add(), t)
+function Add.create(t, rnms)
+    return add_sub_create(Add(), t, rnms)
 end
 
 function Add:execute()
@@ -249,8 +256,8 @@ end
 -- Sub --
 Sub = Class {}
 
-function Sub.create(t)
-    return add_sub_create(Sub(), t)
+function Sub.create(t, rnms)
+    return add_sub_create(Sub(), t, rnms)
 end
 
 function Sub:execute()
@@ -272,9 +279,9 @@ local function vvl_execute(self)
 end
 
 -- Used by all val1 val2 lab operations
-local function vvl_check(t, class)
+local function vvl_check(t, class, rnms)
     if #t ~= 4 then return end
-    local v1, v2, lab = Number.create(t[2]), Number.create(t[3]), Label.create(t[4])
+    local v1, v2, lab = Number.create(t[2], rnms), Number.create(t[3], rnms), Label.create(t[4], rnms)
     if type(v1) ~= 'table' then return v1 end
     if type(v2) ~= 'table' then return v2 end
     if type(lab) ~= 'table' then return lab end
@@ -297,13 +304,13 @@ Jne = Class {init = vvl_init, comp = function(a, b) return a ~= b end, execute =
 -- Read --
 Read = Class{}
 
-function Read:create(t)
+function Read:create(t, rnms)
     if #t > 3 or #t <= 1 then return end
     local obj = self()
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
     if t[3] and not accepted[t[3]] then return end
-    obj.reg, obj.dir = valid_register(t[2]), accepted[t[3]]
+    obj.reg, obj.dir = valid_register(t[2], rnms), accepted[t[3]]
     if type(obj.reg) ~= 'table' then return obj.reg end
     return obj
 end
@@ -333,13 +340,13 @@ end
 -- Write --
 Write = Class{}
 
-function Write:create(t)
+function Write:create(t, rnms)
     if #t > 3 or #t <= 1 then return end
     local obj = self()
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
     if t[3] and not accepted[t[3]] then return end
-    obj.num, obj.dir = Number.create(t[2]), accepted[t[3]]
+    obj.num, obj.dir = Number.create(t[2], rnms), accepted[t[3]]
     if type(obj.num) ~= 'table' then return obj.num end
     return obj
 end
@@ -365,7 +372,7 @@ Pickup = Class{
     init = Turn.init
 }
 
-function Pickup.create(t)
+function Pickup.create(t, rnms)
     if #t > 2 then return end
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
@@ -386,7 +393,7 @@ Drop = Class{
     init = Turn.init
 }
 
-function Drop.create(t)
+function Drop.create(t, rnms)
     if #t > 2 then return end
     local accepted = {north = "north", west = "west", east = "east", south = "south",
     up = "north", down = "south", left = "west", right = "east"}
@@ -402,44 +409,44 @@ function Drop:execute()
     return StepManager.drop()
 end
 
-function op.read(t)
-    if #t == 0 then return Nop()
+function op.read(t, rnms)
+    if #t == 0 then return Nop(rnms)
     elseif t[1] == 'walk' then
-        return Walk.create(t)
+        return Walk.create(t, rnms)
     elseif t[1] == 'turn' then
-        return Turn.create(t)
+        return Turn.create(t, rnms)
     elseif t[1] == 'nop' then
-        if #t == 1 then return Nop() end
+        if #t == 1 then return Nop(rnms) end
     elseif t[1] == 'jmp' then
-        return Jmp.create(t)
+        return Jmp.create(t, rnms)
     elseif t[1] == 'mov' then
-        return Mov.create(t)
+        return Mov.create(t, rnms)
     elseif t[1] == 'add' then
-        return Add.create(t)
+        return Add.create(t, rnms)
     elseif t[1] == 'sub' then
-        return Sub.create(t)
+        return Sub.create(t, rnms)
     elseif t[1] == 'jgt' then
-        return vvl_check(t, Jgt)
+        return vvl_check(t, Jgt, rnms)
     elseif t[1] == 'jge' then
-        return vvl_check(t, Jge)
+        return vvl_check(t, Jge, rnms)
     elseif t[1] == 'jlt' then
-        return vvl_check(t, Jlt)
+        return vvl_check(t, Jlt, rnms)
     elseif t[1] == 'jle' then
-        return vvl_check(t, Jle)
+        return vvl_check(t, Jle, rnms)
     elseif t[1] == 'jeq' then
-        return vvl_check(t, Jeq)
+        return vvl_check(t, Jeq, rnms)
     elseif t[1] == 'jne' then
-        return vvl_check(t, Jne)
+        return vvl_check(t, Jne, rnms)
     elseif t[1] == 'read' then
-        return Read:create(t)
+        return Read:create(t, rnms)
     elseif t[1] == 'write' then
-        return Write:create(t)
+        return Write:create(t, rnms)
     elseif t[1] == 'pickup' then
-        return Pickup.create(t)
+        return Pickup.create(t, rnms)
     elseif t[1] == 'drop' then
-        return Drop.create(t)
+        return Drop.create(t, rnms)
     elseif t[1] == 'walkc' then
-        return WalkC:create(t)
+        return WalkC:create(t, rnms)
     else return "Unknown command " .. t[1] end
 end
 

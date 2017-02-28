@@ -68,7 +68,7 @@ function sm.save()
     f.write('saves/' .. user .. '/save_file', binser.serialize(data))
 
     if ROOM:connected() then
-        sm.save_code(ROOM.puzzle_id, table.concat(Util.findId("code_tab"):getLines(), "\n"))
+        Util.findId('code_tab'):saveCurrentCode()
     end
 end
 
@@ -134,14 +134,31 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
 end
 
 function sm.load_code(puzzle)
-    local filename = 'saves/' .. sm.current_user .. '/' .. puzzle .. '.code'
-    if f.exists(filename) then return f.read(filename) end
+    local code, rnm = "", {}
+    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    if f.exists(basename .. '.code') then code = f.read(basename .. '.code') end
+    if f.exists(basename .. '.renames') then
+        for line in f.read(basename .. '.renames'):gmatch("[^\n]+") do
+            num, str = line:match("^([%d]+)=([%a]+)$")
+            if tonumber(num) and str then
+                rnm[str] = tonumber(num)
+            end
+        end
+    end
+    return code, rnm
 end
 
-function sm.save_code(puzzle, str)
+function sm.save_code(puzzle, str, renames)
     sm.base_user_save(sm.current_user)
-    local filename = 'saves/' .. sm.current_user .. '/' .. puzzle .. '.code'
-    f.write(filename, str)
+    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    f.write(basename .. '.code', str)
+    local rnm = ""
+    for str, num in pairs(renames) do
+        rnm = rnm .. (num .. '=' .. str) .. '\n'
+    end
+    if rnm:len() > 0 then
+        f.write(basename .. '.renames', rnm)
+    end
 end
 
 -- returns whether saving would trigger unwanted events

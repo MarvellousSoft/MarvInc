@@ -119,7 +119,7 @@ function reader.read(puzzle_id)
 
     puz.on_start = _t.on_start
 
-    puz.code = SaveManager.load_code(puzzle_id)
+    puz.code, puz.renames = SaveManager.load_code(puzzle_id)
 
     return puz
 end

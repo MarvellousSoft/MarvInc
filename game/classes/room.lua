@@ -171,7 +171,7 @@ function Room:connect(id, changeToInfo)
 end
 
 function Room:disconnect(wait)
-    SaveManager.save_code(self.puzzle_id, table.concat(Util.findId("code_tab"):getLines(), "\n"))
+    Util.findId('code_tab'):saveCurrentCode()
     if wait == nil or wait then
         SFX.loud_static:stop()
         SFX.loud_static:play()

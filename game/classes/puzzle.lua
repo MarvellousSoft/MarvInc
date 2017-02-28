@@ -40,6 +40,9 @@ Puzzle = Class{
     -- previous code for the puzzle (if saved)
     code = "",
 
+    -- puzzle renaming of registers
+    renames = nil,
+
     -- When completed -- used by LoreManager
     -- called when solving the puzzle for the first time
     first_completed = LoreManager.default_completed,

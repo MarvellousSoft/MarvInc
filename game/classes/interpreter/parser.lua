@@ -3,7 +3,7 @@ require "classes.interpreter.code"
 
 local parser = {}
 
-function parser.parseLine(s)
+function parser.parseLine(s, renames)
     local i = s:find('#')
     if i then s = s:sub(1, i - 1) end
     i = s:find(':')
@@ -26,13 +26,13 @@ function parser.parseLine(s)
         table.insert(t, token)
     end
 
-    local op = Ops.read(t)
+    local op = Ops.read(t, renames)
     if not op and #t > 0 then op = "Invalid '" .. t[1] .. "' parameters" end
 
     return op, label
 end
 
-function parser.parseAll(lines)
+function parser.parseAll(lines, renames)
     local code, labs = {}, {}
     -- instruction code[i] is on line real_line[i] (may be different than i if there are empty lines)
     local real_line = {}
@@ -42,7 +42,7 @@ function parser.parseAll(lines)
     local err_line, err_msg
     for i, line in ipairs(lines) do
         if line ~= "" then
-            local op, lab = parser.parseLine(line)
+            local op, lab = parser.parseLine(line, renames)
             if type(op) ~= "table" then
                 err_line, err_msg = err_line or i, err_msg or (op or "compilation error")
                 bad_lines[i] = true
@@ -71,7 +71,8 @@ function parser.parseAll(lines)
 end
 
 function parser.parseCode()
-    local c = parser.parseAll(Util.findId("code_tab"):getLines())
+    local code_tab = Util.findId('code_tab')
+    local c = parser.parseAll(code_tab:getLines(), code_tab.renames)
     if type(c) == 'table' and c.type == 'code' then return c end
 end
 

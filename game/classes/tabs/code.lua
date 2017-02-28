@@ -71,11 +71,11 @@ CodeTab = Class{
         self.inv_txt_w = self.inv_fnt:getWidth(self.inv_txt)
         self.inv_txt_h = self.inv_fnt:getHeight()
 
+        self:setId "code_tab"
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.term.h + 10, self.w, by - 10 - (self.pos.y + self.term.h + 10), 12)
 
         self.tp = "code_tab"
-        self:setId "code_tab"
     end
 }
 
@@ -116,6 +116,10 @@ function CodeTab:draw()
     self.memory:draw()
 end
 
+local function typingRegister(self)
+    return self.memory.collide_slot ~= -1 and ROOM.version > "1.0"
+end
+
 function CodeTab:keyPressed(key)
     if love.keyboard.isDown("lctrl", "rctrl") then
         if key == 'right' then
@@ -146,14 +150,18 @@ function CodeTab:keyPressed(key)
             return
         end
     end
-    self.term:keyPressed(key)
+    local t = typingRegister(self) and self.memory.tbox or self.term
+    t:keyPressed(key)
+    if typingRegister(self) then self.memory:update_renames() end
 
     self:checkErrors()
 end
 
-function CodeTab:textInput(t)
+function CodeTab:textInput(txt)
     if self.lock then return end
-    self.term:textInput(t)
+    local t = typingRegister(self) and self.memory.tbox or self.term
+    t:textInput(txt)
+    if typingRegister(self) then self.memory:update_renames() end
     self:checkErrors()
 end
 
@@ -161,16 +169,19 @@ function CodeTab:mousePressed(x, y, but)
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
 
     if self.lock then return end
-    self.term:mousePressed(x, y, but)
+    local t = typingRegister(self) and self.memory.tbox or self.term
+    t:mousePressed(x, y, but)
     self:checkErrors()
 end
 
 function CodeTab:mouseScroll(x, y)
-    self.term:mouseScroll(x, y)
+    local t = typingRegister(self) and self.memory.tbox or self.term
+    t:mouseScroll(x, y)
 end
 
 function CodeTab:mouseReleased(x, y, but)
-    self.term:mouseReleased(x, y, but)
+    local t = typingRegister(self) and self.memory.tbox or self.term
+    t:mouseReleased(x, y, but)
 end
 
 function CodeTab:mouseMoved(x, y)
@@ -179,7 +190,7 @@ end
 
 -- Check invalid lines
 function CodeTab:checkErrors()
-    local c, err_l, err_m = Parser.parseAll(self.term.lines)
+    local c, err_l, err_m = Parser.parseAll(self.term.lines, self.renames)
     if err_l or not c then
         self.bad_lines = c
         self.err_line = err_l
@@ -195,6 +206,11 @@ end
 function CodeTab:reset(puzzle)
     self.term:reset_lines(puzzle.lines_on_terminal)
     self.term:typeString(puzzle.code)
+    self.renames = puzzle.renames
+    self.inv_renames = {}
+    for a, b in pairs(self.renames) do
+        self.inv_renames[b] = a
+    end
     self.memory:setSlots(puzzle.memory_slots)
 end
 
@@ -208,4 +224,9 @@ end
 
 function CodeTab:showLine(i)
     self.term.exec_line = i
+end
+
+function CodeTab:saveCurrentCode()
+    if not ROOM:connected() then return end
+    SaveManager.save_code(ROOM.puzzle_id, table.concat(self:getLines(), "\n"), self.renames)
 end

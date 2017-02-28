@@ -534,7 +534,6 @@ end
 
 function TextBox:textInput(t)
     -- First, should check if it is valid
-    local c = self.cursor
     t = self.accepted_chars[t]
     if not t or t == ' ' then return end
     self:tryWrite(t)

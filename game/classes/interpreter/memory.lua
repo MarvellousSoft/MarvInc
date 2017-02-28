@@ -1,6 +1,8 @@
 local Color = require "classes.color.color"
 require "classes.primitive"
 
+local TextBos = require "classes.text_box"
+
 Memory = Class{
     __includes =  {RECT},
     init = function(self, x, y, w, h, slots)
@@ -10,6 +12,14 @@ Memory = Class{
 
         self.unavailable_font = FONTS.fira(50)
         self.time_since_move = 0
+
+        self.collide_slot = -1
+        -- all update functions are automatically called from code_tab
+        self.tbox = TextBox(0, 0, 0, 7, 1, 1, false, FONTS.fira(13))
+
+        -- renaming of registers
+        self.str_to_num = nil
+        self.num_to_str = nil
 
         self:setSlots(slots)
     end
@@ -35,10 +45,14 @@ function Memory:setSlots(slots)
 
     self.index_font = FONTS.fira(self.ssize / 3)
     self.value_font = FONTS.fira(self.ssize * .4)
+    self.rename_font = FONTS.fira(self.ssize * .2)
 
     -- actual memory
     self.vec = {}
     for i = 1, self.slots do self.vec[i] = 0 end
+
+    self.str_to_num = Util.findId('code_tab').renames
+    self.num_to_str = Util.findId('code_tab').inv_renames
 end
 
 function Memory:reset()
@@ -57,10 +71,56 @@ end
 
 function Memory:mouseMoved()
     self.time_since_move = 0
+    if self.collide_slot ~= -1 then
+        self.collide_slot = -1
+        self.wrong_rename = false
+        self.tbox:deactivate()
+    end
 end
 
 function Memory:update(dt)
+    if self.collide_slot ~= -1 then
+        self.tbox:update(dt)
+    end
+    if self.time_since_move < .1 and self.time_since_move + dt >= .1 then
+        -- Inefficient mouse collision check
+        local mx, my = love.mouse.getPosition()
+        local dx = (self.w - self.columns * self.ssize) / 2
+        for i = 1, self.slots do
+            local r = math.ceil(i / self.columns) - 1
+            local c = i - r * self.columns - 1
+            if Util.pointInRect(mx, my, self.pos.x + c * self.ssize + dx, self.pos.y + r * self.ssize, self.ssize, self.ssize) then
+                self.collide_slot = i
+                break
+            end
+        end
+        if self.collide_slot == -1 then return end
+        self.tbox:reset_lines(1)
+        self.tbox:activate()
+        self.tbox.lines[1] = self.num_to_str[self.collide_slot - 1] or ""
+        self.prev_txt = self.tbox.lines[1]
+        self.tbox.cursor.p = self.prev_txt:len() + 1
+    end
     self.time_since_move = self.time_since_move + dt
+end
+
+function Memory:update_renames()
+    local t = self.tbox.lines[1]
+    self.wrong_rename = false
+    if t == self.prev_txt then return end
+    if self.str_to_num[t] then
+        self.wrong_rename = true
+        return
+    end
+    if self.prev_txt:len() > 0 then
+        self.num_to_str[self.str_to_num[self.prev_txt]] = nil
+        self.str_to_num[self.prev_txt] = nil
+    end
+    if t:len() > 0 then
+        self.str_to_num[t] = self.collide_slot - 1
+        self.num_to_str[self.collide_slot - 1] = t
+    end
+    self.prev_txt = t
 end
 
 function Memory:draw()
@@ -81,7 +141,6 @@ function Memory:draw()
         color.s = 140
         color.a = 255
         love.graphics.setFont(self.index_font)
-        local collide_slot = -1
         for i = 1, self.slots do
             local r = math.ceil(i / self.columns) - 1
             local c = i - r * self.columns - 1
@@ -89,12 +148,6 @@ function Memory:draw()
             color.a = 255
             Color.set(color)
             love.graphics.rectangle("line", self.pos.x + c * self.ssize, self.pos.y + r * self.ssize, self.ssize, self.ssize)
-
-            -- Checking mouse colision, should probably be somewhere else.
-            local mx, my = love.mouse.getPosition()
-            if self.time_since_move > .1 and Util.pointInRect(mx, my, self.pos.x + c * self.ssize + dx, self.pos.y + r * self.ssize, self.ssize, self.ssize) then
-                collide_slot = i
-            end
 
             color.a = 100
             Color.set(color)
@@ -108,18 +161,27 @@ function Memory:draw()
             local r = math.ceil(i / self.columns) - 1
             local c = i - r * self.columns - 1
             love.graphics.printf(self.vec[i], self.pos.x + 2 + c * self.ssize, self.pos.y + r * self.ssize + self.ssize / 4, self.ssize, "center")
+            if self.num_to_str[i - 1] then
+                love.graphics.setFont(self.rename_font)
+                love.graphics.printf(self.num_to_str[i - 1], self.pos.x + 2 + c * self.ssize, self.pos.y + r * self.ssize + self.ssize * .75, self.ssize, "center")
+                love.graphics.setFont(self.value_font)
+            end
         end
 
         -- Drawing zoomed in slot
-        if collide_slot > 0 then
-            local i, bsz = collide_slot, 70
+        if self.collide_slot > 0 then
+            local ddx = dx
+            local i, bsz = self.collide_slot, math.max(90, self.ssize)
             local r = math.ceil(i / self.columns) - 1
             local c = i - r * self.columns - 1
             local mx, my = love.mouse.getPosition()
+
+            if mx - dx + bsz >= Util.findId('code_tab').w + Util.findId('code_tab').pos.x then ddx = ddx + bsz end
+
             love.graphics.setColor(0, 0, 0, 160)
-            love.graphics.rectangle('fill', mx - dx, my - bsz, bsz, bsz)
+            love.graphics.rectangle('fill', mx - ddx, my - bsz, bsz, bsz)
             Color.set(color)
-            love.graphics.rectangle('line', mx - dx, my - bsz, bsz, bsz)
+            love.graphics.rectangle('line', mx - ddx, my - bsz, bsz, bsz)
 
             local index_font = FONTS.fira(bsz / 3)
             local value_font = FONTS.fira(bsz * .4)
@@ -127,10 +189,22 @@ function Memory:draw()
             love.graphics.setFont(index_font)
             color.a = 100
             Color.set(color)
-            love.graphics.print(i - 1, mx - dx + 2 * bsz / self.ssize, my - bsz)
+            love.graphics.print(i - 1, mx - ddx + 2 * bsz / self.ssize, my - bsz)
             love.graphics.setFont(value_font)
-            love.graphics.printf(self.vec[i], mx - dx + 2 * bsz / self.ssize, my - bsz + bsz / 4, bsz, "center")
+            love.graphics.printf(self.vec[i], mx - ddx + 2 * bsz / self.ssize, my - bsz + bsz / 4, bsz, "center")
             color.a = 255
+
+            if ROOM.version > "1.0" then
+                self.tbox.w = bsz * .8
+                self.tbox.pos.x, self.tbox.pos.y = mx - ddx + bsz * .1, my - self.tbox.h - bsz * .05
+                self.tbox:draw()
+
+                if self.wrong_rename then
+                    love.graphics.setLineWidth(.5)
+                    Color.set(Color.red())
+                    love.graphics.line(mx - ddx + bsz * .1, my - bsz * .05, mx - ddx + bsz * .9, my - bsz * .05)
+                end
+            end
         end
 
         love.graphics.translate(-dx, 0)
