@@ -22,8 +22,9 @@ Room = Class{
         self.grid_fnt_h = self.grid_fnt:getHeight()
         self.grid_alpha = false
         self.grid_foc_clr = Color.white()
+        self.grid_trans_timer = Timer.new()
+        self.grid_trans_delay = 0.01
         self.grid_transFunc = function() -- Transition function
-            Color.set(self.grid_foc_clr)
             if self.grid_alpha then
                 self.grid_foc_clr.a = self.grid_foc_clr.a + 2
                 if self.grid_foc_clr.a > 255 then
@@ -168,9 +169,12 @@ function Room:connect(id, changeToInfo)
     self:from(Reader.read(id))
     local pc = Util.findId("pcbox")
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end
+
+    self.grid_trans_handle = self.grid_trans_timer:every(self.grid_trans_delay, self.grid_transFunc)
 end
 
 function Room:disconnect(wait)
+    self.grid_trans_timer:cancel(self.grid_trans_handle)
     Util.findId('code_tab'):saveCurrentCode()
     if wait == nil or wait then
         SFX.loud_static:stop()
@@ -281,7 +285,7 @@ function Room:draw()
     for i=1, self.grid_r do
         local _s = tostring(i)
         --if i < 10 then _s = '0'.._s end
-        if self.mode == "online" and i == self.bot.pos.y then self.grid_transFunc() end
+        if self.mode == "online" and i == self.bot.pos.y then Color.set(self.grid_foc_clr) end
         love.graphics.printf(_s, -self.grid_cw, self.grid_ch*(i-1) + self.grid_fnt_h/2 - 5,
             30, "right")
         if self.mode == "online" and i == self.bot.pos.y then Color.set(self.grid_fnt_clr) end
@@ -291,7 +295,7 @@ function Room:draw()
     for i=1, self.grid_c do
         local _s = tostring(i)
         --if i < 10 then _s = '0'.._s end
-        if self.mode == "online" and i == self.bot.pos.x then self.grid_transFunc() end
+        if self.mode == "online" and i == self.bot.pos.x then Color.set(self.grid_foc_clr) end
         love.graphics.print(_s, self.grid_cw*(i-0.5) - self.grid_fnt:getWidth(_s)/2,
             self.grid_h + self.grid_ch/2 - self.grid_fnt_h/2)
         if self.mode == "online" and i == self.bot.pos.x then Color.set(self.grid_fnt_clr) end
@@ -317,8 +321,9 @@ function Room:draw()
     end
 end
 
-function Room:update()
+function Room:update(dt)
     if self.mode == "online" then
+        self.grid_trans_timer:update(dt)
         for _, v in pairs(self.grid_obj) do
             if v.death and v.destroy then
                 v.destroy()
