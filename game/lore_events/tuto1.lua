@@ -4,7 +4,7 @@ local Mail = require "classes.tabs.email"
 local first = {}
 
 first.require_puzzles = {}
-first.wait = 1
+first.wait = 1 --TODO change to 7 on release
 
 local after_intro_email
 
@@ -14,7 +14,7 @@ end
 
 -- called after first email is read
 function first.after_intro_email()
-    LoreManager.timer:after(1, function() Mail.new('tuto1_2') end)
+    LoreManager.timer:after(3, function() Mail.new('tuto1_2') end)
 
     LoreManager.timer:after(30, function()
         if not LoreManager.puzzle_done.tuto1 then Mail.new('tuto1_3') end
