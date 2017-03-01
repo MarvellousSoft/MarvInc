@@ -95,7 +95,9 @@ function sm.login(user)
         -- Other stuff
         local info = Util.findId('info_tab')
         local manual = Util.findId('manual_tab')
-        manual.cmds = data.known_commands
+        for _, item in ipairs(data.known_commands) do
+            manual:addCommand(item)
+        end
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
 

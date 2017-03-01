@@ -168,7 +168,8 @@ function ManualTab:addCommand(item_name)
     table.insert(self.cmds, item_name)
     local bsz = self.cmd_font:getHeight()
     self.expand_buts[item_name] = Button(0, 0, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
-    self.expand_buts[item_name].text_color = Color.black()
+    self.expand_buts[item_name].text_color = Color.green()
+    self.expand_buts[item_name].text_color.a = 150
 end
 
 function ManualTab:mousePressed(x, y, but)
