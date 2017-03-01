@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "First Puzzle",
     text = [[
@@ -24,7 +22,6 @@ Best of Luck, and carry on.
     puzzle_id = 'tuto1',
     open_func =
         function()
-            Info.addCommand("walk")
-            Info.addCommand("walk <direction>")
+            Util.findId('manual_tab'):addCommand("walk")
         end
 }

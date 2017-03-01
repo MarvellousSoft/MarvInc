@@ -54,7 +54,8 @@ function sm.save()
 
     -- Other stuff
     local info = Util.findId('info_tab')
-    data.known_commands = info.commands
+    local manual = Util.findId('manual_tab')
+    data.known_commands = manual.cmds
     data.bots_dead = info.dead
     data.last_bot = BotManager.current_bot
 
@@ -93,7 +94,8 @@ function sm.login(user)
 
         -- Other stuff
         local info = Util.findId('info_tab')
-        info.commands = data.known_commands
+        local manual = Util.findId('manual_tab')
+        manual.cmds = data.known_commands
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
 

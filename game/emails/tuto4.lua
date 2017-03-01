@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Lets use some loops",
     text = [[
@@ -28,7 +26,7 @@ As always, carry on.
     puzzle_id = 'tuto4',
     open_func =
         function()
-            Info.addCommand("jmp <label>")
-            Info.addCommand("label:")
+            -- Util.findId('manual_tab'):addCommand("label") maybe add an entry for labels
+            Util.findId('manual_tab'):addCommand("jmp")
         end
 }

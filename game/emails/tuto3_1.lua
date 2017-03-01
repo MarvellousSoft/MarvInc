@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Making good progress",
     text = [[
@@ -22,8 +20,6 @@ Carry on.
     puzzle_id = 'tuto3',
     open_func =
         function()
-            Info.addCommand("turn clock")
-            Info.addCommand("turn counter")
-            Info.addCommand("turn <direction>")
+            Util.findId('manual_tab'):addCommand("turn")
         end
 }

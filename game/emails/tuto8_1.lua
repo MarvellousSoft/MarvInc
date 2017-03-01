@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Final puzzle",
     text = [[
@@ -23,7 +21,6 @@ Carry on.
     puzzle_id = 'tuto8',
     open_func =
         function()
-            Info.addCommand("mov <value> <address>")
-            Info.addCommand("sub <value1> <value2> <address>")
+            Util.findId('manual_tab'):addCommand("mov")
         end
 }

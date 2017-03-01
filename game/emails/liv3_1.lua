@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Results results results",
     text = SaveManager.current_user .. [[
@@ -28,7 +26,6 @@ Make us proud, and carry on.
     puzzle_id = 'liv3a',
     open_func =
         function()
-            Info.addCommand("walkc <address>")
-            Info.addCommand("walkc <address> <direction>")
+            Util.findId('manual_tab'):addCommand("walkc")
         end
 }

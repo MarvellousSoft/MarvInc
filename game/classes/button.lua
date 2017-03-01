@@ -28,7 +28,9 @@ Button = Class{
         button.tp = "button" --Type of this class
 
         self:centralize()
-    end
+    end,
+    text_color = Color.green(),
+    color = Color.transp()
 }
 
 function Button:update(dt)
@@ -63,7 +65,7 @@ function Button:draw()
     Color.set(self.color)
 
     love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h, 10)
-    Color.set(Color.green())
+    Color.set(self.text_color)
     love.graphics.setFont(b.font)
     love.graphics.print(b.text, b.text_x , b.text_y)
 
@@ -91,6 +93,7 @@ function Button:checkCollides(x, y)
     if y < self.pos.y then return false end
     if y > self.pos.y + self.h then return false end
     self:callback()
+    return true
 end
 
 -- Centralizes text on button

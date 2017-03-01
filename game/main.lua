@@ -25,6 +25,7 @@ require "classes.tabs.tab"
 Mail = require "classes.tabs.email"
 require "classes.tabs.code"
 require "classes.tabs.info"
+require "classes.tabs.manual"
 
 require "classes.pc_box"
 require "classes.sprite"

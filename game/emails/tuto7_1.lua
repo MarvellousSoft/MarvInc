@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Comparing and jumping",
 text = [[
@@ -24,13 +22,6 @@ Carry on.
     puzzle_id = 'tuto7',
     open_func =
         function()
-            Info.addCommand("jgt <value> <value> <label>")
-            Info.addCommand("jge <value> <value> <label>")
-            Info.addCommand("jlt <value> <value> <label>")
-            Info.addCommand("jle <value> <value> <label>")
-            Info.addCommand("jeq <value> <value> <label>")
-            Info.addCommand("jne <value> <value> <label>")
-            Info.addCommand("read <address>")
-            Info.addCommand("read <address> <direction>")
+            Util.findId('manual_tab'):addCommand("cond_jmps")
         end
 }

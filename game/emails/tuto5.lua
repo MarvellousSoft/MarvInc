@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Working with a backpack",
     text = [[
@@ -25,9 +23,7 @@ Happy adventuring, and carry on.
     puzzle_id = 'tuto5',
     open_func =
         function()
-            Info.addCommand("pickup")
-            Info.addCommand("pickup <direction>")
-            Info.addCommand("drop")
-            Info.addCommand("drop <direction>")
+            Util.findId('manual_tab'):addCommand("pickup")
+            Util.findId('manual_tab'):addCommand("drop")
         end
 }

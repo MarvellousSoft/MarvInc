@@ -1,5 +1,3 @@
-local Info = require 'classes.tabs.info'
-
 return {
     title = "Using memory",
     text = [[
@@ -23,8 +21,9 @@ Best of Luck. Carry on. :)
     puzzle_id = 'tuto6',
     open_func =
         function()
-            Info.addCommand("add <value1> <value2> <address>")
-            Info.addCommand("write <value>")
-            Info.addCommand("write <value> <direction>")
+            Util.findId('manual_tab'):addCommand("add")
+            Util.findId('manual_tab'):addCommand("sub")
+            Util.findId('manual_tab'):addCommand("read")
+            Util.findId('manual_tab'):addCommand("write")
         end
 }
