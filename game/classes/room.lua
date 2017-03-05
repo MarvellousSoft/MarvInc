@@ -128,6 +128,8 @@ function Room:from(puzzle)
     self.extra_info = puzzle.extra_info
     Util.findId("code_tab"):reset(puzzle)
 
+    self.turn_handler = puzzle.turn_handler
+
     if puzzle.on_start then
         puzzle.on_start(self)
     end
@@ -167,6 +169,10 @@ function Room:connect(id, changeToInfo)
     end)
 
     self:from(Reader.read(id))
+    if self.turn_handler then
+        Signal.register(SIGEND, self.turn_handler)
+    end
+
     local pc = Util.findId("pcbox")
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end
 
@@ -175,6 +181,11 @@ end
 
 function Room:disconnect(wait)
     self.grid_trans_timer:cancel(self.grid_trans_handle)
+
+    if self.turn_handler then
+        Signal.remove(SIGEND, self.turn_handler)
+    end
+
     Util.findId('code_tab'):saveCurrentCode()
     if wait == nil or wait then
         SFX.loud_static:stop()

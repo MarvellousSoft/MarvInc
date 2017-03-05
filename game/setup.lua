@@ -15,6 +15,9 @@ COLS = 21
 
 WIN_BORD = 20
 
+-- End of turn signal
+SIGEND = "end_turn"
+
 --FONTS--
 
 --Fira-mono table

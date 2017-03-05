@@ -47,7 +47,10 @@ Puzzle = Class{
     -- called when solving the puzzle for the first time
     first_completed = LoreManager.default_completed,
     -- called subsequent times
-    already_completed = LoreManager.already_completed
+    already_completed = LoreManager.already_completed,
+
+    -- End turn Signal function handler. Remove on disconnection.
+    turn_handler = nil
 }
 
 function Puzzle:manage_objectives()

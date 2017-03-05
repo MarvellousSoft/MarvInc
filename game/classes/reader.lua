@@ -28,6 +28,12 @@ function reader.read(puzzle_id)
     puz.id = puzzle_id
     puz.n = _t.n
 
+    -- If you want to do something on each turn, create a function onTurn(ic), where ic is the
+    -- instruction counter.
+    if _t.onTurn then
+        puz.turn_handler = _t.onTurn
+    end
+
     local bot = _t.bot
     for x = 1, COLS do
         for y = 1, ROWS do

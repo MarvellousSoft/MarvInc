@@ -44,6 +44,8 @@ local function stepCallback()
     sm.ic = sm.ic + 1
     SFX.click:play()
 
+    Signal.emit(SIGEND, sm.ic)
+
     if not sm.code then
         print "should not be here"
         return
