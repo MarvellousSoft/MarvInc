@@ -4,7 +4,7 @@ local state = {}
 
 -- CREDTIS SCREEN --
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
-state.duration = 15
+state.duration = 10
 
 -- Changing the text is ok too, no need to change anything else
 local credits = [[
@@ -63,6 +63,10 @@ function state:draw()
 
     love.graphics.setFont(FONTS.fira(15))
     love.graphics.printf("Please do not turn off your computer...", x, y + dh + bh + 2 * b, w, "center")
+
+    -- Title text
+    love.graphics.setFont(FONTS.fira(150))
+    love.graphics.printf("ACT 1", x, 50, w, 'center')
 
     -- Actual credits
     local dy = self.scroll_size * prog

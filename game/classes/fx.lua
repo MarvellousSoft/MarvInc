@@ -4,7 +4,7 @@ local fx = {}
 local full_s = false
 local intro = false
 
-function fx.full_static()
+function fx.full_static(gamestate)
     full_s = true
     EVENTS_LOCK = true
     CLOSE_LOCK = true
@@ -18,7 +18,7 @@ function fx.full_static()
     MAIN_TIMER:after(2.9, function()
         SFX.loud_static:stop()
         full_s = false
-        Gamestate.push(GS.CREDITS)
+        Gamestate.push(gamestate)
         CLOSE_LOCK = false
     end)
 end

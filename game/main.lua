@@ -53,10 +53,9 @@ ResManager = require "res_manager"
 GS = {
 MENU     = require "gamestates.menu",     --Menu Gamestate
 GAME     = require "gamestates.game",     --Game Gamestate
---PAUSE    = require "gamestate.pause",    --Pause Gamestate
---GAMEOVER = require "gamestate.gameover"  --Gameover Gamestate
 SPLASH = require "gamestates.splash",
-CREDITS = require "gamestates.credits"
+ACT1 = require "gamestates.act1_intro",
+ACT2 = require "gamestates.act2_intro"
 }
 
 function love.load()

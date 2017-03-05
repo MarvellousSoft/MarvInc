@@ -85,13 +85,18 @@ end
 
 extra_info = [[You have few lines to use. Be smart.]]
 
+local function after_pop()
+    _G.ROOM:disconnect(false)
+    _G.Util.findId("pcbox"):changeTabs(_G.Util.findId("pcbox").menu_tabs, "email")
+    _G.FX.full_static(_G.GS.ACT2)
+    _G.ROOM.version = "3.0"
+end
+
 function first_completed()
     _G.PopManager.new("Well done",
         "You have proven yourself to be an efficient and valuable employee so far.\n\nIt's time to carry on.\n--Jen",
         _G.Color.green(), {
-            func = function()
-                _G.ROOM:disconnect()
-            end,
+            func = after_pop,
             text = "I am ready",
             clr = _G.Color.blue()
         })
