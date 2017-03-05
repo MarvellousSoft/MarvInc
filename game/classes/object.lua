@@ -62,6 +62,13 @@ function Object:move(grid, r, c)
     self:moveTo(grid, r, c, ORIENT[self.r[2]])
 end
 
+function Object:dieIfStay(grid)
+    local obj = grid[self.pos.x][self.pos.y]
+    if obj and (obj.tp == "dead" or obj.tp == "container") then
+        self:kill(grid, t)
+    end
+end
+
 -- Move towards. Must move to an adjacent cell. Orientation o is north, east, south or west.
 function Object:moveTo(grid, r, c, o)
     local px, py = self.pos.x + o.x, self.pos.y + o.y
@@ -88,7 +95,9 @@ function Object:moveTo(grid, r, c, o)
         end
     end
 
-    grid[self.pos.x][self.pos.y] = nil
+    if grid[self.pos.x][self.pos.y] == self then
+        grid[self.pos.x][self.pos.y] = nil
+    end
     self.pos.x, self.pos.y = px, py
     self.rx = (px-1)*ROOM_CW
     self.ry = (py-1)*ROOM_CH

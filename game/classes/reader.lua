@@ -110,8 +110,10 @@ function reader.read(puzzle_id)
     end
 
     -- Adds standalone emitters.
-    for _, v in pairs(emitters) do
-        Emitter(unpack(v))
+    for _, pack in pairs(emitters) do
+        for _, v in ipairs(pack) do
+            Emitter(unpack(v))
+        end
     end
 
     puz.objective_text = _t.objective_text

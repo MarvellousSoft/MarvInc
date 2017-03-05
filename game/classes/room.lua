@@ -389,7 +389,7 @@ function Room:wakeup(ds, y)
     if not y then
         local px, py = ds.pos.x, ds.pos.y
         if self.bot.pos.x == px and self.bot.pos.y == py then
-            self:kill()
+            -- this will be handled by Bot:dieIfStay
         end
         self:paint(px, py, ds.of)
         self.grid_obj[px][py] = ds

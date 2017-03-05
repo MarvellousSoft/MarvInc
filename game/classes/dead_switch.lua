@@ -12,6 +12,7 @@ DeadSwitch = Class{
 
         -- old floor
         self.of = nil
+        self.on = true
 
         if args then
             self.bucketable = args.bucketable
@@ -20,9 +21,13 @@ DeadSwitch = Class{
 }
 
 function DeadSwitch:sleep()
+    if not self.on then return end
     ROOM:sedate(self)
+    self.on = false
 end
 
 function DeadSwitch:wakeup()
+    if self.on then return end
     ROOM:wake(self)
+    self.on = true
 end

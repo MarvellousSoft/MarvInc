@@ -70,6 +70,7 @@ local function stepCallback()
             return
         end
     end
+    ROOM.bot:dieIfStay(ROOM.grid_obj)
 
     ROOM.puzzle:manage_objectives()
     if sm.state ~= 'playing' then return end
