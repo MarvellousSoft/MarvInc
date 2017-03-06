@@ -504,7 +504,7 @@ function TextBox:tryWrite(t)
     local l = {} -- lines to add
     for s in (t .. '\n'):gmatch("([^\n]*)\n") do table.insert(l, s) end
 
-    if c.i + #l - 1 <= self.line_total then
+    if self.line_cur + #l - 1 <= self.line_total then
         for i = self.line_total, c.i + #l, -1 do
             self.lines[i] = self.lines[i - #l + 1]
         end
