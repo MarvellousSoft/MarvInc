@@ -20,6 +20,13 @@ function objective_checker(room)
     return false
 end
 
+function on_start(room)
+    if not _G.require('classes.lore_manager').puzzle_done.franz1 then
+        room.bot.name = 'Diego'
+        room.bot.traits = {'Good Friend', 'Suspicious'}
+    end
+end
+
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

@@ -87,7 +87,7 @@ function Bot:kill(grid, obj)
         local n = Util.findId('info_tab').dead
         if ROOM.puzzle.id == 'franz1' then
             ROOM.puzzle:manage_objectives(true)
-            grid[self.pos.x][self.pos.y] = nil
+            self:cleanAndKill()
         else
             StepManager.stop(nil, "Bot #" .. n .. " burned in hot lava. Another unit has been dispatched to replace #"..n..". A notification has been dispatched to HR and this incident shall be added to your personal file.")
         end
