@@ -8,6 +8,7 @@ local dead = {}
 Dead = Class{
     __includes = {SpriteObject, Object},
     init = function(self, grid, i, j, key, bg, delay, clr)
+        self.key = key
         if delay then
             SpriteObject.init(self, grid, i, j, key, bg, delay, "dead", clr)
         else

@@ -1,15 +1,17 @@
 return {
-    title = "Multiple lists again",
+    title = "BREAK IT DOWN",
     text = [[
-Well, I guess you learned how to use I/O consoles to store lists. Now let's do it without them :P
+Great party!!! Didn't know Bill was such a wild card ahhahaah, after his dance frenzy, he passed out on the sofa and slept here all night ahhaha.
 
-But first, we're having a happy hour here in SDD after the work hours, wanna join? I guarantee there will be enough booze to make it interesting, also some games and music.
+Don't worry about breaking the server, it happens all the time :P Actually we started doing versioning because of these parties.
 
-Please don't tell Jen or Franz, as this isn't exactly "allowed" use of the office :P. Also don't tell Richard cause he'll just bore everyone if he comes. Anyways, see you tonight. You'll finally learn what's here called "shot-code-shot-deploy".
+Nice work with that playlist! Even Bob got out of the chair.
 
-Back to the task, it is basically a harder version of the last task. You have no I/O consoles, so you need to store everything in the registers. Also, now values can be removed from the lists.
+Hard as it is, let's get back to work. Well, I guess you learned how to use I/O consoles to store lists in the previous task. Now let's do it without them :P
 
-Till tonight, carry on.
+This is basically a harder version of the last task. You have no I/O consoles, so you need to store everything in the registers. Also, now values can be removed from the lists.
+
+Happy coding, and carry on.
 
 -- Liv]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",

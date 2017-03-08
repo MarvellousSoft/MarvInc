@@ -90,7 +90,7 @@ function Object:moveTo(grid, r, c, o)
 
         -- Don't dead open inside
         if t == "dead" or t == "container" then
-            self:kill(grid, t)
+            self:kill(grid, grid[px][py])
             return
         end
     end

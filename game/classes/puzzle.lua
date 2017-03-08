@@ -53,9 +53,9 @@ Puzzle = Class{
     turn_handler = nil
 }
 
-function Puzzle:manage_objectives()
+function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
-    if self.objective_checker(ROOM) or love.keyboard.isDown("f10") --[[TODO: REMOVE IN RELEASE]] then 
+    if auto_win or self.objective_checker(ROOM) or love.keyboard.isDown("f10") --[[TODO: REMOVE IN RELEASE]] then 
         self.completed = true
         LoreManager.mark_completed(self)
     end

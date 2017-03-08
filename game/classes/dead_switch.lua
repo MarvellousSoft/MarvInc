@@ -7,6 +7,8 @@ DeadSwitch = Class{
     init = function(self, grid, i, j, key, bg, delay, clr, skey, args)
         SpriteObject.init(self, grid, i, j, key, bg, delay, "dead", clr)
 
+        self.key = key
+
         -- skey is solid key image
         self.skey = skey
 
