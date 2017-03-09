@@ -136,3 +136,15 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."
+
+function first_completed()
+    _G.PopManager.new("Least Common Multiple",
+        "Your math is almost as sharp as Bill's dance moves.",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = "*Dance*",
+            clr = _G.Color.blue()
+        })
+end

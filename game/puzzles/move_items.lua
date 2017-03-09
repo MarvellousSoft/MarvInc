@@ -92,13 +92,13 @@ There is a tile directly above or below each bucket. They are generated randomly
 - Use walkc.]]
 
 function first_completed()
-    _G.PopManager.new("blahblahblah",
-        "blahblahblahblah",
+    _G.PopManager.new("Situation status",
+        "These buckets look suspiciously like dead human bodies...",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " blah ",
+            text = "Your eyes decieve you",
             clr = _G.Color.blue()
         })
 end

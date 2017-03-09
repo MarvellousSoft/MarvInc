@@ -120,3 +120,15 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."
+
+function first_completed()
+    _G.PopManager.new("Greatest Common Divisor",
+        "Billy boy would be proud.",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = "I like math.",
+            clr = _G.Color.blue()
+        })
+end
