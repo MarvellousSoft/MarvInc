@@ -77,13 +77,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("blah blah blah",
-        "blah blah blah",
+    _G.PopManager.new("A message",
+        "You have been warned.",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "blah ",
+            text = "Good grief",
             clr = _G.Color.blue()
         })
 end
