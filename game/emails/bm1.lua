@@ -1,18 +1,20 @@
-local bm = require 'lore_events.bm1'
-
 return {
-    title = "Remember us?",
+    title = "What's cookin?",
     text = [[
-Hey it's Miles Evans and Bill Davies, the two sharp looking Math PhDs you met at Paul's. We heard wonders from both P and L about your achievements, and we just might need someone of your talents.
+Hey,
 
-As you may remember from our conversation last night, we are both number theorists with emphasis on cryptography. This means working with large primes or at least pseudoprimes. Which in turn means working with large numbers, and as everyone knows, mathematicians hate calculating by hand. That's where you come in. We are mathematicians, so we do the theory, and you do the number crunching. How about that? We are sending you a simple problem. If you decide to help us, complete this puzzle and we can talk.
+It's Bill Davis (and I'm CC-ing Miles Evans) the two handsome math fellas you met at Paul's.
 
-(I'm cc-ing Bill so you can get in touch with either of us)
+As we told you before, I'm a mathematician (and Miles is an applied mathematician). My work is on algebraic number theory with a focus on Galois fields. Mile's is on coding theory, cryptography and error-correction. But we're both working on a joint project on cryptography for now.
 
-Miles Evans
-PhD in Applied Mathematics
-Researcher at Marvellous Inc's Cryptography Department
+We heard from Paul and Liv that you've been useful on the coding department and as you may or may not know, cryptography deals with big numbers and on how to factorize them. We plan on publishing an article, and it'd be nice to have a working code of it. And we were thinking you could do such a thing.
+
+But first you gotta prove it to us that you can deal with the abstract. If you're interested, we'd like you to apply a simple math concept you probably had in mid-school.
+
+Make your code sing.
+
+Bill Davis
 ]],
-    author = "Miles Evans [cc: Bill Evans]",
-    reply_func = bm.after
+    author = "Bill Davis (bdavis@mat.marv.com)",
+    puzzle_id = 'gcd'
 }

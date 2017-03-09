@@ -1,6 +1,6 @@
 name = "Greatest Common Divisor"
 -- Puzzle number
-n = "undecided"
+n = "E.1"
 
 lines_on_terminal = 20
 memory_slots = 6
