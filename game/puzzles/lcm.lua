@@ -1,6 +1,6 @@
 name = "Least Common Multiple"
 -- Puzzle number
-n = "undecided"
+n = "E.2"
 
 lines_on_terminal = 35
 memory_slots = 8

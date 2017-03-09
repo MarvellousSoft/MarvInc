@@ -1,5 +1,5 @@
 name = "Advanced Firefighting"
-n = "not decided"
+n = "B.4"
 
 lines_on_terminal = 30
 memory_slots = 7
@@ -14,7 +14,7 @@ l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketabl
 
 local objs
 
-objective_text = "Extinguish all lava."
+objective_text = "Get this fire sorted."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do

@@ -1,6 +1,6 @@
 name = "Corridor Organizer"
 -- Puzzle number
-n = "undecided"
+n = "B.3"
 
 lines_on_terminal = 12
 memory_slots = 4
@@ -72,7 +72,7 @@ end
 
 -- Objective
 --This obviously won't be buckets in the final game... I hope.
-objective_text = "Move the buckets to the green tiles."
+objective_text = "Clear the way! Move the buckets to the green tiles."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
@@ -89,7 +89,7 @@ end
 
 extra_info = [[
 There is a tile directly above or below each bucket. They are generated randomly.
-- Remeber walkc.]]
+- Use walkc.]]
 
 function first_completed()
     _G.PopManager.new("blahblahblah",
