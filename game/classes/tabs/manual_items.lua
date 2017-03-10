@@ -21,6 +21,12 @@ walk east # Walks right until it hits an obstacle]]}},
     notes = "In this command the order of the parameters may be switched, but in most other commands this won't work."
 }
 
+t.walk1 = {
+    command = "walk <direction>",
+    text = [[The bot turns to <direction> and then the walks until it finds an obstacle. If <direction> is omitted, the bot will walk in the direction it is facing.]],
+    examples = {{[[walk east # Walks right until it hits an obstacle]]}}
+}
+
 t.walkc = {
     command = "walkc <address> <direction>",
     text = [[The bot turns to <direction>, walks until it finds an obstacle and then stores the number of steps walked in the register given by <address>. The argument <direction> is optional, and if omitted the bot will keep facing the same direction.]],
