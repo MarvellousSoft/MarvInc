@@ -78,8 +78,8 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 -- Objective
 objective_text = [[
-Each console on the left has a single number. Read it and write it on the tiles to the right of it.
-- Painting a tile on the row i adds 2^(20 - i) to the number.
+Each console on the left has a single number. Read the number and write it in binary on the tiles to the right in the same row.
+- Painting a tile on the column i adds 2^(20 - i) to the number.
 - That means painting the rightmost tile (next to the paint container) adds 1 to the number, the one to the left adds 2, the next 4, and so on.]]
 
 function objective_checker(room)
@@ -107,7 +107,6 @@ end
 
 extra_info = [[
 All numbers are between 0 and 999.
-- You may paint any number of tiles, as long as the number is correct.
 - It can be shown that there's only one correct way to paint any number.]]
 
 function first_completed()

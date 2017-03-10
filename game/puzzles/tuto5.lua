@@ -20,7 +20,8 @@ function objective_checker(room)
 end
 
 extra_info =
-[[If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.]]
+[[To extinguish lava, water isn't enough. That's why when you drop a water bucket into lava, the robot throws the bucket with it. It's science.
+-If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

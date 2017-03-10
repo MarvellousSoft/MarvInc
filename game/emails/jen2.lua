@@ -1,7 +1,7 @@
 return {
     title = "My sincere apologies",
     text = [[
-Hello Employee #]]..EMPLOYEE_NUMBER..[[
+Hello Robot Tester Employee #]]..EMPLOYEE_NUMBER..[[
 
 First of all, I own you my sincere apologies for my previous email. I had a little wine at my break hours, and I got carried away for a bit.
 

@@ -1,9 +1,9 @@
 return {
     title = "Congraaaaattts!!1!",
     text = [[
-Hey theeeere!
+Hey theeeere employee #1337H4CK3R kkk!
 
-congrats on nailing the job man,  been a while since we had new slavs coming here kkkk jsut kiddin ;P
+congrats on nailing the job man,  been a while since we had new slaves coming here kkkk jsut kiddin ;P
 
 im ur new boss, but no need to formalities right? hahaha call me jenny btw
 

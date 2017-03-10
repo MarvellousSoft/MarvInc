@@ -1,7 +1,7 @@
 return {
     title = "Time to prove yourself",
     text = [[
-Hello again Employee #]]..EMPLOYEE_NUMBER..[[
+Hello again Robot Tester Employee #]]..EMPLOYEE_NUMBER..[[
 
 I can see you've been quite busy around Marvellous Inc. Your efforts have not gone unnoticed and are greatly appreciated by all of us. Especially the Big Bosses.
 

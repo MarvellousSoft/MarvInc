@@ -1,8 +1,8 @@
 return {
     title = "DUDE HELP PLZ",
     text = [[
-bro, Im in trouble. for reals this time.
-people keep sending me task over n over, and they are just getting haaarder D: its too much maaan =(
+bro, im in trouble. for reals this time.
+people keep sending me tasks over n over, and their just getting haaarder D: its too much maaan =(
 
 you've met liv right? she just keep grinding me with tasks and i just cant do it ;-; can you plz plz plz help me bro??
 i already told her i couldnt do it, so she'll probably send it to you
