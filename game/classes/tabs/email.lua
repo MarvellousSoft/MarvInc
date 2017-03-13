@@ -99,6 +99,14 @@ function EmailTab:draw()
         --Set alpha
         color.a = e.alpha
 
+        --Draw email box
+        local mx, my = love.mouse.getPosition()
+        if mx >= t.pos.x + t.email_border and
+           mx <=  t.pos.x + t.email_border + t.w-2*t.email_border and
+           my >= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump and
+           my <= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + t.email_height then
+            color.l = color.l - 10 --Highlight email if mouse is over
+        end
         Color.set(color)
         love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 5)
 
@@ -142,7 +150,7 @@ function EmailTab:draw()
             text = "new"
             Color.set(Color.new(240, 180, 120, e.alpha))
         elseif e.puzzle_id then
-            Color.set(Color.new(150, 130, 70, e.alpha))
+            Color.set(Color.new(150, 140, 60, e.alpha))
             if LoreManager.puzzle_done[e.puzzle_id] then
                 text = "completed"
             else
@@ -264,9 +272,9 @@ EmailObject = Class{
 
         self.alpha = 0 -- Alpha value of email color
         self.email_color = Color.new(0,0,230) -- Color of a new email
-        self.email_read_color = Color.new(150, 50, 140) -- Color of a already read email
-        self.email_puzzle_complete_color = Color.new(70, 80, 200) -- Color of an completed puzzle
-        self.email_puzzle_uncompleted_color = Color.new(250, 80, 200) -- Color of an uncompleted puzzle
+        self.email_read_color = Color.new(150, 40, 200) -- Color of a already read email
+        self.email_puzzle_complete_color = Color.new(70, 150, 200) -- Color of an completed puzzle
+        self.email_puzzle_uncompleted_color = Color.new(250, 140, 200) -- Color of an uncompleted puzzle
 
         self.juicy_bump = 5 -- Amount of bump the email travels when entering the inbox
         self.going_up_amount = 0 -- Amount to go up (for when an email above it is deleted)
