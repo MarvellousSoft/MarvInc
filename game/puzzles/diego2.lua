@@ -138,13 +138,19 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 
 function first_completed()
-    _G.PopManager.new("blah blah blah",
-        "blahjblahblhalbha",
+    _G.PopManager.new("this will do bro",
+        [[i think i can get pass the security system for the confidential files.
+
+        i will expose marvinc for what they rlly are and get to the bottom of this.
+
+        dont tell anyone about this bro, im counting on you
+
+        --investigator bro-vega]],
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "blah",
+            text = "...okay?",
             clr = _G.Color.black()
         })
 end

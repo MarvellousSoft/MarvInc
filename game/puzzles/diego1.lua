@@ -1,6 +1,6 @@
 name = "Chessmat Painter"
 -- Puzzle number
-n = "undecided"
+n = "D.1"
 
 lines_on_terminal = 20
 memory_slots = 5
@@ -87,13 +87,15 @@ function objective_checker(room)
 end
 
 function first_completed()
-    _G.PopManager.new("THANK YOU my friend",
-        "You really are the bigger person",
+    _G.PopManager.new("great, bro. don’t get cocky.",
+        [[i will continue my search. ill let you know if i find anything.
+
+        --master broda vega]],
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Glad to help ",
+            text = " I got a bad feeling about this ",
             clr = _G.Color.blue()
         })
 end
