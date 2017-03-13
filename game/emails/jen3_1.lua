@@ -7,7 +7,7 @@ I can see you've been quite busy around Marvellous Inc. Your efforts have not go
 
 As you already know, there have been extensive work pilling up in every department, and somehow you got Franz attention for a special task to prove yourself.
 
-Pardon my unprofessionalism, but this is FUCKING HUGE. This is your big shot kiddo, so don't let me down. Use everything you learned so far, and use it efficiently.
+Pardon my unprofessionalism, but this is FUCKING HUGE. This is your big shot kiddo, so don't let me down. Use everything you learned so far, and use it efficiently. I've been told the purpose of this task is to create a complex algorithm that will change MarvInc completely.
 
 I trust you'll do your best. And if you're feeling nervous, stop being nervous and be awesome instead.
 

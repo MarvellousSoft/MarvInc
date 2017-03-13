@@ -10,7 +10,10 @@ But I'm happy to say Franz is satisfied with your progress, and you got a well d
 To celebrate the occasion I've arranged one of the interns to upgrade your OS to the most recent version. Enjoy.
 
 Things will be a lot harder from now on. Keep up the good work, you're on the right track.
+
 Carry on, now and forever.
+
+PS: If you were still wondering, that task objective was to create a cleaning algorithm for our cafeteria. Marvinc will be cleaner thanks to you. Good job.
 
 Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department

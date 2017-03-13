@@ -1,6 +1,6 @@
 name = "Maze Sprinter"
 -- Puzzle number
-n = "undecided"
+n = "A.5"
 
 lines_on_terminal = 30
 memory_slots = 6
@@ -73,13 +73,15 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 
 function first_completed()
-    _G.PopManager.new("lalala",
-        "lalalallala",
+    _G.PopManager.new("This look efficient",
+        "I shouldn't bother jen for a while, she looks busy.
+
+        I could watch some Better Call Saul",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " lalala ",
+            text = " Netflix and chill ",
             clr = _G.Color.blue()
         })
 end

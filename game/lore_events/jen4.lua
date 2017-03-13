@@ -12,7 +12,7 @@ function jen.run()
 end
 
 -- called after jen email is read
-function jen.after_intro_email()
+function jen.after_email()
 
     LoreManager.timer:after(15, function() Mail.new('binary') end) --Send bill and miles binary explanation
 

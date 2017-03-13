@@ -320,6 +320,27 @@ function email_funcs.new(id, silent)
     return email
 end
 
+-- Deletes emails with given authors
+-- Must not be called when an email is open
+function email_funcs.deleteAuthor(author)
+    local tmp, mail_list = {}, Util.findId('email_tab').email_list
+    -- swapping contents of table
+    for a, b in pairs(mail_list) do
+        tmp[a] = b
+        mail_list[a] = nil
+    end
+
+    local i = 0
+    for _, e in ipairs(tmp) do
+        if author ~= e.author then
+            i = i + 1
+            e.number = i
+            table.insert(mail_list, e)
+        end
+    end
+
+end
+
 -- Get an email given his number
 function email_funcs.get(number)
     return Util.findId("email_tab").email_list[number]
