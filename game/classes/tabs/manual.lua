@@ -70,50 +70,52 @@ function ManualTab:trueDraw()
     h = h + wrap_height(self.info_font, self.info_text, self.w - 10) + self.info_font:getHeight() -- info
 
     for _, item in ipairs(self.cmds) do
-        local b = self.expand_buts[item] or self.collapse_buts[item]
-        b.pos.x = 5 + self.pos.x
-        b.pos.y = self.pos.y + h
-        b:centralize(); b:draw()
-        love.graphics.setColor(0, 0, 0)
+        if items[item].command then
+            local b = self.expand_buts[item] or self.collapse_buts[item]
+            b.pos.x = 5 + self.pos.x
+            b.pos.y = self.pos.y + h
+            b:centralize(); b:draw()
+            love.graphics.setColor(0, 0, 0)
 
-        love.graphics.setFont(self.cmd_font)
-        love.graphics.print(items[item].command, self.pos.x + 5 + b.w + 5, self.pos.y + h)
-        h = h + self.cmd_font:getHeight()
-        if not self.expand_buts[item] then
-            h = h + 10
-            love.graphics.setFont(self.cmd_info_font)
-            love.graphics.printf(items[item].text, self.pos.x + 20, self.pos.y + h, self.w - 20)
-            h = h + wrap_height(self.cmd_info_font, items[item].text, self.w - 20) + self.cmd_info_font:getHeight()
-            if #items[item].examples > 0 then
-                love.graphics.setFont(self.example_title_font)
-                love.graphics.print("Examples", self.pos.x + 20, self.pos.y + h)
-                h = h + self.example_title_font:getHeight()
-                love.graphics.setLineWidth(.5)
-                for _, e in ipairs(items[item].examples) do
-                    h = h + 10
-                    local dh = wrap_height(self.example_code_font, e[1], self.w - 12.5)
-                    love.graphics.rectangle('line', self.pos.x + 20, self.pos.y + h + 2.5, self.w - 40, dh + 5)
-                    love.graphics.setFont(self.example_code_font)
-                    love.graphics.printf(e[1], self.pos.x + 22.5, self.pos.y + h + 5, self.w - 45)
-                    h = h + dh + 10
-                    if e[2] then
-                        h = h + 5
-                        love.graphics.setFont(self.example_expl_font)
-                        love.graphics.printf(e[2], self.pos.x + 20, self.pos.y + h, self.w - 20)
-                        h = h + wrap_height(self.example_expl_font, e[2], self.w - 20)
+            love.graphics.setFont(self.cmd_font)
+            love.graphics.print(items[item].command, self.pos.x + 5 + b.w + 5, self.pos.y + h)
+            h = h + self.cmd_font:getHeight()
+            if not self.expand_buts[item] then
+                h = h + 10
+                love.graphics.setFont(self.cmd_info_font)
+                love.graphics.printf(items[item].text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                h = h + wrap_height(self.cmd_info_font, items[item].text, self.w - 20) + self.cmd_info_font:getHeight()
+                if #items[item].examples > 0 then
+                    love.graphics.setFont(self.example_title_font)
+                    love.graphics.print("Examples", self.pos.x + 20, self.pos.y + h)
+                    h = h + self.example_title_font:getHeight()
+                    love.graphics.setLineWidth(.5)
+                    for _, e in ipairs(items[item].examples) do
+                        h = h + 10
+                        local dh = wrap_height(self.example_code_font, e[1], self.w - 12.5)
+                        love.graphics.rectangle('line', self.pos.x + 20, self.pos.y + h + 2.5, self.w - 40, dh + 5)
+                        love.graphics.setFont(self.example_code_font)
+                        love.graphics.printf(e[1], self.pos.x + 22.5, self.pos.y + h + 5, self.w - 45)
+                        h = h + dh + 10
+                        if e[2] then
+                            h = h + 5
+                            love.graphics.setFont(self.example_expl_font)
+                            love.graphics.printf(e[2], self.pos.x + 20, self.pos.y + h, self.w - 20)
+                            h = h + wrap_height(self.example_expl_font, e[2], self.w - 20)
+                        end
                     end
                 end
+                if items[item].notes then
+                    h = h + 20
+                    love.graphics.setFont(self.notes_title_font)
+                    love.graphics.print("Notes", self.pos.x + 20, self.pos.y + h)
+                    h = h + self.notes_title_font:getHeight() + 10
+                    love.graphics.setFont(self.notes_text_font)
+                    love.graphics.printf(items[item].notes, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                    h = h + wrap_height(self.notes_text_font, items[item].notes, self.w - 20)
+                end
+                h = h + 10
             end
-            if items[item].notes then
-                h = h + 20
-                love.graphics.setFont(self.notes_title_font)
-                love.graphics.print("Notes", self.pos.x + 20, self.pos.y + h)
-                h = h + self.notes_title_font:getHeight() + 10
-                love.graphics.setFont(self.notes_text_font)
-                love.graphics.printf(items[item].notes, self.pos.x + 20, self.pos.y + h, self.w - 20)
-                h = h + wrap_height(self.notes_text_font, items[item].notes, self.w - 20)
-            end
-            h = h + 10
         end
     end
 
@@ -167,9 +169,24 @@ end
 function ManualTab:addCommand(item_name)
     table.insert(self.cmds, item_name)
     local bsz = self.cmd_font:getHeight()
-    self.expand_buts[item_name] = Button(0, 0, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
+    self.expand_buts[item_name] = Button(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
     self.expand_buts[item_name].text_color = Color.green()
     self.expand_buts[item_name].text_color.a = 150
+end
+
+-- Changes command 'from' to 'to'. Used for commands that are taught in parts.
+function ManualTab:changeCommand(from, to)
+    for i, name in ipairs(self.cmds) do
+        if name == from then
+            self.cmds[i] = to
+            local b = self.expand_buts[from] or self.collapse_buts[from]
+            self.expand_buts[from], self.collapse_buts[from] = nil, nil
+            self.expand_buts[to] = b
+            b.text = '+'
+            b.callback = function() self:expand(to) end
+            return
+        end
+    end
 end
 
 function ManualTab:mousePressed(x, y, but)

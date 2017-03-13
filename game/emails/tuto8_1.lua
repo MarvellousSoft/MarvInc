@@ -21,6 +21,9 @@ Carry on.
     puzzle_id = 'tuto8',
     open_func =
         function()
-            Util.findId('manual_tab'):addCommand("mov")
+            Util.findId('manual_tab'):changeCommand("sub1", "sub")
+            Util.findId('manual_tab'):changeCommand("add1", "add")
+            Util.findId('manual_tab'):changeCommand("mov1", "mov")
+            Util.findId('manual_tab'):changeCommand("jmp1", "jmp2")
         end
 }

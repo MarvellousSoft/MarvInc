@@ -94,7 +94,7 @@ end
 
 extra_info =
 [[You have 20 lines of code
-- The bucket to your right is empty, you can refill it any number of times in the paint container to your left. To refill, use pickup on the container while holding the bucket.
+- The bucket to your right is empty, you can refill it any number of times in the paint container to your left. To refill, use pickup on the container while holding the empty bucket.
 - When you use drop and the bucket is full of paint, the floor in front of the bot will be painted and the bucket will stay in you inventory, now empty.]]
 
 function first_completed()

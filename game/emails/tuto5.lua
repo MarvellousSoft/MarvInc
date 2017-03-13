@@ -23,7 +23,7 @@ Happy adventuring, and carry on.
     puzzle_id = 'tuto5',
     open_func =
         function()
-            Util.findId('manual_tab'):addCommand("pickup")
-            Util.findId('manual_tab'):addCommand("drop")
+            Util.findId('manual_tab'):addCommand("pickup1")
+            Util.findId('manual_tab'):addCommand("drop1")
         end
 }

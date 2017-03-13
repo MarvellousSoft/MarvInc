@@ -14,6 +14,8 @@ You can keep adding []'s as many times as you like to a value, such as [[[[5]]]]
 
 As an almost professional in this area, you should learn well this technique, since it will be crucial for more challenging jobs.
 
+Another possibility is using registers to store numeric labels. That means "jmp [5]" will jump to the label that is stored in register #5. If there is no such label with that number, you will get an error. You probably won't need this soon, but it is always better to know.
+
 Never stop learning, and carry on.
 ]=],
     author = "Automated Introduction System",

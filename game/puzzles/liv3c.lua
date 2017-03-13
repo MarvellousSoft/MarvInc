@@ -150,7 +150,7 @@ grid_floor = "....................."..
 
 function first_completed()
     _G.PopManager.new("Stack completed",
-        "This will be useful in the future, keep it in mind.\n-- Liv",
+        "This will be useful in the future, keep it in mind.\n\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
