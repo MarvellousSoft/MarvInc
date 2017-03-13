@@ -2,8 +2,8 @@ local Mail = require "classes.tabs.email"
 
 local diego = {}
 
-diego.require_puzzles = { } --TODO: fazer dependencias certas
-diego.wait = 5
+diego.require_puzzles = {"paul3"}
+diego.wait = 10
 
 function diego.run()
     Mail.new('diego5')
