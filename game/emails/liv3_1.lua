@@ -27,5 +27,6 @@ Make us proud, and carry on.
     open_func =
         function()
             Util.findId('manual_tab'):addCommand("walkc")
+            Util.findId('manual_tab'):changeCommand("jmp2", "jmp")
         end
 }

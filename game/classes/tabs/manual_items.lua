@@ -9,6 +9,12 @@ Each Example is an array with two strings, the first is the code, the second is 
 
 local t = {}
 
+t.walk1 = {
+    command = "walk <direction>",
+    text = [[The bot turns to <direction> and then the walks until it finds an obstacle. If <direction> is omitted, the bot will walk in the direction it is facing.]],
+    examples = {{[[walk east # Walks right until it hits an obstacle]]}}
+}
+
 t.walk = {
     command = "walk <value> <direction>",
     text = [[
@@ -19,12 +25,6 @@ The bot turns to <direction> and then the walks <value> steps. One or both of th
 walk 3 down # Walks 3 positions down
 walk east # Walks right until it hits an obstacle]]}},
     notes = "In this command the order of the parameters may be switched, but in most other commands this won't work."
-}
-
-t.walk1 = {
-    command = "walk <direction>",
-    text = [[The bot turns to <direction> and then the walks until it finds an obstacle. If <direction> is omitted, the bot will walk in the direction it is facing.]],
-    examples = {{[[walk east # Walks right until it hits an obstacle]]}}
 }
 
 t.walkc = {
@@ -44,10 +44,28 @@ turn clock
 turn clock]], "This code will turn the robot to the oposite direnction it is facing"}}
 }
 
-t.jmp = {
+t.jmp1 = {
+    command = "jmp <label>",
+    text = "The next code line executed will be the line labeled equal to <label>, instead of going to the next line.",
+    examples = {{[[
+lp: turn counter
+walk 1
+jmp lp]], "This code will make the bot walk endlessly in a 2x2 square, in counterclockwise direction."}}
+}
+
+t.jmp2 = {
     command = "jmp <label>",
     text = "The next code line executed will be the line labeled equal to <label>, instead of going to the next line. If <label> is a number, it will be evaluated first, that means jmp [5] will jump to the label that is the same as the number written in register #5.",
-    examples = {{[[
+    examples = {t.jmp1.examples[1], {[[
+mov 5 0
+jmp [0]], "This code will jump to label 5, but if register #0 had a different value it would change to a different label."}
+    }
+}
+
+t.jmp = {
+    command = t.jmp2.command,
+    text = t.jmp2.text,
+    examples = {t.jmp2.examples[1], t.jmp2.examples[2], {[[
 lp: turn counter
 walk 1
 jmp lp]], "This code will make the bot walk endlessly in a 2x2 square, in counterclockwise direction."}, {[[
@@ -66,7 +84,7 @@ jmp func
 111: # continue]], [[In this example, jumping to <func> will store in the register #1 the number of steps you can walk forward until hitting something, using the register #0 as a "return position". Jumping to this label may be seen as a simple function, since it can be called from anywhere and will return to where it was called.]]}}
 }
 
-t.pickup = {
+t.pickup1 = {
     command = "pickup <direction>",
     text = [[
 The bot will first turn to <direction>, and then pickup the object on the tile it is facing. The argument <direction> is optional, and if omitted the bot will keep facing the same direction.
@@ -75,22 +93,52 @@ If the bot tries to pick up an invalid object or its inventory is already full, 
     examples = {}
 }
 
-t.drop = {
+t.pickup = {
+    command = t.pickup1.command,
+    text = t.pickup1.text,
+    examples = {},
+    notes = [[
+It is possible to pick up paint from a paint container by having an empty bucket on your inventory and using pickup on the paint container.]]
+}
+
+t.drop1 = {
     command = "drop <direction>",
     text = [[
-Analogous to pickup, but the bot will drop the object it is currently holding.
+Analogous to pickup, but the bot will drop the object it is currently holding in the given direction, or in front of it if no direction is given.
 
 If the bot tries to drop the object in an invalid position or its inventory is empty, you will get a Runtime Error.]],
     examples = {{[[
 pickup up
 walk 1 down
-drop]], "This code will pickup an object from the north and drop it 3 blocks down from where it was."}}
+drop]], "This code will pickup an object from the north and drop it 3 blocks down from where it was."}},
+    notes = [[
+Dropping a bucket with water will also drop the bucket.]]
+}
+
+t.drop = {
+    command = t.drop1.command,
+    text = t.drop1.text,
+    examples = t.drop1.examples,
+    notes = [[
+Dropping a bucket with water will also drop the bucket. Dropping a bucket with paint will only paint the tile in the chosen direction, and keep an empty bucket on your inventory.]]
+}
+
+t.add1 = {
+    command = "add <value1> <value2> <address>",
+    text = [[The sum of <value1> and <value2> will be stored in the register with number <address>.]],
+    examples = {{[[
+add [0] 1 0 # Increments the value in register #0 by 1
+add [1] [1] 1 # Doubles the value of register #1]]}}
 }
 
 t.add = {
-    command = "add <value1> <value2> <address>",
+    command = t.add1.command,
     text = [[The sum of <value1> and <value2> will be stored in the register with number <address>. See "sub" for examples.]],
     examples = {}
+}
+
+t.sub1 = {
+    -- ghost command
 }
 
 t.sub = {
@@ -103,6 +151,10 @@ sub 0 [5] 5 # Negates the value of register #5
 add [1] [1] 1 # Doubles the value of register #1]]}}
 }
 
+t.mov1 = {
+    --ghost command
+}
+
 t.mov = {
     command = "mov <value> <address>",
     text = [[Stores <value? in the register given by <address>. Notice that this is just a fancy version of "add value 0 address".]],
@@ -111,24 +163,39 @@ mov [0] 1
 mov [0] 2 # Copies the value of register #0 to registers #1 and #2]]}}
 }
 
+t.read1 = {
+    -- ghost command
+}
+
 t.read = {
     command = "read <address> <direction>",
     text = [[
 The bot turns to <direction> and then reads one number from the console it is facing, and stores it in the register given by <address>. The <direction> argument is optional, and if omitted the bot will read from the console in front of it.
 
-If there are no more numbers on the console, you will get a Runtime Error. See "write" for examples.]],
+Reading a number removes it from the console. If there are no more numbers on the console, you will get a Runtime Error. See "write" for examples.]],
     examples = {}
 }
 
-t.write = {
+t.write1 = {
     command = "write <value> <direction>",
+    text = [[
+The bot turns to <direction> and then writes value to the console it is facing. The <direction> argument is optional, and if omitted the bot will write to the console in front of it.
+
+If the the number is invalid (depends on the puzzle), you will get a Runtime Error.]],
+    examples = {{[[
+write 12 right
+write [12] left]], "This code writes 12 to the console on the right, then the content in register #12 to the console on the left."}}
+}
+
+t.write = {
+    command = t.write1.command,
     text = [[
 The bot turns to <direction> and then writes value to the console it is facing. The <direction> argument is optional, and if omitted the bot will write to the console in front of it.
 
 Notice that it is different than "read" because it receives a value and not an address. That means reading from console to register #0 uses the command read 0, and writing to the console from the same register uses the command write [0]. Be careful.
 
 If the the number is invalid (depends on the puzzle), you will get a Runtime Error.]],
-    examples = {{[[
+    examples = {t.write1.examples[1], {[[
 label: read 1 left
 add [1] [1] 1
 write [1] right

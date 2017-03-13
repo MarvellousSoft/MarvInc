@@ -30,7 +30,15 @@ function sm.save()
     -- assumes all events are created with 'after'
     -- checkout hump/timer.lua for better understanding :)
     while next(LoreManager.timer.functions) do
-        local handle = next(LoreManager.timer.functions)
+        local handle = nil
+
+        -- chooses the next handle that would be triggered
+        for h in pairs(LoreManager.timer.functions) do
+            if not handle or h.limit - h.time < handle.limit - handle.time then
+                handle = h
+            end
+        end
+
         LoreManager.timer.functions[handle] = nil -- removes from timer
         handle.after(handle.after) -- calls function manually
         -- rinse and repeat until there are no more events (even if one creates another)

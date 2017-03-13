@@ -4,7 +4,7 @@ name = "Hello World"
 -- Puzzle number
 n = 1
 
-lines_on_terminal = 100
+lines_on_terminal = 99
 memory_slots = 0
 
 -- Bot

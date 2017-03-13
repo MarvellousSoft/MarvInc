@@ -7,7 +7,7 @@ lines_on_terminal=30
 memory_slots=4
 
 -- Bot
-bot = {'p', "NORTH"}
+bot = {'p', "SOUTH"}
 
 o = {"obst", false, "wall_none"}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}

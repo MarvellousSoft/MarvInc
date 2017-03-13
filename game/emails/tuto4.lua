@@ -27,6 +27,6 @@ As always, carry on.
     open_func =
         function()
             -- Util.findId('manual_tab'):addCommand("label") maybe add an entry for labels
-            Util.findId('manual_tab'):addCommand("jmp")
+            Util.findId('manual_tab'):addCommand("jmp1")
         end
 }

@@ -87,7 +87,7 @@ floor = grid_floor
 
 function first_completed()
     _G.PopManager.new("Task completed",
-        "Cool new command, right?\n-- Liv",
+        "Cool new command, right?\n\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()

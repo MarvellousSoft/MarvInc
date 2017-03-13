@@ -21,6 +21,6 @@ Best of Luck, and carry on.]],
     puzzle_id = 'tuto1',
     open_func =
         function()
-            Util.findId('manual_tab'):addCommand("walk")
+            Util.findId('manual_tab'):addCommand("walk1")
         end
 }
