@@ -18,8 +18,12 @@ function fx.full_static(gamestate)
     MAIN_TIMER:after(2.9, function()
         SFX.loud_static:stop()
         full_s = false
-        Gamestate.push(gamestate)
         CLOSE_LOCK = false
+        if gamestate then
+            Gamestate.push(gamestate)
+        else
+            fx.intro()
+        end
     end)
 end
 

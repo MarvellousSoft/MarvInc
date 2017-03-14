@@ -104,7 +104,7 @@ Room = Class{
         self.draw_star = false
 
         -- OS Version
-        self.version = "1.0"
+        self.version = "0.1"
     end
 }
 

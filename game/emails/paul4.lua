@@ -15,5 +15,5 @@ Paul Verkeufen
 Chief engineer at Marvellous Inc's Material Engineering Department
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
-    puzzle_id = 'lava'
+    puzzle_id = 'paul4'
 }

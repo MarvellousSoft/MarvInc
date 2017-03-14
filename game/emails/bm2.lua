@@ -10,5 +10,5 @@ I've got this raging hangover that won't quit, so I can't do much work. We still
 Bill
 ]],
     author = "Bill Davis (bdavis@mat.marv.com)",
-    puzzle_id = 'lcm'
+    puzzle_id = 'bm2'
 }

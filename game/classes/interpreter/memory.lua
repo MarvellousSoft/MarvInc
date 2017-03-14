@@ -194,7 +194,7 @@ function Memory:draw()
             love.graphics.printf(self.vec[i], mx - ddx + 2 * bsz / self.ssize, my - bsz + bsz / 4, bsz, "center")
             color.a = 255
 
-            if ROOM.version > "1.0" then
+            if ROOM.version >= "1.0" then
                 self.tbox.w = bsz * .8
                 self.tbox.pos.x, self.tbox.pos.y = mx - ddx + bsz * .1, my - self.tbox.h - bsz * .05
                 self.tbox:draw()

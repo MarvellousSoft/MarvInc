@@ -1,3 +1,6 @@
+local FX = require('classes.fx')
+local LoreManager = require('classes.lore_manager')
+
 return {
     title = "Promotion",
     text = [[
@@ -19,5 +22,10 @@ Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
-    --open_func =  TODO: make transition to act 2 here
+    reply_func = function()
+        FX.full_static(GS.ACT2)
+        ROOM.version = "2.0"
+        LoreManager.puzzle_done.act1 = true
+        LoreManager.check_all()
+    end
 }

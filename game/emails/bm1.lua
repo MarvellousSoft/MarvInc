@@ -16,5 +16,5 @@ Make your code sing.
 Bill Davis
 ]],
     author = "Bill Davis (bdavis@mat.marv.com)",
-    puzzle_id = 'gcd'
+    puzzle_id = 'bm1'
 }

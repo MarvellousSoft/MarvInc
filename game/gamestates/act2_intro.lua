@@ -58,7 +58,7 @@ function state:draw()
     -- Installation progress bar
     love.graphics.setFont(FONTS.fira(30))
     local x, y, w = 30, H / 2 - 100, 600
-    love.graphics.printf("Installing Marvellous OS 3.0", x, y, w, "center")
+    love.graphics.printf("Installing Marvellous OS 2.0", x, y, w, "center")
     local dh = love.graphics.getFont():getHeight()
     local bh = 60
     love.graphics.rectangle("line", x, y + dh, w, bh)

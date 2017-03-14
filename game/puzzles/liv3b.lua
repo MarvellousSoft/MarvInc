@@ -112,5 +112,4 @@ function first_completed()
             text = " ...ok ",
             clr = _G.Color.blue()
         })
-    --LoreManager.timer:after(6, function() Mail.new('diego2_2') end)
 end

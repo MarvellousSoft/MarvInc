@@ -117,7 +117,7 @@ function CodeTab:draw()
 end
 
 local function typingRegister(self)
-    return self.memory.collide_slot ~= -1 and ROOM.version > "1.0"
+    return self.memory.collide_slot ~= -1 and ROOM.version >= "1.0"
 end
 
 function CodeTab:keyPressed(key)

@@ -86,10 +86,7 @@ end
 extra_info = [[You have few lines to use. Be smart.]]
 
 local function after_pop()
-    _G.ROOM:disconnect(false)
-    _G.Util.findId("pcbox"):changeTabs(_G.Util.findId("pcbox").menu_tabs, "email")
-    _G.FX.full_static(_G.GS.ACT2)
-    _G.ROOM.version = "3.0"
+    _G.ROOM:disconnect()
 end
 
 function first_completed()

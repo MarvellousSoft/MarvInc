@@ -2,7 +2,7 @@ local Mail = require "classes.tabs.email"
 
 local bm = {}
 
-bm.require_puzzles = {'bm1', 'jen5'}
+bm.require_puzzles = {'bm1', 'jen5', 'liv5'}
 bm.wait = 20
 
 function bm.run()

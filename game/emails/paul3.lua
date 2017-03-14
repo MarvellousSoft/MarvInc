@@ -17,5 +17,5 @@ Chief engineer at Marvellous Inc's Material Engineering Department
 ~ LEGALIZE ~
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
-    puzzle_id = 'move_items'
+    puzzle_id = 'paul3'
 }

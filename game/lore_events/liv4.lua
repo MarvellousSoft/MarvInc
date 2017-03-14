@@ -4,8 +4,8 @@ local liv = {}
 
 -- Add puzzle 'liv4'
 
-liv.require_puzzles = {'jen3'}
-liv.wait = 15
+liv.require_puzzles = {'act1'}
+liv.wait = 50
 
 function liv.run()
     Mail.new('liv4')

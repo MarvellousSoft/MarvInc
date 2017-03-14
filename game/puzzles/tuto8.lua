@@ -97,7 +97,7 @@ local function after_pop()
     _G.ROOM:disconnect(false)
     _G.Util.findId("pcbox"):changeTabs(_G.Util.findId("pcbox").menu_tabs, "email")
     _G.FX.full_static(_G.GS.ACT1)
-    _G.ROOM.version = "2.0"
+    _G.ROOM.version = "1.0"
     _G.ROOM.draw_star = true
     -- Fake puzzle, may change this later
     _G.LoreManager.puzzle_done.tutorial = true
