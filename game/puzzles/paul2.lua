@@ -1,8 +1,8 @@
 name = "True Democracy"
 n = "B.2"
 
-lines_on_terminal=20
-memory_slots=3
+lines_on_terminal = 25
+memory_slots = 3
 
 -- Bot
 bot = {'b', "SOUTH"}

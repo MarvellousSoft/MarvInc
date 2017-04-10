@@ -183,6 +183,12 @@ function InfoTab:trueDraw()
         _, wraptext = font:getWrap(text, self.w - 20)
         h = h + #wraptext*font:getHeight()
 
+        font = FONTS.fira(18)
+        love.graphics.setFont(font)
+        Color.set(self.text_color3)
+        love.graphics.print("Maximum lines: " .. ROOM.puzzle.lines_on_terminal, self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
+        h = h + font:getHeight() + 20
+
         -- Extra Info
         if ROOM.extra_info and ROOM.extra_info ~= "" then
             font = FONTS.fira(24)
@@ -220,6 +226,7 @@ function InfoTab:trueDraw()
         love.graphics.print("give up", self.give_up_x + 6, self.give_up_y + 6)
 
     else
+        -- This is useless now
         --Outside a puzzle
 
         -- Tab title

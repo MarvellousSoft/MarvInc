@@ -4,11 +4,12 @@ require "classes.primitive"
 -- Assumes it is a square
 ImgButton = Class{
     __include = {RECT},
-    init = function(self, x, y, sz, img, callback)
+    init = function(self, x, y, sz, img, callback, hvr_txt)
         RECT.init(self, x, y, sz, sz, Color.white())
 
         self.call = callback
         self.img = img
+        self.hover_text = hvr_txt
 
         self.scale = sz / img:getWidth()
 
@@ -37,6 +38,16 @@ function ImgButton:draw()
     self.color.a = 255
     Color.set(self.color)
     love.graphics.draw(self.img, self.pos.x, self.pos.y, 0, self.scale, self.scale)
+
+    if hover then
+        local f = FONTS.fira(17)
+        Color.set(Color.black())
+        local x, y = self.pos.x + (self.w - f:getWidth(self.hover_text)) / 2, self.pos.y + self.h + 1
+        love.graphics.rectangle("fill", x - 2, y - 2, f:getWidth(self.hover_text) + 4, f:getHeight() + 4)
+        Color.set(self.color)
+        love.graphics.setFont(f)
+        love.graphics.print(self.hover_text, x, y)
+    end
 end
 
 function ImgButton:mousePressed(x, y, but)

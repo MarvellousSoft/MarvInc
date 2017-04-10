@@ -28,7 +28,7 @@ CodeTab = Class{
         local by = self.pos.y + self.h - bsz
         local bx = self.pos.x + self.w / 5
         local hf = function(self) return StepManager.state == self.highlight_state and (not self.how_fast or self.how_fast == StepManager.how_fast)  end
-        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop() end)
+        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop() end, "stop")
         self.stop_b.highlight, self.stop_b.highlight_state = hf, 'stopped'
 
         bx = bx + bsz + 20
@@ -37,7 +37,7 @@ CodeTab = Class{
                 if StepManager.state == 'playing' then
                     StepManager.pause()
                 else StepManager.step() end
-            end)
+            end, "pause/step")
         self.pause_b.draw = function(self)
             self.img = StepManager.state == 'playing' and BUTS_IMG.pause or BUTS_IMG.step
             ImgButton.draw(self)
@@ -46,15 +46,15 @@ CodeTab = Class{
 
 
         bx = bx + bsz + 20
-        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager.play() end)
+        self.play_b = ImgButton(bx, by, bsz, BUTS_IMG.play, function() StepManager.play() end, "play")
         self.play_b.highlight, self.play_b.highlight_state, self.play_b.how_fast = hf, 'playing', 1
 
         bx = bx + bsz + 20
-        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager.fast() end)
+        self.fast_b = ImgButton(bx, by, bsz, BUTS_IMG.fast, function() StepManager.fast() end, "fast")
         self.fast_b.highlight, self.fast_b.highlight_state, self.fast_b.how_fast = hf, 'playing', 2
 
         bx = bx + bsz + 20
-        self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager.superfast() end)
+        self.superfast_b = ImgButton(bx, by, bsz, BUTS_IMG.superfast, function() StepManager.superfast() end, "superfast")
         self.superfast_b.highlight, self.superfast_b.highlight_state, self.superfast_b.how_fast = hf, 'playing', 3
 
         self.buttons = {self.stop_b, self.pause_b, self.play_b, self.fast_b, self.superfast_b}
