@@ -12,23 +12,39 @@ function first.run()
     Mail.new('tuto1_1')
 end
 
--- called after first email is opened
+--Called after first email is opened
 function first.after_intro_email()
-    LoreManager.timer:after(20, function() Mail.new('tuto1_2') end)
 
-    LoreManager.timer:after(90, function()
+    LoreManager.timer:after(10, function() Mail.new('tuto1_2') end)
+
+end
+
+--Called after reading the puzzle text
+function first.after_puzzle_email()
+
+    LoreManager.timer:after(120, function()
         if not LoreManager.puzzle_done.tuto1 then Mail.new('tuto1_3') end
     end)
 
-    LoreManager.timer:after(180, function()
+end
+
+--Called after reading the first help email text
+function first.after_help1_email()
+
+    LoreManager.timer:after(120, function()
         if not LoreManager.puzzle_done.tuto1 then Mail.new('tuto1_4') end
     end)
 
-    LoreManager.timer:after(300, function()
-        if not LoreManager.puzzle_done.tuto1 then Mail.new('tuto1_5') end
-    end)
 end
 
+--Called after reading the second help email text
+function first.after_help2_email()
+
+    LoreManager.timer:after(120, function()
+        if not LoreManager.puzzle_done.tuto1 then Mail.new('tuto1_5') end
+    end)
+
+end
 
 
 return first

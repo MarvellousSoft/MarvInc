@@ -140,6 +140,7 @@ end
 
 function PcBox:update(dt)
     tabs[self.cur_tab]:update(dt)
+    self.buttons.email:update(dt) --Update "new email" notification effect
 end
 
 function PcBox:mouseMoved(x, y)

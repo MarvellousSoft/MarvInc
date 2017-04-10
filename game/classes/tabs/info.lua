@@ -54,6 +54,8 @@ InfoTab = Class{
         self.give_up_h = 40 -- Height value of give up button
         self.give_up_x, self.give_up_y = 0, 0
 
+        self.maximum_number_lines_color = Color.new(45,140,140) --Color for maximum number of lines text
+
         self.line_color = Color.new(0,80,40)
 
         self.last_h = 0
@@ -183,10 +185,11 @@ function InfoTab:trueDraw()
         _, wraptext = font:getWrap(text, self.w - 20)
         h = h + #wraptext*font:getHeight()
 
-        font = FONTS.fira(18)
+        --Draw maximum number of lines permitted
+        font = FONTS.fira(20)
         love.graphics.setFont(font)
-        Color.set(self.text_color3)
-        love.graphics.print("Maximum lines: " .. ROOM.puzzle.lines_on_terminal, self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
+        Color.set(self.maximum_number_lines_color)
+        love.graphics.print("Lines available for puzzle: " .. ROOM.puzzle.lines_on_terminal, self.pos.x + 10, self.pos.y + self.id_file_y + 370 + h)
         h = h + font:getHeight() + 20
 
         -- Extra Info
@@ -207,6 +210,7 @@ function InfoTab:trueDraw()
             self.last_h = self.id_file_y + 350 + h
         end
 
+
         -- Draw give up button
 
         -- Make button box
@@ -215,7 +219,7 @@ function InfoTab:trueDraw()
         Color.set(self.give_up_button_color)
         love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
         Color.set(self.line_color)
-        love.graphics.setLineWidth(2)
+        love.graphics.setLineWidth(3)
         love.graphics.rectangle("line", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
 
         self.last_h = self.last_h + 20 + self.give_up_h

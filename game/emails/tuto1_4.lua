@@ -1,3 +1,5 @@
+local tuto1 = require 'lore_events.tuto1'
+
 return {
     title = "Even further clarifications",
     text = [[
@@ -15,5 +17,6 @@ Any remaining doubts can be emailed to REDACTED.
 
 Carry on.]],
     author = "Automated Introduction System",
+    open_func = tuto1.after_help2_email,
     can_be_deleted = true
 }

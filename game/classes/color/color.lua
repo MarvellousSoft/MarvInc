@@ -8,12 +8,14 @@ local Color = {}
 
 --Create a new color with values (a,b,c).
 --A color can also be sent, and it will be copied to the new color.
---Mode can be "hsl" (default) or "rgb"
-function Color.new(a, b, c, d, mode)
+--"mode" can be "hsl" (default) or "rgb"
+--'stdv" is used for converting HSL from (degrees, percent, percent) to (0-255) value
+function Color.new(a, b, c, d, mode, stdv)
     if type(a) == "table" then
         if a.type == "RGB" then
             return RGB(a.r, a.g, a.b, a.a)
         else
+            if stdv then return  HSL(Hsl.stdv(a.h, a.s, a.l, a.a)) end
             return HSL(a.h, a.s, a.l, a.a)
         end
     end
@@ -21,6 +23,7 @@ function Color.new(a, b, c, d, mode)
     mode = mode or "hsl"
 
     if mode == "hsl" then
+        if stdv then return HSL(Hsl.stdv(a,b,c,d)) end
         return HSL(a,b,c,d)
     else
         return RGB(a,b,c,d)

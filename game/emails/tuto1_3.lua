@@ -1,3 +1,5 @@
+local tuto1 = require 'lore_events.tuto1'
+
 return {
     title = "Further instructions",
     text = [[
@@ -15,5 +17,6 @@ Whenever you're lost, you can reread these emails. Unless you've deleted them. D
 
 Good Luck, and carry on.]],
     author = "Automated Introduction System",
+    open_func = tuto1.after_help1_email,
     can_be_deleted = true
 }

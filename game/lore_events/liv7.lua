@@ -4,7 +4,7 @@ local liv = {}
 
 -- Add puzzle 'liv7'
 
-liv.require_puzzles = {} -- TODO: decide
+liv.require_puzzles = {false} -- TODO: decide
 liv.wait = 10
 
 function liv.run()

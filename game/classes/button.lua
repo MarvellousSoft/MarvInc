@@ -25,6 +25,13 @@ Button = Class{
 
         self.color = _color
 
+        --Variables for "new email notification" bounce effect
+        self.bounce_y = 0 --Bounce value to add to email notification
+        self.bounce_speed = 22 --Speed of bounce motion
+        self.bounce_min = -10 --Max value of bounce
+        self.bounce_max = 0 --Min value of bounce
+        self.bounce_motion = "up" --Direction bounce is doing
+
         button.tp = "button" --Type of this class
 
         self:centralize()
@@ -37,6 +44,21 @@ function Button:update(dt)
     local b, x, y
 
     b = self
+
+    --"New email" effect for Email Tab
+    if b.text == "email" then
+        if b.bounce_motion == "up" then
+            b.bounce_y = b.bounce_y - dt*b.bounce_speed
+            if b.bounce_y < b.bounce_min then
+                b.bounce_motion = "down"
+            end
+        else
+            b.bounce_y = b.bounce_y + dt*b.bounce_speed
+            if b.bounce_y > b.bounce_max then
+                b.bounce_motion = "up"
+            end
+        end
+    end
 
     if not b.overtext then return end
 
@@ -52,6 +74,7 @@ function Button:update(dt)
    else
        b.isOver = false
    end
+
 
 end
 
@@ -77,12 +100,28 @@ function Button:draw()
         love.graphics.print(b.overtext, x, y)
     end
 
-    -- Display unread emails notification
-    if b.id == "email_tab_but" and UNREAD_EMAILS > 0 then
-        -- Draw number of unread emails
-        Color.set(Color.new(255,0,230))
-        love.graphics.setFont(FONTS.fira(14))
-        love.graphics.print("new!", b.pos.x + 140, b.pos.y + 6)
+    --Display unread emails notification
+    if b.text == "email" and UNREAD_EMAILS > 0 then
+        local text --Text will be "new!" if outside a puzzle, else just "!"
+        if ROOM.mode == "online" then
+            text = "!"
+        else
+            text = "new!"
+        end
+        local font = FONTS.fira(20)
+        local fx = font:getWidth(text)
+        local fy = font:getHeight(text)
+        local x, y, w, h = b.pos.x + 10, b.pos.y + b.bounce_y - 5, fx + 14, fy + 5
+
+        -- Draw red box
+        Color.set(Color.new(354,90,61,255,"hsl",true))
+        love.graphics.rectangle("fill", x, y, w, h, 9)
+
+        -- Draw "new email' text
+        Color.set(Color.new(354,0,100,255,"hsl",true))
+
+        love.graphics.setFont(font)
+        love.graphics.print(text, x + (w - fx)/2, y + (h - fy)/2)
     end
 
 end

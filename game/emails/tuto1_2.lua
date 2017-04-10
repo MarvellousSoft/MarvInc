@@ -1,3 +1,5 @@
+local tuto1 = require 'lore_events.tuto1'
+
 return {
     title = "First Puzzle",
     text = [[
@@ -23,5 +25,6 @@ Best of Luck, and carry on.]],
     open_func =
         function()
             Util.findId('manual_tab'):addCommand("walk1")
+            tuto1.after_puzzle_email()
         end
 }
