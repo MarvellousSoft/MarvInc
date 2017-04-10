@@ -10,9 +10,10 @@ Examples:
     - walk east
     - walk down
 
+After writing the instructions in the appropriate place, use the "play" button to start running the commands. Use the two buttons to the right of the play button to move your bot faster.
+
 We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
 
-Use the two buttons to the right of the play button to move your bot faster.
 
 Reply this email to start the puzzle.
 

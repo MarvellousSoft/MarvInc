@@ -3,7 +3,7 @@ return {
     text = [[
 Let's take it up a notch shall we? You will now learn to use the registers, and the write/add commands.
 
-Registers can hold values. Think of them as the memory in your terminal. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you write [5]. You can see them just below your terminal notepad, with their respective numbers and contents. Register numbers start from 0.
+Registers can hold values. Think of them as the memory in your <code>. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you write [5]. You can see them just below your <code> notepad, with their respective numbers and contents. Register numbers start from 0, and are represented in the top-left corner of a register, while the content is the big center number on the box.
 
 The add command receives three arguments: The values to be added, and the adress where their sum will be stored.
 

@@ -17,7 +17,7 @@ OpenedEmail = Class{
         local time
         local box_width, box_height = 2.2*W/5, 4*H/5
 
-        self.text_font = FONTS.fira(15)
+        self.text_font = FONTS.robotoLight(18)
 
         local but_size = (_reply_func and 50 or 0) + (_can_be_deleted and 50 or 0)
 
@@ -66,7 +66,7 @@ OpenedEmail = Class{
         self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
         self.title_color = Color.new(150,180,80) -- Color for title
-        self.content_color = Color.new(150,0,60) -- Color for rest of email content
+        self.content_color = Color.new(0,0,0) -- Color for rest of email content
 
         self.referenced_email =  Util.findId("email_tab").email_list[self.number]
 
@@ -100,7 +100,7 @@ function OpenedEmail:draw()
     -- Title
     Color.set(e.title_color)
     font_size = 24
-    font = FONTS.fira(font_size)
+    font = FONTS.robotoBold(font_size)
     while font:getWidth(e.title) > e.w - 20 do
         font_size = font_size - 1
         font = FONTS.fira(font_size)
@@ -116,7 +116,7 @@ function OpenedEmail:draw()
 
     -- Author
     Color.set(e.content_color)
-    font = FONTS.fira(20)
+    font = FONTS.roboto(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
     love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + temp + 25)

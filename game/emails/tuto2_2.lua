@@ -1,7 +1,7 @@
 return {
-    title = "Terminal Tips",
+    title = "Code Tips",
     text = [[
-The <terminal> is a powerful tool.
+The <code> tab is a powerful tool.
 
 As we said before, you should use it just like any text editor. To mention some of its features, you can
 

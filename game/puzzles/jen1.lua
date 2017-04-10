@@ -18,7 +18,7 @@ local done = false
 -- Objective
 objective_text = "Get to the center."
 function objective_checker(room)
-    return room.bot.pos.x == 11 and room.bot.pos.y == 11
+    return room.bot.pos.x == 11 and room.bot.pos.y == 12
 end
 
 extra_info = [[Remember old commands.]]

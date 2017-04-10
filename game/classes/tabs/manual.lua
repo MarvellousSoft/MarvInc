@@ -35,7 +35,7 @@ ManualTab = Class {
 
         self.title_font = FONTS.firaBold(40)
         self.info_font = FONTS.fira(20)
-        self.info_text = "Here are all your know commands, their explanations and examples."
+        self.info_text = "Here are all your know commands, their explanations and examples. Click the + for more details."
 
         self.cmd_font = FONTS.fira(22)
         self.cmd_info_font = FONTS.fira(17)

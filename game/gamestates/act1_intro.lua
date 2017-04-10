@@ -12,7 +12,7 @@ Marvellous Soft. 2016
 
 Made by:
 Renato Lui Geh
-Ricardo Lira Fonseca
+Ricardo Lira da Fonseca
 Yan Soares Couto
 
 Thanks to:

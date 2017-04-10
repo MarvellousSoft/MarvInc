@@ -9,6 +9,8 @@ On the <code> tab you can write and run commands. For now you only need the one 
 On the tab <info> you can check the puzzle's objectives and the current test robot information.
 On the last tab, <manual>, you can check the commands you know, with detailed explanations when you click on the commands.
 
+After writing the commands in the <code> tab, press the "play" button to start the simulation. The "robot" will follow instructions from top to bottom, and you can't write more commands until the program stops or you press the "stop" button.
+
 Whenever you're lost, you can reread these emails. Unless you've deleted them. Don't do that.
 
 Good Luck, and carry on.]],

@@ -16,7 +16,7 @@ x = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketabl
 -- Objective
 objective_text = "Get to the center, but harder."
 function objective_checker(room)
-    return room.bot.pos.x == 11 and room.bot.pos.y == 11
+    return room.bot.pos.x == 11 and room.bot.pos.y == 12
 end
 
 grid_obj = "xxxxxxxxxxxxxxxxxxxxx"..

@@ -20,10 +20,16 @@ SIGEND = "end_turn"
 
 --FONTS--
 
---Fira-mono table
+--Fira-mono regular font table
 FIRA = {}
---Fira-mono bold table
+--Fira-mono bold font table
 FIRA_BOLD = {}
+--Roboto regular font table
+ROBOTO = {}
+--Roboto bold font table
+ROBOTO_BOLD = {}
+--Roboto thin font table
+ROBOTO_LIGHT = {}
 --Global fonts table
 FONTS = {
     fira = function(size)
@@ -36,6 +42,21 @@ FONTS = {
         if FIRA_BOLD[size] then return FIRA_BOLD[size] end
         FIRA_BOLD[size] = love.graphics.newFont("assets/fonts/fira-mono-bold.ttf", size)
         return FIRA_BOLD[size]
+    end,
+    roboto = function(size)
+        if ROBOTO[size] then return ROBOTO[size] end
+        ROBOTO[size] = love.graphics.newFont("assets/fonts/Roboto-Regular.ttf", size)
+        return ROBOTO[size]
+    end,
+    robotoBold = function(size)
+        if ROBOTO_BOLD[size] then return ROBOTO_BOLD[size] end
+        ROBOTO_BOLD[size] = love.graphics.newFont("assets/fonts/Roboto-Bold.ttf", size)
+        return ROBOTO_BOLD[size]
+    end,
+    robotoLight = function(size)
+        if ROBOTO_LIGHT[size] then return ROBOTO_LIGHT[size] end
+        ROBOTO_LIGHT[size] = love.graphics.newFont("assets/fonts/Roboto-Light.ttf", size)
+        return ROBOTO_LIGHT[size]
     end,
 }
 

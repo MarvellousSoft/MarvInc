@@ -3,10 +3,10 @@ return {
     text = [[
 Remember loops from Hacking101 classes? Well, you better.
 
-The new command is jmp. You provide a label, and it will jump to the line you defined the label on. To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+The new command is "jmp". You provide a label, and it will jump to the line you defined the label on. To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
 
-After defining a label, you can write any one command in the same line, however the label must come before the command.
-But that is optional.
+After defining a label, you can optionally write any one command in the same line, however the command must be written after the ':'.
+You can use this to save lines in your code.
 
 Example that makes the bot walk in circles:
     - banana:
@@ -22,7 +22,7 @@ Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the exper
 
 As always, carry on.
 ]],
-    author = "Automated Introduction System", 
+    author = "Automated Introduction System",
     puzzle_id = 'tuto4',
     open_func =
         function()

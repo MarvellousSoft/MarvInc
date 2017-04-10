@@ -21,7 +21,8 @@ end
 
 extra_info =
 [[To extinguish lava, water isn't enough. That's why when you drop a water bucket into lava, the robot throws the bucket with it. It's science.
--If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.]]
+-If the robot tries to pick something that isn't an object, drops something in a blocked space or drops something with an empty inventory, the simulation will throw an error.
+-The robot can't walk on a tile occupied by a bucket. They are just too big.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
