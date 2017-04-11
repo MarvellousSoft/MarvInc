@@ -166,12 +166,36 @@ function ManualTab:collapse(item, example)
     end
 end
 
+local PButton = Class{
+    __includes = {Button}
+}
+
+function PButton:checkCollides(x, y)
+    if Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w + self.ew, self.h) then
+        self:callback()
+        return true
+    end
+    return false
+end
+
+function PButton:draw()
+    local mx, my = love.mouse.getPosition()
+    local over = Util.pointInRect(mx, my, self.pos.x, self.pos.y, self.w + self.ew, self.h)
+    if over then
+        love.graphics.setColor(200, 200, 200, 100)
+        love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w + self.ew, self.h)
+    end
+    Button.draw(self)
+end
+
 function ManualTab:addCommand(item_name)
     table.insert(self.cmds, item_name)
     local bsz = self.cmd_font:getHeight()
-    self.expand_buts[item_name] = Button(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
-    self.expand_buts[item_name].text_color = Color.green()
-    self.expand_buts[item_name].text_color.a = 150
+    local b = PButton(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
+    b.ew = self.cmd_font:getWidth(items[item_name].command) + 10
+    b.text_color = Color.green()
+    b.text_color.a = 150
+    self.expand_buts[item_name] = b
 end
 
 -- Changes command 'from' to 'to'. Used for commands that are taught in parts.
