@@ -10,7 +10,7 @@ require "classes.text_box"
 CodeTab = Class{
     __includes = {Tab},
 
-    button_color = 150,
+    button_color = 200,
 
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)

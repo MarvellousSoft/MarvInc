@@ -10,7 +10,7 @@ local info_funcs = {}
 InfoTab = Class{
     __includes = {Tab},
 
-    button_color = 60,
+    button_color = 150,
 
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)

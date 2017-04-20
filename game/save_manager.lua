@@ -99,6 +99,7 @@ function sm.login(user)
             e.can_be_deleted = email.can_be_deleted
             e.time = email.time_received
         end
+        UNREAD_EMAILS = Mail.getUnreadEmails() --Update UNREAD_EMAILS variable
 
         -- Other stuff
         local info = Util.findId('info_tab')

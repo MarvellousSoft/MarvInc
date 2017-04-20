@@ -75,7 +75,7 @@ function EmailTab:draw()
 
     Color.set(t.main_color)
 
-    love.graphics.rectangle("fill", t.pos.x, t.pos.y, t.w, t.h)
+    --love.graphics.rectangle("fill", t.pos.x, t.pos.y, t.w, t.h)
 
     -- Set stencil for the rectangle containing the code
     love.graphics.stencil(t.stencil, "replace", 1)
@@ -387,6 +387,23 @@ function email_funcs.enableReply(number)
     if opened and opened.number == number then
         opened.can_reply = true
     end
+end
+
+--Iterate through emails and return number on unread emails
+function email_funcs.getUnreadEmails()
+    local unread = 0
+
+    local t = Util.findId("email_tab")
+
+    if not t then return 0 end
+
+    for i,e in ipairs(t.email_list) do
+        if not e.was_read then
+            unread = unread + 1
+        end
+    end
+
+    return unread
 end
 
 
