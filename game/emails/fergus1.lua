@@ -7,7 +7,7 @@ As Senior Robot Tester here in our department, I oversee most of the personnel, 
 
 I know you must have a lot of questions about the department: What do we really do here? What is the payment for extra hours? Who is the guy with the unicorn hat? I had those same questions when I was a newbie here too, many many years ago. That is why I hold a Q&A every Wednesday from 15 to 15:30. If you would like to attend please schedule it with the secretary at least 3 days beforehand.
 
-This automated email also contains an initial task. I hope you can solve it. But don't be afraid to make mistakes. If you have any doubts, don't hesitate to ask one of you co-workers.
+This automated email also contains an initial task. I hope you can solve it. But don't be afraid to make mistakes. If you have any doubts, don't hesitate to ask one of your co-workers.
 
 As we say in here, carry on.
 

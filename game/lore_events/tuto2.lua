@@ -13,7 +13,7 @@ walkx.wait = 4
 function walkx.run()
     Mail.new('tuto2_1')
 
-    LoreManager.timer:after(5, function() Mail.new('tuto2_2') end)
+    LoreManager.timer:after(10, function() Mail.new('tuto2_2') end)
 end
 
 return walkx

@@ -182,8 +182,9 @@ function OpenedEmail:draw()
         else
             text = "reply"
         end
-        -- Draw "COMPLETED" text
         love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
+        
+        -- Draw "COMPLETED" text
         if complete then
             Color.set(Color.red())
             font = FONTS.fira(30)

@@ -5,11 +5,10 @@ local Color = require "classes.color.color"
 
 local button = {}
 
-------------
---INV BUTTON
-------------
+----------
+--BUTTON--
+----------
 
---[[Text button with an invisible box behind (for collision)]]
 Button = Class{
     __includes = {RECT, WTXT},
     init = function(self, _x, _y, _w, _h, _callback, _text, _font, _overtext, _overfont, _color)
@@ -63,10 +62,29 @@ function Button:draw()
 
     b = self
 
-    --Draws button text
-    Color.set(self.color)
+    --If the button is the current tab button, will draw an outline around it, that blends well with the pc-box
+    if b.is_current_tab then
+        --Draws button box (back)--
 
-    love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h, 10)
+        --Creating stencil so it doesn't draw in the same area as the actual pc-box
+        local stencil = function () love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h) end
+        love.graphics.stencil(stencil, "replace", 1)
+        love.graphics.setStencilTest("notequal", 1)
+
+        local back_color = Color.new(self.color)
+        back_color.l = 20
+        Color.set(back_color)
+        local offset = 3
+        love.graphics.rectangle("fill", b.pos.x - offset, b.pos.y - offset, b.w + 2*offset, b.h)
+
+        love.graphics.setStencilTest()
+    end
+
+    --Draws button box (front)--
+    Color.set(self.color)
+    love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h)
+
+    --Draws button text
     Color.set(self.text_color)
     love.graphics.setFont(b.font)
     love.graphics.print(b.text, b.text_x , b.text_y)

@@ -87,7 +87,7 @@ end
 function lore.already_completed()
     PopManager.new("Puzzle completed (again)",
         "You did what you had already done, and possibly killed some more test subjects.\n\nGreat.",
-        Color.yellow(), {
+        Color.purple(), {
             func = function()
                 ROOM:disconnect()
             end,

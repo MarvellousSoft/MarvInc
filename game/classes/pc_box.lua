@@ -44,7 +44,7 @@ PcBox = Class{
         --Function that creates the "Jinglying" effect
         self.new_email_effect = function()
             local half_shake_time = .06 --Time to half-jiggle
-            local half_shake_rotation = math.pi/6
+            local half_shake_rotation = math.pi/7
 
             --Half jiggle first time shifting clockwise
             self.new_email_timer_handle = MAIN_TIMER:tween(half_shake_time, self, {new_email_rotation = half_shake_rotation}, "in-linear",
@@ -67,7 +67,7 @@ PcBox = Class{
                                                     function()
 
                                                         --Stay halted for some time before restarting the effect
-                                                        self.new_email_timer_handle = MAIN_TIMER:after(6*half_shake_time, self.new_email_effect)
+                                                        self.new_email_timer_handle = MAIN_TIMER:after(12*half_shake_time, self.new_email_effect)
 
                                                     end)
                                             end)
@@ -88,12 +88,36 @@ PcBox = Class{
 }
 
 function PcBox:draw()
-    Color.set(self.buttons[self.cur_tab].color)
-    --Draw tabs button
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height, 10)
+
+
+    --Draw tabs buttons in the upper part of the pc box, but draw current tab for last, after drawing the background of pc-box
     for _, b in pairs(self.buttons) do
-        b:draw()
+        if not (b == self.buttons[self.cur_tab]) then
+            b:draw()
+        end
     end
+
+    --Draw background of pc-box (back)--
+    --Creating stencil so it doesn't draw in the same area as the actual pc-box
+    local stencil = function () love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height) end
+    love.graphics.stencil(stencil, "replace", 1)
+    love.graphics.setStencilTest("notequal", 1)
+
+    local back_color = Color.new(self.buttons[self.cur_tab].color)
+    back_color.l = 20
+    Color.set(back_color)
+    local offset = 3
+    love.graphics.rectangle("fill", self.pos.x - offset, self.pos.y + button_tab_height - offset, self.w + 2*offset, self.h - button_tab_height + 2*offset)
+
+    love.graphics.setStencilTest()
+
+    --Draw background of pc-box (front)--
+    Color.set(self.buttons[self.cur_tab].color)
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height)
+
+    --Draw current tab button
+    self.buttons[self.cur_tab]:draw()
+
 
     --Display unread emails notification
     if  UNREAD_EMAILS > 0 then
@@ -156,11 +180,13 @@ function PcBox:changeTo(tab)
         tabs[self.cur_tab]:deactivate()
         self.buttons[self.cur_tab].color.s = self.unfocus_saturation
         self.buttons[self.cur_tab].color.l = self.unfocus_lightness
+        self.buttons[self.cur_tab].is_current_tab = false
     end
 
     tabs[tab]:activate()
     self.buttons[tab].color.s = self.focus_saturation
     self.buttons[tab].color.l = self.focus_lightness
+    self.buttons[tab].is_current_tab = true
 
     self.cur_tab = tab
 end

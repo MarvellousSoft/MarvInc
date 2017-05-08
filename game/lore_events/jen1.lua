@@ -6,7 +6,7 @@ local jen = {}
 
 -- tutorial is a fake puzzle
 jen.require_puzzles = {'tutorial'}
-jen.wait = 6
+jen.wait = 10
 
 function jen.run()
     Mail.new('jen1')

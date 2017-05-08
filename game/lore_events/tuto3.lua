@@ -11,7 +11,7 @@ turn.wait = 4
 function turn.run()
     Mail.new('tuto3_1')
 
-    LoreManager.timer:after(4, function() Mail.new('tuto3_2') end)
+    LoreManager.timer:after(10, function() Mail.new('tuto3_2') end)
 end
 
 return turn

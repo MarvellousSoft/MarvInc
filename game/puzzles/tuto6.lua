@@ -3,7 +3,7 @@ name = "Basic Programming"
 n = 6
 
 lines_on_terminal = 20
-memory_slots = 1
+memory_slots = 3
 
 -- Bot
 bot = {'b', "NORTH"}

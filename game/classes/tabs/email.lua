@@ -99,7 +99,11 @@ function EmailTab:draw()
         --Set alpha
         color.a = e.alpha
 
-        --Draw email box
+        --Draw email box (behind)
+        local behind_color = Color.new(0,0, 50) --Color for box behind true email box
+        Color.set(behind_color)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border - 3, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + 3, t.w-2*t.email_border, t.email_height, 2)
+        --Draw email box (front)
         local mx, my = love.mouse.getPosition()
         if mx >= t.pos.x + t.email_border and
            mx <=  t.pos.x + t.email_border + t.w-2*t.email_border and
@@ -108,7 +112,7 @@ function EmailTab:draw()
             color.l = color.l - 10 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 5)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 2)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
@@ -271,8 +275,8 @@ EmailObject = Class{
         self.handles = {} -- Table containing timer handles related to this object
 
         self.alpha = 0 -- Alpha value of email color
-        self.email_color = Color.new(0,0,230) -- Color of a new email
-        self.email_read_color = Color.new(150, 40, 200) -- Color of a already read email
+        self.email_color = Color.new(0,0,240) -- Color of a new email
+        self.email_read_color = Color.new(150, 30, 170) -- Color of a already read email
         self.email_puzzle_complete_color = Color.new(70, 150, 200) -- Color of an completed puzzle
         self.email_puzzle_uncompleted_color = Color.new(250, 140, 200) -- Color of an uncompleted puzzle
 

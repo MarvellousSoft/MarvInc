@@ -7,7 +7,7 @@ As we said before, you should use it just like any text editor. To mention some 
 
 - Move the cursor with your mouse or arrow keys
 
-- Select text with the mouse holding shift and pressing the arrow keys
+- Combine the shift key with the mouse or arrow keys to select text (or just clicking and dragging)
 
 - Use the 'end' or 'home' keys
 

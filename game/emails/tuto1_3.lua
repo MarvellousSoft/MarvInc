@@ -13,7 +13,7 @@ On the last tab, <manual>, you can check the commands you know, with detailed ex
 
 After writing the commands in the <code> tab, press the "play" button to start the simulation. The "robot" will follow instructions from top to bottom, and you can't write more commands until the program stops or you press the "stop" button.
 
-Whenever you're lost, you can reread these emails. Unless you've deleted them. Don't do that.
+Whenever you're lost, you can reread these emails. Unless you've deleted them. Don't do that. Unless you want to. Then do it.
 
 Good Luck, and carry on.]],
     author = "Automated Introduction System",

@@ -10,8 +10,8 @@ In this example, the bot will write to a console facing his left the content of 
 This next example does the same thing as before, but with less lines of code
     - write [8] left
 
-Example of adding the number inside the register 10 by itself (aka multiplying it by two)
-    - add [10] [10] 10
+Example of adding the number inside the register 10 by itself (aka multiplying it by two), and store the result on register number 0
+    - add [10] [10] 0
 
 Shine on and carry on.
 ]],

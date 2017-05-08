@@ -192,7 +192,9 @@ function ManualTab:addCommand(item_name)
     table.insert(self.cmds, item_name)
     local bsz = self.cmd_font:getHeight()
     local b = PButton(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
-    b.ew = self.cmd_font:getWidth(items[item_name].command) + 10
+    if items[item_name].command then
+        b.ew = self.cmd_font:getWidth(items[item_name].command) + 10
+    end
     b.text_color = Color.green()
     b.text_color.a = 150
     self.expand_buts[item_name] = b
