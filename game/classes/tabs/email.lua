@@ -32,8 +32,8 @@ EmailTab = Class{
         -- Maximum number of emails you can have on a screen
         self.email_on_screen = 16
 
-        self.email_height = 35
-        self.email_border = 5
+        self.email_height = 35 --Height of each email box in the inbox
+        self.email_border = 8 --Gap between emails on the inbox
 
         self.tp = "email_tab"
         self:setId("email_tab")
@@ -100,9 +100,10 @@ function EmailTab:draw()
         color.a = e.alpha
 
         --Draw email box (behind)
-        local behind_color = Color.new(0,0, 50) --Color for box behind true email box
+        local behind_color = Color.new(0,0, 40) --Color for box behind true email box
         Color.set(behind_color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border - 3, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + 3, t.w-2*t.email_border, t.email_height, 2)
+        local offset = 4
+        love.graphics.rectangle("fill", t.pos.x + t.email_border - offset, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + offset, t.w-2*t.email_border, t.email_height, 2)
         --Draw email box (front)
         local mx, my = love.mouse.getPosition()
         if mx >= t.pos.x + t.email_border and
