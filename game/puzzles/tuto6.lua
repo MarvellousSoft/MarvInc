@@ -41,7 +41,7 @@ end
 
 extra_info =
   [[After you outputted the 50 numbers, the code will stop automatically, so there is no need to do it manually.
-- You can use write [X] to write to the console the value stored in register X (in this case there's only one).]]
+- You can use write [X] to write to the console the value stored in register X (in this case you have available registers #0, #1 and #2).]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

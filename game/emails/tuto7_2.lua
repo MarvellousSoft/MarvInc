@@ -1,7 +1,7 @@
 return {
     title = "Conditional Jumps",
     text = [[
-Here are is a list of all conditional jumps and their meaning. You can also see them at the info tab when there isn't any simulation running.
+Here is a list of all conditional jumps and their meaning. You can also see them at the <manual> tab.
 
 - jgt - Greater Than, jumps if first value is greater than the second
 

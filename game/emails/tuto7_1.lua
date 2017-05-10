@@ -14,9 +14,9 @@ Example where the bot will increase the value of the register #1 until its equal
       jgt [2] [1] omar
       walk 1
 
-Lastly you can use the read command to read input from a console. You provide a first argument with the address of the register to store the input read, and a second optional direction, analogous to the write.
+Lastly you can use the "read" command to read input from a console. You provide a first argument with the address of the register to store the input read, and a second optional direction, analogous to the "write" command.
 
-Notice that read is different than write because it receives an addres and not a value. That means reading from console to register #0 uses the command read 0, and writing to the console from the same register uses the command write [0]. Be careful.
+Notice that "read" is different than "write" because it receives an address and not a value. That means reading from console to register #0 uses the command read 0, and writing to the console from the same register uses the command write [0]. Be careful.
 
 Carry on.
 ]],

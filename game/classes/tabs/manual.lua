@@ -210,6 +210,9 @@ function ManualTab:changeCommand(from, to)
             self.expand_buts[to] = b
             b.text = '+'
             b.callback = function() self:expand(to) end
+            if not b.ew then
+                b.ew = self.cmd_font:getWidth(items[to].command) + 10
+            end
             return
         end
     end

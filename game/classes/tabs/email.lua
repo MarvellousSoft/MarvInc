@@ -110,7 +110,7 @@ function EmailTab:draw()
            mx <=  t.pos.x + t.email_border + t.w-2*t.email_border and
            my >= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump and
            my <= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + t.email_height then
-            color.l = color.l - 10 --Highlight email if mouse is over
+            color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
         love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 2)

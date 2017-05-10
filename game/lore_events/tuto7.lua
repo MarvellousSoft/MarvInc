@@ -11,9 +11,9 @@ array_sep.wait = 4
 function array_sep.run()
     Mail.new('tuto7_1')
 
-    LoreManager.timer:after(5, function() Mail.new('tuto7_2') end)
+    LoreManager.timer:after(10, function() Mail.new('tuto7_2') end)
 
-    LoreManager.timer:after(11, function() Mail.new('tuto7_3') end)
+    LoreManager.timer:after(20, function() Mail.new('tuto7_3') end)
 end
 
 return array_sep
