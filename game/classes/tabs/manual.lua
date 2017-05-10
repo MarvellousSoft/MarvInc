@@ -29,7 +29,9 @@ ManualTab = Class {
             pos = self.pos,
             getHeight = function() return self.true_h end,
             draw = function() self:trueDraw() end,
-            mousePressed = function(obj, ...) self:trueMousePressed(...) end
+            mousePressed = function(obj, ...) self:trueMousePressed(...) end,
+            mouseMoved = function(obj, ...) self:trueMouseMoved(...) end,
+            mouseScroll = function(obj, ...) self:trueMouseScroll(...) end
         }
         self.box = ScrollWindow(self.w, self.h, obj)
 
@@ -132,6 +134,20 @@ function ManualTab:trueMousePressed(x, y, but)
     end
 end
 
+function ManualTab:trueMouseMoved(x, y)
+    for _, b in pairs(self.expand_buts) do
+        if b:mouseMoved(x, y) then return end
+    end
+    for _, b in pairs(self.collapse_buts) do
+        if b:mouseMoved(x, y) then return end
+    end
+end
+
+function ManualTab:trueMouseScroll(x, y)
+    for _, b in pairs(self.expand_buts) do b.hover = false end
+    for _, b in pairs(self.collapse_buts) do b.hover = false end
+end
+
 function ManualTab:expand(item, example)
     if example then
         local ex = item .. 'examples'
@@ -171,19 +187,23 @@ local PButton = Class{
 }
 
 function PButton:checkCollides(x, y)
-    if Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w + self.ew, self.h) then
+    if not self.extra_width then return end -- ghost button
+    if Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w + self.extra_width, self.h) then
         self:callback()
         return true
     end
     return false
 end
 
+function PButton:mouseMoved(x, y)
+    self.hover = Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w + self.extra_width, self.h)
+end
+
 function PButton:draw()
-    local mx, my = love.mouse.getPosition()
-    local over = Util.pointInRect(mx, my, self.pos.x, self.pos.y, self.w + self.ew, self.h)
-    if over then
+    if not self.extra_width then return end -- ghost button
+    if self.hover then
         love.graphics.setColor(200, 200, 200, 100)
-        love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w + self.ew, self.h)
+        love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w + self.extra_width, self.h)
     end
     Button.draw(self)
 end
@@ -193,7 +213,8 @@ function ManualTab:addCommand(item_name)
     local bsz = self.cmd_font:getHeight()
     local b = PButton(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
     if items[item_name].command then
-        b.ew = self.cmd_font:getWidth(items[item_name].command) + 10
+        -- You should also be able to click on the text
+        b.extra_width = self.cmd_font:getWidth(items[item_name].command) + 10
     end
     b.text_color = Color.green()
     b.text_color.a = 150
@@ -210,8 +231,8 @@ function ManualTab:changeCommand(from, to)
             self.expand_buts[to] = b
             b.text = '+'
             b.callback = function() self:expand(to) end
-            if not b.ew then
-                b.ew = self.cmd_font:getWidth(items[to].command) + 10
+            if items[to].command then
+                b.extra_width = self.cmd_font:getWidth(items[to].command) + 10
             end
             return
         end
