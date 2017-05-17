@@ -37,7 +37,6 @@ d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 6}
 -- console objects
 local bl
 
--- create ans vector
 function on_start(room)
     -- finds consoles
     for i = 1, ROWS do
