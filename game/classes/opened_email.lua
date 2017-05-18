@@ -20,6 +20,7 @@ The function colors the text based on tags with %. %colorname% means to start co
     %end% - Stop previous tag and start using default_color
     %red% - Red color
     %blue% - Blue color
+    %green% - Green color
 ]]
 
 local function stylizeText(text, default_color)
@@ -41,6 +42,11 @@ local function stylizeText(text, default_color)
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
             current_color = {0, 0, 255, 255} --Change color to blue
+            current_text = "" --Reset current text
+        elseif  w == "%green%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {13, 158, 11, 255} --Change color to green
             current_text = "" --Reset current text
         elseif  w == "%end%" then
             table.insert(colored_text, current_color)
@@ -181,7 +187,7 @@ function OpenedEmail:draw()
     love.graphics.line(e.pos.x + 10, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
 
     -- Text
-    --Color.set(e.content_color)
+    Color.set(Color.white())
     love.graphics.setFont(self.text_font)
     self.text_scroll:draw()
 

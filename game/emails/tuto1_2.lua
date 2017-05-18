@@ -3,7 +3,7 @@ local tuto1 = require 'lore_events.tuto1'
 return {
     title = "First Puzzle",
     text = [[
-There are many commands to control the test subjects. For now, you just need to know one: walk.
+There are many commands to control the test subjects. For now, you just need to know one: %green% walk %end%
 
 You can provide a cardinal direction (such as north or west) or a regular direction (such as up or left). If you don't, your robot will walk to the direction it is facing. This command will make the test subject walk until it encounters an obstacle.
 
@@ -12,7 +12,7 @@ Examples:
     - walk east
     - walk down
 
-After writing the instructions in the appropriate place, use the "play" button to start running the commands. Use the two buttons to the right of the play button to move your bot faster.
+After writing the instructions in the appropriate place, use the %red% play %end% button to start running the commands. Use the two buttons to the right of the play button to move your bot faster.
 
 We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly.
 
