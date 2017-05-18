@@ -10,6 +10,58 @@ local function height(font, text, limit)
     return (#txt) * font:getHeight()
 end
 
+
+--[[
+    Function receives a text and returns a colored_text table as expected for love.graphics.printf function
+The format of the colored_text table is a sequence of 2-tuples (color_of_text_in_rgb, text_to_be_colored)
+The function colors the text based on tags with %. %colorname% means to start coloring a text with the color given.
+%end% means to stop using previous color and change to default color of text (default color must be given in RGB format).
+    Accepted tags:
+    %end% - Stop previous tag and start using default_color
+    %red% - Red color
+    %blue% - Blue color
+]]
+
+local function stylizeText(text, default_color)
+    colored_text = {}
+    current_text = ""
+    current_color = default_color
+    local w, s
+    --[[Iterate through text, getting combinations of words + whitespaces,
+     then dividing the two, and analising the word for a tag]]--
+    for word_plus_whitespaces in text:gmatch("(%g*[%s\n]*)") do
+        w, s = word_plus_whitespaces:match("(%g*)([%s\n]*)")
+        --Check for tags
+        if w == "%red%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {255, 0, 0, 255} --Change color to red
+            current_text = "" --Reset current text
+        elseif  w == "%blue%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {0, 0, 255, 255} --Change color to blue
+            current_text = "" --Reset current text
+        elseif  w == "%end%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = default_color  --Change color to default
+            current_text = "" --Reset current text
+        elseif w then
+            --Not a tag, so update current_text
+            current_text = current_text .. w
+        end
+        if s then
+            current_text = current_text .. s
+        end
+    end
+    --End of text, so insert all remaining text with last picked color
+    table.insert(colored_text, current_color)
+    table.insert(colored_text, current_text)
+
+    return colored_text
+end
+
 OpenedEmail = Class{
     __includes = {RECT},
 
@@ -23,9 +75,18 @@ OpenedEmail = Class{
 
         RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
 
+        --Defining colors used in the opened email
+        self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
+        self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
+        self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
+        self.background_color = Color.new(0,0,40,140) -- Black effect for background
+        self.title_color = Color.new(150,180,80) -- Color for title
+        self.content_color = Color.new(0,0,0) -- Color for rest of email content
+
         self.number = _number --Number of email
         self.title = _title -- Title of the email
-        self.text = _text -- Body of email
+        self.text = stylizeText(_text, {0, 0, 0, 255}) -- Body of email
+--        self.text = _text
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 
@@ -61,12 +122,6 @@ OpenedEmail = Class{
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
 
-        self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
-        self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
-        self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
-        self.background_color = Color.new(0,0,40,140) -- Black effect for background
-        self.title_color = Color.new(150,180,80) -- Color for title
-        self.content_color = Color.new(0,0,0) -- Color for rest of email content
 
         self.referenced_email =  Util.findId("email_tab").email_list[self.number]
 
@@ -126,7 +181,7 @@ function OpenedEmail:draw()
     love.graphics.line(e.pos.x + 10, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
 
     -- Text
-    Color.set(e.content_color)
+    --Color.set(e.content_color)
     love.graphics.setFont(self.text_font)
     self.text_scroll:draw()
 
@@ -183,7 +238,7 @@ function OpenedEmail:draw()
             text = "reply"
         end
         love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
-        
+
         -- Draw "COMPLETED" text
         if complete then
             Color.set(Color.red())
