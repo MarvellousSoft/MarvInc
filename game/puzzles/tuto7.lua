@@ -12,10 +12,10 @@ bot = {'b', "SOUTH"}
 local freq
 
 -- Objective
-objective_text = "Read up to 50 numbers from the green console, and write the negative numbers to the blue console, and the non-negative numbers to the red console."
+objective_text = "Read up to 50 numbers from the green console, write the negative numbers to the blue console, and the non-negative numbers to the red console."
 function objective_checker(room)
     local g = room.grid_obj
-    local cg, cb, cr = g[10][18], g[4][17], g[16][17]
+    local cg, cb, cr = g[11][18], g[5][17], g[17][17]
     ------
     local fr = {}
     for i, v in _G.ipairs(cb.inp) do
@@ -72,21 +72,21 @@ e = {"console", false, "console", "red", args = {vec = 'output'}, dir = "west"}
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooooooooobooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "ooooooooo.ooooooooooo"..
-            "oood...........eooooo"..
-            "ooooooooocooooooooooo"..
+            "ooooooooooboooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "oooooooooo.oooooooooo"..
+            "ooood...........eoooo"..
+            "oooooooooocoooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
@@ -98,22 +98,22 @@ r = "red_tile"
 
 grid_floor = "....................."..
              "....................."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             ".........w..........."..
-             "...wwwwwwwwwwwww....."..
-             ".........w..........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "..........w.........."..
+             "....wwwwwwwwwwwww...."..
+             "..........w.........."..
              "....................."..
              "....................."..
              "....................."

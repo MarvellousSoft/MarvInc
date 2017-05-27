@@ -5,7 +5,7 @@ We are almost finished with the introdutory puzzles.
 
 We now introduce the conditional jumps. There are several of them, and shortly you'll receive an email explaining what condition each one represent.
 
-They all receive three arguments: two values and a label. If the condition of the jump is satisfied, it will jump to the label, just like a normal jmp. If the condition returns false, it will just go to the next instruction as if nothing happened.
+They all receive three arguments: two values and a label. If the condition of the jump is satisfied, it will jump to the label, just like a normal jmp. If the condition is false, it will just go to the next instruction as if nothing happened.
 
 For instance, the jgt command is the Greater Than Jump. So if the first value received is greater than the second one, it will jump to the label given as a third argument.
 
