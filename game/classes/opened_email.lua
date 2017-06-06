@@ -91,17 +91,19 @@ OpenedEmail = Class{
 
         self.number = _number --Number of email
         self.title = _title -- Title of the email
+        _text = _text:match("^%s*(.-)%s*$") -- trimmed text
         self.text = stylizeText(_text, {0, 0, 0, 255}) -- Body of email
---        self.text = _text
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 
         -- Text ScrollWindow
 
-        self.text_height = height(self.text_font, _text, self.w - 20)
+        self.text_height = height(self.text_font, self.text, self.w - 20)
+        local obj_h = self.text_height
         local obj = {
-            getHeight = function() return self.text_height end,
-            draw = function(o) love.graphics.printf(self.text, o.pos.x, o.pos.y, self.w - 20) end,
+            mousePressed = function(o, ...) self:checkButtonClick(...) end,
+            getHeight = function() return self.text_height + 120 end,
+            draw = function(o) self:drawContents(o) end,
             pos = Vector(self.pos.x + 10, self.pos.y + 110)
         }
 
@@ -111,7 +113,7 @@ OpenedEmail = Class{
         self.delete_button_color = Color.new(0,80,120) --Color for delete button box
         self.delete_button_text_color = Color.new(0,0,250) --Color for delete button text
         self.delete_x = self.pos.x + self.w/2 - 25 -- X position value of delete button (related to opened email pos)
-        self.delete_y = self.pos.y + self.h - 60 -- Y position value of delete button (related to opened email pos)
+        self.delete_y = obj.pos.y + self.text_height + 80 -- Y position value of delete button (related to opened email pos)
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
 
@@ -124,7 +126,7 @@ OpenedEmail = Class{
         self.reply_func = _reply_func -- Function to be called when you reply the email (if nil there won't be a reply button)
         self.can_reply = _can_reply -- If the reply button is enabled
         self.reply_x = self.pos.x + self.w/2 - 25 -- X position value of reply button (related to opened email pos)
-        self.reply_y = self.pos.y + self.h - 100 -- Y position value of reply button (related to opened email pos)
+        self.reply_y = obj.pos.y + self.text_height + 40 -- Y position value of reply button (related to opened email pos)
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
 
@@ -135,6 +137,67 @@ OpenedEmail = Class{
     end
 
 }
+
+function OpenedEmail:drawContents(box)
+    love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 20)
+    local e = self
+    local referenced_email = e.referenced_email
+    -- Can be deleted button
+    if e.can_be_deleted then
+        -- Make button box
+        Color.set(e.delete_button_color)
+        love.graphics.rectangle("fill", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
+        Color.set(e.line_color_3)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
+
+        -- Make button text
+        love.graphics.setFont(FONTS.fira(15))
+        Color.set(e.delete_button_text_color)
+        love.graphics.print("delete", e.delete_x + 8, e.delete_y + 7)
+    end
+
+    -- Reply button
+    if e.reply_func then
+        -- Make button box
+        if e.can_reply then
+            Color.set(e.reply_button_enabled_color)
+        else
+            Color.set(e.reply_button_disabled_color)
+        end
+        local complete = referenced_email.puzzle_id and LoreManager.puzzle_done[referenced_email.puzzle_id]
+        if complete then
+            Color.set(e.retry_button_color)
+        end
+        love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
+        Color.set(e.line_color_3)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
+
+        -- Make button text
+        love.graphics.setFont(FONTS.fira(15))
+        if e.can_reply then
+            Color.set(e.reply_button_enabled_text_color)
+        else
+            Color.set(e.reply_button_disabled_text_color)
+        end
+        if complete then
+            text = "retry"
+        else
+            text = "reply"
+        end
+        love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
+
+        -- Draw "COMPLETED" text
+        if complete then
+            Color.set(Color.red())
+            font = FONTS.fira(30)
+            love.graphics.setFont(font)
+            text = "COMPLETED"
+            love.graphics.print(text, self.pos.x + self.w - font:getWidth(text) - 20, self.pos.y + self.h - font:getHeight(text)*2, -math.pi / 20)
+        end
+    end
+end
 
 -- Draws opened email --
 function OpenedEmail:draw()
@@ -198,63 +261,6 @@ function OpenedEmail:draw()
     font_h = font:getHeight("received @ "..e.time)
     love.graphics.setFont(font)
     love.graphics.print("received @ "..e.time,  e.pos.x + e.w - 5 - font_w, e.pos.y + e.h - font_h - 5)
-
-    -- Can be deleted button
-    if e.can_be_deleted then
-        -- Make button box
-        Color.set(e.delete_button_color)
-        love.graphics.rectangle("fill", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
-        Color.set(e.line_color_3)
-        love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
-
-        -- Make button text
-        love.graphics.setFont(FONTS.fira(15))
-        Color.set(e.delete_button_text_color)
-        love.graphics.print("delete", e.delete_x + 8, e.delete_y + 7)
-    end
-
-    -- Reply button
-    if e.reply_func then
-        -- Make button box
-        if e.can_reply then
-            Color.set(e.reply_button_enabled_color)
-        else
-            Color.set(e.reply_button_disabled_color)
-        end
-        local complete = referenced_email.puzzle_id and LoreManager.puzzle_done[referenced_email.puzzle_id]
-        if complete then
-            Color.set(e.retry_button_color)
-        end
-        love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
-        Color.set(e.line_color_3)
-        love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
-
-        -- Make button text
-        love.graphics.setFont(FONTS.fira(15))
-        if e.can_reply then
-            Color.set(e.reply_button_enabled_text_color)
-        else
-            Color.set(e.reply_button_disabled_text_color)
-        end
-        if complete then
-            text = "retry"
-        else
-            text = "reply"
-        end
-        love.graphics.print(text, e.reply_x + 11, e.reply_y + 6)
-
-        -- Draw "COMPLETED" text
-        if complete then
-            Color.set(Color.red())
-            font = FONTS.fira(30)
-            love.graphics.setFont(font)
-            text = "COMPLETED"
-            love.graphics.print(text, self.pos.x + self.w - font:getWidth(text) - 20, self.pos.y + self.h - font:getHeight(text)*2, -math.pi / 20)
-        end
-    end
-
 end
 
 function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker if you send his drawable table, if he has one)
@@ -292,6 +298,23 @@ function OpenedEmail:mousePressed(...) self.text_scroll:mousePressed(...) end
 function OpenedEmail:mouseReleased(...) self.text_scroll:mouseReleased(...) end
 function OpenedEmail:update(...) self.text_scroll:update(...) end
 
+function OpenedEmail:checkButtonClick(x, y, but)
+    local e = self
+     if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
+        --Clicked on the delete button
+        local mailTab = Util.findId("email_tab")
+        mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
+        opened_email_funcs.close()
+     elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
+        --Clicked on the reply button
+        e.reply_func(e)
+        if e.referenced_email.puzzle_id then
+            ROOM:connect(e.referenced_email.puzzle_id)
+            opened_email_funcs.close()
+        end
+     end
+end
+
 -- UTILITY FUNCTIONS
 
 function opened_email_funcs.close()
@@ -303,9 +326,7 @@ function opened_email_funcs.close()
 end
 
 function opened_email_funcs.mousePressed(x, y, but)
-    local e
-
-    e = Util.findId("opened_email")
+    local e = Util.findId("opened_email")
     if not e or e.death then return end
 
     if x  < e.pos.x or
@@ -314,21 +335,7 @@ function opened_email_funcs.mousePressed(x, y, but)
        y < e.pos.y then
         --Clicked outside box
         opened_email_funcs.close()
-     else
-         if but == 1 and e.can_be_deleted and Util.pointInRect(x, y, {pos = {x = e.delete_x, y = e.delete_y}, w = e.delete_w, h = e.delete_h}) then
-            --Clicked on the delete button
-            local mailTab = Util.findId("email_tab")
-            mailTab.deleteEmail(mailTab.email_list[mailTab.email_opened.number])
-            opened_email_funcs.close()
-         elseif but == 1 and e.reply_func and e.can_reply and Util.pointInRect(x, y, {pos = {x = e.reply_x, y = e.reply_y}, w = e.reply_w, h = e.reply_h}) then
-            --Clicked on the reply button
-            e.reply_func(e)
-            if e.referenced_email.puzzle_id then
-                ROOM:connect(e.referenced_email.puzzle_id)
-                opened_email_funcs.close()
-            end
-         end
-     end
+    end
 end
 
 function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)

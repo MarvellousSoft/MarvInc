@@ -149,7 +149,7 @@ function PcBox:draw()
 end
 
 function PcBox:changeTabs(new_tabs, default)
-    if tabs_raw == new_tabs then return end
+    if tabs_raw == new_tabs then self:changeTo(default) return end
     if tabs and self.cur_tab then
         tabs[self.cur_tab]:deactivate()
     end
