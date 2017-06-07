@@ -2,6 +2,7 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
 local Opened = require "classes.opened_email"
+local ScrollWindow = require "classes.scroll_window"
 
 -- EMAIL TAB CLASS--
 
@@ -21,9 +22,6 @@ EmailTab = Class{
 
         self.main_color = Color.new(150, 30, 240, 60) -- Color of box behind
 
-        -- Stencil function for scrolling
-        self.stencil = function() love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h) end
-
         -- Diference from the original vertical value position for first email (for scrolling)
         self.dy = 0
 
@@ -34,6 +32,18 @@ EmailTab = Class{
 
         self.email_height = 35 --Height of each email box in the inbox
         self.email_border = 8 --Gap between emails on the inbox
+
+        -- Used to work with ScrollWindow
+        local obj = {
+            getHeight = function()
+                return (self.email_height + self.email_border) * self.email_cur - self.email_border
+            end,
+            draw = function(box) self:drawMailBox(box) end,
+            mousePressed = function(o, ...) self:checkEmailClick(...) end,
+            mouseMoved = function(box, x, y) box.last_mx, box.last_my = x, y end,
+            pos = self.pos
+        }
+        self.mail_box = ScrollWindow(self.w, (self.email_height + self.email_border) * self.email_on_screen - self.email_border, obj, self.email_border + self.email_height)
 
         self.tp = "email_tab"
         self:setId("email_tab")
@@ -69,18 +79,15 @@ EmailTab = Class{
 }
 
 function EmailTab:draw()
+    self.mail_box:draw() -- draws email box inside scroll window
+end
+
+function EmailTab:drawMailBox(box)
     local t, font, font_w, font_h, text, size, color
 
     t = self
 
     Color.set(t.main_color)
-
-    --love.graphics.rectangle("fill", t.pos.x, t.pos.y, t.w, t.h)
-
-    -- Set stencil for the rectangle containing the code
-    love.graphics.stencil(t.stencil, "replace", 1)
-    -- Only allow rendering on pixels which have a stencil value greater than 0.
-    love.graphics.setStencilTest("greater", 0)
 
     -- Draws email list
     for i,e in ipairs(t.email_list) do
@@ -103,28 +110,28 @@ function EmailTab:draw()
         local behind_color = Color.new(0,0, 40) --Color for box behind true email box
         Color.set(behind_color)
         local offset = 4
-        love.graphics.rectangle("fill", t.pos.x + t.email_border - offset, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + offset, t.w-2*t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border - offset, t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump + offset, t.w - 2 * t.email_border, t.email_height, 2)
         --Draw email box (front)
-        local mx, my = love.mouse.getPosition()
-        if mx >= t.pos.x + t.email_border and
-           mx <=  t.pos.x + t.email_border + t.w-2*t.email_border and
-           my >= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump and
-           my <= t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump + t.email_height then
+        local mx, my = box.last_mx, box.last_my
+        if not self.email_opened and mx and my and mx >= t.pos.x + t.email_border and
+           mx <=  t.pos.x + t.email_border + t.w - 2 * t.email_border and
+           my >= t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump and
+           my <= t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump + t.email_height then
             color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1) + e.juicy_bump, t.w-2*t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
         font = FONTS.fira(12)
         font_w = font:getWidth(e.time)
         love.graphics.setFont(font)
-        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
+        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump)
 
         -- Author
         font = FONTS.fira(16)
-        if #e.author <= 9  then
+        if #e.author <= 12  then
             text = e.author.." | "
         else
             text = string.sub(e.author, 1, 9).."... | "
@@ -132,12 +139,12 @@ function EmailTab:draw()
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y - t.dy*(t.email_height + t.email_border) + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump)
 
         -- Title
         font = FONTS.fira(14)
         text = e.title
-        if #text <= 30  then
+        if #text <= 33  then
             text = e.title
         else
             text = string.sub(text, 1, 30).."..."
@@ -145,7 +152,7 @@ function EmailTab:draw()
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y - t.dy*(t.email_height + t.email_border) + (t.email_height/2 - font_h/2) + t.email_border*i+ t.email_height*(i-1) + 2 + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * (i - 1) + 2 + e.juicy_bump)
 
         -- Print label on emails
 
@@ -165,95 +172,71 @@ function EmailTab:draw()
         if text then
             font = FONTS.fira(15)
             love.graphics.setFont(font)
-            love.graphics.print(text,  t.pos.x + t.email_border + t.w - 25 - font:getWidth(text), t.pos.y - t.dy*(t.email_height + t.email_border) + t.email_border*i+ t.email_height*(i-1)  + e.juicy_bump + 15)
+            love.graphics.print(text,  t.pos.x + t.email_border + t.w - 25 - font:getWidth(text), t.pos.y + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump + 15)
         end
     end
 
-    -- Remove stencil
-    love.graphics.setStencilTest()
-
-end
-
--- Receives an integer 'v' and scrolls the email tab.
--- Positive 'v' for scrolling up, negative for scrolling down.
-function EmailTab:scrollEmail(v)
-
-    -- Just enable scroll if there is too much mail in the inbox and mouse is over the inbox screen
-    if self.email_opened or self.email_cur - self.email_on_screen <= 0 then return end
-
-    -- Increases the difference of vertical position of the email list
-    self.dy = self.dy - v
-
-    -- Don't let the emails go below the first email
-    self.dy = math.max(self.dy, 0)
-    -- Don't let the emails go below the lowest email
-    self.dy = math.min(self.dy, self.email_cur- self.email_on_screen)
 end
 
 function EmailTab:keyPressed(key)
-
-    if key == "up" or key == "pageup" then
-        self:scrollEmail(1)
-    elseif key == "down" or key == "pagedown" then
-        self:scrollEmail(-1)
+    if key == "up" then
+        self.mail_box:translateScreen(-self.mail_box.scroll_min)
+    elseif key == "down" then
+        self.mail_box:translateScreen(self.mail_box.scroll_min)
+    elseif key == "pageup" then
+        self.mail_box:translateScreen(-self.mail_box.scroll_in * self.email_on_screen)
+    elseif key == "pagedown" then
+        self.mail_box:translateScreen(self.mail_box.scroll_in * self.email_on_screen)
     end
-
 end
 
 function EmailTab:mouseMoved(...)
-    local o = Util.findId('opened_email')
-    if o then o:mouseMoved(...) end
+    (Util.findId('opened_email') or self.mail_box):mouseMoved(...)
 end
 
-function EmailTab:mousePressed(x, y, but)
-    local o = Util.findId('opened_email')
-    if o then o:mousePressed(x, y, but) end
+-- Check mouse colision with emails
+function EmailTab:checkEmailClick(x, y, but)
     local e, rect
 
     e = self
 
-    if not e.email_opened and but == 1 then
-        if not Util.pointInRect(x, y, self) then return end
-        --Check mouse colision with emails
+    if but == 1 and not self.mail_box.on_hover then -- if not clicking scroll bar
         for i, mail in ipairs(e.email_list) do
-            if mail.alpha > 250 and Util.pointInRect(x,y,{pos = {x = e.pos.x + e.email_border, y = e.pos.y - e.dy*(e.email_height + e.email_border) + e.email_border*i+ e.email_height*(i-1)}, w = e.w-2*e.email_border, h = e.email_height}) then
+            if mail.alpha > 250 and Util.pointInRect(x , y, {pos = {x = e.pos.x + e.email_border, y = e.pos.y + (e.email_border + e.email_height) * (i - 1)}, w = e.w - 2 * e.email_border, h = e.email_height}) then
                 if not mail.was_read then
                     if mail.open_func then mail:open_func() end
                     mail.was_read = true
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
+                self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
                 TABS_LOCK = true -- Lock tabs until email is closed
                 e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end
-    else
-        Opened.mousePressed(x, y, but)
     end
 end
 
-function EmailTab:mouseReleased(x, y, but)
-    local o = Util.findId('opened_email')
-    if o then o:mouseReleased(x, y, but) end
+function EmailTab:mousePressed(...)
+    (Util.findId('opened_email') or self.mail_box):mousePressed(...)
 end
 
-function EmailTab:mouseScroll(x, y)
+function EmailTab:mouseReleased(...)
+    (Util.findId('opened_email') or self.mail_box):mouseReleased(...)
+end
+
+function EmailTab:mouseScroll(...)
+    (Util.findId('opened_email') or self.mail_box):mouseScroll(...)
+end
+
+function EmailTab:mouseMoved(...)
     local o = Util.findId('opened_email')
-    if o then o:mouseScroll(x, y) end
-    local mx, my
-
-    mx, my = love.mouse.getPosition()
-
-    if Util.pointInRect(mx, my, self) then
-        self:scrollEmail(y)
-    else
-        return
-    end
-
+    if o then o:mouseMoved(...) end
+    self.mail_box.last_mx, self.mail_box.last_my = nil, nil
+    self.mail_box:mouseMoved(...)
 end
 
 function EmailTab:update(...)
-    local o = Util.findId('opened_email')
-    if o then o:update(...) end
+    (Util.findId('opened_email') or self.mail_box):update(...)
 end
 
 

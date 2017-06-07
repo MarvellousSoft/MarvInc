@@ -75,7 +75,6 @@ function love.load()
     Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
     SaveManager.load()
-
 end
 
 -----------------

@@ -315,6 +315,18 @@ function OpenedEmail:checkButtonClick(x, y, but)
      end
 end
 
+function OpenedEmail:mousePressed(x, y, but)
+    local e = self
+    if e.death then return end
+    if x  < e.pos.x or
+       x > e.pos.x + e.w or
+       y  > e.pos.y + e.h or
+       y < e.pos.y then
+        --Clicked outside box
+        opened_email_funcs.close()
+    end
+end
+
 -- UTILITY FUNCTIONS
 
 function opened_email_funcs.close()
@@ -323,19 +335,6 @@ function opened_email_funcs.close()
     e = Util.findId("opened_email")
     e.death = true
 
-end
-
-function opened_email_funcs.mousePressed(x, y, but)
-    local e = Util.findId("opened_email")
-    if not e or e.death then return end
-
-    if x  < e.pos.x or
-       x > e.pos.x + e.w or
-       y  > e.pos.y + e.h or
-       y < e.pos.y then
-        --Clicked outside box
-        opened_email_funcs.close()
-    end
 end
 
 function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)

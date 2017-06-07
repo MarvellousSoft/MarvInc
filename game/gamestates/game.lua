@@ -71,15 +71,12 @@ function state:keypressed(key)
     pc_box:keyPressed(key)
     room:keyPressed(key)
 
-    -- Pressing f11 will type some text on the terminal
-    if key == 'f11' then -- TODO: REMOVE IN RELEASE
-        code = [=[
-Your code here
-]=]
-        Util.findId("code_tab").term:typeString(code)
-    elseif key == 'f12' then
+    if key == 'f12' then
         LoreManager.puzzle_done.tutorial = true -- TODO: REMOVE IN RELEASE
         LoreManager.check_all()
+    elseif key == 'f11' then
+        print('here')
+        Mail.new('bm1')
     end
 end
 
