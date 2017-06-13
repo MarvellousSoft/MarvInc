@@ -3,20 +3,20 @@ return {
     text = [[
 Remember loops from Hacking101 classes? Well, you better.
 
-The new command is "jmp". You provide a label, and it will jump to the line you defined the label on. To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
+The new command is %red% jmp %end% . You provide a label, and it will jump to the line you defined the label on. To define a label, just write any single alphanumeric word (that means only letters and numbers, dummy) followed by a ':'.
 
 After defining a label, you can optionally write any one command in the same line, however the command must be written after the ':'.
 You can use this to save lines in your code.
 
 Example that makes the bot walk in circles:
     - banana:
-      walk 2
-      turn counter
-      jmp banana
+      %red% walk %end% 2
+      %red% turn %green% counter %end%
+      %red% jmp %end% banana
 
 Example that makes the bot spin endlessly:
-    - awesomeLabel66: turn clock
-      jmp awesomeLabel66
+    - awesomeLabel66: %red% turn %green% clock %end%
+      %red% jmp %end% awesomeLabel66
 
 Complete this puzzle quickly. We'd greatly appreciate it. Don't forget the experiment ends as soon as the objective requirements are completed.
 

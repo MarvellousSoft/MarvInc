@@ -41,12 +41,12 @@ local function stylizeText(text, default_color)
         elseif  w == "%blue%" then
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
-            current_color = {0, 0, 255, 255} --Change color to blue
+            current_color = {12, 10, 150, 255} --Change color to blue
             current_text = "" --Reset current text
         elseif  w == "%green%" then
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
-            current_color = {13, 158, 11, 255} --Change color to green
+            current_color = {13, 128, 11, 255} --Change color to green
             current_text = "" --Reset current text
         elseif  w == "%end%" then
             table.insert(colored_text, current_color)

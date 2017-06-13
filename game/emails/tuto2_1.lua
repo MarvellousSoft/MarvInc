@@ -3,7 +3,7 @@ return {
     text = [[
 Well done.
 
-Besides directions, you can add another modifier to the walk command: a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
+Besides directions, you can add another modifier to the %red% walk %end% command: a number. The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful.
 
 Examples:
     - walk 5

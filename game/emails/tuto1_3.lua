@@ -5,13 +5,13 @@ return {
     text = [[
 It seems you have not understood this system completely. Let me explain it further.
 
-When you enter a puzzle, there are four tabs: <email>, <code>, <info> and <manual>.
+When you enter a puzzle, there are four tabs: %blue% <email> %end , %blue% <code> %end% , %blue% <info> %end% and %blue% <manual> %end% .
 You are on the first one, and here you can read your emails.
-On the <code> tab you can write and run commands. For now you only need the one I taught you (walk) to solve this introductory puzzle.
-On the tab <info> you can check the puzzle's objectives and the current test robot information.
-On the last tab, <manual>, you can check the commands you know, with detailed explanations when you click on the commands.
+On the %blue <code> %end% tab you can write and run commands. For now you only need the one I taught you ( %red% walk %end% ) to solve this introductory puzzle.
+On the tab %blue% <info> %end%  you can check the puzzle's objectives and the current test robot information.
+On the last tab, %blue% <manual> %end% , you can check the commands you know, with detailed explanations when you click on the commands.
 
-After writing the commands in the <code> tab, press the "play" button to start the simulation. The "robot" will follow instructions from top to bottom, and you can't write more commands until the program stops or you press the "stop" button.
+After writing the commands in the %blue% <code> %end% tab, press the %green% play %end% button to start the simulation. The "robot" will follow instructions from top to bottom, and you can't write more commands until the program stops or you press the %green% stop %end% button.
 
 Whenever you're lost, you can reread these emails. Unless you've deleted them. Don't do that. Unless you want to. Then do it.
 
