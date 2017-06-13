@@ -294,7 +294,6 @@ end
 
 function OpenedEmail:mouseMoved(...) self.text_scroll:mouseMoved(...) end
 function OpenedEmail:mouseScroll(...) self.text_scroll:mouseScroll(...) end
-function OpenedEmail:mousePressed(...) self.text_scroll:mousePressed(...) end
 function OpenedEmail:mouseReleased(...) self.text_scroll:mouseReleased(...) end
 function OpenedEmail:update(...) self.text_scroll:update(...) end
 
@@ -316,6 +315,7 @@ function OpenedEmail:checkButtonClick(x, y, but)
 end
 
 function OpenedEmail:mousePressed(x, y, but)
+    self.text_scroll:mousePressed(x, y, but)
     local e = self
     if e.death then return end
     if x  < e.pos.x or
