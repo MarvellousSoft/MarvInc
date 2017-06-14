@@ -6,7 +6,7 @@ local intro = false
 
 function fx.full_static(gamestate)
     full_s = true
-    EVENTS_LOCK = true
+    EVENTS_LOCK = EVENTS_LOCK + 1
     CLOSE_LOCK = true
     SFX.loud_static:play()
     fx.ang = 0
@@ -34,7 +34,7 @@ function fx.intro()
     fx.alp = 255
     MAIN_TIMER:tween(.4, fx, {w = W}, "in-cubic")
     MAIN_TIMER:after(.4, function() MAIN_TIMER:tween(.3, fx, {h = H}) end)
-    MAIN_TIMER:after(1.5, function() intro = false EVENTS_LOCK = false end)
+    MAIN_TIMER:after(1.5, function() intro = false EVENTS_LOCK = EVENTS_LOCK - 1 end)
     MAIN_TIMER:tween(1.5, fx, {alp = 0}, "out-quad")
 end
 

@@ -213,7 +213,7 @@ function EmailTab:checkEmailClick(x, y, but)
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
                 self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
-                TABS_LOCK = true -- Lock tabs until email is closed
+                TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
                 e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end

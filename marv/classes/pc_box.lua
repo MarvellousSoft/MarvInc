@@ -217,7 +217,7 @@ end
 
 function PcBox:mousePressed(x, y, but)
     tabs[self.cur_tab]:mousePressed(x, y, but)
-    if not TABS_LOCK and but == 1 then
+    if TABS_LOCK == 0 and but == 1 then
         for _, b in pairs(self.buttons) do
             b:checkCollides(x, y)
         end

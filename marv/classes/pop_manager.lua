@@ -1,5 +1,6 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
+local OpenedEmail = require "classes.opened_email"
 
 Popup = Class{
     __includes = {RECT},
@@ -102,11 +103,13 @@ PopManager = {
 --   text = button text,
 --   clr  = button color }
 function PopManager.new(title, text, clr, b1, b2)
+    -- close email if any is open, to avoid getting stuck because of our ugly code.
+    OpenedEmail.close()
     local pop = Popup(title, text, clr, b1, b2)
     -- Pop the old pop. Stick with the new pop.
     PopManager.pop = pop
-    TABS_LOCK = true
-    EVENTS_LOCK = true
+    TABS_LOCK = TABS_LOCK + 1
+    EVENTS_LOCK = EVENTS_LOCK + 1
 end
 
 function PopManager.mousereleased(x, y, button, touch)
@@ -122,8 +125,8 @@ end
 function PopManager.quit()
     PopManager.pop.death = true
     PopManager.pop = nil
-    TABS_LOCK = false
-    EVENTS_LOCK = false
+    TABS_LOCK = TABS_LOCK - 1
+    EVENTS_LOCK = EVENTS_LOCK - 1
 end
 
 return PopManager

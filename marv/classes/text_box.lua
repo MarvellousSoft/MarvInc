@@ -222,7 +222,13 @@ function TextBox:draw(bad_lines)
     -- Drawing current line -- maybe remove this
     if self.exec_line then
         Color.set(Color.white())
-        love.graphics.rectangle("fill", self.pos.x, self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h, 10, 10)
+        local h = self.line_h / 2
+        local x = self.pos.x + (self.max_char + (self.show_line_num and 4 or 0)) * self.font_w
+        local y = self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h
+        local dy = (self.line_h - h) / 2
+        love.graphics.polygon("fill", x, y + dy + h / 2, x + h, y + dy, x + h, y + dy + h)
+        love.graphics.setLineWidth(.1)
+        love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
     end
 
     -- Remove stencil

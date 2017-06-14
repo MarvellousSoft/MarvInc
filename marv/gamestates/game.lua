@@ -65,7 +65,7 @@ end
 
 function state:keypressed(key)
     PopManager.keypressed(key)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     Util.defaultKeyPressed(key)
     pc_box:keyPressed(key)
@@ -81,7 +81,7 @@ function state:keypressed(key)
 end
 
 function state:mousepressed(x, y, but)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:mousePressed(x,y,but)
 
@@ -97,13 +97,13 @@ function state:mousemoved(x, y)
 end
 
 function state:textinput(t)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:textInput(t)
 end
 
 function state:wheelmoved(x, y)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:mouseScroll(x, y)
 end
