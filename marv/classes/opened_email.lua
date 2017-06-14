@@ -21,6 +21,10 @@ The function colors the text based on tags with %. %colorname% means to start co
     %red% - Red color
     %blue% - Blue color
     %green% - Green color
+    %purple% - Purple color
+    %orange% - Orange color
+    %cyan% - Cyan color
+    %pink% - Pink color
 ]]
 
 local function stylizeText(text, default_color)
@@ -47,6 +51,26 @@ local function stylizeText(text, default_color)
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
             current_color = {13, 128, 11, 255} --Change color to green
+            current_text = "" --Reset current text
+        elseif  w == "%purple%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {110, 41, 188, 255} --Change color to green
+            current_text = "" --Reset current text
+        elseif  w == "%orange%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {255, 114, 0, 255} --Change color to green
+            current_text = "" --Reset current text
+        elseif  w == "%cyan%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {22, 159, 183, 255} --Change color to green
+            current_text = "" --Reset current text
+        elseif  w == "%pink%" then
+            table.insert(colored_text, current_color)
+            table.insert(colored_text, current_text)
+            current_color = {255, 45, 84, 255} --Change color to green
             current_text = "" --Reset current text
         elseif  w == "%end%" then
             table.insert(colored_text, current_color)
@@ -75,7 +99,7 @@ OpenedEmail = Class{
         local time
         local box_width, box_height = 2.2*W/5, 4*H/5
 
-        self.text_font = FONTS.robotoLight(18)
+        self.text_font = FONTS.roboto(18)
 
         local but_size = (_reply_func and 50 or 0) + (_can_be_deleted and 50 or 0)
 
@@ -240,7 +264,7 @@ function OpenedEmail:draw()
 
     -- Author
     Color.set(e.content_color)
-    font = FONTS.roboto(20)
+    font = FONTS.robotoLight(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
     love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + temp + 25)

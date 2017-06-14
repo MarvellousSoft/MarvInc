@@ -12,6 +12,8 @@ function square.run()
     Mail.new('tuto8_1')
 
     LoreManager.timer:after(5, function() Mail.new('tuto8_2') end)
+
+    LoreManager.timer:after(10, function() Mail.new('tuto8_3') end)
 end
 
 return square

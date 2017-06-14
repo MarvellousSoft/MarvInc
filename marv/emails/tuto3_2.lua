@@ -13,7 +13,9 @@ Here are some useful shortcuts to enhance your working experience here at Marvel
 
 - Ctrl + Right/Left Arrow: Increase/Decrease simulation speed.
 
-Remember them all. As we say here in Marvellous Inc. "Mice are for chumps and Larry from accounting".
+- Enter: close pop-ups.
+
+Remember them all. As we say here in Marvellous Inc. %red% "Mice are for chumps and Larry from accounting" %end% .
 
 Stay practical, and carry on.
 ]],

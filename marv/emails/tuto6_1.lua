@@ -1,17 +1,17 @@
 return {
     title = "Using memory",
     text = [[
-Let's take it up a notch shall we? You will now learn to use the registers, and the write/add commands.
+Let's take it up a notch shall we? You will now learn to use the %cyan% registers %end% and two new commands: %red% write %end% and %red% add %end% .
 
-Registers can hold values. Think of them as the memory in your <code>. To access the content of the register #n, just write [n]. So if you want the value in the register #5, you write [5]. You can see them just below your <code> notepad, with their respective numbers and contents. Register numbers start from 0, and are displayed in the top-left corner of a register, while the content is the number centered on the box.
+%cyan% Registers %end% can hold %green% values %end% . Think of them as the memory in your %blue% <code> %end% . To access the %green% content %end% of the %cyan% register #n %end% , just write %green% [n] %end% . So if you want the %green% value %end% in the %cyan% register #5 %end% , you write %green% [5] %end% . You can see them just below your %blue% <code> %end% notepad, with their respective numbers and contents. %cyan% Register %end% numbers start from 0, and are located in the top-left corner of a %cyan% register %end% , while the %green% content %end% is the big number centered on the box.
 
-The "add" command receives three arguments: Two values to be added, and the adress where their sum will be stored.
+The %red% add %end% command receives three arguments: Two %green% values %end% to be added, and the %cyan% address %end% where their sum will be stored.
 
 Look at the following examples:
-    - add [1] 3 7 # adds 3 to the content of register #1, and stores it at register #7.
-    - add [2] [5] 2 # adds register #2 contents to register #5 contents and stores it at register #2 again.
+    - %red% add %green% [1] 3 %cyan% 7 %end% # adds 3 to the content of register #1, and stores it at register #7.
+    - %red% add %green% [2] [5] %cyan% 2 %end% # adds register #2 contents to register #5 contents and stores it at register #2 again.
 
-Finally, the "write" command receives a value argument, and a second optional direction argument. You'll use the "write" command to write values in a console, which are the big colorful computer objects in the room. The direction determines which direction the console is. If not provided, as usual, the robot will try to write in the direction he is facing.
+Finally, the %red% write %end% command receives a %green% value %end% argument, and a second optional %pink% direction %end% argument. You'll use the %red% write %end% command to write %green% values %end% in a %orange% console %end% , which are the big colorful computer objects in the room. The %pink% direction %end% determines which direction the %orange% console %end% is. If not provided, as usual, the robot will try to write in the direction he is facing.
 
 Make sure to understand all these concepts. You can do it.
 
