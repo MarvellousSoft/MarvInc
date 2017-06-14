@@ -1,4 +1,7 @@
 name = "Sequence Separator"
+
+--Achievement: finish in 11 lines of code
+
 -- Puzzle number
 n = 7
 

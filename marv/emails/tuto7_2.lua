@@ -1,21 +1,21 @@
 return {
     title = "Conditional Jumps",
     text = [[
-Here is a list of all conditional jumps and their meaning. You can also see them at the <manual> tab.
+Here is a list of all %red% conditional jumps %end% and their meaning. You can also see them at the %blue% <manual> %end% tab.
 
-- jgt - Greater Than, jumps if first value is greater than the second
+- %red% jgt %end% - %red% Greater Than %end% , jumps if %green% first value %end% is greater than the %green% second %end% .
 
-- jge - Greater or Equal, jumps if first value is greater than or equal to the second
+- %red% jge %end% - %red% Greater or Equal %end% , jumps if %green% first value %end% is greater than or equal to the %green% second %end% .
 
-- jlt - Lesser Than, jumps if first value is less than the second
+- %red% jlt %end% - %red% Lesser Than %end% , jumps if %green% first value %end% is less than the %green% second %end% .
 
-- jle - Lesser or Equal, jumps if first value is less than or equal to the second
+- %red% jle %end% - %red% Lesser or Equal %end% , jumps if %green% first value %end% is less than or equal to the %green% second %end% .
 
-- jeq - Equal, jumps if first value is equal to the second
+- %red% jeq %end% - %red% Equal %end% , jumps if %green% first value %end% is equal to the %green% second %end% .
 
-- jne - Not Equal, jumps if first value is not equal to the second
+- %red% jne %end% - %red% Not Equal %end% , jumps if %green% first value %end% is not equal to the %green% second %end% .
 
-Always use the one most adequate to the situation. And don't forget that you can reference contents of registers.
+Always use the one most adequate to the situation. And don't forget that you can reference %green% contents %end% of %cyan% registers %end% .
 
 Stay fresh, and carry on.]],
     author = "Automated Introduction System",

@@ -3,13 +3,13 @@ return {
     text = [[
 This is it. The last things we have to teach you. The rest is on your own.
 
-The command mov is used to move values to an address. The first argument is the value, and the second argument the address you'll move the value to.
+The command %red% mov %end% is used to move %green% values %end% to an %cyan% address %end% . The first argument is the %green% value %end% , and the second argument the %cyan% address %end% you'll move the %green% value %end% to.
 
-There is also the command sub. It works analogous to the add command, but instead of adding the first two arguments and storing in the register given by the third, it will subtract.
+There is also the command %red% sub %end% . It works analogous to the %red% add %end% command, but instead of adding the first %green% two arguments %end% and storing in the %cyan% register %end% given by the %cyan% third %end% , it will subtract.
 
-Example where the bot will move the content of the register #7 to the register #3, and then subtract the value of register #7 by 4.
-    - mov [7] 3
-      sub [7] 4 7
+Example where the bot will move the %green% content %end% of the %cyan% register #7 %end% to the %cyan% register #3 %end% , and then subtract the %green% value %end% of %cyan% register #7 %end% by %green% 4 %end% .
+    - %red% mov %green% [7] %cyan% 3 %end%
+      %red% sub %green% [7] 4 %cyan% 7 %end%
 
 Prove yourself worthy, employee #]] .. EMPLOYEE_NUMBER .. [[.
 

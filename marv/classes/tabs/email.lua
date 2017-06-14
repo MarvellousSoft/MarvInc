@@ -90,7 +90,10 @@ function EmailTab:drawMailBox(box)
     Color.set(t.main_color)
 
     -- Draws email list
-    for i,e in ipairs(t.email_list) do
+    for index = Util.tableLen(t.email_list), 1, -1 do
+        i = Util.tableLen(t.email_list) - index
+
+        e = t.email_list[index]
 
         --Draw the email box
         if not e.was_read then
@@ -107,27 +110,27 @@ function EmailTab:drawMailBox(box)
         color.a = e.alpha
 
         --Draw email box (behind)
-        local behind_color = Color.new(0,0, 40) --Color for box behind true email box
+        local behind_color = Color.new(0,0, 40, e.alpha) --Color for box behind true email box
         Color.set(behind_color)
         local offset = 4
-        love.graphics.rectangle("fill", t.pos.x + t.email_border - offset, t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump + offset, t.w - 2 * t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border - offset, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump + offset, t.w - 2 * t.email_border, t.email_height, 2)
         --Draw email box (front)
         local mx, my = box.last_mx, box.last_my
         if not self.email_opened and mx and my and mx >= t.pos.x + t.email_border and
            mx <=  t.pos.x + t.email_border + t.w - 2 * t.email_border and
-           my >= t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump and
-           my <= t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump + t.email_height then
+           my >= t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump and
+           my <= t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump + t.email_height then
             color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * (i - 1) + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
         font = FONTS.fira(12)
         font_w = font:getWidth(e.time)
         love.graphics.setFont(font)
-        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump)
+        love.graphics.print(e.time,  t.pos.x + t.w - t.email_border - font_w - 5, t.pos.y + (t.email_border + t.email_height) * i  + e.juicy_bump)
 
         -- Author
         font = FONTS.fira(16)
@@ -139,7 +142,7 @@ function EmailTab:drawMailBox(box)
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
 
         -- Title
         font = FONTS.fira(14)
@@ -152,7 +155,7 @@ function EmailTab:drawMailBox(box)
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * (i - 1) + 2 + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
 
         -- Print label on emails
 
@@ -172,7 +175,7 @@ function EmailTab:drawMailBox(box)
         if text then
             font = FONTS.fira(15)
             love.graphics.setFont(font)
-            love.graphics.print(text,  t.pos.x + t.email_border + t.w - 25 - font:getWidth(text), t.pos.y + (t.email_border + t.email_height) * (i - 1)  + e.juicy_bump + 15)
+            love.graphics.print(text,  t.pos.x + t.email_border + t.w - 25 - font:getWidth(text), t.pos.y + (t.email_border + t.email_height) * i  + e.juicy_bump + 15)
         end
     end
 
@@ -200,9 +203,10 @@ function EmailTab:checkEmailClick(x, y, but)
 
     e = self
 
+    local number_emails = Util.tableLen(e.email_list)
     if but == 1 and not self.mail_box.on_hover then -- if not clicking scroll bar
         for i, mail in ipairs(e.email_list) do
-            if mail.alpha > 250 and Util.pointInRect(x , y, {pos = {x = e.pos.x + e.email_border, y = e.pos.y + (e.email_border + e.email_height) * (i - 1)}, w = e.w - 2 * e.email_border, h = e.email_height}) then
+            if mail.alpha > 250 and Util.pointInRect(x , y, {pos = {x = e.pos.x + e.email_border, y = e.pos.y + (e.email_border + e.email_height) * (number_emails - i)}, w = e.w - 2 * e.email_border, h = e.email_height}) then
                 if not mail.was_read then
                     if mail.open_func then mail:open_func() end
                     mail.was_read = true

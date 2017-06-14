@@ -5,7 +5,7 @@ return {
     text = [[
 It seems you still haven't finished the puzzle. Let me make everything clear.
 
-You should head on to the %blue% <code> %end% tab. No, not now. Finish reading this email first. There, you can code instructions to solve puzzles. You can only write one instruction per line, and you can use the %blue% <code> %end% just as you would with any text editor.
+You should head on to the %blue% <code> %end% tab. No, not now. Finish reading this email first. There, you can code instructions to solve puzzles. You can only write one instruction per line, and you can use the %blue% <code> %end% tab just as you would with any text editor.
 
 After you write the instructions, use the buttons on the bottom of the %blue% <code> %end% tab to run your code. You have three available speeds to choose from. Whenever your robot completes the objective, the puzzle will be finished automatically. If your code crashes or your robot dies, the simulation will be restarted and you'll receive a new test subject.
 

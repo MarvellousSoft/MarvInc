@@ -1,17 +1,17 @@
 return {
     title = "Some more register examples",
     text = [[
-Here are some more examples to get you used to the register, write command and add command.
+Here are some more examples to get you used to the %cyan% register %end% , %red% write %end% command and %red% add %end% command.
 
-In this example, the bot will write to a console facing his left the content of the register #8
-    - turn left
-      write [8]
+In this example, the bot will write to a %orange% console %end% facing his left the %green% content %end% of the %cyan% register #8 %end% .
+    - %red% turn %pink% left %end%
+      %red% write %green% [8] %end%
 
 This next example does the same thing as before, but with less lines of code
-    - write [8] left
+    - %red% write %green% [8] %pink% left %end%
 
-Example of adding the number inside the register 10 by itself (aka multiplying it by two), and store the result on register number 0
-    - add [10] [10] 0
+Example of adding the %green% value %end% inside the %cyan% register 10 %end% by itself (aka multiplying it by two), and storing the result on %cyan% register #0 %end% .
+    - %red% add %green% [10] [10] %cyan% 0 %end%
 
 Shine on and carry on.
 ]],
