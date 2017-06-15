@@ -438,7 +438,7 @@ function TextBox:keyPressed(key)
         self:tryWrite('')
 
     elseif key == 'v' and ctrl then
-        self:tryWrite(love.system.getClipboardText())
+        self:typeString(love.system.getClipboardText())
 
     end
 
@@ -494,7 +494,12 @@ end
 -- Tries to write text t on current cursor position, return whether it was successful
 function TextBox:tryWrite(t)
     -- First, should check if all chars are valid and do not need to be changed
-    for c in t:gmatch('.') do assert(self.accepted_chars[c] == c or c == '\n') end
+    for c in t:gmatch('.') do
+        if not (self.accepted_chars[c] == c or c == '\n') then
+            print("Trying to write weird string. Ignoring.")
+            return
+        end
+    end
 
     -- backup -- should be the latest backup but let's be sure
     local bak = self:getBackup()

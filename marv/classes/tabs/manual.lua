@@ -196,6 +196,7 @@ function PButton:checkCollides(x, y)
 end
 
 function PButton:mouseMoved(x, y)
+    if not self.extra_width then return end -- ghost button
     self.hover = Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w + self.extra_width, self.h)
 end
 
