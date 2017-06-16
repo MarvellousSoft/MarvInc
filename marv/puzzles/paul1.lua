@@ -35,14 +35,14 @@ s = {"emitter", true, "emitter", "red", args={
     x1 = 15, y1 = 12,
     x2 = 3, y2 = 12,
     t_args = {
-        "ray", true, 0.05, "green"
+        "ray", true, 0.05, "red"
     }
 }, dir="WEST"}
 t = {"emitter", true, "emitter", "red", args={
     x1 = 11, y1 = 15,
     x2 = 11, y2 = 19,
     t_args = {
-        "ray", true, 0.05, "green"
+        "ray", true, 0.05, "red"
     }
 }, dir="SOUTH"}
 
