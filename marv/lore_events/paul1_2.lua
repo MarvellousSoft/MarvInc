@@ -15,6 +15,9 @@ end
 function paul.after(email)
     Mail.disableReply(email.number)
     email.can_be_deleted = true
+    local lore = require "classes.lore_manager"
+    lore.puzzle_done.paul_invite = true
+    lore.check_all()
 end
 
 return paul
