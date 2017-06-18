@@ -72,11 +72,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        LoreManager.puzzle_done.tutorial = true -- TODO: REMOVE IN RELEASE
-        LoreManager.check_all()
-    elseif key == 'f11' then
-        print('here')
-        Mail.new('bm1')
+        -- add something to test the game
     end
 end
 

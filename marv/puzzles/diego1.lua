@@ -2,7 +2,7 @@ name = "Chessmat Painter"
 -- Puzzle number
 n = "D.1"
 
-lines_on_terminal = 20
+lines_on_terminal = 25
 memory_slots = 5
 
 -- Bot
@@ -70,20 +70,22 @@ floor = grid_floor
 -- Objective
 objective_text = "Paint all dark tiles, and none of the white."
 function objective_checker(room)
+    local good = true
     for i = 1, ROWS do
         for j = 1, COLS do
             if floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
                 if not room.color_floor[j][i] then
-                    return false
+                    good = false
                 end
             elseif floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'w' then
-                if not room.color_floor[j][i] then
+                if room.color_floor[j][i] then
+                    _G.StepManager.stop("Wrong painting", "Painted a wrong tile!", "Retry")
                     return false
                 end
             end
         end
     end
-    return true
+    return good
 end
 
 function first_completed()

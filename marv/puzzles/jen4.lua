@@ -107,7 +107,8 @@ end
 
 extra_info = [[
 All numbers are between 0 and 999.
-- It can be shown that there's only one correct way to paint any number.]]
+- It can be shown that there's only one correct way to paint any number.
+- There is a very slow way to do this and a fast way. Both will work, but you may need to wait a lot for the former to run, since the numbers are large, so we recommend the latter :).]]
 
 function first_completed()
     _G.PopManager.new("blah blah blah",

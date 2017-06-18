@@ -14,7 +14,7 @@ k = {'bucket', true, 'bucket', args = {content = 'water'}}
 local floor, objs
 
 --This obviously won't be buckets in the final game.
-objective_text = "Move the buckets from the top gray tiles to the bottom gray tiles, mirrored by the black line in the center"
+objective_text = "Move the buckets from the top gray tiles to the bottom gray tiles, mirrored by the black line in the center."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
@@ -28,9 +28,9 @@ function objective_checker(room)
     return true
 end
 
-extra_info = [[Remember you can't walk through a bucket
-- Use our *productive* new command 'walkc'
-- Mirrored by the black line means, if there is a bucket, in column X, 3 rows above the black line, then it should be moved to the same column, but 3 rows *below* the black line]]
+extra_info = [[Remember you can't walk through a bucket.
+- Use our *productive* new command 'walkc'.
+- Mirrored by the black line means, if there is a bucket in column X and 3 rows above the black line, then it should be moved to the same column, but 3 rows *below* the black line.]]
 
 grid_obj =  "....................."..
             "..kk.k..k..k.kk.k.k.."..

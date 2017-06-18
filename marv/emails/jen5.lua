@@ -5,7 +5,7 @@ return {
     text = [[
 Hello CS2. How are you?
 
-I can't really say much, but someone around Marvinc is causing trouble. Jesus, I just wish for once I could have a week without anyone being a complete idiot or setting the copier on fire. That's the dream.
+I can't really say much, but someone around MarvInc is causing trouble. Jesus, I just wish for once I could have a week without anyone being a complete idiot or setting the copier on fire. That's the dream.
 
 In short, I'm really busy. So I'll be quick.
 

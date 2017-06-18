@@ -78,7 +78,7 @@ function objective_checker(room)
 end
 
 extra_info =
-[[Buckets can be dropped on the floor after being picked up.]]
+[[Water buckets can be dropped on the floor after being picked up.]]
 
 
 function first_completed()

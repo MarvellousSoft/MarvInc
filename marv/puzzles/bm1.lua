@@ -69,7 +69,8 @@ function objective_checker(room)
 end
 
 extra_info = [[
-All numbers are between 1 and 999.]]
+All numbers are between 1 and 999.
+- Example: for input "3 5 10 6" the output should be "1 2".]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

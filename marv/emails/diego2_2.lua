@@ -11,5 +11,5 @@ i love you bro
 
 broego vega
 ]],
-    author = "Diego Vega (vega@rtd.marv.com)",
+    author = "Diego Lorenzo Vega (vega@rtd.marv.com)"
 }

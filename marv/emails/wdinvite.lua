@@ -16,8 +16,5 @@ This is an automatic invitation sent by MarvCalendar.
 %red% <Reply to go to the party> %red%
 ]],
     author = "Marvellous Calendar (calendar-notification@marv.com)",
-    reply_func = function(e)
-        p.run()
-        prev.after(e)
-    end
+    reply_func = prev.after
 }

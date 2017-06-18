@@ -14,7 +14,7 @@ k = {'bucket', true, 'bucket', args = {content = 'water'}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Objective
-objective_text = "Kill yourself in the lava."
+objective_text = 'Kill the "robot" in the lava.'
 function objective_checker(room)
     -- this is handled in classes/bot.lua in function kill()
     return false

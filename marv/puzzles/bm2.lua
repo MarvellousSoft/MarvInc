@@ -68,7 +68,8 @@ end
 -- Objective
 objective_text = [[
 For each pair of numbers (x, y) in the green console, write their least common multiple to the blue console.
-- The least common multiple of x and y is the smallest number z such that both x and y divide z.]]
+- The least common multiple of x and y is the smallest number z such that both x and y divide z.
+- You may find useful to copy and paste the code from the previous task.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then

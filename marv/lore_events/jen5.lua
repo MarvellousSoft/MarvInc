@@ -7,7 +7,6 @@ jen.wait = 20
 
 function jen.run()
     Mail.new('jen5')
-    LoreManager.timer:after(10, function() Mail.new('diego6') end)
 end
 
 return jen

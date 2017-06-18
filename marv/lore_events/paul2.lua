@@ -2,7 +2,7 @@ local Mail = require "classes.tabs.email"
 
 local paul = {}
 
-paul.require_puzzles = {'liv2', 'jen2'}
+paul.require_puzzles = {'liv2', 'jen2', 'paul_invite'}
 paul.wait = 4
 
 function paul.run()

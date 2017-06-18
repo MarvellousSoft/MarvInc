@@ -86,6 +86,10 @@ function objective_checker(room)
                 if not room.color_floor[j][i] then
                     return false
                 end
+            elseif floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) ~= ',' then
+                if room.color_floor[j][i] then
+                    _G.StepManager.stop("Wrong logo", "Painted a wrong tile!", "Retry")
+                end
             end
         end
     end
@@ -99,7 +103,7 @@ extra_info =
 
 function first_completed()
     _G.PopManager.new("THANK YOU my friend",
-        "You really are the bigger person",
+        "You really are the bigger person\n\nFergus",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
