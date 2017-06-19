@@ -161,3 +161,21 @@ function objective_checker(room)
     end
     return #bl.inp == #ans
 end
+
+function first_completed()
+    _G.PopManager.new("Res publica",
+        "And once again, Democracy saved the day...",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = "Did it, really?",
+            clr = _G.Color.red()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = "We sure showed them!",
+            clr = _G.Color.blue()
+        })
+end
