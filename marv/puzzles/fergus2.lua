@@ -44,14 +44,14 @@ end
 
 extra_info = nil
 
-grid_obj =  "b.....l.............l"..
-            "ooooo.o.olooooooooo.o"..
-            "ooooo.o.l........lo.o"..
-            "ooool.....looooo.oo.o"..
-            "ooooolo.oooooooo.oo.o"..
+grid_obj =  "b.....o.............o"..
+            "ooooo.o.ooooooooooo.o"..
+            "ooooo.o.o........oo.o"..
+            "ooooo.....oooooo.oo.o"..
             "ooooooo.oooooooo.oo.o"..
-            "ooooooo.oooooool....l"..
-            "ooooooo.ooooooooloolo"..
+            "ooooooo.oooooooo.oo.o"..
+            "ooooooo.oooooooo....o"..
+            "ooooooo.ooooooooooooo"..
             "ooooooo.ooooooooooooo"..
             "ooooooo.kkklooolllooo"..
             "ooooooo....loool.looo"..
@@ -61,7 +61,7 @@ grid_obj =  "b.....l.............l"..
             "ooooooo.oloooooo.oooo"..
             "ooooooo.o....loo.oooo"..
             "ooooooo...lo..lo.oooo"..
-            "ooooooolooool....looo"..
+            "ooooooooooool....looo"..
             "ooooooooooooolooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"

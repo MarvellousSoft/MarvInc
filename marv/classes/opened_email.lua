@@ -25,7 +25,31 @@ The function colors the text based on tags with %. %colorname% means to start co
     %orange% - Orange color
     %cyan% - Cyan color
     %pink% - Pink color
+    %gray% - Gray color
+    %brown% - Brown color
+    %inst% - Used for instructions
+    %dir% - Used for directions
+    %lab% - Used for labels
+    %num% - Used for values
+    %addr% - Used for addresses
 ]]
+
+local text_colors = {
+    red = {255, 0, 0},
+    blue = {12, 10, 150},
+    green = {13, 128, 11},
+    purple = {110, 41, 188},
+    orange = {255, 114, 0},
+    cyan = {22, 159, 183},
+    pink = {255, 45, 84},
+    gray = {122, 122, 122},
+    brown = {178, 101, 12},
+    inst = {116, 38, 147},
+    dir = {53, 83, 20},
+    lab = {24, 96, 78},
+    num = {132, 14, 24},
+    addr = {12, 42, 178}
+}
 
 local function stylizeText(text, default_color)
     colored_text = {}
@@ -37,45 +61,15 @@ local function stylizeText(text, default_color)
     for word_plus_whitespaces in text:gmatch("(%g*[%s\n]*)") do
         w, s = word_plus_whitespaces:match("(%g*)([%s\n]*)")
         --Check for tags
-        if w == "%red%" then
+        if w == "%end%" then
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
-            current_color = {255, 0, 0, 255} --Change color to red
-            current_text = "" --Reset current text
-        elseif  w == "%blue%" then
+            current_color = default_color -- Change color to default
+            current_text = "" -- Reset current text
+        elseif w:match("^%%%a+%%$") then
             table.insert(colored_text, current_color)
             table.insert(colored_text, current_text)
-            current_color = {12, 10, 150, 255} --Change color to blue
-            current_text = "" --Reset current text
-        elseif  w == "%green%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = {13, 128, 11, 255} --Change color to green
-            current_text = "" --Reset current text
-        elseif  w == "%purple%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = {110, 41, 188, 255} --Change color to green
-            current_text = "" --Reset current text
-        elseif  w == "%orange%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = {255, 114, 0, 255} --Change color to green
-            current_text = "" --Reset current text
-        elseif  w == "%cyan%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = {22, 159, 183, 255} --Change color to green
-            current_text = "" --Reset current text
-        elseif  w == "%pink%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = {255, 45, 84, 255} --Change color to green
-            current_text = "" --Reset current text
-        elseif  w == "%end%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = default_color  --Change color to default
+            current_color = text_colors[w:match("%a+")] --Change color to correct color
             current_text = "" --Reset current text
         elseif w then
             --Not a tag, so update current_text
