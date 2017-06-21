@@ -1,4 +1,4 @@
-local Timer = require "hump.timer"
+local Timer = require "extra_libs.hump.timer"
 require "classes.text_box"
 require "classes.button"
 local state = {}

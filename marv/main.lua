@@ -1,10 +1,10 @@
 --HUMP STUFF
-Gamestate = require "hump.gamestate"
-Timer     = require "hump.timer"
-Class     = require "hump.class"
-Camera    = require "hump.camera"
-Vector    = require "hump.vector"
-Signal    = require "hump.signal"
+Gamestate = require "extra_libs.hump.gamestate"
+Timer     = require "extra_libs.hump.timer"
+Class     = require "extra_libs.hump.class"
+Camera    = require "extra_libs.hump.camera"
+Vector    = require "extra_libs.hump.vector"
+Signal    = require "extra_libs.hump.signal"
 
 --MY MODULES
 Util      = require "util"

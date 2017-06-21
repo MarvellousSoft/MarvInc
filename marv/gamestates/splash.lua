@@ -1,4 +1,4 @@
-local Timer = require "hump.timer"
+local Timer = require "extra_libs.hump.timer"
 local state = {}
 
 function state:enter()
