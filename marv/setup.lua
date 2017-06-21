@@ -159,15 +159,30 @@ function setup.config()
     NAMES = {"Barry", "Larry", "Terry", "Mary", "Fieri", "Danny", "Kenny", "Benny", "Kelly",
              "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny",
              "Nancy", "Manny", "Ellie", "Lenny", "Ziggy", "Tammy", "Kerry", "Gerry", "Bonnie",
-             "Tony"
+             "Tony", "Jammy", "Fanny", "Yammy", "Jerry", "Omarry", "Ury"
             }
-    TRAITS = {"Hates Pizza", "Socially Awkward", "Likes Phantom Menace", "Collect Stamps", "Color Blind",
-              "Puppy Lover", "Arachnophobic", "Lactose Intolerant", "Snorts when Laughing",
-              "Germophobe", "Insomniac", "Lives with his Mom", "Has a Cool Car", "Listens to Emo Rock",
-              "Addicted to Caffeine", "Explorer at Heart", "Never Pays Service", "Jerk",
-              "Sympathetic", "Funny", "Cool", "11 Toes", "Logical", "Irrational", "Creepy", "Nice Cook",
-              "Liked Lost's Ending", "Bought an Ouya", "Hates Soda", "Has Heterochromia", "Artistic",
-              "Smells", "Inconvenient", "Hates Sports", "Uses Hashtags", "Rad Dance Moves"
+    TRAITS = {"hates pizza", "socially awkward", "likes Phantom Menace", "collects stamps", "color blind",
+              "puppy lover", "arachnophobic", "lactose intolerant", "snorts when laughing",
+              "germophobe", "insomniac", "lives with mom", "has a cool car", "listens to emo rock",
+              "addicted to caffeine", "explorer at heart", "never pays service", "jerk",
+              "sympathetic", "funny", "cool", "11 toes", "logical", "irrational", "creepy", "nice cook",
+              "liked lost's ending", "bought an ouya", "hates soda", "has heterochromia", "artistic",
+              "smells", "inconvenient", "hates sports", "uses hashtags", "rad dance moves",
+              "types with just one finger", "has a russian accent", "eats m&ms by color", "obsessed with michael cera",
+              "eats toothpaste", "grammar nazi", "collects purple kilts", "very rosy cheeks", "eats fingernails",
+              "hears voice", "terribly shy", "blinks furiously when lying", "memorized moby dick", "lost an eye in a bear accident",
+              "hates bears", "never finished a game without a walkthrough", "overachiever", "underacheiver",
+              "always drunk", "addicted to HIMYM", "never tips", "vegan without the powers", "has to touch everything",
+              "has OCD", "class clown", "in a relationship with a pet rock", "literally allergic to bad jokes",
+              "terrified of babies", "picks scabs", "pretends is a mime at parties", "proud believer of crab people",
+              "reads minds", "can play the theremin", "can recite de alphabet backwards perfectly",
+              "loves costume parties", "can correctly give current latitude and longitude at all times",
+              "accidently makes sexual innuendos", "has a catchphrase", "has an unhealthy obession with Kermit the Frog",
+              "can't ride a bike", "is always seen wearing pajamas", "afraid of the internet", "is agressively against socks",
+              "speaks in a monotone voice", "born in a leap year", "slow walker", "never showers", "sweats profusely",
+              "chews ice cube for dinner", "heavy sleeper", "fear of closed doors", "saves their urine in a jar",
+              "kleptomaniac", "only watches SpongeBob reruns", "constantly makes animal noises", "afraid of feet",
+              "has a foot fetish", "TYPES IN ALL CAPS", "know it all", "has bad acne"
              }
 
 
