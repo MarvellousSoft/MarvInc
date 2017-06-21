@@ -110,13 +110,18 @@ All numbers are between 0 and 999.
 - It can be shown that there's only one correct way to paint any number.]]
 
 function first_completed()
-    _G.PopManager.new("blah blah blah",
-        "blah blah blah",
+    _G.PopManager.new("Great work CS2",
+        [[Actually I just assumed you did a great work.
+         I'm busy looking at a grumpy cat pic.
+
+         It's hilarious.
+
+        -Janine]],
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "blah ",
+            text = "...",
             clr = _G.Color.blue()
         })
 end
