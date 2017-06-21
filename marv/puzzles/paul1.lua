@@ -35,14 +35,14 @@ s = {"emitter", true, "emitter", "red", args={
     x1 = 15, y1 = 12,
     x2 = 3, y2 = 12,
     t_args = {
-        "ray", true, 0.05, "green"
+        "ray", true, 0.05, "red"
     }
 }, dir="WEST"}
 t = {"emitter", true, "emitter", "red", args={
     x1 = 11, y1 = 15,
     x2 = 11, y2 = 19,
     t_args = {
-        "ray", true, 0.05, "green"
+        "ray", true, 0.05, "red"
     }
 }, dir="SOUTH"}
 
@@ -72,7 +72,7 @@ init_pos = {6, 2}
 
 -- Objective
 objective_text = "A former unnatentive intern accidentally switched the lasers on. Unfortunately, we "..
-                 "forgot the password. We do know that the sum of the digits is 7 and the multiplication "..
+                 "forgot the password. We do know that the sum of its digits is 7 and the multiplication "..
                  "is 12, with 3 being the first digit. Turn the lasers off with the consoles, get the "..
                  "bucket he was carrying, extinguish the fire to unblock the entrance and walk there. We expect "..
                  "fewer accidents from now on, hopefully."
@@ -100,8 +100,8 @@ end
 
 
 extra_info =[[
-Each monitor receives only one digit of the password, in order
-- The digits are all positive
+Each monitor receives only one digit of the password, in order.
+- The digits are all positive.
 ]]
 
 grid_obj =   "ooooooooooooooooooooo"..

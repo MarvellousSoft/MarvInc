@@ -218,7 +218,7 @@ function OpenedEmail:drawContents(box)
             font = FONTS.fira(30)
             love.graphics.setFont(font)
             text = "COMPLETED"
-            love.graphics.print(text, self.pos.x + self.w - font:getWidth(text) - 20, self.pos.y + self.h - font:getHeight(text)*2, -math.pi / 20)
+            love.graphics.print(text, self.pos.x + self.w - font:getWidth(text) - 20, box.pos.y + box:getHeight() - font:getHeight(text) * 2, -math.pi / 20)
         end
     end
 end
@@ -303,7 +303,7 @@ function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker 
     else
         for _,tb in pairs(DRAW_TABLE) do--Iterates in all drawable tables and removes element
             if tb[self] then
-                TABS_LOCK = false -- Enable clicking on tabs
+                TABS_LOCK = TABS_LOCK - 1 -- Enable clicking on tabs
                 Util.findId("email_tab").email_opened = nil
                 tb[self] = nil
                 return
@@ -311,7 +311,7 @@ function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker 
         end
     end
 
-    TABS_LOCK = false -- Enable clicking on tabs
+    TABS_LOCK = TABS_LOCK - 1 -- Enable clicking on tabs
     Util.findId("email_tab").email_opened = nil
 
 end
@@ -357,7 +357,7 @@ function opened_email_funcs.close()
     local e
 
     e = Util.findId("opened_email")
-    e.death = true
+    if e then e.death = true end
 
 end
 

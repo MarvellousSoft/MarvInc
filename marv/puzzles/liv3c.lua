@@ -95,9 +95,9 @@ function objective_checker(room)
 end
 
 extra_info = [[
-Example: "+ 2 + 3 - + 5 - -" should output "3 5 2"
-- The stack will have at most 20 elements on it at a time
-- There will be at most 100 operations]]
+Example: "+ 2 + 3 - + 5 - -" should output "3 5 2".
+- The stack will have at most 20 elements on it at a time.
+- There will be at most 100 operations.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

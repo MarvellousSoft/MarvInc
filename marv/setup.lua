@@ -146,8 +146,8 @@ function setup.config()
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
 
-    TABS_LOCK = false -- If the tabs cant be clicked
-    EVENTS_LOCK = false -- All events but popup mouse pressed are locked
+    TABS_LOCK = 0 -- If the tabs cant be clicked
+    EVENTS_LOCK = 0 -- All events but popup mouse pressed are locked
 
     EMPLOYEE_NUMBER = love.math.random(200, 2000)
 

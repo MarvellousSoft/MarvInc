@@ -296,9 +296,9 @@ Jge = Class {init = vvl_init, comp = function(a, b) return a >= b end, execute =
 Jlt = Class {init = vvl_init, comp = function(a, b) return a < b end, execute = vvl_execute}
 -- Jle - Jump lesser or equal --
 Jle = Class {init = vvl_init, comp = function(a, b) return a <= b end, execute = vvl_execute}
--- Jle - Jump lesser or equal --
+-- Jeq - Jump equal --
 Jeq = Class {init = vvl_init, comp = function(a, b) return a == b end, execute = vvl_execute}
--- Jle - Jump lesser or equal --
+-- Jne - Jump not equal --
 Jne = Class {init = vvl_init, comp = function(a, b) return a ~= b end, execute = vvl_execute}
 
 -- Read --

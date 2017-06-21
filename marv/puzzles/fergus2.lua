@@ -2,7 +2,7 @@ name = "Advanced Bucket Mover"
 -- Puzzle number
 n = "D.2"
 
-lines_on_terminal = 45
+lines_on_terminal = 50
 memory_slots = 0
 
 -- Bot

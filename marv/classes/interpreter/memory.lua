@@ -128,6 +128,7 @@ function Memory:draw()
 
     if self.slots == 0 then
         Color.set(color)
+        love.graphics.setLineWidth(.5)
         love.graphics.rectangle("line", self.pos.x, self.pos.y, self.w, self.h)
         Color.set(Color.red())
         love.graphics.setFont(self.unavailable_font)

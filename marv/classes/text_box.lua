@@ -222,7 +222,13 @@ function TextBox:draw(bad_lines)
     -- Drawing current line -- maybe remove this
     if self.exec_line then
         Color.set(Color.white())
-        love.graphics.rectangle("fill", self.pos.x, self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h, 10, 10)
+        local h = self.line_h / 2
+        local x = self.pos.x + (self.max_char + (self.show_line_num and 4 or 0)) * self.font_w
+        local y = self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h
+        local dy = (self.line_h - h) / 2
+        love.graphics.polygon("fill", x, y + dy + h / 2, x + h, y + dy, x + h, y + dy + h)
+        love.graphics.setLineWidth(.1)
+        love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
     end
 
     -- Remove stencil
@@ -432,7 +438,7 @@ function TextBox:keyPressed(key)
         self:tryWrite('')
 
     elseif key == 'v' and ctrl then
-        self:tryWrite(love.system.getClipboardText())
+        self:typeString(love.system.getClipboardText())
 
     end
 
@@ -488,7 +494,12 @@ end
 -- Tries to write text t on current cursor position, return whether it was successful
 function TextBox:tryWrite(t)
     -- First, should check if all chars are valid and do not need to be changed
-    for c in t:gmatch('.') do assert(self.accepted_chars[c] == c or c == '\n') end
+    for c in t:gmatch('.') do
+        if not (self.accepted_chars[c] == c or c == '\n') then
+            print("Trying to write weird string. Ignoring.")
+            return
+        end
+    end
 
     -- backup -- should be the latest backup but let's be sure
     local bak = self:getBackup()

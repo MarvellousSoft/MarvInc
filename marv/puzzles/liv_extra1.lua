@@ -6,7 +6,7 @@ lines_on_terminal = 10
 memory_slots = 1
 
 -- Bot
-bot = {'b', "SOUTH"}
+bot = {'b', "WEST"}
 
 local function create_vec()
     local v = {}
@@ -66,10 +66,10 @@ function objective_checker(room)
     return #bl.inp == #gr.out
 end
 
-extra_info = [[
-You only have 10 lines and 1 register
-- It is guaranteed numbers are divisible by 125
-- Numbers may be negative or 0]]
+extra_info =
+[[You only have 10 lines and 1 register.
+- It is guaranteed numbers are divisible by 125.
+- Numbers may be negative or 0.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -119,3 +119,15 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."
+
+function first_completed()
+    _G.PopManager.new("HOLY FUCK",
+        "You actually did it!!!",
+        _G.Color.green(), {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " Hell Yeah *puts sunglasses on* ",
+            clr = _G.Color.blue()
+        })
+end

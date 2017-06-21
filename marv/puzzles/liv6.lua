@@ -105,9 +105,10 @@ end
 
 
 extra_info =
-[[Example: Input 4 1 2 2 3 -1 1 1 -2 means adding 2, removing it, and then adding -2 to the first list and adding 3 to the second list, and should output 1 -2 1 3 0 0 0 0 0 0
+[[Example: Input "4 1 2 1 3 -1 1 1 -2" means adding 2 then 3 to the first list, removing 3, and then adding -2, and the output should be "2 -2 2 0 0 0 0 0 0 0" since all other lists are empty.
 - There will be at most 50 queries.
 - There are no input/output consoles, but you have 130 registers.
+- Queries are guaranteed to be valid. That is, A and B never have invalid values and no query tries to remove an element from an empty list.
 - The numbers can be stored however you like in the registers, what matters is the output.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
@@ -159,21 +160,14 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
              "vwvwvwvwvwvwvwvwvwvwv"..
              "wvwvwvwvwvwvwvwvwvwvw"
 
-
 function first_completed()
-    _G.PopManager.new("GET HYPE",
-        "REMEMBER THE PARTY IS TODAY\n-- Liv",
+    _G.PopManager.new("Congratz, senior",
+        "Now let's sleep off the headache.\n\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " PARTY HARD ",
+            text = " bring it on ",
             clr = _G.Color.blue()
-        }, {
-            func = function()
-                _G.ROOM:disconnect()
-            end,
-            text = " I'll be there ",
-            clr = _G.Color.black()
         })
 end

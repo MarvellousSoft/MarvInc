@@ -26,7 +26,7 @@ function objective_checker(room)
 end
 
 extra_info =
-[[Remember to use brackets.
+[[Remember to use brackets for indirection.
 - You may need some copies of the same number. Try using mov.
 - If you haven't realized yet, the registers can only hold values between -999 and 999.
 ]]

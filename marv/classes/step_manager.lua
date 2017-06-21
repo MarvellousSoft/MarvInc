@@ -60,7 +60,7 @@ local function stepCallback()
     else
         local ret = sm.code:step()
         if ret == 'halt' then
-            if not sm.cmd then
+            if not sm.cmd and sm.state ~= 'stopped' then
                 -- in this case the code finished normally, but didn't succeed
                 Util.findId("code_tab"):showLine(#sm.code.ops + 1)
                 code_over = true

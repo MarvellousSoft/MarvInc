@@ -17,5 +17,5 @@ a bro is always there in time of need.
 
 diego bro-vega
 ]],
-    author = "Diego Vega (vega@rtd.marv.com)",
+    author = "Diego Lorenzo Vega (vega@rtd.marv.com)"
 }

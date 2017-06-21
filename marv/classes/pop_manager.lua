@@ -1,5 +1,6 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
+local OpenedEmail = require "classes.opened_email"
 
 Popup = Class{
     __includes = {RECT},
@@ -22,20 +23,22 @@ Popup = Class{
 
         self.buttons = {}
         local _bbord = 5 -- button border
-        local _w, _h = 2*_bbord + self.fnt:getWidth(b1.text), self.fnt:getHeight() + _bbord
+        local _w1, _h = 2*_bbord + self.fnt:getWidth(b1.text), self.fnt:getHeight() + _bbord
         -- Relative to popup box
-        local _x1 = (self.w - _w)/2
+        local _x1 = (self.w - _w1)/2
         local _, _wh = self.fnt:getWrap(self.text, self.w - self.border)
         self.h = #_wh*self.fnt:getHeight() + self.title_fnt:getHeight() + _h + self.border + 100
         local _y = self.h - _h - self.border
+        local _w2 = _w1
+        if b2 then _w2 = 2*_bbord + self.fnt:getWidth(b2.text) end
 
         if b2 then
-            _x1 = (w/2 - _w)/2
-            local _x2 = _w + _x1 + (w-_w-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
-            table.insert(self.buttons, Button(_x2, _y, _w, _h, b2.func, b2.text, self.fnt, nil,
+            _x1 = (w/2 - _w1)/2
+            local _x2 = _w1 + _x1 + (w-_w1-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
+            table.insert(self.buttons, Button(_x2, _y, _w2, _h, b2.func, b2.text, self.fnt, nil,
                 nil, b2.clr))
         end
-        table.insert(self.buttons, Button(_x1, _y, _w, _h, b1.func, b1.text, self.fnt, nil, nil,
+        table.insert(self.buttons, Button(_x1, _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
             b1.clr))
 
         self.pos.y = (H - self.h)/2
@@ -102,11 +105,13 @@ PopManager = {
 --   text = button text,
 --   clr  = button color }
 function PopManager.new(title, text, clr, b1, b2)
+    -- close email if any is open, to avoid getting stuck because of our ugly code.
+    OpenedEmail.close()
     local pop = Popup(title, text, clr, b1, b2)
     -- Pop the old pop. Stick with the new pop.
     PopManager.pop = pop
-    TABS_LOCK = true
-    EVENTS_LOCK = true
+    TABS_LOCK = TABS_LOCK + 1
+    EVENTS_LOCK = EVENTS_LOCK + 1
 end
 
 function PopManager.mousereleased(x, y, button, touch)
@@ -122,8 +127,8 @@ end
 function PopManager.quit()
     PopManager.pop.death = true
     PopManager.pop = nil
-    TABS_LOCK = false
-    EVENTS_LOCK = false
+    TABS_LOCK = TABS_LOCK - 1
+    EVENTS_LOCK = EVENTS_LOCK - 1
 end
 
 return PopManager

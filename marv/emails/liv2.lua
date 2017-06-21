@@ -1,5 +1,5 @@
 return {
-    title = "Tech crap",
+    title = "Well done, here's more",
     text = "Congrats " .. SaveManager.current_user .. [[,
 Don't be discouraged about the thing about Fergus, people overhype him ~cof cof kiss ass cof cof~
 

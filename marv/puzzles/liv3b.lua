@@ -25,7 +25,7 @@ function objective_checker(room)
         end
         if #cbs[i].inp < 3 then all = false end
         for j = 1, 3 do
-            if cbs[i][j] and cbs[i][j] ~= vs[i][j] then
+            if cbs[i].inp[j] and cbs[i].inp[j] ~= vs[i][j] then
                 _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
                 return false
             end
@@ -35,7 +35,8 @@ function objective_checker(room)
 end
 
 extra_info =
-[[Each sequence of 3 numbers must be sorted, not the whole sequence of 18 numbers.]]
+[[Each sequence of 3 numbers must be sorted, not the whole sequence of 18 numbers.
+- Since this task came directly from the technology department, the I/O is different. The sequences do not have the first number as their size, and you should not output it either.]]
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}

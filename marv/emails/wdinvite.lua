@@ -1,4 +1,5 @@
 local p = require 'lore_events.paul2'
+local prev = require 'lore_events.paul1_2'
 
 return {
     title = "Notification: Party at mine @ April 20",
@@ -10,8 +11,10 @@ At my place. Be there at any time, leave whenever.
 
 Contact and address information is attached.
 
-This is an automatic invitation sent by MarvCalendar. Reply to set your status as Going.
+This is an automatic invitation sent by MarvCalendar.
+
+%red% <Reply to go to the party> %red%
 ]],
     author = "Marvellous Calendar (calendar-notification@marv.com)",
-    reply_func = p.after
+    reply_func = prev.after
 }

@@ -9,7 +9,7 @@ Nice work with that playlist! Even Bob got out of the chair.
 
 Hard as it is, let's get back to work. Well, I guess you learned how to use I/O consoles to store lists in the previous task. Now let's do it without them :P
 
-This is basically a harder version of the last task. You have no I/O consoles, so you need to store everything in the registers. Also, now values can be removed from the lists.
+This is basically a harder version of the last task. You have no I/O consoles, so you need to store everything in the registers. Also, now values can be removed from the lists. (If you pay attention, you'll realize you are actually implementing a bunch of stacks at the same time)
 
 Happy coding, and carry on.
 

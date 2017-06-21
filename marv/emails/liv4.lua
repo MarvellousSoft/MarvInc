@@ -3,7 +3,7 @@ return {
     text = [[
 Kept you waiting, huh?
 
-I heard you're the new senior in robots!! Nicely done. I always put in a good word for you, glad you could get a post you deserve, you really know you shit. Fergus was just another bullshitter, he won't be missed.
+I heard you're the new senior in robots!! Nicely done. I always put in a good word for you, glad you could get a post you deserve, you really know your shit. Fergus was just another bullshitter, he won't be missed.
 
 Keep it up and you might even replace Jen :P (don't tell her I said this, she can get really uptight about her job)
 

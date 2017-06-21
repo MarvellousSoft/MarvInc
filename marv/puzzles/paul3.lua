@@ -98,7 +98,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "Your eyes decieve you",
+            text = "Your eyes deceive you",
             clr = _G.Color.blue()
         })
 end

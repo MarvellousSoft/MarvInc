@@ -55,7 +55,7 @@ function on_start(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             local o = room.grid_obj[j][i]
-            if o and o.tp == 'console' and o.ctype == 'input' then
+            if o and o.tp == 'console' and o.ctype == 'output' then
                 bl = o
             end
         end
@@ -139,15 +139,20 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
              "vwvwvwvwvwvwvwvwvwvwv"..
              "wvwvwvwvwvwvwvwvwvwvw"
 
-
 function first_completed()
-    _G.PopManager.new("Congratz, senior",
-        "More lists are coming\n-- Liv",
+    _G.PopManager.new("GET HYPE",
+        "REMEMBER THE PARTY IS TODAY\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " bring it on ",
+            text = " PARTY HARD ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I'll be there ",
+            clr = _G.Color.black()
         })
 end

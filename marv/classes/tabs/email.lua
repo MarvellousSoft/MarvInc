@@ -207,14 +207,15 @@ function EmailTab:checkEmailClick(x, y, but)
     if but == 1 and not self.mail_box.on_hover then -- if not clicking scroll bar
         for i, mail in ipairs(e.email_list) do
             if mail.alpha > 250 and Util.pointInRect(x , y, {pos = {x = e.pos.x + e.email_border, y = e.pos.y + (e.email_border + e.email_height) * (number_emails - i)}, w = e.w - 2 * e.email_border, h = e.email_height}) then
+                self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
+                TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
+                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
                 if not mail.was_read then
+                    -- this needs to be done after the email is 'registered' or it won't be able to access it.
                     if mail.open_func then mail:open_func() end
                     mail.was_read = true
                     UNREAD_EMAILS = UNREAD_EMAILS - 1
                 end
-                self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
-                TABS_LOCK = true -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
             end
         end
     end
@@ -323,21 +324,23 @@ end
 -- Deletes emails with given authors
 -- Must not be called when an email is open
 function email_funcs.deleteAuthor(author)
-    local tmp, mail_list = {}, Util.findId('email_tab').email_list
+    local tab = Util.findId('email_tab')
+    local tmp, mail_list = {}, tab.email_list
     -- swapping contents of table
     for a, b in pairs(mail_list) do
         tmp[a] = b
         mail_list[a] = nil
     end
 
-    local i = 0
+    tab.email_cur = 0
     for _, e in ipairs(tmp) do
         if author ~= e.author then
-            i = i + 1
-            e.number = i
+            tab.email_cur = tab.email_cur + 1
+            e.number = tab.email_cur
             table.insert(mail_list, e)
         end
     end
+    UNREAD_EMAILS = email_funcs.getUnreadEmails()
 
 end
 

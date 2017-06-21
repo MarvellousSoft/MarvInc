@@ -58,7 +58,7 @@ t.jmp2 = {
     text = "The next code line executed will be the line labeled equal to <label>, instead of going to the next line. If <label> is a number, it will be evaluated first, that means jmp [5] will jump to the label that is the same as the number written in register #5.",
     examples = {t.jmp1.examples[1], {[[
 mov 5 0
-jmp [0]], "This code will jump to label 5, but if register #0 had a different value it would change to a different label."}
+jmp [0] ]], "This code will jump to label 5, but if register #0 had a different value it would (try to) jump to a different label."}
     }
 }
 
@@ -157,7 +157,7 @@ t.mov1 = {
 
 t.mov = {
     command = "mov <value> <address>",
-    text = [[Stores <value? in the register given by <address>. Notice that this is just a fancy version of "add value 0 address".]],
+    text = [[Stores <value> in the register given by <address>. Notice that this is just a fancy version of "add value 0 address".]],
     examples = {{[[
 mov [0] 1
 mov [0] 2 # Copies the value of register #0 to registers #1 and #2]]}}

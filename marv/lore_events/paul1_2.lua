@@ -7,7 +7,7 @@ paul.wait = 4
 
 function paul.run()
     Mail.new('paul2')
-    LoreManager.timer:after(5, function()
+    LoreManager.timer:after(10, function()
         Mail.new('wdinvite')
     end)
 end
@@ -15,7 +15,9 @@ end
 function paul.after(email)
     Mail.disableReply(email.number)
     email.can_be_deleted = true
-    email.referenced_email.can_be_deleted = true
+    local lore = require "classes.lore_manager"
+    lore.puzzle_done.paul_invite = true
+    lore.check_all()
 end
 
 return paul

@@ -65,23 +65,19 @@ end
 
 function state:keypressed(key)
     PopManager.keypressed(key)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     Util.defaultKeyPressed(key)
     pc_box:keyPressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        LoreManager.puzzle_done.tutorial = true -- TODO: REMOVE IN RELEASE
-        LoreManager.check_all()
-    elseif key == 'f11' then
-        print('here')
-        Mail.new('bm1')
+        -- add something to test the game
     end
 end
 
 function state:mousepressed(x, y, but)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:mousePressed(x,y,but)
 
@@ -97,13 +93,13 @@ function state:mousemoved(x, y)
 end
 
 function state:textinput(t)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:textInput(t)
 end
 
 function state:wheelmoved(x, y)
-    if EVENTS_LOCK then return end
+    if EVENTS_LOCK > 0 then return end
 
     pc_box:mouseScroll(x, y)
 end

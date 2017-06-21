@@ -11,8 +11,8 @@ return {
     Actually any number we write will have the same formula. If our number has 5 digits d4, d3, d2, d1, d0, we can write it as:
     d4x10^4 + d3x10^3 + d2x10^2 + d1x10^1 + d0x10^0
     And a number with n digits would have the formula:
-    d(nx10^n + d(n-1)x10^(n-1) + d(n-2)x10^(n-2) + ..... + d1x10^1 + d0x10^0,
-    Where dn, d(n-1), .... d1 and d0 can be any number from 0-9
+    d(n)x10^n + d(n-1)x10^(n-1) + d(n-2)x10^(n-2) + ..... + d1x10^1 + d0x10^0,
+    Where d(n), d(n-1), ..., d1 and d0 can be any number from 0-9.
 
     We call our numerical system the Decimal Numerical System! You don't have to be no Emmet Brown from Back to the Future to see that, ain't I right doc? ;-P
 
