@@ -7,7 +7,7 @@ It seems you have not understood this system completely. Let me explain it furth
 
 When you enter a puzzle, there are four tabs: %blue% <email> %end% , %blue% <code> %end% , %blue% <info> %end% and %blue% <manual> %end% .
 You are on the first one, and here you can read your emails.
-On the %blue% <code> %end% tab you can write and run commands. For now you only need the one I taught you ( %red% walk %end% ) to solve this introductory puzzle.
+On the %blue% <code> %end% tab you can write and run commands. For now you only need the one I taught you ( %inst% walk %end% ) to solve this introductory puzzle.
 On the tab %blue% <info> %end% you can check the puzzle's objectives and the current test robot information.
 On the last tab, %blue% <manual> %end% , you can check the commands you know, with detailed explanations when you click on the commands.
 

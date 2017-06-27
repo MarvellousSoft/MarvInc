@@ -3,12 +3,12 @@ return {
     text = [[
 Good job, Employee #]].. EMPLOYEE_NUMBER .. [[. Lets learn some new instructions.
 
-Use the %red% turn %end% command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a %pink% direction %end% , or the special arguments %pink% clock %end% or %pink% counter %end% , to turn the robot clockwise or counterclockwise, respectively.
+Use the %inst% turn %end% command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a %dir% direction %end% , or the special arguments %dir% clock %end% or %dir% counter %end% , to turn the robot clockwise or counterclockwise, respectively.
 
 Examples:
-    - %red% turn %pink% south %end%
-    - %red% turn %pink% clock %end%
-    - %red% turn %pink% counter %end%
+    - %inst% turn %dir% south %end%
+    - %inst% turn %dir% clock %end%
+    - %inst% turn %dir% counter %end%
 
 You will need this for future tasks, so don't forget about it. Use the next room to apply this new command, and don't forget to check the objectives on the %blue% <info> %end% tab.
 

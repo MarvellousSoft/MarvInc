@@ -3,11 +3,11 @@ return {
     text = [[
 Well done.
 
-Besides %pink% directions %end% , you can add another modifier to the %red% walk %end% command: a %green% value %end% . The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful for precise robot walking.
+Besides %dir% directions %end% , you can add another modifier to the %inst% walk %end% command: a %num% value %end% . The test subject will then walk that many steps. This may sound worse than the original command, but it may be useful for precise robot walking.
 
 Examples:
-    - %red% walk %green% 5 %end%
-    - %red% walk %pink% left %green% 10 %end%
+    - %inst% walk %num% 5 %end%
+    - %inst% walk %dir% left %num% 10 %end%
 
 Reply this email to start the experiment.
 
