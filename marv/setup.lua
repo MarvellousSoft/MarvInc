@@ -131,10 +131,12 @@ MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 
 -- Bot images (assume array part only)
-HEAD = {}
-table.insert(HEAD, love.graphics.newImage("assets/images/head_1.png"))
-BODY = {}
-table.insert(BODY, love.graphics.newImage("assets/images/body_1.png"))
+HEAD = {
+    love.graphics.newImage("assets/images/head_1.png"),
+}
+BODY = {
+    love.graphics.newImage("assets/images/body_1.png")
+}
 
 
 --Set game's global variables, random seed, window configuration and anything else needed
