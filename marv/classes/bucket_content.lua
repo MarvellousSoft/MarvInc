@@ -1,10 +1,16 @@
 local Color = require "classes.color.color"
 
+local function default_init(self, args)
+    self.img = args and args.img and OBJS_IMG[args.img]
+    self.color = args and args.color
+end
+
 local empty, water, paint
 
 empty = Class {
     img = OBJS_IMG.bucket_content,
-    color = Color.new(0, 0, 140)
+    color = Color.new(0, 0, 140),
+    init = default_init
 }
 
 function empty:pickup_other(bot, grid, i, j)
@@ -28,7 +34,8 @@ end
 
 water = Class {
     img = OBJS_IMG.bucket_content,
-    color = Color.blue()
+    color = Color.blue(),
+    init = default_init
 }
 
 function water:drop(bot, grid, i, j, blocked)
@@ -51,9 +58,9 @@ paint = Class {
 }
 
 function paint:init(args)
+    default_init(self, args)
     -- how many uses
     self.uses = args and args.uses or 1
-    self.color = args and args.color
 end
 
 function paint:pickup_other(bot, grid, i, j)

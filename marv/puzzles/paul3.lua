@@ -8,38 +8,48 @@ memory_slots = 4
 -- Bot
 bot = {'b', "EAST"}
 
+local env = _G.getfenv()
 -- name, draw background, image
-o = {"obst", false, "wall_none"}
-k = {'bucket', true, 'bucket', args = {content = 'water'}}
+env['-'] = {"obst", false, "wall_none"}
+
+local dirs = {'east', 'west', 'north', 'south'}
+for i = 1, 20 do
+    local c = _G.string.char(_G.string.byte('b') + i)
+    if c == 'n' then c = 'x' end
+    local img = 'dead_body' .. _G.love.math.random(1, 3)
+    local color = _G.Color.new(_G.love.math.random() * 256, 200, 150)
+    local dir = dirs[_G.love.math.random(1, 4)]
+    env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'dead_body_hair'}}, dir = dir}
+end
 
 local floor
 
-grid_obj =  "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "bkkkkkkkkkkkkkkkkkkkk"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"
+grid_obj =  "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "bcdefghijklmxopqrstuv"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"..
+            "---------------------"
 
 -- Floor
 w = "white_floor"
-_G.getfenv()[','] = "black_floor"
-g = "green_tile"
+env[','] = "black_floor"
+z = 'green_tile'
 
 grid_floor = "....................."..
              "....................."..
@@ -67,16 +77,15 @@ for i = 2, COLS do
     local y = _G.love.math.random() <= .5 and 12 or 10
     local p = (y - 1) * COLS + i
     grid_obj = grid_obj:sub(1, p - 1) .. '.' .. grid_obj:sub(p + 1, ROWS * COLS)
-    grid_floor = grid_floor:sub(1, p - 1) .. 'g' .. grid_floor:sub(p + 1, ROWS * COLS)
+    grid_floor = grid_floor:sub(1, p - 1) .. 'z' .. grid_floor:sub(p + 1, ROWS * COLS)
 end
 
 -- Objective
---This obviously won't be buckets in the final game... I hope.
-objective_text = "Clear the way! Move the buckets to the green tiles."
+objective_text = "Clear the way! Move the bodies to the green tiles."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
-            if grid_floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'g' then
+            if grid_floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'z' then
                 local o = room.grid_obj[j][i]
                 if not o or o.tp ~= 'bucket' then
                     return false
@@ -88,9 +97,10 @@ function objective_checker(room)
 end
 
 extra_info = [[
-There is a tile directly above or below each bucket. They are generated randomly.
+There is a tile directly above or below each body. They are generated randomly.
 - Use walkc.]]
 
+-- TODO change this text
 function first_completed()
     _G.PopManager.new("Situation status",
         "These buckets look suspiciously like dead human bodies...",
