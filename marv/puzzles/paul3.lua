@@ -1,4 +1,4 @@
-name = "Corridor Organizer"
+name = "Cleanup on Aisle 5"
 -- Puzzle number
 n = "B.3"
 
@@ -81,7 +81,7 @@ for i = 2, COLS do
 end
 
 -- Objective
-objective_text = "Clear the way! Move the bodies to the green tiles."
+objective_text = "It is threat level Midnight! Clear the way! Move the bodies to the green tiles."
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
@@ -103,12 +103,12 @@ There is a tile directly above or below each body. They are generated randomly.
 -- TODO change this text
 function first_completed()
     _G.PopManager.new("Situation status",
-        "These buckets look suspiciously like dead human bodies...",
+        "Never cleaner.",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "Your eyes deceive you",
+            text = "You ponder your life choices.",
             clr = _G.Color.blue()
         })
 end
