@@ -3,7 +3,7 @@
 
   A scroll window has an object and draws part of that object, with a vertical scrollbar if necessary.
   The object is received as the 3rd argument of its constructor and should contain the following fields:
-    - getHeight: function that returns the TRUE height of the object
+    - getHeight: function that returns the TRUE height of the object (not the height after cutting it)
     - pos: a Vector with the position of the object
     - draw: a function that draws the object, starting on (pos.x, pos.y) as usual, not caring about the scrollbar or possible translation
 
@@ -31,7 +31,7 @@ end
 local function scrollBarBounds(self)
     local sh = self.h / self.obj:getHeight() * self.h
     return
-        self.obj.pos.x + self.w - self.sw, -- x
+        self.obj.pos.x + self.w, -- x
         self.obj.pos.y + self.scrolled * (self.h - sh), -- y
         self.sw, -- width
         sh -- height
@@ -101,7 +101,8 @@ function ScrollWindow:update(dt)
 end
 
 function ScrollWindow:mousePressed(x, y, but)
-    if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h) then return end
+    if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h)
+        and not Util.pointInRect(x, y, scrollBarBounds(self)) then return end
     local oh = self.obj:getHeight()
     if self.obj.mousePressed then
         if oh <= self.h then self.obj:mousePressed(x, y, but)
@@ -113,7 +114,8 @@ function ScrollWindow:mousePressed(x, y, but)
 end
 
 function ScrollWindow:mouseReleased(x, y, but)
-    if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h) then return end
+    if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h)
+        and not Util.pointInRect(x, y, scrollBarBounds(self)) then return end
     if self.obj.mouseReleased then
         if oh <= self.h then self.obj:mouseReleased(x, y, but)
         else self.obj:mouseReleased(x, y + self.scrolled * (oh - self.h), but) end
