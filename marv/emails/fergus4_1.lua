@@ -10,6 +10,8 @@ We should really grab a beer some time soon, I will tell you more about it. And 
 Keep being positive!
 
 Fergus
+
+"You must be the change you wish to see in the world." - Ghandi
 ]],
     author = "Fergus Gerhard Jacobsen (jacobsen@rtd.marv.com)",
     can_be_deleted = true

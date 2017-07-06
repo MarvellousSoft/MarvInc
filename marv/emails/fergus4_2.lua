@@ -11,6 +11,8 @@ I know I'm asking for a lot, but I know you're a good person, and my job is on t
 We have to visualize ourselves solving these tasks and it will all happen!!!
 
 Fergus
+
+"You must be the change you wish to see in the world." - Ghandi
 ]],
     author = "Fergus Gerhard Jacobsen (jacobsen@rtd.marv.com)",
     puzzle_id = 'fergus4'
