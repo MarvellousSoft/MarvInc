@@ -1,7 +1,7 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 
--- Bucket class
+-- Container class
 
 Container = Class{
     __includes = {SpriteObject},
