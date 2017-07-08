@@ -38,6 +38,10 @@ end
 
 function state:enter(prev, user)
     SaveManager.login(user)
+
+    if START_PUZZLE then
+        ROOM:connect(START_PUZZLE)
+    end
 end
 
 function state:leave()

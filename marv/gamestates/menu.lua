@@ -13,6 +13,7 @@ local function try_login()
 end
 
 function state:enter()
+
     local bg
 
     -- Create background
@@ -32,6 +33,10 @@ function state:enter()
     self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 5, bw, bh, try_login, "login", self.font, nil, nil, Color.new(self.box.color))
 
     self:initUsernames()
+
+    if START_USER then
+        Gamestate.switch(GS.GAME, START_USER)
+    end
 end
 
 local function drawUsername(b, x, y)

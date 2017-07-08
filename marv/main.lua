@@ -59,7 +59,23 @@ ACT2 = require "gamestates.act2_intro",
 ACT3 = require "gamestates.act3_intro"
 }
 
-function love.load()
+-- When game starts, automatically changes to this puzzle
+START_PUZZLE = nil
+-- When game starts, automatically logs in with this user
+START_USER = nil
+-- Whether the game shows the splash screen
+SKIP_SPLASH = nil
+
+function love.load(args)
+    for i, cmd in ipairs(args) do
+        if cmd:sub(1, 9) == "--puzzle=" then
+            START_PUZZLE = cmd:sub(10)
+        elseif cmd:sub(1, 7) == "--user=" then
+            START_USER = cmd:sub(8)
+        elseif cmd == "--no-splash" then
+            SKIP_SPLASH = true
+        end
+    end
 
     Setup.config() --Configure your game
 
@@ -72,9 +88,10 @@ function love.load()
     -- draw, mousereleased and mousepressed are called manually
     -- mousemoved is ignored
     Gamestate.registerEvents(callbacks) --Overwrites love callbacks to call Gamestate as well
-    Gamestate.switch(GS.SPLASH) --Jump to the inicial state
 
     SaveManager.load()
+
+    Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH) --Jump to the initial state
 end
 
 -----------------
