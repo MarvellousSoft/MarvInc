@@ -10,82 +10,6 @@ local function height(font, text, limit)
     return (#txt) * font:getHeight()
 end
 
-
---[[
-    Function receives a text and returns a colored_text table as expected for love.graphics.printf function
-The format of the colored_text table is a sequence of 2-tuples (color_of_text_in_rgb, text_to_be_colored)
-The function colors the text based on tags with %. %colorname% means to start coloring a text with the color given.
-%end% means to stop using previous color and change to default color of text (default color must be given in RGB format).
-    Accepted tags:
-    %end% - Stop previous tag and start using default_color
-    %red% - Red color
-    %blue% - Blue color
-    %green% - Green color
-    %purple% - Purple color
-    %orange% - Orange color
-    %cyan% - Cyan color
-    %pink% - Pink color
-    %gray% - Gray color
-    %brown% - Brown color
-    %inst% - Used for instructions
-    %dir% - Used for directions
-    %lab% - Used for labels
-    %num% - Used for values
-    %addr% - Used for addresses
-]]
-
-local text_colors = {
-    red = {255, 0, 0},
-    blue = {12, 10, 150},
-    green = {13, 128, 11},
-    purple = {110, 41, 188},
-    orange = {255, 114, 0},
-    cyan = {22, 159, 183},
-    pink = {255, 45, 84},
-    gray = {122, 122, 122},
-    brown = {178, 101, 12},
-    inst = {116, 38, 147},
-    dir = {53, 83, 20},
-    lab = {24, 96, 78},
-    num = {132, 14, 24},
-    addr = {12, 42, 178}
-}
-
-local function stylizeText(text, default_color)
-    colored_text = {}
-    current_text = ""
-    current_color = default_color
-    local w, s
-    --[[Iterate through text, getting combinations of words + whitespaces,
-     then dividing the two, and analising the word for a tag]]--
-    for word_plus_whitespaces in text:gmatch("(%g*[%s\n]*)") do
-        w, s = word_plus_whitespaces:match("(%g*)([%s\n]*)")
-        --Check for tags
-        if w == "%end%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = default_color -- Change color to default
-            current_text = "" -- Reset current text
-        elseif w:match("^%%%a+%%$") then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = text_colors[w:match("%a+")] --Change color to correct color
-            current_text = "" --Reset current text
-        elseif w then
-            --Not a tag, so update current_text
-            current_text = current_text .. w
-        end
-        if s then
-            current_text = current_text .. s
-        end
-    end
-    --End of text, so insert all remaining text with last picked color
-    table.insert(colored_text, current_color)
-    table.insert(colored_text, current_text)
-
-    return colored_text
-end
-
 OpenedEmail = Class{
     __includes = {RECT},
 
@@ -110,7 +34,7 @@ OpenedEmail = Class{
         self.number = _number --Number of email
         self.title = _title -- Title of the email
         _text = _text:match("^%s*(.-)%s*$") -- trimmed text
-        self.text = stylizeText(_text, {0, 0, 0, 255}) -- Body of email
+        self.text = Util.stylizeText(_text, {0, 0, 0, 255}) -- Body of email
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 

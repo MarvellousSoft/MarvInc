@@ -37,7 +37,7 @@ ManualTab = Class {
 
         self.title_font = FONTS.firaBold(40)
         self.info_font = FONTS.fira(20)
-        self.info_text = "Here are all your know commands, their explanations and examples. Click on an item for more details."
+        self.info_text = "Here are all your known commands, their explanations and examples. Click on an item for more details."
 
         self.cmd_font = FONTS.fira(22)
         self.cmd_info_font = FONTS.fira(17)
@@ -60,6 +60,7 @@ local function wrap_height(font, txt, w)
 end
 
 function ManualTab:trueDraw()
+    -- Possible future improvement: Avoid calling Util.stylizeText all the time, since the output is always the same.
     love.graphics.setColor(0, 0, 0)
 
     local h = 0
@@ -77,44 +78,53 @@ function ManualTab:trueDraw()
             b.pos.x = 5 + self.pos.x
             b.pos.y = self.pos.y + h
             b:centralize(); b:draw()
-            love.graphics.setColor(0, 0, 0)
+            love.graphics.setColor(255, 255, 255)
 
             love.graphics.setFont(self.cmd_font)
-            love.graphics.print(items[item].command, self.pos.x + 5 + b.w + 5, self.pos.y + h)
+            love.graphics.printf(Util.stylizeText(items[item].command), self.pos.x + 5 + b.w + 5, self.pos.y + h, W, 'left')
             h = h + self.cmd_font:getHeight()
             if not self.expand_buts[item] then
                 h = h + 10
                 love.graphics.setFont(self.cmd_info_font)
-                love.graphics.printf(items[item].text, self.pos.x + 20, self.pos.y + h, self.w - 20)
-                h = h + wrap_height(self.cmd_info_font, items[item].text, self.w - 20) + self.cmd_info_font:getHeight()
+                local colored_text, normal_text = Util.stylizeText(items[item].text)
+                love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                h = h + wrap_height(self.cmd_info_font, normal_text, self.w - 20) + self.cmd_info_font:getHeight()
                 if #items[item].examples > 0 then
                     love.graphics.setFont(self.example_title_font)
+                    love.graphics.setColor(0, 0, 0)
                     love.graphics.print("Examples", self.pos.x + 20, self.pos.y + h)
                     h = h + self.example_title_font:getHeight()
                     love.graphics.setLineWidth(.5)
-                    for _, e in ipairs(items[item].examples) do
+                    for _, e in ipairs(items[item].examples) do -- for each example
                         h = h + 10
-                        local dh = wrap_height(self.example_code_font, e[1], self.w - 12.5)
+                        local colored_text, normal_text = Util.stylizeText(e[1]) -- e[1] is the code
+                        local dh = wrap_height(self.example_code_font, normal_text, self.w - 12.5)
+                        love.graphics.setColor(0, 0, 0)
                         love.graphics.rectangle('line', self.pos.x + 20, self.pos.y + h + 2.5, self.w - 40, dh + 5)
+                        love.graphics.setColor(255, 255, 255)
                         love.graphics.setFont(self.example_code_font)
-                        love.graphics.printf(e[1], self.pos.x + 22.5, self.pos.y + h + 5, self.w - 45)
+                        love.graphics.printf(colored_text, self.pos.x + 22.5, self.pos.y + h + 5, self.w - 45)
                         h = h + dh + 10
-                        if e[2] then
+                        if e[2] then -- e[2] is the explanation
                             h = h + 5
                             love.graphics.setFont(self.example_expl_font)
-                            love.graphics.printf(e[2], self.pos.x + 20, self.pos.y + h, self.w - 20)
-                            h = h + wrap_height(self.example_expl_font, e[2], self.w - 20)
+                            local colored_text, normal_text = Util.stylizeText(e[2])
+                            love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                            h = h + wrap_height(self.example_expl_font, normal_text, self.w - 20)
                         end
                     end
                 end
                 if items[item].notes then
                     h = h + 20
+                    love.graphics.setColor(0, 0, 0)
                     love.graphics.setFont(self.notes_title_font)
                     love.graphics.print("Notes", self.pos.x + 20, self.pos.y + h)
                     h = h + self.notes_title_font:getHeight() + 10
+                    love.graphics.setColor(255, 255, 255)
                     love.graphics.setFont(self.notes_text_font)
-                    love.graphics.printf(items[item].notes, self.pos.x + 20, self.pos.y + h, self.w - 20)
-                    h = h + wrap_height(self.notes_text_font, items[item].notes, self.w - 20)
+                    local colored_text, normal_text = Util.stylizeText(items[item].notes)
+                    love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                    h = h + wrap_height(self.notes_text_font, normal_text, self.w - 20)
                 end
                 h = h + 10
             end
@@ -209,17 +219,21 @@ function PButton:draw()
     Button.draw(self)
 end
 
-function ManualTab:addCommand(item_name)
-    table.insert(self.cmds, item_name)
+local function createCommand(self, item_name)
     local bsz = self.cmd_font:getHeight()
     local b = PButton(-2 * bsz, -2 * bsz, bsz, bsz, function() self:expand(item_name) end, '+', FONTS.fira(30))
     if items[item_name].command then
         -- You should also be able to click on the text
-        b.extra_width = self.cmd_font:getWidth(items[item_name].command) + 10
+        b.extra_width = self.cmd_font:getWidth(select(2, Util.stylizeText(items[item_name].command))) + 10
     end
     b.text_color = Color.green()
     b.text_color.a = 150
     self.expand_buts[item_name] = b
+end
+
+function ManualTab:addCommand(item_name)
+    table.insert(self.cmds, item_name)
+    createCommand(self, item_name)
 end
 
 -- Changes command 'from' to 'to'. Used for commands that are taught in parts.
@@ -227,17 +241,13 @@ function ManualTab:changeCommand(from, to)
     for i, name in ipairs(self.cmds) do
         if name == from then
             self.cmds[i] = to
-            local b = self.expand_buts[from] or self.collapse_buts[from]
             self.expand_buts[from], self.collapse_buts[from] = nil, nil
-            self.expand_buts[to] = b
-            b.text = '+'
-            b.callback = function() self:expand(to) end
-            if items[to].command then
-                b.extra_width = self.cmd_font:getWidth(items[to].command) + 10
-            end
+            createCommand(self, to)
             return
         end
     end
+    print("Current command '" .. from .. "' not found. Adding duplicate.")
+    self:addCommand(to)
 end
 
 function ManualTab:mousePressed(x, y, but)
