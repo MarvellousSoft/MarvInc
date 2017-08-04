@@ -265,6 +265,7 @@ The function colors the text based on tags with {}. {colorname} means to start c
     {num} - Used for values
     {addr} - Used for addresses
     {ds} - Used when mentioning data structures
+    {cmnt} - Used for comments
 ]]
 
 local text_colors = {
@@ -283,7 +284,8 @@ local text_colors = {
     lab = {24, 96, 78},
     num = {132, 14, 24},
     addr = {12, 42, 178},
-    ds = {178, 101, 12}
+    ds = {178, 101, 12},
+    cmnt = {40, 40, 40}
 }
 
 function util.stylizeText(text, default_color)
