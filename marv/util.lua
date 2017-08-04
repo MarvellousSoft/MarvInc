@@ -246,24 +246,25 @@ end
 --[[
     Function receives a text and returns a colored_text table as expected for love.graphics.printf function
 The format of the colored_text table is a sequence of 2-tuples (color_of_text_in_rgb, text_to_be_colored)
-The function colors the text based on tags with %. %colorname% means to start coloring a text with the color given.
-%end% means to stop using previous color and change to default color of text (default color must be given in RGB format).
+The function colors the text based on tags with {}. {colorname} means to start coloring a text with the color given.
+{end} means to stop using previous color and change to default color of text (default color must be given in RGB format).
     Accepted tags:
-    %end% - Stop previous tag and start using default_color
-    %red% - Red color
-    %blue% - Blue color
-    %green% - Green color
-    %purple% - Purple color
-    %orange% - Orange color
-    %cyan% - Cyan color
-    %pink% - Pink color
-    %gray% - Gray color
-    %brown% - Brown color
-    %inst% - Used for instructions
-    %dir% - Used for directions
-    %lab% - Used for labels
-    %num% - Used for values
-    %addr% - Used for addresses
+    {end} - Stop previous tag and start using default_color
+    {red} - Red color
+    {blue} - Blue color
+    {green} - Green color
+    {purple} - Purple color
+    {orange} - Orange color
+    {cyan} - Cyan color
+    {pink} - Pink color
+    {gray} - Gray color
+    {brown} - Brown color
+    {inst} - Used for instructions
+    {dir} - Used for directions
+    {lab} - Used for labels
+    {num} - Used for values
+    {addr} - Used for addresses
+    {ds} - Used when mentioning data structures
 ]]
 
 local text_colors = {
@@ -276,53 +277,37 @@ local text_colors = {
     pink = {255, 45, 84},
     gray = {122, 122, 122},
     brown = {178, 101, 12},
+    yellow = {195, 174, 38},
     inst = {116, 38, 147},
     dir = {53, 83, 20},
     lab = {24, 96, 78},
     num = {132, 14, 24},
-    addr = {12, 42, 178}
+    addr = {12, 42, 178},
+    ds = {178, 101, 12}
 }
 
 function util.stylizeText(text, default_color)
     default_color = default_color or {0, 0, 0, 255}
-    local colored_text = {}
-    local current_text = ""
-    local current_color = default_color
+    local colored_text = {default_color}
     local full_text = {}
-    local w, s
-    --[[Iterate through text, getting combinations of words + whitespaces,
-     then dividing the two, and analising the word for a tag]]--
-    for word_plus_whitespaces in text:gmatch("(%g*[%s\n]*)") do
-        w, s = word_plus_whitespaces:match("(%g*)([%s\n]*)")
-        local match = true
-        --Check for tags
-        if w == "%end%" then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = default_color -- Change color to default
-            current_text = "" -- Reset current text
-        elseif w:match("^%%%a+%%$") then
-            table.insert(colored_text, current_color)
-            table.insert(colored_text, current_text)
-            current_color = text_colors[w:match("%a+")] --Change color to correct color
-            if not current_color then
+    --[[ Iterate through text, anaylsing for {tags} ]]
+    for w in text:gmatch("{?[^{}]+}?") do
+        -- Check for tags
+        if w == "{end}" then
+            table.insert(colored_text, default_color) -- Change to default color
+        elseif w:match("^{%a+}$") then
+            local color = text_colors[w:match("%a+")] -- Getting color info from name
+            if not color then
                 print("unrecognized color '" .. w:match("%a+") .. "'")
+            else
+                table.insert(colored_text, color)
             end
-            current_text = "" --Reset current text
-        elseif w then
-            --Not a tag, so update current_text
-            current_text = current_text .. w
+        else
+            -- Not a tag, so update current_text
+            table.insert(colored_text, w)
             table.insert(full_text, w)
-            match = false
-        end
-        if s and (not match or s ~= " ") then
-            current_text = current_text .. s
-            table.insert(full_text, s)
         end
     end
-    --End of text, so insert all remaining text with last picked color
-    table.insert(colored_text, current_color)
-    table.insert(colored_text, current_text)
 
     return colored_text, table.concat(full_text)
 end

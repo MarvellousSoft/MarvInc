@@ -10,13 +10,13 @@ Each Example is an array with two strings, the first is the code, the second is 
 local t = {}
 
 t.walk1 = {
-    command = "%inst% walk %dir% <direction>",
+    command = "{inst}walk {dir}<direction>",
     text = [[The bot turns to <direction> and then the walks until it finds an obstacle. If <direction> is omitted, the bot will walk in the direction it is facing.]],
     examples = {{[[walk east # Walks right until it hits an obstacle]]}}
 }
 
 t.walk = {
-    command = "%inst% walk %num% <value> %dir% <direction>",
+    command = "{inst}walk {num}<value> {dir}<direction>",
     text = [[
 The bot turns to <direction> and then the walks <value> steps. One or both of the parameters may be omitted. If <value> is omitted, the bot will walk until it finds an obstacle. If <direction> is omitted, then the bot will walk in the direction it is facing.
 
@@ -28,7 +28,7 @@ walk east # Walks right until it hits an obstacle]]}},
 }
 
 t.walkc = {
-    command = "%inst% walkc %addr% <address> %dir% <direction>",
+    command = "{inst}walkc {addr}<address> {dir}<direction>",
     text = [[The bot turns to <direction>, walks until it finds an obstacle and then stores the number of steps walked in the register given by <address>. The argument <direction> is optional, and if omitted the bot will keep facing the same direction.]],
     examples = {{[[
 walkc 0 up
@@ -37,7 +37,7 @@ walk [0] down]], "With this code the bot will walk north until finding an obstac
 }
 
 t.turn = {
-    command = "%inst% turn %dir% <direction>",
+    command = "{inst}turn {dir}<direction>",
     text = [[The bot will turn to <direction>. In this command, direction may assume two extra values: clock and counter, if one of these are given, the bot will turn clockwise or counterclockwise, respectively.]],
     examples = {{[[
 turn clock
@@ -45,7 +45,7 @@ turn clock]], "This code will turn the robot to the oposite direnction it is fac
 }
 
 t.jmp1 = {
-    command = "%inst% jmp %lab% <label>",
+    command = "{inst}jmp {lab}<label>",
     text = "The next code line executed will be the line labeled equal to <label>, instead of going to the next line.",
     examples = {{[[
 lp: turn counter
@@ -54,7 +54,7 @@ jmp lp]], "This code will make the bot walk endlessly in a 2x2 square, in counte
 }
 
 t.jmp2 = {
-    command = "%inst% jmp %lab% <label>",
+    command = "{inst}jmp {lab}<label>",
     text = "The next code line executed will be the line labeled equal to <label>, instead of going to the next line. If <label> is a number, it will be evaluated first, that means jmp [5] will jump to the label that is the same as the number written in register #5.",
     examples = {t.jmp1.examples[1], {[[
 mov 5 0
@@ -85,7 +85,7 @@ jmp func
 }
 
 t.pickup1 = {
-    command = "%inst% pickup %dir% <direction>",
+    command = "{inst}pickup {dir}<direction>",
     text = [[
 The bot will first turn to <direction>, and then pickup the object on the tile it is facing. The argument <direction> is optional, and if omitted the bot will keep facing the same direction.
 
@@ -102,7 +102,7 @@ It is possible to pick up paint from a paint container by having an empty bucket
 }
 
 t.drop1 = {
-    command = "%inst% drop %dir% <direction>",
+    command = "{inst}drop {dir}<direction>",
     text = [[
 Analogous to pickup, but the bot will drop the object it is currently holding in the given direction, or in front of it if no direction is given.
 
@@ -124,7 +124,7 @@ Dropping a bucket with water will also drop the bucket. Dropping a bucket with p
 }
 
 t.add1 = {
-    command = "%inst% add %num% <value1> <value2> %addr% <address>",
+    command = "{inst}add {num}<value1> <value2> {addr}<address>",
     text = [[The sum of <value1> and <value2> will be stored in the register with number <address>.]],
     examples = {{[[
 add [0] 1 0 # Increments the value in register #0 by 1
@@ -142,7 +142,7 @@ t.sub1 = {
 }
 
 t.sub = {
-    command = "%inst% sub %num% <value1> <value2> %addr% <address>",
+    command = "{inst}sub {num}<value1> <value2> {addr}<address>",
     text = [[The same as "add", but for subtraction.]],
     examples = {{[[
 add [0] 1 0 # Increments the value in register #0 by 1
@@ -156,7 +156,7 @@ t.mov1 = {
 }
 
 t.mov = {
-    command = "%inst% mov %num% <value> %addr% <address>",
+    command = "{inst}mov {num}<value> {addr}<address>",
     text = [[Stores <value> in the register given by <address>. Notice that this is just a fancy version of "add value 0 address".]],
     examples = {{[[
 mov [0] 1
@@ -168,7 +168,7 @@ t.read1 = {
 }
 
 t.read = {
-    command = "%inst% read %addr% <address> %dir% <direction>",
+    command = "{inst}read {addr}<address> {dir}<direction>",
     text = [[
 The bot turns to <direction> and then reads one number from the console it is facing, and stores it in the register given by <address>. The <direction> argument is optional, and if omitted the bot will read from the console in front of it.
 
@@ -177,7 +177,7 @@ Reading a number removes it from the console. If there are no more numbers on th
 }
 
 t.write1 = {
-    command = "%inst% write %num% <value> %addr% <direction>",
+    command = "{inst}write {num}<value> {addr}<direction>",
     text = [[
 The bot turns to <direction> and then writes value to the console it is facing. The <direction> argument is optional, and if omitted the bot will write to the console in front of it.
 
@@ -203,7 +203,7 @@ jmp label]], "This code reads values from the console on the left, and writes th
 }
 
 t.cond_jmps = {
-    command = "%inst% j?? %num% <value1> <value2> %lab% <label>",
+    command = "{inst}j?? {num}<value1> <value2> {lab}<label>",
     text = [[
 For "jgt", if <value1> is greater than <value2>, then the next line executed will be the one labeled as <label>. That is, if <value1> is greater than <value2>, this instruction will be the same as "jmp <label>", otherwise, it will do nothing. Everything said about "jmp" also applies here.
 

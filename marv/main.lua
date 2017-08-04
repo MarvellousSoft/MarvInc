@@ -72,7 +72,7 @@ function love.load(args)
             START_PUZZLE = cmd:sub(10)
         elseif cmd:sub(1, 7) == "--user=" then
             START_USER = cmd:sub(8)
-        elseif cmd == "--no-splash" then
+        elseif cmd == "--no-splash" or cmd == "--skip-splash" then
             SKIP_SPLASH = true
         end
     end

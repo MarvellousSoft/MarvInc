@@ -13,7 +13,7 @@ Contact and address information is attached.
 
 This is an automatic invitation sent by MarvCalendar.
 
-%red% <Reply to go to the party> %red%
+{red}<Reply to go to the party>{end}
 ]],
     author = "Marvellous Calendar (calendar-notification@marv.com)",
     reply_func = prev.after

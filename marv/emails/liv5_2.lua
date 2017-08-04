@@ -1,11 +1,11 @@
 return {
     title = "I/O Consoles",
     text = [[
-Greetings, this is Richard. I'm here on behalf of Olivia to give you some insight in the %orange% I/O consoles %end% , as this is the first time you'll be working with them.
+Greetings, this is Richard. I'm here on behalf of Olivia to give you some insight in the {orange}I/O consoles{end}, as this is the first time you'll be working with them.
 
-%orange% I/O consoles %end% work exactly like regular consoles, but you can both read and write %num% data %end% to it. That means, in reality, they are a place to store %red% temporary %end% data.
+{orange}I/O consoles {end}work exactly like regular consoles, but you can both read and write {num}data {end}to it. That means, in reality, they are a place to store {red}temporary {end}data.
 
-Data is written to the end of it, and read from the beginning, so they work in a %brown% FIFO (first in first out) %end% fashion, just like %brown% queues %end% . Remember that whenever you read some data from it, this data is %red% erased %end% .
+Data is written to the end of it, and read from the beginning, so they work in a {ds}FIFO (first in first out) {end}fashion, just like {ds}queues{end}. Remember that whenever you read some data from it, this data is {red}erased{end}.
 
 Overall, a very simple component, and shouldn't need any further explaining.
 
