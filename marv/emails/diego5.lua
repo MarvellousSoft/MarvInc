@@ -3,7 +3,7 @@ return {
     text = [[
 help me out here bro
 
-since i started asking making questions and digging around this place, the higher ups began sending me more and more tasks. they are grinding my ass man, and not the good "hot chick grinding my ass in the club" type of grindin. and im pretty sure they are doing this so i stop sniffing around.
+since i started asking questions and digging around this place, the higher ups began sending me more and more tasks. they are grinding my ass man, and not the good "hot chick grinding my ass in the club" type of grindin. and im pretty sure they are doing this so i stop sniffing around.
 
 jokes on them, because sniffin is my third best quality. and i know what you are thinking. dont even ask bro. you dont wanna know.
 
