@@ -112,12 +112,13 @@ All numbers are between 0 and 999.
 
 function first_completed()
     _G.PopManager.new("Great work CS2",
-        [[Actually I just assumed you did a great work.
-         I'm busy looking at a grumpy cat pic.
+        [[
+Actually I just assumed you did a great work.
+I'm busy looking at a grumpy cat pic.
 
-         It's hilarious.
+It's hilarious.
 
-        -Janine]],
+-Janine]],
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
