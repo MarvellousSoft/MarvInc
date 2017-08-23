@@ -1,6 +1,13 @@
 require "classes.primitive"
 local Color = require "classes.color.color"
 local Reader = require "classes.reader"
+
+--LOCAL VARIABLES--
+
+local max_time_between_bot_messages = 5
+local min_time_between_bot_messages = 3
+local bot_message_timer_handle = nil
+
 --ROOM CLASS--
 
 --Room functions table
@@ -334,6 +341,18 @@ end
 
 function Room:update(dt)
     if self.mode == "online" then
+
+        --Create a bot message to popup for the player
+        if not bot_message_timer_handle then
+            local d = love.math.random(min_time_between_bot_messages, max_time_between_bot_messages)
+            bot_message_timer_handle = MAIN_TIMER:after(d,
+                function()
+                    Signal.emit("new_bot_message")
+                    bot_message_timer_handle = nil
+                end
+            )
+        end
+
         self.grid_trans_timer:update(dt)
         for _, v in pairs(self.grid_obj) do
             if v.death and v.destroy then
