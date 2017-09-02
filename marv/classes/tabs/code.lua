@@ -166,6 +166,7 @@ function CodeTab:textInput(txt)
 end
 
 function CodeTab:mousePressed(x, y, but)
+    if TABS_LOCK > 0 then return end
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
 
     if self.lock then return end
