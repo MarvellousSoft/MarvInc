@@ -6,9 +6,9 @@ Well, worked out fine, since the lazy programmers in the email area still didn't
 
 Ok. What you have to do in the tasks is to actually {red}sort a sequence{end}. Both tasks may seem very similar, but if you look carefully to their restrictions, you'll see they're {red}quite different {end}(and aren't supposed to be solved the same way).
 
-Here is the second task. Do whichever is easier for you. If you have no idea, don't be ashamed to {red}search the internet{end}. Being a chief doen't mean you know your shit (quite the opposite, usually).
+Here is the second task. Do whichever is easier for you. If you have no idea, don't be ashamed to {red}search the internet{end}. Being a head engineer doen't mean you know your shit (quite the opposite, usually).
 
-Chief away, and carry on.
+Boss away, and carry on.
 
 -- Liv]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",

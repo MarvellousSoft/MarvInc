@@ -23,7 +23,7 @@ Hope you got it. If you need more help, {gray}don't ask Olivia {end}because she 
 Thank you for your attention, carry on.
 
 Richard Black
-Programmer intern at Marvellous Inc.s Software Development Department]],
+Programmer intern at Marvellous Inc. Software Development Department]],
     author = "Richard Black (rick.black@sdd.marv.com)",
     can_be_deleted = true
 }

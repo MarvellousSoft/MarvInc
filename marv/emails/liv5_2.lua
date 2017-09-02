@@ -12,7 +12,7 @@ Overall, a very simple component, and shouldn't need any further explaining.
 Pleasure to meet you, carry on.
 
 Richard Black
-Programmer intern at Marvellous Inc.s Software Development Department]],
+Programmer intern at Marvellous Inc. Software Development Department]],
     author = "Richard Black (rick.black@sdd.marv.com)",
     can_be_deleted = true
 }

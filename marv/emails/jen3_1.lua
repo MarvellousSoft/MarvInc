@@ -14,7 +14,7 @@ I trust you'll do your best. And if you're feeling nervous, stop being nervous a
 Carry on, now and forever.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen3'

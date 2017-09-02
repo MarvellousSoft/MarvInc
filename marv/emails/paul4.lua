@@ -12,7 +12,7 @@ Could you put out the fire on the control room so that we can get this situation
 Thanks a lot, my man!
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 ]],
     author = "Paul Verkeufen (hempman@med.marv.com)",
     puzzle_id = 'paul4'

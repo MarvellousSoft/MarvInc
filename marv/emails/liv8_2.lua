@@ -14,7 +14,7 @@ Hope you got it. If you need more help, {red}Google {end}it.
 Nice to see you again, carry on.
 
 Richard Black
-Programmer intern at Marvellous Inc.s Software Development Department]],
+Programmer intern at Marvellous Inc. Software Development Department]],
     author = "Richard Black (rick.black@sdd.marv.com)",
     can_be_deleted = true
 }

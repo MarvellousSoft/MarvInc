@@ -14,7 +14,7 @@ Anyway, here is your first Senior task. I want you to read several numbers and w
 Carry on CS2, now and forever.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen4',

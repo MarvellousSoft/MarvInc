@@ -6,7 +6,7 @@ Oh shit man, I was so spaced out I almost forgot to tell you. Remember the thing
 Trip on, dude
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 
 ~ LEGALIZE ~
 ]],

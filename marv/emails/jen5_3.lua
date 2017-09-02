@@ -11,7 +11,7 @@ Carry on and try not to drown in your own vomit. That would be such tragedy. {gr
 
 PS: 'BSF' totally does not mean BackStabber {red}[REDACTED]{end}. Promise.
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Janitorial Services Department
+Head engineer at Marvellous Inc. Janitorial Services Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
 }

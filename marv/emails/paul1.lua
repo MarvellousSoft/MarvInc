@@ -8,7 +8,7 @@ I'm Paul from the material engineering department. Look man, I got a situation h
 Trip on, my man
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc.s Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 
 ~ Puff puff puff I go / a joint a stub let I roll / so high puff puff puff ~
 ]],

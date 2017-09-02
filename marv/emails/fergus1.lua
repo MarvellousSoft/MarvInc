@@ -16,7 +16,7 @@ As we say in here, carry on.
 "The road to success is paved with failure" - Steve Jobs
 
 Fergus Gerhard Jacobsen
-Senior Robot Tester at Marvellous Inc.s Robot Testing Department
+Senior Robot Tester at Marvellous Inc. Robot Testing Department
 ]],
     author = "Fergus Gerhard Jacobsen (jacobsen@rtd.marv.com)",
     puzzle_id = 'fergus1'
