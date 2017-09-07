@@ -1,4 +1,4 @@
-name = "Freedom Painter"
+name = "Home Improvement"
 -- Puzzle number
 n = "B.5"
 

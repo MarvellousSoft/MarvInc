@@ -9,7 +9,7 @@ Now I know what you must be thinking. I thought it too. But this is not the appr
 
 Could you put out the fire on the control room so that we can get this situation sorted, please?
 
-Thanks a lot, my man!
+Thanks a lot!
 
 Paul Verkeufen
 Head engineer at Marvellous Inc. Material Engineering Department
