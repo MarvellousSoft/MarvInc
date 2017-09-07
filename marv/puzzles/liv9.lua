@@ -1,4 +1,4 @@
-name = "Complete Brainfuck Interpreter"
+name = "Project Brainfuck Phase 2"
 -- Puzzle number
 n = "C.9"
 
@@ -195,19 +195,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("Interpreter Completed",
-        "Great! That wasn't easy.\n-- Liv",
+    _G.PopManager.new("Project Brainfuck Completed",
+        "Have you seen Olivia?\n\nKarl Franz F. L. von Linz",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " i'm da bomb ",
+            text = " No ",
             clr = _G.Color.blue()
-        }, {
-            func = function()
-                _G.ROOM:disconnect()
-            end,
-            text = " you're too kind ",
-            clr = _G.Color.black()
         })
 end

@@ -1,5 +1,5 @@
 return {
-    title = "I/O Consoles",
+    title = "[EXPLANATION] I/O Consoles",
     text = [[
 Greetings, this is Richard. I'm here on behalf of Olivia to give you some insight in the {orange}I/O consoles{end}, as this is the first time you'll be working with them.
 

@@ -1,5 +1,5 @@
 return {
-    title = "Brainfuck examples",
+    title = "[EXAMPLES] Simple brainfuck",
     text = [[
 Good afternoon. Olivia told me to send you some {blue}brainfuck {end}examples in case you still didn't get it. You {red}won't need {end}to code anything in it, but since you're gonna write an {blue}interpreter {end}it is essential to understand it.
 
