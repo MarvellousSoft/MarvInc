@@ -23,3 +23,5 @@ function this.run()
         Mail.new('bm3_1')
     end)
 end
+
+return this

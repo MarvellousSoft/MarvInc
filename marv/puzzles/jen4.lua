@@ -22,7 +22,7 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint'}}
+c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint', content_color = _G.Color.new(272 * 255 / 360, .65 * 255, .54 * 255)}}
 h = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 10}, dir = "east"}
 k = {'bucket', true, 'bucket', args = {content = 'empty'}}
 
