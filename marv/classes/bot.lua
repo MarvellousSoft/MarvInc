@@ -45,8 +45,8 @@ Bot = Class{
             -- beginning of a knuth shuffle
             while #self.traits < trait_n do
                 local i = love.math.random(#self.traits + 1, #TRAITS)
-                TRAITS[i], TRAITS[#self.traits] = TRAITS[#self.traits], TRAITS[i]
-                table.insert(self.traits, TRAITS[#self.traits])
+                TRAITS[i][1], TRAITS[#self.traits][1] = TRAITS[#self.traits][1], TRAITS[i][1]
+                table.insert(self.traits, TRAITS[#self.traits][1])
             end
 
         end

@@ -4,8 +4,8 @@ local Reader = require "classes.reader"
 
 --LOCAL VARIABLES--
 
-local max_time_between_bot_messages = 5
-local min_time_between_bot_messages = 3
+local max_time_between_bot_messages = 2
+local min_time_between_bot_messages = 2
 local bot_message_timer_handle = nil
 
 --ROOM CLASS--
