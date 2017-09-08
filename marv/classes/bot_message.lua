@@ -10,18 +10,20 @@ local getDialog
 BotMessage = Class{
     __includes = {RECT},
 
-    init = function(self, name, message, image)
+    init = function(self, name, message, image, image_color)
 
-        local width, height = 200, 100
+        local width, height = 280, 100
         RECT.init(self, W, H - height - 160, width, height)
 
         self.name = name
 
         self.message = message
 
-        self.font = FONTS.fira(17)
+        self.name_font = FONTS.fira(16)
+        self.body_font = FONTS.fira(13)
 
         self.image = image
+        self.image_color = image_color or Color.white()
 
         self.duration = 6 --How many seconds the message stay onscreen
 
@@ -32,13 +34,32 @@ BotMessage = Class{
 function BotMessage:draw()
 
     --Draw the background
+    Color.set(Color.new(206,83,31,255,'hsl', true))
+    love.graphics.rectangle("fill", self.pos.x-7, self.pos.y+7, self.w, self.h,5)
     Color.set(Color.white())
-    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+    love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h,5)
+
+    --Draw Portrait Background
+    local portrait_w, portrait_h = 60, 60
+    local portrait_x, portrait_y = self.pos.x + 10, self.pos.y + self.h/2 - portrait_h/2
+    Color.set(Color.new(206,9,81,255,'hsl', true))
+    love.graphics.rectangle("fill", portrait_x-7, portrait_y+7, portrait_w, portrait_h, 5)
+    Color.set(Color.white())
+    love.graphics.rectangle("fill", portrait_x, portrait_y, portrait_w, portrait_h, 5)
+
+    --Draw portrait
+    Color.set(self.image_color)
+    love.graphics.draw(self.image, portrait_x - 5, portrait_y, 0, 1,1)
+
+    --Draw message author
+    love.graphics.setFont(self.name_font)
+    Color.set(Color.black())
+    love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, portrait_y)
 
     --Draw message content
-    love.graphics.setFont(self.font)
+    love.graphics.setFont(self.body_font)
     Color.set(Color.black())
-    love.graphics.printf(self.message, self.pos.x + 10, self.pos.y + 10, self.w - 20)
+    love.graphics.printf(self.message, portrait_x + portrait_w + 10, portrait_y + 20, self.w - portrait_w - 25)
 
 end
 
@@ -46,7 +67,7 @@ end
 Signal.register("new_bot_message",
     function()
         local bot = BotModule.current_bot
-        local message = BotMessage(bot.name, getDialog(bot), bot.head)
+        local message = BotMessage(bot.name, getDialog(bot), HEAD[bot.head_i], Color.new(bot.body_clr, 200, 200))
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "bot_message")
@@ -82,7 +103,7 @@ Signal.register("new_bot_message",
 --Function returns a dialog text based on bots stats
 getDialog = function(bot)
     local messages = {}
-    table.insert(messages, "hello there")
+    table.insert(messages, "as a as asd asd fg ee as dw asd w qa s as ")
 
 
     return Util.randomElement(messages)
