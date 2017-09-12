@@ -4,8 +4,8 @@ local Reader = require "classes.reader"
 
 --LOCAL VARIABLES--
 
-local max_time_between_bot_messages = 2
-local min_time_between_bot_messages = 2
+local max_time_between_bot_messages = 120
+local min_time_between_bot_messages = 60
 local bot_message_timer_handle = nil
 
 --ROOM CLASS--
@@ -210,6 +210,32 @@ function Room:disconnect(wait)
         Util.findId("pcbox"):changeTabs(Util.findId("pcbox").menu_tabs, "email")
     end
     self.mode = "offline"
+
+    --Handle bots messages--
+
+    --Remove handle for creating a new bot message
+    if(bot_message_timer_handle) then
+      MAIN_TIMER:cancel(bot_message_timer_handle)
+    end
+    bot_message_timer_handle = nil
+
+    --Remove any message still active
+    local messages = Util.findSbTp("bot_message")
+    if messages then
+      for message in pairs(messages) do
+        if message.handles["destroy"] then
+          MAIN_TIMER:cancel(message.handles["destroy"])
+        end
+        if not message.handles["leave_movement"] then
+          message.handles["leave_movement"] = MAIN_TIMER:tween(.5, message.pos, {x = message.pos.x + message.w}, "in-quad",
+              function()
+                  message.death = true
+              end
+          )
+        end
+      end
+    end
+
     self:clear()
 end
 

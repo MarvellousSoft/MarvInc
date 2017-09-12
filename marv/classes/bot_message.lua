@@ -25,7 +25,7 @@ BotMessage = Class{
         self.image = image
         self.image_color = image_color or Color.white()
 
-        self.duration = 6 --How many seconds the message stay onscreen
+        self.duration = 12 --How many seconds the message stay onscreen
 
         self.tp = "bot_message"
     end
@@ -67,7 +67,8 @@ end
 Signal.register("new_bot_message",
     function()
         local bot = BotModule.current_bot
-        local message = BotMessage(bot.name, getDialog(bot), HEAD[bot.head_i], Color.new(bot.body_clr, 200, 200))
+        if not bot then return end
+        local message = BotMessage(bot.name, getDialog(bot), HEAD[bot.head_i], Color.new(bot.head_clr, 200, 200))
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "bot_message")
@@ -103,8 +104,37 @@ Signal.register("new_bot_message",
 --Function returns a dialog text based on bots stats
 getDialog = function(bot)
     local messages = {}
-    table.insert(messages, "as a as asd asd fg ee as dw asd w qa s as ")
 
+    local all_caps = false
+
+    --Get all dialogs related to bot traits
+    for _,traits in ipairs(TRAITS) do
+      for _,bot_traits in ipairs(bot.traits) do
+        if traits[1] == bot_traits then
+          for _,dialog in ipairs(traits[2]) do
+            table.insert(messages, dialog)
+          end
+        end
+      end
+    end
+
+    --Insert regular dialogs
+    for _,dialog in ipairs(REGULAR_DIALOGS) do
+      table.insert(messages,dialog)
+    end
+
+    --Make special actions
+    for _,bot_traits in ipairs(bot.traits) do
+      if bot_traits == "TYPES IN ALL CAPS" then
+        all_caps = true
+      end
+    end
+
+    if all_caps then
+      for i,dialog in ipairs(messages) do
+          messages[i] = string.upper(dialog)
+      end
+    end
 
     return Util.randomElement(messages)
 end
