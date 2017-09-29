@@ -85,6 +85,16 @@ function state:mousepressed(x, y, but)
 
     pc_box:mousePressed(x,y,but)
 
+    --Pass mouse-click to side messages
+    if but == 1 then
+        local side_messages = Util.findSbTp("side_message")
+        if side_messages then
+            for message in pairs(side_messages) do
+                message:mousepressed(x,y)
+            end
+        end
+    end
+
 end
 
 function state:mousereleased(x, y, button, touch)

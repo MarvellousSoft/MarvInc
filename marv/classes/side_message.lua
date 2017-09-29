@@ -5,9 +5,9 @@ local Color = require "classes.color.color"
 
 local getDialog
 
---Bot Message Class
+--Side Message Class
 
-BotMessage = Class{
+SideMessage = Class{
     __includes = {RECT},
 
     init = function(self, name, message, image, image_color)
@@ -25,13 +25,19 @@ BotMessage = Class{
         self.image = image
         self.image_color = image_color or Color.white()
 
-        self.duration = 12 --How many seconds the message stay onscreen
+        --Portrait values
+        self.portrait_offset_x = 0
+        self.portrait_offset_y = 0
+        self.portrait_scale_x = 1
+        self.portrait_scale_y = 1
 
-        self.tp = "bot_message"
+        self.duration = 10 --How many seconds the message stay onscreen
+
+        self.tp = "side_message"
     end
 }
 
-function BotMessage:draw()
+function SideMessage:draw()
 
     --Draw the background
     Color.set(Color.new(206,83,31,255,'hsl', true))
@@ -49,7 +55,7 @@ function BotMessage:draw()
 
     --Draw portrait
     Color.set(self.image_color)
-    love.graphics.draw(self.image, portrait_x - 5, portrait_y, 0, 1,1)
+    love.graphics.draw(self.image, portrait_x + self.portrait_offset_x, portrait_y + self.portrait_offset_y, 0, self.portrait_scale_x,self.portrait_scale_y)
 
     --Draw message author
     love.graphics.setFont(self.name_font)
@@ -63,39 +69,86 @@ function BotMessage:draw()
 
 end
 
+function SideMessage:setPortraitOffset(x,y)
+
+    if x then self.portrait_offset_x = x end
+    if y then self.portrait_offset_y = y end
+
+end
+
+function SideMessage:setPortraitScale(x,y)
+
+    if x then self.portrait_scale_x = x end
+    if y then self.portrait_scale_y = y end
+
+end
+
+function SideMessage:activate()
+
+    --Create initial effect
+    self.handles["start_movement"] = MAIN_TIMER:tween(.3, self.pos, {x = self.pos.x - self.w}, "in-out-quad")
+
+    --Move all other messages up
+    local all_messages = Util.findSbTp("side_message")
+    for bot_m in pairs(all_messages) do
+        if bot_m ~= self then
+            local handle = MAIN_TIMER:tween(.5, bot_m.pos, {y = bot_m.pos.y - bot_m.h - 10}, 'out-back')
+            table.insert(bot_m.handles, handle)
+        end
+    end
+
+    --Start time to destroy message
+    self.handles["destroy"] = MAIN_TIMER:after(self.duration,
+          function()
+              self:deactivate()
+          end
+    )
+
+end
+
+function SideMessage:deactivate()
+
+    --Remove timer if exists
+    if self.handles["destroy"] then
+        MAIN_TIMER:cancel(self.handles["destroy"])
+    end
+
+    --Let animation happen if is already deactivating
+    if self.handles["leave_movement"] then return end
+
+    self.handles["leave_movement"] = MAIN_TIMER:tween(.2, self.pos, {x = self.pos.x + self.w}, "in-linear",
+        function()
+            self.death = true
+        end
+    )
+
+end
+
+--Deactivates a message if its clicked upon
+function SideMessage:mousepressed(x,y)
+
+    if x >= self.pos.x and x <= self.pos.x + self.w and
+       y >= self.pos.y and y <= self.pos.y + self.h then
+        self:deactivate()
+    end
+
+end
+
+
 --Register signal to create a bot signal
 Signal.register("new_bot_message",
     function()
         local bot = BotModule.current_bot
         if not bot then return end
-        local message = BotMessage(bot.name, getDialog(bot), HEAD[bot.head_i], Color.new(bot.head_clr, 200, 200))
+        local message = SideMessage(bot.name, getDialog(bot), HEAD[bot.head_i], Color.new(bot.head_clr, 200, 200))
 
         --Add message to the game
-        message:addElement(DRAW_TABLE.GUI, "bot_message")
+        message:addElement(DRAW_TABLE.GUI, "side_message")
+        message:setPortraitOffset(-5,0) --Offset for bot portrait image
 
-        --Create initial effect
-        message.handles["start_movement"] = MAIN_TIMER:tween(.3, message.pos, {x = message.pos.x - message.w}, "out-quad")
+        message:activate()
 
-        --Move all other messages up
-        local all_messages = Util.findSbTp("bot_message")
-        for bot_m in pairs(all_messages) do
-            if bot_m ~= message then
-                local handle = MAIN_TIMER:tween(.5, bot_m.pos, {y = bot_m.pos.y - bot_m.h - 10}, 'out-back')
-                table.insert(bot_m.handles, handle)
-            end
-        end
-
-        --Start time to destroy message
-        message.handles["destroy"] = MAIN_TIMER:after(message.duration,
-            function()
-                message.handles["leave_movement"] = MAIN_TIMER:tween(.5, message.pos, {x = message.pos.x + message.w}, "in-quad",
-                    function()
-                        message.death = true
-                    end
-                )
-            end
-        )
-
+        return message
     end
 )
 

@@ -27,7 +27,7 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 require "classes.tabs.manual"
 
-require "classes.bot_message"
+require "classes.side_message"
 require "classes.pc_box"
 require "classes.sprite"
 require "classes.sprite_object"
