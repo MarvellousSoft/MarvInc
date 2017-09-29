@@ -7,17 +7,17 @@ return {
     text = [[
 Congratulation Employee #]]..EMPLOYEE_NUMBER..[[.
 
-You did your task with excellence, but I can't say I'm impressed. Licking the Statue of Liberty. That would be impressive.
+You did your task with excellence, but I can't say I'm impressed. {blue}Licking the Statue of Liberty{end}. That would be impressive.
 
-But I'm happy to say Franz is satisfied with your progress, and you got a well deserved promotion: Fergus position. Don t worry about him, he was a liabilty this company couldn't afford anymore, so we sent him away. You won't be seeing him around anymore. I can guarantee. :)
+But I'm happy to say {brown}Franz{end} is satisfied with your progress, and you got a well deserved promotion: {pink}Fergus{end} position. Don't worry about him, he was a liabilty this company couldn't afford anymore, so we sent him away. You won't be seeing him around anymore. I can guarantee. {purple}:){end}
 
-To celebrate the occasion I've arranged one of the interns to upgrade your OS to the most recent version. Enjoy.
+To celebrate the occasion I've arranged one of the interns to upgrade your {green}OS{end} to the most recent version. Enjoy.
 
 Things will be a lot harder from now on. Keep up the good work, you're on the right track.
 
 Carry on, now and forever.
 
-PS: If you were still wondering, that task objective was to create a cleaning algorithm for our cafeteria. Marvinc will be cleaner thanks to you. Good job.
+{gray}PS: If you were still wondering, that task objective was to create a cleaning algorithm for our cafeteria. Marvinc will be cleaner thanks to you. {purple}Good job{gray}.{end}
 
 Janine Leubwitz
 Chief engineer at Marvellous Inc.s Robot Testing Department
