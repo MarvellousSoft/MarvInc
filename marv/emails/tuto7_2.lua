@@ -1,7 +1,7 @@
 return {
     title = "Conditional Jumps",
     text = [[
-Here is a list of all {red}conditional jumps {end}and their meaning. You can also see them at the {blue}<manual> {end}tab.
+Here is a list of all {red}conditional jumps {end}and their meaning. You can also see them at the {tab}<manual> {end}tab.
 
 - {inst}jgt {end}- {red}Greater Than{end}, jumps if {num}first value {end}is greater than the {num}second{end}.
 

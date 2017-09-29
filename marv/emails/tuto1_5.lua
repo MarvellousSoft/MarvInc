@@ -3,7 +3,7 @@ return {
     text = [[
 Well, we all have our hard days.
 
-The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your {blue}<code> {end}tab, then hit the {orange}play {end}button to start the simulation.
+The problem consists of moving the robot to the red tile. The path is unique, so the instructions should be very direct. You should write the following code on your {tab}<code> {end}tab, then hit the {orange}play {end}button to start the simulation.
 
     - {inst}walk {dir}left{end}
       {inst}walk {dir}up{end}

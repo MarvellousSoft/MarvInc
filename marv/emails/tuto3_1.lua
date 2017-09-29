@@ -10,7 +10,7 @@ Examples:
     - {inst}turn {dir}clock{end}
     - {inst}turn {dir}counter{end}
 
-You will need this for future tasks, so don't forget about it. Use the next room to apply this new command, and don't forget to check the objectives on the {blue}<info> {end}tab.
+You will need this for future tasks, so don't forget about it. Use the next room to apply this new command, and don't forget to check the objectives on the {tab}<info> {end}tab.
 
 As always, reply this email to start the puzzle.
 

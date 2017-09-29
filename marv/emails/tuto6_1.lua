@@ -3,7 +3,7 @@ return {
     text = [[
 Let's take it up a notch shall we? You will now learn to use the {addr}registers {end}and two new commands: {inst}write {end}and {inst}add{end}.
 
-{addr}Registers {end}can hold {num}values{end}. Think of them as the memory in your {blue}<code>{end}. To access the {num}content {end}of the {addr}register #n{end}, just write {num}[n]{end}. So if you want the {num}value {end}in the {addr}register #5{end}, you write {num}[5]{end}. You can see them just below your {blue}<code> {end}notepad, with their respective numbers and contents. {addr}Register {end}numbers start from 0, and are located in the top-left corner of a {addr}register{end}, while the {num}content {end}is the big number centered on the box.
+{addr}Registers {end}can hold {num}values{end}. Think of them as the memory in your {tab}<code>{end}. To access the {num}content {end}of the {addr}register #n{end}, just write {num}[n]{end}. So if you want the {num}value {end}in the {addr}register #5{end}, you write {num}[5]{end}. You can see them just below your {tab}<code> {end}notepad, with their respective numbers and contents. {addr}Register {end}numbers start from 0, and are located in the top-left corner of a {addr}register{end}, while the {num}content {end}is the big number centered on the box.
 
 The {inst}add {end}command receives three arguments: Two {num}values {end}to be added, and the {addr}address {end}where their sum will be stored.
 

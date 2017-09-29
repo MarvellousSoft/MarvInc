@@ -15,7 +15,7 @@ Here are some useful shortcuts to enhance your working experience here at Marvel
 
 - Enter: close pop-ups.
 
-Remember them all. As we say here in Marvellous Inc. {red}"Mice are for chumps and Larry from accounting"{end}.
+Remember them all. As we say here in Marvellous Inc. {purple}"Mice are for chumps and Larry from accounting"{end}.
 
 Stay practical, and carry on.
 ]],
