@@ -21,7 +21,7 @@ Make a generic algorithm for us that can traverse any maze, ok?
 Thanks {blue}CS2{end}. Carry on.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen5',

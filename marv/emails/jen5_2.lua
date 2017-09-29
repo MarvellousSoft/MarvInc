@@ -12,7 +12,7 @@ For now this is just a warning. But if I find more condoms under my desk, {red}t
 Carry on.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
 }

@@ -83,7 +83,7 @@ floor = grid_floor
 
 function first_completed()
     _G.PopManager.new("Congratulations",
-        "Senior Tester Fergus will contact you at his earliest disposure.",
+        "Senior Tester Fergus will contact you at his earliest disposure.\n\n[This is an automated response]",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()

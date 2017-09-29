@@ -1,26 +1,17 @@
 return {
-    title = "Improving the language",
+    title = "I'm done",
     text = [[
-Nicely done {red}(Y){end}
+{red}Holy fuck{end}. Corporate are really, {red}really{end} fucking stupid.
 
-For now the {blue}language {end}is quite horrible, no condition-checking or loops, makes it impossible to do even the simplest algorithm. Well, let's fix this.
+As you can see, everything is fucking falling apart, but they still think my {purple}Project Brainfuck{end} will be a game-changer hahahahaha. They are sending all their (unfrozen) resources here. I got 100 new servers, and I'm running some stupid busy loop on them to pretend they are being used to their full power.
 
-There is a {inst}loop structure {end}in {blue}brainfuck{end}. It is done using {inst}brackets{end}. {inst}[{blue}code{inst}] {end}means that the segment {blue}code {end}will be executed as long as the {num}value {end}pointed by the {addr}data pointer {end}is non-zero.
+Franz started sending me emails, talking about our purpose in the history of humankind and other epic shit like that. I always knew the bots seemed to good to be true, but... {red}Fuck it all{end}. I'm jumping ship.
 
-More formally, imagine there is an {blue}instruction pointer{end}, that points to the instruction that is currently executing (like the white indicator you see on the right when executing L++). Excluding the loop, all instructions just make the {blue}IP (instruction pointer) {end}increment. When the {blue}IP {end}is at a {inst}[{end}, it will jump to the matching {inst}] {end}if the {num}value {end}pointed by the {addr}DP (data pointer) {end}is 0, otherwise it will just increment. In the same way, when the {blue}IP {end}is at a {inst}]{end}, it will jump to the matching {inst}[ {end}if the {num}value {end}pointed by the {addr}DP {end}is non-zero.
+Richard will send you some task related to what you were doing. As always, he is fucking oblivious. Do it, don't do it, {red}I don't fucking care{end}. I'll be taking care of myself, finding some nice job at some Google office far from here, and relaxing with my fat paycheck.
 
-A simple example: suppose the value pointed by the {addr}DP {end}is positive*, then using {blue}[-] {end}will make that {num}value {end}become 0, because it will subtract 1 until it is so. From this you can see that {blue}brainfuck {end}is {red}WAY {end}simpler than L++, since you need an {red}ALGORITHM {end}just to make a position become 0.
+Fuck you too, carry on.
 
-If instead you write {blue}[->+<]{end}, then what you're actually doing is zeroing the position {addr}DP {end}and adding that value do position {addr}DP+1{end}. Notice that there can be {red}loops inside loops{end}! (This will make the interpreter much harder than the previous one {red}:P{end})
-
-We'll give you enough registers to {red}store the whole code {end}in memory, relax. The white console output will be {red}ended by a 0{end}, so you will know when to stop reading the code.
-
-Good luck, you'll need it. Carry on.
-
--- Liv
-
-* If you're a real L++ expert, you'll see that this works even if the value is negative, since -999 - 1 = 999 (it will take a LOT of time, though).
-]],
+-- Liv]],
     author = "Olivia Kavanagh (liv.k@sdd.marv.com)",
-    puzzle_id = 'liv9'
+    can_be_deleted = true
 }

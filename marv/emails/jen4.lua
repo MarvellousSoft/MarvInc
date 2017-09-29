@@ -14,7 +14,7 @@ Anyway, here is your first {purple}Senior task{end}. I want you to read several 
 Carry on {blue}CS2{end}, now and forever.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen4',

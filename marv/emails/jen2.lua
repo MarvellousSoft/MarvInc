@@ -15,7 +15,7 @@ Once again, I'm sorry for my lack of profissionalism, it will not happen again.
 Suit up and carry on.
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     puzzle_id = 'jen2'

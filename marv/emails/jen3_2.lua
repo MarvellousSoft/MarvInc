@@ -20,7 +20,7 @@ Carry on, now and forever.
 {gray}PS: If you were still wondering, that task objective was to create a cleaning algorithm for our cafeteria. Marvinc will be cleaner thanks to you. {purple}Good job{gray}.{end}
 
 Janine Leubwitz
-Chief engineer at Marvellous Inc.s Robot Testing Department
+Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     reply_func = function(e)
