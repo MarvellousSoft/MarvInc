@@ -76,7 +76,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        -- add something to test the game
+        Signal.emit("new_side_message", "Larry", "hey dude", BUTS_IMG.play, nil, {.5,.5})
     end
 end
 

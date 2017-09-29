@@ -135,7 +135,7 @@ function SideMessage:mousepressed(x,y)
 end
 
 
---Register signal to create a bot signal
+--Register signal to create a bot_message signal
 Signal.register("new_bot_message",
     function()
         local bot = BotModule.current_bot
@@ -147,6 +147,28 @@ Signal.register("new_bot_message",
         message:setPortraitOffset(-5,0) --Offset for bot portrait image
 
         message:activate()
+
+        return message
+    end
+)
+
+--Register signal to create a custom side message
+Signal.register("new_side_message",
+    function(name, text, image, offset, scale)
+
+        local message = SideMessage(name, text, image, Color.white())
+
+        --Add message to the game
+        message:addElement(DRAW_TABLE.GUI, "side_message")
+        message:activate()
+
+        if offset then
+            message:setPortraitOffset(unpack(offset))
+        end
+
+        if scale then
+            message:setPortraitScale(unpack(scale))
+        end
 
         return message
     end
