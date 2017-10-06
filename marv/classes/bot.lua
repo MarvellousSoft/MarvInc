@@ -45,9 +45,10 @@ Bot = Class{
             -- beginning of a knuth shuffle
             while #self.traits < trait_n do
                 local i = love.math.random(#self.traits + 1, #TRAITS)
-                TRAITS[i], TRAITS[#self.traits] = TRAITS[#self.traits], TRAITS[i]
-                table.insert(self.traits, TRAITS[#self.traits])
+                TRAITS[i], TRAITS[#self.traits+1] = TRAITS[#self.traits+1], TRAITS[i]
+                table.insert(self.traits, TRAITS[#self.traits+1][1])
             end
+
         end
 
         -- copy it to bot.current_bot
@@ -167,6 +168,7 @@ function Bot:draw()
     Color.set(self.head_clr)
     love.graphics.draw(self.head, self.rx + dw, self.ry + dh, self.r[1],
                        self.sx, self.sy, w / 2, h / 2)
+
 end
 
 return bot

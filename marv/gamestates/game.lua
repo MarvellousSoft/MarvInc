@@ -76,7 +76,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        -- add something to test the game
+        Signal.emit("new_side_message", "Larry", "hey dude", BUTS_IMG.play, nil, {.5,.5})
     end
 end
 
@@ -84,6 +84,16 @@ function state:mousepressed(x, y, but)
     if EVENTS_LOCK > 0 then return end
 
     pc_box:mousePressed(x,y,but)
+
+    --Pass mouse-click to side messages
+    if but == 1 then
+        local side_messages = Util.findSbTp("side_message")
+        if side_messages then
+            for message in pairs(side_messages) do
+                message:mousepressed(x,y)
+            end
+        end
+    end
 
 end
 
