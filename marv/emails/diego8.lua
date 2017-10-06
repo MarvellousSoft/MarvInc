@@ -13,10 +13,12 @@ JESUS MAN I CAN HEAR STEPS THEY MUST BE LISTENING ME THE WALLS HAVE EYES AND EAR
 ]],
     author = "Diego Lorenzo Vega (vega@rtd.marv.com)",
     open_func = function()
-        require('classes.opened_email').close()
-        Mail.deleteAuthor("Diego Lorenzo Vega (vega@rtd.marv.com)")
-        FX.full_static()
-        LoreManager.puzzle_done.diego_died = true
-        LoreManager.check_all()
+        MAIN_TIMER:after(5, function()
+            require('classes.opened_email').close()
+            Mail.deleteAuthor("Diego Lorenzo Vega (vega@rtd.marv.com)")
+            FX.full_static()
+            LoreManager.puzzle_done.diego_died = true
+            LoreManager.check_all()
+        end)
     end
 }

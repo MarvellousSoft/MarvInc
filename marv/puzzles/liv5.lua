@@ -141,7 +141,7 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
 
 function first_completed()
     _G.PopManager.new("GET HYPE",
-        "REMEMBER THE PARTY IS TODAY\n-- Liv",
+        "REMEMBER THE PARTY IS TODAY\n\n-- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()

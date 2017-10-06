@@ -135,7 +135,7 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
 
 function first_completed()
     _G.PopManager.new("Nice!",
-        "But Fergus did it faster :B\n -- Liv",
+        "But Fergus did it faster :B\n\n -- Liv",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()

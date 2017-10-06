@@ -6,7 +6,7 @@ First of all, appreciate the help man. Without you we would still be counting th
 Fuck the system.
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 
 ~ LEGALIZE ~
 ]],

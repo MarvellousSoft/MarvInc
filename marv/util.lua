@@ -259,13 +259,14 @@ The function colors the text based on tags with {}. {colorname} means to start c
     {pink} - Pink color
     {gray} - Gray color
     {brown} - Brown color
-    {inst} - Used for instructions
-    {dir} - Used for directions
-    {lab} - Used for labels
-    {num} - Used for values
-    {addr} - Used for addresses
+    {inst} - Used for instructions (has a manual version {instm})
+    {dir} - Used for directions (has a manual version {dirm})
+    {lab} - Used for labels (has a manual version {labm})
+    {num} - Used for values (has a manual version {numm})
+    {addr} - Used for addresses (has a manual version {addrm})
+    {cmnt} - Used for comments (has a manual version {cmntm})
     {ds} - Used when mentioning data structures
-    {cmnt} - Used for comments
+    {tab} - Used for pc-box tabs
 ]]
 
 local text_colors = {
@@ -279,13 +280,14 @@ local text_colors = {
     gray = {122, 122, 122},
     brown = {178, 101, 12},
     yellow = {195, 174, 38},
-    inst = {116, 38, 147},
-    dir = {53, 83, 20},
-    lab = {24, 96, 78},
-    num = {132, 14, 24},
-    addr = {12, 42, 178},
-    ds = {178, 101, 12},
-    cmnt = {40, 40, 40}
+    inst = {189,0,255}, instm = {177,94,255},
+    dir = {0,30,255}, dirm = {86,106,255},
+    lab = {0,255,159}, labm = {0,255,159},
+    num = {255, 16, 31}, numm = {255, 109, 119},
+    addr = {192, 242, 77}, addrm = {192, 242, 77},
+    cmnt = {40, 40, 40}, cmntm = {20, 20, 20},
+    ds = {255, 218, 53},
+    tab = {216,17,89}
 }
 
 function util.stylizeText(text, default_color)

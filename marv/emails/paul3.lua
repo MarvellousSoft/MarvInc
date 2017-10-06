@@ -12,7 +12,7 @@ Whenever you get the chance, mind getting B Wing sorted?
 Groove on,
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 
 ~ LEGALIZE ~
 ]],

@@ -138,13 +138,13 @@ grid_floor = "....................."..
              "....................."
 
 function first_completed()
-    _G.PopManager.new("asdasd",
-        "asdasdasdas",
+    _G.PopManager.new("placeholder",
+        "placeholder",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " asdasdasd ",
+            text = " placeholder ",
             clr = _G.Color.blue()
         })
 end

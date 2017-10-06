@@ -1,5 +1,5 @@
 return {
-    title = "I/O Consoles",
+    title = "[EXPLANATION] I/O Consoles",
     text = [[
 Greetings, this is Richard. I'm here on behalf of Olivia to give you some insight in the {orange}I/O consoles{end}, as this is the first time you'll be working with them.
 
@@ -12,7 +12,7 @@ Overall, a very simple component, and shouldn't need any further explaining.
 Pleasure to meet you, carry on.
 
 Richard Black
-Programmer intern at Marvellous Inc.s Software Development Department]],
+Programmer intern at Marvellous Inc. Software Development Department]],
     author = "Richard Black (rick.black@sdd.marv.com)",
     can_be_deleted = true
 }

@@ -8,7 +8,7 @@ Anyways, Bill and Miles were impressed with the work you have been doing for bot
 Keep on rolling,
 
 Paul Verkeufen
-Chief engineer at Marvellous Inc's Material Engineering Department
+Head engineer at Marvellous Inc. Material Engineering Department
 
 ~ LEGALIZE ~
 ]],

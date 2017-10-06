@@ -389,9 +389,6 @@ function Room:update(dt)
 end
 
 function Room:keyPressed(key)
-    if key == "f8" then
-        self:disconnect()
-    end
 end
 
 function Room:kill()

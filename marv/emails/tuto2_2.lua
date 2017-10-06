@@ -1,7 +1,7 @@
 return {
     title = "Code Tips",
     text = [[
-The {blue}<code> {end}tab is a powerful tool.
+The {tab}<code> {end}tab is a powerful tool.
 
 As we said before, you should use it just like any text editor. To mention some of its features, you can
 

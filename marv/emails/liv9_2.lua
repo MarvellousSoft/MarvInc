@@ -1,29 +1,26 @@
 return {
-    title = "More brainfuck examples",
+    title = "[TASK] Brainfuck loops",
     text = [[
-Hello, this is Richard again. I'll send some more {blue}brainfuck {end}examples, now with {inst}loops{end}. Make sure you understand all of these. I always assume the {addr}data pointer {end}starts at position 0, and all {num}data {end}is 0 (unless otherwise stated).
+Hello, Richard here. Olivia asked me to send this task to you, I hope the statement is clear.
 
-    {blue}[>]{end}
-This will point {addr}DP (data pointer) {end}to the next position that has {num}value {end}0.
+For now the {blue}language{end} you implement is not overly useful, since there is no condition-checking or loops, making it impossible to do even the simplest algorithm. The task at hand is to improve the language.
 
-    {blue}<[>,]{end}
-This will read {num}values {end}from the input until it reads a 0, and store them in adjacent positions.
+There is a {inst}loop structure {end}in {blue}brainfuck{end}. It can be done using {inst}brackets{end}. {inst}[{blue}code{inst}]{end} means that the segment {blue}code {end}will be executed for as long as the {num}value {end}pointed by the {addr}data pointer {end}is non-zero.
 
-    {blue}++++++[>++++++++++<-]>+++{end}
-This will set the {num}value {end}at position 1 to 63, using position 0 as an 'auxiliar' for a loop.
+More formally, imagine there is an {blue}instruction pointer{end}, that points to the instruction that is currently executing (not unlike the white indicator you see on the right when running some L++ code). Excluding the loop, all instructions just make the {blue}IP (instruction pointer) {end}increment by one. When the {blue}IP {end}is pointing to a {inst}[{end}, it will skip to the matching {inst}] {end}if the {num}value {end}pointed by the {addr}DP (data pointer) {end}is 0, otherwise it will just increment as usual. In the same manner, when the {blue}IP {end}is at a {inst}]{end}, it will skip to the matching {inst}[ {end}if the {num}value {end}pointed by the {addr}DP {end}is non-zero.
 
-    {blue}[[->+<]>]{end}
-Assuming everything else except the {num}value {end}in position 0 is 0, will endlessly move that {num}value {end}to position 1, and then 2, etc.
+A simple example: suppose the value pointed by the {addr}DP {end}is non-negative*, then the example code {blue}[-] {end}will subtract 1 from that value until it becones 0. From this, you can see that {blue}brainfuck {end}is much simpler than L++, since you need an algorithm just to make a position become 0.
 
-    {blue}++++++++[[>],[<]>-]{end}
-This will read 8 {num}values {end}from the input and place them in positions 1..8, assuming none of them are 0.
+Please notice that there may be {gray}loops inside loops{end}, which will surely make the job of implementing the interpreter significantly harder than the last task.
 
-Hope you got it. If you need more help, {gray}don't ask Olivia {end}because she will mock you.
+There will be enough registers to {gray}store the whole code{end} in memory. The white console output will be {gray}ended by a 0{end}, so you will be able to tell when to stop reading the code.
 
-Thank you for your attention, carry on.
+I'll send you some more examples shortly. Carry on.
 
 Richard Black
-Programmer intern at Marvellous Inc.s Software Development Department]],
+Programmer intern at Marvellous Inc. Software Development Department
+
+* If you're really an L++ expert, you'll realize that this works even if the value is negative, since -999 - 1 = 999 (it will take a long of time, for sure).]],
     author = "Richard Black (rick.black@sdd.marv.com)",
-    can_be_deleted = true
+    puzzle_id = 'liv9'
 }
