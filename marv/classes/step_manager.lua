@@ -123,11 +123,19 @@ function sm.play()
 end
 
 function sm.fast()
-    doPlay(2)
+    if sm.prohibit_fast_speed then
+        SFX.buzz:play()
+    else
+        doPlay(2)
+    end
 end
 
 function sm.superfast()
-    doPlay(3)
+    if sm.prohibit_fast_speed then
+        SFX.buzz:play()
+    else
+        doPlay(3)
+    end
 end
 
 function sm.increase()

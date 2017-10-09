@@ -75,6 +75,9 @@ CodeTab = Class{
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.term.h + 10, self.w, by - 10 - (self.pos.y + self.term.h + 10), 12)
 
+        -- Whether typing in the terminal is possible
+        self.lock = 0
+
         self.tp = "code_tab"
     end
 }
@@ -130,16 +133,18 @@ function CodeTab:keyPressed(key)
             return
         end
     end
-    if self.lock then
-        if key == 'space' then
-            if StepManager.running then
-                StepManager.pause()
-            else StepManager.play() end
-        elseif key == 'escape' then
-            StepManager.stop()
+    local isRunning = StepManager.state ~= 'stopped'
+    if key == 'space' then
+        if StepManager.state == 'playing' then
+            StepManager.pause()
+        elseif StepManager.state == 'paused' then
+            StepManager.play()
         end
-        return
     end
+    if key == 'escape' and StepManager ~= 'stopped' then
+        StepManager.stop()
+    end
+    if isRunning then return end
     if love.keyboard.isDown("lctrl", "rctrl") then
         if key == 'return' then
             if StepManager.running then
@@ -150,6 +155,7 @@ function CodeTab:keyPressed(key)
             return
         end
     end
+    if self.lock > 0 then return end
     local t = typingRegister(self) and self.memory.tbox or self.term
     t:keyPressed(key)
     if typingRegister(self) then self.memory:update_renames() end
@@ -158,7 +164,7 @@ function CodeTab:keyPressed(key)
 end
 
 function CodeTab:textInput(txt)
-    if self.lock then return end
+    if self.lock > 0 then return end
     local t = typingRegister(self) and self.memory.tbox or self.term
     t:textInput(txt)
     if typingRegister(self) then self.memory:update_renames() end
@@ -169,7 +175,7 @@ function CodeTab:mousePressed(x, y, but)
     if TABS_LOCK > 0 then return end
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
 
-    if self.lock then return end
+    if self.lock > 0 then return end
     local t = typingRegister(self) and self.memory.tbox or self.term
     t:mousePressed(x, y, but)
     self:checkErrors()
@@ -208,6 +214,11 @@ function CodeTab:reset(puzzle)
     self.term:reset_lines(puzzle.lines_on_terminal)
     self.term:typeString(puzzle.code)
     self.renames = puzzle.renames
+    -- resetting locks to terminal
+    self.lock = 0
+    -- resetting button images (changed in franz1)
+    self.fast_b.img = BUTS_IMG.fast
+    self.superfast_b.img = BUTS_IMG.superfast
     self.inv_renames = {}
     for a, b in pairs(self.renames) do
         self.inv_renames[b] = a

@@ -14,7 +14,7 @@ Code = Class{
 function Code:start()
     local ct = Util.findId("code_tab")
     ct:showLine(1)
-    ct.lock = true
+    ct.lock = ct.lock + 1
     ct.memory:reset()
 end
 
@@ -40,5 +40,5 @@ end
 function Code:stop()
     local ct = Util.findId("code_tab")
     ct:showLine(nil)
-    ct.lock = false
+    ct.lock = ct.lock + 1
 end

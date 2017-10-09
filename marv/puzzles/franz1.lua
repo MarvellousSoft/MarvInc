@@ -2,7 +2,7 @@ name = "Basic Intimidation"
 -- Puzzle number
 n = 'F.1'
 
-lines_on_terminal = 20
+lines_on_terminal = 1
 memory_slots = 0
 
 -- Bot
@@ -25,6 +25,12 @@ function on_start(room)
         room.bot.name = 'Diego'
         room.bot.traits = {'Good Friend', 'Suspicious'}
     end
+    local ct = _G.Util.findId('code_tab')
+    ct.lock = ct.lock + 1 -- will reset automatically
+    ct.term.lines = {"walk right"} -- fixed text
+    ct.fast_b.img = _G.BUTS_IMG.fast_blocked
+    ct.superfast_b.img = _G.BUTS_IMG.superfast_blocked
+    _G.StepManager.prohibit_fast_speed = true
 end
 
 grid_obj =  "ooooooooooooooooooooo"..

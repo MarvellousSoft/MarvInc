@@ -137,6 +137,8 @@ function Room:from(puzzle)
 
     self.turn_handler = puzzle.turn_handler
 
+    StepManager.prohibit_fast_speed = false
+
     if puzzle.on_start then
         puzzle.on_start(self)
     end
