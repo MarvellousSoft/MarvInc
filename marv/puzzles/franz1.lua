@@ -20,6 +20,40 @@ function objective_checker(room)
     return false
 end
 
+local msg_list = {
+    "W-what... What is going on?",
+    "Why do I have a splitting headache?",
+    "Bzzzt! Robot ready for duty.",
+    "WHAT THE F- Bzzzt!",
+    "MarvInc, where dreams come true! Bzzz! Shit bro, what the...? Bzzt!",
+    "Dude... Is that you? Why am I here?!",
+    "Hey man, what the shit! Get me outta here!",
+    "Bzzzt! MarvBots are always eager to please!",
+    "AAAAARGH MY HEAD!!!",
+    "Is this a prank? What the fuck, man!",
+    "Bzzzt! Join MarvInc today and make the world a better place!",
+    "Bzzzt! MOTHERFUCKER, WHAT THE SHIT ARE YOU DOING?!",
+    "I know it's you, you fucking son of a bitch!",
+    "Bzzzt! The new MarvInc personal robots are now available! For only $999,99!",
+    "Bzzzt! My head... It's hurting so fucking much... I... I can't take it...",
+    "Bzzzt! Get yours now! Call 1-800-MARVINC and reserve yours!",
+    "Bzzzt! W-what...? W-w-why?!",
+    "C'mon man, I'll do what you want, just get me outta here...",
+    "Whatever you want, I'll do it...",
+    "Bzzzt! The new MarvInc personal robots! Each with a unique personality! Call now and guarantee yours!",
+    "Bzzzt! Just... Just kill me dude. What the fuck? My head... It just hurts so much...",
+    "Bzzzt! Be it household, industrial or even military! The new MarvBots are just so handy!",
+    "Bzzzt! Kill me... End this...",
+    "...",
+    "Bzzzt!",
+    "MarvBots, the latest in MarvInc technology! Find yours at your local MarvStore!",
+    "I aim to please! Please give me a command.",
+    "MarvBot standing by."
+}
+
+local cur_msg = 0
+local function rnd_delay() return _G.love.math.random(2, 6) end
+
 function on_start(room)
     if not _G.require('classes.lore_manager').puzzle_done.franz1 then
         room.bot.name = 'Diego'
@@ -34,7 +68,15 @@ function on_start(room)
     ct.stop_b.img = _G.BUTS_IMG.stop_blocked
     _G.StepManager.only_play_button = true
     _G.ROOM.block_bot_messages = true
+    _G.MAIN_TIMER:after(rnd_delay(), function(self)
+        if _G.ROOM.puzzle_id ~= 'franz1' then return end
+        cur_msg = cur_msg + 1
+        if cur_msg > #msg_list then cur_msg = #msg_list end
+        _G.Signal.emit("new_bot_message", msg_list[cur_msg], 120)
+        _G.MAIN_TIMER:after(rnd_delay() + (cur_msg == 21 and 10 or 0), self)
+    end)
 end
+
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
