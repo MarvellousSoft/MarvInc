@@ -1,4 +1,4 @@
-name = "Basic Intimidation"
+name = "Would you kindly?"
 -- Puzzle number
 n = 'F.1'
 
@@ -14,7 +14,7 @@ k = {'bucket', true, 'bucket', args = {content = 'water'}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 
 -- Objective
-objective_text = 'Kill the "robot" in the lava.'
+objective_text = 'Prove your loyalty.'
 function objective_checker(room)
     -- this is handled in classes/bot.lua in function kill()
     return false
@@ -30,7 +30,10 @@ function on_start(room)
     ct.term.lines = {"walk right"} -- fixed text
     ct.fast_b.img = _G.BUTS_IMG.fast_blocked
     ct.superfast_b.img = _G.BUTS_IMG.superfast_blocked
-    _G.StepManager.prohibit_fast_speed = true
+    ct.pause_b.img = _G.BUTS_IMG.pause_blocked
+    ct.stop_b.img = _G.BUTS_IMG.stop_blocked
+    _G.StepManager.only_play_button = true
+    _G.ROOM.block_bot_messages = true
 end
 
 grid_obj =  "ooooooooooooooooooooo"..
@@ -83,6 +86,12 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
+    local et = _G.Util.findId("email_tab")
+    for a, b in _G.ipairs(et.email_list) do
+        if b.id == 'franz1' then
+            _G.require('classes.tabs.email').disableReply(a)
+        end
+    end
     _G.PopManager.new("A message",
         "You have been warned.",
         _G.Color.green(), {

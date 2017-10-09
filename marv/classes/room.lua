@@ -136,8 +136,9 @@ function Room:from(puzzle)
     Util.findId("code_tab"):reset(puzzle)
 
     self.turn_handler = puzzle.turn_handler
+    self.block_bot_messages = false
 
-    StepManager.prohibit_fast_speed = false
+    StepManager.only_play_button = false
 
     if puzzle.on_start then
         puzzle.on_start(self)
@@ -371,7 +372,7 @@ function Room:update(dt)
     if self.mode == "online" then
 
         --Create a bot message to popup for the player
-        if not bot_message_timer_handle then
+        if not self.block_bot_messages and not bot_message_timer_handle then
             local d = love.math.random(min_time_between_bot_messages, max_time_between_bot_messages)
             bot_message_timer_handle = MAIN_TIMER:after(d,
                 function()

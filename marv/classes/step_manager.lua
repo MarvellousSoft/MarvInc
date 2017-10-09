@@ -123,7 +123,7 @@ function sm.play()
 end
 
 function sm.fast()
-    if sm.prohibit_fast_speed then
+    if sm.only_play_button then
         SFX.buzz:play()
     else
         doPlay(2)
@@ -131,7 +131,7 @@ function sm.fast()
 end
 
 function sm.superfast()
-    if sm.prohibit_fast_speed then
+    if sm.only_play_button then
         SFX.buzz:play()
     else
         doPlay(3)
@@ -139,23 +139,35 @@ function sm.superfast()
 end
 
 function sm.increase()
+    if sm.only_play_button then
+        SFX.buzz:play()
+        return
+    end
     if sm.how_fast == 2 then sm.superfast()
     elseif sm.how_fast == 1 then sm.fast()
     elseif sm.how_fast == 0 then sm.play() end
 end
 
 function sm.decrease()
+    if sm.only_play_button then
+        SFX.buzz:play()
+        return
+    end
     if sm.how_fast == 3 then sm.fast()
     elseif sm.how_fast == 2 then sm.play()
     elseif sm.how_fast == 1 then sm.pause() end
 end
 
 function sm.step()
+    if sm.only_play_button then
+        SFX.buzz:play()
+        return
+    end
     doPlay(0)
 end
 
 function sm.pause()
-    if not ROOM:connected() then
+    if not ROOM:connected() or sm.only_play_button then
         SFX.buzz:play()
         return
     end
@@ -168,7 +180,7 @@ function sm.pause()
 end
 
 function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
-    if not ROOM:connected() then
+    if not ROOM:connected() or sm.only_play_button then
         SFX.buzz:play()
         return
     end
