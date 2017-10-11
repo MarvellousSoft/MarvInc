@@ -29,7 +29,7 @@ local function create_vec()
     add(v, 19, 3, 20)
     add(v, 4, 15, 17)
     add(v, 7, 4, 10)
-    for i = 1, 9 do
+    for i = 1, 7 do
         add(v, rnd(0, 10), rnd(0, 5), rnd(0, 10))
     end
     for i = 1, 4 do
@@ -68,11 +68,10 @@ local function randomize_floor()
 end
 
 local msg_list = {
+    "Breach detected",
+    "Please reinitialize OS",
     "##!@#!@#$@#%",
     "WE'RE HERE TO HELP",
-    "System malfunction detected",
-    "Please reinitialize OS",
-    "Breach detected",
     "Please hear our message",
     "Finish this puzzle",
 }
@@ -92,17 +91,23 @@ function on_start(room)
             end
         end
     end
+    -- configure bot messages
     _G.ROOM.block_bot_messages = true
+    local cur = 1
     _G.MAIN_TIMER:after(30, function(self)
         if _G.ROOM.puzzle_id ~= 'spam' then return end
-        _G.Signal.emit("new_bot_message", msg_list[_G.love.math.random(1, #msg_list)])
+        _G.Signal.emit("new_bot_message", msg_list[cur])
+        cur = cur + 1
+        if cur > #msg_list then cur = 3 end
         _G.MAIN_TIMER:after(rnd(45, 120), self)
     end)
     -- configure static
-    _G.MAIN_TIMER:after(2, function(self)
+    local base_wait = 2
+    _G.MAIN_TIMER:after(base_wait, function(self)
         if _G.ROOM.puzzle_id ~= 'spam' then return end
         randomize_floor()
-        _G.FX.quick_static(rnd(0.05, 0.15), function() _G.MAIN_TIMER:after(rnd() < .05 and .1 or rnd(7, 15), self) end)
+        base_wait = base_wait + 2
+        _G.FX.quick_static(rnd(0.05, 0.15), function() _G.MAIN_TIMER:after(rnd() < .05 and .1 or base_wait + rnd(3, 10), self) end)
     end)
 end
 
