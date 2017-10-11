@@ -307,7 +307,7 @@ function setup.config()
       "Please move this along",
       "Can you go a little faster there mate?",
       "All I wanted was a hug...",
-      "Try no to kill me please.",
+      "Try not to kill me please.",
       "This looks more challenging that I thought.",
       "Can you finish this one before I fall asleep?",
     }
