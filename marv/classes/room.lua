@@ -213,6 +213,7 @@ function Room:disconnect(wait)
         Util.findId("pcbox"):changeTabs(Util.findId("pcbox").menu_tabs, "email")
     end
     self.mode = "offline"
+    self.puzzle_id = nil
 
     --Handle bots messages--
 

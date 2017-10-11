@@ -197,6 +197,20 @@ function EmailTab:mouseMoved(...)
     (Util.findId('opened_email') or self.mail_box):mouseMoved(...)
 end
 
+function EmailTab:openEmail(mail)
+    local e = self
+    self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
+    TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
+    e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
+    if not mail.was_read then
+        -- this needs to be done after the email is 'registered' or it won't be able to access it.
+        if mail.open_func then mail:open_func() end
+        mail.was_read = true
+        UNREAD_EMAILS = UNREAD_EMAILS - 1
+    end
+    return e.email_opened
+end
+
 -- Check mouse colision with emails
 function EmailTab:checkEmailClick(x, y, but)
     local e, rect
@@ -207,15 +221,7 @@ function EmailTab:checkEmailClick(x, y, but)
     if but == 1 and not self.mail_box.on_hover then -- if not clicking scroll bar
         for i, mail in ipairs(e.email_list) do
             if mail.alpha > 250 and Util.pointInRect(x , y, {pos = {x = e.pos.x + e.email_border, y = e.pos.y + (e.email_border + e.email_height) * (number_emails - i)}, w = e.w - 2 * e.email_border, h = e.email_height}) then
-                self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
-                TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
-                e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
-                if not mail.was_read then
-                    -- this needs to be done after the email is 'registered' or it won't be able to access it.
-                    if mail.open_func then mail:open_func() end
-                    mail.was_read = true
-                    UNREAD_EMAILS = UNREAD_EMAILS - 1
-                end
+                self:openEmail(mail)
             end
         end
     end
@@ -290,10 +296,18 @@ EmailObject = Class{
 
 -- UTILITY FUNCTIONS --
 
+
+function email_funcs.get_raw_email(id, number)
+    local e = require('emails.' .. id)
+
+    local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number)
+
+    return email
+end
+
 -- Creates a new email and add to the email list
 function email_funcs.new(id, silent)
 
-    local e = require('emails.' .. id)
     local mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -304,7 +318,7 @@ function email_funcs.new(id, silent)
     tab.email_cur = tab.email_cur + 1
     number = tab.email_cur
 
-    local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number)
+    local email = email_funcs.get_raw_email(id, number)
 
     -- Add fade-in effect to email
     email.handles["fadein"] = MAIN_TIMER:tween(.5, email, {alpha = 255, juicy_bump = 0}, 'out-quad')

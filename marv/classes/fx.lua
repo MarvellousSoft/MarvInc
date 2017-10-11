@@ -3,6 +3,7 @@ local fx = {}
 
 local full_s = false
 local intro = false
+local quick_s = false
 
 function fx.full_static(gamestate)
     full_s = true
@@ -25,6 +26,21 @@ function fx.full_static(gamestate)
             fx.intro()
         end
     end)
+end
+
+function fx.quick_static(time, callback)
+    quick_s = true
+    fx.ang = 0
+    fx.h = H
+    fx.w = W
+    SFX.loud_static:stop()
+    SFX.loud_static:play()
+    MAIN_TIMER:after(time, function()
+        quick_s = false
+        SFX.loud_static:stop()
+        if callback then callback() end
+    end)
+
 end
 
 function fx.intro()
@@ -66,6 +82,12 @@ function fx.post_draw()
         love.graphics.stencil(stencil, "replace", 1)
         love.graphics.stencil(stencil2, "increment", nil, true)
         love.graphics.setStencilTest("greater", 1)
+        Color.set(Color.white())
+        local s = ROOM.static_img
+        love.graphics.draw(s, W / 2, H / 2, fx.ang, 1.1 * W / s:getWidth(), 1.1 * W / s:getHeight(), s:getWidth() / 2, s:getHeight() / 2)
+        fx.ang = fx.ang + math.pi / 2
+    end
+    if quick_s then
         Color.set(Color.white())
         local s = ROOM.static_img
         love.graphics.draw(s, W / 2, H / 2, fx.ang, 1.1 * W / s:getWidth(), 1.1 * W / s:getHeight(), s:getWidth() / 2, s:getHeight() / 2)

@@ -14,7 +14,7 @@ I tried hacking Marvellous, {orange}unsuccessfully of course{end}. But it wasn't
 
 There's no easy way to break these news for you, ]] .. SaveManager.current_user .. [[... {red}The robots are people.{end} They are developing some sort of mind control component, and we have been helping them! The FBI still don't know where they are getting the people from, but the rate of disappearances hasn't increased lately... Which leads to the frightening conclusion that they have been doing this for a long time.
 
-Well, there it is. {orange}The whole truth{end}. Now comes your part, ]] .. SaveManager.current_user .. [[. {red}You must help me{end}. Me and the FBI. They have a solid case... But Marvellous is too big. They won't go down easy, we need more proof... Something from inside.
+Well, there it is. {orange}The whole truth{end}. Now comes your part, ]] .. SaveManager.current_user .. [[. {red}You must help me{end}. Me and the FBI. We have a solid case... But Marvellous is too big. They won't go down easy, we need more proof... Something from inside.
 
 I can't help you from outside but I'm sure you'll figure it out, ]] .. SaveManager.current_user .. [[. You're the real hero here. {red}This is your story{end}. You can bring the company down. Don't you worry about anything you might need to do, the FBI can get us immunity from anything done while employees of Marvellous Inc.
 
