@@ -116,13 +116,13 @@ grid_floor = ",,,,,,,,,,,,,,,,,,,,,"..
              ",,,,,,,,,,,,,,,,,,,,,"
 
 function first_completed()
-    _G.PopManager.new("placeholder",
-        "placeholder",
+    _G.PopManager.new("The Great Firewall",
+        "You have saved MarvInc from the invading hackers!",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " placeholder ",
+            text = "Dishonor on the hackers cow!",
             clr = _G.Color.blue()
         })
 end
