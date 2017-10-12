@@ -30,10 +30,10 @@ local function create_vec()
     add(v, 4, 15, 17)
     add(v, 7, 4, 10)
     for i = 1, 7 do
-        add(v, rnd(0, 10), rnd(0, 5), rnd(0, 10))
+        add(v, rnd(0, 10), rnd(0, 5), rnd(2, 10))
     end
     for i = 1, 4 do
-        add(v, rnd(0, 20), rnd(0, 20), rnd(0, 20))
+        add(v, rnd(0, 20), rnd(0, 20), rnd(2, 20))
     end
     add(v, 1, 7, 2)
     add(v, 0, 2, 7)
@@ -76,6 +76,9 @@ local msg_list = {
     "Finish this puzzle",
 }
 
+-- handles
+local msg_h, static_h = nil, nil
+
 -- create ans vector
 function on_start(room)
     -- finds consoles
@@ -94,21 +97,26 @@ function on_start(room)
     -- configure bot messages
     _G.ROOM.block_bot_messages = true
     local cur = 1
-    _G.MAIN_TIMER:after(30, function(self)
+    msg_h = _G.MAIN_TIMER:after(30, function(self)
         if _G.ROOM.puzzle_id ~= 'spam' then return end
         _G.Signal.emit("new_bot_message", msg_list[cur])
         cur = cur + 1
         if cur > #msg_list then cur = 3 end
-        _G.MAIN_TIMER:after(rnd(45, 120), self)
+        msg_h = _G.MAIN_TIMER:after(rnd(45, 120), self)
     end)
     -- configure static
     local base_wait = 2
-    _G.MAIN_TIMER:after(base_wait, function(self)
+    static_h = _G.MAIN_TIMER:after(base_wait, function(self)
         if _G.ROOM.puzzle_id ~= 'spam' then return end
         randomize_floor()
         base_wait = base_wait + 2
-        _G.FX.quick_static(rnd(0.05, 0.15), function() _G.MAIN_TIMER:after(rnd() < .05 and .1 or base_wait + rnd(3, 10), self) end)
+        _G.FX.quick_static(rnd(0.05, 0.15), function() static_h = _G.MAIN_TIMER:after(rnd() < .05 and .1 or base_wait + rnd(3, 10), self) end)
     end)
+end
+
+function on_end(room)
+    _G.MAIN_TIMER:cancel(msg_h)
+    _G.MAIN_TIMER:cancel(static_h)
 end
 
 -- Objective

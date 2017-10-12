@@ -37,6 +37,9 @@ Puzzle = Class{
     -- Called when the puzzle is started
     on_start = nil,
 
+    -- Called when the puzzle is disconnected
+    on_end = nil,
+
     -- previous code for the puzzle (if saved)
     code = "",
 

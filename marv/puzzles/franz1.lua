@@ -54,6 +54,8 @@ local msg_list = {
 local cur_msg = 0
 local function rnd_delay() return _G.love.math.random(2, 6) end
 
+local handle = nil
+
 function on_start(room)
     if not _G.require('classes.lore_manager').puzzle_done.franz1 then
         room.bot.name = 'Diego'
@@ -68,13 +70,17 @@ function on_start(room)
     ct.stop_b.img = _G.BUTS_IMG.stop_blocked
     _G.StepManager.only_play_button = true
     _G.ROOM.block_bot_messages = true
-    _G.MAIN_TIMER:after(rnd_delay(), function(self)
+    handle = _G.MAIN_TIMER:after(rnd_delay(), function(self)
         if _G.ROOM.puzzle_id ~= 'franz1' then return end
         cur_msg = cur_msg + 1
         if cur_msg > #msg_list then cur_msg = #msg_list end
         _G.Signal.emit("new_bot_message", msg_list[cur_msg], 120)
-        _G.MAIN_TIMER:after(rnd_delay() + (cur_msg == 21 and 10 or 0), self)
+        handle = _G.MAIN_TIMER:after(rnd_delay() + (cur_msg == 21 and 10 or 0), self)
     end)
+end
+
+function on_end(room)
+    _G.MAIN_TIMER:cancel(handle)
 end
 
 
