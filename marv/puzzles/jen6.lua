@@ -1,6 +1,6 @@
-name = "Freelancer Painter"
+name = "Cleaner I"
 -- Puzzle number
-n = "undecided"
+n = "A.6"
 
 lines_on_terminal = 20
 memory_slots = 5
@@ -10,6 +10,7 @@ bot = {'b', "SOUTH"}
 
 local final
 local function create_vec()
+    local final = grid_floor
     local tmp = {}
     for i = 1, ROWS do
         for j = 1, COLS do
@@ -28,10 +29,11 @@ local function create_vec()
     return v
 end
 
+local green = _G.Color.white()
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-k = {'bucket', true, 'bucket', args = {content = 'empty'}}
-c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint'}}
+k = {'bucket', true, 'bucket', args = {content = 'empty', content_color = _G.Color.black()}}
+c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint', content_color = green}}
 h = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 10}, dir = "west"}
 
 
@@ -59,11 +61,11 @@ grid_obj =  "cbhoooooooooooooooooo"..
 
 -- Floor
 w = "white_floor"
-_G.getfenv()[','] = "black_floor"
+_G.getfenv()[','] = "red_tile"
 r = "red_tile"
 g = "black_floor"
 
-grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
+final      = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
@@ -85,7 +87,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
-final =      "wwwwwwwwwwwwwwwwwwwww"..
+grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "w,,,,,,,wwwwwwwwww,,w"..
              "ww,wwww,,,wwwwwww,www"..
              "www,w,,www,wwwwwwwwww"..
@@ -109,36 +111,40 @@ final =      "wwwwwwwwwwwwwwwwwwwww"..
 
 -- Objective
 objective_text = [[
-For each pair of numbers (x, y) on the green console, paint tile on row x and column y in black.]]
+The floor is... dirty. The coordinate of the dirty tiles are in the green console. For each pair of numbers (i, j) on the console, clean tile on row i and column j, by painting it using the bucket and the bleach in the container.]]
 function objective_checker(room)
-    local ok = true
     for i = 1, ROWS do
         for j = 1, COLS do
-            if final:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
-                if not room.color_floor[j][i] then
-                    ok = false
-                end
-            elseif final:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'w' then
+            local p = COLS * (i - 1) + j
+            if grid_floor:sub(p, p) == ',' then
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Painted wrong place", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted.", "Retry")
+                    room.color_floor[j][i] = nil
+                    grid_floor = grid_floor:sub(1, p - 1) .. 'w' .. grid_floor:sub(p + 1, #grid_floor)
+                    room.grid_floor[j][i] = 'white_floor'
+                end
+            elseif grid_floor:sub(p, p) == 'w' then
+                if room.color_floor[j][i] then
+                    _G.StepManager.stop("Cleaned wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be cleaned.", "Retry")
                     return false
                 end
             end
         end
     end
-    return ok
+    return grid_floor == final
 end
 
-extra_info = [[All coordinates are between 2 and 20.]]
+extra_info = [[
+Don't waste any bleach.
+- All coordinates are between 2 and 20.]]
 
 function first_completed()
-    _G.PopManager.new("THANK YOU my friend",
-        "You really are the bigger person",
+    _G.PopManager.new(" PLACEHOLDER ",
+        " PLACEHOLDER ",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Glad to help ",
+            text = " PLACEHOLDER ",
             clr = _G.Color.blue()
         })
 end
