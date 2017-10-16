@@ -187,6 +187,8 @@ function Room:connect(id, changeToInfo)
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end
 
     self.grid_trans_handle = self.grid_trans_timer:every(self.grid_trans_delay, self.grid_transFunc)
+
+    self:createEphemeral()
 end
 
 function Room:disconnect(wait)
@@ -452,6 +454,28 @@ function Room:wakeup(ds, y)
                 end
                 self:wakeup(k)
                 return
+            end
+        end
+    end
+end
+
+-- Creates 1-turn stuff (e.g. lasers)
+function Room:createEphemeral()
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if self.grid_obj[j][i] and self.grid_obj[j][i].tp == 'emitter' then
+                self.grid_obj[j][i]:createRays(self.grid_obj)
+            end
+        end
+    end
+end
+
+-- Deletes 1-turn stuff (e.g. lasers)
+function Room:deleteEphemeral()
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            if self.grid_obj[j][i] and self.grid_obj[j][i].is_ephemeral then
+                self.grid_obj[j][i] = nil
             end
         end
     end

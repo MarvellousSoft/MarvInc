@@ -5,57 +5,19 @@ local Color = require "classes.color.color"
 
 Emitter = Class{
     __includes = {Object},
-    init = function(self, grid, i, j, key, bg, color, _, __, args)
+    init = function(self, grid, i, j, key, bg, color, _, __, args, dir)
         Object.init(self, grid, i, j, "emitter", bg)
         self.color = Color[color or "white"](Color)
+
+        self.r = _G[dir:upper() .. '_R']
 
         self.img = OBJS_IMG[key]
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
 
-        self.traps = {}
-        -- (x1, y1) -> (x2, y2)
-        -- Lines must always be horizontal or vertical
-        if args.x1 == args.x2 then
-            -- Vertical
-            local _max_y, _min_y
-
-            if args.y1 > args.y2 then _max_y, _min_y = args.y1,  args.y2
-            else _max_y, _min_y = args.y2, args.y1 end
-
-            if _max_y < j then
-                self.r = NORTH_R
-            elseif _min_y > j then
-                self.r = SOUTH_R
-            end
-
-            local _dy = _max_y - _min_y + 1
-            for k=1, _dy do
-                table.insert(self.traps, DeadSwitch(grid, args.x1, _min_y+(k-1),
-                    unpack(args.t_args)))
-                self.traps[k].r = self.r
-            end
-        elseif args.y1 == args.y2 then
-            -- Horizontal
-            local _max_x, _min_x
-
-            if args.x1 > args.x2 then _max_x, _min_x = args.x1,  args.x2
-            else _max_x, _min_x = args.x2, args.x1 end
-
-            if _max_x < i then
-                self.r = WEST_R
-            elseif _min_x > i then
-                self.r = EAST_R
-            end
-
-            local _dx = _max_x - _min_x + 1
-            for k=1, _dx do
-                table.insert(self.traps, DeadSwitch(grid, _min_x+(k-1), args.y1,
-                    unpack(args.t_args)))
-                self.traps[k].r = self.r
-            end
-        else print("ERROR! Emitter lines cannot be complex!") end
+        self.t_args = args.t_args
         self.awake = true
+        self.rays = {}
     end
 }
 
@@ -64,17 +26,34 @@ function Emitter:toggle()
 end
 
 function Emitter:sleep()
-    if not self.awake then return end
-    for _, v in ipairs(self.traps) do
-        ROOM:sedate(v)
-    end
     self.awake = false
 end
 
 function Emitter:wakeup()
-    if self.awake then return end
-    for _, v in ipairs(self.traps) do
-        ROOM:wakeup(v)
-    end
     self.awake = true
+end
+
+function Emitter:createRays(grid)
+    if not self.awake then return end
+    local d = ORIENT[self.r[2]]
+    local px, py = self.pos.x, self.pos.y
+    local i = 0
+    while true do
+        i = i + 1
+        px, py = px + d.x, py + d.y
+        if px < 1 or px > ROWS or py < 1 or py > COLS then return end
+        local o = grid[px][py]
+        if o and o.tp == 'bot' then
+            StepManager.stop()
+            return
+        end
+        -- does not work well when colliding with other lasers
+        if o then return end
+        if not self.rays[i] then
+            self.rays[i] = DeadSwitch(grid, px, py, unpack(self.t_args))
+            self.rays[i].is_ephemeral = true
+            self.rays[i].r = self.r
+        end
+        grid[px][py] = self.rays[i]
+    end
 end

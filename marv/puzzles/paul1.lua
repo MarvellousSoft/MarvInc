@@ -20,7 +20,7 @@ h = {"emitter", true, "emitter", "green", args= {
     t_args = {
         "ray", true, 0.05, "green"
     }
-}, dir="WEST"}
+}, dir="west"}
 i = {"emitter", true, "emitter", "green", args={
     x1 = 7, y1 = 15,
     x2 = 7, y2 = 19,
@@ -37,7 +37,7 @@ s = {"emitter", true, "emitter", "red", args={
     t_args = {
         "ray", true, 0.05, "red"
     }
-}, dir="WEST"}
+}, dir="west"}
 t = {"emitter", true, "emitter", "red", args={
     x1 = 11, y1 = 15,
     x2 = 11, y2 = 19,
@@ -54,7 +54,7 @@ c = {"emitter", true, "emitter", "blue", args={
     t_args = {
         "ray", true, 0.05, "blue"
     }
-}, dir="WEST"}
+}, dir="west"}
 d = {"emitter", true, "emitter", "blue", args={
     x1 = 3, y1 = 15,
     x2 = 3, y2 = 19,
@@ -63,12 +63,8 @@ d = {"emitter", true, "emitter", "blue", args={
     }
 }, dir="SOUTH"}
 
-e = nil
-
 -- Bucket
 k = {'bucket', true, 'bucket', args = {content = 'water'}}
-
-init_pos = {6, 2}
 
 -- Objective
 objective_text = "A former unnatentive intern accidentally switched the lasers on. Unfortunately, we "..
@@ -105,24 +101,24 @@ Each monitor receives only one digit of the password, in order.
 ]]
 
 grid_obj =   "ooooooooooooooooooooo"..
-             "ooooopeoooooooooooooo"..
-             "oooooeeoooooooooooooo"..
-             "oooooeeoooooooooooooo"..
-             "oooooeeoooooooooooooo"..
-             "oooooeeoooooooooooooo"..
-             "ooooobeoooooooooooooo"..
-             "ooeeeeeeeeeeeeecooooo"..
-             "ooeeeeeeeeegooooooooo"..
-             "ooeeeeeeeeeeeeehooooo"..
-             "ooeeeeeeeeerooooooooo"..
-             "ooeeeeeeeeeeeeesooooo"..
-             "ooeeeeeeeeeeeeeoooooo"..
-             "oodoooioootoooeoooooo"..
-             "ooeoooeoooeoooeoooooo"..
-             "ooeoooeoooeoooeoooooo"..
-             "ooeoooeoooeoooeoooooo"..
-             "ooeoooeoooeoooeoooooo"..
-             "okeeeeeeeeeeeeeeeleoo"..
+             "ooooop.oooooooooooooo"..
+             "ooooo..oooooooooooooo"..
+             "ooooo..oooooooooooooo"..
+             "ooooo..oooooooooooooo"..
+             "ooooo..oooooooooooooo"..
+             "ooooob.oooooooooooooo"..
+             "oo.............cooooo"..
+             "oo.........gooooooooo"..
+             "oo.............hooooo"..
+             "oo.........rooooooooo"..
+             "oo.............sooooo"..
+             "oo.............oooooo"..
+             "oodoooioootooo.oooooo"..
+             "oo.ooo.ooo.ooo.oooooo"..
+             "oo.ooo.ooo.ooo.oooooo"..
+             "oo.ooo.ooo.ooo.oooooo"..
+             "oo.ooo.ooo.ooo.oooooo"..
+             "ok...............l.oo"..
              "ooooooooooooooooooooo"..
              "ooooooooooooooooooooo"
 

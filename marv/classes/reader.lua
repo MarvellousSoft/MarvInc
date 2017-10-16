@@ -63,8 +63,9 @@ function reader.read(puzzle_id)
                 local _proto = _t[_co]
                 if _proto[1] == "emitter" then
                     if not emitters[_proto[4]] then emitters[_proto[4]] = {} end
+                    assert(_proto.dir)
                     table.insert(emitters[_proto[4]], {puz.grid_obj, j, i, _proto[3], _proto[2],
-                        _proto[4], nil, nil, _proto.args})
+                        _proto[4], nil, nil, _proto.args, _proto.dir})
                 end
             end
             k = k + 1

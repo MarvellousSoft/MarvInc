@@ -44,6 +44,9 @@ local function stepCallback()
     sm.ic = sm.ic + 1
     SFX.click:play()
 
+    -- deletes 1-turn stuff (lasers)
+    ROOM:deleteEphemeral()
+
     Signal.emit(SIGEND, sm.ic)
 
     if not sm.code then
@@ -67,9 +70,15 @@ local function stepCallback()
             end
         elseif ret == 'error' then
             -- state will be changed automatically by the function call
+            -- Creates 1-turn stuff (lasers) (after action)
+            ROOM:createEphemeral()
             return
         end
     end
+
+    -- Creates 1-turn stuff (lasers) (after action)
+    ROOM:createEphemeral()
+
     ROOM.bot:dieIfStay(ROOM.grid_obj)
 
     ROOM.puzzle:manage_objectives()
@@ -86,6 +95,7 @@ local function stepCallback()
         sm.stop(title, text, button)
         return
     end
+
     sm.timer:after(sm.delay, stepCallback)
 end
 

@@ -24,10 +24,17 @@ end
 function empty:drop(bot, grid, i, j, blocked)
     if blocked then return "Dropping obstructed" end
     local _o = grid[i][j]
-    if _o then
+    if _o and _o.key == 'lava' then
+        -- dropping into lava
+        -- TODO maybe play some burning sfx
+    elseif _o and not _o.is_ephemeral then
         return "Dropping obstructed"
     else
         ROOM:put(bot.inv, i, j)
+        if _o then -- refresh lasers
+            ROOM:deleteEphemeral()
+            ROOM:createEphemeral()
+        end
     end
     bot.inv = nil
 end
