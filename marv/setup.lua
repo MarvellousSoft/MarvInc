@@ -201,7 +201,7 @@ function setup.config()
       {"logical", {}},
       {"irrational", {}},
       {"creepy", {"I can hear your breathing from here...:)", "You smell good today. Is that because of the new shampoo you bought yesterday?"}},
-      {"Good cook", {}},
+      {"good cook", {}},
       {"liked LOST's ending", {"Hurley was the best character in a TV show by far"}},
       {"bought an Ouya", {}},
       {"hates soda", {}},
@@ -231,7 +231,7 @@ function setup.config()
       {"hates bears", {"Goddamn bears stealing our honeykeeping jobs!"}},
       {"never finished a game without a walkthrough", {"You should look for the solution to this puzzle on the internet!"}},
       {"overachiever", {}},
-      {"underacheiver", {}},
+      {"underachiever", {}},
       {"always drunk", {"Jsut one moer drink..."}},
       {"addicted to HIMYM", {"This puzzle is LEGEN --wait for it-- DARY!! hahaha"}},
       {"vegan without the powers", {}},
@@ -244,9 +244,9 @@ function setup.config()
       {"picks scabs", {}},
       {"pretends is a mime at parties", {}},
       {"proud believer of crab people", {}},
-      {"reads minds", {}},
+      {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}},
       {"can play the theremin", {}},
-      {"can recite de alphabet backwards perfectly", {}},
+      {"can recite de alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}},
       {"loves costume parties", {}},
       {"can correctly give current latitude and longitude at all times", {}},
       {"accidently makes sexual innuendos", {"This is too hard and long! I can't take it anymore. Just finish already!"}},
@@ -296,6 +296,7 @@ function setup.config()
       {"diabetic", {}},
       {"only drinks soda", {}},
       {"only listens to Insane Clown Posse", {}},
+      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}},      
     }
 
     --Regular dialogs any robot can say
@@ -310,7 +311,29 @@ function setup.config()
       "Try not to kill me please.",
       "This looks more challenging that I thought.",
       "Can you finish this one before I fall asleep?",
+      "How long have you been on this task?",
+      "Any progress?",
+      "HA! I figured it out!\n\n...but I'm not telling you.",
     }
+
+    --Introduction dialogs any robot can say once, where {bot_name} will be replaced by its name
+    INTRO_DIALOGS = {
+      "Hello, my name is {bot_name}.",
+      "{bot_name}. Nice to meet you.",
+      "Bot {bot_name} waiting your instructions.",
+      "Sup.",
+      "Hey there, looks like we'll be stuck together for a while :)",
+      "{bot_name} is my name. Serving you is my game ;)",
+      "I hope you don't kill me like the last one...",
+      "Hi buddy!",
+      "Hey man.",
+      "Hello.",
+      "You can call me {bot_name}.",
+      "Hey I'm {bot_name}. Let's solve this.",
+      "Let's hope I don't end the same way as the other robots, ok?",
+      "My name is {bot_name} and we are now best friends!",
+    }
+
 
     --INITIALIZING TABLES--
 

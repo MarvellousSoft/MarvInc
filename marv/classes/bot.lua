@@ -26,6 +26,7 @@ Bot = Class{
             self.body_clr = Color.new(b.body_clr, 200, 200)
             self.name = b.name
             self.traits = b.traits
+            self.first_time = b.first_time
         else
             -- random body
             head_i = love.math.random(#HEAD)
@@ -38,6 +39,9 @@ Bot = Class{
 
             --Create 1-3 traits
             self.traits = {}
+
+            --If its the first time the bot is appearing
+            self.first_time = true
 
             -- Number of traits
             local trait_n = love.math.random(3)
@@ -58,7 +62,8 @@ Bot = Class{
             head_clr = self.head_clr.h,
             body_clr = self.body_clr.h,
             name = self.name,
-            traits = self.traits
+            traits = self.traits,
+            first_time = self.first_time
         }
 
         self.head = HEAD[head_i]
@@ -69,6 +74,18 @@ Bot = Class{
 
         -- Inventory
         self.inv = nil
+
+        --Send intro message
+        if self.first_time then
+          local d = love.math.random(3)
+          local handle = MAIN_TIMER:after(d,
+            function()
+              Signal.emit("new_bot_message")
+            end
+          )
+          table.insert(self.handles, handle)
+        end
+
     end
 }
 

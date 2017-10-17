@@ -182,16 +182,26 @@ Signal.register("new_side_message",
 
 --Function returns a dialog text based on bots stats
 getDialog = function(bot)
-    local messages = {}
+    local special_messages = {}
+    local regular_messages = {}
+    local intro_messages = {}
 
+    --Special flags
     local all_caps = false
+    local lost_an_eye = false
+    local hates_bears = false
+    local underachiever = false
+    local overachiever = false
+    local shy = false
+    local sexual_innuendos = false
+    local pirate = false
 
     --Get all dialogs related to bot traits
     for _,traits in ipairs(TRAITS) do
       for _,bot_traits in ipairs(bot.traits) do
         if traits[1] == bot_traits then
           for _,dialog in ipairs(traits[2]) do
-            table.insert(messages, dialog)
+            table.insert(special_messages, dialog)
           end
         end
       end
@@ -199,21 +209,151 @@ getDialog = function(bot)
 
     --Insert regular dialogs
     for _,dialog in ipairs(REGULAR_DIALOGS) do
-      table.insert(messages,dialog)
+      table.insert(regular_messages,dialog)
     end
 
-    --Make special actions
+    if bot.first_time then
+      --Insert introduction dialogs, replacing {bot_name} with actual name
+      for _,dialog in ipairs(INTRO_DIALOGS) do
+        local text = ""
+        for w in dialog:gmatch("{?[^{}]+}?") do
+          if w == "{bot_name}" then
+            text = text .. bot.name
+          else
+            text = text .. w
+          end
+        end
+        table.insert(intro_messages,text)
+      end
+    end
+
+    -----------------------------
+    --Check for special actions--
+    -----------------------------
+
     for _,bot_traits in ipairs(bot.traits) do
       if bot_traits == "TYPES IN ALL CAPS" then
         all_caps = true
+      elseif bot_traits == "lost an eye in a bear accident" then
+        lost_an_eye = true
+      elseif bot_traits == "hates bears" then
+        hates_bears = true
+      elseif bot_traits == "overachiever" then
+        overachiever = true
+      elseif bot_traits == "underachiever" then
+        underachiever = true
+      elseif bot_traits == "accidently makes sexual innuendos" then
+        sexual_innuendos = true
+      elseif bot_traits == "thinks it's a pirate" then
+        pirate = true
+      elseif bot_traits == "terribly shy" then
+        shy = true
       end
     end
 
+    ---------------------------------
+    --Add ~really~ special messages--
+    ---------------------------------
+
+    if hates_bears and lost_an_eye then
+      table.insert(special_messages, "Come to think of it, I hated bears long after the eye accident...huh")
+      table.insert(special_messages, "Come to think of it, I hated bears long after the eye accident...huh")
+    end
+
+    if overachiever and underachiever then
+      table.insert(special_messages, "I'm living a paradox!!")
+      table.insert(special_messages, "I'm living a paradox!!")
+    end
+
+    if sexual_innuendos and bot.name == "Fanny" then
+      table.insert(special_messages, "Mother would always say how her little Fanny was the most beautiful thing.")
+      table.insert(special_messages, "Mother would always say how her little Fanny was the most beautiful thing.")
+    end
+
+    if pirate and lost_an_eye then
+      table.insert(special_messages, "Funny thing is I was already wearing an eye patch before the accident!")
+      table.insert(special_messages, "Funny thing is I was already wearing an eye patch before the accident!")
+    end
+
+    if pirate and bot.first_time then
+      table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+      table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+      table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+      table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+    end
+
+    if bot.name == "Gerry" then
+      table.insert(intro_messages, "Hey I'm Gerry! But you can call me Gary if you want...")
+      table.insert(intro_messages, "Hey I'm Gerry! But you can call me Gary if you want...")
+      table.insert(intro_messages, "Hey I'm Gerry! But you can call me Gary if you want...")
+      table.insert(intro_messages, "Hey I'm Gerry! But you can call me Gary if you want...")
+    end
+
+    if shy then
+      table.insert(intro_messages, "....hi")
+      table.insert(intro_messages, "....hi")
+      table.insert(intro_messages, "....hi")
+      table.insert(intro_messages, "....hi")
+    end
+
+    -------------------------
+    --Apply special actions--
+    -------------------------
+
+    --Transform all messages to caps
     if all_caps then
-      for i,dialog in ipairs(messages) do
-          messages[i] = string.upper(dialog)
+      for i,dialog in ipairs(regular_messages) do
+          regular_messages[i] = string.upper(dialog)
+      end
+      for i,dialog in ipairs(special_messages) do
+          special_messages[i] = string.upper(dialog)
+      end
+      for i,dialog in ipairs(intro_messages) do
+          intro_messages[i] = string.upper(dialog)
       end
     end
 
-    return Util.randomElement(messages)
+    --Stutters in the first word (TODO: For every word have a chance to stutter)
+    if shy then
+      local shy_dialog
+      for i,dialog in ipairs(regular_messages) do
+          if dialog:sub(1,1):match("%a") then
+            shy_dialog = dialog:sub(1,1) .. "-"..dialog
+            regular_messages[i] = shy_dialog
+          end
+      end
+      for i,dialog in ipairs(special_messages) do
+          if dialog:sub(1,1):match("%a") then
+            shy_dialog = dialog:sub(1,1) .. "-"..dialog
+            special_messages[i] = shy_dialog
+          end
+      end
+      for i,dialog in ipairs(intro_messages) do
+          if dialog:sub(1,1):match("%a") then
+            shy_dialog = dialog:sub(1,1) .. "-"..dialog
+            intro_messages[i] = shy_dialog
+          end
+      end
+
+    end
+
+    -----------------------------
+
+    --If its bot first time appearing
+    if bot.first_time then
+      bot.first_time = false
+      return Util.randomElement(intro_messages)
+    end
+
+    --Chances of special messages increases if there are more, capped at .6
+    local chance = 0
+    chance = math.min(.6, .08*#special_messages)
+
+    --Choose between special messages or regular messages
+    if love.math.random() <= chance then
+        return Util.randomElement(special_messages)
+    else
+        return Util.randomElement(regular_messages)
+    end
+
 end
