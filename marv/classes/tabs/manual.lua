@@ -59,6 +59,16 @@ local function wrap_height(font, txt, w)
     return font:getHeight() * (#wrap)
 end
 
+local function draw_border(border_text, x, y, ...)
+  local fh = love.graphics.getFont():getHeight()
+  love.graphics.setColor(0, 0, 0)
+  fh = fh / 20
+  love.graphics.printf(border_text, x + fh, y + fh, ...)
+  love.graphics.printf(border_text, x - fh, y + fh, ...)
+  love.graphics.printf(border_text, x + fh, y - fh, ...)
+  love.graphics.printf(border_text, x - fh, y - fh, ...)
+end
+
 function ManualTab:trueDraw()
     -- Possible future improvement: Avoid calling Util.stylizeText all the time, since the output is always the same.
     love.graphics.setColor(0, 0, 0)
@@ -82,11 +92,7 @@ function ManualTab:trueDraw()
             local text, _, all_but_default_text = Util.stylizeText(items[item].command)
             local x, y = self.pos.x + 5 + b.w + 5, self.pos.y + h
 
-            love.graphics.setColor(0, 0, 0)
-            love.graphics.printf(all_but_default_text, x - 2, y, W, 'left')
-            love.graphics.printf(all_but_default_text, x, y - 2, W, 'left')
-            love.graphics.printf(all_but_default_text, x + 2, y, W, 'left')
-            love.graphics.printf(all_but_default_text, x, y + 2, W, 'left')
+            draw_border(all_but_default_text, x, y, W, 'left')
 
             love.graphics.setColor(255, 255, 255)
             love.graphics.printf(text, x, y, W, 'left')
@@ -98,14 +104,10 @@ function ManualTab:trueDraw()
                 local colored_text, normal_text, all_but_default_text = Util.stylizeText(items[item].text, nil, "cmntm")
 
                 local x, y = self.pos.x + 20, self.pos.y + h
-                love.graphics.setColor(0, 0, 0)
-                love.graphics.printf(all_but_default_text, x - 2, y, self.w - 20)
-                love.graphics.printf(all_but_default_text, x, y - 2, self.w - 20)
-                love.graphics.printf(all_but_default_text, x + 2, y, self.w - 20)
-                love.graphics.printf(all_but_default_text, x, y + 2, self.w - 20)
+                draw_border(all_but_default_text, x, y, self.w - 20)
 
                 love.graphics.setColor(255, 255, 255)
-                love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                love.graphics.printf(colored_text, x, y, self.w - 20)
 
 
                 h = h + wrap_height(self.cmd_info_font, normal_text, self.w - 20) + self.cmd_info_font:getHeight()
@@ -124,11 +126,8 @@ function ManualTab:trueDraw()
                         love.graphics.setFont(self.example_code_font)
 
                         local x, y = self.pos.x + 22.5, self.pos.y + h + 5
-                        love.graphics.setColor(0, 0, 0)
-                        love.graphics.printf(all_but_default_text, x - 2, y, self.w - 45)
-                        love.graphics.printf(all_but_default_text, x, y - 2, self.w - 45)
-                        love.graphics.printf(all_but_default_text, x + 2, y, self.w - 45)
-                        love.graphics.printf(all_but_default_text, x, y + 2, self.w - 45)
+                        draw_border(all_but_default_text, x, y, self.w - 45)
+
                         love.graphics.setColor(255, 255, 255)
                         love.graphics.printf(colored_text, x, y, self.w - 45)
 
@@ -139,11 +138,8 @@ function ManualTab:trueDraw()
                             local colored_text, normal_text, all_but_default_text = Util.stylizeText(e[2], nil, "cmntm")
                             local x, y = self.pos.x + 20, self.pos.y + h
 
-                            love.graphics.setColor(0, 0, 0)
-                            love.graphics.printf(all_but_default_text, x - 2, y, self.w - 20)
-                            love.graphics.printf(all_but_default_text, x, y - 2, self.w - 20)
-                            love.graphics.printf(all_but_default_text, x + 2, y, self.w - 20)
-                            love.graphics.printf(all_but_default_text, x, y + 2, self.w - 20)
+                            draw_border(all_but_default_text, x, y, self.w - 20)
+
                             love.graphics.setColor(255, 255, 255)
                             love.graphics.printf(colored_text, x, y, self.w - 20)
 
