@@ -66,7 +66,7 @@ Github
 
 Found any bugs? Loved the game? Contact us at
 
-- `marvellous.amoeba@gmail.com`
+- `marvellous.amoeba at gmail dot com`
 
 Want to know about incoming projects, new releases and other cool stuff? Of course you do!
 

@@ -282,38 +282,48 @@ local text_colors = {
     yellow = {195, 174, 38},
     inst = {189,0,255}, instm = {177,94,255},
     dir = {0,30,255}, dirm = {86,106,255},
-    lab = {0,255,159}, labm = {0,255,159},
+    lab = {35, 102, 96}, labm = {0,255,159},
     num = {255, 16, 31}, numm = {255, 109, 119},
-    addr = {192, 242, 77}, addrm = {192, 242, 77},
+    addr = {140, 111, 23}, addrm = {192, 242, 77},
     cmnt = {40, 40, 40}, cmntm = {20, 20, 20},
     ds = {255, 218, 53},
     tab = {216,17,89}
 }
 
-function util.stylizeText(text, default_color)
+--If non_default_color isn't nil, everything that is not default will be colored that way
+--ignore is a string that lists all color tags that should be treated as default
+function util.stylizeText(text, default_color, ignore)
     default_color = default_color or {0, 0, 0, 255}
     local colored_text = {default_color}
     local full_text = {}
+    local all_but_default_text = {{0,0,0,0}}
+
     --[[ Iterate through text, anaylsing for {tags} ]]
     for w in text:gmatch("{?[^{}]+}?") do
         -- Check for tags
         if w == "{end}" then
             table.insert(colored_text, default_color) -- Change to default color
+            table.insert(all_but_default_text, {0,0,0,0}) -- Stop coloring
         elseif w:match("^{%a+}$") then
             local color = text_colors[w:match("%a+")] -- Getting color info from name
             if not color then
                 print("unrecognized color '" .. w:match("%a+") .. "'")
+            elseif ignore and ignore:find(w:match("%a+")) then
+              table.insert(colored_text, default_color)
+              table.insert(all_but_default_text, {0,0,0,0})
             else
                 table.insert(colored_text, color)
+                table.insert(all_but_default_text, color)
             end
         else
             -- Not a tag, so update current_text
             table.insert(colored_text, w)
             table.insert(full_text, w)
+            table.insert(all_but_default_text, w)
         end
     end
 
-    return colored_text, table.concat(full_text)
+    return colored_text, table.concat(full_text), all_but_default_text
 end
 
 --Return functions

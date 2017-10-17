@@ -78,16 +78,36 @@ function ManualTab:trueDraw()
             b.pos.x = 5 + self.pos.x
             b.pos.y = self.pos.y + h
             b:centralize(); b:draw()
-            love.graphics.setColor(255, 255, 255)
-
             love.graphics.setFont(self.cmd_font)
-            love.graphics.printf(Util.stylizeText(items[item].command), self.pos.x + 5 + b.w + 5, self.pos.y + h, W, 'left')
+            local text, _, all_but_default_text = Util.stylizeText(items[item].command)
+            local x, y = self.pos.x + 5 + b.w + 5, self.pos.y + h
+
+            love.graphics.setColor(0, 0, 0)
+            love.graphics.printf(all_but_default_text, x - 2, y, W, 'left')
+            love.graphics.printf(all_but_default_text, x, y - 2, W, 'left')
+            love.graphics.printf(all_but_default_text, x + 2, y, W, 'left')
+            love.graphics.printf(all_but_default_text, x, y + 2, W, 'left')
+
+            love.graphics.setColor(255, 255, 255)
+            love.graphics.printf(text, x, y, W, 'left')
+
             h = h + self.cmd_font:getHeight()
             if not self.expand_buts[item] then
                 h = h + 10
                 love.graphics.setFont(self.cmd_info_font)
-                local colored_text, normal_text = Util.stylizeText(items[item].text)
+                local colored_text, normal_text, all_but_default_text = Util.stylizeText(items[item].text, nil, "cmntm")
+
+                local x, y = self.pos.x + 20, self.pos.y + h
+                love.graphics.setColor(0, 0, 0)
+                love.graphics.printf(all_but_default_text, x - 2, y, self.w - 20)
+                love.graphics.printf(all_but_default_text, x, y - 2, self.w - 20)
+                love.graphics.printf(all_but_default_text, x + 2, y, self.w - 20)
+                love.graphics.printf(all_but_default_text, x, y + 2, self.w - 20)
+
+                love.graphics.setColor(255, 255, 255)
                 love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+
+
                 h = h + wrap_height(self.cmd_info_font, normal_text, self.w - 20) + self.cmd_info_font:getHeight()
                 if #items[item].examples > 0 then
                     love.graphics.setFont(self.example_title_font)
@@ -97,19 +117,36 @@ function ManualTab:trueDraw()
                     love.graphics.setLineWidth(.5)
                     for _, e in ipairs(items[item].examples) do -- for each example
                         h = h + 10
-                        local colored_text, normal_text = Util.stylizeText(e[1]) -- e[1] is the code
+                        local colored_text, normal_text, all_but_default_text = Util.stylizeText(e[1], nil, "cmntm") -- e[1] is the code
                         local dh = wrap_height(self.example_code_font, normal_text, self.w - 12.5)
                         love.graphics.setColor(0, 0, 0)
                         love.graphics.rectangle('line', self.pos.x + 20, self.pos.y + h + 2.5, self.w - 40, dh + 5)
-                        love.graphics.setColor(255, 255, 255)
                         love.graphics.setFont(self.example_code_font)
-                        love.graphics.printf(colored_text, self.pos.x + 22.5, self.pos.y + h + 5, self.w - 45)
+
+                        local x, y = self.pos.x + 22.5, self.pos.y + h + 5
+                        love.graphics.setColor(0, 0, 0)
+                        love.graphics.printf(all_but_default_text, x - 2, y, self.w - 45)
+                        love.graphics.printf(all_but_default_text, x, y - 2, self.w - 45)
+                        love.graphics.printf(all_but_default_text, x + 2, y, self.w - 45)
+                        love.graphics.printf(all_but_default_text, x, y + 2, self.w - 45)
+                        love.graphics.setColor(255, 255, 255)
+                        love.graphics.printf(colored_text, x, y, self.w - 45)
+
                         h = h + dh + 10
                         if e[2] then -- e[2] is the explanation
                             h = h + 5
                             love.graphics.setFont(self.example_expl_font)
-                            local colored_text, normal_text = Util.stylizeText(e[2])
-                            love.graphics.printf(colored_text, self.pos.x + 20, self.pos.y + h, self.w - 20)
+                            local colored_text, normal_text, all_but_default_text = Util.stylizeText(e[2], nil, "cmntm")
+                            local x, y = self.pos.x + 20, self.pos.y + h
+
+                            love.graphics.setColor(0, 0, 0)
+                            love.graphics.printf(all_but_default_text, x - 2, y, self.w - 20)
+                            love.graphics.printf(all_but_default_text, x, y - 2, self.w - 20)
+                            love.graphics.printf(all_but_default_text, x + 2, y, self.w - 20)
+                            love.graphics.printf(all_but_default_text, x, y + 2, self.w - 20)
+                            love.graphics.setColor(255, 255, 255)
+                            love.graphics.printf(colored_text, x, y, self.w - 20)
+
                             h = h + wrap_height(self.example_expl_font, normal_text, self.w - 20)
                         end
                     end
