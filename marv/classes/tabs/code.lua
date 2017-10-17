@@ -142,7 +142,7 @@ function CodeTab:keyPressed(key)
             StepManager.play()
         end
     end
-    if key == 'escape' and StepManager ~= 'stopped' then
+    if key == 'escape' and StepManager.state ~= 'stopped' then
         StepManager.stop()
     end
     if isRunning then return end

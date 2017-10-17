@@ -190,7 +190,7 @@ function sm.pause()
 end
 
 function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
-    if not ROOM:connected() or sm.only_play_button then
+    if sm.state == 'stopped' or not ROOM:connected() or sm.only_play_button then
         SFX.buzz:play()
         return
     end
