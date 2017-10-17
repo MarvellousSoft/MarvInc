@@ -1,5 +1,5 @@
 name = "Prime Decomposition"
-n = "???"
+n = "E.3"
 
 lines_on_terminal = 40
 memory_slots = 6
@@ -124,13 +124,13 @@ grid_floor = "....................."..
              "....................."
 
 function first_completed()
-    _G.PopManager.new("yaydyadyaydyadyad",
-        "Replace me please this is placeholder",
+    _G.PopManager.new(" PLACEHOLDER ",
+        " PLACEHOLDER ",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "placeholder",
+            text = " PLACEHOLDER ",
             clr = _G.Color.blue()
         })
 end
