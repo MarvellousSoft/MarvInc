@@ -83,7 +83,7 @@ function InfoTab:trueMousePressed(x, y, but)
     local i
     i = self
     -- Disconnect Room if give up button is pressed
-    if but == 1 and ROOM:connected() and Util.pointInRect(x, y, i.give_up_x, i.give_up_y, i.give_up_w, i.give_up_h) then
+    if ROOM.puzzle_id ~= 'franz1' and but == 1 and ROOM:connected() and Util.pointInRect(x, y, i.give_up_x, i.give_up_y, i.give_up_w, i.give_up_h) then
         ROOM:disconnect()
     end
 end
@@ -214,20 +214,22 @@ function InfoTab:trueDraw()
         -- Draw give up button
 
         -- Make button box
-        self.give_up_x = self.pos.x + self.w - self.give_up_w - 10
-        self.give_up_y = self.pos.y + self.last_h + 10
-        Color.set(self.give_up_button_color)
-        love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
-        Color.set(self.line_color)
-        love.graphics.setLineWidth(3)
-        love.graphics.rectangle("line", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+        if ROOM.puzzle_id ~= 'franz1' then
+          self.give_up_x = self.pos.x + self.w - self.give_up_w - 10
+          self.give_up_y = self.pos.y + self.last_h + 10
+          Color.set(self.give_up_button_color)
+          love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+          Color.set(self.line_color)
+          love.graphics.setLineWidth(3)
+          love.graphics.rectangle("line", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
 
-        self.last_h = self.last_h + 20 + self.give_up_h
+          self.last_h = self.last_h + 20 + self.give_up_h
 
-        -- Make button text
-        love.graphics.setFont(FONTS.fira(20))
-        Color.set(self.give_up_button_text_color)
-        love.graphics.print("give up", self.give_up_x + 6, self.give_up_y + 6)
+          -- Make button text
+          love.graphics.setFont(FONTS.fira(20))
+          Color.set(self.give_up_button_text_color)
+          love.graphics.print("give up", self.give_up_x + 6, self.give_up_y + 6)
+        end
 
     else
         -- This is useless now
