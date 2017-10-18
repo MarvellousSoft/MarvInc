@@ -15,7 +15,7 @@ When we all signed our contracts to become a member of the Marvellous Family, an
 {blue}HR:{end} What's written is not really that important! And we definitely did not write in legalese just to confuse you! That's just not the MarvInc way!
 
 {red}You:{end} What are some of these obligations?
-{blue}HR:{end} Well, now this is VERY important! So pay attention now. You are obligated to do the following:
+{blue}HR:{end} Well, now this is VERY important! So pay attention now. You are {red}obligated{end} to do the following:
 
 1. The employee gives complete ownership of any and all intelectual property (IP) of his/her during his/her employment at MarvInc to MarvInc.
 2. The employee is forbidden of disclosing information of any and all activities, events, IP or anything related to the employement of MarvInc to anyone who is not working at the same or above capacity as him/her, subject to legal prosecution otherwise.
