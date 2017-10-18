@@ -117,7 +117,7 @@ function first_completed()
     "    - Christoff J. Kormen, Senior Assistant to the Training Manager",
     _G.Color.blue(), {
         func = after_pop,
-        text = "Thank you for this wonderful opportunity",
+        text = " thank you for this wonderful opportunity ",
         clr = _G.Color.blue()
     })
 end

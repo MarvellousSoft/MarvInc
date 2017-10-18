@@ -72,7 +72,7 @@ function first_completed()
 [[
 Jenny will want to hear about this.
 
-You probably should call her Jenny.
+You probably shouldn't call her Jenny.
 ]],
     _G.Color.green(), {
         func = function()

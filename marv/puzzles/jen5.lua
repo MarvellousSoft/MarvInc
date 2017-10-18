@@ -74,12 +74,12 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 function first_completed()
     _G.PopManager.new("This looks efficient",
-        "I shouldn't bother Jen for a while, she looks busy.\n\nI could watch some Better Call Saul",
+        "You shouldn't bother Jen for a while, she looks busy.\n\nYou could watch some Better Call Saul",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Netflix and chill ",
+            text = " *Netflix and chill* ",
             clr = _G.Color.blue()
         })
 end

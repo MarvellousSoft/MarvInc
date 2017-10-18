@@ -128,7 +128,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "I like math.",
+            text = " I like math ",
             clr = _G.Color.blue()
         })
 end

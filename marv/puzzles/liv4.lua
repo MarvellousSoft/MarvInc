@@ -160,7 +160,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " No probs ",
+            text = " no probs ",
             clr = _G.Color.blue()
         })
 end

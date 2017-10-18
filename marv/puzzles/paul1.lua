@@ -157,7 +157,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "trip on",
+            text = " trip on ",
             clr = _G.Color.black()
         })
 end

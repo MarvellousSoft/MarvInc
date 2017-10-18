@@ -135,16 +135,17 @@ end
 
 extra_info = [[
 Don't waste any bleach.
-- All coordinates are between 2 and 20.]]
+- All coordinates are between 2 and 20.
+- Go fuck yourself]]
 
 function first_completed()
-    _G.PopManager.new(" PLACEHOLDER ",
-        " PLACEHOLDER ",
+    _G.PopManager.new(" That looks as clean as it could get ",
+        "You shouldn't expect a \"thank you\" from Janine anytime soon",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " PLACEHOLDER ",
+            text = " ...so we are ignoring the blood pools then? ",
             clr = _G.Color.blue()
         })
 end

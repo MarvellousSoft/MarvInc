@@ -225,8 +225,7 @@ function first_completed()
                     i = i + 1
                 end)
             end,
-            text = " Show me ",
+            text = " show me ",
             clr = _G.Color.blue()
         })
 end
-

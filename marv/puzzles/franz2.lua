@@ -122,7 +122,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "Dishonor on the hackers cow!",
+            text = " dishonor on the hackers cow! ",
             clr = _G.Color.blue()
         })
 end

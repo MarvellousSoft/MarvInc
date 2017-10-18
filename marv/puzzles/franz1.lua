@@ -146,7 +146,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "Good grief",
+            text = " good grief ",
             clr = _G.Color.blue()
         })
 end

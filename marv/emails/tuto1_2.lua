@@ -5,7 +5,9 @@ return {
     text = [[
 There are many commands to control the test subjects. For now, you just need to know one: {inst}walk{end}
 
-You can provide a {dir}cardinal direction {end}({dir}north{end}, {dir}east{end}, {dir}south {end}or {dir}west{end}) or a {dir}regular direction {end}({dir}up{end}, {dir}right{end}, {dir}down {end}or {dir}left{end}). If you don't, your robot will walk to the direction it's facing. This command will make the test subject walk until it encounters an obstacle.
+You can provide a {dir}cardinal direction {end}({dir}north{end}, {dir}east{end}, {dir}south {end}or {dir}west{end}) or a {dir}regular direction {end}({dir}up{end}, {dir}right{end}, {dir}down {end}or {dir}left{end}). If you don't, your robot will walk to the direction it's facing.
+
+{red}IMPORTANT:{end} This command will make the test subject walk {green}until it encounters an obstacle{end}.
 
 Examples:
     - {inst}walk{end}

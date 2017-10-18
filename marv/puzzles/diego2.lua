@@ -150,7 +150,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "...okay?",
+            text = " ...okay? ",
             clr = _G.Color.black()
         })
 end

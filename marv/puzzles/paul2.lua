@@ -169,13 +169,13 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "Did it, really?",
+            text = " did it, really? ",
             clr = _G.Color.red()
         }, {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "We sure showed them!",
+            text = " we sure showed them! ",
             clr = _G.Color.blue()
         })
 end

@@ -91,10 +91,10 @@ end
 
 function first_completed()
     _G.PopManager.new("Well done",
-        "You have proven yourself to be an efficient and valuable employee so far.\n\nI'll tell Franz about your sucess. It's time to carry on.\n--Jen",
+        "You have proven yourself to be an efficient and valuable employee so far.\n\nI'll tell Franz about your sucess. It's time to carry on.\n-Janine",
         _G.Color.green(), {
             func = after_pop,
-            text = "I am ready",
+            text = " I am ready ",
             clr = _G.Color.blue()
         })
 end

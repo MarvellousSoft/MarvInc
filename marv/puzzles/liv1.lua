@@ -151,7 +151,7 @@ function first_completed()
                 end)
                 -- maybe Liv should say something
             end,
-            text = " Well, fuck him ",
+            text = " well, fuck him ",
             clr = _G.Color.black()
         })
 end

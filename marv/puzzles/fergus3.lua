@@ -108,7 +108,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Glad to help ",
+            text = " ...glad to help ",
             clr = _G.Color.blue()
         })
 end

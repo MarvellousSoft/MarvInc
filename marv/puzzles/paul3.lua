@@ -108,7 +108,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = "You ponder your life choices.",
+            text = " *you ponder your life choices* ",
             clr = _G.Color.blue()
         })
 end
