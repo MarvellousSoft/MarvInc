@@ -15,4 +15,5 @@ Janine Leubwitz
 Head engineer at Marvellous Inc. Janitorial Services Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
+    can_be_deleted = true
 }

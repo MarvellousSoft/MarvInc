@@ -24,6 +24,7 @@ Head engineer at Marvellous Inc. Robot Testing Department
 ]],
     author = "Janine Leubwitz (leubwitz@rtd.marv.com)",
     reply_func = function(e)
+        require('classes.opened_email').close()
         FX.full_static(GS.ACT2)
         ROOM.version = "2.0"
         LoreManager.puzzle_done.act1 = true

@@ -27,5 +27,6 @@ These are just the obligations that you should be aware of for now! And remember
 
 A big hug from all of us at Human Resources!
 ]],
-    author = "Human Resources (no_reply@hr.marv.com)"
+    author = "Human Resources (no_reply@hr.marv.com)",
+    can_be_deleted = true
 }

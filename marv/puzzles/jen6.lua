@@ -147,7 +147,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " ...so we are ignoring the blood pools then? ",
+            text = " ...so are we ignoring the blood? ",
             clr = _G.Color.blue()
         })
 end

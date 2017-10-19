@@ -1,3 +1,7 @@
+local FX = require('classes.fx')
+local LoreManager = require('classes.lore_manager')
+local Mail = require('classes.tabs.email')
+
 local you = "Employee #" .. EMPLOYEE_NUMBER
 return {
     title = "A satisfactory result",
@@ -19,4 +23,12 @@ Karl Franz F. L. von Linz
 General Executive Manager
 ]],
     author = "Karl Franz F. L. von Linz (kflinz@marv.com)",
+    reply_func = function(e)
+        require('classes.opened_email').close()
+        FX.full_static(GS.ACT3)
+        ROOM.version = "3.0"
+        LoreManager.puzzle_done.act2 = true
+        LoreManager.check_all()
+        Mail.disableReply(e.number)
+    end
 }

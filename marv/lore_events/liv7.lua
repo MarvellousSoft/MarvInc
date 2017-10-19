@@ -4,12 +4,12 @@ local liv = {}
 
 -- Add puzzle 'liv7'
 
-liv.require_puzzles = {false} -- TODO: decide
-liv.wait = 10
+liv.require_puzzles = {'act2'}
+liv.wait = 7
 
 function liv.run()
     Mail.new('liv7_1')
-    LoreManager.timer:after(10, function() Mail.new('liv7_2') end)
+    LoreManager.timer:after(20, function() Mail.new('liv7_2') end)
 end
 
 return liv

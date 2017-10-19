@@ -48,6 +48,10 @@ grid_obj =  "---------------------"..
 
 -- Floor
 w = "white_floor"
+A = 'blood_splat_1'
+B = 'blood_splat_2'
+C = 'blood_splat_3'
+D = 'blood_splat_4'
 env[','] = "black_floor"
 z = 'green_tile'
 
@@ -61,7 +65,7 @@ grid_floor = "....................."..
              "....................."..
              "....................."..
              "....................."..
-             "wwwwwwwwwwwwwwwwwwwww"..
+             "wDwCwBAwBAwwDwwwCwBwA"..
              "....................."..
              "....................."..
              "....................."..
