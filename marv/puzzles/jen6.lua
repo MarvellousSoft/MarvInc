@@ -14,7 +14,7 @@ local function create_vec()
     local tmp = {}
     for i = 1, ROWS do
         for j = 1, COLS do
-            if final:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
+            if final:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) ~= '.' then
                 _G.table.insert(tmp, {i, j})
             end
         end
@@ -60,54 +60,56 @@ grid_obj =  "cbhoooooooooooooooooo"..
             "ooooooooooooooooooooo"
 
 -- Floor
-w = "white_floor"
-_G.getfenv()[','] = "red_tile"
-r = "red_tile"
+_G.getfenv()['.'] = "white_floor"
+_G.getfenv()['A'] = "blood_splat_1"
+_G.getfenv()['B'] = "blood_splat_2"
+_G.getfenv()['C'] = "blood_splat_3"
+_G.getfenv()['D'] = "blood_splat_4"
 g = "black_floor"
 
-final      = "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"
+final      = "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."..
+             "....................."
 
-grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
-             "w,,,,,,,wwwwwwwwww,,w"..
-             "ww,wwww,,,wwwwwww,www"..
-             "www,w,,www,wwwwwwwwww"..
-             "wwww,wwwww,wwwwwwwwww"..
-             "wwww,wwwww,wwwwwwwwww"..
-             "wwww,wwwwww,wwwwwwwww"..
-             "wwww,ww,ww,w,wwwwwwww"..
-             "wwww,ww,ww,ww,wwwwwww"..
-             "wwww,www,wwwww,wwwwww"..
-             "www,wwww,,wwwww,wwwww"..
-             "www,wwwwwwwwwwww,wwww"..
-             "www,ww,www,wwww,wwwww"..
-             "www,ww,,,,,www,wwwwww"..
-             "www,wwwwwwww,wwwwwwww"..
-             "www,wwwwww,wwwwwwwwww"..
-             "www,,,ww,wwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwwwwww,www"..
-             "w,,wwwwwwwwwwwwwwww,w"..
-             "wwwwwwwwwwwwwwwwwwwww"
+grid_floor = "....................."..
+             ".ABBDCBD..........DC."..
+             "..A....CBD.......C..."..
+             "...C.AD...C.........."..
+             "....A.....B.........."..
+             "....B.....A.........."..
+             "....C.....DC........."..
+             "....B..B..D.B........"..
+             "....A..C..B..A......."..
+             "....C...A.....A......"..
+             "...B....BA..........."..
+             "...A............B...."..
+             "......B...A.......AC."..
+             ".A.B..DBDAC...A...BD."..
+             "............B........"..
+             "...B......B.........."..
+             "...ACB..D............"..
+             "....................."..
+             ".................A..."..
+             ".AB................B."..
+             "....................."
 
 -- Objective
 objective_text = [[
@@ -116,13 +118,13 @@ function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             local p = COLS * (i - 1) + j
-            if grid_floor:sub(p, p) == ',' then
+            if grid_floor:sub(p, p) ~= '.' then
                 if room.color_floor[j][i] then
                     room.color_floor[j][i] = nil
-                    grid_floor = grid_floor:sub(1, p - 1) .. 'w' .. grid_floor:sub(p + 1, #grid_floor)
+                    grid_floor = grid_floor:sub(1, p - 1) .. '.' .. grid_floor:sub(p + 1, #grid_floor)
                     room.grid_floor[j][i] = 'white_floor'
                 end
-            elseif grid_floor:sub(p, p) == 'w' then
+            elseif grid_floor:sub(p, p) == '.' then
                 if room.color_floor[j][i] then
                     _G.StepManager.stop("Cleaned wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be cleaned.", "Retry")
                     return false
@@ -136,7 +138,7 @@ end
 extra_info = [[
 Don't waste any bleach.
 - All coordinates are between 2 and 20.
-- Go fuck yourself]]
+- Go fuck yourself.]]
 
 function first_completed()
     _G.PopManager.new("That looks as clean as it could get",

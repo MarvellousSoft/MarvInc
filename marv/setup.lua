@@ -104,6 +104,10 @@ TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")
 TILES_IMG["green_tile"] = love.graphics.newImage("assets/images/green_tile.png")
 TILES_IMG["blue_tile"] = love.graphics.newImage("assets/images/blue_tile.png")
 TILES_IMG["solid_lava"] = love.graphics.newImage("assets/images/cold_lava_tile.png")
+TILES_IMG["blood_splat_1"] = love.graphics.newImage("assets/images/blood_splat_1.png")
+TILES_IMG["blood_splat_2"] = love.graphics.newImage("assets/images/blood_splat_2.png")
+TILES_IMG["blood_splat_3"] = love.graphics.newImage("assets/images/blood_splat_3.png")
+TILES_IMG["blood_splat_4"] = love.graphics.newImage("assets/images/blood_splat_4.png")
 
 -- Objects
 OBJS_IMG = {}
