@@ -6,6 +6,9 @@ Camera    = require "extra_libs.hump.camera"
 Vector    = require "extra_libs.hump.vector"
 Signal    = require "extra_libs.hump.signal"
 
+--OTHER EXTRA LIBS
+require "extra_libs.slam"
+
 --MY MODULES
 Util      = require "util"
 Draw      = require "draw"

@@ -300,7 +300,7 @@ function setup.config()
       {"diabetic", {}},
       {"only drinks soda", {}},
       {"only listens to Insane Clown Posse", {}},
-      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}},      
+      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}},
     }
 
     --Regular dialogs any robot can say
@@ -370,6 +370,7 @@ function setup.config()
     SFX.buzz = love.audio.newSource("assets/sound/buzz.ogg", "static")
     SFX.fail = love.audio.newSource("assets/sound/fail.mp3", "static")
     SFX.click = love.audio.newSource("assets/sound/click.wav", "static")
+    SFX.side_message = love.audio.newSource("assets/sound/side_message_blip.wav", "static")
 end
 
 --Return functions

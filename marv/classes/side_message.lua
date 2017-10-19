@@ -92,6 +92,9 @@ function SideMessage:activate()
     --Create initial effect
     self.handles["start_movement"] = MAIN_TIMER:tween(.3, self.pos, {x = self.pos.x - self.w}, "in-out-quad")
 
+    --Play sfx
+    SFX.side_message:play()
+
     --Move all other messages up
     local all_messages = Util.findSbTp("side_message")
     for bot_m in pairs(all_messages) do

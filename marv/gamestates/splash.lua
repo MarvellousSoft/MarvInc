@@ -11,7 +11,7 @@ function state:enter()
 end
 
 local function leave()
-    if sound:isPlaying() then sound:stop() end
+    if sound then sound:stop() end
     Timer.clear()
     Gamestate.switch(GS.MENU)
 end
