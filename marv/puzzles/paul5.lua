@@ -153,13 +153,13 @@ The console will have exactly enough info to paint or ignore everything.
 ]]
 
 function first_completed()
-    _G.PopManager.new("PLACEHOLDER",
-        "PLACEHOLDER",
+    _G.PopManager.new("You do know how to give good paintjobs",
+        "No wonder Karl Franz didn't allow Paul to redecorate the labs.",
         _G.Color.green(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " PLACEHOLDER ",
+            text = "Quite unfortunate...",
             clr = _G.Color.blue()
         })
 end
