@@ -282,7 +282,7 @@ function setup.config()
       {"ArchLinux user", {"Did I tell you I run ArchLinux?"}},
       {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}},
       {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}},
-      {"jazz poser", {"DAE A Love Supreme best album?!", "Miles Davis, am I right?", "I kind of like Kenny G."}},
+      {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?"}, {"Baby, give it up! Give it up, baby give it up!"}},
       {"1/128 irish", {"I can't wait for St. Pattys day!"}},
       {"german", {"Das ist nicht effizient. You should optimize your code."}},
       {"spanish", {"Oye chico! When I can do the siesta, eh?"}},
