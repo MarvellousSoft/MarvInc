@@ -24,6 +24,8 @@ ManualTab = Class {
         -- list of known commands
         self.cmds = {}
 
+        self.w = self.w - 13 / 2
+
         self.true_h = 0
         local obj = {
             pos = self.pos,
@@ -33,7 +35,11 @@ ManualTab = Class {
             mouseMoved = function(obj, ...) self:trueMouseMoved(...) end,
             mouseScroll = function(obj, ...) self:trueMouseScroll(...) end
         }
-        self.box = ScrollWindow(self.w, self.h, obj)
+        self.box = ScrollWindow(self.w + 5, self.h, obj)
+
+        self.box.sw = 13
+
+        self.box.color = {5, 30, 8}
 
         self.title_font = FONTS.firaBold(40)
         self.info_font = FONTS.fira(20)

@@ -13,7 +13,8 @@
 local ResManager = require "res_manager"
 
 local ScrollWindow = Class {
-    __includes = {ELEMENT}
+    __includes = {ELEMENT},
+    default_width = 15
 }
 
 function ScrollWindow:init(w, h, obj, scroll_min)
@@ -23,7 +24,7 @@ function ScrollWindow:init(w, h, obj, scroll_min)
     self.obj = obj
 
     self.scrolled = 0 -- [0, 1] how much it scrolled
-    self.sw = 20 -- scrollbar width
+    self.sw = ScrollWindow.default_width -- scrollbar width
     self.on_grab = false -- currently mouse is grabbing scrollbar
     self.scroll_min = scroll_min -- minimum scroll size, if nil there is no minimum
 end
@@ -55,13 +56,22 @@ function ScrollWindow:draw()
     love.graphics.translate(0, (oh - self.h) * self.scrolled)
     love.graphics.setScissor()
 
+    local normalAlpha, hoverAlpha, grabAlpha = 200, 230, 255
+
+    local r, g, b
+    if self.color then
+        r, g, b = unpack(self.color)
+    else
+        r, g, b = 50, 50, 50
+    end
+
     -- Drawing scroll bar
     if self.on_grab then
-        love.graphics.setColor(50, 50, 50, 120)
+        love.graphics.setColor(r, g, b, grabAlpha)
     elseif self.on_hover then
-        love.graphics.setColor(50, 50, 50, 80)
+        love.graphics.setColor(r, g, b, hoverAlpha)
     else
-        love.graphics.setColor(50, 50, 50, 60)
+        love.graphics.setColor(r, g, b, normalAlpha)
     end
     love.graphics.rectangle('fill', scrollBarBounds(self))
 end

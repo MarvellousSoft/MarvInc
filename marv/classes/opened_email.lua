@@ -39,8 +39,9 @@ OpenedEmail = Class{
         self.time = _time -- Time the email was sent
 
         -- Text ScrollWindow
+        self.w = self.w - 20
 
-        self.text_height = height(self.text_font, self.text, self.w - 20)
+        self.text_height = height(self.text_font, self.text, self.w - 25)
         local obj_h = self.text_height
         local obj = {
             mousePressed = function(o, ...) self:checkButtonClick(...) end,
@@ -49,7 +50,9 @@ OpenedEmail = Class{
             pos = Vector(self.pos.x + 10, self.pos.y + 110)
         }
 
-        self.text_scroll = ScrollWindow(self.w - 20, 21 * self.text_font:getHeight(), obj, self.text_font:getHeight())
+
+        self.text_scroll = ScrollWindow(self.w - 23, 21 * self.text_font:getHeight(), obj, self.text_font:getHeight())
+        self.text_scroll.sw = 10
 
         self.can_be_deleted = _can_be_deleted -- If email can be deleted
         self.delete_button_color = Color.new(0,80,120) --Color for delete button box
@@ -81,7 +84,7 @@ OpenedEmail = Class{
 }
 
 function OpenedEmail:drawContents(box)
-    love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 20)
+    love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 25)
     local e = self
     local referenced_email = e.referenced_email
     -- Can be deleted button

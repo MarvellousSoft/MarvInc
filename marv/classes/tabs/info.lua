@@ -58,6 +58,8 @@ InfoTab = Class{
 
         self.line_color = Color.new(0,80,40)
 
+        self.w = self.w - 13 / 2
+
         self.last_h = 0
         local obj = {
             pos = self.pos,
@@ -65,7 +67,9 @@ InfoTab = Class{
             draw = function() self:trueDraw() end,
             mousePressed = function(obj, ...) self:trueMousePressed(...) end
         }
-        self.box = ScrollWindow(self.w, self.h, obj)
+        self.box = ScrollWindow(self.w + 5, self.h, obj)
+        self.box.sw = 13
+        self.box.color = {5, 10, 30}
 
         self:setId("info_tab")
     end

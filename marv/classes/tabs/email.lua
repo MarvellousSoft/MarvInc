@@ -33,6 +33,8 @@ EmailTab = Class{
         self.email_height = 35 --Height of each email box in the inbox
         self.email_border = 8 --Gap between emails on the inbox
 
+        self.w = self.w - ScrollWindow.default_width / 2
+
         -- Used to work with ScrollWindow
         local obj = {
             getHeight = function()
@@ -44,6 +46,8 @@ EmailTab = Class{
             pos = self.pos
         }
         self.mail_box = ScrollWindow(self.w, (self.email_height + self.email_border) * self.email_on_screen - self.email_border, obj, self.email_border + self.email_height)
+
+        self.mail_box.color = {240, 240, 240}
 
         self.tp = "email_tab"
         self:setId("email_tab")
