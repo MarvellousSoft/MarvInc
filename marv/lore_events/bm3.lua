@@ -7,6 +7,7 @@ bm.wait = 30
 
 function bm.run()
     Mail.new('bm3')
+    LoreManager.timer:after(30, function() Mail.new('bm3_1') end)
 end
 
 return bm
