@@ -97,8 +97,9 @@ function CodeTab:update(dt)
 end
 
 function CodeTab:draw()
+    -- Drawing error message
     if self.err_msg and self.err_line ~= self.term.cursor.i then
-        love.graphics.setColor(100, 0, 0)
+        love.graphics.setColor(255, 60, 60)
         love.graphics.setFont(FONTS.fira(13))
         love.graphics.print("Line " .. self.err_line .. ": " .. self.err_msg, self.term.pos.x, self.term.pos.y - FONTS.fira(13):getHeight())
     end
