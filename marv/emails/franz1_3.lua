@@ -4,7 +4,7 @@ return {
     text = you .. [[,
 You have proven yourself useful and true to the MarvInc cause. As such, I expect you to perform another task for me.
 
-There have been... Rumors. Leaks. And a certain federal agency has been investigating us.
+There have been... {gray}Rumors{end}. Leaks. And a certain federal agency has been investigating us.
 
 As is usual of the American inneficiency, they rely heavily on humans. And in the FBI case, snitches. It appears that they have recently lost their only rat in the inside... It is fortunate that we are not dealing with the Bundeskriminalant. Otherwise we would already be peeling Kartoffeln in the Bundesgefängnis. Ha! And they say german humor is nonexistant.
 
@@ -19,5 +19,3 @@ General Executive Manager
 ]],
     author = "Karl Franz F. L. von Linz (kflinz@marv.com)"
 }
-
-
