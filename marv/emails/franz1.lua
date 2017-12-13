@@ -15,7 +15,7 @@ It has come to our attention that Mr. Vega has been involved in very concerning 
 
 Do not mistake us for amateurs, ]] .. you .. [[. We do not tolerate this kind of behaviour. Loyalty is very much valued in this company, and I needn't tell you, ]] .. you .. [[, that unquestionable loyalty will get you a bright future. Do as Mr. Allton and... Well, we cannot say of what becomes of you.
 
-Since I am a very forgiving and merciful person, I shall forgive any transgressions you may have made because of Mr. Allton, and blame it on his manipulative and devious character. I have faith that you are loyal to this company, and nothing like your past friend Mr. Allton.
+Since I am a very forgiving and merciful person, I shall dismiss any previous transgressions you may have made because of Mr. Allton, and blame it on his manipulative and devious character. I have faith that you are loyal to this company, and nothing like your past friend Mr. Allton.
 
 Having said that, indulge me for a second and kindly perform this one task for me as a proof of your loyalty and commitment to this company.
 
