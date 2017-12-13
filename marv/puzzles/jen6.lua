@@ -143,7 +143,7 @@ Don't waste any bleach.
 function first_completed()
     _G.PopManager.new("That looks as clean as it could get",
         "You shouldn't expect a \"thank you\" from Janine anytime soon",
-        _G.Color.green(), {
+        _G.CHR_CLR['jen'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

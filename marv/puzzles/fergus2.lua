@@ -100,7 +100,7 @@ floor = grid_floor
 function first_completed()
     _G.PopManager.new("Well done",
         "I'm sure this was a real challenge for you.\n\nFergus Gerhard Jacobsen",
-        _G.Color.green(), {
+        _G.CHR_CLR['fergus'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

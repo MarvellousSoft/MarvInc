@@ -165,7 +165,7 @@ end
 function first_completed()
     _G.PopManager.new("Res publica",
         "And once again, Democracy saved the day...",
-        _G.Color.green(), {
+        _G.CHR_CLR['paul'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

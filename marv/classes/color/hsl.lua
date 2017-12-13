@@ -115,6 +115,16 @@ function hsl.pink()
   return HSL(hsl.stdv(318,85.8,64.1))
 end
 
+--Faeces brown
+function hsl.brown()
+    return HSL(hsl.stdv(34,98.1,60.8))
+end
+
+--Granny gray
+function hsl.gray()
+    return HSL(hsl.stdv(0,0.0,47.8))
+end
+
 --Invisible transparent
 function hsl.transp()
   return HSL(0,0,0,0)

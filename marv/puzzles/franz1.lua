@@ -142,7 +142,7 @@ function first_completed()
     end
     _G.PopManager.new("A message",
         "You have been warned.",
-        _G.Color.green(), {
+        _G.CHR_CLR['franz'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

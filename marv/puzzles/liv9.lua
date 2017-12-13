@@ -197,7 +197,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 function first_completed()
     _G.PopManager.new("Project Brainfuck Completed",
         "Have you seen Olivia?\n\nKarl Franz F. L. von Linz",
-        _G.Color.green(), {
+        _G.CHR_CLR['franz'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

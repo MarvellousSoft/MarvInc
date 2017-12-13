@@ -85,7 +85,7 @@ grid_floor = "w,w,w,w,w,w,w,w,w,w,w"..
 function first_completed()
     _G.PopManager.new("Situation status",
         "The fire has been extinguished. Paul can get his interns to fix the reactor.",
-        _G.Color.green(), {
+        _G.CHR_CLR['paul'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

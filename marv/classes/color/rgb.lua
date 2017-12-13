@@ -87,6 +87,16 @@ function rgb.pink()
   return RGB(242,85,195)
 end
 
+--Faeces brown
+function rgb.brown()
+    return RGB(155,88,3)
+end
+
+--Granny gray
+function rgb.gray()
+    return RGB(122,122,122)
+end
+
 --Invisible transparent
 function rgb.transp()
   return RGB(0,0,0,0)

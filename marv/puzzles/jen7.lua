@@ -97,7 +97,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 function first_completed()
     _G.PopManager.new("Clean as a morgue",
         "I couldn't make it better myself.\nIf we get out of this mess in one piece, I'll buy you a bottle of Wharmpess and we put all of this havoc behind us, how about it?\n-Janine",
-        _G.Color.green(), {
+        _G.CHR_CLR['jen'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

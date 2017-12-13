@@ -74,7 +74,7 @@ Jenny will want to hear about this.
 
 You probably shouldn't call her Jenny.
 ]],
-    _G.Color.green(), {
+    _G.CHR_CLR['jen'], {
         func = function()
             _G.ROOM:disconnect()
         end,

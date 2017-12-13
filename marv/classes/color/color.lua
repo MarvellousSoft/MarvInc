@@ -187,5 +187,23 @@ function Color.transp(mode)
     end
 end
 
+--Faeces brown
+function Color.brown(mode)
+    if not mode or mode == "HSL" then
+        return Hsl.brown()
+    else
+        return Rgb.brown()
+    end
+end
+
+--Granny gray
+function Color.gray(mode)
+    if not mode or mode == "HSL" then
+        return Hsl.gray()
+    else
+        return Rgb.gray()
+    end
+end
+
 --Return functions
 return Color

@@ -106,7 +106,7 @@ grid_floor = "....................."..
 function first_completed()
     _G.PopManager.new("No title",
         "Type your message here...",
-        _G.Color.green(), {
+        _G.CHR_CLR['liv'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

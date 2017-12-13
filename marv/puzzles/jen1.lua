@@ -74,7 +74,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 function first_completed()
     _G.PopManager.new("You've completed the job",
         "But is Jenny always this... energetic?",
-        _G.Color.green(), {
+        _G.CHR_CLR['jen'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

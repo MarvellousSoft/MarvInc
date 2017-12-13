@@ -156,7 +156,7 @@ grid_floor = "....................."..
 function first_completed()
     _G.PopManager.new("Deque completed",
         "Thanks. Franz will be pleased.\n\n-- Liv",
-        _G.Color.green(), {
+        _G.CHR_CLR['liv'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

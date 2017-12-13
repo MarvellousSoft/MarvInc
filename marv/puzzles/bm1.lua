@@ -124,7 +124,7 @@ grid_floor = "....................."..
 function first_completed()
     _G.PopManager.new("Greatest Common Divisor",
         "Billy boy would be proud.",
-        _G.Color.green(), {
+        _G.CHR_CLR['bm'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

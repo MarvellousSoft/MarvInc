@@ -119,7 +119,7 @@ I'm busy looking at a grumpy cat pic.
 It's hilarious.
 
 -Janine]],
-        _G.Color.green(), {
+        _G.CHR_CLR['jen'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

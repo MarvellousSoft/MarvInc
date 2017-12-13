@@ -163,7 +163,7 @@ grid_floor = "wvwvwvwvwvwvwvwvwvwvw"..
 function first_completed()
     _G.PopManager.new("Congratz, senior",
         "Now let's sleep off the headache.\n\n-- Liv",
-        _G.Color.green(), {
+        _G.CHR_CLR['liv'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

@@ -93,7 +93,7 @@ function first_completed()
         [[i will continue my search. ill let you know if i find anything.
 
         --master broda vega]],
-        _G.Color.green(), {
+        _G.CHR_CLR['diego'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

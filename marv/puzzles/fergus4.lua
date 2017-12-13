@@ -84,7 +84,7 @@ extra_info =
 function first_completed()
     _G.PopManager.new("I appreciate it",
         "Now I'll get back to the rest before that bitch sends me more!\n\nFergus",
-        _G.Color.green(), {
+        _G.CHR_CLR['fergus'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

@@ -146,7 +146,7 @@ function first_completed()
         dont tell anyone about this bro, im counting on you
 
         --investigator bro-vega]],
-        _G.Color.green(), {
+        _G.CHR_CLR['diego'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

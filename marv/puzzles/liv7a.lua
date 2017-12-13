@@ -139,7 +139,7 @@ grid_floor = "....................."..
 function first_completed()
     _G.PopManager.new("Great!",
         "You used counting sort, right?\n\n-- Liv",
-        _G.Color.green(), {
+        _G.CHR_CLR['liv'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

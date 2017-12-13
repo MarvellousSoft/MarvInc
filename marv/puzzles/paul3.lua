@@ -108,7 +108,7 @@ There is a tile directly above or below each body. They are generated randomly.
 function first_completed()
     _G.PopManager.new("Situation status",
         "Never cleaner.",
-        _G.Color.green(), {
+        _G.CHR_CLR['paul'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

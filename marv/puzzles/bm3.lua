@@ -124,13 +124,13 @@ grid_floor = "....................."..
              "....................."
 
 function first_completed()
-    _G.PopManager.new(" PLACEHOLDER ",
-        " PLACEHOLDER ",
-        _G.Color.green(), {
+    _G.PopManager.new("Prime Decomposition",
+        "I wonder what Miles and Bill were all worried about...",
+        _G.CHR_CLR['bm'], {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " PLACEHOLDER ",
+            text = "... and what was Miles talking about?",
             clr = _G.Color.blue()
         })
 end

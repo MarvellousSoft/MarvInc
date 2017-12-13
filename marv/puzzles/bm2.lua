@@ -141,7 +141,7 @@ grid_floor = "....................."..
 function first_completed()
     _G.PopManager.new("Least Common Multiple",
         "Your math is almost as sharp as Bill's dance moves.",
-        _G.Color.green(), {
+        _G.CHR_CLR['bm'], {
             func = function()
                 _G.ROOM:disconnect()
             end,

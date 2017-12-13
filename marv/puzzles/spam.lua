@@ -210,7 +210,7 @@ function first_completed()
     end
     _G.PopManager.new("Thanks",
         "You've just decrypted the most important email of your life.\n\nFergus",
-        _G.Color.green(), {
+        _G.CHR_CLR['fergus'], {
             func = function()
                 _G.ROOM:disconnect()
                 local op = et:openEmail(new_email)

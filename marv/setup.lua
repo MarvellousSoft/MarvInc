@@ -128,6 +128,16 @@ OBJS_IMG["dead_body2"] = love.graphics.newImage("assets/images/dead_body_2.png")
 OBJS_IMG["dead_body3"] = love.graphics.newImage("assets/images/dead_body_3.png")
 OBJS_IMG["dead_body_hair"] = love.graphics.newImage("assets/images/dead_hair_1.png")
 
+-- Character colors
+Color = require "classes.color.color"
+CHR_CLR = {}
+CHR_CLR['bm'] = Color.yellow()
+CHR_CLR['diego'] = Color.pink()
+CHR_CLR['fergus'] = Color.brown()
+CHR_CLR['franz'] = Color.gray()
+CHR_CLR['jen'] = Color.red()
+CHR_CLR['liv'] = Color.purple()
+CHR_CLR['paul'] = Color.green()
 
 -- Spritesheets
 SHEET_IMG = {}
@@ -251,7 +261,7 @@ function setup.config()
       {"proud believer of crab people", {}},
       {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}},
       {"can play the theremin", {}},
-      {"can recite de alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}},
+      {"can recite the alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}},
       {"loves costume parties", {}},
       {"can correctly give current latitude and longitude at all times", {}},
       {"accidently makes sexual innuendos", {"This is too hard and long! I can't take it anymore. Just finish already!"}},
