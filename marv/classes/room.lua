@@ -260,6 +260,8 @@ function Room:connected()
     return self.mode == "online"
 end
 
+local black = Color.black()
+
 function Room:draw()
 
     -- Border
@@ -317,6 +319,11 @@ function Room:draw()
                 end
             end
         end
+
+        if self.puzzle.postDraw then
+            self.puzzle.postDraw()
+        end
+
     else
         Color.set(self.back_clr)
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
@@ -328,6 +335,7 @@ function Room:draw()
         love.graphics.setFont(FONTS.fira(25))
         love.graphics.printf(self.version, self.w * .75, (self.grid_h - self.back_fnt:getHeight()) / 2 + dy + 10, self.w / 4)
     end
+
     if self.static_on then
         Color.set(self.back_clr)
         love.graphics.push()
@@ -340,6 +348,12 @@ function Room:draw()
     end
 
     -- Grid numbering
+    Color.set(black)
+    -- black borders
+    love.graphics.rectangle('fill', -self.grid_cw, 0, self.grid_cw, self.grid_ch * self.grid_r)
+    love.graphics.rectangle('fill', self.grid_cw * self.grid_c, 0, 2 * self.grid_cw, self.grid_ch * (1 + self.grid_r))
+    love.graphics.rectangle('fill', -self.grid_cw, self.grid_ch * self.grid_r, self.grid_cw * (1 + self.grid_c), self.grid_ch)
+    love.graphics.rectangle('fill', -self.grid_cw, -2 * self.grid_ch, self.grid_cw * (2 + self.grid_c), 2 * self.grid_ch)
     Color.set(self.grid_fnt_clr)
     love.graphics.setFont(self.grid_fnt)
     love.graphics.setLineWidth(.5)
@@ -365,6 +379,7 @@ function Room:draw()
     end
     love.graphics.line(self.grid_cw*self.grid_c, self.grid_h+2,
         self.grid_cw*self.grid_c, self.grid_h+self.grid_ch)
+
 
     -- Set origin to (0, 0)
     love.graphics.pop()
@@ -401,6 +416,10 @@ function Room:update(dt)
             if v.death and v.destroy then
                 v.destroy()
             end
+        end
+
+        if self.puzzle.update then
+            self.puzzle.update(dt)
         end
     end
 end

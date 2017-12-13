@@ -27,6 +27,8 @@ function reader.read(puzzle_id)
     puz.name = _t.name
     puz.id = puzzle_id
     puz.n = _t.n
+    puz.postDraw = _t.postDraw
+    puz.update = _t.update
 
     -- If you want to do something on each turn, create a function onTurn(ic), where ic is the
     -- instruction counter.

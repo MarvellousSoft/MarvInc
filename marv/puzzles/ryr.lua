@@ -23,8 +23,8 @@ _G.getfenv()['x'] = {"obst", false, "wall_none"}
 f = {'bucket', true, 'papers', args = {content = 'empty', content_color = _G.Color.transp()}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
 t = {'bucket', true, 'table', args = {content = 'empty', pickable = false, w = _G.ROOM_CW * 3, h = _G.ROOM_CH * 2}}
-c = {'computer', true, 'bucket', args = {}}
-h = {'computer', true, 'bucket', args = {}}
+c = {'computer', true, 'console', args = {color = _G.Color.gray()}, dir="south"}
+h = {'bucket', true, 'bucket', args = {content = 'empty'}}
 
 local papers
 function on_start(room)
@@ -87,16 +87,16 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "vvvvvvvvvvvvDoooooooo"..
-            "x..t...ch...<oooooooo"..
-            "x...f.......<oooooooo"..
-            "x...........<oooooooo"..
-            "x...........<oooooooo"..
-            "x..b.....l..<oooooooo"..
-            "x...........<oooooooo"..
-            "x...........<oooooooo"..
-            "x...........<oooooooo"..
-            "^^^^^^^^^^^^Boooooooo"..
+            "vvvvvvvvvvDoooooooooo"..
+            "x..t.f..h.<oooooooooo"..
+            "x...c.....<oooooooooo"..
+            "x.........<oooooooooo"..
+            "x.........<oooooooooo"..
+            "x..b.....l<oooooooooo"..
+            "x.........<oooooooooo"..
+            "x.........<oooooooooo"..
+            "x.........<oooooooooo"..
+            "^^^^^^^^^^Boooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -105,7 +105,7 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
 
 -- Floor
-w = "white_floor"
+w = "building_floor"
 _G.getfenv()[','] = "black_floor"
 r = "red_tile"
 
@@ -130,6 +130,58 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
+
+local clouds = {}
+
+local TW = _G.ROOM_CW * COLS
+local TH = _G.ROOM_CH * ROWS
+
+local function rnd_vel()
+    local v = _G.love.math.random() * 5 + 5
+    if _G.love.math.random() < .5 then v = -v end
+    return v
+end
+
+
+for i = 1, 4 do
+    clouds[i] = {
+        x = _G.love.math.random() * TW / 2 + TW / 2,
+        y = _G.love.math.random() * TH,
+        sx = rnd_vel(),
+        sy = rnd_vel(),
+        img = _G.OBJS_IMG.bucket
+    }
+end
+
+local function in_screen(x, y, w, h)
+    return not (x > TW or x + w < 0 or y > TH or y + h < 0)
+end
+
+function update(dt)
+    for _, c in _G.ipairs(clouds) do
+        c.x = c.x + c.sx * dt
+        c.y = c.y + c.sy * dt
+        if not in_screen(c.x, c.y, c.img:getWidth(), c.img:getHeight()) then
+            c.sx = rnd_vel()
+            c.sy = rnd_vel()
+            local mnx, mxx = 0, TW
+            if c.sx > 0 then mxx = mxx / 2
+            else mnx = mxx / 2 end
+            c.x = _G.love.math.random() * (mxx - mnx) + mnx
+            if c.sy > 0 then
+                c.y = -c.img:getWidth()
+            else
+                c.y = TH
+            end
+        end
+    end
+end
+
+function postDraw()
+    for _, c in _G.ipairs(clouds) do
+        _G.love.graphics.draw(c.img, c.x, c.y)
+    end
+end
 
 function first_completed()
     _G.PopManager.new(" placeholder",

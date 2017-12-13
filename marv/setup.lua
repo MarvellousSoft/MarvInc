@@ -98,6 +98,7 @@ end
 -- Tiles
 TILES_IMG = {}
 TILES_IMG["white_floor"] = love.graphics.newImage("assets/images/white_tile.png")
+TILES_IMG["building_floor"] = love.graphics.newImage("assets/images/building_floor.png")
 TILES_IMG["black_floor"] = love.graphics.newImage("assets/images/black_tile.png")
 TILES_IMG["grey_tile"] = love.graphics.newImage("assets/images/grey_tile.png")
 TILES_IMG["red_tile"] = love.graphics.newImage("assets/images/red_tile.png")

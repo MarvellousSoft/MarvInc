@@ -17,3 +17,9 @@ function Computer:onInventoryDrop(bot)
     print(bot.inv.tp)
     bot.inv.dropped_on_computer = true
 end
+
+function Computer:draw() end
+
+function Computer:postDraw()
+    Object.draw(self)
+end

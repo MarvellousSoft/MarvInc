@@ -269,6 +269,8 @@ The function colors the text based on tags with {}. {colorname} means to start c
     {tab} - Used for pc-box tabs
 ]]
 
+local b = .3
+
 local text_colors = {
     red = {255, 0, 0},
     blue = {12, 10, 150},
