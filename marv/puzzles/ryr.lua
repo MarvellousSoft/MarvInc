@@ -9,7 +9,16 @@ memory_slots = 0
 bot = {'b', "EAST"}
 
 -- name, draw background, image
-o = {"obst", false, "wall_none"}
+_G.getfenv()['A'] = {"obst", false, "building_corner", dir = "west"}
+_G.getfenv()['B'] = {"obst", false, "building_corner", dir = "east"}
+_G.getfenv()['C'] = {"obst", false, "building_corner", dir = "south"}
+_G.getfenv()['D'] = {"obst", false, "building_corner", dir = "north"}
+_G.getfenv()['>'] = {"obst", false, "building_wall", dir = "west"}
+_G.getfenv()['<'] = {"obst", false, "building_wall", dir = "east"}
+_G.getfenv()['^'] = {"obst", false, "building_wall", dir = "south"}
+_G.getfenv()['v'] = {"obst", false, "building_wall", dir = "north"}
+_G.getfenv()['o'] = {"obst", false, "building_outside"}
+_G.getfenv()['x'] = {"obst", false, "wall_none"}
 
 f = {'bucket', true, 'papers', args = {content = 'empty', content_color = _G.Color.transp()}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
@@ -54,20 +63,20 @@ end
 inv_wall =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooooooooooooooooooooo"..
-            "ooo....111.........oo"..
-            "ooo....111.........oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooooooooooooooooooooo"..
+            "ooAvvvvvvvvvvvvvvvBoo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>111............<oo"..
+            "oo>111............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "oo>...............<oo"..
+            "ooC^^^^^^^^^^^^^^^Doo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -77,18 +86,18 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooo....t......ch...oo"..
-            "ooo.....f..........oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo..b.........l...oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
-            "ooo................oo"..
+            "ooooooooooooooooooooo"..
+            "vvvvvvvvvvvvDoooooooo"..
+            "x..t...ch...<oooooooo"..
+            "x...f.......<oooooooo"..
+            "x...........<oooooooo"..
+            "x...........<oooooooo"..
+            "x..b.....l..<oooooooo"..
+            "x...........<oooooooo"..
+            "x...........<oooooooo"..
+            "x...........<oooooooo"..
+            "^^^^^^^^^^^^Boooooooo"..
+            "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
@@ -106,14 +115,14 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwwwwwwwwwww,wwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
-             "wwwwww,wwwww,w,wwwwww"..
-             "wwwwww,,www,,w,wwwwww"..
-             "wwwwww,w,w,w,wwwwwwww"..
-             "wwwwww,ww,ww,wwwwwwww"..
-             "wwwwww,wwwww,wwwwwwww"..
-             "wwwwww,wwwww,wwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
+             "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
