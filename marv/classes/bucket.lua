@@ -15,6 +15,13 @@ Bucket = Class{
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
         self.pickable = true
+        if args.color then
+            self.color = args.color
+            self.content.color = args.color
+        end
+        if args.pickable ~= nil then
+            self.pickable = args.pickable
+        end
     end
 }
 

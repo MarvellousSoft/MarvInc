@@ -123,6 +123,7 @@ function Room:from(puzzle)
 
     self.grid_obj = puzzle.grid_obj
     self.grid_floor = puzzle.grid_floor
+    self.inv_wall = puzzle.inv_wall
     self.color_floor = {}
     for i = 1, self.grid_r do
         self.color_floor[i] = {}

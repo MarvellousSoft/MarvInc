@@ -173,7 +173,7 @@ function Bot:blocked(grid, r, c, o)
         return true
     end
     local _o = grid[px][py]
-    return _o and (_o.tp ~= "dead" and _o.tp ~= "dead_switch" and _o.tp ~= "container")
+    return ROOM.inv_wall[px][py] or (_o and (_o.tp ~= "dead" and _o.tp ~= "dead_switch" and _o.tp ~= "container"))
 end
 
 function Bot:draw()

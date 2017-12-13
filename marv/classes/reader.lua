@@ -47,10 +47,12 @@ function reader.read(puzzle_id)
 
     puz.grid_floor = {}
     puz.grid_obj = {}
+    puz.inv_wall = {}
     local k = 1
     for i=1, ROWS do
         puz.grid_floor[i] = {}
         puz.grid_obj[i] = {}
+        puz.inv_wall[i] = {}
     end
 
     -- Searches for emitters before other objects.
@@ -77,6 +79,7 @@ function reader.read(puzzle_id)
         for j=1, ROWS do
             local _co = _t.grid_obj:sub(k, k)
             puz.grid_floor[j][i] = _t[_t.grid_floor:sub(k, k)]
+            puz.inv_wall[j][i] = _t.inv_wall and _t.inv_wall:sub(k, k) == '1'
             if _co ~= bot[1] and _t[_co] ~= nil then
                 local _proto = _t[_co]
                 if _proto[1] ~= "emitter" then

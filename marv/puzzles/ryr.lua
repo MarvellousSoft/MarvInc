@@ -11,8 +11,11 @@ bot = {'b', "EAST"}
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 
+i = {'bucket', true, 'bucket', args = {content = 'empty', color = _G.Color.transp(), pickable = false}}
 f = {'bucket', true, 'bucket', args = {content = 'empty'}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
+c = {'bucket', true, 'bucket', args = {content = 'empty', pickable = false}}
+h = {'bucket', true, 'bucket', args = {content = 'empty', pickable = false}}
 
 -- Objective
 objective_text = [[
@@ -30,23 +33,45 @@ function objective_checker(room)
     return true
 end
 
+inv_wall =  "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooo....111....ch...oo"..
+            "ooo....111.........oo"..
+            "ooo................oo"..
+            "ooo..f.............oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo..b.........l...oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"
+
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo...f.............oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo...b.........l...oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
-            "oo.................oo"..
+            "ooooooooooooooooooooo"..
+            "ooo...........ch...oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo..f.............oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo..b.........l...oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooo................oo"..
+            "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
