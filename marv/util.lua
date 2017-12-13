@@ -233,6 +233,9 @@ function util.defaultKeyPressed(key)
         util.exit()
     elseif key == 'f1' then
         --util.toggleDebug()
+    elseif key == 'f2' then
+        local Mail = require 'classes.tabs.email'
+        Mail.new('news1')
     end
 
 end
