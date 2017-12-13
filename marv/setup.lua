@@ -155,6 +155,7 @@ BG_IMG = love.graphics.newImage("assets/images/background.png")
 MISC_IMG = {}
 MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
+MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 
 -- Bot images (assume array part only)
 HEAD = {

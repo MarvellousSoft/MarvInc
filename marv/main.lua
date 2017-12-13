@@ -103,6 +103,12 @@ end
 --MOUSE FUNCTIONS
 -----------------
 
+CUR_TIME = 0
+
+function love.update(dt)
+    CUR_TIME = CUR_TIME + dt
+end
+
 function love.draw()
     ResManager.preDraw()
     Gamestate.draw()

@@ -53,6 +53,10 @@ function Bucket:draw(x, y, w, h)
 end
 
 function Bucket:postDraw()
+    if self.img == OBJS_IMG.papers then
+        Color.set(Color.green())
+        self:drawImg(MISC_IMG.arrow, self.rx, self.ry - (1 + math.sin(CUR_TIME * 5)) * ROOM_CH / 4 - ROOM_CH, ROOW_CW, ROOM_CH)
+    end
     Color.set(self.color)
     self:drawImg(self.img, nil, nil, self.w, self.h)
     Color.set(self.content.color)
