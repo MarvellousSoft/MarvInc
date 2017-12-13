@@ -8,6 +8,17 @@ memory_slots = 0
 -- Bot
 bot = {'b', "EAST"}
 
+local function window_drop(self, bot)
+    bot.inv.delivered_to_feds = true
+end
+
+local function window_walk(self, bot)
+    if bot.inv ~= nil then
+        bot.inv.delivered_to_feds = true
+        bot.inv = nil
+    end
+end
+
 -- name, draw background, image
 _G.getfenv()['A'] = {"obst", false, "building_corner", dir = "west"}
 _G.getfenv()['B'] = {"obst", false, "building_corner", dir = "east"}
@@ -15,10 +26,13 @@ _G.getfenv()['C'] = {"obst", false, "building_corner", dir = "south"}
 _G.getfenv()['D'] = {"obst", false, "building_corner", dir = "north"}
 _G.getfenv()['>'] = {"obst", false, "building_wall", dir = "west"}
 _G.getfenv()['<'] = {"obst", false, "building_wall", dir = "east"}
+_G.getfenv()['X'] = {"obst", false, "building_window", dir = "east", args = {onInventoryDrop = window_drop, onWalk = window_walk}}
 _G.getfenv()['^'] = {"obst", false, "building_wall", dir = "south"}
+_G.getfenv()['W'] = {"obst", false, "building_window", dir = "south", args = {onInventoryDrop = window_drop, onWalk = window_walk}}
 _G.getfenv()['v'] = {"obst", false, "building_wall", dir = "north"}
 _G.getfenv()['o'] = {"obst", false, "building_outside"}
-_G.getfenv()['x'] = {"obst", false, "wall_none"}
+_G.getfenv()['x'] = {"obst", false, "building_inner"}
+
 
 f = {'bucket', true, 'papers', args = {content = 'empty', content_color = _G.Color.transp()}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
@@ -52,7 +66,7 @@ function objective_checker(room)
             end
         end
     end
-    if papers.dropped_on_computer then
+    if papers.delivered_to_feds then
         print "FEDS"
     else
         print "MARVINC"
@@ -76,8 +90,8 @@ inv_wall =  "ooooooooooooooooooooo"..
             "oo>...............<oo"..
             "oo>...............<oo"..
             "oo>...............<oo"..
-            "ooC^^^^^^^^^^^^^^^Doo"..
-            "ooooooooooooooooooooo"..
+            "ooCWWWWWWWWW^W^^^^Doo"..
+            "oooWWWWoooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"
@@ -90,13 +104,13 @@ grid_obj =  "ooooooooooooooooooooo"..
             "vvvvvvvvvvDoooooooooo"..
             "x..t.f..h.<oooooooooo"..
             "x...c.....<oooooooooo"..
-            "x.........<oooooooooo"..
+            "x.........Xoooooooooo"..
             "x.........<oooooooooo"..
             "x..b.....l<oooooooooo"..
             "x.........<oooooooooo"..
+            "x.........Xoooooooooo"..
             "x.........<oooooooooo"..
-            "x.........<oooooooooo"..
-            "^^^^^^^^^^Boooooooooo"..
+            "^^W^^^^W^^Boooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

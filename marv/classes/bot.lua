@@ -160,7 +160,7 @@ function Bot:drop(grid, r, c)
     end
 end
 
-function Bot:blocked(grid, r, c, o)
+function Bot:blocked(grid, r, c, o, notify)
     local p = o
     if not o then
         p = ORIENT[self.r[2]]
@@ -173,6 +173,9 @@ function Bot:blocked(grid, r, c, o)
         return true
     end
     local _o = grid[px][py]
+    if notify and _o and _o.onWalk then
+        _o:onWalk(self)
+    end
     return ROOM.inv_wall[px][py] or (_o and (_o.tp ~= "dead" and _o.tp ~= "dead_switch" and _o.tp ~= "container"))
 end
 

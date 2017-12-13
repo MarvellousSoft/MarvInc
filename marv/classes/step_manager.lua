@@ -250,8 +250,9 @@ end
 function sm.walk(x)
     sm.cmd = function() sm.walk(x and x - 1) end
     ROOM:walk()
-    if x == 1 then sm.cmd = nil end
-    if not x and ROOM:blocked() then
+    if x == 1 then
+        sm.cmd = nil
+    elseif not x and ROOM:blocked(nil, true) then
         sm.cmd = nil
     end
 end
@@ -261,7 +262,7 @@ function sm.walkc(op, count)
         ROOM:walk()
         count = count + 1
     end
-    if ROOM:blocked() then
+    if ROOM:blocked(nil, true) then
         sm.cmd = nil
         op:finishWalk(count)
     else

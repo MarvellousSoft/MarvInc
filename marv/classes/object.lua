@@ -85,6 +85,9 @@ function Object:moveTo(grid, r, c, o)
         local t = grid[px][py].tp
         -- refactor me plz
         if t == "obst" or t == "console" or t == "bucket" then
+            if grid[px][py].onWalk then
+                grid[px][py]:onWalk(bot)
+            end
             return
         end
 

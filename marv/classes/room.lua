@@ -350,7 +350,7 @@ function Room:draw()
     -- Grid numbering
     Color.set(black)
     -- black borders
-    love.graphics.rectangle('fill', -self.grid_cw, 0, self.grid_cw, self.grid_ch * self.grid_r)
+    love.graphics.rectangle('fill', -self.grid_cw - 10, -2 * self.grid_ch ,10 +  self.grid_cw, self.grid_ch * (3 + self.grid_r))
     love.graphics.rectangle('fill', self.grid_cw * self.grid_c, 0, 2 * self.grid_cw, self.grid_ch * (1 + self.grid_r))
     love.graphics.rectangle('fill', -self.grid_cw, self.grid_ch * self.grid_r, self.grid_cw * (1 + self.grid_c), self.grid_ch)
     love.graphics.rectangle('fill', -self.grid_cw, -2 * self.grid_ch, self.grid_cw * (2 + self.grid_c), 2 * self.grid_ch)
@@ -528,8 +528,8 @@ function Room:drop()
     return self.bot:drop(self.grid_obj, self.grid_r, self.grid_c)
 end
 
-function Room:blocked(o)
-    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c, o)
+function Room:blocked(o, notify)
+    return self.bot:blocked(self.grid_obj, self.grid_r, self.grid_c, o, notify)
 end
 
 function Room:next_block(o)
