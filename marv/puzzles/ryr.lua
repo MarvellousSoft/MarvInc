@@ -11,11 +11,24 @@ bot = {'b', "EAST"}
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 
-i = {'bucket', true, 'bucket', args = {content = 'empty', color = _G.Color.transp(), pickable = false}}
 f = {'bucket', true, 'papers', args = {content = 'empty', content_color = _G.Color.transp()}}
 l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
-c = {'bucket', true, 'bucket', args = {content = 'empty', pickable = false}}
-h = {'bucket', true, 'bucket', args = {content = 'empty', pickable = false}}
+t = {'bucket', true, 'table', args = {content = 'empty', pickable = false, w = _G.ROOM_CW * 3, h = _G.ROOM_CH * 2}}
+c = {'computer', true, 'bucket', args = {}}
+h = {'computer', true, 'bucket', args = {}}
+
+local papers
+function on_start(room)
+    -- finds consoles
+    for i = 1, ROWS do
+        for j = 1, COLS do
+            local o = room.grid_obj[j][i]
+            if o and o.tp == 'bucket' and o.img == _G.OBJS_IMG.papers then
+                papers = o
+            end
+        end
+    end
+end
 
 -- Objective
 objective_text = [[
@@ -25,10 +38,15 @@ function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             local o = room.grid_obj[j][i]
-            if o and o.tp == 'bucket' then
+            if o and o.tp == 'bucket' and o.img == _G.OBJS_IMG.papers then
                 return false
             end
         end
+    end
+    if papers.dropped_on_computer then
+        print "FEDS"
+    else
+        print "MARVINC"
     end
     return true
 end
@@ -59,7 +77,7 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooo...........ch...oo"..
+            "ooo....t......ch...oo"..
             "ooo.....f..........oo"..
             "ooo................oo"..
             "ooo................oo"..

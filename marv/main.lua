@@ -38,6 +38,7 @@ require "classes.object"
 require "classes.obstacle"
 require "classes.dead"
 require "classes.bucket"
+require "classes.computer"
 require "classes.container"
 require "classes.dead_switch"
 require "classes.emitter"
@@ -130,6 +131,12 @@ end
 
 local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true}
 function love.quit()
+    local room = GS['GAME'].getRoom()
+    if room.puzzle_id == 'franz1' then
+        if not Mail.exists('Tread very carefully') then
+            Mail.new('franz1_1')
+        end
+    end
     if PopManager.pop or not ok_state[Gamestate.current()] or CLOSE_LOCK  then
         local press = love.window.showMessageBox('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.", {"Close the game, I like to play with fire", "Do not close, I will take the safe approach", escapebutton = 2}, 'warning')
         if press == 2 then

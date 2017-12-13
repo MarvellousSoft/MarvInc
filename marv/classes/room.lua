@@ -199,6 +199,13 @@ function Room:disconnect(wait)
         Signal.remove(SIGEND, self.turn_handler)
     end
 
+    if self.puzzle_id == 'franz1' then
+        local Mail = require 'classes.tabs.email'
+        if not Mail.exists('Tread very carefully') then
+            Mail.new('franz1_1')
+        end
+    end
+
     Util.findId('code_tab'):saveCurrentCode()
     if wait == nil or wait then
         SFX.loud_static:stop()

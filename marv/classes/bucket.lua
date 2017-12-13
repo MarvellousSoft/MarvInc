@@ -25,6 +25,12 @@ Bucket = Class{
         if args.pickable ~= nil then
             self.pickable = args.pickable
         end
+        if args.w then
+            self.w = args.w
+        end
+        if args.h then
+            self.h = args.h
+        end
     end
 }
 
@@ -39,10 +45,18 @@ function Bucket:use(bot, grid, i, j, blocked)
 end
 
 function Bucket:draw(x, y, w, h)
+    if not x then return end
     Color.set(self.color)
     self:drawImg(self.img, x, y, w, h)
     Color.set(self.content.color)
     self:drawImg(self.content.img, x, y, w, h)
+end
+
+function Bucket:postDraw()
+    Color.set(self.color)
+    self:drawImg(self.img, nil, nil, self.w, self.h)
+    Color.set(self.content.color)
+    self:drawImg(self.content.img)
 end
 
 -- pickup other object while holding bucket
