@@ -36,6 +36,10 @@ function state:init()
     end)
 end
 
+function state:getRoom()
+    return room
+end
+
 function state:enter(prev, user)
     SaveManager.login(user)
 
