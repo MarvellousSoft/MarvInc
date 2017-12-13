@@ -22,6 +22,11 @@ function empty:pickup_other(bot, grid, i, j)
 end
 
 function empty:drop(bot, grid, i, j, blocked)
+    if grid[i][j] and grid[i][j].onInventoryDrop then
+        grid[i][j]:onInventoryDrop(bot)
+        bot.inv = nil
+        return
+    end
     if blocked then return "Dropping obstructed" end
     local _o = grid[i][j]
     if _o and _o.key == 'lava' then

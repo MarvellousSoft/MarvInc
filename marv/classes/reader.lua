@@ -94,6 +94,8 @@ function reader.read(puzzle_id)
                         _obj = DeadSwitch(unpack(args))
                     elseif _proto[1] == "bucket" then
                         _obj = Bucket(unpack(args))
+                    elseif _proto[1] == "computer" then
+                        _obj = Computer(unpack(args))
                     elseif _proto[1] == "container" then
                         _obj = Container(unpack(args))
                     elseif _proto[1] == "console" then
