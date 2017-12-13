@@ -121,6 +121,7 @@ OBJS_IMG["bucket"] = love.graphics.newImage("assets/images/bucket.png")
 OBJS_IMG["bucket_content"] = love.graphics.newImage("assets/images/bucket_content.png")
 OBJS_IMG["console"] = love.graphics.newImage("assets/images/console.png")
 OBJS_IMG["emitter"] = love.graphics.newImage("assets/images/emitter.png")
+OBJS_IMG["papers"] = love.graphics.newImage("assets/images/papers.png")
 
 OBJS_IMG["dead_body1"] = love.graphics.newImage("assets/images/dead_body_1.png")
 OBJS_IMG["dead_body2"] = love.graphics.newImage("assets/images/dead_body_2.png")

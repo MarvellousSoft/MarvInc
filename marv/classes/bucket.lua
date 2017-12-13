@@ -19,6 +19,9 @@ Bucket = Class{
             self.color = args.color
             self.content.color = args.color
         end
+        if args.content_color then
+            self.content.color = args.content_color
+        end
         if args.pickable ~= nil then
             self.pickable = args.pickable
         end
