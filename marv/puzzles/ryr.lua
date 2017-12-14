@@ -9,12 +9,12 @@ memory_slots = 0
 bot = {'b', "EAST"}
 
 local function window_drop(self, bot)
-    bot.inv.delivered_to_feds = true
+    bot.inv.delivered_to_feds = 'drop'
 end
 
 local function window_walk(self, bot)
-    if bot.inv ~= nil then
-        bot.inv.delivered_to_feds = true
+    if bot and bot.inv ~= nil then
+        bot.inv.delivered_to_feds = 'jump'
         bot.inv = nil
     end
 end
@@ -69,7 +69,11 @@ function objective_checker(room)
     end
     if papers.delivered_to_feds then
         print "FEDS"
-        _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 5)
+        if papers.delivered_to_feds == 'jump' then
+            _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 5)
+        else
+            _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/paper_drop.png", 12, 15, 5)
+        end
     else
         print "MARVINC"
         _G.Gamestate.push(_G.GS.FIREPLACE)

@@ -6,7 +6,13 @@ local w, h
 
 local quad, batch
 
+local sound = nil
+
 function state:enter(prev, _img, _w, _h, total)
+    if _img == 'assets/cutscenes/body_drop.png' then
+        sound = love.audio.newSource('assets/sound/window.ogg', 'static')
+        sound:play()
+    end
     n_w, n_h = _w, _h
     step = total / (n_w * n_h)
     img = love.graphics.newImage(_img)
@@ -43,6 +49,9 @@ function state:draw()
 end
 
 function state:leave()
+    if sound then
+        sound:stop()
+    end
 end
 
 return state
