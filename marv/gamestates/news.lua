@@ -1,9 +1,12 @@
 local state = {}
 
+local time = 12
+local intro_time
 local cur = 1
 local tot
 local news = {}
-function state:enter(prev, typ, n)
+function state:enter(prev, typ, n, _intro_time)
+    intro_time = _intro_time or 2
     tot = n
     for i = 1, n do
         news[i] = {
@@ -23,12 +26,15 @@ end
 
 local fade_in = 255
 local on_leave = false
-local time = 10
 local times = {0, 7, 15, 15}
 local sx, sy = 0, 0
 function state:update(dt)
+    if intro_time > 0 then
+        intro_time = intro_time - dt
+        return
+    end
     if fade_in > 0 then
-        fade_in = fade_in - dt * 100
+        fade_in = fade_in - dt * 50
     end
     if not on_leave then
         time = time - dt
