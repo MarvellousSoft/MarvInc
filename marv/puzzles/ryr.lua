@@ -193,10 +193,18 @@ function update(dt)
 end
 
 function postDraw()
+
+    local f = function()
+        _G.love.graphics.rectangle("fill", 0,0, COLS*_G.ROOM.grid_cw, ROWS*_G.ROOM.grid_ch)
+    end
+    _G.love.graphics.stencil(f, "replace", 1)
+
+    _G.love.graphics.setStencilTest("greater", 0)
+    _G.love.graphics.setColor(255,255,255)
     for _, c in _G.ipairs(clouds) do
-        _G.love.graphics.setColor(255,255,255)
         _G.love.graphics.draw(c.img, c.x, c.y)
     end
+    _G.love.graphics.setStencilTest()
 end
 
 function first_completed()
