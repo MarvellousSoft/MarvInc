@@ -23,7 +23,8 @@ end
 
 local fade_in = 255
 local on_leave = false
-local time = 5
+local time = 10
+local times = {0, 7, 15, 15}
 local sx, sy = 0, 0
 function state:update(dt)
     if fade_in > 0 then
@@ -43,8 +44,8 @@ function state:update(dt)
         if time <= 0 then
             if cur < tot then
                 on_leave = false
-                time = 5
                 cur = cur + 1
+                time = times[cur]
             else
                 Gamestate.pop()
             end

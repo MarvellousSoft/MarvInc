@@ -4,7 +4,7 @@ local state = {}
 
 -- CREDTIS SCREEN --
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
-state.duration = 20
+state.duration = 15
 
 -- Changing the text is ok too, no need to change anything else
 local credits = [[
@@ -65,7 +65,7 @@ end
 
 function state:leave()
     ROOM:disconnect()
-    PopManager.pop = nil
+    PopManager.quit()
     FX.quick_static(1)
 end
 

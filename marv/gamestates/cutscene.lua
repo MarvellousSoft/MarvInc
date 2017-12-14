@@ -8,6 +8,8 @@ local quad, batch
 
 local sound = nil
 
+local close_door = nil
+
 function state:enter(prev, _img, _w, _h, total)
     if _img == 'assets/cutscenes/body_drop.png' then
         sound = love.audio.newSource('assets/sound/window.ogg', 'static')
@@ -20,6 +22,8 @@ function state:enter(prev, _img, _w, _h, total)
     quad = love.graphics.newQuad(0, 0, w, h, img:getWidth(), img:getHeight())
     batch = love.graphics.newSpriteBatch(img, 180)
     batch:add(quad, 0, 0)
+
+    close_door = love.audio.newSource('assets/sound/car_close_door.wav', 'static')
 end
 
 local cur = 0
@@ -28,6 +32,9 @@ function state:update(dt)
     if cur > step then
         cur = 0
         i = i + 1
+        if i == 10 and j == 10 then
+            close_door:play()
+        end
         if i == n_w then
             i = 0
             j = j + 1
@@ -52,7 +59,8 @@ function state:leave()
     if sound then
         sound:stop()
     end
-    -- Gamestate.push(GS.NEWS, 'against', 4)
+    close_door:stop()
+    Gamestate.push(GS.NEWS, 'against', 1)
 end
 
 return state
