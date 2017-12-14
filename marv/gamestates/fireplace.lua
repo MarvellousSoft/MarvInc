@@ -86,6 +86,7 @@ end
 
 function state:leave()
     sound:stop()
+    Gamestate.push(GS.NEWS, 'pro', 2)
 end
 
 return state

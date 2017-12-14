@@ -52,6 +52,7 @@ function state:leave()
     if sound then
         sound:stop()
     end
+    -- Gamestate.push(GS.NEWS, 'against', 4)
 end
 
 return state

@@ -64,6 +64,8 @@ ACT2 = require "gamestates.act2_intro",
 ACT3 = require "gamestates.act3_intro",
 CUTSCENE  = require "gamestates.cutscene",
 FIREPLACE = require "gamestates.fireplace",
+NEWS = require "gamestates.news",
+CREDITS = require "gamestates.credits",
 }
 
 -- When game starts, automatically changes to this puzzle
