@@ -240,6 +240,8 @@ function util.defaultKeyPressed(key)
         Mail.new('news2')
     elseif key == 'f4' then
         Mail.new('news3')
+    elseif key == 'f5' then
+        Mail.new('ryr')
     end
 
 end
