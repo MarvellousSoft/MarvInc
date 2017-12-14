@@ -163,7 +163,7 @@ for i = 1, 4 do
         y = _G.love.math.random() * TH,
         sx = rnd_vel(),
         sy = rnd_vel(),
-        img = _G.OBJS_IMG.bucket
+        img = _G.OBJS_IMG.cloud_1
     }
 end
 
