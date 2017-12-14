@@ -29,7 +29,7 @@ function empty:drop(bot, grid, i, j, blocked)
     end
     if blocked then return "Dropping obstructed" end
     local _o = grid[i][j]
-    if _o and _o.key == 'lava' then
+    if _o and _o.key == 'lava' or _o.key == 'fireplace' then
         -- dropping into lava
         -- TODO maybe play some burning sfx
     elseif _o and not _o.is_ephemeral then
