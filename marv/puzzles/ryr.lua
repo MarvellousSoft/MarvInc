@@ -68,7 +68,7 @@ function objective_checker(room)
     end
     if papers.delivered_to_feds then
         print "FEDS"
-        _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/paper_drop.png", 12, 15, 5)
+        _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 5)
     else
         print "MARVINC"
     end
