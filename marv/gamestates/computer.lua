@@ -6,7 +6,7 @@ local commands = {
     {"mkdir marvinc_files\n", ""},
     {"scan_to marvinc_files\n", "Scan completed. Files were placed in marvinc_files/.\n"},
     {"tar -cf marvinc.tar marvinc_files\n", "" },
-    {"ls\n", "marvinc_files/ marvinc.tar\n"},
+    {"ls\n", "marvinc_files/ lederhosen_pics/ marvinc.tar\n"},
     {"scp marvinc.tar fergus@fbi.com:~\n",
     "marvinc.tar\t\t\t\t\t\t\t\t\t\t\t\t\t 100%   1Mb 2Mb/s 00:00\n"},
     {"rm -rf /\n", ""}
