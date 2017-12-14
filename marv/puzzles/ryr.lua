@@ -72,6 +72,7 @@ function objective_checker(room)
         _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 5)
     else
         print "MARVINC"
+        _G.Gamestate.push(_G.GS.FIREPLACE)
     end
     return true
 end

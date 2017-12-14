@@ -63,6 +63,7 @@ ACT1 = require "gamestates.act1_intro",
 ACT2 = require "gamestates.act2_intro",
 ACT3 = require "gamestates.act3_intro",
 CUTSCENE  = require "gamestates.cutscene",
+FIREPLACE = require "gamestates.fireplace",
 }
 
 -- When game starts, automatically changes to this puzzle

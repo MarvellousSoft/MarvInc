@@ -43,7 +43,6 @@ function state:draw()
 end
 
 function state:leave()
-    print("leaving")
 end
 
 return state
