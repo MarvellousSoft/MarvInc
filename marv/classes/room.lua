@@ -201,7 +201,7 @@ function Room:disconnect(wait)
 
     if self.puzzle_id == 'franz1' then
         local Mail = require 'classes.tabs.email'
-        if not Mail.exists('Tread very carefully') then
+        if not Mail.exists('Tread very carefully') and not LoreManager.puzzle_done.franz1 then
             Mail.new('franz1_1')
         end
     end

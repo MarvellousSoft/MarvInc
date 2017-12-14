@@ -144,7 +144,7 @@ local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true}
 function love.quit()
     local room = GS['GAME'].getRoom()
     if room and room.puzzle_id == 'franz1' then
-        if not Mail.exists('Tread very carefully') then
+        if not Mail.exists('Tread very carefully') and not LoreManager.puzzle_done.franz1 then
             Mail.new('franz1_1')
         end
     end
