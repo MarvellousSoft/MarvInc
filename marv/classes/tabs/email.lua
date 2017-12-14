@@ -291,7 +291,7 @@ EmailObject = Class{
         self.can_reply = true -- If email can be replyied
 
         -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
-        self.time = os.date("%x, %I:%M %p")
+        self.time = os.date("%I:%M %p")
 
         self.tp = "email_object"
     end

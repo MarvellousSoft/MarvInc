@@ -202,10 +202,11 @@ function OpenedEmail:draw()
     -- Time
     Color.set(e.content_color)
     font = FONTS.fira(13)
-    font_w = font:getWidth("received @ "..e.time)
-    font_h = font:getHeight("received @ "..e.time)
+    local tx = "received @ "..e.time
+    font_w = font:getWidth(tx)
+    font_h = font:getHeight(tx)
     love.graphics.setFont(font)
-    love.graphics.print("received @ "..e.time,  e.pos.x + e.w - 5 - font_w, e.pos.y + e.h - font_h - 5)
+    love.graphics.print(tx,  e.pos.x + e.w - 5 - font_w, e.pos.y + e.h - font_h - 5)
 end
 
 function OpenedEmail:destroy(t) --Destroy this element from all tables (quicker if you send his drawable table, if he has one)
