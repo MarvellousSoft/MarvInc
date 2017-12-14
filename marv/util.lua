@@ -229,13 +229,17 @@ end
 --Get any key that is pressed and checks for generic events
 function util.defaultKeyPressed(key)
 
+    local Mail = require 'classes.tabs.email'
     if  key == 'f9' then
         util.exit()
     elseif key == 'f1' then
         --util.toggleDebug()
     elseif key == 'f2' then
-        local Mail = require 'classes.tabs.email'
         Mail.new('news1')
+    elseif key == 'f3' then
+        Mail.new('news2')
+    elseif key == 'f4' then
+        Mail.new('news3')
     end
 
 end
