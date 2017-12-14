@@ -68,9 +68,11 @@ function objective_checker(room)
         end
     end
     if papers.delivered_to_feds then
-        print "FEDS"
+        print("FEDS via " .. papers.delivered_to_feds)
         if papers.delivered_to_feds == 'jump' then
             _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 5)
+        elseif papers.delivered_to_feds == 'computer' then
+            _G.Gamestate.push(_G.GS.COMP)
         else
             _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/paper_drop.png", 12, 15, 5)
         end
@@ -109,7 +111,7 @@ grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "vvvvvvvvvvDoooooooooo"..
-            "x..t.f..h.<oooooooooo"..
+            "x..t.f....<oooooooooo"..
             "x...c.....<oooooooooo"..
             "x.........Xoooooooooo"..
             "x........l<oooooooooo"..

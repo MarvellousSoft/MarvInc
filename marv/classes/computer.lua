@@ -14,7 +14,7 @@ Computer = Class {
 }
 
 function Computer:onInventoryDrop(bot)
-    bot.inv.delivered_to_feds = true
+    bot.inv.delivered_to_feds = 'computer'
 end
 
 function Computer:draw() end
