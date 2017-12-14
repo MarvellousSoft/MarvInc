@@ -30,7 +30,7 @@ The Federal Bureau of Investigation has confirmed rumors that Marvellous Inc, th
 
 {blue}"The End is Nigh!", says local cult leader{end}
 ]]..div..[[
-Larry Michaels, local cult leader, claims the end of all times is approaching: "These MarvBots! They are going to enslave us! Brainwash us into their kind! Turn us into robots and control us! Do not trust them!". Mr. Michaels has been under pressure since Apple sued his Church of Larry for defamation. The ongoing lawsuit has been draining Mr. Michaels both financially as mentally, it seems.
+Larry Michaels, local cult leader, claims the end of all times is approaching: "These MarvBots! They are going to enslave us! Brainwash us into their kind! Turn us into robots and control us! Do not trust them!". Mr. Michaels has been under pressure since Apple sued his Church of Larry for defamation. The ongoing lawsuit has been draining Mr. Michaels both financially and mentally, it seems.
 {blue}[More...]{end}
 ]],
     author = "Newsletter (feed@newsletter.com)",

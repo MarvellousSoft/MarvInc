@@ -7,6 +7,8 @@ franz.wait = 15
 
 function franz.run()
     Mail.new('franz2')
+
+    LoreManager.timer:after(15, function() Mail.new('news3') end)
 end
 
 return franz

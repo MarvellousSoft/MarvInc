@@ -8,6 +8,7 @@ paul.wait = 15
 function paul.run()
     Mail.new('radwarning')
     LoreManager.timer:after(10, function() Mail.new('paul3') end)
+    LoreManager.timer:after(15, function() Mail.new('news2') end)
 end
 
 return paul
