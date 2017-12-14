@@ -6,6 +6,7 @@ local w, h
 
 local paper = {}
 local p_y = 0
+local sound
 
 function state:enter(prev)
     n = 7
@@ -16,6 +17,8 @@ function state:enter(prev)
     for i = 1, 5 do
         paper[i] = love.graphics.newImage('assets/images/paper_burn' .. i .. '.png')
     end
+    sound = love.audio.newSource('assets/sound/fire.ogg', 'stream')
+    sound:play()
 end
 
 local cur = 0
@@ -82,6 +85,7 @@ function state:draw()
 end
 
 function state:leave()
+    sound:stop()
 end
 
 return state
