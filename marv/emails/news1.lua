@@ -28,9 +28,9 @@ Last week, a caucasian male body was found under a bridge in the outskirts of Na
 Last month a team of archaeologists from all around the world discovered an ancient pyramid dedicated to the Pharaoh Tut-ka-Rah. The ruins show signs of battle, with the Eye of Horus, an ancient Egyptian God, appearing frequently in the hieroglyphs on the walls.
 {blue}[More...]{end}
 
-{blue}Unidentified Foreign Objects in Uranus{end}
+{blue}Tensions between Russia and EU rise as new sanctions are put in place against Russia{end}
 ]]..div..[[
-George Johnson, a 42 year-old farmer, claims to have been anally probed by extraterrestrial beings from the planet of Uranus. Johnson described the aliens as "not like in them movies", but "hairy little things with them big eyes lookin' at you". The local authorities refused to investigate further, prompting the 42 year-old farmer to respond "they's all in cahoots with them Uranians, I tell you hwat!".
+After the russian annexation of Ukraine and Georgia, the EU pushed for tougher sanctions against the slavic country. "This is a provocation we will not stand idly by", says a spokesperson to the Kremlin. Tensions have been rising constantly for the last five years, as an arms race between US, EU, Russia and China erupted after the discovery of huge Uranium reserves in Antarctica.
 {blue}[More...]{end}
 ]],
     author = "Newsletter (feed@newsletter.com)",
