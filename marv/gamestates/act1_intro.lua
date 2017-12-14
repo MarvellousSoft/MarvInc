@@ -2,36 +2,23 @@ local Timer = require "extra_libs.hump.timer"
 local FX = require "classes.fx"
 local state = {}
 
--- CREDTIS SCREEN --
+-- ACT 2 TRANSITION SCREEN -- Similar to credits
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
 state.duration = 10
 
 -- Changing the text is ok too, no need to change anything else
-local credits = [[
-Marvellous Soft. 2016
-
-Made by:
-Renato Lui Geh
-Ricardo Lira da Fonseca
-Yan Soares Couto
-
-Thanks to:
-Yan's Mom
-Fast Food
-Mayte
-Maria Clara
-Cotuba
-]]
-
+local text = love.filesystem.read('assets/text/install_act2.log')
 
 function state:enter()
     local bg
 
     self.dy = H + 100
-    self.credits_font = FONTS.fira(50)
+    self.text_font = FONTS.fira(15)
 
     -- number of lines + 4 to give some time before and after the text arrives
-    self.scroll_size = (4 + #credits:gsub("%C", "")) * self.credits_font:getHeight() + H
+    self.scroll_size = (4 + #text:gsub("%C", "")) * self.text_font:getHeight()
+    self.last_scroll = 0
+    self.real_scroll = 0
     self.cur_time = 0
 end
 
@@ -39,6 +26,24 @@ function state:update(dt)
     Timer.update(dt)
     self.cur_time = self.cur_time + dt
     if self.cur_time > self.duration  then Gamestate.pop() FX.intro() end
+end
+
+-- semi-random scroll
+function state:setScroll(sc)
+    if self.last_scroll == sc then return end
+    self.last_scroll = sc
+    local x = { 0,  1,   2,  3,    4,   5}
+    local p = {.5, .2, .2, .02, .04, 999}
+    local c = love.math.random()
+    for i, pp in ipairs(p) do
+        if pp >= c then
+            local fh = self.text_font:getHeight()
+            self.real_scroll = math.min(self.real_scroll + x[i] * fh, self.scroll_size)
+            break
+        else
+            c = c - pp
+        end
+    end
 end
 
 function state:draw()
@@ -68,15 +73,18 @@ function state:draw()
     love.graphics.setFont(FONTS.fira(150))
     love.graphics.printf("ACT 1", x, 50, w, 'center')
 
-    -- Actual credits
-    local dy = self.scroll_size * prog
-    love.graphics.translate(0, -dy)
+    -- Actual text
+    local fh = self.text_font:getHeight()
+    self:setScroll(math.floor(self.scroll_size * prog / fh))
+    local dy = self.real_scroll * fh
 
-    love.graphics.setFont(self.credits_font)
+    love.graphics.translate(0, -self.real_scroll)
 
-    love.graphics.printf(credits, W/2, H + 2 * self.credits_font:getHeight(), W/2, "center")
+    love.graphics.setFont(self.text_font)
 
-    love.graphics.translate(0, dy)
+    love.graphics.printf(text, W/2, H + 2 * fh, W/2, "left")
+
+    love.graphics.translate(0, self.real_scroll)
 end
 
 return state
