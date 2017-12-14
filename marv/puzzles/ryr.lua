@@ -35,7 +35,8 @@ _G.getfenv()['x'] = {"obst", false, "building_inner"}
 
 
 f = {'bucket', true, 'papers', args = {content = 'empty', content_color = _G.Color.transp()}}
-l = {"dead_switch", false, "lava", 0.2, "white", "solid_lava", args = {bucketable = true}}
+L = {"dead_switch", false, "fireplace", 0.1, "white", "solid_lava", args = {bucketable = true, sh = 3*(_G.ROOM_CH/216), post_draw=true}}
+l = {"dead_switch", false, "fireplace", 0.2, "white", "solid_lava", args = {bucketable = true, no_draw = true}}
 t = {'bucket', true, 'table', args = {content = 'empty', pickable = false, w = _G.ROOM_CW * 3, h = _G.ROOM_CH * 2}}
 c = {'computer', true, 'console', args = {color = _G.Color.gray()}, dir="south"}
 h = {'bucket', true, 'bucket', args = {content = 'empty'}}
@@ -106,9 +107,9 @@ grid_obj =  "ooooooooooooooooooooo"..
             "x..t.f..h.<oooooooooo"..
             "x...c.....<oooooooooo"..
             "x.........Xoooooooooo"..
-            "x.........<oooooooooo"..
-            "x..b.....l<oooooooooo"..
-            "x.........<oooooooooo"..
+            "x........l<oooooooooo"..
+            "x..b.....L<oooooooooo"..
+            "x........l<oooooooooo"..
             "x.........Xoooooooooo"..
             "x.........<oooooooooo"..
             "^^W^^^^W^^Boooooooooo"..

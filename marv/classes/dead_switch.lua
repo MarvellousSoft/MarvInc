@@ -18,6 +18,15 @@ DeadSwitch = Class{
 
         if args then
             self.bucketable = args.bucketable
+            if args.sw then
+                self.sx = args.sw
+            end if args.sh then
+                self.sy = args.sh
+            end if args.no_draw then
+                self.no_draw = true
+            end if args.post_draw then
+                self.post_draw = true
+            end
         end
     end
 }

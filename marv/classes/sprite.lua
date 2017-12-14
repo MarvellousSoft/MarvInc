@@ -29,6 +29,15 @@ function Sprite:destroy()
 end
 
 function Sprite:draw()
-    Color.set(self.color)
-    love.graphics.draw(self.img, self.quad, self.pos.x, self.pos.y)
+    if not self.post_draw then
+        Color.set(self.color)
+        love.graphics.draw(self.img, self.quad, self.pos.x, self.pos.y)
+    end
+end
+
+function Sprite:postDraw()
+    if self.post_draw then
+        Color.set(self.color)
+        love.graphics.draw(self.img, self.quad, self.pos.x, self.pos.y)
+    end
 end

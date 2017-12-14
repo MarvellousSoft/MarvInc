@@ -152,6 +152,7 @@ SHEET_IMG = {}
 SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
 SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
 SHEET_IMG["paint"] = {love.graphics.newImage("assets/images/paint_sheet.png"), 4}
+SHEET_IMG["fireplace"] = {love.graphics.newImage("assets/images/fireplace_sheet.png"), 6}
 
 -- Room Img
 ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")

@@ -16,6 +16,7 @@ SpriteObject = Class{
 }
 
 function SpriteObject:draw()
+    if self.no_draw or self.post_draw then return end
     if not self.quad then
         Object.draw(self)
         return
@@ -23,4 +24,13 @@ function SpriteObject:draw()
     Color.set(self.color)
     love.graphics.draw(self.img, self.quad, self.rx + ROOM_CW / 2, self.ry + ROOM_CH / 2, self.r[1],
                        self.sx, self.sy, self.w / 2, self.h / 2)
+end
+
+function SpriteObject:postDraw()
+    if self.no_draw then return end
+    if self.post_draw then
+        Color.set(self.color)
+        love.graphics.draw(self.img, self.quad, self.rx + ROOM_CW / 2, self.ry + ROOM_CH / 2, self.r[1],
+                           self.sx, self.sy, self.w / 2, self.h / 2)
+    end
 end
