@@ -7,9 +7,11 @@ local w, h
 local paper = {}
 local p_y = 0
 local sound
+local timer
 
 function state:enter(prev)
-    n = 7
+    timer = Timer.new()
+    n = 5
     for i = 1, n do
         imgs[i] = love.graphics.newImage('assets/images/fire' .. i .. '.png')
     end
@@ -18,7 +20,11 @@ function state:enter(prev)
         paper[i] = love.graphics.newImage('assets/images/paper_burn' .. i .. '.png')
     end
     sound = love.audio.newSource('assets/sound/fire.ogg', 'stream')
+    sound:setLooping(true)
     sound:play()
+    self.sound_vol = 1
+    timer:after(7.5, function() timer:tween(1, self, {sound_vol = 0}) end)
+    timer:after(8.5, Gamestate.pop)
 end
 
 local cur = 0
@@ -31,6 +37,8 @@ local s_y = 200
 local time = 0
 local bg_a = 0
 function state:update(dt)
+    timer:update(dt)
+    sound:setVolume(self.sound_vol)
     cur = cur + dt
     if cur > step then
         cur = 0
@@ -53,9 +61,6 @@ function state:update(dt)
     if time > 4 then
         bg_a = bg_a + (255 / 3) * dt
         if bg_a > 255 then bg_a = 255 end
-    end
-    if time > 8.5 then
-        Gamestate.pop()
     end
 end
 
