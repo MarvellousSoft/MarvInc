@@ -1,4 +1,4 @@
-name = "Weird Sorting"
+name = "Hardester Sort"
 -- Puzzle number
 n = "C.extra.2"
 
@@ -138,13 +138,19 @@ grid_floor = "....................."..
              "....................."
 
 function first_completed()
-    _G.PopManager.new("placeholder",
-        "placeholder",
-        _G.Color.green(), {
+    _G.PopManager.new(" SHIIET ",
+        "Wow! Congratz.\n\n-- Liv",
+        _G.CHR_CLR['liv'], {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " placeholder ",
+            text = " That was hard! ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I AM GOD OF PROGRAMMING ",
+            clr = _G.Color.black()
         })
 end

@@ -3,7 +3,7 @@ return {
     text = [[
 Well done. Those three weren't easy problems. Hope you keep up.
 
-Since you're so excited, I'm giving you a {red}puzzle {end}that we have here in our department. No one, {red}not even me{end}, was able to solve it. Arthur, an intern, left it here a couple years ago, with the hint "To go north, you must go south. To reach the west, you must go east. To go forward you must go back, and to touch the light you must pass beneath the shadow.".
+Since you're so excited, I'm giving you a {red}puzzle {end}that we have here in our department. No one, {red}not even me{end}, was able to solve it. Arthur Blacksmith Birth, an intern, left it here a couple years ago, with the hint "To go north, you must go south. To reach the west, you must go east. To go forward you must go back, and to touch the light you must pass beneath the shadow.".
 
 At first it seems like an easy division problem, but its restraints on lines and registers are {red}RIDICULOUS{end}. We bothered him a bit more, telling him it was impossible and that his Game of Thrones* reference was lame.
 
