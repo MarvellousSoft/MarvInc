@@ -45,8 +45,8 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 7}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 7}, dir = "west"}
 
 -- console objects
 local gr, bl
