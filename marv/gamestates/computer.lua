@@ -16,6 +16,8 @@ local commands = {
 local text = "$ "
 local timer
 
+local type_sound, type_enter_sound
+
 local function type_command(cmd_i)
     local cmd = commands[cmd_i]
 
@@ -24,6 +26,11 @@ local function type_command(cmd_i)
     timer:after(.1, function (self)
         i = i + 1
         text = text .. cmd[1]:sub(i, i)
+        if cmd[1]:sub(i, i) == '\n' then
+            type_enter_sound:play()
+        else
+            type_sound:play()
+        end
         if i == #cmd[1] then
             text = text .. cmd[2]
             if cmd_i ~= #commands then
@@ -40,6 +47,8 @@ end
 
 
 function state:enter(prev)
+    type_sound = love.audio.newSource('assets/sound/type.wav', 'static')
+    type_enter_sound = love.audio.newSource('assets/sound/type_enter.wav', 'static')
     self.cur_time = 0
     self.duration = 10
     timer = Timer.new()
