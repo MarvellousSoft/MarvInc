@@ -1,4 +1,4 @@
-name = "PLACEHOLDER"
+name = "The End"
 -- Puzzle number
 n = "RYR"
 
