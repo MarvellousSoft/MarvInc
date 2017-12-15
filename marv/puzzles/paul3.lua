@@ -104,7 +104,6 @@ extra_info = [[
 There is a tile directly above or below each body. They are generated randomly.
 - Use walkc.]]
 
--- TODO change this text
 function first_completed()
     _G.PopManager.new("Situation status",
         "Never cleaner.",

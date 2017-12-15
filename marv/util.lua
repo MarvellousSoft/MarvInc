@@ -230,18 +230,10 @@ end
 function util.defaultKeyPressed(key)
 
     local Mail = require 'classes.tabs.email'
-    if  key == 'f9' then
+    if key == 'f4' and love.keyboard.isDown('lalt') then
         util.exit()
     elseif key == 'f1' then
         --util.toggleDebug()
-    elseif key == 'f2' then
-        Mail.new('news1')
-    elseif key == 'f3' then
-        Mail.new('news2')
-    elseif key == 'f4' then
-        Mail.new('news3')
-    elseif key == 'f5' then
-        Mail.new('ryr')
     end
 
 end

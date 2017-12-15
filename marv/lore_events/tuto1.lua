@@ -4,7 +4,7 @@ local Mail = require "classes.tabs.email"
 local first = {}
 
 first.require_puzzles = {}
-first.wait = 2 --TODO change to 5 on release
+first.wait = 3
 
 local after_intro_email
 
