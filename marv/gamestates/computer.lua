@@ -75,7 +75,7 @@ function state:draw()
 end
 
 function state:leave()
-    Gamestate.push(GS.NEWS, 'against', 1)
+    Gamestate.push(GS.NEWS, 'against', 4)
 end
 
 return state

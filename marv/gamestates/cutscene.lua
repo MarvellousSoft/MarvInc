@@ -99,7 +99,7 @@ function state:leave()
     car_passing:stop()
     ambient:stop()
     close_door, car_passing, ambient = nil, nil, nil
-    Gamestate.push(GS.NEWS, 'against', 1, 1)
+    Gamestate.push(GS.NEWS, 'against', 4, 1)
 end
 
 return state
