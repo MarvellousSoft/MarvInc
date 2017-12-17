@@ -86,21 +86,21 @@ end
 inv_wall =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
-            "ooAvvvvvvvvvvvvvvvBoo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>111............<oo"..
-            "oo>111............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "oo>...............<oo"..
-            "ooCWWWWWWWWW^W^^^^Doo"..
-            "oooWWWWoooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "vvvvvvvvvvDoooooooooo"..
+            "x..111....<oooooooooo"..
+            "x..111....<oooooooooo"..
+            "x.........Xoooooooooo"..
+            "x........1<oooooooooo"..
+            "x..b.....1<oooooooooo"..
+            "x........1<oooooooooo"..
+            "x.........Xoooooooooo"..
+            "x.........<oooooooooo"..
+            "^^W^^^^W^^Boooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
+            "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"

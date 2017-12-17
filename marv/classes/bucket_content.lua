@@ -27,12 +27,11 @@ function empty:drop(bot, grid, i, j, blocked)
         bot.inv = nil
         return
     end
-    if blocked then return "Dropping obstructed" end
     local _o = grid[i][j]
     if _o and _o.key == 'lava' or _o.key == 'fireplace' then
         -- dropping into lava
         -- TODO maybe play some burning sfx
-    elseif _o and not _o.is_ephemeral then
+    elseif blocked or (_o and not _o.is_ephemeral) then
         return "Dropping obstructed"
     else
         ROOM:put(bot.inv, i, j)
