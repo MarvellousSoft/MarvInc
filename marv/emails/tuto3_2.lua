@@ -3,17 +3,17 @@ return {
     text = [[
 Here are some useful shortcuts to enhance your working experience here at Marvellous Inc.
 
-- Ctrl + Enter: Starts the simulation.
+- {blue}Ctrl + Enter{end}: Starts the simulation.
 
-- Space: Toggle play or pause for the simulation if its already running.
+- {blue}Space{end}: Toggle play or pause for the simulation if its already running.
 
-- PageDown/PageUp: Move between tabs.
+- {blue}PageDown{end}/{blue}PageUp{end}: Move between tabs.
 
-- Up Arrow/Down Arrow: Scrolls your email list.
+- {blue}Up Arrow{end}/{blue}Down Arrow{end}: Scrolls your email list.
 
-- Ctrl + Right/Left Arrow: Increase/Decrease simulation speed.
+- {blue}Ctrl + Right{end}/{blue}Left Arrow{end}: Increase/Decrease simulation speed.
 
-- Enter: close pop-ups.
+- {blue}Enter{end}: close pop-ups.
 
 Remember them all. As we say here in Marvellous Inc. {purple}"Mice are for chumps and Larry from accounting"{end}.
 
