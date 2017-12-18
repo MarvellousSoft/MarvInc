@@ -16,7 +16,7 @@ local function create_vec()
     local v = {}
     local lim = {{1, 30}, {10, 120}, {200, 440}, {400, 600}, {500, 999}}
     local mx = {30, 999, 999, 999, 999}
-    local tim = {3, 2, 1, 6, 7}
+    local tim = {3, 2, 1, 3, 4}
     _G.table.insert(v, 1)
     _G.table.insert(v, 1)
     _G.table.insert(ans, 1)
@@ -46,8 +46,8 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 6}, dir = "south"}
-d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 6}, dir = "south"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 5}, dir = "south"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 5}, dir = "south"}
 
 -- console objects
 local bl
@@ -68,8 +68,7 @@ end
 -- Objective
 objective_text = [[
 For each pair of numbers (x, y) in the green console, write their least common multiple to the blue console.
-- The least common multiple of x and y is the smallest number z such that both x and y divide z.
-- You may find useful to copy and paste the code from the previous task.]]
+- The least common multiple of x and y is the smallest number z such that both x and y divide z.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
@@ -87,7 +86,8 @@ end
 
 extra_info = [[
 All numbers are between 1 and 999.
-- The answer is always between 1 and 999.]]
+- The answer is always between 1 and 999. Be careful with number limits.
+- You may find useful to copy and paste the code from the previous task.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

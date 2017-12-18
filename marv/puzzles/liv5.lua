@@ -17,6 +17,10 @@ local function create_vec()
     for i = 1, 8 do
         local j = _G.love.math.random(i, 8)
         sz[i], sz[j] = sz[j], sz[i]
+        if i == 7 and sz[8] == 0 then
+            -- empty list can't be the last, or some faulty code might get AC
+            sz[7], sz[8] = sz[8], sz[7]
+        end
         for x = 1, sz[i] do
             _G.table.insert(tmp, i)
         end
@@ -67,7 +71,7 @@ objective_text =
 [[You have to maintain 8 lists, they all start empty.
 - Read a sequence of queries from the green console, that means first a number N and then N queries.
 - Each query has 2 numbers A and B, this means you should add number B to the end of the Ath list.
-- Once the queries are over, output all lists, from the first to the eighth, to the blue console.]]
+- Once the queries are over, output all lists, from the first to the eighth, to the blue console. Use the usual sequence formatting, that is, size first and then the elements.]]
 
 function objective_checker(room)
     if #bl.inp == 0 then return false end

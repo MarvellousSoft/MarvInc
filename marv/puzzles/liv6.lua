@@ -2,7 +2,7 @@ name = "List Handler II"
 -- Puzzle number
 n = "C.6"
 
-lines_on_terminal = 40
+lines_on_terminal = 50
 memory_slots = 130
 
 -- Bot
@@ -84,7 +84,7 @@ end
 objective_text = 
 [[You have to maintain 8 lists, they all start empty.
 - Read a sequence of queries from the green console, that means first a number N and then N queries.
-- Each query has two number A and B.
+- Each query has two numbers: A and B.
   - If A is between 1 and 8, this means you should add number B to the *beginning* of the Ath list.
   - Otherwise A is -1, and you should remove the first number from the Bth list.
 - Once the queries are over, output all lists, from the first to the eighth, to the blue console.]]

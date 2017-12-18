@@ -6,7 +6,7 @@ lines_on_terminal = 50
 memory_slots = 50
 
 -- Bot
-bot = {'b', "WEST"}
+bot = {'b', "NORTH"}
 
 local ans = {}
 local v_code, v_in
@@ -91,9 +91,9 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_in}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
-e = {"console", false, "console", "white", args = {vec = create_code}, dir = "south"}
+c = {"console", false, "console", "green", args = {vec = create_in, show_nums = 9}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 9}, dir = "west"}
+e = {"console", false, "console", "white", args = {vec = create_code, show_nums = 11}, dir = "south"}
 
 -- console objects
 local bl
@@ -134,16 +134,16 @@ extra_info = [[
 The size of the cyclic memory should be exactly 20.
 - Refer to Liv's email for details on the instructions and language.]]
 
-grid_obj =  "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
+grid_obj =  "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........e.........."..
             "ooooooooocbdooooooooo"..
             "wwwwwwwwwwwwwwwwwwwww"..
             "wwwwwwwwwwwwwwwwwwwww"..

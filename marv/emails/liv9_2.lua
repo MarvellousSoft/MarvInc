@@ -3,7 +3,7 @@ return {
     text = [[
 Hello, Richard here. Olivia asked me to send this task to you, I hope the statement is clear.
 
-For now the {blue}language{end} you implement is not overly useful, since there is no condition-checking or loops, making it impossible to do even the simplest algorithm. The task at hand is to improve the language.
+For now the {blue}language{end} you implemented is not overly useful, since there is no condition-checking or loops, making it impossible to do even the simplest algorithm. The task at hand is to improve the language.
 
 There is a {inst}loop structure {end}in {blue}brainfuck{end}. It can be done using {inst}brackets{end}. {inst}[{blue}code{inst}]{end} means that the segment {blue}code {end}will be executed for as long as the {num}value {end}pointed by the {addr}data pointer {end}is non-zero.
 

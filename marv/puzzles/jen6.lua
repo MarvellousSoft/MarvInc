@@ -141,7 +141,7 @@ Don't waste any bleach.
 - Go fuck yourself.]]
 
 function first_completed()
-    _G.PopManager.new("That looks as clean as it could get",
+    _G.PopManager.new("That looks clean",
         "You shouldn't expect a \"thank you\" from Janine anytime soon",
         _G.CHR_CLR['jen'], {
             func = function()

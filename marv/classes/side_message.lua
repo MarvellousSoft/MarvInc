@@ -145,9 +145,9 @@ end
 --Register signal to create a bot_message signal
 Signal.register("new_bot_message",
     function(text, height)
-        local bot = BotModule.current_bot
+        local bot = ROOM.bot
         if not bot then return end
-        local message = SideMessage(bot.name, text or getDialog(bot), HEAD[bot.head_i], Color.new(bot.head_clr, 200, 200), height)
+        local message = SideMessage(bot.name, text or getDialog(bot), bot.head, Color.new(bot.head_clr.h, 200, 200), height)
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")

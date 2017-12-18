@@ -1,7 +1,7 @@
 name = "Cleaner II"
 n = "A.7"
 
-lines_on_terminal = 50
+lines_on_terminal = 60
 memory_slots = 6
 
 -- Bot
@@ -42,7 +42,7 @@ end
 
 
 extra_info =[[
-Bodies can block lasers.
+Bodies can block lasers. Obviously.
 ]]
 
 grid_obj =   "x-aaaaaaaaaaaaaaaaa--"..

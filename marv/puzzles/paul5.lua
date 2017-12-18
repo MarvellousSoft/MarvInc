@@ -40,7 +40,7 @@ o = {"obst", false, "wall_none"}
 k = {'bucket', true, 'bucket', args = {content = 'empty'}}
 c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint', content_color = black}}
 d = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint', content_color = green}}
-h = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 5}, dir = "west"}
+h = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 10}, dir = "west"}
 
 
 grid_obj =  "dbhoooooooooooooooooo"..
@@ -149,11 +149,12 @@ end
 
 extra_info = [[
 The console will have exactly enough info to paint or ignore everything.
+- All numbers are positive.
 - You first paint (2, 2), then (2, 3), ..., then (2, 20), then (3, 2), and so on.
 ]]
 
 function first_completed()
-    _G.PopManager.new("You do know how to give good paintjobs",
+    _G.PopManager.new("You give good paintjobs",
         "No wonder Karl Franz didn't allow Paul to redecorate the labs.",
         _G.CHR_CLR['paul'], {
             func = function()

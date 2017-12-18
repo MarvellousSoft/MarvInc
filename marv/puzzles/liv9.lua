@@ -2,11 +2,11 @@ name = "Project Brainfuck Phase 2"
 -- Puzzle number
 n = "C.9"
 
-lines_on_terminal = 60
+lines_on_terminal = 80
 memory_slots = 120
 
 -- Bot
-bot = {'b', "WEST"}
+bot = {'b', "NORTH"}
 
 local ans = {}
 local v_code, v_in
@@ -69,6 +69,7 @@ local function create_vecs()
     for i = 1, _G.love.math.random(5, 9) do ins(v_in, rnd()) end
     ins(v_in, 0)
     add(v_code, 2)
+    ins(v_code, ">[]<.")
     for i = 1, 5 do
         ins(v_code, '[->')
         add(v_code, _G.love.math.random() < .6 and 1 or 2)
@@ -79,6 +80,7 @@ local function create_vecs()
     end
     ins(v_code, "<<<[.<]")
     ins(v_code, 0)
+    print(#v_code)
     create_ans()
 end
 
@@ -98,9 +100,9 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_in}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
-e = {"console", false, "console", "white", args = {vec = create_code}, dir = "south"}
+c = {"console", false, "console", "green", args = {vec = create_in, show_nums = 9}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 9}, dir = "west"}
+e = {"console", false, "console", "white", args = {vec = create_code, show_nums = 11}, dir = "south"}
 
 -- console objects
 local bl
@@ -143,18 +145,18 @@ The size of the cyclic memory should be exactly 20.
 - There will be at most 80 instructions.
 - The will be at most 5 levels of nested loops.
 - You have 120 register positions.
-- Refer to Liv's email for details on the instructions and language.]]
+- Refer to Liv's and Richard's emails for details on the instructions and language.]]
 
-grid_obj =  "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
-            "....................."..
+grid_obj =  "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........o.........."..
+            "..........e.........."..
             "ooooooooocbdooooooooo"..
             "wwwwwwwwwwwwwwwwwwwww"..
             "wwwwwwwwwwwwwwwwwwwww"..

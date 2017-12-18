@@ -2,7 +2,7 @@ return {
     title = "Your job is done",
     text = "Heyo " .. SaveManager.current_user .. [[,
 
-Thanks for doing that task. I'll have Robert do the other, he is probably just working on his {gray}stupid{end} novel anyway.
+Thanks for doing that task. I'll have Richard do the other, he is probably just working on his {gray}stupid{end} novel anyway.
 
 If you still wish to solve it, go ahead. Just don't complain if people notice and send you more work {red}:P{end}.
 

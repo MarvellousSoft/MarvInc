@@ -75,7 +75,7 @@ function on_start(room)
         cur_msg = cur_msg + 1
         if cur_msg > #msg_list then cur_msg = #msg_list end
         _G.Signal.emit("new_bot_message", msg_list[cur_msg], 120)
-        handle = _G.MAIN_TIMER:after(rnd_delay() + (cur_msg == 21 and 10 or 0), self)
+        handle = _G.MAIN_TIMER:after(rnd_delay() + (cur_msg == #msg_list and 10 or 0), self)
     end)
 end
 
