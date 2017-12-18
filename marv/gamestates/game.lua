@@ -26,12 +26,14 @@ function state:init()
     -- autosave every 2 min
     -- in case of a crash or something
     -- WARNING: saving may trigger unwanted events so we have to handle that case
-    Timer.after(120, function(itself)
+    MAIN_TIMER:after(120, function(itself)
         if SaveManager.safeToSave() then
+            print("Autosaving...")
             SaveManager.save()
-            Timer.after(120, itself)
+            MAIN_TIMER:after(120, itself)
         else
-            Timer.after(10, itself)
+            print("Not safe to autosave now. Scheduling for later...")
+            MAIN_TIMER:after(10, itself)
         end
     end)
 end
