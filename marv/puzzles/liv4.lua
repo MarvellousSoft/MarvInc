@@ -53,7 +53,7 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec}, dir = "east"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 4}, dir = "east"}
 d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
 
 -- console objects
@@ -98,9 +98,9 @@ function objective_checker(room)
 end
 
 extra_info = [[
-Example: "+ 2 + 3 < + 5 > <" should output "2 5 3"
-- The deque will have at most 20 elements on it at a time
-- There will be at most 100 operations]]
+Example: "+ 2 + 3 < + 5 > <" should output "2 5 3".
+- The deque will have at most 20 elements on it at a time.
+- There will be at most 100 operations.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

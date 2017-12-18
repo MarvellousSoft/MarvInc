@@ -64,7 +64,11 @@ c = {"console", false, "console", "green", args = {vec = function()
     freq = {}
     local vec = {}
     for i = 1, 50 do
-        vec[i] = _G.love.math.random(-99, 99)
+        if i == 17 then
+            vec[i] = 0
+        else
+            vec[i] = _G.love.math.random(-99, 99)
+        end
         freq[vec[i]] = (freq[vec[i]] or 0) + 1
     end
     return vec

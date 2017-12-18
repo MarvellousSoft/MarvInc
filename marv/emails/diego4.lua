@@ -11,7 +11,7 @@ just then i got this {purple}tingly{end} sensation in my balls. and i know that 
 
 so my investigating instincts kicked in and i went to ask the boss, jennylicious, what those medical things were (i mean, we dont even have dental bro, and that is messed up). she just looked at me and said {gray}"stop asking question or youll get in trouble"{end}.
 
-something is not right, so ill keep asking questions around. its not me that will get in trouble. [purple}trouble will get in me.{end}
+something is not right, so ill keep asking questions around. its not me that will get in trouble. {purple}trouble will get in me.{end}
 
 if i find anything else, ill keep you posted. i hope you do the same bro.
 

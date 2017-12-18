@@ -13,6 +13,9 @@ Look at the following examples:
 
 Finally, the {inst}write {end}command receives a {num}value {end}argument, and a second optional {dir}direction {end}argument. You'll use the {inst}write {end}command to write {num}values {end}in a {orange}console{end}, which are the big colorful computer objects in the room. The {dir}direction {end}determines which direction the {orange}console {end}is. If not provided, as usual, the robot will try to write in the direction he is facing.
 
+The following example writes the {num}contents{end} of {addr}register #2{end} to the {orange}console{end} below the robot:
+    - {inst}write {num}[2] {dir}south{end}
+
 Make sure to understand all these concepts. You can do it.
 
 Best of Luck. Carry on. :)

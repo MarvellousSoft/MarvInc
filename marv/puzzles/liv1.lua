@@ -24,8 +24,8 @@ end
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
-c = {"console", false, "console", "green", args = {vec = create_vec}, dir = "east"}
-d = {"console", false, "console", "blue", args = {vec = 'output'}, dir = "west"}
+c = {"console", false, "console", "green", args = {vec = create_vec, show_nums = 5}, dir = "east"}
+d = {"console", false, "console", "blue", args = {vec = 'output', show_nums = 5}, dir = "west"}
 
 -- console objects
 local gr, bl
@@ -81,7 +81,7 @@ end
 extra_info = [[
 Each sequence is given by its size and then its elements.
 - Example: 2 1 2 1 3 is sequence (1,2) and  (3) and the output should be 2 2 1 1 3.
-- Sequences will have at most 20 elements.]]
+- Sequences will have at least 1 and at most 20 elements.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

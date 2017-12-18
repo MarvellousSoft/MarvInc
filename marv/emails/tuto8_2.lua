@@ -16,6 +16,11 @@ As an almost professional in this area, you should learn well this technique, si
 
 Another possibility is using {addr}registers {end}to store numeric {lab}labels{end}. That means [{inst}jmp {num}[5] {end}] will jump to the {lab}label {end}that is stored in {addr}register #5{end}. If there is no such {lab}label {end}with that {num}number{end}, you will get an error. You probably won't need this soon, but it is always better to know.
 
+In the following code, if the {addr}register #7{end} has he {num}content 12{end}, then the robot will turn clockwise forever, if it has {num}content 13{end}, it will walk down. Otherwise, it will throw an error.
+    - {lab}12: {inst}turn {dir}clock{end}
+     {inst}jmp {lab}[7]{end}
+     {lab}13: {inst}walk {dir}down{end}
+
 Never stop learning, and carry on.
 ]=],
     author = "Automated Introduction System",

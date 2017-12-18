@@ -3,7 +3,7 @@ return {
     text = SaveManager.current_user .. [[
 , let's get some results!
 
-I've just created a new command, {inst}walkc{end}. It's kind of like {inst}walk{end}, but it always walks until it hits an {red}obstacle{end}. What's the catch? It stores the {num}number {end}of walked steps on a {addr}register position{end}!!!
+I've just created a new command, {inst}walkc{end}. It's kind of like {inst}walk{end}, but it {red}always{end} walks until it hits an {red}obstacle{end}. What's the catch? It stores the {num}number {end}of walked steps on a {addr}register position{end}!!!
 
 This allows the bot to 'visualize' the environment, and you can {red}automatize {end}some stuff that wasn't previously possible. The complete command is '{inst}walkc {addr}address {dir}direction{end}', it turns to {dir}direction{end}, walks until it hits an obstacle, and then stores the {num}number {end}of steps walked on the register given by {addr}address{end}. The {dir}direction {end}argument is optional, of course, like in the normal {inst}walk{end}.
 

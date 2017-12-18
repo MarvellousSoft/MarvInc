@@ -13,6 +13,6 @@ Thanking you a lot in anticipation of your quick response. I will give you detai
 Yours sincerely
 Miss Maria Warlord Ibrahim Coulibaly
 ]],
-    author = "Miss Maria Warlord Ibrahim Boulibaly (mariawarlord03@gmail.com)",
+    author = "Maria Warlord Ibrahim (mariawarlord03@gmail.com)",
     can_be_deleted = true
 }

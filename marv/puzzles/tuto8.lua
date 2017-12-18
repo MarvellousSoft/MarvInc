@@ -36,8 +36,14 @@ extra_info =
 o = {"obst", false, "wall_none"}
 c = {"console", false, "console", "green", args = {vec = function()
     local vec = {}
-    for i = 1, 10 do
-        vec[i] = _G.love.math.random(1, 30)
+    for i = 1, 11 do
+        if i == 7 then
+            vec[i] = 0
+        elseif i == 10 then
+            vec[i] = 30
+        else
+            vec[i] = _G.love.math.random(1, 30)
+        end
         bk[i] = vec[i]
     end
     return vec

@@ -5,7 +5,7 @@ local fergus = {}
 -- Add puzzle 'fergus1'
 
 fergus.require_puzzles = {'tutorial'}
-fergus.wait = 20
+fergus.wait = 30
 
 function fergus.run()
     Mail.new('fergus1')
