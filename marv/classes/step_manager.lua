@@ -101,6 +101,7 @@ end
 
 -- Plays a set of instructions until step can no longer parse.
 local function doPlay(how_fast)
+    if PopManager.pop then return end
     if not ROOM:connected() then
         SFX.buzz:play()
         return
@@ -149,6 +150,7 @@ function sm.superfast()
 end
 
 function sm.increase()
+    if PopManager.pop then return end
     if sm.only_play_button then
         SFX.buzz:play()
         return
@@ -159,6 +161,7 @@ function sm.increase()
 end
 
 function sm.decrease()
+    if PopManager.pop then return end
     if sm.only_play_button then
         SFX.buzz:play()
         return
@@ -169,6 +172,7 @@ function sm.decrease()
 end
 
 function sm.step()
+    if PopManager.pop then return end
     if sm.only_play_button then
         SFX.buzz:play()
         return
@@ -177,6 +181,7 @@ function sm.step()
 end
 
 function sm.pause()
+    if PopManager.pop then return end
     if not ROOM:connected() or sm.only_play_button then
         SFX.buzz:play()
         return
@@ -190,6 +195,7 @@ function sm.pause()
 end
 
 function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
+    if PopManager.pop then return end
     if sm.state == 'stopped' or not ROOM:connected() or sm.only_play_button then
         SFX.buzz:play()
         return
