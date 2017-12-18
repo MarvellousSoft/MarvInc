@@ -60,6 +60,8 @@ function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
         self.completed = true
+        SFX.win_puzzle:stop()
+        SFX.win_puzzle:play()
         LoreManager.mark_completed(self)
     end
 end

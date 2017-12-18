@@ -75,6 +75,8 @@ OpenedEmail = Class{
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
 
+        SFX.open_email:stop()
+        SFX.open_email:play()
 
         self.referenced_email =  Util.findId("email_tab").email_list[self.number]
 
@@ -280,6 +282,9 @@ function opened_email_funcs.close()
 
     e = Util.findId("opened_email")
     if e then e.death = true end
+
+    SFX.close_email:stop()
+    SFX.close_email:play()
 
 end
 

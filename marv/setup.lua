@@ -228,9 +228,9 @@ function setup.config()
       {"creepy", {"I can hear your breathing from here...:)", "You smell good today. Is that because of the new shampoo you bought yesterday?"}},
       {"good cook", {}},
       {"liked LOST's ending", {"Hurley was the best character in a TV show by far.", "IT WAS ALL CYCLIC.", "Man, don't believe the haters about LOST's ending.", "See you in another life, brotha."}},
-      {"bought an Ouya", {}},
-      {"hates soda", {}},
-      {"has heterochromia", {}},
+      {"bought an Ouya", {"Life is made of regrets..."}},
+      {"hates tennis", {"Federer is a fool and probably has stinky feet."}},
+      {"has heterochromia", {"My left eye is reddish. My right one is blueish. And no, I do not see purple."}},
       {"artistic", {}},
       {"smells", {}},
       {"inconvenient", {"Hey, what are you doing there?", "Do you really need that command?", "Are you done yet?", "Are you done yet?"}},
@@ -240,7 +240,7 @@ function setup.config()
       {"rad dance moves", {}},
       {"types with just one finger", {}},
       {"has a russian accent", {}},
-      {"eats M&Ms by color", {}},
+      {"eats M&Ms by color", {"Usually I start with the reds and follow the rainbow order."}},
       {"obsessed with Michael Cera", {"Michael Cera is just the perfect actor.", "Have you watched Arrested Development?", "Have you watched Juno?", "Michael Cera's mustache is the symbol of masculinity.", "Have you watched Scott Pilgrim?", "Have you watched Superbad?", "The best thing about Michael Cera is he doesn't even need to act."}},
       {"obsessed with Nicolas Cage", {"Nicolas Cage is just the perfect actor.", "Have you watched Face/Off?", "Have you watched Kick-Ass? Man that Nic Cage scene.", "Have you watched Bad Lieutenant?"}},
       {"eats toothpaste", {}},
@@ -284,20 +284,20 @@ function setup.config()
       {"speaks in a monotone voice", {}},
       {"born in a leap year", {"I'm turning 6 today. :P"}},
       {"slow walker", {}},
-      {"never showers", {}},
-      {"sweats profusely", {}},
+      {"never showers", {"I prefer to think I'm SAVING our precious planet's resource"}},
+      {"sweats profusely", {"Oh man, did someone up the heat? I'm feeling like a pig down here."}},
       {"chews ice cubes for dinner", {}},
       {"heavy sleeper", {}},
-      {"fear of closed doors", {}},
-      {"stores their urine in a jar", {}},
+      {"fear of closed doors", {"I don't care about lava or buckets, just don't leave any door closed okay?", "Lets leave all door open, please."}},
+      {"stores their urine in a jar", {"Everyone has a hobby :)"}},
       {"kleptomaniac", {"Can I borrow your computer when I leave this place?"}},
-      {"only watches SpongeBob reruns", {}},
+      {"only watches SpongeBob reruns", {"How about that one where Squidward accidentally freezes himself for 2,000 years huh? Classic!","Have you seen the one where Patrick helps SpongeBob on his driving test? Oh man I love that one!"}},
       {"constantly makes animal noises", {"Moo", "Oink Oink","Baaaaaaah", "Meeeoow ;3", "Gobble gobble gobble"}},
       {"afraid of feet", {}},
       {"has a foot fetish", {"Could you describe your feet for me? ;)"}},
       {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}},
       {"know it all", {"Did you know a crocodile can't poke its tongue out?"}},
-      {"has bad acne", {}},
+      {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}},
       {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}},
       {"nihilist", {"This puzzle doesn't matter. Nothing does."}},
       {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}},
@@ -320,7 +320,7 @@ function setup.config()
       {"went to Burning Man", {"Have I told you how awesome it was at Burning Man?!", "I'm telling you, Burning Man is eye-opening!"}},
       {"gambling addict", {"I bet 5$ you can't finish this task in under 5 minutes."}},
       {"diabetic", {}},
-      {"only drinks soda", {}},
+      {"only drinks soda", {"Juice is for vegans man. Soda, there where its at."}},
       {"only listens to Insane Clown Posse", {}},
       {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}},
       {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}},
@@ -365,7 +365,9 @@ function setup.config()
       "I trust you.",
       "I'm hungry.",
       "I'm tired.",
+      "Staying still is a bit boring.",
       "Don't let me down.",
+      "Is this hard?",
     }
 
     --Introduction dialogs any robot can say once, where {bot_name} will be replaced by its name
@@ -384,6 +386,7 @@ function setup.config()
       "Hey I'm {bot_name}. Let's solve this.",
       "Let's hope I don't end the same way as the other robots, ok?",
       "My name is {bot_name} and we are now best friends!",
+      "Is this freedom?!!...oh, it's just another puzzle :(",
     }
 
 
@@ -419,6 +422,10 @@ function setup.config()
     SFX.fail = love.audio.newSource("assets/sound/fail.mp3", "static")
     SFX.click = love.audio.newSource("assets/sound/click.wav", "static")
     SFX.side_message = love.audio.newSource("assets/sound/side_message_blip.wav", "static")
+    SFX.login = love.audio.newSource("assets/sound/login.wav", "static")
+    SFX.open_email = love.audio.newSource("assets/sound/open_email.wav", "static")
+    SFX.close_email = love.audio.newSource("assets/sound/close_email.wav", "static")
+    SFX.win_puzzle = love.audio.newSource("assets/sound/win_puzzle.wav", "static")
 end
 
 --Return functions

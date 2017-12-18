@@ -9,6 +9,8 @@ local function try_login()
         SFX.buzz:play()
     else
         Gamestate.switch(GS.GAME, state.box.lines[1])
+        SFX.login:stop()
+        SFX.login:play()
     end
 end
 
