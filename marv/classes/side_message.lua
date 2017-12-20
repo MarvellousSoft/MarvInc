@@ -344,8 +344,11 @@ getDialog = function(bot)
 
     --If its bot first time appearing
     if bot.first_time then
-      BotModule.current_bot.first_time = false
-      return Util.randomElement(intro_messages)
+        bot.first_time = false
+        if BotModule.current_bot then -- may not exist for some reason
+            BotModule.current_bot.first_time = false
+        end
+        return Util.randomElement(intro_messages)
     end
 
     --Chances of special messages increases if there are more, capped at .6

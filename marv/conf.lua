@@ -2,7 +2,7 @@
 
 function love.conf(t)
     t.identity = "marvellous"           -- The name of the save directory (string)
-    t.version = "0.10.1"                -- The LÖVE version this game was made for (string)
+    t.version = "0.10.2"                -- The LÖVE version this game was made for (string)
     t.console = true                    -- Attach a console (boolean, Windows only)
     t.accelerometerjoystick = false     -- Enable the accelerometer on iOS and Android by exposing it as a Joystick (boolean)
     t.externalstorage = false           -- True to save files (and read from the save directory) in external storage on Android (boolean)
@@ -48,7 +48,7 @@ function love.conf(t)
         title = "Marvellous_Inc",                          -- The project title (string)
         package = "marvellous",                             -- The project command and package name (string)
         loveVersion = t.version,                            -- The project LÖVE version
-        version = "1.0",                                    -- The project version
+        version = "1.0.1",                                    -- The project version
         author = "Marvellous Soft",                         -- Your name (string)
         email = "marvellous.amoeba@gmail.com",              -- Your email (string)
         description = "Zachlike with an immersive storyline told through emails.", -- The project description (string)
