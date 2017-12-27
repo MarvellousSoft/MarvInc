@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Cleaner I"
 -- Puzzle number
 n = "A.6"

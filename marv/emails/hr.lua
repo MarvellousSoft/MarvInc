@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 return {
     title = "[Notice][HR] A friendly reminder for all of us at MarvInc!",
     text = [[Hello fellow Marvs!,

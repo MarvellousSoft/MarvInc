@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local p = require 'lore_events.paul2'
 local prev = require 'lore_events.paul1_2'
 

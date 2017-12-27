@@ -1,4 +1,13 @@
 --[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
+--[[
   Scroll Window
 
   A scroll window has an object and draws part of that object, with a vertical scrollbar if necessary.
