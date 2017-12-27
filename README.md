@@ -12,9 +12,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program (file LICENSE.txt). If not, see <https://www.gnu.org/licenses/>.
+along with this program ([right here](https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)). If not, see <https://www.gnu.org/licenses/>.
 
-All Marvellous Inc. assets, except foreign assets with their own license, are under **Creative Commons Attribution-NoDerivatives 4.0 International Public License**. You can read the full license in ASSETS-LICENSE.txt in the folder _assets_.
+All Marvellous Inc. assets, except foreign assets with their own license, are under **Creative Commons Attribution-NoDerivatives 4.0 International Public License**. You can read the full license [here](https://github.com/MarvellousSoft/MarvInc/blob/dev/ASSETS-LICENSE.txt).
 
 # Marvellous Inc.
 

@@ -17,6 +17,6 @@ Human-readable version of license can be found here:
 
 - https://creativecommons.org/licenses/by-nd/4.0/
 
-Complete license can be read in ASSETS-LICENSE.txt or here:
+Complete license can be read in [ASSETS-LICENSE.txt](https://github.com/MarvellousSoft/MarvInc/blob/dev/ASSETS-LICENSE.txt) or here:
 
 - https://creativecommons.org/licenses/by-nd/4.0/legalcode
