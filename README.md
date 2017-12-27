@@ -1,6 +1,24 @@
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the **GNU General Public License** as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program (file LICENSE.txt). If not, see <https://www.gnu.org/licenses/>.
+
+All Marvellous Inc. assets, except foreign assets with their own license, are under **Creative Commons Attribution-NoDerivatives 4.0 International Public License**. You can read the full license in ASSETS-LICENSE.txt in the folder _assets_.
+
 # Marvellous Inc.
 
-A GAME BY MARVELLOUS SOFT . 2017
+AN OPEN SOURCE GAME BY MARVELLOUS SOFT . 2017
 
 ## Introduction
 
@@ -56,4 +74,4 @@ Github
     ~ https://github.com/MarvellousSoft/MarvInc
 
 
-Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba@gmail.com`.
+Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba at gmail dot com`.
