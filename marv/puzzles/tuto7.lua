@@ -1,7 +1,3 @@
---Marvellous Inc.
---Copyright (C) 2017  MarvellousSoft
---See full license in file LICENSE.txt
-
 name = "Sequence Separator"
 
 --Achievement: finish in 11 lines of code

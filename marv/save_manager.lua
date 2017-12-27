@@ -1,7 +1,3 @@
---Marvellous Inc.
---Copyright (C) 2017  MarvellousSoft
---See full license in file LICENSE.txt
-
 local LoreManager = require "classes.lore_manager"
 local BotManager = require 'classes.bot'
 binser = require "binser"

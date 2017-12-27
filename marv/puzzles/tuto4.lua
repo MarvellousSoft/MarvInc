@@ -1,7 +1,3 @@
---Marvellous Inc.
---Copyright (C) 2017  MarvellousSoft
---See full license in file LICENSE.txt
-
 -- This is a test puzzle
 
 name = "DO YOU EVEN LIFT?"

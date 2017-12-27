@@ -1,7 +1,3 @@
---Marvellous Inc.
---Copyright (C) 2017  MarvellousSoft
---See full license in file LICENSE.txt
-
 return {
     title = "READ THIS " .. string.upper(SaveManager.current_user),
     text = SaveManager.current_user .. [[!!!
