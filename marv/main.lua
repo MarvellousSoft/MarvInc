@@ -2,6 +2,10 @@
 --Copyright (C) 2017  MarvellousSoft
 --See full license in file LICENSE.txt
 
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 --HUMP STUFF
 Gamestate = require "extra_libs.hump.gamestate"
 Timer     = require "extra_libs.hump.timer"

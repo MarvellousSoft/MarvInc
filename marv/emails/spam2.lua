@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 return {
     title = "Contact him for you money worth 10.5million USD",
     text = [[

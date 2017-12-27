@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 local op = {}
 
 --[[ Number class holds a number... Or what can become one. ]]

@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 --[[ Each item must be a table with the following fields
 - command: name and paramenters of command
 - text: explanation of command

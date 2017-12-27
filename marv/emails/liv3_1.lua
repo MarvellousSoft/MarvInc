@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 return {
     title = "Results results results",
     text = SaveManager.current_user .. [[

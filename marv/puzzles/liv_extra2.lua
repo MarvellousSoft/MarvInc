@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 name = "Hardester Sort"
 -- Puzzle number
 n = "C.extra.2"

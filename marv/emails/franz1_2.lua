@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 local FX = require('classes.fx')
 local LoreManager = require('classes.lore_manager')
 local Mail = require('classes.tabs.email')

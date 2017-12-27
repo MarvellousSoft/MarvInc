@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 return {
     title = "My ass is on the line",
     text = SaveManager.current_user .. [[, I need your help again. {orange}I'm sorry{end}.

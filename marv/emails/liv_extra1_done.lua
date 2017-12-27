@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 return {
     title = "WOW",
     text = SaveManager.current_user .. [[, you really have {red}outdone yourself{end}. How did you know about that shit?

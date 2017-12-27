@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 require "classes.primitive"
 require "classes.color.color"
 local Color = require "classes.color.color"

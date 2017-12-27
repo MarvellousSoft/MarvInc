@@ -1,3 +1,7 @@
+--Marvellous Inc.
+--Copyright (C) 2017  MarvellousSoft
+--See full license in file LICENSE.txt
+
 require "classes.primitive"
 local Color = require "classes.color.color"
 local OpenedEmail = require "classes.opened_email"
