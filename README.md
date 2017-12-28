@@ -1,5 +1,5 @@
 Marvellous Inc.
-Copyright (C) 2017  MarvellousSoft
+Copyright (C) 2017  MarvellousSoft & USPGameDev
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the **GNU General Public License** as published by
@@ -14,11 +14,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program ([right here](https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)). If not, see <https://www.gnu.org/licenses/>.
 
-All Marvellous Inc. assets, except foreign assets with their own license, are under **Creative Commons Attribution-NoDerivatives 4.0 International Public License**. You can read the full license [here](https://github.com/MarvellousSoft/MarvInc/blob/dev/marv/assets/ASSETS-LICENSE.txt).
+All Marvellous Inc. assets, except foreign assets with their own license, are under **Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**. You can read the full license [here](https://github.com/MarvellousSoft/MarvInc/blob/dev/marv/assets/ASSETS-LICENSE.txt).
 
 # Marvellous Inc.
 
-AN OPEN SOURCE GAME BY MARVELLOUS SOFT . 2017
+AN OPEN SOURCE GAME BY MARVELLOUS SOFT AND USPGAMEDEV . 2017
 
 ## Introduction
 

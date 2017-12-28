@@ -1,15 +1,11 @@
 --[[
 #####################################
 Marvellous Inc.
-Copyright (C) 2017  MarvellousSoft
+Copyright (C) 2017  MarvellousSoft & USPGameDev
 See full license in file LICENSE.txt
 (https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
 #####################################
 ]]--
-
---Marvellous Inc.
---Copyright (C) 2017  MarvellousSoft
---See full license in file LICENSE.txt
 
 --HUMP STUFF
 Gamestate = require "extra_libs.hump.gamestate"
