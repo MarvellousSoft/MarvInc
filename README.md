@@ -60,7 +60,7 @@ Github
     ~ https://github.com/MarvellousSoft/MarvInc
 
 
-Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba at gmail dot com`.
+Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba@gmail.com`.
 
 ## License and other boring stuff
 
