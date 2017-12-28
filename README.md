@@ -4,7 +4,7 @@ Code under license **GPLv3.0**, original assets under license **CC BY-AS 4.0**\n
 
 # Marvellous Inc.
 
-AN OPEN SOURCE GAME BY MARVELLOUS SOFT AND USPGAMEDEV . 2017
+AN OPEN SOURCE GAME BY MARVELLOUS SOFT AND USPGAMEDEV. 2017
 
 ## Introduction
 
@@ -44,9 +44,9 @@ Join our Family now, and help us CHANGE the world.
 
 ## Team
 
-- Renato Lui Geh
-- Ricardo Lira da Fonseca
-- Yan Soares Couto
+- Renato Lui Geh @renatogeh
+- Ricardo Lira da Fonseca @rilifon
+- Yan Soares Couto @yancouto
 
 ----------------------------------------------------
 
