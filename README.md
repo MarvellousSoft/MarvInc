@@ -1,6 +1,6 @@
-######Marvellous Inc.
-######Copyright (C) 2017  MarvellousSoft & USPGameDev
-######Code under license **GPLv3.0**, original assets under license **CC BY-AS 4.0**
+###### Marvellous Inc.
+###### Copyright (C) 2017  MarvellousSoft & USPGameDev
+###### Code under license **GPLv3.0**, original assets under license **CC BY-AS 4.0**
 
 # Marvellous Inc.
 
