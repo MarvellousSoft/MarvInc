@@ -4,7 +4,7 @@
 
 # Marvellous Inc.
 
-**AN OPEN SOURCE ZACHLIKE INDIE GAME BY MARVELLOUS SOFT AND USPGAMEDEV ~ 2016/2017**
+**an open source zachlike indie game by [MarvellousSoft](https://marvelloussoft.github.io/) and [USPGameDev](https://uspgamedev.org/) ~ 2016/2017**
 
 ## Introduction
 
@@ -50,7 +50,6 @@ Join our Family now, and help us CHANGE the world.
 
 ----------------------------------------------------
 
-
 ## Platform
 
 Made using [LÖVE](https://love2d.org/) with the [STEAMING](https://github.com/uspgamedev/STEAMING) game template integrated with library [HUMP](http://hump.readthedocs.org/).
@@ -61,6 +60,8 @@ Github
 
 
 Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba@gmail.com`.
+
+----------------------------------------------------
 
 ## License and other boring stuff
 
