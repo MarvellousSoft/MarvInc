@@ -44,9 +44,9 @@ Join our Family now, and help us CHANGE the world.
 
 ## Team
 
-- Renato Lui Geh @renatogeh
-- Ricardo Lira da Fonseca @rilifon
-- Yan Soares Couto @yancouto
+- Renato Lui Geh ([@renatogeh](https://github.com/renatogeh))
+- Ricardo Lira da Fonseca ([@rilifon](https://github.com/rilifon))
+- Yan Soares Couto ([@yancouto](https://github.com/yancouto))
 
 ----------------------------------------------------
 
