@@ -135,7 +135,7 @@ function ManualTab:trueDraw()
                     for _, e in ipairs(items[item].examples) do -- for each example
                         h = h + 10
                         local colored_text, normal_text, all_but_default_text = Util.stylizeText(e[1], nil, "cmntm") -- e[1] is the code
-                        local dh = wrap_height(self.example_code_font, normal_text, self.w - 12.5)
+                        local dh = wrap_height(self.example_code_font, normal_text, self.w - 45)
                         love.graphics.setColor(0, 0, 0)
                         love.graphics.rectangle('line', self.pos.x + 20, self.pos.y + h + 2.5, self.w - 40, dh + 5)
                         love.graphics.setFont(self.example_code_font)
