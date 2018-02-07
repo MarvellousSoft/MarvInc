@@ -9,15 +9,13 @@ See full license in file LICENSE.txt
 
 local Mail = require "classes.tabs.email"
 
-local fergus = {}
+local auto = {}
 
--- Add puzzle 'fergus1'
+auto.require_puzzles = {'tutorial'}
+auto.wait = 5
 
-fergus.require_puzzles = {'tutorial'}
-fergus.wait = 50
-
-function fergus.run()
-    Mail.new('fergus1')
+function auto.run()
+    Mail.new('auto')
 end
 
-return fergus
+return auto

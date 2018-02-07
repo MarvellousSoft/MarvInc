@@ -136,7 +136,11 @@ function EmailTab:drawMailBox(box)
             color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border + 14, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border - 14, t.email_height, 2)
+
+        -- Draw author color box
+        Color.set(e.author_color)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, 10, t.email_height, 2)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
@@ -155,7 +159,7 @@ function EmailTab:drawMailBox(box)
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + 5 + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
 
         -- Title
         font = FONTS.fira(14)
@@ -168,7 +172,7 @@ function EmailTab:drawMailBox(box)
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + size + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
 
         -- Print label on emails
 
@@ -265,6 +269,25 @@ end
 
 
 
+local AUTHORS = {"bill miles", "diego", "fergus", "franz", "jen", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto"}
+function get_author_color(author)
+    local s = author:lower()
+    for _, k in ipairs(AUTHORS) do
+        for t in k:gmatch("%S+") do
+            if s:find(k) then
+                local key = k
+                if k == "bill miles" then
+                    key = "bm"
+                elseif k == "renatogeh rilifon yancouto" then
+                    key = "ryr"
+                end
+                return CHR_CLR[key]
+            end
+        end
+    end
+    return CHR_CLR["spam"]
+end
+
 -- EMAIL OBJECT --
 
 EmailObject = Class{
@@ -279,6 +302,7 @@ EmailObject = Class{
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
+        self.author_color = get_author_color(self.author)
 
         self.handles = {} -- Table containing timer handles related to this object
 
