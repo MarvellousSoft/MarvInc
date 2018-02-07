@@ -244,12 +244,13 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
 
     SFX.fail:stop()
     SFX.fail:play()
-    PopManager.new(title, text,
-         Color.red(), {
+    PopManager.newFailed(title, text,
+        {
             func = callback,
             text = button,
             clr = Color.blue()
-        })
+        },
+        ROOM.bot)
 
 end
 

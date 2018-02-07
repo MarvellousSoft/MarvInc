@@ -343,7 +343,7 @@ end
 
 function WalkC:finishWalk(count)
     local err = Util.findId('memory'):set(self.reg:evaluate(), count)
-    if err then StepManager.stop("Code error!", "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ")\n\nError message: \"" .. err .. "\"\n\nFor this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.") end
+    if err then StepManager.stop("Code error!", "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. "). Error message:\n\n\"" .. err .. "\"\n\nFor this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.") end
 end
 
 -- Write --
