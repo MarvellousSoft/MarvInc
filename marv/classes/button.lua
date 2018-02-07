@@ -42,6 +42,15 @@ Button = Class{
     color = Color.transp()
 }
 
+function Button:isMouseOver()
+    local b = self
+    local x, y = love.mouse.getPosition()
+    return x >= b.pos.x and
+       x <= b.pos.x + b.w and
+       y >= b.pos.y and
+       y <= b.pos.y + b.h
+end
+
 function Button:update(dt)
     local b, x, y
 
@@ -61,8 +70,6 @@ function Button:update(dt)
    else
        b.isOver = false
    end
-
-
 end
 
 --Draws a given square button with text aligned to the left
@@ -90,7 +97,14 @@ function Button:draw()
     end
 
     --Draws button box (front)--
-    Color.set(self.color)
+    if b:isMouseOver() then
+        local bk = self.color.l
+        self.color.l = self.color.l * 1.2
+        Color.set(self.color)
+        self.color.l = bk
+    else
+        Color.set(self.color)
+    end
     love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h)
 
     --Draws button text

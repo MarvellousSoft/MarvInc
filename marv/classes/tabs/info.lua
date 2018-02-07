@@ -62,6 +62,7 @@ InfoTab = Class{
         self.give_up_w = 95 -- Width value of give up button
         self.give_up_h = 40 -- Height value of give up button
         self.give_up_x, self.give_up_y = 0, 0
+        self.give_up_hover = false
 
         self.maximum_number_lines_color = Color.new(45,140,140) --Color for maximum number of lines text
 
@@ -74,7 +75,8 @@ InfoTab = Class{
             pos = self.pos,
             getHeight = function() return self.last_h end,
             draw = function() self:trueDraw() end,
-            mousePressed = function(obj, ...) self:trueMousePressed(...) end
+            mousePressed = function(obj, ...) self:trueMousePressed(...) end,
+            mouseMoved = function(obj, ...) self:trueMouseMoved(...) end,
         }
         self.box = ScrollWindow(self.w + 5, self.h, obj)
         self.box.sw = 13
@@ -101,6 +103,10 @@ function InfoTab:trueMousePressed(x, y, but)
     end
 end
 
+function InfoTab:trueMouseMoved(x, y)
+    self.give_up_hover = Util.pointInRect(x, y, self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
+end
+
 function InfoTab:mouseReleased(x, y, but)
     self.box:mouseReleased(x, y, but)
 end
@@ -119,6 +125,11 @@ function InfoTab:draw()
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
 
     self.box:draw()
+end
+
+local function makeBrighter()
+    local r, g, b = love.graphics.getColor()
+    love.graphics.setColor(r * 1.2, g * 1.2, b * 1.2)
 end
 
 function InfoTab:trueDraw()
@@ -231,6 +242,7 @@ function InfoTab:trueDraw()
           self.give_up_x = self.pos.x + self.w - self.give_up_w - 10
           self.give_up_y = self.pos.y + self.last_h + 10
           Color.set(self.give_up_button_color)
+          if self.give_up_hover then makeBrighter() end
           love.graphics.rectangle("fill", self.give_up_x, self.give_up_y, self.give_up_w, self.give_up_h)
           Color.set(self.line_color)
           love.graphics.setLineWidth(3)

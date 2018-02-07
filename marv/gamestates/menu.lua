@@ -41,7 +41,9 @@ function state:enter()
 
     local bw, bh = 80, 40
     self.font = FONTS.fira(20)
-    self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 5, bw, bh, try_login, "login", self.font, nil, nil, Color.new(self.box.color))
+    local c = Color.green()
+    c.l = 30
+    self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 10, bw, bh, try_login, "login", self.font, nil, nil, c)
 
     self:initUsernames()
 

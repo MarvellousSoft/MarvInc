@@ -54,6 +54,7 @@ OpenedEmail = Class{
         local obj_h = self.text_height
         local obj = {
             mousePressed = function(o, ...) self:checkButtonClick(...) end,
+            mouseMoved = function(o, ...) self:fixedMouseMoved(...) end,
             getHeight = function() return self.text_height + 120 end,
             draw = function(o) self:drawContents(o) end,
             pos = Vector(self.pos.x + 10, self.pos.y + 110)
@@ -70,6 +71,7 @@ OpenedEmail = Class{
         self.delete_y = obj.pos.y + self.text_height + 80 -- Y position value of delete button (related to opened email pos)
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
+        self.delete_hover = false -- Whether the mouse is over the delete button
 
         self.retry_button_color = Color.new(70,80,120) --Color for retry button box when opening an already completed puzzle
 
@@ -83,6 +85,7 @@ OpenedEmail = Class{
         self.reply_y = obj.pos.y + self.text_height + 40 -- Y position value of reply button (related to opened email pos)
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
+        self.reply_hover = false -- Whether the mouse is over the reply button
 
         SFX.open_email:stop()
         SFX.open_email:play()
@@ -94,6 +97,11 @@ OpenedEmail = Class{
 
 }
 
+local function makeBrighter()
+    local r, g, b = love.graphics.getColor()
+    love.graphics.setColor(r * 1.2, g * 1.2, b * 1.2)
+end
+
 function OpenedEmail:drawContents(box)
     love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 25)
     local e = self
@@ -102,6 +110,7 @@ function OpenedEmail:drawContents(box)
     if e.can_be_deleted then
         -- Make button box
         Color.set(e.delete_button_color)
+        if self.delete_hover then makeBrighter() end
         love.graphics.rectangle("fill", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
         Color.set(e.line_color_3)
         love.graphics.setLineWidth(3)
@@ -125,6 +134,7 @@ function OpenedEmail:drawContents(box)
         if complete then
             Color.set(e.retry_button_color)
         end
+        if self.reply_hover then makeBrighter() end
         love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
         Color.set(e.line_color_3)
         love.graphics.setLineWidth(3)
@@ -271,6 +281,11 @@ function OpenedEmail:checkButtonClick(x, y, but)
      end
 end
 
+function OpenedEmail:fixedMouseMoved(x, y)
+    self.delete_hover = Util.pointInRect(x, y, self.delete_x, self.delete_y, self.delete_w, self.delete_h)
+    self.reply_hover = Util.pointInRect(x, y, self.reply_x, self.reply_y, self.reply_w, self.reply_h)
+end
+
 function OpenedEmail:mousePressed(x, y, but)
     self.text_scroll:mousePressed(x, y, but)
     local e = self
@@ -282,6 +297,10 @@ function OpenedEmail:mousePressed(x, y, but)
         --Clicked outside box
         opened_email_funcs.close()
     end
+end
+
+function OpenedEmail:mouseMoved(x, y)
+    self.text_scroll:mouseMoved(x, y)
 end
 
 -- UTILITY FUNCTIONS

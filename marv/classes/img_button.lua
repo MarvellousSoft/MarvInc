@@ -33,7 +33,7 @@ function ImgButton:draw()
 
     if hover then
         self.color.l = 50
-        self.color.a = 50
+        self.color.a = 90
         Color.set(self.color)
         love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
     end
