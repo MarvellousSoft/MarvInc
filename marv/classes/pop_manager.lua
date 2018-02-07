@@ -30,6 +30,8 @@ Popup = Class{
         self.text = text
         self.text_clr = Color.black()
 
+        self.border_clr = Color.black()
+
         self.buttons = {}
         local _bbord = 5 -- button border
         local _w1, _h = 2*_bbord + self.fnt:getWidth(b1.text), self.fnt:getHeight() + _bbord
@@ -41,16 +43,17 @@ Popup = Class{
         local _w2 = _w1
         if b2 then _w2 = 2*_bbord + self.fnt:getWidth(b2.text) end
 
+        self.pos.y = (H - self.h)/2
+
         if b2 then
             _x1 = (w/2 - _w1)/2
             local _x2 = _w1 + _x1 + (w-_w1-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
-            table.insert(self.buttons, Button(_x2, _y, _w2, _h, b2.func, b2.text, self.fnt, nil,
+            table.insert(self.buttons, Button(_x2 + self.pos.x, _y + self.pos.y, _w2, _h, b2.func, b2.text, self.fnt, nil,
                 nil, b2.clr))
         end
-        table.insert(self.buttons, Button(_x1, _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
+        table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
             b1.clr))
 
-        self.pos.y = (H - self.h)/2
 
         self.tp = "popup"
 
@@ -63,32 +66,37 @@ Popup = Class{
 function Popup:draw()
     Color.set(self.back_clr)
     love.graphics.rectangle("fill", -5, -5, W+5, W+5)
+
     Color.set(self.color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
+
+    Color.set(self.border_clr)
+    love.graphics.setLineWidth(2)
+    love.graphics.rectangle("line", self.pos.x, self.pos.y, self.w, self.h)
+
     Color.set(self.title_clr)
     love.graphics.rectangle("fill", self.pos.x + 5, self.pos.y + 5, self.w - 10,
         self.title_h + 10)
+
     Color.set(self.color)
     love.graphics.setFont(self.title_fnt)
     love.graphics.printf(self.title, self.pos.x + self.border, self.pos.y + self.border,
         self.w - self.border, "center")
+
     Color.set(self.text_clr)
     love.graphics.setFont(self.fnt)
     love.graphics.printf(self.text, self.pos.x + self.border, self.pos.y +
         self.title_fnt:getHeight() + 30, self.w - self.border, "left")
 
-    love.graphics.push()
-    love.graphics.translate(self.pos.x, self.pos.y)
     for _, v in ipairs(self.buttons) do
         v:draw()
     end
-    love.graphics.pop()
 end
 
 function Popup:mousereleased(x, y, button, touch)
     if button == 1 then
         for _, v in ipairs(self.buttons) do
-            if Util.pointInRect(x - self.pos.x, y - self.pos.y, v) then
+            if Util.pointInRect(x, y, v) then
                 PopManager.quit()
                 v.callback()
                 return
