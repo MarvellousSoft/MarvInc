@@ -172,6 +172,22 @@ SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
 SHEET_IMG["paint"] = {love.graphics.newImage("assets/images/paint_sheet.png"), 4}
 SHEET_IMG["fireplace"] = {love.graphics.newImage("assets/images/fireplace_sheet.png"), 6}
 
+-- Author Images
+AUTHOR_IMG = {}
+AUTHOR_IMG["unknown"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["liv"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["fergus"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["paul"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["auto"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["jan"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["diego"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["bill"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/unknown.png")
+
 -- Room Img
 ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
 -- Background

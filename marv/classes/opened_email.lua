@@ -188,9 +188,13 @@ function OpenedEmail:draw()
     -- Draw email content
 
     local pic_w, pic_h = 90, 90
-    local img = OBJS_IMG.blue_tile
+    local img = Util.getAuthorImage(self.author)
 
+    Color.set(Color.white())
     love.graphics.draw(img, self.pos.x + 10, self.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
+    love.graphics.setLineWidth(2)
+    Color.set(Util.getAuthorColor(self.author))
+    love.graphics.rectangle('line', self.pos.x + 10, self.pos.y + 10, pic_w, pic_h)
 
     -- Title
     Color.set(e.title_color)
