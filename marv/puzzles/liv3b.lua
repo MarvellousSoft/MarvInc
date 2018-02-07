@@ -35,7 +35,7 @@ function objective_checker(room)
         if #cbs[i].inp < 3 then all = false end
         for j = 1, 3 do
             if cbs[i].inp[j] and cbs[i].inp[j] ~= vs[i][j] then
-                _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
+                _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i .. ".\nExpected " .. vs[i][j] .. " got " .. cbs[i].inp[j], "Retry")
                 return false
             end
         end
