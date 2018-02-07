@@ -136,7 +136,7 @@ function EmailTab:drawMailBox(box)
             color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border + 14, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border - 14, t.email_height, 2)
 
         -- Draw author color box
         Color.set(e.author_color)
@@ -159,7 +159,7 @@ function EmailTab:drawMailBox(box)
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + 5 + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
 
         -- Title
         font = FONTS.fira(14)
@@ -172,7 +172,7 @@ function EmailTab:drawMailBox(box)
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + size + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
 
         -- Print label on emails
 
