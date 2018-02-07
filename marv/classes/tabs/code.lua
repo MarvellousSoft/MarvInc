@@ -155,6 +155,11 @@ function CodeTab:keyPressed(key)
     if key == 'escape' and StepManager.state ~= 'stopped' then
         StepManager.stop()
     end
+    if isRunning and (key == 'up' or key == 'down' or key == 'left' or key == 'right') then
+        -- Moving cursor while code is playing
+        self.term:keyPressed(key)
+        return
+    end
     if isRunning then return end
     if love.keyboard.isDown("lctrl", "rctrl") then
         if key == 'return' then
