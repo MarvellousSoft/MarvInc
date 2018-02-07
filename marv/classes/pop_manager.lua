@@ -133,11 +133,12 @@ end
 
 PopupFailed = Class{
   __includes = {RECT, Popup},
-  init = function(self, title, text, b1, bot)
+  init = function(self, title, text, b1, bot, bot_n)
       local clr = Color.red()
       RECT.init(self,-1, -1, -1, -1, Color.white())
       local w = 2*W/5
       self.bot = bot
+      self.bot_n = bot_n
       self.border = 10
       self.fnt = FONTS.fira(20)
       self.title_fnt = FONTS.fira(30)
@@ -159,7 +160,8 @@ PopupFailed = Class{
       -- Relative to popup box
       local _x1 = (self.w - _w1)/2
       local _, _wh = self.fnt:getWrap(self.text, self.w - self.border)
-      self.h = #_wh*self.fnt:getHeight() + self.title_fnt:getHeight() + _h + self.border + 100
+      self.h_fix = 100
+      self.h = #_wh*self.fnt:getHeight() + self.title_fnt:getHeight() + _h + self.border + 100 + self.h_fix
       local _y = self.h - _h - self.border
       local _w2 = _w1
       if b2 then _w2 = 2*_bbord + self.fnt:getWidth(b2.text) end
@@ -199,15 +201,51 @@ PopupFailed = Class{
     love.graphics.rectangle("fill", self.pos.x + 5, self.pos.y + 5, self.w - 10,
         self.title_h + 10)
 
+    --Draw title
     Color.set(self.color)
     love.graphics.setFont(self.title_fnt)
     love.graphics.printf(self.title, self.pos.x + self.border, self.pos.y + self.border,
         self.w - self.border, "center")
 
+    --Draw sentence
     Color.set(self.text_clr)
     love.graphics.setFont(self.fnt)
     love.graphics.printf(self.text, self.pos.x + self.border, self.pos.y +
         self.title_fnt:getHeight() + 30, self.w - self.border, "left")
+
+    local _h = self.buttons[1].pos.y - 115
+    --Draw bot last words "preview"
+    Color.set(self.text_clr)
+    love.graphics.setFont(FONTS.fira(14))
+    love.graphics.printf("Bot #" .. self.bot_n .. " " .. self.bot.name.. " last words:", self.pos.x + self.border,
+        _h - 45, self.w - self.border, "left")
+
+    --Draw bot
+    local off = 8
+    local i_x, i_y = self.pos.x + self.border + off, _h - 20 + off
+    Color.set(Color.black())
+    love.graphics.setLineWidth(3)
+    love.graphics.rectangle("line", i_x - off/2, i_y - off/2, self.w - 2*self.border, self.bot.body:getHeight() + off, 5)
+    Color.set(self.bot.body_clr)
+    love.graphics.draw(self.bot.body, i_x, i_y + off)
+    Color.set(self.bot.head_clr)
+    love.graphics.draw(self.bot.head, i_x, i_y + off)
+    Color.set(self.bot.hair_clr)
+    love.graphics.draw(self.bot.hair, i_x, i_y + off)
+
+    --Draw last words
+    local t_x, t_y = i_x + self.bot.body:getWidth() + 20, i_y + self.bot.body:getHeight()/2 - 20
+    Color.set(self.text_clr)
+    love.graphics.setFont(FONTS.fira(18))
+    love.graphics.printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAA", t_x,
+        t_y, self.w - 150, "left")
+
+    --Draw last sentence
+    Color.set(self.text_clr)
+    love.graphics.setFont(self.fnt)
+    love.graphics.printf("A new bot had been dispatched", self.pos.x + self.border,
+        _h + 80, self.w - self.border, "center")
+
 
     for _, v in ipairs(self.buttons) do
         v:draw()
@@ -217,10 +255,10 @@ PopupFailed = Class{
 
 
 --Creates a "failed puzzle" popup
-function PopManager.newFailed(title, sentence, b, bot)
+function PopManager.newFailed(title, sentence, b, bot, bot_n)
     -- close email if any is open, to avoid getting stuck because of our ugly code.
     OpenedEmail.close()
-    local pop = PopupFailed(title, sentence, b, bot)
+    local pop = PopupFailed(title, sentence, b, bot, bot_n)
     -- Pop the old pop. Stick with the new pop.
     PopManager.pop = pop
     TABS_LOCK = TABS_LOCK + 1

@@ -250,7 +250,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
             text = button,
             clr = Color.blue()
         },
-        ROOM.bot)
+        ROOM.bot, n)
 
 end
 

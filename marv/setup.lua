@@ -450,14 +450,18 @@ function setup.config()
     --Table of different apologise texts it can appear on failed popups
     FAILED_POPUP_BUTTON_TEXT =
     {
-      "I'm sorry",
-      "I will be more careful next time",
-      "Frankly it was his fault",
-      "It won't happen again",
-      "Ooops",
-      "I will be more successful next time",
+      " I'm sorry ",
+      " I will be more careful next time ",
+      " Frankly it was his fault ",
+      " It won't happen again ",
+      " Ooops ",
+      " I will be more successful next time ",
     }
 
+    DEFAULT_DYING_MESSAGES =
+    {
+
+    }
 
     --INITIALIZING TABLES--
 
