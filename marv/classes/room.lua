@@ -99,6 +99,14 @@ Room = Class{
         self.back_sx = self.grid_w/BG_IMG:getWidth()
         self.back_sy = self.grid_h/BG_IMG:getHeight()
 
+        -- Logoff button
+        local logoff = function()
+            SaveManager.logout()
+            FX.full_static(function() love.event.quit('restart') end)
+        end
+        self.logoff_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.logoff, logoff, "Reboot")
+        self.logoff_b.hover_img = BUTS_IMG.logoff_hover
+
         -- Static transition
         self.static_dhdl = nil
         self.static_rhdl = nil
@@ -396,6 +404,10 @@ function Room:draw()
     -- Set origin to (0, 0)
     love.graphics.pop()
 
+    if self.mode == "offline" then
+        self.logoff_b:draw()
+    end
+
     --Draw camera screen
     Color.set(Color.white())
     love.graphics.draw(ROOM_CAMERA_IMG, self.pos.x- 45, self.pos.y - 45)
@@ -461,6 +473,12 @@ end
 
 function Room:mouseMoved()
     self.cursor_mov_dt = 0
+end
+
+function Room:mousePressed(x, y, but)
+    if self.mode == "offline" then
+        self.logoff_b:mousePressed(x, y, but)
+    end
 end
 
 function Room:kill(keep_bot)

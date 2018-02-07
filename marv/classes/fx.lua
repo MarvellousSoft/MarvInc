@@ -29,7 +29,9 @@ function fx.full_static(gamestate)
         SFX.loud_static:stop()
         full_s = false
         CLOSE_LOCK = false
-        if gamestate then
+        if type(gamestate) == 'function' then
+            gamestate()
+        elseif gamestate then
             Gamestate.push(gamestate)
         else
             fx.intro()
