@@ -463,8 +463,8 @@ function Room:mouseMoved()
     self.cursor_mov_dt = 0
 end
 
-function Room:kill()
-    self.bot:cleanAndKill(self.grid_obj)
+function Room:kill(keep_bot)
+    self.bot:cleanAndKill(keep_bot)
 end
 
 -- Careful when calling this function!

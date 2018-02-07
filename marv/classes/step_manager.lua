@@ -211,7 +211,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
     end
 
     sm.clear()
-    ROOM:kill()
+    ROOM:kill(fail_title == 'no kill')
 
     -- display popup
     local callback = function()
@@ -223,7 +223,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
         Util.findId('code_tab').term.backups = bk
     end
 
-    if show_popup == false then
+    if show_popup == false or fail_title == 'no kill' then
         callback()
         return
     end

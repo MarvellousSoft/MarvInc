@@ -104,10 +104,12 @@ Bot = Class{
     end
 }
 
-function Bot:cleanAndKill()
+function Bot:cleanAndKill(keep_bot)
     Object.kill(self, ROOM.grid_obj)
-    bot.current_bot = nil -- erase current bot
-    Signal.emit("death")
+    if not keep_bot then
+        bot.current_bot = nil -- erase current bot
+        Signal.emit("death")
+    end
     --SFX.fail:stop()
     --SFX.fail:play()
 end

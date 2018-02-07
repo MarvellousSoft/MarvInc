@@ -37,7 +37,7 @@ CodeTab = Class{
         local by = self.pos.y + self.h - bsz
         local bx = self.pos.x + self.w / 5
         local hf = function(self) return StepManager.state == self.highlight_state and (not self.how_fast or self.how_fast == StepManager.how_fast)  end
-        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop() end, "stop")
+        self.stop_b = ImgButton(bx, by, bsz, BUTS_IMG.stop, function() StepManager.stop('no kill') end, "stop")
         self.stop_b.highlight, self.stop_b.highlight_state = hf, 'stopped'
 
         bx = bx + bsz + 20
