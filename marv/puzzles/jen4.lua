@@ -134,5 +134,11 @@ It's hilarious.
             end,
             text = " ... ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " 01100011 01100001 01110100 ",
+            clr = _G.Color.red()
         })
 end
