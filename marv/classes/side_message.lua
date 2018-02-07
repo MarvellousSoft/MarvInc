@@ -164,7 +164,7 @@ Signal.register("new_bot_message",
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
-        message:setPortraitOffset(-5,0) --Offset for bot portrait image
+        message:setPortraitOffset(-9,11) --Offset for bot portrait image
 
         message:activate()
 
