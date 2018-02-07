@@ -16,13 +16,13 @@ local f = love.filesystem -- used a lot
 sm.user_data = {}
 
 -- used to improve compatibilty
-local current_save_version = "1"
+local current_save_version = "2"
 
 function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
         f.createDirectory('saves/'.. user)
-        f.write('saves/' .. user .. '/version', current_save_version)
     end
+    f.write('saves/' .. user .. '/version', current_save_version)
 end
 
 function sm.save()
@@ -147,10 +147,21 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
     for _, user in pairs(f.getDirectoryItems("saves")) do
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
+            sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
+            if ver == "1" then -- 1 --> 2
+                print("Changing from version 1 to 2")
+                local bot = sm.user_data[user].last_bot
+                if bot then
+                    bot.hair_i = love.math.random(#HAIR)
+                    bot.hair_clr = Color.new(love.math.random(256) - 1, 200, 200)
+                    bot.head_clr = Color.rand_skin()
+                    bot.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
+                end
+                ver = "2"
+            end
             if ver ~= current_save_version then
                 -- deal with old save versions
             end
-            sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
         end
     end
 end
