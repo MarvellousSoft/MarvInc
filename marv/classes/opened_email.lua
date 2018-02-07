@@ -24,7 +24,7 @@ OpenedEmail = Class{
 
     init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
-        local box_width, box_height = 2.2*W/5, 4*H/5
+        local box_width, box_height = 2.8*W/5, 4*H/5
 
         self.text_font = FONTS.roboto(18)
 
@@ -187,33 +187,38 @@ function OpenedEmail:draw()
 
     -- Draw email content
 
+    local pic_w, pic_h = 90, 90
+    local img = OBJS_IMG.blue_tile
+
+    love.graphics.draw(img, self.pos.x + 10, self.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
+
     -- Title
     Color.set(e.title_color)
     font_size = 24
     font = FONTS.robotoBold(font_size)
-    while font:getWidth(e.title) > e.w - 20 do
+    while font:getWidth(e.title) > e.w - 25 - pic_w do
         font_size = font_size - 1
         font = FONTS.fira(font_size)
     end
     font_h = font:getHeight(e.title)
     temp = font_h
     love.graphics.setFont(font)
-    love.graphics.print(e.title,  e.pos.x + 10, e.pos.y + 10)
+    love.graphics.print(e.title,  e.pos.x + 15 + pic_w, e.pos.y + 10)
     -- Draw line
     love.graphics.setLineWidth(5)
     Color.set(e.line_color)
-    love.graphics.line(e.pos.x + 10, e.pos.y + 10 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + 10 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5)
 
     -- Author
     Color.set(e.content_color)
     font = FONTS.robotoLight(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
-    love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + temp + 25)
+    love.graphics.print("from: "..e.author,  e.pos.x + 15 + pic_w, e.pos.y + temp + 25)
     -- Draw line
     love.graphics.setLineWidth(1)
     Color.set(e.line_color_2)
-    love.graphics.line(e.pos.x + 10, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
 
     -- Text
     Color.set(Color.white())
