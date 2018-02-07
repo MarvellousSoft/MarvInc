@@ -120,6 +120,7 @@ end
 
 function state:mousemoved(x, y)
     pc_box:mouseMoved(x, y)
+    room:mouseMoved(x, y)
 end
 
 function state:textinput(t)

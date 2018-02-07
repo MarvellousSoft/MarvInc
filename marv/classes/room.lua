@@ -87,6 +87,9 @@ Room = Class{
             self.mrkr_drw = not self.mrkr_drw
         end)
 
+        -- Current tile coordinates
+        self.cursor_x, self.cursor_y = -1, -1
+        self.cursor_mov_dt = 0
 
         -- Offline background
         self.back_fnt = FONTS.fira(50)
@@ -404,6 +407,15 @@ function Room:draw()
         local star = MISC_IMG.star
         love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 40 / star:getWidth())
     end
+
+    -- Cursor tile coordinates
+    if self.cursor_mov_dt > 0.05 then
+        if self.cursor_x > 0 and self.cursor_y > 0 then
+            Color.set(Color.green())
+            local cx, cy = love.mouse.getPosition()
+            love.graphics.print("(" .. self.cursor_y .. ", " .. self.cursor_x .. ")", cx+10, cy+10)
+        end
+    end
 end
 
 function Room:update(dt)
@@ -420,6 +432,17 @@ function Room:update(dt)
             )
         end
 
+        -- Get cursor's tile coordinates.
+        self.cursor_mov_dt = self.cursor_mov_dt + dt
+        local cx, cy = love.mouse.getPosition()
+        if cx > self.grid_x and cx < self.grid_x + self.grid_w and
+            cy > self.grid_y and cy < self.grid_y + self.grid_h then
+            local px, py = cx - self.grid_x, cy - self.grid_y
+            self.cursor_x, self.cursor_y = math.floor(px/self.grid_cw)+1, math.floor(py/self.grid_ch)+1
+        else
+            self.cursor_x, self.cursor_y = -1, -1
+        end
+
         self.grid_trans_timer:update(dt)
         for _, v in pairs(self.grid_obj) do
             if v.death and v.destroy then
@@ -434,6 +457,10 @@ function Room:update(dt)
 end
 
 function Room:keyPressed(key)
+end
+
+function Room:mouseMoved()
+    self.cursor_mov_dt = 0
 end
 
 function Room:kill()
