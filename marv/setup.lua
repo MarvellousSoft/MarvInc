@@ -175,11 +175,15 @@ MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 
 -- Bot images (assume array part only)
+HAIR = {
+    love.graphics.newImage("assets/images/hairs/01.png"),
+    love.graphics.newImage("assets/images/hairs/02.png"),
+}
 HEAD = {
-    love.graphics.newImage("assets/images/head_1.png"),
+    love.graphics.newImage("assets/images/faces/01.png"),
 }
 BODY = {
-    love.graphics.newImage("assets/images/body_1.png")
+    love.graphics.newImage("assets/images/bodies/01.png")
 }
 
 

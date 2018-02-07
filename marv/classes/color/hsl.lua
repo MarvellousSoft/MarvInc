@@ -139,5 +139,10 @@ function hsl.transp()
   return HSL(0,0,0,0)
 end
 
+--Returns a random skin color. Disclaimer: not all skin colors are considered. Use at own risk.
+function hsl.rand_skin()
+    return HSL(hsl.stdv(32, 50, love.math.random(0, 100)))
+end
+
 --Return functions
 return hsl

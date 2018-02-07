@@ -214,5 +214,15 @@ function Color.gray(mode)
     end
 end
 
+--Returns a random skin color. Disclaimer: not all skin colors are considered. Use at own risk.
+function Color.rand_skin(mode)
+    local c = Hsl.rand_skin()
+    if not mode or mode == "HSL" then
+        return c
+    else
+        return Hsl.convert(c)
+    end
+end
+
 --Return functions
 return Color

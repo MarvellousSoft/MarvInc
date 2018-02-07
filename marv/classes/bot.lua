@@ -30,16 +30,19 @@ Bot = Class{
         if bot.current_bot then
             local b = bot.current_bot
             -- get previous bot
-            head_i, body_i = b.head_i, b.body_i
-            self.head_clr = Color.new(b.head_clr, 200, 200)
-            self.body_clr = Color.new(b.body_clr, 200, 200)
+            hair_i, head_i, body_i = b.hair_i, b.head_i, b.body_i
+            self.hair_clr = b.hair_clr
+            self.head_clr = b.head_clr
+            self.body_clr = b.body_clr
             self.name = b.name
             self.traits = b.traits
             self.first_time = b.first_time
         else
             -- random body
+            hair_i = love.math.random(#HAIR)
+            self.hair_clr = Color.new(love.math.random(256) - 1, 200, 200)
             head_i = love.math.random(#HEAD)
-            self.head_clr = Color.new(love.math.random(256) - 1, 200, 200)
+            self.head_clr = Color.rand_skin()
             body_i = love.math.random(#BODY)
             self.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
 
@@ -66,15 +69,18 @@ Bot = Class{
 
         -- copy it to bot.current_bot
         bot.current_bot = {
+            hair_i = hair_i,
             head_i = head_i,
             body_i = body_i,
-            head_clr = self.head_clr.h,
-            body_clr = self.body_clr.h,
+            hair_clr = self.hair_clr,
+            head_clr = self.head_clr,
+            body_clr = self.body_clr,
             name = self.name,
             traits = self.traits,
             first_time = self.first_time
         }
 
+        self.hair = HAIR[hair_i]
         self.head = HEAD[head_i]
         self.body = BODY[body_i]
 
@@ -197,7 +203,9 @@ function Bot:draw()
     Color.set(self.head_clr)
     love.graphics.draw(self.head, self.rx + dw, self.ry + dh, self.r[1],
                        self.sx, self.sy, w / 2, h / 2)
-
+    Color.set(self.hair_clr)
+    love.graphics.draw(self.hair, self.rx + dw, self.ry + dh, self.r[1],
+                       self.sx, self.sy, w / 2, h / 2)
 end
 
 return bot

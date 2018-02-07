@@ -160,9 +160,12 @@ function InfoTab:trueDraw()
         Color.set(self.portrait_color)
         love.graphics.rectangle("fill", self.pos.x + self.portrait_x + 20, self.pos.y + self.portrait_y + 28, self.portrait_w, self.portrait_h, 5)
         Color.set(ROOM.bot.body_clr)
-        love.graphics.draw(ROOM.bot.body, self.pos.x + self.portrait_x + 25, self.pos.y + self.portrait_y + 33)
+        local fx, fy = self.pos.x + self.portrait_x + 25, self.pos.y + self.portrait_y + 33
+        love.graphics.draw(ROOM.bot.body, fx, fy)
         Color.set(ROOM.bot.head_clr)
-        love.graphics.draw(ROOM.bot.head, self.pos.x + self.portrait_x + 25, self.pos.y + self.portrait_y + 33)
+        love.graphics.draw(ROOM.bot.head, fx, fy)
+        Color.set(ROOM.bot.hair_clr)
+        love.graphics.draw(ROOM.bot.hair, fx, fy)
 
         -- Bot traits
         love.graphics.setFont(FONTS.fira(25))
