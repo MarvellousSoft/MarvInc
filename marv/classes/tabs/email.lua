@@ -138,6 +138,10 @@ function EmailTab:drawMailBox(box)
         Color.set(color)
         love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
 
+        -- Draw author color box
+        Color.set(e.author_color)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, 10, t.email_height, 2)
+
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
         font = FONTS.fira(12)
@@ -265,6 +269,25 @@ end
 
 
 
+local AUTHORS = {"bill miles", "diego", "fergus", "franz", "jen", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto"}
+function get_author_color(author)
+    local s = author:lower()
+    for _, k in ipairs(AUTHORS) do
+        for t in k:gmatch("%S+") do
+            if s:find(k) then
+                local key = k
+                if k == "bill miles" then
+                    key = "bm"
+                elseif k == "renatogeh rilifon yancouto" then
+                    key = "ryr"
+                end
+                return CHR_CLR[key]
+            end
+        end
+    end
+    return CHR_CLR["spam"]
+end
+
 -- EMAIL OBJECT --
 
 EmailObject = Class{
@@ -279,6 +302,7 @@ EmailObject = Class{
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
+        self.author_color = get_author_color(self.author)
 
         self.handles = {} -- Table containing timer handles related to this object
 

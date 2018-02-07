@@ -157,6 +157,12 @@ CHR_CLR['franz'] = Color.gray()
 CHR_CLR['jen'] = Color.red()
 CHR_CLR['liv'] = Color.purple()
 CHR_CLR['paul'] = Color.green()
+CHR_CLR['auto'] = Color.orange()
+CHR_CLR['human'] = Color.blue()
+CHR_CLR['news'] = Color.teal()
+CHR_CLR['emergency'] = Color.magenta()
+CHR_CLR['ryr'] = Color.add3(Color.blue(), Color.purple(), Color.orange())
+CHR_CLR['spam'] = Color.violet()
 
 -- Spritesheets
 SHEET_IMG = {}
@@ -180,6 +186,7 @@ MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 HAIR = {
     love.graphics.newImage("assets/images/hairs/01.png"),
     love.graphics.newImage("assets/images/hairs/02.png"),
+    love.graphics.newImage("assets/images/hairs/03.png"),
 }
 HEAD = {
     love.graphics.newImage("assets/images/faces/01.png"),

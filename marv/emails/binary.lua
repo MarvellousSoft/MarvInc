@@ -50,6 +50,6 @@ return {
 
   Remember, {red}SAY NO TO DRUGS{end} and have a cow man {pink}B-){end}
     ]],
-    author = "Automatic Eletronic Mail ",
+    author = "Automatic Eletronic Mail (aem@marv.com)",
     can_be_deleted = true
 }
