@@ -352,7 +352,7 @@ getDialog = function(bot)
     -----------------------------
 
     --If its bot first time appearing
-    if bot.first_time then
+    if bot.first_time and BotModule.current_bot then
       BotModule.current_bot.first_time = false
       return Util.randomElement(intro_messages)
     end
