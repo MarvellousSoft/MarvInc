@@ -100,6 +100,7 @@ function state:mousepressed(x, y, but)
     if EVENTS_LOCK > 0 then return end
 
     pc_box:mousePressed(x,y,but)
+    room:mousePressed(x, y, but)
 
     --Pass mouse-click to side messages
     if but == 1 then
