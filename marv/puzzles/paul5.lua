@@ -134,7 +134,7 @@ You must paint the given tiles room, starting from tile (2, 2) till (20, 20).
 function objective_checker(room)
     local ok = true
     if room.color_floor[1][1] then
-        _G.StepManager.stop("Painted wrong tile", "You weren't supposed to paint this tile.", "Retry")
+        _G.StepManager.stop("Painted wrong tile", "You weren't supposed to paint this tile. Your bot was sacrificed as punishment.")
         return false
     end
     for i = 2, ROWS - 1 do
@@ -143,11 +143,11 @@ function objective_checker(room)
                 if not room.color_floor[j][i] then
                     ok = false
                 elseif not eq_color(room.color_floor[j][i], green) then
-                    _G.StepManager.stop("Painted wrong color", "Tile on row " .. i .. " and column " .. j .. " should be green.", "Retry")
+                    _G.StepManager.stop("Painted wrong color", "Tile on row " .. i .. " and column " .. j .. " should be green. Your bot was sacrificed as punishment.")
                 end
             elseif final:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'w' then
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Painted wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted.", "Retry")
+                    _G.StepManager.stop("Painted wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted. Your bot was sacrificed as punishment.")
                     return false
                 end
             end

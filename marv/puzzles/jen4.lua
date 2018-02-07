@@ -104,7 +104,7 @@ function objective_checker(room)
                 end
             else
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Painted wrong place", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted. It isn't possible to write number " .. vec[i] .. " that way.", "Retry")
+                    _G.StepManager.stop("Painted wrong place", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted. It isn't possible to write number " .. vec[i] .. " that way. Your bot was sacrificed as punishment.")
                     return false
                 end
             end

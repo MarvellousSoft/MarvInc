@@ -27,7 +27,7 @@ function objective_checker(room)
     for i = 1, #cb.inp do
         if i >= #bk then return true end
         if cb.inp[i] ~= bk[i] * bk[i] then
-            _G.StepManager.stop("Wrong output", "Expected " .. (bk[i] * bk[i]) .. " got " .. cb.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", "Expected " .. (bk[i] * bk[i]) .. " got " .. cb.inp[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end

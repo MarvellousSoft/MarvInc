@@ -40,7 +40,7 @@ function objective_checker(room)
     if #con.inp == 0 then return false end
     for i = 1, #con.inp do
         if con.inp[i] ~= i then
-            _G.StepManager.stop("Wrong output", "Expected " .. i .. " got " .. con.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", "Expected " .. i .. " got " .. con.inp[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end

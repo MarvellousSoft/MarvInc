@@ -63,12 +63,12 @@ Read numbers from the green console, divide them by 57 and write the result, rou
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #gr.out then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= _G.math.abs(_G.math.floor(gr.out[i] / 57))  then
-            _G.StepManager.stop("Wrong output", "abs(" ..gr.out[i] .. "/57) is not " .. bl.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", "abs(" ..gr.out[i] .. "/57) is not " .. bl.inp[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end

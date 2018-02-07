@@ -88,7 +88,7 @@ function objective_checker(room)
                 end
             elseif floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == 'w' then
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Wrong painting", "Painted a wrong tile!", "Retry")
+                    _G.StepManager.stop("Wrong painting", "Painted a wrong tile! Your bot was sacrificed as punishment.")
                     return false
                 end
             end

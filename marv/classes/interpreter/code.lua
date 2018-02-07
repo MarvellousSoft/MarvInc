@@ -35,8 +35,8 @@ function Code:step()
             local line = self.real_line[self.cur]
             self.cur = self.labs[lab]
             if not self.cur then
-                StepManager.stop("Code Error!",
-                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ") on line " .. line ..  "\n\nError message: \"" .. (err or lab) .. "\"\n\n For this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.", "I'm sorry.")
+                StepManager.stop("Code error!",
+                "Your code got a runtime error (0x" .. love.math.random(10000, 99999) .. ") on line " .. line ..  "\n\nError message: \"" .. (err or lab) .. "\"\n\nFor this reason, subject #" .. Util.findId("info_tab").dead .. " \"" .. ROOM.bot.name .. "\" is no longer working and will be sacrificed and replaced.")
                 return 'error'
             end
         else

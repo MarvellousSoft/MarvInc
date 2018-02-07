@@ -66,7 +66,7 @@ function objective_checker(room)
     if bl.inp[1] == perm[1] then
         return true
     else
-        _G.StepManager.stop("Wrong output", "Incorrect console number.", "Retry")
+        _G.StepManager.stop("Wrong output", "Incorrect console number. Your bot was sacrificed in the hope to fix this bad behaviour.")
         return false
     end
 end

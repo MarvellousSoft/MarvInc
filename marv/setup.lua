@@ -402,6 +402,52 @@ function setup.config()
       "Is this freedom?!!...oh, it's just another puzzle :(",
     }
 
+    --FAILED POPUP MESSAGES TABLES
+    FAILED_POPUP_MESSAGES = {
+      code_over =
+      {
+        title = "Code not successful",
+        sentences =
+        {
+            "Your code finished but the objectives weren't completed. Your robot had to be sacrificed as punishment for your inefficiency."
+        }
+      },
+      paint_container =
+      {
+        title = "Bot drowned in paint!",
+        sentences =
+        {
+            "You somehow let your bot fall into a paint container. That's embarassing."
+        }
+      },
+      lava =
+      {
+        title = "Bot burn in lava!",
+        sentences =
+        {
+            "You let your bot burn in hot lava. That's innapropriate."
+        }
+      },
+      laser =
+      {
+        title = "Bot destroyed by laser!",
+        sentences =
+        {
+            "Your bot got in a direct conflict with a laser ray. The laser won."
+        }
+      },
+    }
+    --Table of different apologise texts it can appear on failed popups
+    FAILED_POPUP_BUTTON_TEXT =
+    {
+      "I'm sorry",
+      "I will be more careful next time",
+      "Frankly it was his fault",
+      "It won't happen again",
+      "Ooops",
+      "I will be more successful next time",
+    }
+
 
     --INITIALIZING TABLES--
 

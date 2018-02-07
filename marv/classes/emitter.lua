@@ -53,7 +53,7 @@ function Emitter:createRays(grid)
         if px < 1 or px > ROWS or py < 1 or py > COLS then return end
         local o = grid[px][py]
         if o and o.tp == 'bot' then
-            StepManager.stop()
+            StepManager.stop("laser")
             return
         end
         -- does not work well when colliding with other lasers

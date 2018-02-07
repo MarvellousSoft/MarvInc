@@ -93,15 +93,7 @@ local function stepCallback()
     ROOM.puzzle:manage_objectives()
     if sm.state ~= 'playing' then return end
     if code_over then
-        local n = Util.findId("info_tab").dead
-        local title = "Code not successful"
-        local text =
-            "Your code finished but the objectives weren't completed. " ..
-            "Test subject #"..n.." \""..ROOM.bot.name.."\" had to be sacrificed. " ..
-            "Another unit has been dispatched to replace #"..n..".\nA notification has "..
-            "been dispatched to HR and this incident shall be added to your personal file."
-        local button = "I will be more successful next time"
-        sm.stop(title, text, button)
+        sm.stop("code_over")
         return
     end
 
@@ -229,12 +221,27 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
     end
 
     local n = Util.findId("info_tab").dead - 1
-    local title = fail_title or "Bot #"..n.." has been destroyed!"
-    local text = fail_text or
-        ("Communications with test subject #"..n.." \""..ROOM.bot.name.."\" have been "..
-        "lost. Another unit has been dispatched to replace #"..n..". A notification has "..
-        "been dispatched to HR and this incident shall be added to your personal file.")
-    local button = fail_button or "I will be more careful next time"
+
+    --Creating failed popup
+    local title, text
+    if fail_title and FAILED_POPUP_MESSAGES[fail_title] then
+      title = FAILED_POPUP_MESSAGES[fail_title].title
+      text = Util.randomElement(FAILED_POPUP_MESSAGES[fail_title].sentences)
+    else
+      if not fail_title then
+        title = "Bot #"..n.." has been destroyed!"
+      else
+        title = fail_title
+      end
+      if not fail_text then
+        text = "Communications with test subject #"..n.." \""..ROOM.bot.name.."\" have been lost."
+      else
+        text = fail_text
+      end
+    end
+
+    local button = Util.randomElement(FAILED_POPUP_BUTTON_TEXT)
+
     SFX.fail:stop()
     SFX.fail:play()
     PopManager.new(title, text,

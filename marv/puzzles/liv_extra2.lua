@@ -79,12 +79,12 @@ Read multiple 0-terminated sequences (there is a 0 between two sequences) from t
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= ans[i] then
-            _G.StepManager.stop("Wrong output", bl.inp[i] .. " is not " .. ans[i], "Retry")
+            _G.StepManager.stop("Wrong output", bl.inp[i] .. " is not " .. ans[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end

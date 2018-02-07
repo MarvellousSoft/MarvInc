@@ -117,14 +117,14 @@ end
 function Bot:kill(grid, obj)
     if obj and obj.tp == 'container' then
         local n = Util.findId('info_tab').dead
-        StepManager.stop(nil, "You somehow let Bot #" .. n .. " fall into a paint container. That's embarassing. Another unit has been dispatched to replace #"..n..". A notification has been dispatched to HR and this incident shall be added to your personal file.")
+        StepManager.stop("paint_container")
     elseif obj and obj.tp == 'dead' and obj.key == 'lava' then
         local n = Util.findId('info_tab').dead
         if ROOM.puzzle.id == 'franz1' then
             ROOM.puzzle:manage_objectives(true)
             self:cleanAndKill()
         else
-            StepManager.stop(nil, "Bot #" .. n .. " burned in hot lava. Another unit has been dispatched to replace #"..n..". A notification has been dispatched to HR and this incident shall be added to your personal file.")
+            StepManager.stop("lava")
         end
     else
         StepManager.stop()
