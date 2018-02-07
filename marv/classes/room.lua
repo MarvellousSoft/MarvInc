@@ -421,7 +421,7 @@ function Room:draw()
     end
 
     -- Cursor tile coordinates
-    if self.cursor_mov_dt > 0.05 then
+    if self.cursor_mov_dt > 0.1 then
         if self.cursor_x > 0 and self.cursor_y > 0 then
             Color.set(Color.green())
             local cx, cy = love.mouse.getPosition()

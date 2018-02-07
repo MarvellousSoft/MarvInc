@@ -269,17 +269,19 @@ end
 
 
 
-local AUTHORS = {"bill miles", "diego", "fergus", "franz", "jen", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto"}
+local AUTHORS = {"bill miles", "diego", "fergus", "franz", "janine", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto", "black"}
 function get_author_color(author)
     local s = author:lower()
     for _, k in ipairs(AUTHORS) do
         for t in k:gmatch("%S+") do
-            if s:find(k) then
+            if s:find(t) then
                 local key = k
                 if k == "bill miles" then
                     key = "bm"
                 elseif k == "renatogeh rilifon yancouto" then
                     key = "ryr"
+                elseif k == "janine" then
+                    key = "jen"
                 end
                 return CHR_CLR[key]
             end

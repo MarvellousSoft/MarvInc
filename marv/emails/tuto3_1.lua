@@ -12,7 +12,7 @@ return {
     text = [[
 Good job, Employee #]].. EMPLOYEE_NUMBER .. [[. Lets learn some new instructions.
 
-Use the {inst}turn {end}command to, *surprise*, turn the test subject and change the direction he is facing. You can provide a {dir}direction{end}, or the special arguments {dir}clock {end}or {dir}counter{end}, to turn the robot clockwise or counterclockwise, respectively.
+Use the {inst}turn {end}command to, *surprise*, turn the test subject and change the direction he is facing. You can provide an absolute {dir}direction{end}, or the special arguments {dir}clock {end}or {dir}counter{end}, to turn the robot clockwise or counterclockwise, respectively.
 
 Examples:
     - {inst}turn {dir}south{end}

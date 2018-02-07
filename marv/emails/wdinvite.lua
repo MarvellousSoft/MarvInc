@@ -24,6 +24,6 @@ This is an automatic invitation sent by MarvCalendar.
 
 {red}<Reply to go to the party>{end}
 ]],
-    author = "Marvellous Calendar (calendar-notification@marv.com)",
+    author = "Automated Marvellous Calendar (calendar-notification@marv.com)",
     reply_func = prev.after
 }

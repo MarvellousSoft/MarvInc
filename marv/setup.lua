@@ -163,6 +163,7 @@ CHR_CLR['news'] = Color.teal()
 CHR_CLR['emergency'] = Color.magenta()
 CHR_CLR['ryr'] = Color.add3(Color.blue(), Color.purple(), Color.orange())
 CHR_CLR['spam'] = Color.violet()
+CHR_CLR['black'] = Color.black()
 
 -- Spritesheets
 SHEET_IMG = {}
