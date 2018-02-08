@@ -1,8 +1,18 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.tabs.tab"
 local Opened = require "classes.opened_email"
 local ScrollWindow = require "classes.scroll_window"
+local Util = require "util"
 
 -- EMAIL TAB CLASS--
 
@@ -127,7 +137,11 @@ function EmailTab:drawMailBox(box)
             color.l = color.l - 20 --Highlight email if mouse is over
         end
         Color.set(color)
-        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border, t.email_height, 2)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border + 14, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, t.w - 2 * t.email_border - 14, t.email_height, 2)
+
+        -- Draw author color box
+        Color.set(e.author_color)
+        love.graphics.rectangle("fill", t.pos.x + t.email_border, t.pos.y + (t.email_border + t.email_height) * i + e.juicy_bump, 10, t.email_height, 2)
 
         -- Timestamp on the email
         Color.set(Color.new(0, 80, 10,e.alpha))
@@ -146,7 +160,7 @@ function EmailTab:drawMailBox(box)
         size = font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + 5, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + 5 + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i  + e.juicy_bump)
 
         -- Title
         font = FONTS.fira(14)
@@ -159,7 +173,7 @@ function EmailTab:drawMailBox(box)
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
         love.graphics.setFont(font)
-        love.graphics.print(text,  t.pos.x + t.email_border + size, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
+        love.graphics.print(text,  t.pos.x + t.email_border + size + 14, t.pos.y + (t.email_height/2 - font_h/2) + (t.email_border + t.email_height) * i + 2 + e.juicy_bump)
 
         -- Print label on emails
 
@@ -270,6 +284,7 @@ EmailObject = Class{
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
         self.author = _author -- Who sent the email
+        self.author_color = Util.getAuthorColor(self.author)
 
         self.handles = {} -- Table containing timer handles related to this object
 

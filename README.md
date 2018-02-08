@@ -1,6 +1,10 @@
-# Marvellous Inc.
+###### Marvellous Inc.
+###### Copyright (C) 2017  MarvellousSoft & USPGameDev
+###### Code under license **GPLv3.0**, original assets under license **CC BY-AS 4.0**
 
-A GAME BY MARVELLOUS SOFT . 2017
+# Marvellous Inc. v1.1
+
+**an open source zachlike indie game by [MarvellousSoft](https://marvelloussoft.github.io/) and [USPGameDev](https://uspgamedev.org/) ~ 2016/2017**
 
 ## Introduction
 
@@ -40,12 +44,11 @@ Join our Family now, and help us CHANGE the world.
 
 ## Team
 
-- Renato Lui Geh
-- Ricardo Lira da Fonseca
-- Yan Soares Couto
+- Renato Lui Geh ([@renatogeh](https://github.com/renatogeh))
+- Ricardo Lira da Fonseca ([@rilifon](https://github.com/rilifon))
+- Yan Soares Couto ([@yancouto](https://github.com/yancouto))
 
 ----------------------------------------------------
-
 
 ## Platform
 
@@ -57,3 +60,22 @@ Github
 
 
 Found any bugs? Loved the game? Contact us at our [itch.io community](https://marvellous.itch.io/marvellous-inc/community), or send us and email at `marvellous.amoeba@gmail.com`.
+
+----------------------------------------------------
+
+## License and other boring stuff
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the **GNU General Public License** as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program ([right here](https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)). If not, see <https://www.gnu.org/licenses/>.
+
+All Marvellous Inc. assets, except foreign assets with their own license, are under **Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)**. You can read the full license [here](https://github.com/MarvellousSoft/MarvInc/blob/dev/marv/assets/ASSETS-LICENSE.txt).

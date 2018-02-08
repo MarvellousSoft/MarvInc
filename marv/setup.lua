@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 --MODULE FOR SETUP STUFF--
 
 local setup = {}
@@ -76,6 +85,8 @@ BUTS_IMG["pause_blocked"] = love.graphics.newImage("assets/images/button_pause_b
 BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
 BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blocked.png")
 BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
+BUTS_IMG["logoff"] = love.graphics.newImage("assets/images/logoff_button_regular.png")
+BUTS_IMG["logoff_hover"] = love.graphics.newImage("assets/images/logoff_button_mouse_over.png")
 
 -- Move orientations
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
@@ -146,6 +157,13 @@ CHR_CLR['franz'] = Color.gray()
 CHR_CLR['jen'] = Color.red()
 CHR_CLR['liv'] = Color.purple()
 CHR_CLR['paul'] = Color.green()
+CHR_CLR['auto'] = Color.orange()
+CHR_CLR['human'] = Color.blue()
+CHR_CLR['news'] = Color.teal()
+CHR_CLR['emergency'] = Color.magenta()
+CHR_CLR['ryr'] = Color.add3(Color.blue(), Color.purple(), Color.orange())
+CHR_CLR['spam'] = Color.violet()
+CHR_CLR['black'] = Color.black()
 
 -- Spritesheets
 SHEET_IMG = {}
@@ -153,6 +171,22 @@ SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
 SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
 SHEET_IMG["paint"] = {love.graphics.newImage("assets/images/paint_sheet.png"), 4}
 SHEET_IMG["fireplace"] = {love.graphics.newImage("assets/images/fireplace_sheet.png"), 6}
+
+-- Author Images
+AUTHOR_IMG = {}
+AUTHOR_IMG["unknown"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["liv"] = love.graphics.newImage("assets/images/authors/liv.png")
+AUTHOR_IMG["fergus"] = love.graphics.newImage("assets/images/authors/fergus.png")
+AUTHOR_IMG["paul"] = love.graphics.newImage("assets/images/authors/paul.png")
+AUTHOR_IMG["auto"] = love.graphics.newImage("assets/images/authors/auto.png")
+AUTHOR_IMG["jan"] = love.graphics.newImage("assets/images/authors/jen.png")
+AUTHOR_IMG["diego"] = love.graphics.newImage("assets/images/authors/diego.png")
+AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/black.png")
+AUTHOR_IMG["bill"] = love.graphics.newImage("assets/images/authors/bill.png")
+AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/miles.png")
+AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/franz.png")
+AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/news.png")
+AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/ryr.png")
 
 -- Room Img
 ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
@@ -166,11 +200,16 @@ MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 
 -- Bot images (assume array part only)
+HAIR = {
+    love.graphics.newImage("assets/images/hairs/01.png"),
+    love.graphics.newImage("assets/images/hairs/02.png"),
+    love.graphics.newImage("assets/images/hairs/03.png"),
+}
 HEAD = {
-    love.graphics.newImage("assets/images/head_1.png"),
+    love.graphics.newImage("assets/images/faces/01.png"),
 }
 BODY = {
-    love.graphics.newImage("assets/images/body_1.png")
+    love.graphics.newImage("assets/images/bodies/01.png")
 }
 
 
@@ -199,137 +238,139 @@ function setup.config()
              "Tony", "Jammy", "Fanny", "Yammy", "Jerry", "Omarry", "Ury", "Lilly", "Nelly",
              "Annie",
             }
-    --Traits table composed of tuples, where the first position is a trait and the second a table containing specific dialog options for this trait
+    --Traits table composed of tuples, where the first position is a trait, second a table containing specific dialog options for this trait and third table containing specific last words options for this trait.
     TRAITS = {
-      {"hates pizza", {"Hawaiian pizza isn't so bad, you know?"}},
-      {"socially awkward", {}},
-      {"likes Phantom Menace", {"Jar Jar Binks is soooo underrated...", "Meesa think yousa no know how to solve thisa problem."}},
-      {"collects stamps", {"You know whats better than bacon? Freaking stamps man."}},
-      {"color blind", {"Hey, quick question. Is my hair green or red?"}},
-      {"puppy lover", {"Woof Woof Bark Bark :3"}},
-      {"arachnophobic", {"DUDE IS THAT A SPIDER IN THE CEILING?!"}},
-      {"lactose intolerant", {"Soy milk is the bomb."}},
-      {"snorts when laughing", {}},
-      {"germophobe", {"Please don't make me touch anything dirty."}},
-      {"insomniac", {}},
-      {"lives with mom", {}},
-      {"has a cool car", {"I can give you a ride someday", "Hey have I told you about my sweet Sedan? 'ts preety cool"}},
-      {"listens to emo rock", {}},
-      {"addicted to caffeine", {}},
-      {"explorer at heart", {}},
-      {"never tips", {"10% service it's just an absurd, don't you think?"}},
-      {"jerk", {"You're ugly.", "F%$# you."}},
-      {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}},
-      {"funny", {"You know the worst part of being lonely here? I can't up my frisbee game."}},
-      {"cool", {}},
-      {"11 toes", {}},
-      {"logical", {"Don't stress. Stressing doesn't help you achieve your objective."}},
-      {"irrational", {}},
-      {"creepy", {"I can hear your breathing from here...:)", "You smell good today. Is that because of the new shampoo you bought yesterday?"}},
-      {"good cook", {}},
-      {"liked LOST's ending", {"Hurley was the best character in a TV show by far.", "IT WAS ALL CYCLIC.", "Man, don't believe the haters about LOST's ending.", "See you in another life, brotha."}},
-      {"bought an Ouya", {"Life is made of regrets..."}},
-      {"hates tennis", {"Federer is a fool and probably has stinky feet."}},
-      {"has heterochromia", {"My left eye is reddish. My right one is blueish. And no, I do not see purple."}},
-      {"artistic", {}},
-      {"smells", {}},
-      {"inconvenient", {"Hey, what are you doing there?", "Do you really need that command?", "Are you done yet?", "Are you done yet?"}},
-      {"hates sports", {}},
-      {"soccer fan", {"Did you see that ludicrous display last night?"}},
-      {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}},
-      {"rad dance moves", {}},
-      {"types with just one finger", {}},
-      {"has a russian accent", {}},
-      {"eats M&Ms by color", {"Usually I start with the reds and follow the rainbow order."}},
-      {"obsessed with Michael Cera", {"Michael Cera is just the perfect actor.", "Have you watched Arrested Development?", "Have you watched Juno?", "Michael Cera's mustache is the symbol of masculinity.", "Have you watched Scott Pilgrim?", "Have you watched Superbad?", "The best thing about Michael Cera is he doesn't even need to act."}},
-      {"obsessed with Nicolas Cage", {"Nicolas Cage is just the perfect actor.", "Have you watched Face/Off?", "Have you watched Kick-Ass? Man that Nic Cage scene.", "Have you watched Bad Lieutenant?"}},
-      {"eats toothpaste", {}},
-      {"grammer nazi", {"Actually, it's 'grammar nazi'."}},
-      {"collects purple kilts", {}},
-      {"very rosy cheeks", {}},
-      {"eats fingernails", {}},
-      {"hears voices", {"DON'T TELL ME WHAT TO DO", "Of course not.", "Hahaha, no. That would be silly", "What?", "Why?", "Okay okay! I'll do it! Just shut up!"}},
-      {"terribly shy", {"...", "please... don't...", "*looks away*"}},
-      {"blinks furiously when lying", {}},
-      {"memorized Moby Dick", {}},
-      {"lost an eye in a bear accident", {"An eye for an eye... That bear sure showed me."}},
-      {"hates bears", {"Goddamn bears stealing our honeykeeping jobs!"}},
-      {"never finished a game without a walkthrough", {"You should look for the solution to this puzzle on the internet!"}},
-      {"overachiever", {}},
-      {"underachiever", {}},
-      {"always drunk", {"Jsut one moer drink..."}},
-      {"addicted to HIMYM", {"This puzzle is LEGEN --wait for it-- DARY!! hahaha"}},
-      {"vegan without the powers", {}},
-      {"has to touch everything", {}},
-      {"has OCD", {}},
-      {"class clown", {}},
-      {"in a relationship with a pet rock", {}},
-      {"literally allergic to bad jokes", {}},
-      {"terrified of babies", {}},
-      {"picks scabs", {}},
-      {"pretends is a mime at parties", {}},
-      {"proud believer of crab people", {}},
-      {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}},
-      {"can play the theremin", {}},
-      {"can recite the alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}},
-      {"loves costume parties", {}},
-      {"can correctly give current latitude and longitude at all times", {}},
-      {"accidently makes sexual innuendos", {"This is too hard and long! I can't take it anymore. Just finish already!"}},
-      {"has a catchphrase", {"Wubba lubba dub dub", "Wubba lubba dub dub", "Wubba lubba dub dub", "AIDS!",  "Ands that's the wayyyyy the news goes!", "GRASSSS... tastes bad!", "Lick, lick, lick my BALLS!"}},
-      {"has an unhealthy obession with Kermit the Frog", {}},
-      {"can't ride a bike", {}},
-      {"is always seen wearing pajamas", {}},
-      {"afraid of the internet", {"They say you can catch a virus in this Internet!"}},
-      {"is agressively against socks", {}},
-      {"speaks in a monotone voice", {}},
-      {"born in a leap year", {"I'm turning 6 today. :P"}},
-      {"slow walker", {}},
-      {"never showers", {"I prefer to think I'm SAVING our precious planet's resource"}},
-      {"sweats profusely", {"Oh man, did someone up the heat? I'm feeling like a pig down here."}},
-      {"chews ice cubes for dinner", {}},
-      {"heavy sleeper", {}},
-      {"fear of closed doors", {"I don't care about lava or buckets, just don't leave any door closed okay?", "Lets leave all door open, please."}},
-      {"stores their urine in a jar", {"Everyone has a hobby :)"}},
-      {"kleptomaniac", {"Can I borrow your computer when I leave this place?"}},
-      {"only watches SpongeBob reruns", {"How about that one where Squidward accidentally freezes himself for 2,000 years huh? Classic!","Have you seen the one where Patrick helps SpongeBob on his driving test? Oh man I love that one!"}},
-      {"constantly makes animal noises", {"Moo", "Oink Oink","Baaaaaaah", "Meeeoow ;3", "Gobble gobble gobble"}},
-      {"afraid of feet", {}},
-      {"has a foot fetish", {"Could you describe your feet for me? ;)"}},
-      {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}},
-      {"know it all", {"Did you know a crocodile can't poke its tongue out?"}},
-      {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}},
-      {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}},
-      {"nihilist", {"This puzzle doesn't matter. Nothing does."}},
-      {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}},
-      {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}},
-      {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}},
-      {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?"}, {"Baby, give it up! Give it up, baby give it up!"}},
-      {"1/128 irish", {"I can't wait for St. Pattys day!"}},
-      {"german", {"Das ist nicht effizient. You should optimize your code."}},
-      {"spanish", {"Oye chico! When I can do the siesta, eh?"}},
-      {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}},
-      {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}},
-      {"never-nude", {"There are dozens of us!"}},
-      {"magician", {"It's not a trick. It's an ILLUSION.", "You like magic? SAME", "But where did the lighter fluid come from?"}},
-      {"ambidextrous", {}},
-      {"left-handed", {}},
-      {"procrastinator", {"Why don't you solve another puzzle?", "You should watch some TV first... Just to unwind."}},
-      {"national spelling bee winner", {"You are D-E-F-I-N-I-T-E-L-Y solving this task."}},
-      {"frugal", {}},
-      {"freakishly tall", {}},
-      {"went to Burning Man", {"Have I told you how awesome it was at Burning Man?!", "I'm telling you, Burning Man is eye-opening!"}},
-      {"gambling addict", {"I bet 5$ you can't finish this task in under 5 minutes."}},
-      {"diabetic", {}},
-      {"only drinks soda", {"Juice is for vegans man. Soda, there where its at."}},
-      {"only listens to Insane Clown Posse", {}},
-      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}},
-      {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}},
-      {"believes in pc master race", {"Can you run 16K 180 FPS in your console?"}},
-      {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}},
-      {"watches youtube hits", {"OPPA GANGNAM STYLE", "TURN DOWN FOR WHAT?", "DO THE HARLEM SHAKE"}},
-      {"meme guy", {"*trollface*", "Forever Alone."}},
-      {"lana del rey fan", {"You want to be my sugar daddy?", "*smokes*"}},
-      {"likes small talk", {"What a weather, huh?"}},
+      {"has peculiar taste in pizza", {"Hawaiian pizza isn't so bad, you know?"}, {}},
+      {"socially awkward", {}, {}},
+      {"likes Phantom Menace", {"Jar Jar Binks is soooo underrated...", "Meesa think yousa no know how to solve thisa problem."}, {}},
+      {"collects stamps", {"You know whats better than bacon? Freaking stamps man."}, {}},
+      {"color blind", {"Hey, quick question. Is my hair green or red?"}, {}},
+      {"puppy lover", {"Woof Woof Bark Bark :3"}, {}},
+      {"arachnophobic", {"DUDE IS THAT A SPIDER IN THE CEILING?!"}, {}},
+      {"lactose intolerant", {"Soy milk is the bomb."}, {}},
+      {"snorts when laughing", {}, {}},
+      {"germophobe", {"Please don't make me touch anything dirty."}, {}},
+      {"insomniac", {}, {}},
+      {"lives with mom", {}, {}},
+      {"has a cool car", {"I can give you a ride someday", "Hey have I told you about my sweet Sedan? 'ts preety cool"}, {}},
+      {"listens to emo rock", {}, {}},
+      {"addicted to caffeine", {}, {}},
+      {"explorer at heart", {}, {}},
+      {"never tips", {"10% service it's just an absurd, don't you think?"}, {}},
+      {"jerk", {"You're ugly.", "F%$# you."}, {"F%$# you."}},
+      {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}, {"It's ok, man. We had a good run..."}},
+      {"funny", {"You know the worst part of being lonely here? I can't up my frisbee game."}, {}},
+      {"cool", {}, {"Ain't no thing, brother. You did what you had to do."}},
+      {"11 toes", {}, {}},
+      {"speaks in jive", {"Y'all cats better know what's up with this shit, aight?", "I'm thinkin' ya ain't got the chops for this, ya dig?"}, {"You done fucked me up, son!"}},
+      {"logical", {"Don't stress. Stressing doesn't help you achieve your objective."}, {}},
+      {"irrational", {}, {}},
+      {"creepy", {"I can hear your breathing from here...:)", "You smell good today. Is that because of the new shampoo you bought yesterday?"}, {}},
+      {"good cook", {}, {}},
+      {"liked LOST's ending", {"Hurley was the best character in a TV show by far.", "IT WAS ALL CYCLIC.", "Man, don't believe the haters about LOST's ending.", "See you in another life, brotha."}, {}},
+      {"bought an Ouya", {"Life is made of regrets..."}, {"I have only one regret in my short life! Buying an Ouya..."}},
+      {"hates tennis", {"Federer is a fool and probably has stinky feet."}, {}},
+      {"has heterochromia", {"My left eye is reddish. My right one is blueish. And no, I do not see purple."}, {}},
+      {"artistic", {}, {}},
+      {"smells", {}, {}},
+      {"inconvenient", {"Hey, what are you doing there?", "Do you really need that command?", "Are you done yet?", "Are you done yet?"}, {}},
+      {"hates sports", {}, {}},
+      {"soccer fan", {"Did you see that ludicrous display last night?"}, {}},
+      {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}, {"#TimeToDie", "#ThisIsGonnaSuck"}},
+      {"rad dance moves", {}, {}},
+      {"types with just one finger", {}, {}},
+      {"has a russian accent", {}, {"Goodbye, tovarisch."}},
+      {"eats M&Ms by color", {"Usually I start with the reds and follow the rainbow order."}, {}},
+      {"obsessed with Michael Cera", {"Michael Cera is just the perfect actor.", "Have you watched Arrested Development?", "Have you watched Juno?", "Michael Cera's mustache is the symbol of masculinity.", "Have you watched Scott Pilgrim?", "Have you watched Superbad?", "The best thing about Michael Cera is he doesn't even need to act."}, {}},
+      {"obsessed with Nicolas Cage", {"Nicolas Cage is just the perfect actor.", "Have you watched Face/Off?", "Have you watched Kick-Ass? Man that Nic Cage scene.", "Have you watched Bad Lieutenant?"}, {}},
+      {"eats toothpaste", {}, {}},
+      {"grammer nazi", {"Actually, it's 'grammar nazi'."}, {}},
+      {"collects purple kilts", {}, {}},
+      {"very rosy cheeks", {}, {}},
+      {"eats fingernails", {}, {}},
+      {"hears voices", {"DON'T TELL ME WHAT TO DO", "Of course not.", "Hahaha, no. That would be silly", "What?", "Why?", "Okay okay! I'll do it! Just shut up!"}, {"They warned me! They warned me not to trust you!"}},
+      {"terribly shy", {"...", "please... don't...", "*looks away*"}, {"...oh no..."}},
+      {"blinks furiously when lying", {}, {}},
+      {"memorized Moby Dick", {}, {}},
+      {"lost an eye in a bear accident", {"An eye for an eye... That bear sure showed me."}, {}},
+      {"hates bears", {"Goddamn bears stealing our honeykeeping jobs!"}, {}},
+      {"never finished a game without a walkthrough", {"You should look for the solution to this puzzle on the internet!"}, {}},
+      {"overachiever", {}, {}},
+      {"underachiever", {}, {}},
+      {"always drunk", {"Jsut one moer drink..."}, {}},
+      {"addicted to HIMYM", {"This puzzle is LEGEN --wait for it-- DARY!! hahaha"}, {}},
+      {"vegan without the powers", {}, {}},
+      {"has to touch everything", {}, {}},
+      {"has OCD", {}, {}},
+      {"class clown", {}, {}},
+      {"in a relationship with a pet rock", {}, {}},
+      {"literally allergic to bad jokes", {}, {}},
+      {"terrified of babies", {}, {}},
+      {"picks scabs", {}, {}},
+      {"pretends is a mime at parties", {}, {}},
+      {"proud believer of crab people", {}, {}},
+      {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}, {"It's ok. I forgive you."}},
+      {"can play the theremin", {}, {}},
+      {"can recite the alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}, {}},
+      {"loves costume parties", {}, {}},
+      {"can correctly give current latitude and longitude at all times", {}, {}},
+      {"accidently makes sexual innuendos", {"This is too hard and long! I can't take it anymore. Just finish already!"}, {}},
+      {"has a catchphrase", {"Wubba lubba dub dub", "Wubba lubba dub dub", "Wubba lubba dub dub", "AIDS!",  "Ands that's the wayyyyy the news goes!", "GRASSSS... tastes bad!", "Lick, lick, lick my BALLS!"}, {}},
+      {"has an unhealthy obession with Kermit the Frog", {}, {}},
+      {"can't ride a bike", {}, {}},
+      {"is always seen wearing pajamas", {}, {}},
+      {"afraid of the internet", {"They say you can catch a virus in this Internet!"}, {}},
+      {"is agressively against socks", {}, {}},
+      {"speaks in a monotone voice", {}, {}},
+      {"born in a leap year", {"I'm turning 6 today. :P"}, {}},
+      {"slow walker", {}, {}},
+      {"never showers", {"I prefer to think I'm SAVING our precious planet's resource"}, {}},
+      {"sweats profusely", {"Oh man, did someone up the heat? I'm feeling like a pig down here."}, {}},
+      {"chews ice cubes for dinner", {}, {}},
+      {"heavy sleeper", {}, {}},
+      {"fear of closed doors", {"I don't care about lava or buckets, just don't leave any door closed okay?", "Lets leave all door open, please."}, {}},
+      {"stores their urine in a jar", {"Everyone has a hobby :)"}, {}},
+      {"kleptomaniac", {"Can I borrow your computer when I leave this place?"}, {}},
+      {"only watches SpongeBob reruns", {"How about that one where Squidward accidentally freezes himself for 2,000 years huh? Classic!","Have you seen the one where Patrick helps SpongeBob on his driving test? Oh man I love that one!"}, {}},
+      {"constantly makes animal noises", {"Moo", "Oink Oink","Baaaaaaah", "Meeeoow ;3", "Gobble gobble gobble"}, {}},
+      {"afraid of feet", {}, {}},
+      {"has a foot fetish", {"Could you describe your feet for me? ;)"}, {}},
+      {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}, {"I'M GOING TO DIE!!!"}},
+      {"know it all", {"Did you know a crocodile can't poke its tongue out?"}, {}},
+      {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}, {}},
+      {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}, {}},
+      {"nihilist", {"This puzzle doesn't matter. Nothing does."}, {"Death is meaningless."}},
+      {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}, {}},
+      {"plays Dwarf Fortress", {}, {"Death is all around us, begone fear!"}},
+      {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}, {}},
+      {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}, {}},
+      {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", "Baby, give it up! Give it up, baby give it up!"}, {}},
+      {"1/128 irish", {"I can't wait for St. Pattys day!"}, {}},
+      {"german", {"Das ist nicht effizient. You should optimize your code."}, {}},
+      {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {}},
+      {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}, {"I literally feel like I'm dying, man!"}},
+      {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}, {}},
+      {"never-nude", {"There are dozens of us!"}, {}},
+      {"magician", {"It's not a trick. It's an ILLUSION.", "You like magic? SAME", "But where did the lighter fluid come from?"}, {"Want to see a cool trick?"}},
+      {"ambidextrous", {}, {}},
+      {"left-handed", {}, {}},
+      {"procrastinator", {"Why don't you solve another puzzle?", "You should watch some TV first... Just to unwind."}, {}},
+      {"national spelling bee winner", {"You are D-E-F-I-N-I-T-E-L-Y solving this task."}, {"D-E-A-D"}},
+      {"frugal", {}, {}},
+      {"freakishly tall", {}, {}},
+      {"went to Burning Man", {"Have I told you how awesome it was at Burning Man?!", "I'm telling you, Burning Man is eye-opening!"}, {}},
+      {"gambling addict", {"I bet 5$ you can't finish this task in under 5 minutes."}, {"I bet this will hurt a lot."}},
+      {"diabetic", {}, {}},
+      {"only drinks soda", {"Juice is for vegans man. Soda, that's where it's at."}, {}},
+      {"only listens to Insane Clown Posse", {}, {}},
+      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}, {"Arr, my scallywag, ya done kill me for good!"}},
+      {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}, {}},
+      {"believes in pc master race", {"Can you run 16K 180 FPS in your console?"}, {}},
+      {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}, {}},
+      {"watches youtube hits", {"OPPA GANGNAM STYLE", "TURN DOWN FOR WHAT?", "DO THE HARLEM SHAKE"}, {}},
+      {"meme guy", {"*trollface*", "Forever Alone."}, {}},
+      {"lana del rey fan", {"You want to be my sugar daddy?", "*smokes*"}, {}},
+      {"likes small talk", {"What a weather, huh?"}, {}},
     }
 
     --Regular dialogs any robot can say
@@ -350,7 +391,7 @@ function setup.config()
       "I don't like where this is going.",
       "Please debug your code before running it with me.",
       "...",
-      "It's a bit shill here.",
+      "It's a bit chill here.",
       "My legs are sore, try not to make me walk much.",
       "*yawns*",
       "ATCHOO",
@@ -380,6 +421,7 @@ function setup.config()
       "{bot_name} is my name. Serving you is my game ;)",
       "I hope you don't kill me like the last one...",
       "Hi buddy!",
+      "Yo",
       "Hey man.",
       "Hello.",
       "You can call me {bot_name}.",
@@ -389,6 +431,71 @@ function setup.config()
       "Is this freedom?!!...oh, it's just another puzzle :(",
     }
 
+    --FAILED POPUP MESSAGES TABLES
+    FAILED_POPUP_MESSAGES = {
+      code_over =
+      {
+        title = "Code not successful",
+        sentences =
+        {
+            "Your code finished but the objectives weren't completed. Your robot had to be sacrificed as punishment for your inefficiency.",
+            "Your code reached the ending but you did not fully meet the objectives. So we exploded your bot. Do not repeat this mistake."
+        }
+      },
+      paint_container =
+      {
+        title = "Bot drowned in paint!",
+        sentences =
+        {
+            "You somehow let your bot fall into a paint container. That's embarassing.",
+            "It seems you let your bot fall into a paint container... Did you do that on purpose?",
+            "Your robot sunk into a beautiful rainbow.",
+        }
+      },
+      lava =
+      {
+        title = "Bot burn in lava!",
+        sentences =
+        {
+            "You let your bot burn in hot lava. That's innapropriate.",
+            "Your bot scorched to death.",
+            "Your robot fell in a lava pit. I don't think it's coming back.",
+            "Your robot got head first in a lava pit.",
+
+        }
+      },
+      laser =
+      {
+        title = "Bot destroyed by laser!",
+        sentences =
+        {
+            "Your bot got in a direct conflict with a laser ray. The laser won.",
+            "Your robot was obliterated by a laser.",
+            "Your robot was sliced in half by a laser."
+        }
+      },
+    }
+    --Table of different apologise texts it can appear on failed popups
+    FAILED_POPUP_BUTTON_TEXT =
+    {
+      " I'm sorry ",
+      " I will be more careful next time ",
+      " Frankly it was his fault ",
+      " It won't happen again ",
+      " Ooops ",
+      " I will be more successful next time ",
+    }
+
+    REGULAR_DYING_MESSAGES =
+    {
+      "AAAAAaaaaAAAaaaAAAaaaAAaAAAaAAaAAAaaAAAAAaaaaAAAAaaaaAAAaaaAAaAAAaaA",
+      "Hey did you know today is my birthd-",
+      "Argh!",
+      "Wait, is that?! Oh shit!",
+      "Oh no, shit! Argh!",
+      "WHAT THE FUCK?!",
+      "#YOLO"
+    }
 
     --INITIALIZING TABLES--
 

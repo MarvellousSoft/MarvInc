@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Greatest Common Divisor"
 -- Puzzle number
 n = "E.1"
@@ -56,12 +65,12 @@ For each pair of numbers (x, y) in the green console, write their greatest commo
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= ans[i] then
-            _G.StepManager.stop("Wrong output", "Expected " .. ans[i] .. " got " .. bl.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", "Expected " .. ans[i] .. " got " .. bl.inp[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end
@@ -130,5 +139,11 @@ function first_completed()
             end,
             text = " I like math ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I hate math ",
+            clr = _G.Color.red()
         })
 end

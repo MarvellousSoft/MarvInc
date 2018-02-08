@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Binary Painting"
 -- Puzzle number
 n = "A.4"
@@ -95,7 +104,7 @@ function objective_checker(room)
                 end
             else
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Painted wrong place", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted. It isn't possible to write number " .. vec[i] .. " that way.", "Retry")
+                    _G.StepManager.stop("Painted wrong place", "Tile on row " .. i .. " and column " .. j .. " shouldn't be painted. It isn't possible to write number " .. vec[i] .. " that way. Your bot was sacrificed as punishment.")
                     return false
                 end
             end
@@ -125,5 +134,11 @@ It's hilarious.
             end,
             text = " ... ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " 01100011 01100001 01110100 ",
+            clr = _G.Color.red()
         })
 end

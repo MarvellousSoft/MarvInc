@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Sequence Separator"
 
 --Achievement: finish in 11 lines of code
@@ -23,24 +32,24 @@ function objective_checker(room)
     local fr = {}
     for i, v in _G.ipairs(cb.inp) do
         if v >= 0 then
-            _G.StepManager.stop("Wrong output", "Non-negative number in blue console", "Retry")
+            _G.StepManager.stop("Wrong output", "Non-negative number in blue console. Your bot was sacrificed as punishment.")
             return false
         end
         fr[v] = (fr[v] or 0) + 1
         if not freq[v] or fr[v] > freq[v] then
-            _G.StepManager.stop("Wrong output", "Additional number " .. v .. " in blue console", "Retry")
+            _G.StepManager.stop("Wrong output", "Additional number " .. v .. " in blue console. Your bot was sacrificed as punishment.")
             return false
         end
     end
 
     for i, v in _G.ipairs(cr.inp) do
         if v < 0 then
-            _G.StepManager.stop("Wrong output", "Negative number in red console", "Retry")
+            _G.StepManager.stop("Wrong output", "Negative number in red console. Your bot was sacrificed as punishment.")
             return false
         end
         fr[v] = (fr[v] or 0) + 1
         if not freq[v] or fr[v] > freq[v] then
-            _G.StepManager.stop("Wrong output", "Additional number " .. v .. " in red console", "Retry")
+            _G.StepManager.stop("Wrong output", "Additional number " .. v .. " in red console. Your bot was sacrificed as punishment.")
             return false
         end
     end

@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local tuto1 = require 'lore_events.tuto1'
 
 return {
@@ -5,7 +14,7 @@ return {
     text = [[
 There are many commands to control the test subjects. For now, you just need to know one: {inst}walk{end}
 
-You can provide a {dir}cardinal direction {end}({dir}north{end}, {dir}east{end}, {dir}south {end}or {dir}west{end}) or a {dir}regular direction {end}({dir}up{end}, {dir}right{end}, {dir}down {end}or {dir}left{end}). If you don't, your robot will walk to the direction it's facing.
+You can provide a {dir}cardinal direction {end}({dir}north{end}, {dir}east{end}, {dir}south {end}or {dir}west{end}) or their respective aliases {dir}up{end}, {dir}left{end}, {dir}down{end}, {dir}right{end}. Note that they are all absolute directions. If you don't, your robot will walk to the direction it's facing
 
 {red}IMPORTANT:{end} This command will make the test subject {red}walk continuously{end} until it encounters an obstacle.
 

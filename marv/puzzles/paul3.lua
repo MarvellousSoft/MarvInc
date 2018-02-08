@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Cleanup on Aisle 5"
 -- Puzzle number
 n = "B.3"
@@ -113,5 +122,11 @@ function first_completed()
             end,
             text = " *you ponder your life choices* ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " that's a lot of dead people... ",
+            clr = _G.Color.red()
         })
 end

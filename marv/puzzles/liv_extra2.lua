@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Hardester Sort"
 -- Puzzle number
 n = "C.extra.2"
@@ -70,12 +79,12 @@ Read multiple 0-terminated sequences (there is a 0 between two sequences) from t
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= ans[i] then
-            _G.StepManager.stop("Wrong output", bl.inp[i] .. " is not " .. ans[i], "Retry")
+            _G.StepManager.stop("Wrong output", bl.inp[i] .. " is not " .. ans[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end
@@ -150,7 +159,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " I AM GOD OF PROGRAMMING ",
+            text = " I AM A GOD OF PROGRAMMING ",
             clr = _G.Color.black()
         })
 end

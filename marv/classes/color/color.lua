@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local Rgb = require "classes.color.rgb"
 local Hsl = require "classes.color.hsl"
 --COLOR CLASS--
@@ -202,6 +211,51 @@ function Color.gray(mode)
         return Hsl.gray()
     else
         return Rgb.gray()
+    end
+end
+
+--Coral teal
+function Color.teal(mode)
+    if not mode or mode == "HSL" then
+        return Hsl.teal()
+    else
+        return Rgb.teal()
+    end
+end
+
+--Marge's Magenta
+function Color.magenta(mode)
+    if not mode or mode == "HSL" then
+        return Hsl.magenta()
+    else
+        return Rgb.magenta()
+    end
+end
+
+--Viola's Violet
+function Color.violet(mode)
+    if not mode or mode == "HSL" then
+        return Hsl.violet()
+    else
+        return Rgb.magenta()
+    end
+end
+
+function normalize_color(c) return c.type == "HSL" and RGB(Hsl.convert(c.h, c.s, c.l, c.a)) or c end
+
+--Returns the addition of three colors in RGB
+function Color.add3(a, b, c)
+    local na, nb, nc = normalize_color(a), normalize_color(b), normalize_color(c)
+    return RGB((na.r+nb.r+nc.r)/3, (na.g+nb.g+nc.g)/3, (na.b+nb.b+nc.b)/3)
+end
+
+--Returns a random skin color. Disclaimer: not all skin colors are considered. Use at own risk.
+function Color.rand_skin(mode)
+    local c = Hsl.rand_skin()
+    if not mode or mode == "HSL" then
+        return c
+    else
+        return Hsl.convert(c)
     end
 end
 

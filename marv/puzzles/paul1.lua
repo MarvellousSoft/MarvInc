@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 -- Lasers, Consoles and Emitters
 
 name = "Guess the Password"
@@ -159,5 +168,11 @@ function first_completed()
             end,
             text = " trip on ",
             clr = _G.Color.black()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " this guy's crazy ",
+            clr = _G.Color.red()
         })
 end

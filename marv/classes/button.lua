@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 require "classes.primitive"
 require "classes.color.color"
 local Color = require "classes.color.color"
@@ -33,6 +42,15 @@ Button = Class{
     color = Color.transp()
 }
 
+function Button:isMouseOver()
+    local b = self
+    local x, y = love.mouse.getPosition()
+    return x >= b.pos.x and
+       x <= b.pos.x + b.w and
+       y >= b.pos.y and
+       y <= b.pos.y + b.h
+end
+
 function Button:update(dt)
     local b, x, y
 
@@ -52,8 +70,6 @@ function Button:update(dt)
    else
        b.isOver = false
    end
-
-
 end
 
 --Draws a given square button with text aligned to the left
@@ -81,13 +97,26 @@ function Button:draw()
     end
 
     --Draws button box (front)--
-    Color.set(self.color)
+    if b:isMouseOver() then
+        local bk = self.color.l
+        self.color.l = self.color.l * 1.2
+        Color.set(self.color)
+        self.color.l = bk
+    else
+        Color.set(self.color)
+    end
     love.graphics.rectangle("fill", b.pos.x, b.pos.y, b.w, b.h)
 
     --Draws button text
     Color.set(self.text_color)
     love.graphics.setFont(b.font)
     love.graphics.print(b.text, b.text_x , b.text_y)
+
+    if b.border_clr then
+        Color.set(b.border_clr)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", b.pos.x, b.pos.y, b.w, b.h)
+    end
 
     --Print overtext, aligned with center of the normal text
     if b.overtext and b.isOver then

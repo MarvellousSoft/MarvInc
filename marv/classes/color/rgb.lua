@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 --MODULE FOR COLOR AND STUFF--
 
 local rgb = {}
@@ -100,6 +109,21 @@ end
 --Invisible transparent
 function rgb.transp()
   return RGB(0,0,0,0)
+end
+
+--Coral teal
+function rgb.teal()
+    return RGB(0, 128, 128)
+end
+
+--Marge's Magenta
+function rgb.magenta()
+    return RGB(255, 0, 255)
+end
+
+--Viola's Violet
+function rgb.violet()
+    return RGB(238, 130, 238)
 end
 
 --Return functions

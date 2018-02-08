@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "True Democracy"
 n = "B.2"
 
@@ -150,12 +159,12 @@ The orange console contains sequences of votes. For each sequence write to the g
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #ans then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= ans[i] then
-            _G.StepManager.stop("Wrong output", "Expected " .. ans[i] .. " got " .. bl.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", "Expected " .. ans[i] .. " got  "  .. bl.inp[i] .. ".  Your bot was sacrificed as punishment.")
             return false
         end
     end

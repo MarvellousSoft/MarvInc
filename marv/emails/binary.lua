@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 return {
     title = "Never Gonna Give Binaries Up",
     text = [[
@@ -41,6 +50,6 @@ return {
 
   Remember, {red}SAY NO TO DRUGS{end} and have a cow man {pink}B-){end}
     ]],
-    author = "Automatic Eletronic Mail ",
+    author = "Automatic Eletronic Mail (aem@marv.com)",
     can_be_deleted = true
 }

@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local p = require 'lore_events.paul2'
 local prev = require 'lore_events.paul1_2'
 
@@ -15,6 +24,6 @@ This is an automatic invitation sent by MarvCalendar.
 
 {red}<Reply to go to the party>{end}
 ]],
-    author = "Marvellous Calendar (calendar-notification@marv.com)",
+    author = "Automated Marvellous Calendar (calendar-notification@marv.com)",
     reply_func = prev.after
 }

@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 require "classes.primitive"
 local Color = require "classes.color.color"
 
@@ -10,7 +19,7 @@ local getDialog
 SideMessage = Class{
     __includes = {RECT},
 
-    init = function(self, name, message, image, image_color, height)
+    init = function(self, name, message, hair, face, height)
 
         local width = 280
         height = height or 100
@@ -23,8 +32,9 @@ SideMessage = Class{
         self.name_font = FONTS.fira(16)
         self.body_font = FONTS.fira(13)
 
-        self.image = image
-        self.image_color = image_color or Color.white()
+        self.hair, self.face = hair[1], face[1]
+        self.hair_clr = hair[2] or Color.white
+        self.face_clr = face[2] or Color.white
 
         --Portrait values
         self.portrait_offset_x = 0
@@ -55,8 +65,11 @@ function SideMessage:draw()
     love.graphics.rectangle("fill", portrait_x, portrait_y, portrait_w, portrait_h, 5)
 
     --Draw portrait
-    Color.set(self.image_color)
-    love.graphics.draw(self.image, portrait_x + self.portrait_offset_x, portrait_y + self.portrait_offset_y, 0, self.portrait_scale_x,self.portrait_scale_y)
+    local pt_x, pt_y = portrait_x + self.portrait_offset_x, portrait_y + self.portrait_offset_y
+    Color.set(self.face_clr)
+    love.graphics.draw(self.face, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+    Color.set(self.hair_clr)
+    love.graphics.draw(self.hair, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
 
     local text_h = 20 + self.body_font:getHeight() * #select(2, self.body_font:getWrap(self.message, self.w - portrait_w - 25))
     local text_y = self.pos.y + self.h / 2 - text_h / 2
@@ -147,11 +160,11 @@ Signal.register("new_bot_message",
     function(text, height)
         local bot = ROOM.bot
         if not bot then return end
-        local message = SideMessage(bot.name, text or getDialog(bot), bot.head, Color.new(bot.head_clr.h, 200, 200), height)
+        local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height)
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
-        message:setPortraitOffset(-5,0) --Offset for bot portrait image
+        message:setPortraitOffset(-9,11) --Offset for bot portrait image
 
         message:activate()
 
@@ -161,9 +174,9 @@ Signal.register("new_bot_message",
 
 --Register signal to create a custom side message
 Signal.register("new_side_message",
-    function(name, text, image, offset, scale)
+    function(name, text, hair, face, offset, scale)
 
-        local message = SideMessage(name, text, image, Color.white())
+        local message = SideMessage(name, text, hair or {}, face or {}, Color.white())
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
@@ -343,12 +356,9 @@ getDialog = function(bot)
     -----------------------------
 
     --If its bot first time appearing
-    if bot.first_time then
-        bot.first_time = false
-        if BotModule.current_bot then -- may not exist for some reason
-            BotModule.current_bot.first_time = false
-        end
-        return Util.randomElement(intro_messages)
+    if bot.first_time and BotModule.current_bot then
+      BotModule.current_bot.first_time = false
+      return Util.randomElement(intro_messages)
     end
 
     --Chances of special messages increases if there are more, capped at .6

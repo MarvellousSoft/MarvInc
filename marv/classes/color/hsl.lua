@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 --MODULE FOR COLOR AND STUFF--
 
 local hsl = {}
@@ -128,6 +137,26 @@ end
 --Invisible transparent
 function hsl.transp()
   return HSL(0,0,0,0)
+end
+
+--Coral Teal
+function hsl.teal()
+    return HSL(hsl.stdv(180, 100, 25))
+end
+
+--Marge's Magenta
+function hsl.magenta()
+    return HSL(hsl.stdv(300, 100, 50))
+end
+
+--Viola's Violet
+function hsl.violet()
+    return HSL(hsl.stdv(300, 76, 72))
+end
+
+--Returns a random skin color. Disclaimer: not all skin colors are considered. Use at own risk.
+function hsl.rand_skin()
+    return HSL(hsl.stdv(32, 50, love.math.random(0, 100)))
 end
 
 --Return functions

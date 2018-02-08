@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 require "classes.primitive"
 local Color = require "classes.color.color"
 
@@ -44,7 +53,7 @@ function Emitter:createRays(grid)
         if px < 1 or px > ROWS or py < 1 or py > COLS then return end
         local o = grid[px][py]
         if o and o.tp == 'bot' then
-            StepManager.stop()
+            StepManager.stop("laser")
             return
         end
         -- does not work well when colliding with other lasers

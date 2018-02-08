@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local Color = require "classes.color.color"
 
 local Rooms = require "classes.room"
@@ -82,8 +91,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        Mail.new('fergus5_fake')
-        Mail.new('spam3')
+        --Mail.new('ryr')
     end
 end
 
@@ -91,6 +99,7 @@ function state:mousepressed(x, y, but)
     if EVENTS_LOCK > 0 then return end
 
     pc_box:mousePressed(x,y,but)
+    room:mousePressed(x, y, but)
 
     --Pass mouse-click to side messages
     if but == 1 then
@@ -111,6 +120,7 @@ end
 
 function state:mousemoved(x, y)
     pc_box:mouseMoved(x, y)
+    room:mouseMoved(x, y)
 end
 
 function state:textinput(t)

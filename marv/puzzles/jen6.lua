@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Cleaner I"
 -- Puzzle number
 n = "A.6"
@@ -126,7 +135,7 @@ function objective_checker(room)
                 end
             elseif grid_floor:sub(p, p) == '.' then
                 if room.color_floor[j][i] then
-                    _G.StepManager.stop("Cleaned wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be cleaned.", "Retry")
+                    _G.StepManager.stop("Cleaned wrong tile", "Tile on row " .. i .. " and column " .. j .. " shouldn't be cleaned. Your bot was sacrificed as punishment.")
                     return false
                 end
             end

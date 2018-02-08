@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Simple Sort"
 -- Puzzle number
 n = "C.3B"
@@ -20,13 +29,13 @@ function objective_checker(room)
     for i = 1, 6 do
         cbs[i] = g[4 + 2 * i][5]
         if #cbs[i].inp > 3 then
-            _G.StepManager.stop("Wrong output", "More than 3 numbers in blue console " .. i, "Retry")
+            _G.StepManager.stop("Wrong output", "More than 3 numbers in blue console " .. i..". Your bot was sacrificed as punishment.")
             return false
         end
         if #cbs[i].inp < 3 then all = false end
         for j = 1, 3 do
             if cbs[i].inp[j] and cbs[i].inp[j] ~= vs[i][j] then
-                _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i, "Retry")
+                _G.StepManager.stop("Wrong output", "Wrong sequence in blue console " .. i .. ".\nExpected " .. vs[i][j] .. " got " .. cbs[i].inp[j]..". Your bot was sacrificed as punishment.")
                 return false
             end
         end

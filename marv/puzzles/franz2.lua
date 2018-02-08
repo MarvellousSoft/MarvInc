@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Hacking Forensics"
 -- Puzzle number
 n = "F.2"
@@ -57,7 +66,7 @@ function objective_checker(room)
     if bl.inp[1] == perm[1] then
         return true
     else
-        _G.StepManager.stop("Wrong output", "Incorrect console number.", "Retry")
+        _G.StepManager.stop("Wrong output", "Incorrect console number. Your bot was sacrificed in the hope to fix this bad behaviour.")
         return false
     end
 end

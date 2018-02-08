@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 -- This is a test puzzle
 
 name = "DO YOU EVEN LIFT?"
@@ -21,7 +30,8 @@ function objective_checker(room)
 end
 
 extra_info = [[The experiment ends as soon as the objective requirements are completed.
-- You can use the Fast (>>) or SuperFast (>>>) speed buttons to make the turns go faster.]]
+- You can use the Fast (>>) or SuperFast (>>>) speed buttons to make the turns go faster.
+- Remember you can write commands in the same line you define a label.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..

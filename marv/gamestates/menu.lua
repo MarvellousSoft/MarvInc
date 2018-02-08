@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local Timer = require "extra_libs.hump.timer"
 require "classes.text_box"
 require "classes.button"
@@ -32,7 +41,9 @@ function state:enter()
 
     local bw, bh = 80, 40
     self.font = FONTS.fira(20)
-    self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 5, bw, bh, try_login, "login", self.font, nil, nil, Color.new(self.box.color))
+    local c = Color.green()
+    c.l = 30
+    self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 10, bw, bh, try_login, "login", self.font, nil, nil, c)
 
     self:initUsernames()
 

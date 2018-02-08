@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 --MODULE WITH LOGICAL, MATHEMATICAL AND USEFUL STUFF--
 
 local util = {}
@@ -327,6 +336,37 @@ function util.stylizeText(text, default_color, ignore)
     end
 
     return colored_text, table.concat(full_text), all_but_default_text
+end
+
+local AUTHORS = {"bill miles", "diego", "fergus", "franz", "janine", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto", "black"}
+function util.getAuthorColor(author)
+    local s = author:lower()
+    for _, k in ipairs(AUTHORS) do
+        for t in k:gmatch("%S+") do
+            if s:find(t) then
+                local key = k
+                if k == "bill miles" then
+                    key = "bm"
+                elseif k == "renatogeh rilifon yancouto" then
+                    key = "ryr"
+                elseif k == "janine" then
+                    key = "jen"
+                end
+                return CHR_CLR[key]
+            end
+        end
+    end
+    return CHR_CLR["spam"]
+end
+
+function util.getAuthorImage(author)
+    author = author:lower()
+    for key, img in pairs(AUTHOR_IMG) do
+        if author:find(key) then
+            return img
+        end
+    end
+    return AUTHOR_IMG.unknown
 end
 
 --Return functions

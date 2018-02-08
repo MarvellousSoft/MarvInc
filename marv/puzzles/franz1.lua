@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Would you kindly?"
 -- Puzzle number
 n = 'F.1'
@@ -60,6 +69,8 @@ function on_start(room)
     if not _G.require('classes.lore_manager').puzzle_done.franz1 then
         room.bot.name = 'Diego'
         room.bot.traits = {'Good Friend', 'Suspicious'}
+    else
+        msg_list = {}
     end
     local ct = _G.Util.findId('code_tab')
     ct.lock = ct.lock + 1 -- will reset automatically

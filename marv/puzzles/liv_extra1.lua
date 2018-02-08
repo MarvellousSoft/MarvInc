@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 name = "Small Division"
 -- Puzzle number
 n = "C.extra.1"
@@ -54,12 +63,12 @@ Read numbers from the green console, divide them by 125 and write them to the bl
 function objective_checker(room)
     if #bl.inp == 0 then return false end
     if #bl.inp > #gr.out then
-        _G.StepManager.stop("Wrong output", "Too many numbers!", "Retry")
+        _G.StepManager.stop("Wrong output", "Too many numbers! Your bot was sacrificed as punishment.")
         return false
     end
     for i = 1, #bl.inp do
         if bl.inp[i] ~= gr.out[i] / 125 then
-            _G.StepManager.stop("Wrong output", gr.out[i] .. "/125 is not " .. bl.inp[i], "Retry")
+            _G.StepManager.stop("Wrong output", gr.out[i] .. "/125 is not " .. bl.inp[i]..". Your bot was sacrificed as punishment.")
             return false
         end
     end

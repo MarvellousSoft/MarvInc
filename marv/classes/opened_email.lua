@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local Color = require "classes.color.color"
 local ScrollWindow = require "classes.scroll_window"
 
@@ -15,7 +24,7 @@ OpenedEmail = Class{
 
     init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
-        local box_width, box_height = 2.2*W/5, 4*H/5
+        local box_width, box_height = 2.8*W/5, 4*H/5
 
         self.text_font = FONTS.roboto(18)
 
@@ -45,9 +54,10 @@ OpenedEmail = Class{
         local obj_h = self.text_height
         local obj = {
             mousePressed = function(o, ...) self:checkButtonClick(...) end,
+            mouseMoved = function(o, ...) self:fixedMouseMoved(...) end,
             getHeight = function() return self.text_height + 120 end,
             draw = function(o) self:drawContents(o) end,
-            pos = Vector(self.pos.x + 10, self.pos.y + 110)
+            pos = Vector(self.pos.x + 10, self.pos.y + 130)
         }
 
 
@@ -61,6 +71,7 @@ OpenedEmail = Class{
         self.delete_y = obj.pos.y + self.text_height + 80 -- Y position value of delete button (related to opened email pos)
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
+        self.delete_hover = false -- Whether the mouse is over the delete button
 
         self.retry_button_color = Color.new(70,80,120) --Color for retry button box when opening an already completed puzzle
 
@@ -74,6 +85,7 @@ OpenedEmail = Class{
         self.reply_y = obj.pos.y + self.text_height + 40 -- Y position value of reply button (related to opened email pos)
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
+        self.reply_hover = false -- Whether the mouse is over the reply button
 
         SFX.open_email:stop()
         SFX.open_email:play()
@@ -85,6 +97,11 @@ OpenedEmail = Class{
 
 }
 
+local function makeBrighter()
+    local r, g, b = love.graphics.getColor()
+    love.graphics.setColor(r * 1.2, g * 1.2, b * 1.2)
+end
+
 function OpenedEmail:drawContents(box)
     love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 25)
     local e = self
@@ -93,6 +110,7 @@ function OpenedEmail:drawContents(box)
     if e.can_be_deleted then
         -- Make button box
         Color.set(e.delete_button_color)
+        if self.delete_hover then makeBrighter() end
         love.graphics.rectangle("fill", e.delete_x, e.delete_y, e.delete_w, e.delete_h)
         Color.set(e.line_color_3)
         love.graphics.setLineWidth(3)
@@ -116,6 +134,7 @@ function OpenedEmail:drawContents(box)
         if complete then
             Color.set(e.retry_button_color)
         end
+        if self.reply_hover then makeBrighter() end
         love.graphics.rectangle("fill", e.reply_x, e.reply_y, e.reply_w, e.reply_h)
         Color.set(e.line_color_3)
         love.graphics.setLineWidth(3)
@@ -168,33 +187,42 @@ function OpenedEmail:draw()
 
     -- Draw email content
 
+    local pic_w, pic_h = 110, 110
+    local img = Util.getAuthorImage(self.author)
+
+    Color.set(Color.white())
+    love.graphics.draw(img, self.pos.x + 10, self.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
+    love.graphics.setLineWidth(2)
+    Color.set(Util.getAuthorColor(self.author))
+    love.graphics.rectangle('line', self.pos.x + 10, self.pos.y + 10, pic_w, pic_h)
+
     -- Title
     Color.set(e.title_color)
     font_size = 24
     font = FONTS.robotoBold(font_size)
-    while font:getWidth(e.title) > e.w - 20 do
+    while font:getWidth(e.title) > e.w - 25 - pic_w do
         font_size = font_size - 1
         font = FONTS.fira(font_size)
     end
     font_h = font:getHeight(e.title)
     temp = font_h
     love.graphics.setFont(font)
-    love.graphics.print(e.title,  e.pos.x + 10, e.pos.y + 10)
+    love.graphics.print(e.title,  e.pos.x + 15 + pic_w, e.pos.y + 10 + 10)
     -- Draw line
     love.graphics.setLineWidth(5)
     Color.set(e.line_color)
-    love.graphics.line(e.pos.x + 10, e.pos.y + 10 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + 10 + font_h + 5 + 10, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5 + 10)
 
     -- Author
     Color.set(e.content_color)
     font = FONTS.robotoLight(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
-    love.graphics.print("from: "..e.author,  e.pos.x + 10, e.pos.y + temp + 25)
+    love.graphics.print("from: "..e.author,  e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + 10)
     -- Draw line
     love.graphics.setLineWidth(1)
     Color.set(e.line_color_2)
-    love.graphics.line(e.pos.x + 10, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + font_h + 5 + 10, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5 + 10)
 
     -- Text
     Color.set(Color.white())
@@ -262,6 +290,11 @@ function OpenedEmail:checkButtonClick(x, y, but)
      end
 end
 
+function OpenedEmail:fixedMouseMoved(x, y)
+    self.delete_hover = Util.pointInRect(x, y, self.delete_x, self.delete_y, self.delete_w, self.delete_h)
+    self.reply_hover = Util.pointInRect(x, y, self.reply_x, self.reply_y, self.reply_w, self.reply_h)
+end
+
 function OpenedEmail:mousePressed(x, y, but)
     self.text_scroll:mousePressed(x, y, but)
     local e = self
@@ -273,6 +306,10 @@ function OpenedEmail:mousePressed(x, y, but)
         --Clicked outside box
         opened_email_funcs.close()
     end
+end
+
+function OpenedEmail:mouseMoved(x, y)
+    self.text_scroll:mouseMoved(x, y)
 end
 
 -- UTILITY FUNCTIONS

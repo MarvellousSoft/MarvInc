@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local Color = require "classes.color.color"
 local fx = {}
 
@@ -20,7 +29,9 @@ function fx.full_static(gamestate)
         SFX.loud_static:stop()
         full_s = false
         CLOSE_LOCK = false
-        if gamestate then
+        if type(gamestate) == 'function' then
+            gamestate()
+        elseif gamestate then
             Gamestate.push(gamestate)
         else
             fx.intro()

@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 require "classes.primitive"
 local Color = require "classes.color.color"
 local Reader = require "classes.reader"
@@ -78,6 +87,9 @@ Room = Class{
             self.mrkr_drw = not self.mrkr_drw
         end)
 
+        -- Current tile coordinates
+        self.cursor_x, self.cursor_y = -1, -1
+        self.cursor_mov_dt = 0
 
         -- Offline background
         self.back_fnt = FONTS.fira(50)
@@ -86,6 +98,14 @@ Room = Class{
         self.back_img = BG_IMG
         self.back_sx = self.grid_w/BG_IMG:getWidth()
         self.back_sy = self.grid_h/BG_IMG:getHeight()
+
+        -- Logoff button
+        local logoff = function()
+            SaveManager.logout()
+            FX.full_static(function() love.event.quit('restart') end)
+        end
+        self.logoff_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.logoff, logoff, "Reboot")
+        self.logoff_b.hover_img = BUTS_IMG.logoff_hover
 
         -- Static transition
         self.static_dhdl = nil
@@ -384,6 +404,10 @@ function Room:draw()
     -- Set origin to (0, 0)
     love.graphics.pop()
 
+    if self.mode == "offline" then
+        self.logoff_b:draw()
+    end
+
     --Draw camera screen
     Color.set(Color.white())
     love.graphics.draw(ROOM_CAMERA_IMG, self.pos.x- 45, self.pos.y - 45)
@@ -394,6 +418,15 @@ function Room:draw()
         Color.set(self.star_color)
         local star = MISC_IMG.star
         love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 40 / star:getWidth())
+    end
+
+    -- Cursor tile coordinates
+    if self.cursor_mov_dt > 0.1 then
+        if self.cursor_x > 0 and self.cursor_y > 0 then
+            Color.set(Color.green())
+            local cx, cy = love.mouse.getPosition()
+            love.graphics.print("(" .. self.cursor_y .. ", " .. self.cursor_x .. ")", cx+10, cy+10)
+        end
     end
 end
 
@@ -409,6 +442,17 @@ function Room:update(dt)
                     bot_message_timer_handle = nil
                 end
             )
+        end
+
+        -- Get cursor's tile coordinates.
+        self.cursor_mov_dt = self.cursor_mov_dt + dt
+        local cx, cy = love.mouse.getPosition()
+        if cx > self.grid_x and cx < self.grid_x + self.grid_w and
+            cy > self.grid_y and cy < self.grid_y + self.grid_h then
+            local px, py = cx - self.grid_x, cy - self.grid_y
+            self.cursor_x, self.cursor_y = math.floor(px/self.grid_cw)+1, math.floor(py/self.grid_ch)+1
+        else
+            self.cursor_x, self.cursor_y = -1, -1
         end
 
         self.grid_trans_timer:update(dt)
@@ -427,8 +471,18 @@ end
 function Room:keyPressed(key)
 end
 
-function Room:kill()
-    self.bot:cleanAndKill(self.grid_obj)
+function Room:mouseMoved()
+    self.cursor_mov_dt = 0
+end
+
+function Room:mousePressed(x, y, but)
+    if self.mode == "offline" then
+        self.logoff_b:mousePressed(x, y, but)
+    end
+end
+
+function Room:kill(keep_bot)
+    self.bot:cleanAndKill(keep_bot)
 end
 
 -- Careful when calling this function!
