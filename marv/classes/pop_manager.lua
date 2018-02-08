@@ -56,6 +56,8 @@ Popup = Class{
         table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
             b1.clr))
 
+        for _, b in ipairs(self.buttons) do b.border_clr = Color.black() end
+
 
         self.tp = "popup"
 
@@ -181,6 +183,7 @@ PopupFailed = Class{
       table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
           b1.clr))
 
+      for _, b in ipairs(self.buttons) do b.border_clr = Color.black() end
 
       self.tp = "popup"
 

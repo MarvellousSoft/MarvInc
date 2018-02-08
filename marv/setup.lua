@@ -175,16 +175,16 @@ SHEET_IMG["fireplace"] = {love.graphics.newImage("assets/images/fireplace_sheet.
 -- Author Images
 AUTHOR_IMG = {}
 AUTHOR_IMG["unknown"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["liv"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["fergus"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["paul"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["liv"] = love.graphics.newImage("assets/images/authors/liv.png")
+AUTHOR_IMG["fergus"] = love.graphics.newImage("assets/images/authors/fergus.png")
+AUTHOR_IMG["paul"] = love.graphics.newImage("assets/images/authors/paul.png")
 AUTHOR_IMG["auto"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["jan"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["diego"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["bill"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/unknown.png")
-AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["jan"] = love.graphics.newImage("assets/images/authors/jen.png")
+AUTHOR_IMG["diego"] = love.graphics.newImage("assets/images/authors/diego.png")
+AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/black.png")
+AUTHOR_IMG["bill"] = love.graphics.newImage("assets/images/authors/bill.png")
+AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/miles.png")
+AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/franz.png")
 AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/unknown.png")
 AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/unknown.png")
 
@@ -258,16 +258,17 @@ function setup.config()
       {"explorer at heart", {}, {}},
       {"never tips", {"10% service it's just an absurd, don't you think?"}, {}},
       {"jerk", {"You're ugly.", "F%$# you."}, {}},
-      {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}, {}},
+      {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}, {"It's ok, man. We had a good run..."}},
       {"funny", {"You know the worst part of being lonely here? I can't up my frisbee game."}, {}},
-      {"cool", {}, {}},
+      {"cool", {}, {"Ain't no thing, brother. You did what you had to do."}},
       {"11 toes", {}, {}},
+      {"speaks in jive", {"Y'all cats better know what's up with this shit, aight?", "I'm thinkin' ya ain't got the chops for this, ya dig?"}, {"You done fucked me up, son!"}},
       {"logical", {"Don't stress. Stressing doesn't help you achieve your objective."}, {}},
       {"irrational", {}, {}},
       {"creepy", {"I can hear your breathing from here...:)", "You smell good today. Is that because of the new shampoo you bought yesterday?"}, {}},
       {"good cook", {}, {}},
       {"liked LOST's ending", {"Hurley was the best character in a TV show by far.", "IT WAS ALL CYCLIC.", "Man, don't believe the haters about LOST's ending.", "See you in another life, brotha."}, {}},
-      {"bought an Ouya", {"Life is made of regrets..."}, {}},
+      {"bought an Ouya", {"Life is made of regrets..."}, {"I have only one regret in my short life! Buying an Ouya..."}},
       {"hates tennis", {"Federer is a fool and probably has stinky feet."}, {}},
       {"has heterochromia", {"My left eye is reddish. My right one is blueish. And no, I do not see purple."}, {}},
       {"artistic", {}, {}},
@@ -278,7 +279,7 @@ function setup.config()
       {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}, {"#TimeToDie", "#ThisIsGonnaSuck"}},
       {"rad dance moves", {}, {}},
       {"types with just one finger", {}, {}},
-      {"has a russian accent", {}, {}},
+      {"has a russian accent", {}, {"Goodbye, tovarisch."}},
       {"eats M&Ms by color", {"Usually I start with the reds and follow the rainbow order."}, {}},
       {"obsessed with Michael Cera", {"Michael Cera is just the perfect actor.", "Have you watched Arrested Development?", "Have you watched Juno?", "Michael Cera's mustache is the symbol of masculinity.", "Have you watched Scott Pilgrim?", "Have you watched Superbad?", "The best thing about Michael Cera is he doesn't even need to act."}, {}},
       {"obsessed with Nicolas Cage", {"Nicolas Cage is just the perfect actor.", "Have you watched Face/Off?", "Have you watched Kick-Ass? Man that Nic Cage scene.", "Have you watched Bad Lieutenant?"}, {}},
@@ -287,7 +288,7 @@ function setup.config()
       {"collects purple kilts", {}, {}},
       {"very rosy cheeks", {}, {}},
       {"eats fingernails", {}, {}},
-      {"hears voices", {"DON'T TELL ME WHAT TO DO", "Of course not.", "Hahaha, no. That would be silly", "What?", "Why?", "Okay okay! I'll do it! Just shut up!"}, {}},
+      {"hears voices", {"DON'T TELL ME WHAT TO DO", "Of course not.", "Hahaha, no. That would be silly", "What?", "Why?", "Okay okay! I'll do it! Just shut up!"}, {"They warned me! They warned me not to trust you!"}},
       {"terribly shy", {"...", "please... don't...", "*looks away*"}, {"...oh no..."}},
       {"blinks furiously when lying", {}, {}},
       {"memorized Moby Dick", {}, {}},
@@ -308,7 +309,7 @@ function setup.config()
       {"picks scabs", {}, {}},
       {"pretends is a mime at parties", {}, {}},
       {"proud believer of crab people", {}, {}},
-      {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}, {}},
+      {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}, {"It's ok. I forgive you."}},
       {"can play the theremin", {}, {}},
       {"can recite the alphabet backwards perfectly", {"This puzzle is easy as ZYX :)"}, {}},
       {"loves costume parties", {}, {}},
@@ -334,19 +335,20 @@ function setup.config()
       {"constantly makes animal noises", {"Moo", "Oink Oink","Baaaaaaah", "Meeeoow ;3", "Gobble gobble gobble"}, {}},
       {"afraid of feet", {}, {}},
       {"has a foot fetish", {"Could you describe your feet for me? ;)"}, {}},
-      {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}, {}},
+      {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}, {"I'M GOING TO DIE!!!"}},
       {"know it all", {"Did you know a crocodile can't poke its tongue out?"}, {}},
       {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}, {}},
       {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}, {}},
       {"nihilist", {"This puzzle doesn't matter. Nothing does."}, {}},
       {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}, {}},
+      {"plays Dwarf Fortress", {}, {"Death is all around us, begone fear!"}},
       {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}, {}},
       {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}, {}},
       {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", {}}, {"Baby, give it up! Give it up, baby give it up!"}, {}},
       {"1/128 irish", {"I can't wait for St. Pattys day!"}, {}},
       {"german", {"Das ist nicht effizient. You should optimize your code."}, {}},
       {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {}},
-      {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}, {}},
+      {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}, {"I literally feel like I'm dying, man!"}},
       {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}, {}},
       {"never-nude", {"There are dozens of us!"}, {}},
       {"magician", {"It's not a trick. It's an ILLUSION.", "You like magic? SAME", "But where did the lighter fluid come from?"}, {"Want to see a cool trick?"}},
@@ -359,9 +361,9 @@ function setup.config()
       {"went to Burning Man", {"Have I told you how awesome it was at Burning Man?!", "I'm telling you, Burning Man is eye-opening!"}, {}},
       {"gambling addict", {"I bet 5$ you can't finish this task in under 5 minutes."}, {"I bet this will hurt a lot."}},
       {"diabetic", {}, {}},
-      {"only drinks soda", {"Juice is for vegans man. Soda, there where its at."}, {}},
+      {"only drinks soda", {"Juice is for vegans man. Soda, that's where it's at."}, {}},
       {"only listens to Insane Clown Posse", {}, {}},
-      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}, {}},
+      {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}, {"Arr, my scallywag, ya done kill me for good!"}},
       {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}, {}},
       {"believes in pc master race", {"Can you run 16K 180 FPS in your console?"}, {}},
       {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}, {}},
@@ -478,6 +480,10 @@ function setup.config()
     {
       "AAAAAaaaaAAAaaaAAAaaaAAaAAAaAAaAAAaaAAAAAaaaaAAAAaaaaAAAaaaAAaAAAaaA",
       "Hey did you know today is my birthd-",
+      "Argh!",
+      "Wait, is that?! Oh shit!",
+      "Oh no, shit! Argh!",
+      "WHAT THE FUCK?!",
     }
 
     --INITIALIZING TABLES--

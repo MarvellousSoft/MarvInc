@@ -57,7 +57,7 @@ OpenedEmail = Class{
             mouseMoved = function(o, ...) self:fixedMouseMoved(...) end,
             getHeight = function() return self.text_height + 120 end,
             draw = function(o) self:drawContents(o) end,
-            pos = Vector(self.pos.x + 10, self.pos.y + 110)
+            pos = Vector(self.pos.x + 10, self.pos.y + 130)
         }
 
 
@@ -187,7 +187,7 @@ function OpenedEmail:draw()
 
     -- Draw email content
 
-    local pic_w, pic_h = 90, 90
+    local pic_w, pic_h = 110, 110
     local img = Util.getAuthorImage(self.author)
 
     Color.set(Color.white())
@@ -207,22 +207,22 @@ function OpenedEmail:draw()
     font_h = font:getHeight(e.title)
     temp = font_h
     love.graphics.setFont(font)
-    love.graphics.print(e.title,  e.pos.x + 15 + pic_w, e.pos.y + 10)
+    love.graphics.print(e.title,  e.pos.x + 15 + pic_w, e.pos.y + 10 + 10)
     -- Draw line
     love.graphics.setLineWidth(5)
     Color.set(e.line_color)
-    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + 10 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + 10 + font_h + 5 + 10, e.pos.x + e.w - 10, e.pos.y + 10 + font_h + 5 + 10)
 
     -- Author
     Color.set(e.content_color)
     font = FONTS.robotoLight(20)
     font_h = font:getHeight(e.title)
     love.graphics.setFont(font)
-    love.graphics.print("from: "..e.author,  e.pos.x + 15 + pic_w, e.pos.y + temp + 25)
+    love.graphics.print("from: "..e.author,  e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + 10)
     -- Draw line
     love.graphics.setLineWidth(1)
     Color.set(e.line_color_2)
-    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + font_h + 5, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5)
+    love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + font_h + 5 + 10, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5 + 10)
 
     -- Text
     Color.set(Color.white())
