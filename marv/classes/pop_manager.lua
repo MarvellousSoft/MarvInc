@@ -11,6 +11,8 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 local OpenedEmail = require "classes.opened_email"
 
+local getFinalWords
+
 Popup = Class{
     __includes = {RECT},
     init = function(self, title, text, clr, b1, b2)
@@ -152,6 +154,8 @@ PopupFailed = Class{
       self.text = text
       self.text_clr = Color.black()
 
+      self.last_words = getFinalWords(self, self.bot)
+
       self.border_clr = Color.black()
 
       self.buttons = {}
@@ -237,7 +241,7 @@ PopupFailed = Class{
     local t_x, t_y = i_x + self.bot.body:getWidth() + 20, i_y + self.bot.body:getHeight()/2 - 20
     Color.set(self.text_clr)
     love.graphics.setFont(FONTS.fira(18))
-    love.graphics.printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAA", t_x,
+    love.graphics.printf(self.last_words, t_x,
         t_y, self.w - 150, "left")
 
     --Draw last sentence
@@ -281,6 +285,100 @@ function PopManager.quit()
     PopManager.pop = nil
     TABS_LOCK = TABS_LOCK - 1
     EVENTS_LOCK = EVENTS_LOCK - 1
+end
+
+function getFinalWords(popup,bot)
+  local special_messages = {}
+  local regular_messages = {}
+
+  --Special flags
+  local all_caps = false
+  local shy = false
+
+  --Get all messages related to bot traits
+  for _,traits in ipairs(TRAITS) do
+    for _,bot_traits in ipairs(bot.traits) do
+      if traits[1] == bot_traits then
+        for _,message in ipairs(traits[3]) do
+          table.insert(special_messages, message)
+        end
+      end
+    end
+  end
+
+  --Insert regular messages
+  for _,dialog in ipairs(REGULAR_DYING_MESSAGES) do
+    table.insert(regular_messages,dialog)
+  end
+
+  --Insert death-related messages
+  if popup.title == FAILED_POPUP_MESSAGES["code_over"].title then
+    table.insert(special_messages, "So are we done here?")
+  elseif popup.title == FAILED_POPUP_MESSAGES["lava"].title then
+    table.insert(special_messages, "Did someone turn on the heat around here?")
+    table.insert(special_messages, "Something about entering a pool of lava doesn't seem right...")
+  elseif popup.title == FAILED_POPUP_MESSAGES["paint_container"].title then
+    table.insert(special_messages, "Wait, do I REALLY need to enter giant paint container? Well, you're the boss...")
+  elseif popup.title == FAILED_POPUP_MESSAGES["laser"].title then
+    table.insert(special_messages, "This laser beam sure seems harmless.")
+  end
+
+  -----------------------------
+  --Check for special actions--
+  -----------------------------
+
+  for _,bot_traits in ipairs(bot.traits) do
+    if bot_traits == "TYPES IN ALL CAPS" then
+      all_caps = true
+    elseif bot_traits == "terribly shy" then
+      shy = true
+    end
+  end
+
+  -------------------------
+  --Apply special actions--
+  -------------------------
+
+  --Transform all messages to caps
+  if all_caps then
+    for i,dialog in ipairs(regular_messages) do
+        regular_messages[i] = string.upper(dialog)
+    end
+    for i,dialog in ipairs(special_messages) do
+        special_messages[i] = string.upper(dialog)
+    end
+  end
+
+  --Stutters in the first word (TODO: For every word have a chance to stutter)
+  if shy then
+    local shy_dialog
+    for i,dialog in ipairs(regular_messages) do
+        if dialog:sub(1,1):match("%a") then
+          shy_dialog = dialog:sub(1,1) .. "-"..dialog
+          regular_messages[i] = shy_dialog
+        end
+    end
+    for i,dialog in ipairs(special_messages) do
+        if dialog:sub(1,1):match("%a") then
+          shy_dialog = dialog:sub(1,1) .. "-"..dialog
+          special_messages[i] = shy_dialog
+        end
+    end
+  end
+
+  -----------------------------
+
+  --Chances of special messages increases if there are more, capped at .6
+  local chance = 0
+  chance = math.min(.6, .3*#special_messages)
+
+  --Choose between special messages or regular messages
+  if love.math.random() <= chance then
+      return Util.randomElement(special_messages)
+  else
+      return Util.randomElement(regular_messages)
+  end
+
 end
 
 return PopManager
