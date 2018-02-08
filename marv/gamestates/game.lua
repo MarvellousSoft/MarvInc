@@ -91,8 +91,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        Mail.new('fergus5_fake')
-        Mail.new('spam3')
+        Mail.new('ryr')
     end
 end
 

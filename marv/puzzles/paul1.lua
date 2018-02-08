@@ -168,5 +168,11 @@ function first_completed()
             end,
             text = " trip on ",
             clr = _G.Color.black()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " this guy's crazy ",
+            clr = _G.Color.red()
         })
 end

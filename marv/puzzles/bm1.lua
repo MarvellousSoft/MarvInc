@@ -139,5 +139,11 @@ function first_completed()
             end,
             text = " I like math ",
             clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " I hate math ",
+            clr = _G.Color.red()
         })
 end
