@@ -91,7 +91,7 @@ function state:keypressed(key)
     room:keyPressed(key)
 
     if key == 'f12' then
-        Mail.new('ryr')
+        --Mail.new('ryr')
     end
 end
 
