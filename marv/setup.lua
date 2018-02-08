@@ -339,12 +339,12 @@ function setup.config()
       {"know it all", {"Did you know a crocodile can't poke its tongue out?"}, {}},
       {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}, {}},
       {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}, {}},
-      {"nihilist", {"This puzzle doesn't matter. Nothing does."}, {}},
+      {"nihilist", {"This puzzle doesn't matter. Nothing does."}, {"Death is meaningless."}},
       {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}, {}},
       {"plays Dwarf Fortress", {}, {"Death is all around us, begone fear!"}},
       {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}, {}},
       {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}, {}},
-      {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", {}}, {"Baby, give it up! Give it up, baby give it up!"}, {}},
+      {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", "Baby, give it up! Give it up, baby give it up!"}, {}},
       {"1/128 irish", {"I can't wait for St. Pattys day!"}, {}},
       {"german", {"Das ist nicht effizient. You should optimize your code."}, {}},
       {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {}},
@@ -391,7 +391,7 @@ function setup.config()
       "I don't like where this is going.",
       "Please debug your code before running it with me.",
       "...",
-      "It's a bit shill here.",
+      "It's a bit chill here.",
       "My legs are sore, try not to make me walk much.",
       "*yawns*",
       "ATCHOO",
@@ -421,6 +421,7 @@ function setup.config()
       "{bot_name} is my name. Serving you is my game ;)",
       "I hope you don't kill me like the last one...",
       "Hi buddy!",
+      "Yo",
       "Hey man.",
       "Hello.",
       "You can call me {bot_name}.",
@@ -437,7 +438,8 @@ function setup.config()
         title = "Code not successful",
         sentences =
         {
-            "Your code finished but the objectives weren't completed. Your robot had to be sacrificed as punishment for your inefficiency."
+            "Your code finished but the objectives weren't completed. Your robot had to be sacrificed as punishment for your inefficiency.",
+            "Your code reached the ending but you did not fully meet the objectives. So we exploded your bot."
         }
       },
       paint_container =
@@ -445,7 +447,8 @@ function setup.config()
         title = "Bot drowned in paint!",
         sentences =
         {
-            "You somehow let your bot fall into a paint container. That's embarassing."
+            "You somehow let your bot fall into a paint container. That's embarassing.",
+            "It seems you let your bot fall into a paint container... Did you do that on purpose?"
         }
       },
       lava =
@@ -453,7 +456,9 @@ function setup.config()
         title = "Bot burn in lava!",
         sentences =
         {
-            "You let your bot burn in hot lava. That's innapropriate."
+            "You let your bot burn in hot lava. That's innapropriate.",
+            "Your bot scorched to death.",
+            "Your robot fell in a lava pit. I don't think it's coming back."
         }
       },
       laser =
@@ -461,7 +466,8 @@ function setup.config()
         title = "Bot destroyed by laser!",
         sentences =
         {
-            "Your bot got in a direct conflict with a laser ray. The laser won."
+            "Your bot got in a direct conflict with a laser ray. The laser won.",
+            "Your robot was obliterated by a laser."
         }
       },
     }
@@ -484,6 +490,7 @@ function setup.config()
       "Wait, is that?! Oh shit!",
       "Oh no, shit! Argh!",
       "WHAT THE FUCK?!",
+      "#YOLO"
     }
 
     --INITIALIZING TABLES--
