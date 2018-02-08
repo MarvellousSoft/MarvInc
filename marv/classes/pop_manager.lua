@@ -313,6 +313,7 @@ function getFinalWords(popup,bot)
 
   --Insert death-related messages
   if popup.title == FAILED_POPUP_MESSAGES["code_over"].title then
+    table.insert(special_messages, "Yay!! So we finished the puzzle??")
     table.insert(special_messages, "So are we done here?")
   elseif popup.title == FAILED_POPUP_MESSAGES["lava"].title then
     table.insert(special_messages, "Did someone turn on the heat around here?")

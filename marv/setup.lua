@@ -275,7 +275,7 @@ function setup.config()
       {"inconvenient", {"Hey, what are you doing there?", "Do you really need that command?", "Are you done yet?", "Are you done yet?"}, {}},
       {"hates sports", {}, {}},
       {"soccer fan", {"Did you see that ludicrous display last night?"}, {}},
-      {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}, {}},
+      {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}, {"#TimeToDie", "#ThisIsGonnaSuck"}},
       {"rad dance moves", {}, {}},
       {"types with just one finger", {}, {}},
       {"has a russian accent", {}, {}},
