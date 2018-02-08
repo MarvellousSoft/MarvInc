@@ -112,6 +112,12 @@ function Button:draw()
     love.graphics.setFont(b.font)
     love.graphics.print(b.text, b.text_x , b.text_y)
 
+    if b.border_clr then
+        Color.set(b.border_clr)
+        love.graphics.setLineWidth(3)
+        love.graphics.rectangle("line", b.pos.x, b.pos.y, b.w, b.h)
+    end
+
     --Print overtext, aligned with center of the normal text
     if b.overtext and b.isOver then
         love.graphics.setFont(b.overfont)
