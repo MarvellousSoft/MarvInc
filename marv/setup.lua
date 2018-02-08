@@ -257,7 +257,7 @@ function setup.config()
       {"addicted to caffeine", {}, {}},
       {"explorer at heart", {}, {}},
       {"never tips", {"10% service it's just an absurd, don't you think?"}, {}},
-      {"jerk", {"You're ugly.", "F%$# you."}, {}},
+      {"jerk", {"You're ugly.", "F%$# you."}, {"F%$# you."}},
       {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}, {"It's ok, man. We had a good run..."}},
       {"funny", {"You know the worst part of being lonely here? I can't up my frisbee game."}, {}},
       {"cool", {}, {"Ain't no thing, brother. You did what you had to do."}},
