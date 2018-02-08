@@ -439,7 +439,7 @@ function setup.config()
         sentences =
         {
             "Your code finished but the objectives weren't completed. Your robot had to be sacrificed as punishment for your inefficiency.",
-            "Your code reached the ending but you did not fully meet the objectives. So we exploded your bot."
+            "Your code reached the ending but you did not fully meet the objectives. So we exploded your bot. Do not repeat this mistake."
         }
       },
       paint_container =
@@ -448,7 +448,8 @@ function setup.config()
         sentences =
         {
             "You somehow let your bot fall into a paint container. That's embarassing.",
-            "It seems you let your bot fall into a paint container... Did you do that on purpose?"
+            "It seems you let your bot fall into a paint container... Did you do that on purpose?",
+            "Your robot sunk into a beautiful rainbow.",
         }
       },
       lava =
@@ -458,7 +459,9 @@ function setup.config()
         {
             "You let your bot burn in hot lava. That's innapropriate.",
             "Your bot scorched to death.",
-            "Your robot fell in a lava pit. I don't think it's coming back."
+            "Your robot fell in a lava pit. I don't think it's coming back.",
+            "Your robot got head first in a lava pit.",
+
         }
       },
       laser =
@@ -467,7 +470,8 @@ function setup.config()
         sentences =
         {
             "Your bot got in a direct conflict with a laser ray. The laser won.",
-            "Your robot was obliterated by a laser."
+            "Your robot was obliterated by a laser.",
+            "Your robot was sliced in half by a laser."
         }
       },
     }

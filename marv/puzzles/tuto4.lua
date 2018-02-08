@@ -30,7 +30,8 @@ function objective_checker(room)
 end
 
 extra_info = [[The experiment ends as soon as the objective requirements are completed.
-- You can use the Fast (>>) or SuperFast (>>>) speed buttons to make the turns go faster.]]
+- You can use the Fast (>>) or SuperFast (>>>) speed buttons to make the turns go faster.
+- Remember you can write commands in the same line you define a label.]]
 
 grid_obj =  "ooooooooooooooooooooo"..
             "ooooooooooooooooooooo"..
