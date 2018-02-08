@@ -185,7 +185,7 @@ AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/black.png"
 AUTHOR_IMG["bill"] = love.graphics.newImage("assets/images/authors/bill.png")
 AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/miles.png")
 AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/franz.png")
-AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/unknown.png")
+AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/news.png")
 AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/ryr.png")
 
 -- Room Img
