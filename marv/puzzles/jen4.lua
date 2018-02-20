@@ -17,14 +17,16 @@ memory_slots = 20
 -- Bot
 bot = {'b', "SOUTH"}
 
-local vec = {1, 0, 999, 512, 511, 12}
-while #vec < 21 do
-    _G.table.insert(vec, _G.love.math.random(2, 998))
-end
-for i = 1, #vec do
-    local j = _G.love.math.random(i, #vec)
-    vec[i], vec[j] = vec[j], vec[i]
-    end
+
+--local vec = {1, 0, 999, 512, 511, 12}
+--while #vec < 21 do
+--    _G.table.insert(vec, _G.love.math.random(2, 998))
+--end
+--for i = 1, #vec do
+--    local j = _G.love.math.random(i, #vec)
+--    vec[i], vec[j] = vec[j], vec[i]
+--    end
+local vec = {396, 476, 428, 396, 32, 112, 216, 248, 216, 216, 0, 240, 216, 240, 240, 216, 0, 396, 396, 216, 112}
 local function create_vec(x, y)
     return {vec[y]}
 end
@@ -92,6 +94,7 @@ Each console on the left has a single number. Read the number and write it in bi
 - That means painting the rightmost tile (next to the paint container) adds 1 to the number, the one to the left adds 2, the next 4, and so on.]]
 
 function objective_checker(room)
+    if true then return false end
     local p2 = {[0] = 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024}
     local ok = true
     for i = 1, ROWS do
