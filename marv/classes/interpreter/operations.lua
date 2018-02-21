@@ -330,6 +330,7 @@ function Read:execute()
     if not console or console.tp ~= "console" then return "Trying to read from non-console" end
     local nx = console:input()
     if not nx then return "No input on console" end
+    if type(nx) ~= 'number' then return nx end
     return Util.findId("memory"):set(self.reg:evaluate(), nx)
 end
 
