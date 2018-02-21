@@ -122,11 +122,5 @@ function first_completed()
             end,
             text = " *you ponder your life choices* ",
             clr = _G.Color.blue()
-        }, {
-            func = function()
-                _G.ROOM:disconnect()
-            end,
-            text = " that's a lot of dead people... ",
-            clr = _G.Color.red()
         })
 end
