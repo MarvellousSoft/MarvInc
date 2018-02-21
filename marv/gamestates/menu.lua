@@ -92,6 +92,9 @@ function state:draw()
     local f = self.font
     love.graphics.setFont(f)
     love.graphics.print("Username:", (W - self.box.w) / 2, H - 300 - f:getHeight() - 5)
+
+    love.graphics.print('v' .. VERSION, W - f:getWidth('v' .. VERSION) - 10, H - f:getHeight() - 10)
+
     love.graphics.setLineWidth(.5)
     love.graphics.rectangle("line", (W - self.box.w) / 2, H - 300, self.box.w, self.box.h)
     self.box:draw()
