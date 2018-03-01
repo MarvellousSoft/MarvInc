@@ -74,7 +74,7 @@ end
 
 -- Objective
 objective_text = [[
-Read multiple 0-terminated sequences (there is a 0 between two sequences) from the green console.
+Read multiple 0-terminated sequences (there is a 0 after each sequences) from the green console.
 - Sort each sequence and output it to the blue console, in the same format.]]
 function objective_checker(room)
     if #bl.inp == 0 then return false end
