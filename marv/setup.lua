@@ -206,6 +206,8 @@ HAIR = {
     love.graphics.newImage("assets/images/hairs/01.png"),
     love.graphics.newImage("assets/images/hairs/02.png"),
     love.graphics.newImage("assets/images/hairs/03.png"),
+    love.graphics.newImage("assets/images/hairs/04.png"),
+    love.graphics.newImage("assets/images/hairs/05.png"),
 }
 HEAD = {
     love.graphics.newImage("assets/images/faces/01.png"),
