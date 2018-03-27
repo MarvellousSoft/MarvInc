@@ -15,7 +15,7 @@ local setup = {}
 --SETUP FUNCTIONS
 --------------------
 
-VERSION = "1.1.1"
+VERSION = "1.1.2"
 
 --GLOBAL VARIABLES--
 W = love.graphics.getWidth() --Current width of the game window
@@ -200,12 +200,16 @@ MISC_IMG = {}
 MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
+MISC_IMG["logo"] = love.graphics.newImage("assets/images/logo.png")
+
 
 -- Bot images (assume array part only)
 HAIR = {
     love.graphics.newImage("assets/images/hairs/01.png"),
     love.graphics.newImage("assets/images/hairs/02.png"),
     love.graphics.newImage("assets/images/hairs/03.png"),
+    love.graphics.newImage("assets/images/hairs/04.png"),
+    love.graphics.newImage("assets/images/hairs/05.png"),
 }
 HEAD = {
     love.graphics.newImage("assets/images/faces/01.png"),

@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 return {
-    title = "Clean up on ailse 4",
+    title = "Clean up on aisle 4",
     text = [[
 
 {cyan}BSF{end}, let's stop bullshitting one another okay? By now you must have realised what is really happening behind the scenes at {blue}Marvinc{end}, but if you're so naïve to think you're still dealing with {gray}"robots"{end}, then you are truly an idiot.

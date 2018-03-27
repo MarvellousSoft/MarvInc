@@ -86,7 +86,7 @@ function state:draw()
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(FONTS.fira(120))
-    love.graphics.printf("Marvellous Inc.", 0, 200, W, "center")
+	love.graphics.draw(MISC_IMG.logo, 200, 150, 0, .75)
 
     -- username box
     local f = self.font
