@@ -41,10 +41,23 @@ SettingsTab = Class {
         self.box.sw = 13
         self.box.color = {12, 30, 10}
 
+        local prev_window = nil
+
         self.options = {
-            ["Background Music"] = ToggleButton(0, 0, 20, 20, function() print("on") end, function() print("off") end, true),
-            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() print("on") end, function() print("off") end, true),
+            ["Background Music"] = ToggleButton(0, 0, 20, 20, function() MUSIC_MOD = 1 end, function() MUSIC_MOD = 0 end, true),
+            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, true),
             ["Robot Messages Popup"] = ToggleButton(0, 0, 20, 20, function() print("on") end, function() print("off") end, true),
+            ["Fullscreen"] = ToggleButton(0, 0, 20, 20, function()
+                prev_window = {love.window.getMode()}
+                love.window.setFullscreen(true, "desktop")
+                love.resize(love.window.getMode())
+            end, function()
+                love.window.setFullscreen(false, "desktop")
+                if prev_window then
+                    love.window.setMode(unpack(prev_window))
+                end
+                love.resize(love.window.getMode())
+            end, false),
         }
 
         self.title_font = FONTS.firaBold(50)
@@ -56,11 +69,6 @@ SettingsTab = Class {
         self:setId("settings_tab")
     end
 }
-
-local function wrap_height(font, txt, w)
-    local _, wrap = font:getWrap(txt, w)
-    return font:getHeight() * (#wrap)
-end
 
 function SettingsTab:trueDraw()
     -- Possible future improvement: Avoid calling Util.stylizeText all the time, since the output is always the same.
@@ -79,6 +87,13 @@ function SettingsTab:trueDraw()
         but:draw()
         love.graphics.setColor(0, 0, 0)
         love.graphics.print(name, but.pos.x + but.w + 20, but.pos.y + but.h / 2 - self.options_font:getHeight() / 2)
+
+        -- collision rectangle (includes text)
+        but.col_x = but.pos.x - 10
+        but.col_y = -10 + but.pos.y + but.h / 2 - self.options_font:getHeight() / 2
+        but.col_w = 10 + but.w + 20 + self.options_font:getWidth(name) + 10
+        but.col_h = 10 + self.options_font:getHeight() + 10
+
         h = h + but.h * 3
     end
 end
@@ -109,10 +124,11 @@ function ToggleButton:init(x, y, w, h, on_callback, off_callback, is_on)
         self.square_mod = 0
     end
     self.hover = false
+    self.col_x, self.col_y, self.col_w, self.col_h = 0, 0, 0, 0
 end
 
 function ToggleButton:mousePressed(x, y, but)
-    if but == 1 and Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w, self.h) then
+    if but == 1 and Util.pointInRect(x, y, self.col_x, self.col_y, self.col_w, self.col_h) then
         if self.on then
             self:off_callback()
             MAIN_TIMER:tween(.1, self, { square_mod = 0 })
@@ -125,7 +141,7 @@ function ToggleButton:mousePressed(x, y, but)
 end
 
 function ToggleButton:mouseMoved(x, y)
-    self.hover = Util.pointInRect(x, y, self.pos.x, self.pos.y, self.w, self.h)
+    self.hover = Util.pointInRect(x, y, self.col_x, self.col_y, self.col_w, self.col_h)
 end
 
 function ToggleButton:draw()

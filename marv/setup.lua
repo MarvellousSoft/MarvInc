@@ -525,20 +525,20 @@ function setup.config()
     --SHADERS--
 
     --AUDIO--
+    SOUND_EFFECT_MOD = 1 -- Current effects volume
+    MUSIC_MOD = 1 -- Current BGM volume
     SFX = {}
-    SFX.loud_static = love.audio.newSource("assets/sound/pink_noise.wav", "static")
-    SFX.loud_static:setLooping(true)
-    SFX.tab_switch = love.audio.newSource("assets/sound/tab_switch.ogg", "static")
-    SFX.new_email = love.audio.newSource("assets/sound/new_email.wav", "static")
-    SFX.new_email:setVolume(.5)
-    SFX.buzz = love.audio.newSource("assets/sound/buzz.ogg", "static")
-    SFX.fail = love.audio.newSource("assets/sound/fail.mp3", "static")
-    SFX.click = love.audio.newSource("assets/sound/click.wav", "static")
-    SFX.side_message = love.audio.newSource("assets/sound/side_message_blip.wav", "static")
-    SFX.login = love.audio.newSource("assets/sound/login.wav", "static")
-    SFX.open_email = love.audio.newSource("assets/sound/open_email.wav", "static")
-    SFX.close_email = love.audio.newSource("assets/sound/close_email.wav", "static")
-    SFX.win_puzzle = love.audio.newSource("assets/sound/win_puzzle.wav", "static")
+    SFX.loud_static = SoundEffect("assets/sound/pink_noise.wav", "static", 1, true)
+    SFX.tab_switch = SoundEffect("assets/sound/tab_switch.ogg", "static")
+    SFX.new_email = SoundEffect("assets/sound/new_email.wav", "static", .5)
+    SFX.buzz = SoundEffect("assets/sound/buzz.ogg", "static")
+    SFX.fail = SoundEffect("assets/sound/fail.mp3", "static")
+    SFX.click = SoundEffect("assets/sound/click.wav", "static")
+    SFX.side_message = SoundEffect("assets/sound/side_message_blip.wav", "static")
+    SFX.login = SoundEffect("assets/sound/login.wav", "static")
+    SFX.open_email = SoundEffect("assets/sound/open_email.wav", "static")
+    SFX.close_email = SoundEffect("assets/sound/close_email.wav", "static")
+    SFX.win_puzzle = SoundEffect("assets/sound/win_puzzle.wav", "static")
 end
 
 --Return functions
