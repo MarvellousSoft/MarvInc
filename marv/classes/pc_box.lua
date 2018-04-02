@@ -194,7 +194,7 @@ function PcBox:changeTo(tab)
 
     tabs[tab]:activate()
     self.buttons[tab].color.s = self.focus_saturation
-    self.buttons[tab].color.l = self.focus_lightness
+    self.buttons[tab].color.l = self.focus_lightness * (tabs[tab].lightness_mod or 1)
     self.buttons[tab].is_current_tab = true
 
     self.cur_tab = tab
