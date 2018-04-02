@@ -31,7 +31,8 @@ PcBox = Class{
         local b = WIN_BORD
         PcBox.menu_tabs = {
             {"email", EmailTab(inner_tab_border, button_tab_height)},
-            {"manual", ManualTab(inner_tab_border, button_tab_height)}
+            {"manual", ManualTab(inner_tab_border, button_tab_height)},
+            {"settings", SettingsTab(inner_tab_border, button_tab_height)},
         }
         PcBox.puzzle_tabs = {
             PcBox.menu_tabs[1],
