@@ -16,7 +16,7 @@ See full license in file LICENSE.txt
     - pos: a Vector with the position of the object
     - draw: a function that draws the object, starting on (pos.x, pos.y) as usual, not caring about the scrollbar or possible translation
 
-  You must call the functions draw, mouseMoved, mousePressed, mouseReleased, mouseScrolled and update of the ScrollWindow. The window will then call these methods in the object, if the object has them (the coordinates will be fixed according to the translation).
+  You must call the functions draw, mouseMoved, mousePressed, mouseReleased, mouseScroll and update of the ScrollWindow. The window will then call these methods in the object, if the object has them (the coordinates will be fixed according to the translation).
 ]]
 
 local ResManager = require "res_manager"

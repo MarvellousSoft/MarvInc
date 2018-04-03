@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 local Timer = require "extra_libs.hump.timer"
 require "classes.text_box"
 require "classes.button"
+local ScrollWindow = require "classes.scroll_window"
 local state = {}
 
 local function try_login()
@@ -45,6 +46,7 @@ function state:enter()
     c.l = 30
     self.login = Button((W - bw) / 2, self.box.pos.y + self.box.h + 10, bw, bh, try_login, "login", self.font, nil, nil, c)
 
+
     self:initUsernames()
 
     if START_USER then
@@ -65,6 +67,36 @@ local function drawUsername(b, x, y)
     love.graphics.print('X', b.bx + (b.bsz - f:getWidth('X')) / 2, y)
 end
 
+function state:usernames_draw()
+    local f = love.graphics:getFont()
+    if #self.user_buttons > 0 then
+        love.graphics.setColor(255, 255, 255)
+        local cx, cy = self.user_buttons.x, self.user_buttons.y
+        for _, b in ipairs(self.user_buttons) do
+            drawUsername(b, cx, cy)
+            cy = cy + f:getHeight()
+        end
+        self.usernames_h = cy + 4 - self.user_buttons.y
+    end
+end
+
+function state:usernames_mousePressed(x, y, but)
+    if but == 1 then
+        local ub = self.user_buttons
+        if x >= ub.x and y >= ub.y then
+            local i = math.floor((y - ub.y) / self.font:getHeight()) + 1
+            if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
+                local press = love.window.showMessageBox("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
+                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2}, 'warning')
+                if press == 1 then
+                    SaveManager.deleteUser(ub[i].user)
+                    self:initUsernames()
+                end
+            end
+        end
+    end
+end
+
 function state:initUsernames()
     -- list of usernames and buttons to delete them
     self.user_buttons = {}
@@ -72,8 +104,18 @@ function state:initUsernames()
     for user in pairs(SaveManager.user_data) do
         table.insert(ub, {user = user})
     end
-    ub.y = H * .65 - ((#ub + 1) * self.font:getHeight()) / 2
-    ub.x = W * .75
+    ub.y = H * .60
+    ub.x = W * .65
+    local usernames = {
+        pos = {x = ub.x, y = ub.y},
+        getHeight = function() return self.usernames_h end,
+        mousePressed = function(obj, ...) self:usernames_mousePressed(...) end,
+        draw = function() self:usernames_draw() end,
+    }
+    self.known_usernames = ScrollWindow(300, H - 10 - ub.y, usernames)
+    self.known_usernames.sw = 8
+    self.known_usernames.color = {200, 200, 200, 100}
+    self.usernames_h = H - 10 - ub.y
 end
 
 function state:update(dt)
@@ -86,7 +128,7 @@ function state:draw()
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(FONTS.fira(120))
-	love.graphics.draw(MISC_IMG.logo, 200, 150, 0, .75)
+    love.graphics.draw(MISC_IMG.logo, W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, 0, .75)
 
     -- username box
     local f = self.font
@@ -102,15 +144,9 @@ function state:draw()
     self.login:draw()
 
     -- known usernames
-    if #self.user_buttons > 0 then
-        love.graphics.setColor(255, 255, 255)
-        local cx, cy = self.user_buttons.x, self.user_buttons.y
-        love.graphics.print("Known users:", cx, cy)
-        for _, b in ipairs(self.user_buttons) do
-            cy = cy + f:getHeight()
-            drawUsername(b, cx, cy)
-        end
-    end
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.print("Known users:", self.user_buttons.x + 20, self.user_buttons.y - f:getHeight() * 1.2)
+    self.known_usernames:draw()
 
     -- fade in
     love.graphics.setColor(0, 0, 0, self.fade_in_alp)
@@ -132,28 +168,25 @@ end
 
 function state:mousepressed(x, y, but)
     self.box:mousePressed(x, y, but)
+    self.known_usernames:mousePressed(x, y, but)
     if but == 1 then self.login:checkCollides(x, y) end
-    if but == 1 then
-        local ub = self.user_buttons
-        if x >= ub.x and y >= ub.y then
-            local i = math.floor((y - ub.y) / self.font:getHeight())
-            if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
-                local press = love.window.showMessageBox("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
-                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2}, 'warning')
-                if press == 1 then
-                    SaveManager.deleteUser(ub[i].user)
-                    self:initUsernames()
-                end
-            end
-        end
-    end
+end
+
+function state:mousemoved(...)
+    self.known_usernames:mouseMoved(...)
 end
 
 function state:mousereleased(x, y, but)
     self.box:mouseReleased(x, y, but)
+    self.known_usernames:mouseReleased(x, y)
+end
+
+function state:wheelmoved(...)
+    self.known_usernames:mouseScroll(...)
 end
 
 function state:update(dt)
+    self.known_usernames:update(dt)
     Timer.update(dt)
     self.box:update(dt)
 end
