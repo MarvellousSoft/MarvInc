@@ -146,6 +146,8 @@ function ToggleButton:mousePressed(x, y, but)
             self:on_callback()
             MAIN_TIMER:tween(.1, self, { square_mod = 1 })
         end
+        SFX.click:stop()
+        SFX.click:play()
         self.on = not self.on
     end
 end

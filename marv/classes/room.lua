@@ -417,7 +417,8 @@ function Room:draw()
     if self.draw_star then
         Color.set(self.star_color)
         local star = MISC_IMG.star
-        love.graphics.draw(star, self.pos.x, self.pos.y + self.mrkr_y, 0, 40 / star:getWidth())
+        local sz = 50
+        love.graphics.draw(star, self.pos.x + sz / 2, self.pos.y + self.mrkr_y + sz / 2, -1, sz / star:getWidth(), nil, star:getWidth() / 2, star:getHeight() / 2)
     end
 
     -- Cursor tile coordinates
