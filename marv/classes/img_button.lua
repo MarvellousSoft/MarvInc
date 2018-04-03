@@ -63,6 +63,12 @@ function ImgButton:draw()
     end
 end
 
+function ImgButton:checkCollides(x, y)
+    if Util.pointInRect(x, y, self) then
+        self.call()
+    end
+end
+
 function ImgButton:mousePressed(x, y, but)
     if but == 1 and Util.pointInRect(x, y, self) then
         self.call()

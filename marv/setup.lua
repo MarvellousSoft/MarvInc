@@ -89,6 +89,7 @@ BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blo
 BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
 BUTS_IMG["logoff"] = love.graphics.newImage("assets/images/logoff_button_regular.png")
 BUTS_IMG["logoff_hover"] = love.graphics.newImage("assets/images/logoff_button_mouse_over.png")
+BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
 
 -- Move orientations
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)

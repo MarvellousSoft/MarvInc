@@ -38,7 +38,8 @@ PcBox = Class{
             PcBox.menu_tabs[1],
             {"code", CodeTab(inner_tab_border, button_tab_height)},
             {"info", InfoTab(inner_tab_border, button_tab_height)},
-            PcBox.menu_tabs[2]
+            PcBox.menu_tabs[2],
+            PcBox.menu_tabs[3],
         }
 
         --Saturation and lightness when a tab is focused
@@ -122,7 +123,7 @@ function PcBox:draw()
     love.graphics.setStencilTest()
 
     --Draw background of pc-box (front)--
-    Color.set(self.buttons[self.cur_tab].color)
+    Color.set(Color.new(tabs[self.cur_tab].button_color, self.focus_saturation, self.focus_lightness * (tabs[self.cur_tab].lightness_mod or 1), 80))
     love.graphics.rectangle("fill", self.pos.x, self.pos.y + button_tab_height, self.w, self.h - button_tab_height)
 
     --Draw current tab button
@@ -170,11 +171,16 @@ function PcBox:changeTabs(new_tabs, default)
     local h = button_tab_height
     self.buttons = {}
     local x = self.pos.x
+    local set_size = 28
     for _, t in ipairs(tabs_raw) do
         tabs[t[1]] = t[2]
-        self.buttons[t[1]] = But.create_tab(x, self.pos.y, self.w / #tabs_raw, h, function() self:changeTo(t[1]) end, t[1],
-            FONTS.fira(20), nil, nil, Color.new(t[2].button_color, self.unfocus_saturation, self.unfocus_lightness, 80))
-        x = x + self.w / #tabs_raw
+        if _ == #tabs_raw then
+            self.buttons[t[1]] = ImgButton(x, self.pos.y, set_size, BUTS_IMG.settings, function() self:changeTo(t[1]) end)
+        else
+            self.buttons[t[1]] = But.create_tab(x, self.pos.y, (self.w - set_size) / (#tabs_raw - 1), h, function() self:changeTo(t[1]) end,
+                t[1], FONTS.fira(20), nil, nil, Color.new(t[2].button_color, self.unfocus_saturation, self.unfocus_lightness, 80))
+            x = x + (self.w - set_size) / (#tabs_raw - 1)
+        end
     end
 
     self.cur_tab = nil
