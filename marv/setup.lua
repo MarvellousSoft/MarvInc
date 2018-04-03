@@ -42,34 +42,28 @@ ROBOTO_BOLD = {}
 --Roboto thin font table
 ROBOTO_LIGHT = {}
 --Global fonts table
-FONTS = {
-    fira = function(size)
-        if FIRA[size] then return FIRA[size] end
-
-        FIRA[size] = love.graphics.newFont("assets/fonts/fira-mono-regular.ttf", size)
-        return FIRA[size]
-    end,
-    firaBold = function(size)
-        if FIRA_BOLD[size] then return FIRA_BOLD[size] end
-        FIRA_BOLD[size] = love.graphics.newFont("assets/fonts/fira-mono-bold.ttf", size)
-        return FIRA_BOLD[size]
-    end,
-    roboto = function(size)
-        if ROBOTO[size] then return ROBOTO[size] end
-        ROBOTO[size] = love.graphics.newFont("assets/fonts/Roboto-Regular.ttf", size)
-        return ROBOTO[size]
-    end,
-    robotoBold = function(size)
-        if ROBOTO_BOLD[size] then return ROBOTO_BOLD[size] end
-        ROBOTO_BOLD[size] = love.graphics.newFont("assets/fonts/Roboto-Bold.ttf", size)
-        return ROBOTO_BOLD[size]
-    end,
-    robotoLight = function(size)
-        if ROBOTO_LIGHT[size] then return ROBOTO_LIGHT[size] end
-        ROBOTO_LIGHT[size] = love.graphics.newFont("assets/fonts/Roboto-Light.ttf", size)
-        return ROBOTO_LIGHT[size]
-    end,
+local fonts = {
+    fira = "assets/fonts/fira-mono-regular.ttf",
+    firaBold = "assets/fonts/fira-mono-bold.ttf",
+    roboto = "assets/fonts/Roboto-Regular.ttf",
+    robotoBold = "assets/fonts/Roboto-Bold.ttf",
+    robotoLight = "assets/fonts/Roboto-Light.ttf",
+    comfortaa = "assets/fonts/Comfortaa-Regular.ttf",
+    comfortaaBold = "assets/fonts/Comfortaa-Bold.ttf",
+    comfortaaLight = "assets/fonts/Comfortaa-Light.ttf",
 }
+
+FONTS = {}
+
+for name, file in pairs(fonts) do
+    local stored = {}
+    FONTS[name] = function(size)
+        if not stored[size] then
+            stored[size] = love.graphics.newFont(file, size)
+        end
+        return stored[size]
+    end
+end
 
 --Other Tables
 SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)

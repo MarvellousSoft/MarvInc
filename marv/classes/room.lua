@@ -92,7 +92,7 @@ Room = Class{
         self.cursor_mov_dt = 0
 
         -- Offline background
-        self.back_fnt = FONTS.fira(50)
+        self.back_fnt_sz = 50
         self.back_clr = Color.white()
         self.back_tclr = Color.white()
         self.back_img = BG_IMG
@@ -347,13 +347,15 @@ function Room:draw()
     else
         Color.set(self.back_clr)
         love.graphics.draw(self.back_img, 0, 0, nil, self.back_sx, self.back_sy)
-        love.graphics.setFont(self.back_fnt)
+        local fnt = self.version <= "1.0" and FONTS.comfortaaBold or self.version <= "2.0" and FONTS.comfortaa or FONTS.comfortaaLight
+        local back_fnt = fnt(self.back_fnt_sz)
+        love.graphics.setFont(back_fnt)
         Color.set(self.back_tclr)
-        love.graphics.printf("Marvellous OS", 0, (self.grid_h - self.back_fnt:getHeight())/2, self.w, "center")
+        love.graphics.printf("Marvellous OS", 0, (self.grid_h - back_fnt:getHeight())/2, self.w, "center")
 
-        local dy = self.back_fnt:getHeight()
-        love.graphics.setFont(FONTS.fira(25))
-        love.graphics.printf(self.version, self.w * .75, (self.grid_h - self.back_fnt:getHeight()) / 2 + dy + 10, self.w / 4)
+        local dy = back_fnt:getHeight()
+        love.graphics.setFont(back_fnt)
+        love.graphics.printf(self.version, self.w * .75, (self.grid_h - back_fnt:getHeight()) / 2 + dy + 10, self.w / 4)
     end
 
     if self.static_on then
