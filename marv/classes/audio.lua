@@ -26,6 +26,10 @@ Music = Class {
     __includes = {Audio}
 }
 
+function Music:updateVolume()
+    self.source:setVolume(self.base_volume * MUSIC_MOD)
+end
+
 function Music:play()
     self.source:setVolume(self.base_volume * MUSIC_MOD)
     self.source:play()

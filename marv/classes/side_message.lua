@@ -19,6 +19,8 @@ local getDialog
 SideMessage = Class{
     __includes = {RECT},
 
+    block_extra_bot_messages = false,
+
     init = function(self, name, message, hair, face, height)
 
         local width = 280
@@ -161,6 +163,8 @@ Signal.register("new_bot_message",
         local bot = ROOM.bot
         if not bot then return end
         local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height)
+
+        if not message.message then return nil end
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
@@ -357,8 +361,10 @@ getDialog = function(bot)
 
     --If its bot first time appearing
     if bot.first_time and BotModule.current_bot then
-      BotModule.current_bot.first_time = false
-      return Util.randomElement(intro_messages)
+        BotModule.current_bot.first_time = false
+        return Util.randomElement(intro_messages)
+    elseif SideMessage.block_extra_bot_messages then
+        return nil
     end
 
     --Chances of special messages increases if there are more, capped at .6

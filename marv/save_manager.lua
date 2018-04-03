@@ -16,6 +16,7 @@ local f = love.filesystem -- used a lot
 sm.user_data = {}
 
 -- used to improve compatibilty
+local current_common_version = "1"
 local current_save_version = "2"
 
 function sm.base_user_save(user)
@@ -25,7 +26,21 @@ function sm.base_user_save(user)
     f.write('saves/' .. user .. '/version', current_save_version)
 end
 
+function sm.common_save()
+    local data = {}
+
+    f.write('version', current_common_version)
+
+    data.sound_effect_mod = SOUND_EFFECT_MOD
+    data.music_mod = MUSIC_MOD
+
+    data.fullscreen = love.window.getFullscreen()
+
+    f.write('config', binser.serialize(data))
+end
+
 function sm.save()
+    sm.common_save()
     local user = sm.current_user
     if not user then return end
     sm.base_user_save(user)
@@ -75,6 +90,7 @@ function sm.save()
     data.known_commands = manual.cmds
     data.bots_dead = info.dead
     data.last_bot = BotManager.current_bot
+    data.block_extra_bot_messages = SideMessage.block_extra_bot_messages
 
     data.employee_id = EMPLOYEE_NUMBER
     -- whether to draw star on the corner of the screen
@@ -118,6 +134,7 @@ function sm.login(user)
         end
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
+        SideMessage.block_extra_bot_messages = data.block_extra_bot_messages
 
         ROOM.draw_star = data.draw_star
         ROOM.version = data.os_version
@@ -134,6 +151,22 @@ function sm.logout()
     sm.current_user = nil
 end
 
+function sm.common_load()
+    if not f.exists('config') then return end
+    local ver = f.read('version')
+    if ver ~= current_common_version then
+        print('Unrecognized common save version')
+        -- deal with old save versions
+    end
+
+    local data = binser.deserializeN(f.read('config'), 1)
+
+    MUSIC_MOD = data.music_mod
+    SOUND_EFFECT_MOD = data.sound_effect_mod
+
+    love.window.setFullscreen(data.fullscreen, 'desktop')
+end
+
 function sm.load()
     if not f.exists("README") then
         f.write("README", [[
@@ -141,6 +174,7 @@ This is Marvellous Inc's save directory.
 
 Feel free to mess up the files here, but if the game crashes it is not our responsability :)]])
     end
+    sm.common_load()
     if not f.exists("saves") then
         f.createDirectory("saves")
     end

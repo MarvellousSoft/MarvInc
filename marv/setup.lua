@@ -526,7 +526,6 @@ function setup.config()
 
     --AUDIO--
     SOUND_EFFECT_MOD = 1 -- Current effects volume
-    MUSIC_MOD = 1 -- Current BGM volume
     SFX = {}
     SFX.loud_static = SoundEffect("assets/sound/pink_noise.wav", "static", 1, true)
     SFX.tab_switch = SoundEffect("assets/sound/tab_switch.ogg", "static")
@@ -539,6 +538,9 @@ function setup.config()
     SFX.open_email = SoundEffect("assets/sound/open_email.wav", "static")
     SFX.close_email = SoundEffect("assets/sound/close_email.wav", "static")
     SFX.win_puzzle = SoundEffect("assets/sound/win_puzzle.wav", "static")
+
+    MUSIC_MOD = 1 -- Current BGM volume
+    MUSIC = {}
 end
 
 --Return functions

@@ -44,9 +44,14 @@ SettingsTab = Class {
         local prev_window = nil
 
         self.options = {
-            ["Background Music"] = ToggleButton(0, 0, 20, 20, function() MUSIC_MOD = 1 end, function() MUSIC_MOD = 0 end, true),
-            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, true),
-            ["Robot Messages Popup"] = ToggleButton(0, 0, 20, 20, function() print("on") end, function() print("off") end, true),
+            ["Background Music"] = ToggleButton(0, 0, 20, 20, function()
+                MUSIC_MOD = 1
+                for _, m in pairs(MUSIC) do m:updateVolume() end -- fixes playing sounds
+            end, function()
+                MUSIC_MOD = 0
+                for _, m in pairs(MUSIC) do m:updateVolume() end -- fixes playing sounds
+            end, MUSIC_MOD == 1),
+            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, SOUND_EFFECT_MOD == 1),
             ["Fullscreen"] = ToggleButton(0, 0, 20, 20, function()
                 prev_window = {love.window.getMode()}
                 love.window.setFullscreen(true, "desktop")
@@ -57,7 +62,12 @@ SettingsTab = Class {
                     love.window.setMode(unpack(prev_window))
                 end
                 love.resize(love.window.getMode())
-            end, false),
+            end, (love.window.getFullscreen())),
+            ["Robot Messages Popup"] = ToggleButton(0, 0, 20, 20, function()
+                SideMessage.block_extra_bot_messages = false
+            end, function()
+                SideMessage.block_extra_bot_messages = true
+            end, not SideMessage.block_extra_bot_messages),
         }
 
         self.title_font = FONTS.firaBold(50)
