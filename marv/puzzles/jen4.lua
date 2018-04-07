@@ -111,6 +111,12 @@ function objective_checker(room)
         end
         _G.assert(x == 0)
     end
+    if ok and not _G.LoreManager.puzzle_done.jen4_fast then
+        local ic = _G.StepManager.ic
+        if ic <= 5000 then
+            _G.LoreManager.puzzle_done.jen4_fast = true
+        end
+    end
     return ok
 end
 

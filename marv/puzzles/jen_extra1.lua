@@ -9,7 +9,7 @@ See full license in file LICENSE.txt
 
 name = "Division II"
 -- Puzzle number
-n = "extra.undecided"
+n = "A.extra.1"
 
 lines_on_terminal = 10
 memory_slots = 1
@@ -76,10 +76,10 @@ function objective_checker(room)
 end
 
 extra_info = [[
-You only have 10 lines and 1 register
+You only have 10 lines and 1 register.
 - To round down a number, choose the largest integer that is less or equal to that number. For example, round(0.1) = 0, while round(-0.1) = -1.
-- Example: Input (13, 100, -100) should output (0, 1, 2)
-- All numbers are between -900 and 900]]
+- Example: Input (13, 100, -100) should output (0, 1, 2).
+- All numbers are between -900 and 900.]]
 
 grid_obj =  ".........cbd........."..
             "....................."..
@@ -129,3 +129,16 @@ grid_floor = ",,,,,,,,,,,,,,,,,,,,,"..
              ",,,,,,,,,,,,,,,,,,,,,"..
              ",,,,,,,,,,,,,,,,,,,,,"..
              ",,,,,,,,,,,,,,,,,,,,,"
+
+
+function first_completed()
+    _G.PopManager.new("Placeholder",
+        "Placeholder",
+        _G.CHR_CLR['jen'], {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " Placeholder ",
+            clr = _G.Color.black()
+        })
+end
