@@ -27,7 +27,11 @@ local function create_vec()
         if #st == 20 then x = '-' end
         _G.table.insert(v, x)
         if x == '+' then
-            _G.table.insert(v, _G.love.math.random(0, 999))
+            if _G.love.math.random() <= .1 then
+                _G.table.insert(v, 0)
+            else
+                _G.table.insert(v, _G.love.math.random(1, 999))
+            end
             _G.table.insert(st, v[#v])
         else
             _G.table.insert(ans, st[#st])

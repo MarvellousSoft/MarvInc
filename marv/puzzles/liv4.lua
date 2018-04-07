@@ -22,7 +22,11 @@ local ans = {}
 local function add_op(v, dq, x)
     _G.table.insert(v, x)
     if x == '+' then
-        _G.table.insert(v, _G.love.math.random(0, 999))
+        if _G.love.math.random() <= .1 then
+            _G.table.insert(v, 0)
+        else
+            _G.table.insert(v, _G.love.math.random(1, 999))
+        end
         dq.r = dq.r + 1
         dq[dq.r] = v[#v]
     elseif x == '<' then

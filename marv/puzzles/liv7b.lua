@@ -31,8 +31,18 @@ local function create_vec()
         for i = 1, sz do
             if _ == 1 then
                 _G.table.insert(v, _G.love.math.random(1, 20))
+            elseif _ == 2 then
+                if i <= 2 then
+                    _G.table.insert(v, 0)
+                else
+                    _G.table.insert(v, _G.love.math.random(1, 999))
+                end
             else
-                _G.table.insert(v, _G.love.math.random(-999, 999))
+                if _G.love.math.random() <= .1 then
+                    _G.table.insert(v, 0)
+                else
+                    _G.table.insert(v, _G.love.math.random(-999, 999))
+                end
             end
         end
     end
