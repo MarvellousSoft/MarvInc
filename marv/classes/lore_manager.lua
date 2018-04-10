@@ -84,6 +84,7 @@ function lore.mark_completed(puzzle)
     StepManager.pause()
     if lore.puzzle_done[puzzle.id] then
         puzzle.already_completed()
+        lore.check_all()
     else
         lore.puzzle_done[puzzle.id] = true
         puzzle.first_completed()

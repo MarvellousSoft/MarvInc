@@ -11,11 +11,13 @@ local Mail = require "classes.tabs.email"
 
 local jen = {}
 
-jen.require_puzzles = {'jen4_fast'}
+jen.require_puzzles = {'jen4'}
 jen.wait = 10
 
 function jen.run()
-    Mail.new('jen_extra1')
+    if not _G.LoreManager.puzzle_done.jen4_fast then
+        Mail.new('jen4_2')
+    end
 end
 
 return jen

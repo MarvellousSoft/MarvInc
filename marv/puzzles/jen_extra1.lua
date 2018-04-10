@@ -132,13 +132,26 @@ grid_floor = ",,,,,,,,,,,,,,,,,,,,,"..
 
 
 function first_completed()
-    _G.PopManager.new("Placeholder",
-        "Placeholder",
-        _G.CHR_CLR['jen'], {
+    _G.PopManager.new("That was incredible",
+        [[
+It's hard to admit, but I must say you are a master of optimization.
+
+I'm... proud of you.
+
+And I will never repeat that and deny ever saying it.
+
+-Janine]],
+        _G.CHR_CLR['jen'],{
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Placeholder ",
-            clr = _G.Color.black()
+            text = " Thank you Jen ",
+            clr = _G.Color.blue()
+        },{
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " GG ",
+            clr = _G.Color.red()
         })
 end

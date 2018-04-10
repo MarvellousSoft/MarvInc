@@ -133,6 +133,8 @@ I'm busy looking at a grumpy cat pic.
 
 It's hilarious.
 
+I will analyse your work after I'm done laughing.
+
 -Janine]],
         _G.CHR_CLR['jen'], {
             func = function()
