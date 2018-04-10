@@ -23,10 +23,16 @@ local function create_vec()
         _G.table.insert(v, _G.love.math.random(-200, 200))
     end
     _G.table.insert(v, 0)
+    _G.table.insert(v, -742)
+    _G.table.insert(v, -683)
+    _G.table.insert(v, 900)
     for i = 1, 10 do
         _G.table.insert(v, _G.love.math.random(-899, 899))
     end
-    _G.table.insert(v, 900)
+    _G.table.insert(v, 627)
+    _G.table.insert(v, -855)
+    _G.table.insert(v, 569)
+    _G.table.insert(v, 514)
     _G.table.insert(v, -900)
     return v
 end
