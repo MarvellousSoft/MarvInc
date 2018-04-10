@@ -1,10 +1,10 @@
 ###### Marvellous Inc.
-###### Copyright (C) 2017  MarvellousSoft & USPGameDev
+###### Copyright (C) 2018  MarvellousSoft & USPGameDev
 ###### Code under license **GPLv3.0**, original assets under license **CC BY-AS 4.0**
 
-# Marvellous Inc. v1.1.3 indev
+# Marvellous Inc. v1.2.0 indev
 
-**an open source zachlike indie game by [MarvellousSoft](https://marvelloussoft.github.io/) and [USPGameDev](https://uspgamedev.org/) ~ 2016/2017**
+**an open source zachlike indie game by [MarvellousSoft](https://marvelloussoft.github.io/) and [USPGameDev](https://uspgamedev.org/) ~ 2016-2018**
 
 ## Introduction
 

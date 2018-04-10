@@ -10,25 +10,25 @@ See full license in file LICENSE.txt
 return {
     title = "Code Tips",
     text = [[
-The {tab}<code> {end}tab is a powerful tool.
+The {tab}<code>{end} tab is a powerful tool.
 
-As we said before, you should use it just like any text editor. To mention some of its features, you can
+As we said before, you should use it just like any text editor. To mention some of its features, you can:
 
-- Move the cursor with your mouse or arrow keys
+- Move the cursor with your {green}mouse{end} or {green}arrow keys{end}
 
-- Combine the shift key with the mouse or arrow keys to select text (or just clicking and dragging)
+- Combine the {orange}shift key{end} with the {green}mouse{end} or {green}arrow keys{end} to select text (or just clicking and dragging)
 
-- Use the 'end' or 'home' keys
+- Use the {orange}end{end} or {orange}home keys{end}
 
-- Use ctrl-c, ctrl-x and ctrl-v to copy, cut and paste text
+- Use {red}ctrl-c{end}, {blue}ctrl-x{end} and {yellow}ctrl-v{end} to {red}copy{end}, {blue}cut{end} and {yellow}paste text{end}
 
-- Use ctrl-z and ctrl-y to undo or redo actions
+- Use {red}ctrl-z{end} and {blue}ctrl-y{end} to {red}undo{end} or {blue}redo{end} actions
 
-- And much more!
+- {purple}And much more!{end}
 
 Exploring is part of the job, so get used to it.
 
-Happy coding, and carry on.
+{red}Happy coding{end}, and carry on.
 ]],
     author = "Automated Introduction System",
     can_be_deleted = true
