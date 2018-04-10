@@ -25,17 +25,19 @@ OpenedEmail = Class{
     init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
         local time
         local box_width, box_height = 2.8*W/5, 4*H/5
-
+        local color = Color.new(160, 0, 240)
         self.text_font = FONTS.roboto(18)
 
         local but_size = (_reply_func and 50 or 0) + (_can_be_deleted and 50 or 0)
 
-        RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, Color.new(150, 0, 240))
+        RECT.init(self, W/2 - box_width/2,  H/2 - box_height/2, box_width, box_height, color)
 
         --Defining colors used in the opened email
         self.line_color = Color.new(150,180,60) -- Color for line outlining the email box and below title
         self.line_color_2 = Color.new(150,100,60) -- Color for line below author of email
         self.line_color_3 = Color.new(0,30,20) -- Color for outlining delete button
+        self.line_color_4 = Color.new(0,10,60) -- Color for line between email header and content
+        self.header_color = Color.new(120, 0, 230) --Color for email header bg
         self.background_color = Color.new(0,0,40,140) -- Black effect for background
         self.title_color = Color.new(150,180,80) -- Color for title
         self.content_color = Color.new(0,0,0) -- Color for rest of email content
@@ -167,12 +169,10 @@ end
 
 -- Draws opened email --
 function OpenedEmail:draw()
-    local e, font, font_w, font_h, font_size, temp, text
-    local referenced_email
+    local font, font_w, font_h, font_size, temp, text
 
-
-    e = self
-    referenced_email = e.referenced_email
+    local e = self
+    local referenced_email = e.referenced_email
 
     -- Draws black effect
     Color.set(e.background_color)
@@ -181,20 +181,29 @@ function OpenedEmail:draw()
     -- Draws email box
     Color.set(e.color)
     love.graphics.rectangle("fill", e.pos.x, e.pos.y, e.w, e.h)
-    love.graphics.setLineWidth(2)
+    love.graphics.setLineWidth(4)
     Color.set(e.line_color)
     love.graphics.rectangle("line", e.pos.x, e.pos.y, e.w, e.h)
 
-    -- Draw email content
+    -- Draws header background
+    local header_h = e.pos.y + 50
+    local header_w = e.w
+    Color.set(e.header_color)
+    love.graphics.rectangle("fill", e.pos.x, e.pos.y, header_w, header_h)
+    love.graphics.setLineWidth(4)
+    Color.set(e.line_color)
+    love.graphics.rectangle("line", e.pos.x, e.pos.y, header_w, header_h)
 
-    local pic_w, pic_h = 110, 110
+    -- DRAW EMAIL CONTENT --
+
+    -- Draw author image
     local img = Util.getAuthorImage(self.author)
-
+    local pic_w, pic_h = 110, 110 --Size of author pic
     Color.set(Color.white())
-    love.graphics.draw(img, self.pos.x + 10, self.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
+    love.graphics.draw(img, e.pos.x + 10, e.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
     love.graphics.setLineWidth(2)
-    Color.set(Util.getAuthorColor(self.author))
-    love.graphics.rectangle('line', self.pos.x + 10, self.pos.y + 10, pic_w, pic_h)
+    Color.set(Util.getAuthorColor(e.author))
+    love.graphics.rectangle('line', e.pos.x + 10, e.pos.y + 10, pic_w, pic_h)
 
     -- Title
     Color.set(e.title_color)
@@ -223,6 +232,12 @@ function OpenedEmail:draw()
     love.graphics.setLineWidth(1)
     Color.set(e.line_color_2)
     love.graphics.line(e.pos.x + 15 + pic_w, e.pos.y + temp + 25 + font_h + 5 + 10, e.pos.x + e.w - 10, e.pos.y + temp + 25 + font_h + 5 + 10)
+
+    -- Draw separator line between email header and content
+    love.graphics.setLineWidth(2)
+    Color.set(e.line_color_4)
+    love.graphics.line(e.pos.x, e.pos.y + header_h, e.pos.x + e.w, e.pos.y + header_h)
+
 
     -- Text
     Color.set(Color.white())
