@@ -165,10 +165,10 @@ function EmailTab:drawMailBox(box)
         -- Title
         font = FONTS.fira(14)
         text = e.title
-        if #text <= 33  then
+        if #text <= 29  then
             text = e.title
         else
-            text = string.sub(text, 1, 30).."..."
+            text = string.sub(text, 1, 26).."..."
         end
         font_w = size + font:getWidth(text)
         font_h = font:getHeight(text)
