@@ -90,6 +90,7 @@ Room = Class{
         -- Current tile coordinates
         self.cursor_x, self.cursor_y = -1, -1
         self.cursor_mov_dt = 0
+        self.tile_coord_bg_color = Color.new(10,10,10,170,"rgb")
 
         -- Offline background
         self.back_fnt_sz = 50
@@ -426,9 +427,19 @@ function Room:draw()
     -- Cursor tile coordinates
     if self.cursor_mov_dt > 0.1 then
         if self.cursor_x > 0 and self.cursor_y > 0 then
-            Color.set(Color.green())
             local cx, cy = love.mouse.getPosition()
-            love.graphics.print("(" .. self.cursor_y .. ", " .. self.cursor_x .. ")", cx+10, cy+10)
+            local text_x, text_y = cx+10, cy+10
+            local text = "(" .. self.cursor_y .. ", " .. self.cursor_x .. ")"
+            local font = self.grid_fnt
+            local margin = 5
+            local w, h = font:getWidth(text) + 2*margin, font:getHeight(text) + 2*margin
+            --Draw background
+            Color.set(self.tile_coord_bg_color)
+            love.graphics.rectangle("fill", text_x - margin, text_y - margin, w, h, 5)
+            --Draw coordinates
+            love.graphics.setFont(font)
+            Color.set(Color.green())
+            love.graphics.print(text, text_x, text_y)
         end
     end
 end
