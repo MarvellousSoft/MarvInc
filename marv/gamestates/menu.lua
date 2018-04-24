@@ -172,7 +172,8 @@ function state:keypressed(key)
 end
 
 function state:textinput(t)
-    self.box:textInput(t)
+    local new_t = string.lower(t) --Force lowercase letters only
+    self.box:textInput(new_t)
 end
 
 function state:mousepressed(x, y, but)

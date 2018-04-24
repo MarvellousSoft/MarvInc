@@ -179,6 +179,12 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         f.createDirectory("saves")
     end
     for _, user in pairs(f.getDirectoryItems("saves")) do
+        --Check for user with uppercase letters
+        if string.match(user, "[A-Z]") then
+            print("Found a user with uppercase letters: "..user)
+            love.window.showMessageBox("Warning: Username with uppercase letters", "The username '"..user.."' contains uppercase letters,\nand we no longer support this type of username since\n it can create conflicts on certain OS.\nPlease rename this user folder in the save directory\nfolder so you can access it and supress this warning.",
+            {"OK", "lol ok"}, 'warning')
+        end
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
             sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
