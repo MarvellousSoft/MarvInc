@@ -35,8 +35,8 @@ local msg_list = {
     "Bzzzt! Robot ready for duty.",
     "WHAT THE F- Bzzzt!",
     "MarvInc, where dreams come true! Bzzz! Shit bro, what the...? Bzzt!",
-    "Dude... Is that you? Why am I here?!",
-    "Hey man, what the shit! Get me outta here!",
+    "Bro... Is that you? Why am I here?!",
+    "Hey man, w-what the shit!? Get me outta here!!",
     "Bzzzt! MarvBots are always eager to please!",
     "AAAAARGH MY HEAD!!!",
     "Is this a prank? What the fuck, man!",
@@ -50,13 +50,13 @@ local msg_list = {
     "C'mon man, I'll do what you want, just get me outta here...",
     "Whatever you want, I'll do it...",
     "Bzzzt! The new MarvInc personal robots! Each with a unique personality! Call now and guarantee yours!",
-    "Bzzzt! Just... Just kill me dude. What the fuck? My head... It just hurts so much...",
+    "Bzzzt! J-Just... Just kill me bro. What the fuck? My head... It just hurts so much...",
     "Bzzzt! Be it household, industrial or even military! The new MarvBots are just so handy!",
-    "Bzzzt! Kill me... End this...",
+    "Bzzzt! Kill me... End this b-bro...",
     "...",
     "Bzzzt!",
     "MarvBots, the latest in MarvInc technology! Find yours at your local MarvStore!",
-    "I aim to please! Please give me a command.",
+    "I aim to please! Please give me a command. :)",
     "MarvBot standing by."
 }
 

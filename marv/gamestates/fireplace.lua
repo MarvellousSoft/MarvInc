@@ -15,10 +15,11 @@ local w, h
 
 local paper = {}
 local p_y = 0
-local sound
+local firesound
 local timer
 
 function state:enter(prev)
+    GS['GAME'].getBGMManager():stopBGM()
     timer = Timer.new()
     n = 5
     for i = 1, n do
@@ -28,10 +29,10 @@ function state:enter(prev)
     for i = 1, 5 do
         paper[i] = love.graphics.newImage('assets/images/paper_burn' .. i .. '.png')
     end
-    sound = love.audio.newSource('assets/sound/fire.ogg', 'stream')
-    sound:setLooping(true)
-    sound:play()
-    self.sound_vol = 1
+    firesound = love.audio.newSource('assets/sound/fire.ogg', 'stream')
+    firesound:setLooping(true)
+    firesound:play()
+    self.sound_vol = SOUND_EFFECT_MOD
     timer:after(7.5, function() timer:tween(1, self, {sound_vol = 0}) end)
     timer:after(8.5, Gamestate.pop)
 end
@@ -47,7 +48,8 @@ local time = 0
 local bg_a = 0
 function state:update(dt)
     timer:update(dt)
-    sound:setVolume(self.sound_vol)
+    AUDIO_TIMER:update(dt)
+    firesound:setVolume(self.sound_vol)
     cur = cur + dt
     if cur > step then
         cur = 0
@@ -99,7 +101,7 @@ function state:draw()
 end
 
 function state:leave()
-    sound:stop()
+    firesound:stop()
     Gamestate.push(GS.NEWS, 'pro', 4)
 end
 

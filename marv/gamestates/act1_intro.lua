@@ -11,7 +11,7 @@ local Timer = require "extra_libs.hump.timer"
 local FX = require "classes.fx"
 local state = {}
 
--- ACT 2 TRANSITION SCREEN -- Similar to credits
+-- ACT 1 TRANSITION SCREEN -- Similar to credits
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
 state.duration = 10
 

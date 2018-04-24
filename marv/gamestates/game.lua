@@ -22,12 +22,14 @@ local FX = require "classes.fx"
 local state = {}
 local pc_box
 local room
+local bgmmanager
 
 -- DONT USE LEAVE BEFORE FIXING THIS
 -- see what should be on init and what should be on enter
 function state:init()
     room = Rooms.create()
     pc_box = PcBox.create()
+    bgmmanager = BGMManager()
 
     LoreManager.init()
     FX.intro()
@@ -51,8 +53,14 @@ function state:getRoom()
     return room
 end
 
+function state:getBGMManager()
+    return bgmmanager
+end
+
+
 function state:enter(prev, user)
     SaveManager.login(user)
+    bgmmanager:newBGM()
 
     if START_PUZZLE then
         ROOM:connect(START_PUZZLE)
@@ -70,10 +78,12 @@ function state:update(dt)
 
     pc_box:update(dt)
     room:update(dt)
+    bgmmanager:update(dt)
     StepManager.update(dt)
     LoreManager.update(dt)
 
-    Util.updateTimers(dt)
+    MAIN_TIMER:update(dt)
+    AUDIO_TIMER:update(dt)
 end
 
 function state:draw()

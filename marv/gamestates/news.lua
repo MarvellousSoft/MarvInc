@@ -15,6 +15,11 @@ local cur = 1
 local tot
 local news = {}
 function state:enter(prev, typ, n, _intro_time)
+    if typ == "pro" then
+        GS['GAME'].getBGMManager():newBGM(MUSIC.act3_3)
+    else
+        GS['GAME'].getBGMManager():newBGM(MUSIC.act1_1)
+    end
     intro_time = _intro_time or 2
     tot = n
     for i = 1, n do
@@ -38,6 +43,7 @@ local on_leave = false
 local times = {0, 7, 15, 15}
 local sx, sy = 0, 0
 function state:update(dt)
+    AUDIO_TIMER:update(dt)
     if intro_time > 0 then
         intro_time = intro_time - dt
         return
@@ -85,9 +91,6 @@ function state:draw()
 end
 
 function state:leave()
-    if sound then
-        sound:stop()
-    end
     Gamestate.push(GS.CREDITS)
 end
 

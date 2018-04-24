@@ -15,9 +15,11 @@ local intro = false
 local quick_s = false
 
 function fx.full_static(gamestate)
+    GS['GAME'].getBGMManager():stopBGM()
     full_s = true
     EVENTS_LOCK = EVENTS_LOCK + 1
     CLOSE_LOCK = true
+    SFX.loud_static:stop()
     SFX.loud_static:play()
     fx.ang = 0
     fx.h = H
@@ -29,6 +31,7 @@ function fx.full_static(gamestate)
         SFX.loud_static:stop()
         full_s = false
         CLOSE_LOCK = false
+        GS['GAME'].getBGMManager():newBGM()
         if type(gamestate) == 'function' then
             gamestate()
         elseif gamestate then
@@ -40,6 +43,7 @@ function fx.full_static(gamestate)
 end
 
 function fx.quick_static(time, callback, timer)
+    GS['GAME'].getBGMManager():stopBGM()
     timer = timer or MAIN_TIMER
     quick_s = true
     fx.ang = 0
@@ -50,6 +54,7 @@ function fx.quick_static(time, callback, timer)
     timer:after(time, function()
         quick_s = false
         SFX.loud_static:stop()
+        GS['GAME'].getBGMManager():newBGM()
         if callback then callback() end
     end)
 

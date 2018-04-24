@@ -22,6 +22,7 @@ local close_door, car_passing, ambient
 local timer
 
 function state:enter(prev, _img, _w, _h, total)
+    GS['GAME'].getBGMManager():stopBGM()
     timer = Timer.new()
     if _img == 'assets/cutscenes/body_drop.png' then
         thump = love.audio.newSource('assets/sound/thump.wav', 'static')

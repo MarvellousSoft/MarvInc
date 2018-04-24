@@ -93,6 +93,7 @@ ORIENT = {NORTH, EAST, SOUTH, WEST}
 
 --TIMERS--
 MAIN_TIMER = Timer.new()  --General Timer
+AUDIO_TIMER = Timer.new()  --General Audio Timer
 
 -- Rotational orientations
 NORTH_R, EAST_R, SOUTH_R, WEST_R = {math.pi}, {3*math.pi/2}, {0}, {math.pi/2}
@@ -536,6 +537,18 @@ function setup.config()
 
     MUSIC_MOD = 1 -- Current BGM volume
     MUSIC = {}
+    MUSIC.menu = {path = "assets/sound/bgms/tumult.mp3", base_volume = .1}
+    MUSIC.tut_1 = {path = "assets/sound/bgms/he_missed_loop.mp3", base_volume = .1}
+    MUSIC.tut_2 = {path = "assets/sound/bgms/easy_life_loop.mp3", base_volume = .08}
+    MUSIC.act1_1 = {path = "assets/sound/bgms/what_have_you_done_loop.mp3", base_volume = .08}
+    MUSIC.act2_1 = {path = "assets/sound/bgms/tiger_blue_sky_loop.mp3", base_volume = .08}
+    MUSIC.act2_2 = {path = "assets/sound/bgms/wasnt_what_i_expected_loop.mp3", base_volume = .08}
+    MUSIC.act2_3 = {path = "assets/sound/bgms/i_wanted_to_live_loop.mp3", base_volume = .08}
+    MUSIC.act3_1 = {path = "assets/sound/bgms/i_thought_of_pills_loop.mp3", base_volume = .08}
+    MUSIC.act3_2 = {path = "assets/sound/bgms/just_blue_sky_loop.mp3", base_volume = .08}
+    MUSIC.act3_3 = {path = "assets/sound/bgms/completely_lost_loop.mp3", base_volume = .08}
+    MUSIC.final_puzzle = {path = "assets/sound/bgms/a_role_in_life_loop.mp3", base_volume = .08}
+
 end
 
 --Return functions

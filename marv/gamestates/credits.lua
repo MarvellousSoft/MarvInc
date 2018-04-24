@@ -13,23 +13,50 @@ local state = {}
 
 -- CREDTIS SCREEN --
 -- If you just want to change the duration, change the self.duration var and everything will adapt nicely
-state.duration = 15
+state.duration = 40
 
 -- Changing the text is ok too, no need to change anything else
 local credits = [[
-Marvellous Soft. 2017
+Marvellous Inc.
+
+
+
+
 
 Made by:
+
 Renato Lui Geh
-Ricardo Lira da Fonseca
 Yan Soares Couto
+Ricardo Lira da Fonseca
+
+
+
+
+
 
 Thanks to:
+
 Yan's Mom
 Fast Food
 Mayte
 Maria Clara
 Cotuba
+
+> YOU <
+
+
+
+
+
+
+
+
+a game made by
+Marvellous Soft
+
+
+
+
 ]]
 
 
@@ -46,8 +73,12 @@ end
 
 function state:update(dt)
     Timer.update(dt)
+    AUDIO_TIMER:update(dt)
+    MAIN_TIMER:update(dt)
     self.cur_time = self.cur_time + dt
-    if self.cur_time > self.duration  then Gamestate.pop()  end
+    if self.cur_time > self.duration  then
+         Gamestate.pop()
+    end
 end
 
 function state:draw()

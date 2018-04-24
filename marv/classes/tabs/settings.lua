@@ -46,10 +46,10 @@ SettingsTab = Class {
         self.options = {
             ["Background Music"] = ToggleButton(0, 0, 20, 20, function()
                 MUSIC_MOD = 1
-                for _, m in pairs(MUSIC) do m:updateVolume() end -- fixes playing sounds
+                GS['GAME'].getBGMManager():updateVolume()
             end, function()
                 MUSIC_MOD = 0
-                for _, m in pairs(MUSIC) do m:updateVolume() end -- fixes playing sounds
+                GS['GAME'].getBGMManager():updateVolume()
             end, MUSIC_MOD == 1),
             ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, SOUND_EFFECT_MOD == 1),
             ["Fullscreen"] = ToggleButton(0, 0, 20, 20, function()

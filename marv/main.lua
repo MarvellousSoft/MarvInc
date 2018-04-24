@@ -170,4 +170,8 @@ function love.quit()
         PopManager.quit()
     end
     SaveManager.save()
+    local bgmm = GS['GAME'].getBGMManager()
+    if bgmm then
+        bgmm.current_bgm:fadeout()
+    end
 end

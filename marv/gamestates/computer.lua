@@ -56,6 +56,7 @@ end
 
 
 function state:enter(prev)
+    GS['GAME'].getBGMManager():stopBGM()
     type_sound = love.audio.newSource('assets/sound/type.wav', 'static')
     type_enter_sound = love.audio.newSource('assets/sound/type_enter.wav', 'static')
     self.cur_time = 0

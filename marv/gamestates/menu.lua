@@ -12,6 +12,8 @@ require "classes.text_box"
 require "classes.button"
 local ScrollWindow = require "classes.scroll_window"
 local state = {}
+local bgm
+
 
 local function try_login()
     if #state.box.lines[1] == 0 then
@@ -19,16 +21,23 @@ local function try_login()
         SFX.buzz:play()
     else
         Gamestate.switch(GS.GAME, state.box.lines[1])
+        bgm:fadeout()
         SFX.login:stop()
         SFX.login:play()
     end
 end
 
+function state:init()
+    bgm = Music(MUSIC.menu.path, "stream", MUSIC.menu.base_volume)
+end
+
 function state:enter()
 
-    local bg
+    --Start menu bgm
+    bgm:fadein()
 
     -- Create background
+    local bg
     bg = IMAGE(0, 0, BG_IMG)
     bg:addElement(DRAW_TABLE.BG, nil, "background")
 
@@ -188,6 +197,7 @@ end
 function state:update(dt)
     self.known_usernames:update(dt)
     Timer.update(dt)
+    AUDIO_TIMER:update(dt)
     self.box:update(dt)
 end
 
