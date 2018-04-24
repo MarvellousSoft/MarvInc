@@ -323,6 +323,12 @@ function OpenedEmail:mousePressed(x, y, but)
     end
 end
 
+function OpenedEmail:keyPressed(key)
+    if key == "return" then
+        opened_email_funcs.close()
+    end
+end
+
 function OpenedEmail:mouseMoved(x, y)
     self.text_scroll:mouseMoved(x, y)
 end

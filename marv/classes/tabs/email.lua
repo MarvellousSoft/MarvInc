@@ -209,6 +209,11 @@ function EmailTab:keyPressed(key)
     elseif key == "pagedown" then
         self.mail_box:translateScreen(self.mail_box.scroll_in * self.email_on_screen)
     end
+
+    if Util.findId('opened_email') then
+        Util.findId('opened_email'):keyPressed(key)
+    end
+    
 end
 
 function EmailTab:mouseMoved(...)
