@@ -99,7 +99,11 @@ function Button:draw()
     --Draws button box (front)--
     if b:isMouseOver() then
         local bk = self.color.l
-        self.color.l = self.color.l * 1.2
+        if self.color.l < 30 then
+            self.color.l = self.color.l + 80
+        else
+            self.color.l = self.color.l * 1.2
+        end
         Color.set(self.color)
         self.color.l = bk
     else
