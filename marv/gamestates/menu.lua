@@ -13,6 +13,7 @@ require "classes.button"
 local ScrollWindow = require "classes.scroll_window"
 local state = {}
 local bgm
+local user_font = FONTS.fira(22)
 
 
 local function try_login()
@@ -63,11 +64,22 @@ function state:enter()
     end
 end
 
-local function drawUsername(b, x, y)
+local function drawUsername(b, x, y, mx, my)
     local str = "- " .. b.user
-    local f = love.graphics.getFont()
+    local f = user_font
+    local fw, fh = f:getWidth(b.user), f:getHeight(b.user)
+
+    --Draw username
+    love.graphics.setFont(f)
     love.graphics.setColor(255, 255, 255)
     love.graphics.print(str, x, y)
+    --Draw hover effect
+    if b.bx and Util.pointInRect(mx, my, x + f:getWidth("- "), y + 3, fw, fh - 5) then
+        love.graphics.setColor(255, 255, 255, 90)
+        love.graphics.rectangle("fill", x + f:getWidth("- "), y, fw, fh)
+    end
+
+    --Draw delete button
     love.graphics.setLineWidth(.5)
     local h = f:getHeight()
     Color.set(Color.red())
@@ -80,9 +92,10 @@ function state:usernames_draw()
     local f = love.graphics:getFont()
     if #self.user_buttons > 0 then
         love.graphics.setColor(255, 255, 255)
+        mx, my = love.mouse.getPosition()
         local cx, cy = self.user_buttons.x, self.user_buttons.y
         for _, b in ipairs(self.user_buttons) do
-            drawUsername(b, cx, cy)
+            drawUsername(b, cx, cy, mx, my)
             cy = cy + f:getHeight()
         end
         self.usernames_h = cy + 4 - self.user_buttons.y
@@ -100,6 +113,11 @@ function state:usernames_mousePressed(x, y, but)
                 if press == 1 then
                     SaveManager.deleteUser(ub[i].user)
                     self:initUsernames()
+                end
+            --If clicking on username, write username on login
+            elseif i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx - user_font:getWidth(ub[i].user) - 10, ub[i].by, user_font:getWidth(ub[i].user), user_font:getHeight(ub[i].user)) then
+                for c = 1, #ub[i].user do
+                    state:textinput(ub[i].user:sub(c,c))
                 end
             end
         end
