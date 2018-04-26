@@ -23,5 +23,5 @@ This Automated System will guide you if you feel disoriented.
 Most importantly, have fun and carry on :)
 ]],
     author = "Automated Introduction System",
-    open_func = tuto1.after_intro_email
+    open_func = tuto1.after_intro_email,
 }

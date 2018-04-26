@@ -213,7 +213,7 @@ function EmailTab:keyPressed(key)
     if Util.findId('opened_email') then
         Util.findId('opened_email'):keyPressed(key)
     end
-    
+
 end
 
 function EmailTab:mouseMoved(...)
@@ -224,7 +224,8 @@ function EmailTab:openEmail(mail)
     local e = self
     self.mail_box.last_mx, self.mail_box.last_my = nil, nil -- remove hover effect
     TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
-    e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply)
+
+    e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.image)
     if not mail.was_read then
         -- this needs to be done after the email is 'registered' or it won't be able to access it.
         if mail.open_func then mail:open_func() end
@@ -280,7 +281,7 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number)
+    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number, _image)
         local time
 
         self.number = _number
@@ -313,6 +314,8 @@ EmailObject = Class{
         -- Time the email was sent (Date (dd/mm/yy) and Time (hh:mm) AM/PM
         self.time = os.date("%I:%M %p")
 
+        self.image = _image --Optional image the email can have
+
         self.tp = "email_object"
     end
 
@@ -324,7 +327,7 @@ EmailObject = Class{
 function email_funcs.get_raw_email(id, number)
     local e = require('emails.' .. id)
 
-    local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number)
+    local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number, e.image)
 
     return email
 end

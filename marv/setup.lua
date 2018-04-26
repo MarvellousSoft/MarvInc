@@ -199,6 +199,7 @@ MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 MISC_IMG["logo"] = love.graphics.newImage("assets/images/logo.png")
+MISC_IMG["cat"] = love.graphics.newImage("assets/images/grumpy_cat.png")
 
 
 -- Bot images (assume array part only)

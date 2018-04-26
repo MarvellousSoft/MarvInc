@@ -22,7 +22,7 @@ end
 OpenedEmail = Class{
     __includes = {RECT},
 
-    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply)
+    init = function(self, _number, _title, _text, _author, _time, _can_be_deleted, _reply_func, _can_reply, _image)
         local time
         local box_width, box_height = 2.8*W/5, 4*H/5
         local color = Color.new(160, 0, 240)
@@ -49,6 +49,11 @@ OpenedEmail = Class{
         self.author = _author -- Who sent the email
         self.time = _time -- Time the email was sent
 
+        --Optional Image
+        self.image = _image
+        self.image_gap = 5 --Gap between image and text above/buttons below
+        self.image_height = _image and (_image:getHeight() + 2*self.image_gap) or 0
+
         -- Text ScrollWindow
         self.w = self.w - 20
 
@@ -57,7 +62,7 @@ OpenedEmail = Class{
         local obj = {
             mousePressed = function(o, ...) self:checkButtonClick(...) end,
             mouseMoved = function(o, ...) self:fixedMouseMoved(...) end,
-            getHeight = function() return self.text_height + 120 end,
+            getHeight = function() return self.text_height + self.image_height + 120 end,
             draw = function(o) self:drawContents(o) end,
             pos = Vector(self.pos.x + 10, self.pos.y + 130)
         }
@@ -70,7 +75,7 @@ OpenedEmail = Class{
         self.delete_button_color = Color.new(0,80,120) --Color for delete button box
         self.delete_button_text_color = Color.new(0,0,250) --Color for delete button text
         self.delete_x = self.pos.x + self.w/2 - 25 -- X position value of delete button (related to opened email pos)
-        self.delete_y = obj.pos.y + self.text_height + 80 -- Y position value of delete button (related to opened email pos)
+        self.delete_y = obj.pos.y + self.text_height + self.image_height + 80 -- Y position value of delete button (related to opened email pos)
         self.delete_w = 70 -- Width value of delete button
         self.delete_h = 30 -- Height value of delete button
         self.delete_hover = false -- Whether the mouse is over the delete button
@@ -84,7 +89,7 @@ OpenedEmail = Class{
         self.reply_func = _reply_func -- Function to be called when you reply the email (if nil there won't be a reply button)
         self.can_reply = _can_reply -- If the reply button is enabled
         self.reply_x = self.pos.x + self.w/2 - 25 -- X position value of reply button (related to opened email pos)
-        self.reply_y = obj.pos.y + self.text_height + 40 -- Y position value of reply button (related to opened email pos)
+        self.reply_y = obj.pos.y + self.text_height + self.image_height + 40 -- Y position value of reply button (related to opened email pos)
         self.reply_w = 70 -- Width value of reply button
         self.reply_h = 30 -- Height value of reply button
         self.reply_hover = false -- Whether the mouse is over the reply button
@@ -105,9 +110,19 @@ local function makeBrighter()
 end
 
 function OpenedEmail:drawContents(box)
-    love.graphics.printf(self.text, box.pos.x, box.pos.y, self.w - 25)
     local e = self
     local referenced_email = e.referenced_email
+
+    --Draw email text
+    love.graphics.printf(e.text, box.pos.x, box.pos.y, e.w - 25)
+
+    --Draw email image if it exists
+    if e.image then
+        local x = box.pos.x + e.w/2 - e.image:getWidth()/2
+        local y = box.pos.y + e.text_height + self.image_gap
+        love.graphics.draw(self.image, x, y)
+    end
+
     -- Can be deleted button
     if e.can_be_deleted then
         -- Make button box
@@ -346,10 +361,10 @@ function opened_email_funcs.close()
 
 end
 
-function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
+function opened_email_funcs.create(number, title, text, author, time, can_be_deleted, reply_func, can_reply, image)
     local e
 
-    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply)
+    e = OpenedEmail(number, title, text, author, time, can_be_deleted, reply_func, can_reply, image)
     e:addElement(DRAW_TABLE.L2, nil, "opened_email")
 
     return e
