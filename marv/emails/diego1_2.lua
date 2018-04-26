@@ -12,6 +12,6 @@ return {
     text = [[
 i cant stop laughing at this image
 ]],
-    author = "Diego Lorenzo Vega (vega@rtd.marv.com)"
+    author = "Diego Lorenzo Vega (vega@rtd.marv.com)",
+    image = MISC_IMG["cat"]
 }
---TODO insert funny cat image
