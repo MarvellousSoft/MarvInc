@@ -116,8 +116,9 @@ function state:usernames_mousePressed(x, y, but)
                 end
             --If clicking on username, write username on login
             elseif i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx - user_font:getWidth(ub[i].user) - 10, ub[i].by, user_font:getWidth(ub[i].user), user_font:getHeight(ub[i].user)) then
+                self.box:reset_lines(1)
                 for c = 1, #ub[i].user do
-                    state:textinput(ub[i].user:sub(c,c))
+                    self:textinput(ub[i].user:sub(c,c))
                 end
             end
         end
