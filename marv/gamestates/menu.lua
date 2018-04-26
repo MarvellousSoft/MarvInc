@@ -14,6 +14,7 @@ local ScrollWindow = require "classes.scroll_window"
 local state = {}
 local bgm
 local user_font = FONTS.fira(22)
+local delete_font = FONTS.firaBold(22)
 
 
 local function try_login()
@@ -80,11 +81,18 @@ local function drawUsername(b, x, y, mx, my)
     end
 
     --Draw delete button
-    love.graphics.setLineWidth(.5)
+    love.graphics.setLineWidth(1)
     local h = f:getHeight()
-    Color.set(Color.red())
     b.bx, b.by, b.bsz = x + f:getWidth(str) + 10, y + h * .1, h * .8
+    --Hover effect
+    if Util.pointInRect(mx, my, b.bx, b.by, b.bsz, b.bsz) then
+        love.graphics.setColor(255, 95, 66, 80)
+        love.graphics.rectangle('fill', b.bx, b.by, b.bsz, b.bsz)
+    end
+    Color.set(Color.red())
+    f = delete_font
     love.graphics.rectangle('line', b.bx, b.by, b.bsz, b.bsz)
+    love.graphics.setFont(f)
     love.graphics.print('X', b.bx + (b.bsz - f:getWidth('X')) / 2, y)
 end
 
