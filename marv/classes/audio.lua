@@ -26,6 +26,11 @@ local function GetNextBGM(previous)
         table.insert(possible_bgms, MUSIC.act3_3)
     end
 
+    if ROOM.puzzle_id == "ryr" and ROOM:connected() then
+        possible_bgms = {}
+        table.insert(possible_bgms, MUSIC.final_puzzle)
+    end
+
     --Get a different bgm, if possible
     local bgm
     if #possible_bgms > 1 then

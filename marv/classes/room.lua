@@ -190,6 +190,10 @@ function Room:connect(id, changeToInfo)
     SFX.loud_static:play()
 
     self.puzzle_id = id
+    if id == 'ryr' then
+        GS['GAME'].getBGMManager():stopBGM()
+        GS['GAME'].getBGMManager():newBGM(MUSIC.final_puzzle)
+    end
     self.static_on = true
     self.static_dhdl = MAIN_TIMER:after(0.0675, function()
         SFX.loud_static:stop()
@@ -220,11 +224,17 @@ function Room:disconnect(wait)
         Signal.remove(SIGEND, self.turn_handler)
     end
 
+    self.prev_puzzle_id = self.puzzle_id
+    self.mode = "offline"
+
     if self.puzzle_id == 'franz1' then
         local Mail = require 'classes.tabs.email'
         if not Mail.exists('Tread very carefully') and not LoreManager.puzzle_done.franz1 then
             Mail.new('franz1_1')
         end
+    elseif self.puzzle_id == 'ryr' then
+        GS['GAME'].getBGMManager():stopBGM()
+        GS['GAME'].getBGMManager():newBGM()
     end
 
     Util.findId('code_tab'):saveCurrentCode()
@@ -243,7 +253,6 @@ function Room:disconnect(wait)
         end)
         Util.findId("pcbox"):changeTabs(Util.findId("pcbox").menu_tabs, "email")
     end
-    self.mode = "offline"
     if self.puzzle.on_end then
         self.puzzle.on_end(self)
     end
