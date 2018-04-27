@@ -100,7 +100,7 @@ function state:usernames_draw()
     local f = love.graphics:getFont()
     if #self.user_buttons > 0 then
         love.graphics.setColor(255, 255, 255)
-        mx, my = love.mouse.getPosition()
+        mx, my = self.username_mx, self.username_my
         local cx, cy = self.user_buttons.x, self.user_buttons.y
         for _, b in ipairs(self.user_buttons) do
             drawUsername(b, cx, cy, mx, my)
@@ -108,6 +108,10 @@ function state:usernames_draw()
         end
         self.usernames_h = cy + 4 - self.user_buttons.y
     end
+end
+
+function state:usernames_mouseMoved(x, y)
+    self.username_mx, self.username_my = x, y
 end
 
 function state:usernames_mousePressed(x, y, but)
@@ -142,11 +146,13 @@ function state:initUsernames()
     end
     ub.y = H * .60
     ub.x = W * .65
+    self.username_mx, self.username_my = 0, 0
     local usernames = {
         pos = {x = ub.x, y = ub.y},
         getHeight = function() return self.usernames_h end,
         mousePressed = function(obj, ...) self:usernames_mousePressed(...) end,
         draw = function() self:usernames_draw() end,
+        mouseMoved = function(obj, ...) self:usernames_mouseMoved(...) end,
     }
     self.known_usernames = ScrollWindow(300, H - 10 - ub.y, usernames)
     self.known_usernames.sw = 8
