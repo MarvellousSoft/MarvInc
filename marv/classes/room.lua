@@ -224,6 +224,7 @@ function Room:disconnect(wait)
         Signal.remove(SIGEND, self.turn_handler)
     end
 
+    Util.findId('code_tab'):saveCurrentCode()
     self.prev_puzzle_id = self.puzzle_id
     self.mode = "offline"
 
@@ -237,7 +238,6 @@ function Room:disconnect(wait)
         GS['GAME'].getBGMManager():newBGM()
     end
 
-    Util.findId('code_tab'):saveCurrentCode()
     if wait == nil or wait then
         SFX.loud_static:stop()
         SFX.loud_static:play()
