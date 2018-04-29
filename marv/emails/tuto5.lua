@@ -17,11 +17,11 @@ You can pickup and drop objects, such as giant buckets, with the commands {inst}
 The {inst}drop {end}command works the same way, but instead of picking objects, the robot will try to drop whatever he is holding in the inventory.
 
 Example that makes the bot pickup an object from his left and placing on his right:
-    - {inst}pickup {dir}left{end}
+      {inst}pickup {dir}left{end}
       {inst}drop {dir}right{end}
 
 The same example as above, if the robot was facing north:
-    - {inst}turn {dir}counter{end}
+      {inst}turn {dir}counter{end}
       {inst}pickup{end}
       {inst}turn {dir}right{end}
       {inst}drop{end}
