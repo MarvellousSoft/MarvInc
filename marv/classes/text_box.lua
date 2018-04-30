@@ -139,7 +139,7 @@ function TextBox:undo()
     end
 end
 
--- redoes last undone action, returns whether sucessful
+-- redoes last undone action, returns whether successful
 function TextBox:redo()
     local b = self.backups
     if b.cur == b.last then
