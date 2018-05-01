@@ -68,6 +68,13 @@ SettingsTab = Class {
             end, function()
                 SideMessage.block_extra_bot_messages = true
             end, not SideMessage.block_extra_bot_messages),
+            ["Milder Static Screens"] = ToggleButton(0, 0, 20, 20, function()
+                MISC_IMG["static"] = MISC_IMG["mild_static"]
+                SETTINGS["static"] = "mild_static"
+            end, function()
+                MISC_IMG["static"] = MISC_IMG["reg_static"]
+                SETTINGS["static"] = "reg_static"
+            end, SETTINGS["static"] == "mild_static")
         }
 
         self.title_font = FONTS.firaBold(50)

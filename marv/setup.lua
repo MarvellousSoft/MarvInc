@@ -197,13 +197,18 @@ BG_IMG = love.graphics.newImage("assets/images/background.png")
 
 -- Miscellaneous images
 MISC_IMG = {}
-MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
+MISC_IMG["reg_static"] = love.graphics.newImage("assets/images/static.png")
+MISC_IMG["mild_static"] = love.graphics.newImage("assets/images/static_mild.png")
+MISC_IMG["static"] = MISC_IMG["reg_static"]
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 MISC_IMG["logo"] = love.graphics.newImage("assets/images/logo.png")
 MISC_IMG["cat"] = love.graphics.newImage("assets/images/grumpy_cat.png")
 MISC_IMG["marvsoft"] = love.graphics.newImage("assets/images/Marvellous Soft.png")
 
+-- Miscellaneous settings
+SETTINGS = {}
+SETTINGS["static"] = "reg_static"
 
 -- Bot images (assume array part only)
 HAIR = {

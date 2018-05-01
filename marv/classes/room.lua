@@ -119,9 +119,9 @@ Room = Class{
         -- Static transition
         self.static_dhdl = nil
         self.static_rhdl = nil
-        self.static_img = MISC_IMG["static"]
-        self.static_sx = self.grid_w / self.static_img:getWidth()
-        self.static_sy = self.grid_h / self.static_img:getHeight()
+        local static_img = MISC_IMG.static
+        self.static_sx = self.grid_w / static_image:getWidth()
+        self.static_sy = self.grid_h / static_image:getHeight()
         self.static_r = 0
         self.static_on = false
 
@@ -380,10 +380,11 @@ function Room:draw()
         Color.set(self.back_clr)
         love.graphics.push()
         love.graphics.origin()
-        love.graphics.draw(self.static_img,
+        local s = MISC_IMG.static
+        love.graphics.draw(s,
             self.grid_x + self.grid_w/2, self.grid_h/2 + self.grid_y,
             self.static_r, self.static_sx, self.static_sy,
-            self.static_img:getWidth()/2, self.static_img:getHeight()/2)
+            s:getWidth()/2, s:getHeight()/2)
         love.graphics.pop()
     end
 
