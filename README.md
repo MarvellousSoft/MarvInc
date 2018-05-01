@@ -16,7 +16,9 @@ After that, the game was much improved and re-released.
 
 ## Running
 
-Marvellous Inc. runs on Windows, Linux and MacOS, checkout our [itch.io page](https://marvellous.itch.io/marvellous-inc) for the latest release, or our [releases page](https://github.com/MarvellousSoft/MarvInc/releases) for all previous ones.
+Marvellous Inc. runs on Windows, Linux and MacOS!
+The game is available on [Steam](https://store.steampowered.com/app/827940/Marvellous_Inc/) and [itch.io](https://marvellous.itch.io/marvellous-inc).
+Checkout our [releases page](https://github.com/MarvellousSoft/MarvInc/releases) for previous versions aswell.
 
 ----------------------------------------------------
 
