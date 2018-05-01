@@ -100,13 +100,21 @@ Room = Class{
         self.back_sx = self.grid_w/BG_IMG:getWidth()
         self.back_sy = self.grid_h/BG_IMG:getHeight()
 
-        -- Logoff button
-        local logoff = function()
+        -- Exit button
+        local exit = function()
+            SaveManager.logout()
+            FX.full_static(function() love.event.quit() end)
+        end
+        self.exit_b = ImgButton(self.grid_x + self.grid_w - 115, self.grid_y + 10, 50, BUTS_IMG.exit, exit, "Exit")
+        self.exit_b.hover_img = BUTS_IMG.exit_hover
+
+        -- Reboot button
+        local reboot = function()
             SaveManager.logout()
             FX.full_static(function() love.event.quit('restart') end)
         end
-        self.logoff_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.logoff, logoff, "Reboot")
-        self.logoff_b.hover_img = BUTS_IMG.logoff_hover
+        self.reboot_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.reboot, reboot, "Reboot")
+        self.reboot_b.hover_img = BUTS_IMG.reboot_hover
 
         -- Static transition
         self.static_dhdl = nil
@@ -416,8 +424,10 @@ function Room:draw()
     -- Set origin to (0, 0)
     love.graphics.pop()
 
+    --Draw exit and reboot buttons
     if self.mode == "offline" then
-        self.logoff_b:draw()
+        self.exit_b:draw()
+        self.reboot_b:draw()
     end
 
     --Draw camera screen
@@ -500,7 +510,8 @@ end
 
 function Room:mousePressed(x, y, but)
     if self.mode == "offline" then
-        self.logoff_b:mousePressed(x, y, but)
+        self.exit_b:mousePressed(x, y, but)
+        self.reboot_b:mousePressed(x, y, but)
     end
 end
 
