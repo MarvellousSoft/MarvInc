@@ -91,6 +91,7 @@ function sm.save()
     data.bots_dead = info.dead
     data.last_bot = BotManager.current_bot
     data.block_extra_bot_messages = SideMessage.block_extra_bot_messages
+    data.block_intro_bot_messages = SideMessage.block_intro_bot_messages
     data.static_screen = SETTINGS["static"]
 
     data.employee_id = EMPLOYEE_NUMBER
@@ -136,6 +137,7 @@ function sm.login(user)
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
         SideMessage.block_extra_bot_messages = data.block_extra_bot_messages
+        SideMessage.block_intro_bot_messages = data.block_intro_bot_messages
         SETTINGS["static"] = data.static_screen
         MISC_IMG["static"] = MISC_IMG[data.static_screen] or MISC_IMG.reg_static
 

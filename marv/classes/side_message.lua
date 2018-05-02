@@ -361,8 +361,14 @@ getDialog = function(bot)
 
     --If its bot first time appearing
     if bot.first_time and BotModule.current_bot then
+        bot.first_time = false
         BotModule.current_bot.first_time = false
-        return Util.randomElement(intro_messages)
+        if not SideMessage.block_intro_bot_messages then
+            print("Intro message")
+            return Util.randomElement(intro_messages)
+        else
+            return nil
+        end
     elseif SideMessage.block_extra_bot_messages then
         return nil
     end

@@ -63,18 +63,23 @@ SettingsTab = Class {
                 end
                 love.resize(love.window.getMode())
             end, function() return love.window.getFullscreen() end),
-            ["Robot Messages Popup"] = ToggleButton(0, 0, 20, 20, function()
+            ["Robots Messages Popup"] = ToggleButton(0, 0, 20, 20, function()
                 SideMessage.block_extra_bot_messages = false
             end, function()
                 SideMessage.block_extra_bot_messages = true
             end, function() return not SideMessage.block_extra_bot_messages end),
+            ["Robots Intro Popup"] = ToggleButton(0, 0, 20, 20, function()
+                SideMessage.block_intro_bot_messages = false
+            end, function()
+                SideMessage.block_intro_bot_messages = true
+            end, function() return not SideMessage.block_intro_bot_messages end),
             ["Milder Static Screens"] = ToggleButton(0, 0, 20, 20, function()
                 MISC_IMG["static"] = MISC_IMG["mild_static"]
                 SETTINGS["static"] = "mild_static"
             end, function()
                 MISC_IMG["static"] = MISC_IMG["reg_static"]
                 SETTINGS["static"] = "reg_static"
-            end, function() return SETTINGS["static"] == "mild_static" end)
+            end, function() return SETTINGS["static"] == "mild_static" end),
         }
 
         self.title_font = FONTS.firaBold(50)
