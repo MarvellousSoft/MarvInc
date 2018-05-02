@@ -107,6 +107,10 @@ function Object:moveTo(grid, r, c, o)
         end
     end
 
+    if ROOM.inv_wall[px][py] then
+        return
+    end
+
     if grid[self.pos.x][self.pos.y] == self then
         grid[self.pos.x][self.pos.y] = nil
     end
