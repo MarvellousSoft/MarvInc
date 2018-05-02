@@ -74,7 +74,7 @@ SettingsTab = Class {
             end, function()
                 MISC_IMG["static"] = MISC_IMG["reg_static"]
                 SETTINGS["static"] = "reg_static"
-            end, function() return SETTINGS["static"] ~= "mild_static" end)
+            end, function() return SETTINGS["static"] == "mild_static" end)
         }
 
         self.title_font = FONTS.firaBold(50)
@@ -182,6 +182,11 @@ end
 
 function ToggleButton:refresh()
     self.on = self.on_f()
+    if self.on then
+        self.square_mod = 1
+    else
+        self.square_mod = 0
+    end
 end
 
 function SettingsTab:mousePressed(x, y, but)

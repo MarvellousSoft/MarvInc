@@ -17,7 +17,7 @@ sm.user_data = {}
 
 -- used to improve compatibilty
 local current_common_version = "1"
-local current_save_version = "2"
+local current_save_version = "3"
 
 function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
@@ -137,7 +137,7 @@ function sm.login(user)
         BotManager.current_bot = data.last_bot
         SideMessage.block_extra_bot_messages = data.block_extra_bot_messages
         SETTINGS["static"] = data.static_screen
-        MISC_IMG["static"] = MISC_IMG[data.static_screen]
+        MISC_IMG["static"] = MISC_IMG[data.static_screen] or MISC_IMG.reg_static
 
         ROOM.draw_star = data.draw_star
         ROOM.version = data.os_version
@@ -190,9 +190,9 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         end
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
+            print(user .. " has version " .. ver)
             sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
             if ver == "1" then -- 1 --> 2
-                print("Changing from version 1 to 2")
                 local bot = sm.user_data[user].last_bot
                 if bot then
                     bot.hair_i = love.math.random(#HAIR)
@@ -201,6 +201,10 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
                     bot.body_clr = Color.new(love.math.random(256) - 1, 200, 200)
                 end
                 ver = "2"
+            end
+            if ver == "2" then -- 2 --> 3
+                sm.user_data[user].static_screen = "reg_static"
+                ver = "3"
             end
             if ver ~= current_save_version then
                 -- deal with old save versions
