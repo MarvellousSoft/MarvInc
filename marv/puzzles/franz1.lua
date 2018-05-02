@@ -82,7 +82,7 @@ function on_start(room)
     _G.StepManager.only_play_button = true
     _G.ROOM.block_bot_messages = true
     handle = _G.MAIN_TIMER:after(rnd_delay(), function(self)
-        if _G.ROOM.puzzle_id ~= 'franz1' then return end
+        if _G.ROOM.puzzle_id ~= 'franz1' or _G.require('classes.lore_manager').puzzle_done.franz1 then return end
         cur_msg = cur_msg + 1
         if cur_msg > #msg_list then cur_msg = #msg_list end
         _G.Signal.emit("new_bot_message", msg_list[cur_msg], 120)
