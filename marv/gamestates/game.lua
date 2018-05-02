@@ -60,6 +60,7 @@ end
 
 function state:enter(prev, user)
     SaveManager.login(user)
+    SettingsTab:refresh()
     bgmmanager:newBGM()
 
     if START_PUZZLE then

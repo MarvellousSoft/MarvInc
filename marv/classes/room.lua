@@ -120,8 +120,8 @@ Room = Class{
         self.static_dhdl = nil
         self.static_rhdl = nil
         local static_img = MISC_IMG.static
-        self.static_sx = self.grid_w / static_image:getWidth()
-        self.static_sy = self.grid_h / static_image:getHeight()
+        self.static_sx = self.grid_w / static_img:getWidth()
+        self.static_sy = self.grid_h / static_img:getHeight()
         self.static_r = 0
         self.static_on = false
 

@@ -50,8 +50,8 @@ SettingsTab = Class {
             end, function()
                 MUSIC_MOD = 0
                 GS['GAME'].getBGMManager():updateVolume()
-            end, MUSIC_MOD == 1),
-            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, SOUND_EFFECT_MOD == 1),
+            end, function() return MUSIC_MOD == 1 end),
+            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, function() return SOUND_EFFECT_MOD == 1 end),
             ["Fullscreen"] = ToggleButton(0, 0, 20, 20, function()
                 prev_window = {love.window.getMode()}
                 love.window.setFullscreen(true, "desktop")
@@ -62,19 +62,19 @@ SettingsTab = Class {
                     love.window.setMode(unpack(prev_window))
                 end
                 love.resize(love.window.getMode())
-            end, (love.window.getFullscreen())),
+            end, function() return love.window.getFullscreen() end),
             ["Robot Messages Popup"] = ToggleButton(0, 0, 20, 20, function()
                 SideMessage.block_extra_bot_messages = false
             end, function()
                 SideMessage.block_extra_bot_messages = true
-            end, not SideMessage.block_extra_bot_messages),
+            end, function() return not SideMessage.block_extra_bot_messages end),
             ["Milder Static Screens"] = ToggleButton(0, 0, 20, 20, function()
                 MISC_IMG["static"] = MISC_IMG["mild_static"]
                 SETTINGS["static"] = "mild_static"
             end, function()
                 MISC_IMG["static"] = MISC_IMG["reg_static"]
                 SETTINGS["static"] = "reg_static"
-            end, SETTINGS["static"] == "mild_static")
+            end, function() return SETTINGS["static"] ~= "mild_static" end)
         }
 
         self.title_font = FONTS.firaBold(50)
@@ -134,7 +134,8 @@ function ToggleButton:init(x, y, w, h, on_callback, off_callback, is_on)
     RECT.init(self, x, y, w, h)
     self.on_callback = on_callback
     self.off_callback = off_callback
-    self.on = is_on
+    self.on_f = is_on
+    self.on = is_on()
     if self.on then
         self.square_mod = 1
     else
@@ -179,6 +180,10 @@ function ToggleButton:draw()
     end
 end
 
+function ToggleButton:refresh()
+    self.on = self.on_f()
+end
+
 function SettingsTab:mousePressed(x, y, but)
     self.box:mousePressed(x, y, but)
 end
@@ -201,4 +206,11 @@ end
 
 function SettingsTab:draw()
     self.box:draw()
+end
+
+function SettingsTab:refresh()
+    local tab = Util.findId("settings_tab")
+    for _, o in pairs(tab.options) do
+        o:refresh()
+    end
 end
