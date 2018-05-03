@@ -32,6 +32,8 @@ function draw.allTables()
 
     DrawTable(DRAW_TABLE.GUI)
 
+    DrawTable(DRAW_TABLE.WRNG)
+
 end
 
 --Draw all the elements in a table
