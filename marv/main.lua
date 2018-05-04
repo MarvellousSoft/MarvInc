@@ -39,6 +39,7 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 require "classes.tabs.manual"
 require "classes.tabs.settings"
+require "classes.tabs.puzzle_list"
 
 require "classes.side_message"
 require "classes.pc_box"
