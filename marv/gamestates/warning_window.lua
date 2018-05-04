@@ -16,12 +16,10 @@ local _coroutine
 local _window
 -- Warning Window State  --
 
-function state:enter(old_state, title, message, buttonlist, co)
-    print("entered", co)
-    --Store coroutine to resume later
-    _coroutine = co
+function state:enter(old_state, title, message, buttonlist)
 
     _window = WarnWindow.create(title,message,buttonlist)
+    
 end
 
 function state:update(dt)
@@ -42,7 +40,7 @@ end
 
 function state:leave()
     _window:destroy()
-    coroutine.resume(_coroutine)
+
 end
 
 return state

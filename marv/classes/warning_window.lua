@@ -105,19 +105,11 @@ function funcs.create(title, message, buttonlist)
     return w
 end
 
---Pushes the Warning Window state, yielding current thread.
---It will return to here with the arguments (which button pressed) and resume
+--Pushes the Warning Window state
 function funcs.show(title, message, buttonlist)
-    local co = coroutine.create(
-        function(corotine)
-            Gamestate.push(GS.WARNINGWIN, title, message, buttonlist, corotine)
-            coroutine.yield()
-        end
-    )
 
-    coroutine.resume(co, co)
+    Gamestate.push(GS.WARNINGWIN, title, message, buttonlist)
 
-    return 0
 end
 
 
