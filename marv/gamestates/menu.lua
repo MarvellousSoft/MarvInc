@@ -123,7 +123,7 @@ function state:usernames_mousePressed(x, y, but)
         if x >= ub.x and y >= ub.y then
             local i = math.floor((y - ub.y) / self.font:getHeight()) + 1
             if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
-                WarningWindow.show("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
+                WarningWindow.show("Warning", "Are you sure you want to delete user " ..'"'..ub[i].user ..'"'.."?",
                     {'Yes', function()
                                 SaveManager.deleteUser(ub[i].user)
                                 self:initUsernames()

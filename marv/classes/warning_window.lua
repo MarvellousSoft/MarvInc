@@ -137,19 +137,22 @@ function funcs.create(title, message, buttonlist)
 end
 
 local _has_active_window = false
+local _dont_pop
 --Pushes the Warning Window state
-function funcs.show(title, message, buttonlist)
+function funcs.show(title, message, buttonlist, dont_pop)
     if _has_active_window == true then
         funcs.deactivate()
     end
 
-    Gamestate.push(GS.WARNINGWIN, title, message, buttonlist)
+    Gamestate.push(GS.WARNINGWIN, title, message, buttonlist, dont_pop)
     _has_active_window = true
 
 end
 
-function funcs.deactivate()
-    Gamestate.pop()
+function funcs.deactivate(dont_pop)
+    if not dont_pop then
+        Gamestate.pop()
+    end
     _has_active_window = false
 end
 

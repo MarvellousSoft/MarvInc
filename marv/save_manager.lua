@@ -183,12 +183,11 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
     if not f.exists("saves") then
         f.createDirectory("saves")
     end
+    local uppercase_users = {}
     for _, user in pairs(f.getDirectoryItems("saves")) do
         --Check for user with uppercase letters
         if string.match(user, "[A-Z]") then
-            print("Found a user with uppercase letters: "..user)
-            love.window.showMessageBox("Warning: Username with uppercase letters", "The username '"..user.."' contains uppercase letters,\nand we no longer support this type of username since\n it can create conflicts on certain OS.\nPlease rename this user folder in the save directory\nfolder so you can access it and supress this warning.",
-            {"OK", "lol ok"}, 'warning')
+            table.insert(uppercase_users,user)
         end
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
@@ -213,6 +212,26 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
             end
         end
     end
+
+    --Handle warning if there is users with uppercase
+    local uppercase_users_warning = false
+    if #uppercase_users > 0 then
+        uppercase_users_warning = true
+
+        local users = '"'..uppercase_users[1]..'"'
+        for i = 2, #uppercase_users do
+            local separator = (i == #uppercase_users) and " and " or ", "
+            users = users..separator..'"'..uppercase_users[i]..'"'
+        end
+
+        local plural = #uppercase_users > 1 and "s" or ""
+        local title = "Warning: Username"..plural.." with uppercase letters"
+        local message = "The username"..plural.." "..users.." contains uppercase letters, and we no longer support this type of username since it can create conflicts on certain OS. Please rename the user folder"..plural.." in the save directory folder so you can access it and supress this warning."
+
+        WarningWindow.show(title, message, {"OKAY", function()Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH)end}, true)
+    end
+
+    return uppercase_users_warning
 end
 
 function sm.load_code(puzzle)
