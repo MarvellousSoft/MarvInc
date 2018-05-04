@@ -24,7 +24,7 @@ Button = Class{
 
         RECT.init(self, _x, _y, _w, _h, Color.transp(), "fill") --Set atributes
 
-        self.callback  = _callback  --Function to call when pressed
+        self.callback  = _callback or function()end  --Function to call when pressed
 
         WTXT.init(self, _text, _font, nil) --Set text
 
@@ -149,6 +149,10 @@ function Button:centralize()
 end
 
 --UTILITY FUNCTIONS--
+
+function button.create_warning(x, y, w, h, callback, text, font)
+    return Button(x, y, w, h, callback, text, font, nil, nil, Color.new(217,2,3,255,"hsl",true))
+end
 
 function button.create_tab(x, y, w, h, callback, text, font, overtext, overfont, color, id)
     return Button(x, y, w, h, callback, text, font, overtext, overfont, color)

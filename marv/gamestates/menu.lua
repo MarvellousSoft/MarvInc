@@ -39,9 +39,12 @@ function state:enter()
     bgm:fadein()
 
     -- Create background
-    local bg
-    bg = IMAGE(0, 0, BG_IMG)
+    local bg = IMAGE(0, 0, BG_IMG)
     bg:addElement(DRAW_TABLE.BG, nil, "background")
+
+    -- Create logo
+    local logo = IMAGE(W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, MISC_IMG.logo, Color.white(), .75)
+    logo:addElement(DRAW_TABLE.GUI, nil, "logo")
 
     self.fade_in_alp = 255
     Timer.tween(.3, self, {fade_in_alp = 0})
@@ -120,12 +123,14 @@ function state:usernames_mousePressed(x, y, but)
         if x >= ub.x and y >= ub.y then
             local i = math.floor((y - ub.y) / self.font:getHeight()) + 1
             if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
-                local press = love.window.showMessageBox("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
-                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2}, 'warning')
-                if press == 1 then
-                    SaveManager.deleteUser(ub[i].user)
-                    self:initUsernames()
-                end
+                WarningWindow.show("Warning", "Are you sure you want to delete user " ..'"'..ub[i].user ..'"'.."?",
+                    {'Yes', function()
+                                SaveManager.deleteUser(ub[i].user)
+                                self:initUsernames()
+                            end,
+                     'No, sorry', nil, enter = 1, escape = 2
+                    }
+                )
             --If clicking on username, write username on login
             elseif i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx - user_font:getWidth(ub[i].user) - 10, ub[i].by, user_font:getWidth(ub[i].user), user_font:getHeight(ub[i].user)) then
                 self.box:reset_lines(1)
@@ -167,10 +172,6 @@ end
 function state:draw()
 
     Draw.allTables()
-
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.setFont(FONTS.fira(120))
-    love.graphics.draw(MISC_IMG.logo, W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, 0, .75)
 
     -- username box
     local f = self.font
@@ -236,6 +237,7 @@ function state:update(dt)
 end
 
 function state:leave()
+    Util.findId("logo"):kill()
     self.box:deactivate()
 end
 

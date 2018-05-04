@@ -235,7 +235,7 @@ end
 --Circle: is a positionable and colorful object with radius
 IMAGE = Class{
     __includes = {ELEMENT, POS, CLR},
-    init = function(self, _x, _y, _img, _c) --Set circle's atributes
+    init = function(self, _x, _y, _img, _c, _scale) --Set circle's atributes
         local color
         ELEMENT.init(self)
         POS.init(self, _x, _y)
@@ -243,7 +243,7 @@ IMAGE = Class{
         color = _c or Color.white()
         CLR.init(self, color)
 
-
+        self.scale = _scale
         self.img = _img
 
     end,
@@ -258,6 +258,6 @@ function IMAGE:draw()
 
     Color.set(i.color)
 
-    love.graphics.draw(i.img, i.pos.x, i.pos.y)
+    love.graphics.draw(i.img, i.pos.x, i.pos.y, 0, self.scale)
 
 end
