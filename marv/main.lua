@@ -79,6 +79,7 @@ FIREPLACE = require "gamestates.fireplace",
 NEWS = require "gamestates.news",
 CREDITS = require "gamestates.credits",
 COMP = require "gamestates.computer",
+WARNINGWIN = require "gamestates.warning_window"
 }
 
 -- When game starts, automatically changes to this puzzle

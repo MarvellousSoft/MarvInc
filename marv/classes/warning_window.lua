@@ -20,7 +20,6 @@ local funcs = {}
 local WarningWindow = Class{
     __includes = {RECT, WTXT},
     init = function(self, _title, _message, _buttonlist)
-
         self.title_font = FONTS.firaBold(40)
         self.message_font = FONTS.fira(20)
         self.h_gap = 10 --Horizontal gap between title/message and border of window
@@ -43,7 +42,6 @@ local WarningWindow = Class{
         self.text_color = Color.black()
 
         self.tp = "warning_window" --Type of this class
-
     end,
 }
 
@@ -107,9 +105,17 @@ function funcs.create(title, message, buttonlist)
     return w
 end
 
+--Pushes the Warning Window state, yielding current thread.
+--It will return to here with the arguments (which button pressed) and resume
 function funcs.show(title, message, buttonlist)
+    local co = coroutine.create(
+        function(corotine)
+            Gamestate.push(GS.WARNINGWIN, title, message, buttonlist, corotine)
+            coroutine.yield()
+        end
+    )
 
-    funcs.create(title,message,buttonlist)
+    coroutine.resume(co, co)
 
     return 0
 end
