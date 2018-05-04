@@ -364,12 +364,11 @@ getDialog = function(bot)
         bot.first_time = false
         BotModule.current_bot.first_time = false
         if not SideMessage.block_intro_bot_messages then
-            print("Intro message")
             return Util.randomElement(intro_messages)
         else
             return nil
         end
-    elseif SideMessage.block_extra_bot_messages then
+    elseif SideMessage.block_extra_bot_messages or PopManager.pop --[[ gambz to avoid sending msgs after death ]] then
         return nil
     end
 
