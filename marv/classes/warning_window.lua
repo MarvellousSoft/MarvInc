@@ -59,8 +59,9 @@ local WarningWindow = Class{
             but_x = but_x + but.w + self.h_button_gap
         end
 
-        self.bg_color = Color.white()
-        self.bg_contour_color = Color.black()
+        self.bg_color = Color.new(13, 100, 96, 255, "hsl", true)
+        self.bg_title_color = Color.new(13, 100, 56, 255, "hsl", true)
+        self.bg_contour_color = Color.red()
         self.bg_contour_line_width = 3
 
         self.text_color = Color.black()
@@ -89,6 +90,8 @@ function WarningWindow:draw()
     --Draw background
     Color.set(w.bg_color)
     love.graphics.rectangle("fill", 0, 0, w.w, w.h, 5)
+    Color.set(w.bg_title_color)
+    love.graphics.rectangle("fill", 0, 0, w.w, w.title_font:getHeight(w.title) + 2*w.v_title_gap, 5)
     love.graphics.setLineWidth(w.bg_contour_line_width)
     Color.set(w.bg_contour_color)
     love.graphics.rectangle("line", 0, 0, w.w, w.h, 5)
@@ -104,7 +107,7 @@ function WarningWindow:draw()
     --Draw title separator
     love.graphics.translate(0, w.title_font:getHeight(w.title) + w.v_title_gap)
     love.graphics.setLineWidth(2)
-    Color.set(Color.black())
+    Color.set(w.bg_contour_color)
     local gap = 3
     love.graphics.line(gap, 0, w.w - gap, 0)
 
