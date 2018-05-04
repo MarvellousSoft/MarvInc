@@ -32,6 +32,7 @@ PcBox = Class{
         PcBox.menu_tabs = {
             {"email", EmailTab(inner_tab_border, button_tab_height)},
             {"manual", ManualTab(inner_tab_border, button_tab_height)},
+            {"puzzles", PuzzleListTab(inner_tab_border, button_tab_height)},
             {"settings", SettingsTab(inner_tab_border, button_tab_height)},
         }
         PcBox.puzzle_tabs = {
@@ -132,14 +133,10 @@ function PcBox:draw()
 
     --Display unread emails notification
     if  UNREAD_EMAILS > 0 then
-        local text --Text will be "new!" if outside a puzzle, else just "!"
+        local text --Text will be just "!"
         local ajust_x = 0 --Ajust position of text if inside a puzzle
-        if ROOM.mode == "online" then
-            text = "!"
-            ajust_x = -45
-        else
-            text = "new!"
-        end
+        text = "!"
+        ajust_x = -45
         local font = FONTS.fira(22)
         local fx = font:getWidth(text)
         local fy = font:getHeight(text)
