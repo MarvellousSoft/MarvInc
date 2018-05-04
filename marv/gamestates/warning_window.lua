@@ -15,10 +15,12 @@ local state = {}
 
 local _window
 local _dont_pop
+local _old_state
 
 -- Warning Window State  --
 
 function state:enter(old_state, title, message, buttonlist, dont_pop)
+    _old_state = old_state
 
     _dont_pop = dont_pop
     _window = WarningWindow.create(title,message,buttonlist)
@@ -30,8 +32,9 @@ function state:update(dt)
 end
 
 function state:draw()
+    _old_state:draw()
 
-    Draw.allTables()
+    _window:draw()
 
 end
 

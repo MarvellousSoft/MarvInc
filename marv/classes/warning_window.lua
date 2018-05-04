@@ -62,7 +62,7 @@ local WarningWindow = Class{
 
         --Fix buttons positions
         local but_x = self.pos.x + width/2 - total_button_width/2
-        local but_y = self.pos.y + height - self.v_bottom_gap - self.button_height
+        local but_y = self.pos.y + height - self.v_bottom_gap - self.button_height + self.v_message_gap
         for _,but in ipairs(self.buttons) do
             but.pos.x = but_x
             but.pos.y = but_y
@@ -136,7 +136,6 @@ function WarningWindow:draw()
     love.graphics.pop()
 
     --Draw buttons
-    love.graphics.translate(0, w.v_message_gap)
     for _, but in ipairs(self.buttons) do
         but:draw()
     end
@@ -147,8 +146,6 @@ end
 
 function funcs.create(title, message, buttonlist)
     local w = WarningWindow(title, message, buttonlist)
-
-    w:addElement(DRAW_TABLE.WRNG, nil, "warning_window")
 
     return w
 end

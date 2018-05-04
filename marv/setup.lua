@@ -514,12 +514,11 @@ function setup.config()
 
     --Drawing Tables
     DRAW_TABLE = {
-    BG   = {}, --Background (bottom layer, first to draw)
-    L1   = {}, --Layer 1
-    L1u  = {}, --Layer 1 upper
-    L2   = {}, --Layer 2
-    GUI  = {}, --Graphic User Interface
-    WRNG = {}, --Special layer for warning window (top layer, last to draw)
+        BG   = {}, --Background (bottom layer, first to draw)
+        L1   = {}, --Layer 1
+        L1u  = {}, --Layer 1 upper
+        L2   = {}, --Layer 2
+        GUI  = {}, --Graphic User Interface (top layer, last to draw)
     }
 
     --WINDOW CONFIG--
