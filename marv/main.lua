@@ -170,7 +170,7 @@ function love.quit()
                     _force = true
                     love.event.quit()
                 end,
-            "Do not close, I will take the safe approach", nil
+            "Do not close, I will take the safe approach", nil, enter = 1, escape = 2
             }
         )
         return true

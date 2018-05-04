@@ -17,6 +17,17 @@ local funcs = {}
 --Warning Window Class--
 ------------------------
 
+--[[
+Format of argument _buttonlist:
+    Must best a sequence of tuples (text, function), and for each it will created
+a button on the warning window using the text and function as callback when the
+button is pressed.
+    Additionally, you can provide two arguments in the hash part of the table:
+    "escape": provide a button index, and it will call his callback when "escape" key is pressed
+    "enter": provide a button index, and it will call his callback when "enter" key is pressed
+
+]]
+
 local WarningWindow = Class{
     __includes = {RECT, WTXT},
     init = function(self, _title, _message, _buttonlist)
@@ -63,6 +74,9 @@ local WarningWindow = Class{
         self.bg_title_color = Color.new(13, 100, 56, 255, "hsl", true)
         self.bg_contour_color = Color.red()
         self.bg_contour_line_width = 3
+
+        self.escape = _buttonlist.escape
+        self.enter = _buttonlist.enter
 
         self.text_color = Color.black()
 

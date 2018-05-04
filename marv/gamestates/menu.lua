@@ -128,7 +128,7 @@ function state:usernames_mousePressed(x, y, but)
                                 SaveManager.deleteUser(ub[i].user)
                                 self:initUsernames()
                             end,
-                     'No, sorry', nil
+                     'No, sorry', nil, enter = 1, escape = 2
                     }
                 )
             --If clicking on username, write username on login
