@@ -9,7 +9,6 @@ See full license in file LICENSE.txt
 
 local Timer = require "extra_libs.hump.timer"
 local FX = require "classes.fx"
-local WarnWindow = require "classes.warning_window"
 local state = {}
 
 local _coroutine
@@ -18,7 +17,7 @@ local _window
 
 function state:enter(old_state, title, message, buttonlist)
 
-    _window = WarnWindow.create(title,message,buttonlist)
+    _window = WarningWindow.create(title,message,buttonlist)
 
 end
 
@@ -35,7 +34,7 @@ end
 function state:mousepressed(x, y)
     for _,but in ipairs(_window.buttons) do
         if but:checkCollides(x,y) then
-            Gamestate.pop()
+            WarningWindow.deactivate()
         end
     end
 end

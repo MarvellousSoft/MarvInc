@@ -24,7 +24,7 @@ Button = Class{
 
         RECT.init(self, _x, _y, _w, _h, Color.transp(), "fill") --Set atributes
 
-        self.callback  = _callback  --Function to call when pressed
+        self.callback  = _callback or function()end  --Function to call when pressed
 
         WTXT.init(self, _text, _font, nil) --Set text
 

@@ -23,19 +23,15 @@ local WarningWindow = Class{
         self.title_font = FONTS.firaBold(40)
         self.message_font = FONTS.fira(20)
         self.h_gap = 10 --Horizontal gap between title/message/buttons and border of window
-        self.v_title_gap = 2 --Vertical gap above and below title
-        self.v_message_gap = 3 --Vertical gap above and below message
-        self.v_bottom_gap = 9 --Vertical gap below buttons
+        self.v_title_gap = 3 --Vertical gap above and below title
+        self.v_message_gap = 9 --Vertical gap above and below message
+        self.v_bottom_gap = 20 --Vertical gap below buttons
+        self.title = _title
+        self.message = _message
         self.h_button_gap = 7 --Gaps between buttons
         self.button_font = FONTS.fira(22)
         self.button_height = 30
-        self.message_limit = 400 --Limit for wrapping the message text
-        self.real_message_w, self.wraptext = self.message_font:getWrap(_message, self.message_limit)
-        self.title = _title
-        self.message = _message
         self.buttons = {}
-
-
         local total_button_width = 0
         for i = 1, #_buttonlist, 2 do
             local button_text = _buttonlist[i]
@@ -46,6 +42,8 @@ local WarningWindow = Class{
             total_button_width = total_button_width + w
         end
         total_button_width = total_button_width + (math.max(0,#self.buttons-1)*self.h_button_gap)
+        self.message_limit = math.max(400,self.title_font:getWidth(_title) + 2*self.h_gap, total_button_width + 2*self.h_gap) --Limit for wrapping the message text
+        self.real_message_w, self.wraptext = self.message_font:getWrap(_message, self.message_limit)
 
         local width = math.max(self.title_font:getWidth(_title) + 2*self.h_gap, self.real_message_w + 2*self.h_gap, total_button_width + 2*self.h_gap)
         local height = self.title_font:getHeight(_title) + 2*self.v_title_gap + self.message_font:getHeight(_message)*#self.wraptext +2*self.v_message_gap + self.button_height + self.v_bottom_gap
@@ -81,7 +79,7 @@ function WarningWindow:draw()
     local x, y
 
     --Draw black filter
-    love.graphics.setColor(0, 0, 0, 120)
+    love.graphics.setColor(30, 0, 0, 130)
     love.graphics.rectangle("fill", 0, 0, W, H)
 
     love.graphics.push()
@@ -90,10 +88,10 @@ function WarningWindow:draw()
 
     --Draw background
     Color.set(w.bg_color)
-    love.graphics.rectangle("fill", 0, 0, w.w, w.h)
+    love.graphics.rectangle("fill", 0, 0, w.w, w.h, 5)
     love.graphics.setLineWidth(w.bg_contour_line_width)
     Color.set(w.bg_contour_color)
-    love.graphics.rectangle("line", 0, 0, w.w, w.h)
+    love.graphics.rectangle("line", 0, 0, w.w, w.h, 5)
 
     --Draw title
     love.graphics.translate(0, w.v_title_gap)
@@ -138,11 +136,21 @@ function funcs.create(title, message, buttonlist)
     return w
 end
 
+local _has_active_window = false
 --Pushes the Warning Window state
 function funcs.show(title, message, buttonlist)
+    if _has_active_window == true then
+        funcs.deactivate()
+    end
 
     Gamestate.push(GS.WARNINGWIN, title, message, buttonlist)
+    _has_active_window = true
 
+end
+
+function funcs.deactivate()
+    Gamestate.pop()
+    _has_active_window = false
 end
 
 

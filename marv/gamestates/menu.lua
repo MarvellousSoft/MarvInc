@@ -11,7 +11,6 @@ local Timer = require "extra_libs.hump.timer"
 require "classes.text_box"
 require "classes.button"
 local ScrollWindow = require "classes.scroll_window"
-local WarningWindow = require "classes.warning_window"
 local state = {}
 local bgm
 local user_font = FONTS.fira(22)
@@ -129,7 +128,7 @@ function state:usernames_mousePressed(x, y, but)
                                 SaveManager.deleteUser(ub[i].user)
                                 self:initUsernames()
                             end,
-                     'No, sorry', function()end
+                     'No, sorry', nil
                     }
                 )
             --If clicking on username, write username on login

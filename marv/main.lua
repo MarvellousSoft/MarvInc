@@ -56,7 +56,7 @@ BotModule = require "classes.bot"
 require "classes.puzzle"
 require "classes.room"
 require "classes.opened_email"
-require "classes.warning_window"
+WarningWindow = require "classes.warning_window"
 require "classes.audio"
 Color = require "classes.color.color"
 FX = require "classes.fx"
@@ -154,7 +154,8 @@ function love.resize(w, h)
 end
 
 local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true}
-function love.quit(force)
+local force = false
+function love.quit()
     local room = GS['GAME'].getRoom()
     if room and room.puzzle_id == 'franz1' then
         if not Mail.exists('Tread very carefully') and not LoreManager.puzzle_done.franz1 then
@@ -162,11 +163,19 @@ function love.quit(force)
         end
     end
     if not force and (PopManager.pop or not ok_state[Gamestate.current()] or CLOSE_LOCK)  then
-        local press = love.window.showMessageBox('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.", {"Close the game, I like to play with fire", "Do not close, I will take the safe approach", escapebutton = 2}, 'warning')
-        if press == 2 then
-            return true
-        end
+        WarningWindow.show('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.",
+            {"Close the game, I like to play with fire",
+                function()
+                    force = true
+                    love.event.quit()
+                end,
+            "Do not close, I will take the safe approach", nil
+            }
+        )
+        return true
+
     end
+    force = false
     if PopManager.pop then
         PopManager.pop.buttons[1].callback()
         PopManager.quit()
