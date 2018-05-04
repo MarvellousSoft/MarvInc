@@ -124,12 +124,14 @@ function state:usernames_mousePressed(x, y, but)
         if x >= ub.x and y >= ub.y then
             local i = math.floor((y - ub.y) / self.font:getHeight()) + 1
             if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
-                local press = WarningWindow.show("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
-                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2})
-                if press == 1 then
-                    SaveManager.deleteUser(ub[i].user)
-                    self:initUsernames()
-                end
+                WarningWindow.show("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
+                    {'Yes', function()
+                                SaveManager.deleteUser(ub[i].user)
+                                self:initUsernames()
+                            end,
+                     'No, sorry', function()end
+                    }
+                )
             --If clicking on username, write username on login
             elseif i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx - user_font:getWidth(ub[i].user) - 10, ub[i].by, user_font:getWidth(ub[i].user), user_font:getHeight(ub[i].user)) then
                 self.box:reset_lines(1)

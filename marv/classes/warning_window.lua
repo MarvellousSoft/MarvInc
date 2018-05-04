@@ -22,18 +22,44 @@ local WarningWindow = Class{
     init = function(self, _title, _message, _buttonlist)
         self.title_font = FONTS.firaBold(40)
         self.message_font = FONTS.fira(20)
-        self.h_gap = 10 --Horizontal gap between title/message and border of window
+        self.h_gap = 10 --Horizontal gap between title/message/buttons and border of window
         self.v_title_gap = 2 --Vertical gap above and below title
         self.v_message_gap = 3 --Vertical gap above and below message
+        self.v_bottom_gap = 9 --Vertical gap below buttons
+        self.h_button_gap = 7 --Gaps between buttons
+        self.button_font = FONTS.fira(22)
+        self.button_height = 30
         self.message_limit = 400 --Limit for wrapping the message text
         self.real_message_w, self.wraptext = self.message_font:getWrap(_message, self.message_limit)
-
-        local width = math.max(self.title_font:getWidth(_title) + 2*self.h_gap, self.real_message_w + 2*self.h_gap)
-        local height = self.title_font:getHeight(_title) + 2*self.v_title_gap + self.message_font:getHeight(_message)*#self.wraptext +2*self.v_message_gap
-        RECT.init(self, W/2 - width/2, H/2 - height/2, width, height) --Set rect attributes
-
         self.title = _title
         self.message = _message
+        self.buttons = {}
+
+
+        local total_button_width = 0
+        for i = 1, #_buttonlist, 2 do
+            local button_text = _buttonlist[i]
+            local button_func = _buttonlist[i+1]
+            local extra_space = 20 --Extra space to add to buttons width
+            local w = extra_space + self.button_font:getWidth(button_text)
+            table.insert(self.buttons, But.create_warning(0, 0, w, self.button_height, button_func, button_text, self.button_font))
+            total_button_width = total_button_width + w
+        end
+        total_button_width = total_button_width + (math.max(0,#self.buttons-1)*self.h_button_gap)
+
+        local width = math.max(self.title_font:getWidth(_title) + 2*self.h_gap, self.real_message_w + 2*self.h_gap, total_button_width + 2*self.h_gap)
+        local height = self.title_font:getHeight(_title) + 2*self.v_title_gap + self.message_font:getHeight(_message)*#self.wraptext +2*self.v_message_gap + self.button_height + self.v_bottom_gap
+        RECT.init(self, W/2 - width/2, H/2 - height/2, width, height) --Set rect attributes
+
+        --Fix buttons positions
+        local but_x = self.pos.x + width/2 - total_button_width/2
+        local but_y = self.pos.y + height - self.v_bottom_gap - self.button_height
+        for _,but in ipairs(self.buttons) do
+            but.pos.x = but_x
+            but.pos.y = but_y
+            but:centralize()
+            but_x = but_x + but.w + self.h_button_gap
+        end
 
         self.bg_color = Color.white()
         self.bg_contour_color = Color.black()
@@ -93,6 +119,13 @@ function WarningWindow:draw()
     love.graphics.printf(w.message, x , y, w.message_limit)
 
     love.graphics.pop()
+
+    --Draw buttons
+    love.graphics.translate(0, w.v_message_gap)
+    for _, but in ipairs(self.buttons) do
+        but:draw()
+    end
+
 end
 
 --UTILITY FUNCTIONS--

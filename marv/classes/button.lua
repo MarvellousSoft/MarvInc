@@ -150,6 +150,10 @@ end
 
 --UTILITY FUNCTIONS--
 
+function button.create_warning(x, y, w, h, callback, text, font)
+    return Button(x, y, w, h, callback, text, font, nil, nil, Color.new(217,2,3,255,"hsl",true))
+end
+
 function button.create_tab(x, y, w, h, callback, text, font, overtext, overfont, color, id)
     return Button(x, y, w, h, callback, text, font, overtext, overfont, color)
 end

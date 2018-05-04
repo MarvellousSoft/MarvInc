@@ -19,7 +19,7 @@ local _window
 function state:enter(old_state, title, message, buttonlist)
 
     _window = WarnWindow.create(title,message,buttonlist)
-    
+
 end
 
 function state:update(dt)
@@ -30,6 +30,14 @@ function state:draw()
 
     Draw.allTables()
 
+end
+
+function state:mousepressed(x, y)
+    for _,but in ipairs(_window.buttons) do
+        if but:checkCollides(x,y) then
+            Gamestate.pop()
+        end
+    end
 end
 
 function state:keypressed(key)
