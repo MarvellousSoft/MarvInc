@@ -26,9 +26,9 @@ function AuthorButton:init(x, y, w, h, name, puzzle_list)
     self.rot = 0 -- rotation of the triangle
     self.color = Color.new(Util.getAuthorColor(name))
     if self.color.l then
-        self.color.l = self.color.l / 2
+        self.color.l = self.color.l / 5
     else
-        self.color.r, self.color.g, self.color.b = self.color.r / 2, self.color.g / 2, self.color.b / 2
+        self.color.r, self.color.g, self.color.b = self.color.r / 5, self.color.g / 5, self.color.b / 5
     end
 end
 
@@ -87,6 +87,12 @@ end
 
 function PuzzleButton:checkCollides(x, y)
     if Util.pointInRect(x, y, self) then
+        -- franz1 shouldn't be replayable
+        if self.puzzle.id == "franz1" and LoreManager.puzzle_done.franz1 then
+            SFX.buzz:stop()
+            SFX.buzz:play()
+            return
+        end
         ROOM:connect(self.puzzle.id)
     end
 end
