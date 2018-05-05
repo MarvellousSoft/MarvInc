@@ -10,7 +10,13 @@ See full license in file LICENSE.txt
 local ScrollWindow = require "classes.scroll_window"
 require "classes.tabs.tab"
 local AuthorButton = require "classes.tabs.puzzle_list_buttons"
+
 local border_w = 20
+local button_dy = 20
+local button_h = 30
+local detail_h = 50
+local challenge_color = Color.red()
+challenge_color.l = 50
 
 PuzzleListTab = Class {
     __includes = {Tab},
@@ -21,10 +27,8 @@ PuzzleListTab = Class {
         Tab.init(self, eps, dy)
 
 
-        local categories = {"main game", "dlc"}
-        local button_dy = 20
+        local categories = {"main game"}
         local button_w = 130
-        local button_h = 30
 
         self.buttons = {} -- buttons for each category
         self.lists = {} -- puzzle list for each category
@@ -34,7 +38,7 @@ PuzzleListTab = Class {
             b.text_color = Color.black()
             table.insert(self.buttons, b)
             local obj = {
-                pos = Vector(self.pos.x + border_w, self.pos.y + button_dy + button_h + 20),
+                pos = Vector(self.pos.x + border_w, self.pos.y + button_dy + button_h + detail_h),
                 getHeight = function(obj) return obj.true_h end,
                 draw = function() self:list_draw() end,
                 mousePressed = function(obj, ...) self:list_mousePressed(...) end,
@@ -56,6 +60,11 @@ function PuzzleListTab:draw()
     for _, b in ipairs(self.buttons) do
         b:draw()
     end
+    Color.set(challenge_color)
+    local sz = detail_h * .5
+    love.graphics.circle('fill', self.pos.x + sz / 2 + 200, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25, sz / 2)
+    love.graphics.setFont(FONTS.fira(20))
+    love.graphics.print("challenge", self.pos.x + sz + 210, self.pos.y + button_dy + button_h + (detail_h - FONTS.fira(20):getHeight()) / 2)
     self.active_list:draw()
 end
 
@@ -67,13 +76,38 @@ function PuzzleListTab:mousePressed(x, y, but)
     self.active_list:mousePressed(x, y, but)
 end
 
+function PuzzleListTab:activate() self:refresh() end
+
 function PuzzleListTab:refresh()
     -- refresh the puzzle list
     -- for now just checks the emails for available puzzles
     local l = self.active_list
     l.buttons = {}
-    table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Janine Leubwitz", {{name = "Puzzle Name", id = "puzzle id", status = "completed"}}))
-    table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Olivia Kavanagh", {{name = "Puzzle Name2", id = "puzzle id2", status = "open"}, {name = "Very very very very very long puzzle name", id = "puzzle id3", status = "completed"}}))
+    local puzzles = {}
+    for _, email in ipairs(Util.findId('email_tab').email_list) do
+        if email.puzzle_id then
+            local a = email.author
+            if a:find("Richard Black") then
+                a = "Olivia Kavanagh"
+            end
+            if a:find("[(]") then
+                a = a:sub(1, a:find("[(]") - 2)
+            end
+            puzzles[a] = puzzles[a] or {}
+            table.insert(puzzles[a], email.puzzle_id)
+        end
+    end
+    for author, puzzle_list in pairs(puzzles) do
+        local list = {}
+        for _, p in ipairs(puzzle_list) do
+            local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G}
+            local f = love.filesystem.load('puzzles/' .. p .. '.lua')
+            setfenv(f, pu)
+            f()
+            table.insert(list, {name = pu.name, id = p, status = LoreManager.puzzle_done[p] and "completed" or "open"})
+        end
+        table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, author, list))
+    end
 end
 
 function PuzzleListTab:mouseMoved(x, y)
