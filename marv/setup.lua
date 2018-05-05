@@ -205,6 +205,9 @@ MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 MISC_IMG["logo"] = love.graphics.newImage("assets/images/logo.png")
 MISC_IMG["cat"] = love.graphics.newImage("assets/images/grumpy_cat.png")
 MISC_IMG["marvsoft"] = love.graphics.newImage("assets/images/Marvellous Soft.png")
+MISC_IMG["lines"] = love.graphics.newImage("assets/images/settings.png")
+MISC_IMG["ticks"] = love.graphics.newImage("assets/images/settings.png")
+MISC_IMG["triangle"] = love.graphics.newImage("assets/images/triangle.png")
 
 -- Miscellaneous settings
 SETTINGS = {}
