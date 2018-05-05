@@ -84,6 +84,7 @@ function PuzzleListTab:refresh()
     local l = self.active_list
     l.buttons = {}
     local puzzles = {}
+    local has_diego = false
     for _, email in ipairs(Util.findId('email_tab').email_list) do
         if email.puzzle_id then
             local a = email.author
@@ -93,8 +94,20 @@ function PuzzleListTab:refresh()
             if a:find("[(]") then
                 a = a:sub(1, a:find("[(]") - 2)
             end
+            if email.puzzle_id:find("diego") then
+                has_diego = true
+            end
             puzzles[a] = puzzles[a] or {}
             table.insert(puzzles[a], email.puzzle_id)
+        end
+    end
+    if not has_diego then
+        for puzzle in pairs(LoreManager.puzzle_done) do
+            if puzzle:find('diego') and love.filesystem.exists('puzzles/' .. puzzle .. '.lua') then
+                local a = "Diego Lorenzo Vega"
+                puzzles[a] = puzzles[a] or {}
+                table.insert(puzzles[a], puzzle)
+            end
         end
     end
     for author, puzzle_list in pairs(puzzles) do
