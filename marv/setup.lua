@@ -209,6 +209,7 @@ MISC_IMG["lines"] = love.graphics.newImage("assets/images/settings.png")
 MISC_IMG["ticks"] = love.graphics.newImage("assets/images/settings.png")
 MISC_IMG["triangle"] = love.graphics.newImage("assets/images/triangle.png")
 MISC_IMG["triangle_border"] = love.graphics.newImage("assets/images/triangle_border.png")
+MISC_IMG["pixel"] = love.graphics.newImage("assets/images/pixel.png")
 
 
 -- Miscellaneous settings
@@ -229,6 +230,43 @@ HEAD = {
 BODY = {
     love.graphics.newImage("assets/images/bodies/01.png")
 }
+
+--Shaders
+
+--Table containing smooth circle shaders created
+SMOOTH_CIRCLE_TABLE = {}
+--Table containing smooth ring shaders created
+SMOOTH_RING_TABLE = {}
+
+--Default Smooth Circle Shader
+SMOOTH_CIRCLE_SHADER = ([[
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){
+    vec4 pixel = Texel(texture, texture_coords );//This is the current pixel color
+    vec2 center = vec2(0.5,0.5);
+    pixel.a = 1 - smoothstep(.5 - 1/%f, .5, distance(center, texture_coords));
+    return pixel * color;
+  }
+]])
+
+--Default Smooth Ring Shader
+SMOOTH_RING_SHADER = ([[
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){
+    vec4 pixel = Texel(texture, texture_coords );//This is the current pixel color
+    vec2 center = vec2(0.5,0.5);
+    number size = %f;
+    number inner_radius = %f;
+    number x = distance(center, texture_coords);
+    if (x >= inner_radius/size) {
+      pixel.a = 1 - smoothstep(.5 - 1/size, .5, x);
+    }
+    else
+    {
+      pixel.a = smoothstep(inner_radius/size - 1/size, inner_radius/size, x);
+    }
+
+    return pixel * color;
+  }
+]])
 
 
 --Set game's global variables, random seed, window configuration and anything else needed

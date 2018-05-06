@@ -77,12 +77,15 @@ function PuzzleListTab:draw()
     love.graphics.setFont(self.separator_font)
     love.graphics.print("--------------------------", self.pos.x, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 - 43)
 
-    --Draw subtitles
+    --Draw subtitles--
+
+    --Draw challenge icon
     Color.set(challenge_color)
-    love.graphics.circle('fill', self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2)
-    Color.set(Color.black())
-    love.graphics.setLineWidth(3)
-    love.graphics.circle('line', self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2)
+    Util.drawSmoothCircle(self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2)
+    --Contour
+    love.graphics.setColor(0, 0, 0)
+    Util.drawSmoothRing(self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2, sz / 2 - 3.5)
+    --Text
     love.graphics.setFont(FONTS.fira(18))
     love.graphics.print(" = challenge puzzle", self.pos.x + sz + 170, self.pos.y + title_h + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 1)
 

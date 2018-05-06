@@ -129,15 +129,15 @@ function PuzzleButton:draw(mx, my)
 
     --Draw contour line
     love.graphics.setColor(0, 0, 0)
+    love.graphics.setLineWidth(4)
     love.graphics.rectangle('line', self.pos.x, self.pos.y, self.w - 2, self.h, 5, 10)
 
-    -- circles
+    -- Challenge Circle
     if self.puzzle.id:find("extra") or self.puzzle.id == "spam" then
         Color.set(challenge_color)
-        love.graphics.circle('fill', self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
+        Util.drawSmoothCircle(self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
         Color.set(Color.black())
-        love.graphics.setLineWidth(3)
-        love.graphics.circle('line', self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
+        Util.drawSmoothRing(self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2, circles_w / 2 - 3.5)
     end
 
     -- name
