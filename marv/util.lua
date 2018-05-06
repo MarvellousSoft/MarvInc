@@ -369,5 +369,46 @@ function util.getAuthorImage(author)
     return AUTHOR_IMG.unknown
 end
 
+--Receives the center x and y values of a circle, and its radius, and draw it on the screen
+--OBS: Have the color already setted
+function util.drawSmoothCircle(x, y, r)
+    x = x - r
+    y = y - r
+
+    local size = math.ceil(2*r)
+    --Create smooth circle shader if it hasn't been yet
+    if not SMOOTH_CIRCLE_TABLE[size] then
+        SMOOTH_CIRCLE_TABLE[size] = love.graphics.newShader(SMOOTH_CIRCLE_SHADER:format(size))
+    end
+
+    --Draw the circle
+    love.graphics.setShader(SMOOTH_CIRCLE_TABLE[size])
+    love.graphics.draw(MISC_IMG.pixel, x, y, 0, 2*r)
+    love.graphics.setShader()
+
+end
+
+--Receives the center x and y values of a ring, its radius and inner_radius, and draw it on the screen
+--OBS: Have the color already setted
+function util.drawSmoothRing(x, y, r, i_r)
+    x = x - r
+    y = y - r
+
+    local size = math.ceil(2*r)
+    i_r = math.ceil(i_r)
+
+    --Create smooth circle shader if it hasn't been yet
+    if not SMOOTH_RING_TABLE[size..'-'..i_r] then
+        SMOOTH_RING_TABLE[size..'-'..i_r] = love.graphics.newShader(SMOOTH_RING_SHADER:format(size, i_r))
+    end
+
+    --Draw the circle
+    love.graphics.setShader(SMOOTH_RING_TABLE[size..'-'..i_r])
+    love.graphics.draw(MISC_IMG.pixel, x, y, 0, 2*r)
+    love.graphics.setShader()
+end
+
+
+
 --Return functions
 return util
