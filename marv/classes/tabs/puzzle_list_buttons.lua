@@ -6,9 +6,7 @@ local PuzzleButton = Class {
     __includes = {RECT}
 }
 
-local challenge_color = Color.red()
-challenge_color.l = 50
-
+local challenge_color = Color.new(21, 100, 53, 255, "hsl", true)
 function AuthorButton:init(x, y, w, h, name, puzzle_list)
     RECT.init(self, x, y, w, h)
     self.name = name
@@ -123,6 +121,9 @@ function PuzzleButton:draw(mx, my)
     if self.puzzle.id:find("extra") or self.puzzle.id == "spam" then
         Color.set(challenge_color)
         love.graphics.circle('fill', self.pos.x + circles_w / 2 + 5, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
+        Color.set(Color.black())
+        love.graphics.setLineWidth(3)
+        love.graphics.circle('line', self.pos.x + circles_w / 2 + 5, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
     end
     -- name
     love.graphics.setColor(0, 0, 0)
