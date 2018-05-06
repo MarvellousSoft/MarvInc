@@ -15,13 +15,13 @@ local border_w = 20
 local button_dy = 20
 local button_h = 30
 local detail_h = 50
-local challenge_color = Color.red()
-challenge_color.l = 50
+local challenge_color = Color.new(21, 100, 53, 255, "hsl", true)
 
 PuzzleListTab = Class {
     __includes = {Tab},
 
-    button_color = 40,
+    button_color = 120,
+    lightness_mod = 1.05,
 
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
@@ -60,11 +60,21 @@ function PuzzleListTab:draw()
     for _, b in ipairs(self.buttons) do
         b:draw()
     end
-    Color.set(challenge_color)
     local sz = detail_h * .5
-    love.graphics.circle('fill', self.pos.x + sz / 2 + 200, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25, sz / 2)
-    love.graphics.setFont(FONTS.fira(20))
-    love.graphics.print("challenge", self.pos.x + sz + 210, self.pos.y + button_dy + button_h + (detail_h - FONTS.fira(20):getHeight()) / 2)
+    --Draw separator
+    Color.set(Color.black())
+    love.graphics.setFont(FONTS.fira(35))
+    love.graphics.print("--------------------------", self.pos.x, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 - 35)
+
+    --Draw subtitles
+    Color.set(challenge_color)
+    love.graphics.circle('fill', self.pos.x + sz / 2 + 165, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 + 9, sz / 2)
+    Color.set(Color.black())
+    love.graphics.setLineWidth(3)
+    love.graphics.circle('line', self.pos.x + sz / 2 + 165, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 + 9, sz / 2)
+    love.graphics.setFont(FONTS.fira(18))
+    love.graphics.print(" = challenge puzzle", self.pos.x + sz + 170, self.pos.y + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 9)
+
     self.active_list:draw()
 end
 
