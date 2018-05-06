@@ -16,7 +16,7 @@ function AuthorButton:init(x, y, w, h, name, puzzle_list)
     for _, puzzle in ipairs(puzzle_list) do
         table.insert(self.puzzle_list, PuzzleButton(self.pos.x, 0, self.w, 50, puzzle))
     end
-    self.img = MISC_IMG.triangle
+    self.img = MISC_IMG.triangle_border
     local sz = 30
     while sz > 2 and FONTS.fira(sz):getWidth(self.name) > self.w - self.h do
         sz = sz - 2
@@ -25,26 +25,32 @@ function AuthorButton:init(x, y, w, h, name, puzzle_list)
     self.expand = false
     self.rot = 0 -- rotation of the triangle
     self.color = Color.new(Util.getAuthorColor(name))
-    if self.color.l then
-        self.color.l = self.color.l / 5
-    else
-        self.color.r, self.color.g, self.color.b = self.color.r / 5, self.color.g / 5, self.color.b / 5
-    end
+
 end
 
 function AuthorButton:draw(mx, my)
     if Util.pointInRect(mx, my, self) then
-        self.color.a = 30
+        self.color.a = 60
+        if self.color.l then
+            self.color.l = self.color.l/5
+        else
+            self.color.r, self.color.g, self.color.b = self.color.r/5, self.color.g/5, self.color.b/5
+        end
         Color.set(self.color)
         love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w - 2, self.h)
         self.color.a = 255
+        if self.color.l then
+            self.color.l = 5*self.color.l
+        else
+            self.color.r, self.color.g, self.color.b = 5*self.color.r, 5*self.color.g, 5*self.color.b
+        end
     end
     Color.set(self.color)
     -- Drawing triangle
     love.graphics.draw(self.img, self.pos.x + self.h / 2, self.pos.y + self.h / 2, self.rot, self.h / self.img:getWidth(), self.h / self.img:getHeight(), self.img:getWidth() / 2, self.img:getHeight() / 2)
     love.graphics.setColor(0, 0, 0)
     -- Drawing author name
-    Color.set(self.color)
+    Color.set(Color.black())
     love.graphics.setFont(self.font)
     love.graphics.print(self.name, self.pos.x + self.h + 10, self.pos.y + (self.h - self.font:getHeight()) / 2)
     if not self.expand then return self.h end

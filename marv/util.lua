@@ -338,7 +338,7 @@ function util.stylizeText(text, default_color, ignore)
     return colored_text, table.concat(full_text), all_but_default_text
 end
 
-local AUTHORS = {"bill miles", "diego", "fergus", "franz", "janine", "liv", "paul", "auto", "human", "news", "emergency", "renatogeh rilifon yancouto", "black"}
+local AUTHORS = {"bill miles", "diego", "fergus", "franz", "janine", "liv", "paul", "auto", "human", "news", "emergency", "r.y.r.", "black"}
 function util.getAuthorColor(author)
     local s = author:lower()
     for _, k in ipairs(AUTHORS) do
@@ -347,7 +347,7 @@ function util.getAuthorColor(author)
                 local key = k
                 if k == "bill miles" then
                     key = "bm"
-                elseif k == "renatogeh rilifon yancouto" then
+                elseif k == "r.y.r." then
                     key = "ryr"
                 elseif k == "janine" then
                     key = "jen"
