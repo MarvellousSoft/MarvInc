@@ -15,6 +15,7 @@ local border_w = 20
 local button_dy = 20
 local button_h = 30
 local detail_h = 50
+local title_h = 60
 local challenge_color = Color.new(21, 100, 53, 255, "hsl", true)
 
 PuzzleListTab = Class {
@@ -30,15 +31,17 @@ PuzzleListTab = Class {
         local categories = {"main game"}
         local button_w = 130
 
+        self.title_font = FONTS.firaBold(40)
+        self.separator_font = FONTS.fira(35)
         self.buttons = {} -- buttons for each category
         self.lists = {} -- puzzle list for each category
         for i, name in ipairs(categories) do
             local callback = function(b) self.active_list = self.lists[i] end
-            local b = Button(self.pos.x + border_w + (self.w - 2 * border_w) * i / (#categories + 1) - button_w / 2, self.pos.y + button_dy, button_w, 30, callback, name, FONTS.fira(20), nil, nil, Color.black(), 'line')
+            local b = Button(self.pos.x + border_w + (self.w - 2 * border_w) * i / (#categories + 1) - button_w / 2, self.pos.y + title_h + button_dy - 8, button_w, 30, callback, name, FONTS.fira(20), nil, nil, Color.black(), 'line')
             b.text_color = Color.black()
             table.insert(self.buttons, b)
             local obj = {
-                pos = Vector(self.pos.x + border_w, self.pos.y + button_dy + button_h + detail_h),
+                pos = Vector(self.pos.x + border_w, self.pos.y + button_dy + button_h + detail_h + title_h),
                 getHeight = function(obj) return obj.true_h end,
                 draw = function() self:list_draw() end,
                 mousePressed = function(obj, ...) self:list_mousePressed(...) end,
@@ -57,23 +60,36 @@ PuzzleListTab = Class {
 }
 
 function PuzzleListTab:draw()
+
+    --Draw Title
+    Color.set(Color.black())
+    love.graphics.setFont(self.title_font)
+    love.graphics.printf("Puzzle List", self.pos.x, self.pos.y + self.title_font:getHeight() * .2, self.w, 'center')
+
+    --Draw categories buttons
     for _, b in ipairs(self.buttons) do
         b:draw()
     end
+
     local sz = detail_h * .5
-    --Draw separator
+    --Draw upper separator
     Color.set(Color.black())
-    love.graphics.setFont(FONTS.fira(35))
-    love.graphics.print("--------------------------", self.pos.x, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 - 35)
+    love.graphics.setFont(self.separator_font)
+    love.graphics.print("--------------------------", self.pos.x, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 - 43)
 
     --Draw subtitles
     Color.set(challenge_color)
-    love.graphics.circle('fill', self.pos.x + sz / 2 + 165, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 + 9, sz / 2)
+    love.graphics.circle('fill', self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2)
     Color.set(Color.black())
     love.graphics.setLineWidth(3)
-    love.graphics.circle('line', self.pos.x + sz / 2 + 165, self.pos.y + button_dy + button_h + sz / 2 + detail_h * .25 + 9, sz / 2)
+    love.graphics.circle('line', self.pos.x + sz / 2 + 165, self.pos.y + title_h + button_dy + button_h + sz / 2 + detail_h * .25 + 1, sz / 2)
     love.graphics.setFont(FONTS.fira(18))
-    love.graphics.print(" = challenge puzzle", self.pos.x + sz + 170, self.pos.y + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 9)
+    love.graphics.print(" = challenge puzzle", self.pos.x + sz + 170, self.pos.y + title_h + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 1)
+
+    --Draw nottom separator
+    Color.set(Color.black())
+    love.graphics.setFont(self.separator_font)
+    love.graphics.print("--------------------------", self.pos.x, self.pos.y + title_h + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 9)
 
     self.active_list:draw()
 end
