@@ -46,6 +46,13 @@ function state:enter()
     local logo = IMAGE(W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, MISC_IMG.logo, Color.white(), .75)
     logo:addElement(DRAW_TABLE.GUI, nil, "logo")
 
+    -- Exit button
+    local exit = function()
+        love.event.quit()
+    end
+    self.exit_b = ImgButton(W - 60, 10, 50, BUTS_IMG.exit, exit, "Exit")
+    self.exit_b.hover_img = BUTS_IMG.exit_hover
+
     self.fade_in_alp = 255
     Timer.tween(.3, self, {fade_in_alp = 0})
 
@@ -195,6 +202,9 @@ function state:draw()
     love.graphics.setColor(0, 0, 0, self.fade_in_alp)
     love.graphics.rectangle("fill", 0, 0, W, H)
 
+    --exit button
+    self.exit_b:draw()
+
 end
 
 function state:keypressed(key)
@@ -213,6 +223,7 @@ end
 function state:mousepressed(x, y, but)
     self.box:mousePressed(x, y, but)
     self.known_usernames:mousePressed(x, y, but)
+    self.exit_b:mousePressed(x, y, but)
     if but == 1 then self.login:checkCollides(x, y) end
 end
 
