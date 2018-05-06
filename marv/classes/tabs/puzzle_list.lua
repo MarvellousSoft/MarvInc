@@ -68,6 +68,7 @@ function PuzzleListTab:draw()
 
     --Draw categories buttons
     for _, b in ipairs(self.buttons) do
+        love.graphics.setLineWidth(2)
         b:draw()
     end
 
