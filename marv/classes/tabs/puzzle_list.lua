@@ -48,7 +48,7 @@ PuzzleListTab = Class {
                 mouseMoved = function(obj, x, y) obj.mx, obj.my = x, y end,
                 true_h = 0, mx = 0, my = 0
             }
-            table.insert(self.lists, ScrollWindow(self.w - 2 * border_w, self.pos.y + self.h - obj.pos.y, obj))
+            table.insert(self.lists, ScrollWindow(self.w - 2 * border_w, self.pos.y + self.h - obj.pos.y, obj, nil, 35))
         end
         self.active_list = self.lists[1]
 

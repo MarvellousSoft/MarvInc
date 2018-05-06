@@ -26,7 +26,7 @@ local ScrollWindow = Class {
     default_width = 15
 }
 
-function ScrollWindow:init(w, h, obj, scroll_min)
+function ScrollWindow:init(w, h, obj, scroll_min, scroll_speed)
     ELEMENT.init(self)
     self.w = w
     self.h = h
@@ -36,6 +36,7 @@ function ScrollWindow:init(w, h, obj, scroll_min)
     self.sw = ScrollWindow.default_width -- scrollbar width
     self.on_grab = false -- currently mouse is grabbing scrollbar
     self.scroll_min = scroll_min -- minimum scroll size, if nil there is no minimum
+    self.scroll_speed = scroll_speed -- how much the scroll wheel affects scrolling (defaults to 10)
 end
 
 local function scrollBarBounds(self)
@@ -156,7 +157,7 @@ function ScrollWindow:mouseScroll(x, y)
     if self.obj.mouseScroll then self.obj:mouseScroll(x, y) end
     local mx, my = love.mouse.getPosition()
     if Util.pointInRect(mx, my, self.obj.pos.x, self.obj.pos.y, self.w, self.h) then
-        self:translateScreen((self.scroll_min or 10) * -y)
+        self:translateScreen((self.scroll_min or self.scroll_speed or 10) * -y)
     end
 end
 
