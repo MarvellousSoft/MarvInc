@@ -12,14 +12,14 @@ function AuthorButton:init(x, y, w, h, name, puzzle_list)
     self.name = name
     self.puzzle_list = {}
     for _, puzzle in ipairs(puzzle_list) do
-        table.insert(self.puzzle_list, PuzzleButton(self.pos.x, 0, self.w, 50, puzzle))
+        table.insert(self.puzzle_list, PuzzleButton(self.pos.x + 50, 0, 4*self.w/5, 40, puzzle))
     end
     self.img = MISC_IMG.triangle_border
     local sz = 30
-    while sz > 2 and FONTS.fira(sz):getWidth(self.name) > self.w - self.h do
+    while sz > 2 and FONTS.fira(sz):getWidth(self.name) > self.w - self.h - 10 do
         sz = sz - 2
     end
-    self.font = FONTS.fira(sz)
+    self.font = FONTS.firaBold(sz)
     self.expand = false
     self.rot = 0 -- rotation of the triangle
     self.color = Color.new(Util.getAuthorColor(name))
@@ -77,12 +77,14 @@ function AuthorButton:checkCollides(x, y)
     end
 end
 
-local circles_w = 30
+local circles_w = 25
 function PuzzleButton:init(x, y, w, h, puzzle)
     RECT.init(self, x, y, w, h)
     self.puzzle = puzzle
+    self.has_challenge = self.puzzle.id:find("extra") or self.puzzle.id == "spam"
+    local width = self.has_challenge and self.w - circles_w or self.w
     local sz = 30
-    while sz > 2 and FONTS.fira(sz):getWidth(puzzle.name) > self.w - circles_w do
+    while sz > 2 and FONTS.fira(sz):getWidth(puzzle.name) > width do
         sz = sz - 2
     end
     self.font = FONTS.fira(sz)
@@ -102,32 +104,47 @@ function PuzzleButton:checkCollides(x, y)
 end
 
 local color_table = {
-    completed = Color.green(),
-    open = Color.red(),
+    completed = Color.new(70, 150, 160),
+    open = Color.new(250, 140, 200),
 }
 
 function PuzzleButton:draw(mx, my)
     love.graphics.setFont(self.font)
     local c = color_table[self.puzzle.status]
-    c.a = 30
-    if Util.pointInRect(mx, my, self) then
-        c.a = 50
-    end
+
+    --Shadow of box
+    love.graphics.setColor(0,0,40,80)
+    local offset = 5
+    love.graphics.rectangle('fill', self.pos.x - offset, self.pos.y + offset, self.w - 2, self.h, 5, 10)
+
+    --Puzzle Box
     Color.set(c)
-    love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w - 2, self.h)
+    love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w - 2, self.h, 5, 10)
+
+    --Draw highlight effect
+    if Util.pointInRect(mx, my, self) then
+        love.graphics.setColor(255, 255, 255, 50)
+        love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.w - 2, self.h, 5, 10)
+    end
+
+    --Draw contour line
     love.graphics.setColor(0, 0, 0)
-    love.graphics.rectangle('line', self.pos.x, self.pos.y, self.w - 2, self.h)
+    love.graphics.rectangle('line', self.pos.x, self.pos.y, self.w - 2, self.h, 5, 10)
+
     -- circles
     if self.puzzle.id:find("extra") or self.puzzle.id == "spam" then
         Color.set(challenge_color)
-        love.graphics.circle('fill', self.pos.x + circles_w / 2 + 5, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
+        love.graphics.circle('fill', self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
         Color.set(Color.black())
         love.graphics.setLineWidth(3)
-        love.graphics.circle('line', self.pos.x + circles_w / 2 + 5, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
+        love.graphics.circle('line', self.pos.x + circles_w / 2 + 10, self.pos.y + (self.h - circles_w) / 2 + circles_w / 2, circles_w / 2)
     end
+
     -- name
     love.graphics.setColor(0, 0, 0)
-    love.graphics.print(self.puzzle.name, self.pos.x + circles_w + (self.w - circles_w - self.font:getWidth(self.puzzle.name)) / 2, self.pos.y + (self.h - self.font:getHeight()) / 2)
+    local shift = self.has_challenge and circles_w or 0
+    love.graphics.print(self.puzzle.name, self.pos.x + shift + (self.w - shift - self.font:getWidth(self.puzzle.name)) / 2, self.pos.y + (self.h - self.font:getHeight()) / 2)
+
     return self.h
 end
 
