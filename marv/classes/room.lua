@@ -102,16 +102,22 @@ Room = Class{
 
         -- Exit button
         local exit = function()
-            SaveManager.logout()
-            FX.full_static(function() love.event.quit() end)
+            if not IS_EXITING then
+                IS_EXITING = true
+                SaveManager.logout()
+                FX.full_static(function() love.event.quit() end)
+            end
         end
         self.exit_b = ImgButton(self.grid_x + self.grid_w - 115, self.grid_y + 10, 50, BUTS_IMG.exit, exit, "Exit")
         self.exit_b.hover_img = BUTS_IMG.exit_hover
 
         -- Reboot button
         local reboot = function()
-            SaveManager.logout()
-            FX.full_static(function() love.event.quit('restart') end)
+            if not IS_EXITING then
+                IS_EXITING = true
+                SaveManager.logout()
+                FX.full_static(function() love.event.quit('restart') end)
+            end
         end
         self.reboot_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.reboot, reboot, "Reboot")
         self.reboot_b.hover_img = BUTS_IMG.reboot_hover

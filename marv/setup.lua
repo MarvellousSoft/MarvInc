@@ -79,6 +79,9 @@ ORIENT = {NORTH, EAST, SOUTH, WEST}
 --Previous window state (to store in case of going back from fullscreen)
 PREV_WINDOW = nil
 
+--if game is already closing, to prevent other instances of closing
+IS_EXITING = false
+
 
 --TIMERS--
 MAIN_TIMER = Timer.new()  --General Timer

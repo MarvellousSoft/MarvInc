@@ -94,6 +94,7 @@ function state:draw()
 end
 
 function state:keypressed(key)
+    if IS_EXITING then return end
     --Toggle fullscreen
     if key == 'f11' then
         if not love.window.getFullscreen() then
@@ -123,7 +124,7 @@ function state:keypressed(key)
 end
 
 function state:mousepressed(x, y, but)
-    if EVENTS_LOCK > 0 then return end
+    if EVENTS_LOCK > 0 or IS_EXITING then return end
 
     pc_box:mousePressed(x,y,but)
     room:mousePressed(x, y, but)
@@ -141,23 +142,25 @@ function state:mousepressed(x, y, but)
 end
 
 function state:mousereleased(x, y, button, touch)
+    if IS_EXITING then return end
     PopManager.mousereleased(x, y, button, touch)
     pc_box:mouseReleased(x, y, button)
 end
 
 function state:mousemoved(x, y)
+    if IS_EXITING then return end
     pc_box:mouseMoved(x, y)
     room:mouseMoved(x, y)
 end
 
 function state:textinput(t)
-    if EVENTS_LOCK > 0 then return end
+    if EVENTS_LOCK > 0 or IS_EXITING then return end
 
     pc_box:textInput(t)
 end
 
 function state:wheelmoved(x, y)
-    if EVENTS_LOCK > 0 then return end
+    if EVENTS_LOCK > 0 or IS_EXITING then return end
 
     pc_box:mouseScroll(x, y)
 end

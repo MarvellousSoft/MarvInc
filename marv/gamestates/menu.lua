@@ -48,7 +48,10 @@ function state:enter()
 
     -- Exit button
     local exit = function()
-        love.event.quit()
+        if not IS_EXITING then
+            IS_EXITING = true
+            love.event.quit()
+        end
     end
     self.exit_b = ImgButton(W - 60, 10, 50, BUTS_IMG.exit, exit, "Exit")
     self.exit_b.hover_img = BUTS_IMG.exit_hover
