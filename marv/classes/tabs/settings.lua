@@ -41,8 +41,6 @@ SettingsTab = Class {
         self.box.sw = 13
         self.box.color = {12, 30, 10}
 
-        local prev_window = nil
-
         self.options = {
             ["Background Music"] = ToggleButton(0, 0, 20, 20, function()
                 MUSIC_MOD = 1
@@ -52,14 +50,14 @@ SettingsTab = Class {
                 GS['GAME'].getBGMManager():updateVolume()
             end, function() return MUSIC_MOD == 1 end),
             ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, function() return SOUND_EFFECT_MOD == 1 end),
-            ["Fullscreen"] = ToggleButton(0, 0, 20, 20, function()
-                prev_window = {love.window.getMode()}
+            ["Fullscreen (F11)"] = ToggleButton(0, 0, 20, 20, function()
+                PREV_WINDOW = {love.window.getMode()}
                 love.window.setFullscreen(true, "desktop")
                 love.resize(love.window.getMode())
             end, function()
                 love.window.setFullscreen(false, "desktop")
-                if prev_window then
-                    love.window.setMode(unpack(prev_window))
+                if PREV_WINDOW then
+                    love.window.setMode(unpack(PREV_WINDOW))
                 end
                 love.resize(love.window.getMode())
             end, function() return love.window.getFullscreen() end),

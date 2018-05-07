@@ -47,7 +47,22 @@ function state:mousepressed(x, y)
 end
 
 function state:keypressed(key)
-    if key == "escape" and _window.escape and _window.buttons[_window.escape] then
+    --Toggle fullscreen
+    if key == 'f11' then
+        if not love.window.getFullscreen() then
+            PREV_WINDOW = {love.window.getMode()}
+            love.window.setFullscreen(true, "desktop")
+            love.resize(love.window.getMode())
+        else
+            love.window.setFullscreen(false, "desktop")
+            if PREV_WINDOW then
+                love.window.setMode(unpack(PREV_WINDOW))
+            end
+            love.resize(love.window.getMode())
+        end
+        local set = Util.findId("settings_tab")
+        if set then set:refresh() end
+    elseif key == "escape" and _window.escape and _window.buttons[_window.escape] then
         _window.buttons[_window.escape]:callback()
         WarningWindow.deactivate(_dont_pop)
     elseif key == "return" and _window.enter and _window.buttons[_window.enter] then

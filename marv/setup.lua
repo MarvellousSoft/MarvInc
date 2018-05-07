@@ -53,8 +53,10 @@ local fonts = {
     comfortaaLight = "assets/fonts/Comfortaa-Light.ttf",
 }
 
-FONTS = {}
 
+--FONTS
+
+FONTS = {}
 for name, file in pairs(fonts) do
     local stored = {}
     FONTS[name] = function(size)
@@ -73,6 +75,9 @@ ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
 SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
 ORIENT = {NORTH, EAST, SOUTH, WEST}
+
+--Previous window state (to store in case of going back from fullscreen)
+PREV_WINDOW = nil
 
 
 --TIMERS--
