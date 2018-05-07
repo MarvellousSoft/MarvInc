@@ -69,24 +69,6 @@ end
 SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)
 ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 
--- Buttons Images
-BUTS_IMG = {}
-BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
-BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
-BUTS_IMG["fast_blocked"] = love.graphics.newImage("assets/images/button_fast_blocked.png")
-BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
-BUTS_IMG["superfast_blocked"] = love.graphics.newImage("assets/images/button_superfast_blocked.png")
-BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
-BUTS_IMG["pause_blocked"] = love.graphics.newImage("assets/images/button_pause_blocked.png")
-BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
-BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blocked.png")
-BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
-BUTS_IMG["exit"] = love.graphics.newImage("assets/images/exit_button_regular.png")
-BUTS_IMG["exit_hover"] = love.graphics.newImage("assets/images/exit_button_mouse_over.png")
-BUTS_IMG["reboot"] = love.graphics.newImage("assets/images/reboot_button_regular.png")
-BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_mouse_over.png")
-BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
-
 -- Move orientations
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
 SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
@@ -105,6 +87,33 @@ for i=1, #ORIENT_R do
 end
 
 --IMAGES--
+
+-- Buttons Images
+BUTS_IMG = {}
+BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
+BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
+BUTS_IMG["fast_blocked"] = love.graphics.newImage("assets/images/button_fast_blocked.png")
+BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
+BUTS_IMG["superfast_blocked"] = love.graphics.newImage("assets/images/button_superfast_blocked.png")
+BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
+BUTS_IMG["pause_blocked"] = love.graphics.newImage("assets/images/button_pause_blocked.png")
+BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
+BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blocked.png")
+BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
+BUTS_IMG["exit"] = love.graphics.newImage("assets/images/exit_button_regular.png")
+BUTS_IMG["exit_hover"] = love.graphics.newImage("assets/images/exit_button_mouse_over.png")
+BUTS_IMG["reboot"] = love.graphics.newImage("assets/images/reboot_button_regular.png")
+BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_mouse_over.png")
+BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
+
+--Icons
+ICON_IMG = {}
+ICON_IMG["16"] = love.image.newImageData("assets/icons/16x16.png")
+ICON_IMG["24"] = love.image.newImageData("assets/icons/24x24.png")
+ICON_IMG["32"] = love.image.newImageData("assets/icons/32x32.png")
+ICON_IMG["48"] = love.image.newImageData("assets/icons/48x48.png")
+ICON_IMG["64"] = love.image.newImageData("assets/icons/64x64.png")
+ICON_IMG["96"] = love.image.newImageData("assets/icons/96x96.png")
 
 -- Tiles
 TILES_IMG = {}
@@ -271,6 +280,20 @@ SMOOTH_RING_SHADER = ([[
 
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
+    --GAME ICON
+    if not love.window.setIcon(ICON_IMG["96"]) then
+        if not love.window.setIcon(ICON_IMG["64"]) then
+            if not love.window.setIcon(ICON_IMG["48"]) then
+                if not love.window.setIcon(ICON_IMG["32"]) then
+                    if not love.window.setIcon(ICON_IMG["24"]) then
+                        if not love.window.setIcon(ICON_IMG["16"]) then
+                            print("Couldn't set any icon image")
+                        end
+                    end
+                end
+            end
+        end
+    end
 
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
