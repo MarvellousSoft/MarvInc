@@ -46,8 +46,10 @@ function Code:step()
     if self.cur > #self.ops then return 'halt' end
 end
 
-function Code:stop()
+function Code:stop(show_code_state)
     local ct = Util.findId("code_tab")
-    ct:showLine(nil)
+    if not show_code_state then
+        ct:showLine(nil)
+    end
     ct.lock = ct.lock + 1
 end

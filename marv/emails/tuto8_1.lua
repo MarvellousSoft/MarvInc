@@ -17,12 +17,12 @@ The command {inst}mov {end}is used to move {num}values {end}to an {addr}address{
 There is also the command {inst}sub{end}. It works analogous to the {inst}add {end}command, but instead of adding the first {num}two arguments {end}and storing in the {addr}register {end}given by the {addr}third{end}, it will subtract.
 
 Example where the bot will move the {num}content {end}of the {addr}register #7 {end}to the {addr}register #3{end}, and then subtract the {num}value {end}of {addr}register #7 {end}by {num}4{end}.
-    - {inst}mov {num}[7] {addr}3 {end}
+      {inst}mov {num}[7] {addr}3 {end}
       {inst}sub {num}[7] 4 {addr}7 {end}
 
 Prove yourself worthy, employee #]] .. EMPLOYEE_NUMBER .. [[.
 
-We are waiting you.
+{purple}We are waiting you.{end}
 
 Carry on.
 ]],

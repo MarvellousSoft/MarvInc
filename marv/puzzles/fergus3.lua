@@ -14,13 +14,15 @@ n = "D.3"
 lines_on_terminal = 20
 memory_slots = 5
 
+local green = _G.Color.green()
+
 -- Bot
 bot = {'b', "EAST"}
 
 -- name, draw background, image
 o = {"obst", false, "wall_none"}
 k = {'bucket', true, 'bucket', args = {content = 'empty'}}
-c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint'}}
+c = {'container', false, 'paint', 0.2, 'white', 'solid_lava', args = {content = 'paint', content_color = green}}
 
 local floor
 
@@ -80,14 +82,14 @@ function on_start(room)
     for i = 1, ROWS do
         for j = 1, COLS do
             if floor:sub(COLS * (i - 1) + j, COLS * (i - 1) + j) == ',' then
-                room.color_floor[j][i] = _G.Color.new(0, 0, 30)
+                room.color_floor[j][i] = green
             end
         end
     end
 end
 
 -- Objective
-objective_text = "Complete the painting of the Marvellous logo"
+objective_text = "Complete the green painting of the Marvellous Inc. logo"
 function objective_checker(room)
     for i = 1, ROWS do
         for j = 1, COLS do

@@ -21,7 +21,7 @@ In short, I'm really busy. So I'll be quick.
 Remember our old {purple}Navigation System{end} you helped us improve? The one with the maze.
 Well, we need it {green}better{end}.
 And more {green}efficient{end}.
-And with {green}as low lines of code as possible{end}.
+And with {green}as few lines of code as possible{end}.
 
 So, yeah, the usual.
 

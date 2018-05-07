@@ -39,6 +39,7 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 require "classes.tabs.manual"
 require "classes.tabs.settings"
+require "classes.tabs.puzzle_list"
 
 require "classes.side_message"
 require "classes.pc_box"
@@ -56,6 +57,7 @@ BotModule = require "classes.bot"
 require "classes.puzzle"
 require "classes.room"
 require "classes.opened_email"
+WarningWindow = require "classes.warning_window"
 require "classes.audio"
 Color = require "classes.color.color"
 FX = require "classes.fx"
@@ -78,6 +80,7 @@ FIREPLACE = require "gamestates.fireplace",
 NEWS = require "gamestates.news",
 CREDITS = require "gamestates.credits",
 COMP = require "gamestates.computer",
+WARNINGWIN = require "gamestates.warning_window"
 }
 
 -- When game starts, automatically changes to this puzzle
@@ -110,9 +113,10 @@ function love.load(args)
     -- mousemoved is ignored
     Gamestate.registerEvents(callbacks) --Overwrites love callbacks to call Gamestate as well
 
-    SaveManager.load()
-
-    Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH) --Jump to the initial state
+    local got_warning = SaveManager.load()
+    if not got_warning then
+        Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH) --Jump to the initial state
+    end
 end
 
 -----------------
@@ -151,7 +155,8 @@ function love.resize(w, h)
     ResManager.adjustWindow(w, h)
 end
 
-local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true}
+local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true, [GS.WARNINGWIN] = true}
+local _force = false
 function love.quit()
     local room = GS['GAME'].getRoom()
     if room and room.puzzle_id == 'franz1' then
@@ -159,12 +164,20 @@ function love.quit()
             Mail.new('franz1_1')
         end
     end
-    if PopManager.pop or not ok_state[Gamestate.current()] or CLOSE_LOCK  then
-        local press = love.window.showMessageBox('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.", {"Close the game, I like to play with fire", "Do not close, I will take the safe approach", escapebutton = 2}, 'warning')
-        if press == 2 then
-            return true
-        end
+    if not _force and (PopManager.pop or not ok_state[Gamestate.current()] or CLOSE_LOCK)  then
+        WarningWindow.show('Warning', "Are you sure you want to close the game right now? It might lead to undefined behavior.",
+            {"Close the game, I like to play with fire",
+                function()
+                    _force = true
+                    love.event.quit()
+                end,
+            "Do not close, I will take the safe approach", nil, enter = 1, escape = 2
+            }
+        )
+        return true
+
     end
+    _force = false
     if PopManager.pop then
         PopManager.pop.buttons[1].callback()
         PopManager.quit()

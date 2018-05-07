@@ -100,7 +100,7 @@ end
 
 function first_completed()
     _G.PopManager.new("Well done",
-        "You have proven yourself to be an efficient and valuable employee so far.\n\nI'll tell Franz about your sucess. It's time to carry on.\n\n-Janine",
+        "You have proven yourself to be an efficient and valuable employee so far.\n\nI'll tell Franz about your success. It's time to carry on.\n\n-Janine",
         _G.CHR_CLR['jen'], {
             func = after_pop,
             text = " I am ready ",

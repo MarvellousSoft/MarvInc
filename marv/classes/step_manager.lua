@@ -202,11 +202,12 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
         return
     end
 
-    sm.clear()
+    sm.clear(true)
     ROOM:kill(fail_title == 'no kill')
 
     -- display popup
     local callback = function()
+        sm.clear(false)
         -- Just to be sure we aren't forgetting to clean anything
         -- And this should be a pretty fast procedure
         local bk = Util.findId('code_tab').term.backups -- does not loose history
@@ -254,17 +255,20 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
 
 end
 
-function sm.clear()
-    if sm.state == 'stopped' then return end
+function sm.clear(show_code_state)
     if sm.state == 'playing' then sm.timer:clear() end
     if sm.code then
-        sm.code:stop()
-        sm.code = nil
+        sm.code:stop(show_code_state)
+        if not show_code_state then
+            sm.code = nil
+        end
     end
     sm.cmd = nil
     sm.state = 'stopped'
     sm.how_fast = 0
-    Util.findId("code_tab").memory:reset()
+    if not show_code_state then
+        Util.findId("code_tab").memory:reset()
+    end
 end
 
 -- CODE COMMANDS

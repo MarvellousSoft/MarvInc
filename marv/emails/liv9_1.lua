@@ -14,9 +14,9 @@ return {
 
 As you can see, everything is fucking falling apart, but they still think my {purple}Project Brainfuck{end} will be a game-changer hahahahaha. They are sending all their (unfrozen) resources here. I got 100 new servers, and I'm running some stupid busy loop on them to pretend they are being used to their full power.
 
-Franz started sending me emails, talking about our purpose in the history of humankind and other epic shit like that. I always knew the bots seemed to good to be true, but... {red}Fuck it all{end}. I'm jumping ship.
+Franz started sending me emails, talking about our purpose in the history of humankind and other epic shit like that. I always knew the bots seemed too good to be true, but... {red}Fuck it all{end}. I'm jumping ship.
 
-Richard will send you some task related to what you were doing. As always, he is fucking oblivious. Do it, don't do it, {red}I don't fucking care{end}. I'll be taking care of myself, finding some nice job at some Google office far from here, and relaxing with my fat paycheck.
+Richard will send you some task related to what you were doing. As always, he is fucking oblivious. Do it, don't do it, {red}I don't fucking care{end}. I'll be taking care of myself, finding some nice job at some Google office far away from here, and relaxing with my fat paycheck.
 
 Fuck you too, carry on.
 

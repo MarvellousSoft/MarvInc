@@ -100,20 +100,34 @@ Room = Class{
         self.back_sx = self.grid_w/BG_IMG:getWidth()
         self.back_sy = self.grid_h/BG_IMG:getHeight()
 
-        -- Logoff button
-        local logoff = function()
-            SaveManager.logout()
-            FX.full_static(function() love.event.quit('restart') end)
+        -- Exit button
+        local exit = function()
+            if not IS_EXITING then
+                IS_EXITING = true
+                SaveManager.logout()
+                FX.full_static(function() love.event.quit() end)
+            end
         end
-        self.logoff_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.logoff, logoff, "Reboot")
-        self.logoff_b.hover_img = BUTS_IMG.logoff_hover
+        self.exit_b = ImgButton(self.grid_x + self.grid_w - 115, self.grid_y + 10, 50, BUTS_IMG.exit, exit, "Exit")
+        self.exit_b.hover_img = BUTS_IMG.exit_hover
+
+        -- Reboot button
+        local reboot = function()
+            if not IS_EXITING then
+                IS_EXITING = true
+                SaveManager.logout()
+                FX.full_static(function() love.event.quit('restart') end)
+            end
+        end
+        self.reboot_b = ImgButton(self.grid_x + self.grid_w - 60, self.grid_y + 10, 50, BUTS_IMG.reboot, reboot, "Reboot")
+        self.reboot_b.hover_img = BUTS_IMG.reboot_hover
 
         -- Static transition
         self.static_dhdl = nil
         self.static_rhdl = nil
-        self.static_img = MISC_IMG["static"]
-        self.static_sx = self.grid_w / self.static_img:getWidth()
-        self.static_sy = self.grid_h / self.static_img:getHeight()
+        local static_img = MISC_IMG.static
+        self.static_sx = self.grid_w / static_img:getWidth()
+        self.static_sy = self.grid_h / static_img:getHeight()
         self.static_r = 0
         self.static_on = false
 
@@ -372,10 +386,11 @@ function Room:draw()
         Color.set(self.back_clr)
         love.graphics.push()
         love.graphics.origin()
-        love.graphics.draw(self.static_img,
+        local s = MISC_IMG.static
+        love.graphics.draw(s,
             self.grid_x + self.grid_w/2, self.grid_h/2 + self.grid_y,
             self.static_r, self.static_sx, self.static_sy,
-            self.static_img:getWidth()/2, self.static_img:getHeight()/2)
+            s:getWidth()/2, s:getHeight()/2)
         love.graphics.pop()
     end
 
@@ -416,8 +431,10 @@ function Room:draw()
     -- Set origin to (0, 0)
     love.graphics.pop()
 
+    --Draw exit and reboot buttons
     if self.mode == "offline" then
-        self.logoff_b:draw()
+        self.exit_b:draw()
+        self.reboot_b:draw()
     end
 
     --Draw camera screen
@@ -500,7 +517,8 @@ end
 
 function Room:mousePressed(x, y, but)
     if self.mode == "offline" then
-        self.logoff_b:mousePressed(x, y, but)
+        self.exit_b:mousePressed(x, y, but)
+        self.reboot_b:mousePressed(x, y, but)
     end
 end
 

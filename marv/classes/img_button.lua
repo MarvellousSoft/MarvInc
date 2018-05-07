@@ -31,7 +31,7 @@ function ImgButton:draw()
     local mx, my = love.mouse.getPosition()
     local hover = Util.pointInRect(mx, my, self)
 
-    if hover then
+    if hover and Gamestate.current() ~= GS.WARNINGWIN and not Util.findId("opened_email") then
         self.color.l = 50
         self.color.a = 90
         Color.set(self.color)
@@ -47,10 +47,10 @@ function ImgButton:draw()
     self.color.a = 255
     Color.set(self.color)
     local img = self.img
-    if hover and self.hover_img then img = self.hover_img end
+    if hover and self.hover_img and Gamestate.current() ~= GS.WARNINGWIN and not Util.findId("opened_email") then img = self.hover_img end
     love.graphics.draw(img, self.pos.x, self.pos.y, 0, self.scale, self.scale)
 
-    if hover and self.hover_text then
+    if hover and self.hover_text and Gamestate.current() ~= GS.WARNINGWIN and not Util.findId("opened_email") then
         local f = FONTS.fira(17)
         Color.set(Color.black())
         local x, y = self.pos.x + (self.w - f:getWidth(self.hover_text)) / 2, self.pos.y + self.h + 1
@@ -70,8 +70,8 @@ function ImgButton:checkCollides(x, y)
 end
 
 function ImgButton:mousePressed(x, y, but)
+    if Util.findId("opened_email") then return end
     if but == 1 and Util.pointInRect(x, y, self) then
         self.call()
     end
 end
-

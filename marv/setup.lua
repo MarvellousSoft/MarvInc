@@ -15,7 +15,7 @@ local setup = {}
 --SETUP FUNCTIONS
 --------------------
 
-VERSION = "1.2.1"
+VERSION = "1.2.2"
 
 --GLOBAL VARIABLES--
 W = love.graphics.getWidth() --Current width of the game window
@@ -53,8 +53,10 @@ local fonts = {
     comfortaaLight = "assets/fonts/Comfortaa-Light.ttf",
 }
 
-FONTS = {}
 
+--FONTS
+
+FONTS = {}
 for name, file in pairs(fonts) do
     local stored = {}
     FONTS[name] = function(size)
@@ -69,26 +71,16 @@ end
 SUBTP_TABLE = {} --Table with tables for each subtype (for fast lookup)
 ID_TABLE = {} --Table with elements with Ids (for fast lookup)
 
--- Buttons Images
-BUTS_IMG = {}
-BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
-BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
-BUTS_IMG["fast_blocked"] = love.graphics.newImage("assets/images/button_fast_blocked.png")
-BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
-BUTS_IMG["superfast_blocked"] = love.graphics.newImage("assets/images/button_superfast_blocked.png")
-BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
-BUTS_IMG["pause_blocked"] = love.graphics.newImage("assets/images/button_pause_blocked.png")
-BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
-BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blocked.png")
-BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
-BUTS_IMG["logoff"] = love.graphics.newImage("assets/images/logoff_button_regular.png")
-BUTS_IMG["logoff_hover"] = love.graphics.newImage("assets/images/logoff_button_mouse_over.png")
-BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
-
 -- Move orientations
 NORTH, EAST = Vector.new(0, -1), Vector.new(1, 0)
 SOUTH, WEST = Vector.new(0, 1), Vector.new(-1, 0)
 ORIENT = {NORTH, EAST, SOUTH, WEST}
+
+--Previous window state (to store in case of going back from fullscreen)
+PREV_WINDOW = nil
+
+--if game is already closing, to prevent other instances of closing
+IS_EXITING = false
 
 
 --TIMERS--
@@ -103,6 +95,33 @@ for i=1, #ORIENT_R do
 end
 
 --IMAGES--
+
+-- Buttons Images
+BUTS_IMG = {}
+BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
+BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
+BUTS_IMG["fast_blocked"] = love.graphics.newImage("assets/images/button_fast_blocked.png")
+BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")
+BUTS_IMG["superfast_blocked"] = love.graphics.newImage("assets/images/button_superfast_blocked.png")
+BUTS_IMG["pause"] = love.graphics.newImage("assets/images/button_pause.png")
+BUTS_IMG["pause_blocked"] = love.graphics.newImage("assets/images/button_pause_blocked.png")
+BUTS_IMG["stop"] = love.graphics.newImage("assets/images/button_stop.png")
+BUTS_IMG["stop_blocked"] = love.graphics.newImage("assets/images/button_stop_blocked.png")
+BUTS_IMG["step"] = love.graphics.newImage("assets/images/button_step.png")
+BUTS_IMG["exit"] = love.graphics.newImage("assets/images/exit_button_regular.png")
+BUTS_IMG["exit_hover"] = love.graphics.newImage("assets/images/exit_button_mouse_over.png")
+BUTS_IMG["reboot"] = love.graphics.newImage("assets/images/reboot_button_regular.png")
+BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_mouse_over.png")
+BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
+
+--Icons
+ICON_IMG = {}
+ICON_IMG["16"] = love.image.newImageData("assets/icons/16x16.png")
+ICON_IMG["24"] = love.image.newImageData("assets/icons/24x24.png")
+ICON_IMG["32"] = love.image.newImageData("assets/icons/32x32.png")
+ICON_IMG["48"] = love.image.newImageData("assets/icons/48x48.png")
+ICON_IMG["64"] = love.image.newImageData("assets/icons/64x64.png")
+ICON_IMG["96"] = love.image.newImageData("assets/icons/96x96.png")
 
 -- Tiles
 TILES_IMG = {}
@@ -178,7 +197,7 @@ AUTHOR_IMG["liv"] = love.graphics.newImage("assets/images/authors/liv.png")
 AUTHOR_IMG["fergus"] = love.graphics.newImage("assets/images/authors/fergus.png")
 AUTHOR_IMG["paul"] = love.graphics.newImage("assets/images/authors/paul.png")
 AUTHOR_IMG["auto"] = love.graphics.newImage("assets/images/authors/auto.png")
-AUTHOR_IMG["hr"] = love.graphics.newImage("assets/images/authors/hr.png")
+AUTHOR_IMG["human resources"] = love.graphics.newImage("assets/images/authors/hr.png")
 AUTHOR_IMG["jan"] = love.graphics.newImage("assets/images/authors/jen.png")
 AUTHOR_IMG["diego"] = love.graphics.newImage("assets/images/authors/diego.png")
 AUTHOR_IMG["richard"] = love.graphics.newImage("assets/images/authors/black.png")
@@ -195,13 +214,24 @@ BG_IMG = love.graphics.newImage("assets/images/background.png")
 
 -- Miscellaneous images
 MISC_IMG = {}
-MISC_IMG["static"] = love.graphics.newImage("assets/images/static.png")
+MISC_IMG["reg_static"] = love.graphics.newImage("assets/images/static.png")
+MISC_IMG["mild_static"] = love.graphics.newImage("assets/images/static_mild.png")
+MISC_IMG["static"] = MISC_IMG["reg_static"]
 MISC_IMG["star"] = love.graphics.newImage("assets/images/star.png")
 MISC_IMG["arrow"] = love.graphics.newImage("assets/images/arrow.png")
 MISC_IMG["logo"] = love.graphics.newImage("assets/images/logo.png")
 MISC_IMG["cat"] = love.graphics.newImage("assets/images/grumpy_cat.png")
 MISC_IMG["marvsoft"] = love.graphics.newImage("assets/images/Marvellous Soft.png")
+MISC_IMG["lines"] = love.graphics.newImage("assets/images/settings.png")
+MISC_IMG["ticks"] = love.graphics.newImage("assets/images/settings.png")
+MISC_IMG["triangle"] = love.graphics.newImage("assets/images/triangle.png")
+MISC_IMG["triangle_border"] = love.graphics.newImage("assets/images/triangle_border.png")
+MISC_IMG["pixel"] = love.graphics.newImage("assets/images/pixel.png")
 
+
+-- Miscellaneous settings
+SETTINGS = {}
+SETTINGS["static"] = "reg_static"
 
 -- Bot images (assume array part only)
 HAIR = {
@@ -218,9 +248,60 @@ BODY = {
     love.graphics.newImage("assets/images/bodies/01.png")
 }
 
+--Shaders
+
+--Table containing smooth circle shaders created
+SMOOTH_CIRCLE_TABLE = {}
+--Table containing smooth ring shaders created
+SMOOTH_RING_TABLE = {}
+
+--Default Smooth Circle Shader
+SMOOTH_CIRCLE_SHADER = ([[
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){
+    vec4 pixel = Texel(texture, texture_coords );//This is the current pixel color
+    vec2 center = vec2(0.5,0.5);
+    pixel.a = 1 - smoothstep(.5 - 1/%f, .5, distance(center, texture_coords));
+    return pixel * color;
+  }
+]])
+
+--Default Smooth Ring Shader
+SMOOTH_RING_SHADER = ([[
+  vec4 effect( vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords ){
+    vec4 pixel = Texel(texture, texture_coords );//This is the current pixel color
+    vec2 center = vec2(0.5,0.5);
+    number size = %f;
+    number inner_radius = %f;
+    number x = distance(center, texture_coords);
+    if (x >= inner_radius/size) {
+      pixel.a = 1 - smoothstep(.5 - 1/size, .5, x);
+    }
+    else
+    {
+      pixel.a = smoothstep(inner_radius/size - 1/size, inner_radius/size, x);
+    }
+
+    return pixel * color;
+  }
+]])
+
 
 --Set game's global variables, random seed, window configuration and anything else needed
 function setup.config()
+    --GAME ICON
+    if not love.window.setIcon(ICON_IMG["96"]) then
+        if not love.window.setIcon(ICON_IMG["64"]) then
+            if not love.window.setIcon(ICON_IMG["48"]) then
+                if not love.window.setIcon(ICON_IMG["32"]) then
+                    if not love.window.setIcon(ICON_IMG["24"]) then
+                        if not love.window.setIcon(ICON_IMG["16"]) then
+                            print("Couldn't set any icon image")
+                        end
+                    end
+                end
+            end
+        end
+    end
 
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
@@ -249,19 +330,19 @@ function setup.config()
       {"has peculiar taste in pizza", {"Hawaiian pizza isn't so bad, you know?"}, {}},
       {"socially awkward", {}, {}},
       {"likes Phantom Menace", {"Jar Jar Binks is soooo underrated...", "Meesa think yousa no know how to solve thisa problem."}, {}},
-      {"collects stamps", {"You know whats better than bacon? Freaking stamps man."}, {}},
+      {"collects stamps", {"You know whats better than bacon? Freaking stamps man."}, {"I had almost completed my 1984 collection..."}},
       {"color blind", {"Hey, quick question. Is my hair green or red?"}, {}},
       {"puppy lover", {"Woof Woof Bark Bark :3"}, {}},
       {"arachnophobic", {"DUDE IS THAT A SPIDER IN THE CEILING?!"}, {}},
-      {"lactose intolerant", {"Soy milk is the bomb."}, {}},
+      {"lactose intolerant", {"Soy milk is the bomb.", "What's so great about cheese anyway?"}, {}},
       {"snorts when laughing", {}, {}},
       {"germophobe", {"Please don't make me touch anything dirty."}, {}},
       {"insomniac", {}, {}},
       {"lives with mom", {}, {}},
       {"has a cool car", {"I can give you a ride someday", "Hey have I told you about my sweet Sedan? 'ts preety cool"}, {}},
       {"listens to emo rock", {}, {}},
-      {"addicted to caffeine", {}, {}},
-      {"explorer at heart", {}, {}},
+      {"addicted to caffeine", {"Coffee first. Talk later."}, {}},
+      {"explorer at heart", {"Ooh, let's see what's at 15, 10!"}, {}},
       {"never tips", {"10% service it's just an absurd, don't you think?"}, {}},
       {"jerk", {"You're ugly.", "F%$# you."}, {"F%$# you."}},
       {"sympathetic", {"Don't stress man, take your time. :)", "These puzzles sure are tough huh?"}, {"It's ok, man. We had a good run..."}},
@@ -280,11 +361,11 @@ function setup.config()
       {"artistic", {}, {}},
       {"smells", {}, {}},
       {"inconvenient", {"Hey, what are you doing there?", "Do you really need that command?", "Are you done yet?", "Are you done yet?"}, {}},
-      {"hates sports", {}, {}},
-      {"soccer fan", {"Did you see that ludicrous display last night?"}, {}},
+      {"hates sports", {"Did you see the game last night? I didn't."}, {}},
+      {"soccer fan", {"Did you see that ludicrous display last night?"}, {"Red card? Seriously?"}},
       {"uses hashtags", {"#NailingIt", "#YouCanDoIt", "#NoFilter"}, {"#TimeToDie", "#ThisIsGonnaSuck"}},
       {"rad dance moves", {}, {}},
-      {"types with just one finger", {}, {}},
+      {"types with just one finger", {"h... e... l... l... o"}, {}},
       {"has a russian accent", {}, {"Goodbye, tovarisch."}},
       {"eats M&Ms by color", {"Usually I start with the reds and follow the rainbow order."}, {}},
       {"obsessed with Michael Cera", {"Michael Cera is just the perfect actor.", "Have you watched Arrested Development?", "Have you watched Juno?", "Michael Cera's mustache is the symbol of masculinity.", "Have you watched Scott Pilgrim?", "Have you watched Superbad?", "The best thing about Michael Cera is he doesn't even need to act."}, {}},
@@ -301,19 +382,19 @@ function setup.config()
       {"lost an eye in a bear accident", {"An eye for an eye... That bear sure showed me."}, {}},
       {"hates bears", {"Goddamn bears stealing our honeykeeping jobs!"}, {}},
       {"never finished a game without a walkthrough", {"You should look for the solution to this puzzle on the internet!"}, {}},
-      {"overachiever", {}, {}},
+      {"overachiever", {"I've solved a similar puzzle when I was five."}, {}},
       {"underachiever", {}, {}},
       {"always drunk", {"Jsut one moer drink..."}, {}},
       {"addicted to HIMYM", {"This puzzle is LEGEN --wait for it-- DARY!! hahaha"}, {}},
-      {"vegan without the powers", {}, {}},
+      {"vegan without the powers", {}, {"Wait... Chicken isn't vegan?"}},
       {"has to touch everything", {}, {}},
       {"has OCD", {}, {}},
       {"class clown", {}, {}},
       {"in a relationship with a pet rock", {}, {}},
       {"literally allergic to bad jokes", {}, {}},
-      {"terrified of babies", {}, {}},
+      {"terrified of babies", {"My nephew was just born. I'll miss my sister."}, {}},
       {"picks scabs", {}, {}},
-      {"pretends is a mime at parties", {}, {}},
+      {"pretends is a mime at parties", {"*Is trapped inside an invisible box*", "*Checks imaginary instructions*"}, {}},
       {"proud believer of crab people", {}, {}},
       {"reads minds", {"This puzzle is not a pain in the ass. Stop thinking that."}, {"It's ok. I forgive you."}},
       {"can play the theremin", {}, {}},
@@ -325,7 +406,7 @@ function setup.config()
       {"has an unhealthy obession with Kermit the Frog", {}, {}},
       {"can't ride a bike", {}, {}},
       {"is always seen wearing pajamas", {}, {}},
-      {"afraid of the internet", {"They say you can catch a virus in this Internet!"}, {}},
+      {"afraid of the internet", {"They say you can catch a virus in this Internet!"}, {"I told you to disconnect!"}},
       {"is agressively against socks", {}, {}},
       {"speaks in a monotone voice", {}, {}},
       {"born in a leap year", {"I'm turning 6 today. :P"}, {}},
@@ -335,19 +416,19 @@ function setup.config()
       {"chews ice cubes for dinner", {}, {}},
       {"heavy sleeper", {}, {}},
       {"fear of closed doors", {"I don't care about lava or buckets, just don't leave any door closed okay?", "Lets leave all door open, please."}, {}},
-      {"stores their urine in a jar", {"Everyone has a hobby :)"}, {}},
+      {"stores their urine in a jar", {"Everyone has a hobby :)", "Are you on fire? I can help."}, {}},
       {"kleptomaniac", {"Can I borrow your computer when I leave this place?"}, {}},
       {"only watches SpongeBob reruns", {"How about that one where Squidward accidentally freezes himself for 2,000 years huh? Classic!","Have you seen the one where Patrick helps SpongeBob on his driving test? Oh man I love that one!"}, {}},
       {"constantly makes animal noises", {"Moo", "Oink Oink","Baaaaaaah", "Meeeoow ;3", "Gobble gobble gobble"}, {}},
-      {"afraid of feet", {}, {}},
+      {"afraid of feet", {"Don't look down, don't look down..."}, {}},
       {"has a foot fetish", {"Could you describe your feet for me? ;)"}, {}},
       {"TYPES IN ALL CAPS", {"HEY MAN U DOING ALRIGHT THERE?"}, {"I'M GOING TO DIE!!!"}},
       {"know it all", {"Did you know a crocodile can't poke its tongue out?"}, {}},
       {"has bad acne", {"Please don't look at my face, I'm very insecure about it..."}, {}},
-      {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}, {}},
+      {"conspiracy theorist", {"9/11 was an inside job.", "Illuminati are behind it all.", "Vaccination is a lie created by the media.", "We're all being mind-controlled!"}, {"Oh no, they came after me!"}},
       {"nihilist", {"This puzzle doesn't matter. Nothing does."}, {"Death is meaningless."}},
-      {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}, {}},
-      {"plays Dwarf Fortress", {}, {"Death is all around us, begone fear!"}},
+      {"ArchLinux user", {"Did I tell you I run ArchLinux?", "Yesterday I managed to connect to a Wi-Fi network. I know, super hard."}, {"Looks like this version of \"life\" wasn't compatible with this package..."}},
+      {"plays Dwarf Fortress", {}, {"Death is all around us, begone fear!", "Losing is fun!", "Losing isn't fun after all..."}},
       {"Apple fanboy", {"The new iPhone isn't really that expensive... I'll just take a second mortgage..."}, {}},
       {"Elvis impersonator", {"Yeah baby yeah...", "I guess this \"robot\" microchip is... Always on my mind, baby."}, {}},
       {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", "Baby, give it up! Give it up, baby give it up!"}, {}},
@@ -355,7 +436,7 @@ function setup.config()
       {"german", {"Das ist nicht effizient. You should optimize your code."}, {}},
       {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {}},
       {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}, {"I literally feel like I'm dying, man!"}},
-      {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}, {}},
+      {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}, {"I'm fairly sure that part was a bug."}},
       {"never-nude", {"There are dozens of us!"}, {}},
       {"magician", {"It's not a trick. It's an ILLUSION.", "You like magic? SAME", "But where did the lighter fluid come from?"}, {"Want to see a cool trick?"}},
       {"ambidextrous", {}, {}},
@@ -363,16 +444,16 @@ function setup.config()
       {"procrastinator", {"Why don't you solve another puzzle?", "You should watch some TV first... Just to unwind."}, {}},
       {"national spelling bee winner", {"You are D-E-F-I-N-I-T-E-L-Y solving this task."}, {"D-E-A-D"}},
       {"frugal", {}, {}},
-      {"freakishly tall", {}, {}},
+      {"freakishly tall", {"No, the weather up here is not any different."}, {}},
       {"went to Burning Man", {"Have I told you how awesome it was at Burning Man?!", "I'm telling you, Burning Man is eye-opening!"}, {}},
       {"gambling addict", {"I bet 5$ you can't finish this task in under 5 minutes."}, {"I bet this will hurt a lot."}},
       {"diabetic", {}, {}},
       {"only drinks soda", {"Juice is for vegans man. Soda, that's where it's at."}, {}},
       {"only listens to Insane Clown Posse", {}, {}},
       {"thinks it's a pirate", {"Yaaaaaaaarrrrr"}, {"Arr, my scallywag, ya done kill me for good!"}},
-      {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}, {}},
-      {"believes in pc master race", {"Can you run 16K 180 FPS in your console?"}, {}},
-      {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}, {}},
+      {"game of thrones fanboy", {"KHALEESI", "WHERE ARE MY DRAGONS?", "Winter is coming!!", "The red wedding was rad, right?"}, {"You know nothing."}},
+      {"believes in pc master race", {"Can you run 16K 180 FPS in your console?"}, {"Should have upgraded my CPU..."}},
+      {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}, {"Am I obsolete already?"}},
       {"watches youtube hits", {"OPPA GANGNAM STYLE", "TURN DOWN FOR WHAT?", "DO THE HARLEM SHAKE"}, {}},
       {"meme guy", {"*trollface*", "Forever Alone."}, {}},
       {"lana del rey fan", {"You want to be my sugar daddy?", "*smokes*"}, {}},
@@ -507,11 +588,11 @@ function setup.config()
 
     --Drawing Tables
     DRAW_TABLE = {
-    BG   = {}, --Background (bottom layer, first to draw)
-    L1   = {}, --Layer 1
-    L1u  = {}, --Layer 1 upper
-    L2   = {}, --Layer 2
-    GUI  = {}  --Graphic User Interface (top layer, last to draw)
+        BG   = {}, --Background (bottom layer, first to draw)
+        L1   = {}, --Layer 1
+        L1u  = {}, --Layer 1 upper
+        L2   = {}, --Layer 2
+        GUI  = {}, --Graphic User Interface (top layer, last to draw)
     }
 
     --WINDOW CONFIG--

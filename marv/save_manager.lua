@@ -17,7 +17,7 @@ sm.user_data = {}
 
 -- used to improve compatibilty
 local current_common_version = "1"
-local current_save_version = "2"
+local current_save_version = "3"
 
 function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
@@ -91,6 +91,8 @@ function sm.save()
     data.bots_dead = info.dead
     data.last_bot = BotManager.current_bot
     data.block_extra_bot_messages = SideMessage.block_extra_bot_messages
+    data.block_intro_bot_messages = SideMessage.block_intro_bot_messages
+    data.static_screen = SETTINGS["static"]
 
     data.employee_id = EMPLOYEE_NUMBER
     -- whether to draw star on the corner of the screen
@@ -135,6 +137,9 @@ function sm.login(user)
         info.dead = data.bots_dead
         BotManager.current_bot = data.last_bot
         SideMessage.block_extra_bot_messages = data.block_extra_bot_messages
+        SideMessage.block_intro_bot_messages = data.block_intro_bot_messages
+        SETTINGS["static"] = data.static_screen
+        MISC_IMG["static"] = MISC_IMG[data.static_screen] or MISC_IMG.reg_static
 
         ROOM.draw_star = data.draw_star
         ROOM.version = data.os_version
@@ -178,18 +183,17 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
     if not f.exists("saves") then
         f.createDirectory("saves")
     end
+    local uppercase_users = {}
     for _, user in pairs(f.getDirectoryItems("saves")) do
         --Check for user with uppercase letters
         if string.match(user, "[A-Z]") then
-            print("Found a user with uppercase letters: "..user)
-            love.window.showMessageBox("Warning: Username with uppercase letters", "The username '"..user.."' contains uppercase letters,\nand we no longer support this type of username since\n it can create conflicts on certain OS.\nPlease rename this user folder in the save directory\nfolder so you can access it and supress this warning.",
-            {"OK", "lol ok"}, 'warning')
+            table.insert(uppercase_users,user)
         end
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
+            print(user .. " has version " .. ver)
             sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
             if ver == "1" then -- 1 --> 2
-                print("Changing from version 1 to 2")
                 local bot = sm.user_data[user].last_bot
                 if bot then
                     bot.hair_i = love.math.random(#HAIR)
@@ -199,11 +203,35 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
                 end
                 ver = "2"
             end
+            if ver == "2" then -- 2 --> 3
+                sm.user_data[user].static_screen = "reg_static"
+                ver = "3"
+            end
             if ver ~= current_save_version then
                 -- deal with old save versions
             end
         end
     end
+
+    --Handle warning if there is users with uppercase
+    local uppercase_users_warning = false
+    if #uppercase_users > 0 then
+        uppercase_users_warning = true
+
+        local users = '"'..uppercase_users[1]..'"'
+        for i = 2, #uppercase_users do
+            local separator = (i == #uppercase_users) and " and " or ", "
+            users = users..separator..'"'..uppercase_users[i]..'"'
+        end
+
+        local plural = #uppercase_users > 1 and "s" or ""
+        local title = "Warning: Username"..plural.." with uppercase letters"
+        local message = "The username"..plural.." "..users.." contains uppercase letters, and we no longer support this type of username since it can create conflicts on certain OS. Please rename the user folder"..plural.." in the save directory folder so you can access it and supress this warning."
+
+        WarningWindow.show(title, message, {"OKAY", function()Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH)end, enter = 1, escape = 1}, true)
+    end
+
+    return uppercase_users_warning
 end
 
 function sm.load_code(puzzle)

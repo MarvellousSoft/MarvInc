@@ -20,7 +20,7 @@ Well, now let's get back to work. Even seniors have to do that {red}:D{end}
 
 So, that first {ds}data structure {end}was simple, but I've seen something glow in Franz's eyes when he saw it done. Let's keep doing it then, I'm sure it will keep the managers happy and it's pretty cool. {pink}L++ rulz{end}
 
-This one might seen the same as the other, but it's harder. Remember it doesn't matter where you store the {num}values{end}, as long as your answers are correct.
+This one might seem the same as the other, but it's harder. Remember it doesn't matter where you store the {num}values{end}, as long as your answers are correct.
 
 Also, notice, like in the previous {ds}DS{end}, you can store all values {red}currently {end}on the {ds}DS {end}(at most 20), but there are not enough registers to store all the values that were ever added to the {ds}DS {end}(at most 100).
 

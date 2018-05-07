@@ -39,9 +39,22 @@ function state:enter()
     bgm:fadein()
 
     -- Create background
-    local bg
-    bg = IMAGE(0, 0, BG_IMG)
+    local bg = IMAGE(0, 0, BG_IMG)
     bg:addElement(DRAW_TABLE.BG, nil, "background")
+
+    -- Create logo
+    local logo = IMAGE(W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, MISC_IMG.logo, Color.white(), .75)
+    logo:addElement(DRAW_TABLE.GUI, nil, "logo")
+
+    -- Exit button
+    local exit = function()
+        if not IS_EXITING then
+            IS_EXITING = true
+            love.event.quit()
+        end
+    end
+    self.exit_b = ImgButton(W - 60, 10, 50, BUTS_IMG.exit, exit, "Exit")
+    self.exit_b.hover_img = BUTS_IMG.exit_hover
 
     self.fade_in_alp = 255
     Timer.tween(.3, self, {fade_in_alp = 0})
@@ -120,12 +133,14 @@ function state:usernames_mousePressed(x, y, but)
         if x >= ub.x and y >= ub.y then
             local i = math.floor((y - ub.y) / self.font:getHeight()) + 1
             if i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx, ub[i].by, ub[i].bsz, ub[i].bsz) then
-                local press = love.window.showMessageBox("Warning", "Are you sure you want to delete user " .. ub[i].user .. "?",
-                {'Yes', 'No, sorry', enterbutton = 1, escapebutton = 2}, 'warning')
-                if press == 1 then
-                    SaveManager.deleteUser(ub[i].user)
-                    self:initUsernames()
-                end
+                WarningWindow.show("Warning", "Are you sure you want to delete user " ..'"'..ub[i].user ..'"'.."?",
+                    {'Yes', function()
+                                SaveManager.deleteUser(ub[i].user)
+                                self:initUsernames()
+                            end,
+                     'No, sorry', nil, enter = 1, escape = 2
+                    }
+                )
             --If clicking on username, write username on login
             elseif i > 0 and i <= #ub and ub[i].bx and Util.pointInRect(x, y, ub[i].bx - user_font:getWidth(ub[i].user) - 10, ub[i].by, user_font:getWidth(ub[i].user), user_font:getHeight(ub[i].user)) then
                 self.box:reset_lines(1)
@@ -168,10 +183,6 @@ function state:draw()
 
     Draw.allTables()
 
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.setFont(FONTS.fira(120))
-    love.graphics.draw(MISC_IMG.logo, W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, 0, .75)
-
     -- username box
     local f = self.font
     love.graphics.setFont(f)
@@ -194,9 +205,28 @@ function state:draw()
     love.graphics.setColor(0, 0, 0, self.fade_in_alp)
     love.graphics.rectangle("fill", 0, 0, W, H)
 
+    --exit button
+    self.exit_b:draw()
+
 end
 
 function state:keypressed(key)
+    --Toggle fullscreen
+    if key == 'f11' then
+        if not love.window.getFullscreen() then
+            PREV_WINDOW = {love.window.getMode()}
+            love.window.setFullscreen(true, "desktop")
+            love.resize(love.window.getMode())
+        else
+            love.window.setFullscreen(false, "desktop")
+            if PREV_WINDOW then
+                love.window.setMode(unpack(PREV_WINDOW))
+            end
+            love.resize(love.window.getMode())
+        end
+        local set = Util.findId("settings_tab")
+        if set then set:refresh() end
+    end
     if key == 'return' or key == 'kpenter' then
         try_login()
         return
@@ -212,6 +242,7 @@ end
 function state:mousepressed(x, y, but)
     self.box:mousePressed(x, y, but)
     self.known_usernames:mousePressed(x, y, but)
+    self.exit_b:mousePressed(x, y, but)
     if but == 1 then self.login:checkCollides(x, y) end
 end
 
@@ -236,6 +267,7 @@ function state:update(dt)
 end
 
 function state:leave()
+    Util.findId("logo"):kill()
     self.box:deactivate()
 end
 

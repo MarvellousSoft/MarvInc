@@ -19,13 +19,13 @@ You can provide a {dir}cardinal direction {end}({dir}north{end}, {dir}east{end},
 {red}IMPORTANT:{end} This command will make the test subject {red}walk continuously{end} until it encounters an obstacle.
 
 Examples:
-    - {inst}walk{end}
-    - {inst}walk {dir}east{end}
-    - {inst}walk {dir}down{end}
+      {inst}walk{end}
+      {inst}walk {dir}east{end}
+      {inst}walk {dir}down{end}
 
 After writing the instructions in the appropriate place, use the {orange}play {end}button to start running the commands. Use the two buttons to the right of the {orange}play {end}button to move your bot faster.
 
-We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly. Reply this email to start the puzzle.
+We are assured you are an expert, so no more instructions are needed. Complete the following puzzle quickly. {purple}Reply{end} this email to start the puzzle (scroll down this email to find the {purple}reply{end} button).
 
 Best of Luck, and carry on.]],
     author = "Automated Introduction System",

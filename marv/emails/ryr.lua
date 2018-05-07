@@ -34,6 +34,6 @@ Good luck,
   {orange}R{end}icardo
 
 ]],
-    author = "{renatogeh,rilifon,yancouto}@marv.com",
+    author = "R.Y.R. (renatogeh,yancouto,rilifon@marv.com)",
     puzzle_id = 'ryr'
 }
