@@ -116,7 +116,7 @@ function PuzzleListTab:refresh()
     local puzzles = {}
     local has_diego = false
     for _, email in ipairs(Util.findId('email_tab').email_list) do
-        if email.puzzle_id then
+        if email.puzzle_id and email.was_read then
             local a = email.author
             if a:find("Richard Black") then
                 a = "Olivia Kavanagh"
