@@ -93,6 +93,12 @@ START_USER = nil
 -- Whether the game shows the splash screen
 SKIP_SPLASH = nil
 
+-- Whether the game is running with steam (for steam integration)
+USING_STEAM = false
+STEAMWORKS = nil
+STEAMWORKS_API = nil
+CREATE_APPID_FILE = nil
+
 function love.load(args)
     for i, cmd in ipairs(args) do
         if cmd:sub(1, 9) == "--puzzle=" then
@@ -101,6 +107,11 @@ function love.load(args)
             START_USER = cmd:sub(8)
         elseif cmd == "--no-splash" or cmd == "--skip-splash" then
             SKIP_SPLASH = true
+        elseif cmd == "--steam" then
+            USING_STEAM = true
+        elseif cmd == "--steamdev" then
+            USING_STEAM = true
+            CREATE_APPID_FILE = true
         end
     end
 
@@ -190,4 +201,5 @@ function love.quit()
     if bgmm then
         bgmm.current_bgm:fadeout()
     end
+
 end
