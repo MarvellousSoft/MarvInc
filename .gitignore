@@ -1,6 +1,6 @@
 build/
+steam_appid.txt
 *.swp
 *.vim
 *.lvimrc
 *.directory
-steam_appid.txt

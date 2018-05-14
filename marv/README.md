@@ -7,3 +7,6 @@ When running the game from the command line, you can add the following options t
 - `--steam` will integrate Steam API with MarvInc, however you'll need to place these two DLL files in your love.exe folder:
     - [steam_api.dll](https://drive.google.com/uc?export=download&id=0B-V5MASkccPiOUVUR0hobW91MTg)
     - [steam_api64.dll](https://drive.google.com/uc?export=download&id=0B-V5MASkccPiSkxleko2b3hwRmM)
+- `--steamdev` will integrate Steam API with MarvInc in dev mode, creating an auxiliary appID file. You'll still need the DLLs.
+    - [steam_api.dll](https://drive.google.com/uc?export=download&id=0B-V5MASkccPiOUVUR0hobW91MTg)
+    - [steam_api64.dll](https://drive.google.com/uc?export=download&id=0B-V5MASkccPiSkxleko2b3hwRmM)
