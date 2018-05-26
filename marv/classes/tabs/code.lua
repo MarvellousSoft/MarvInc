@@ -229,6 +229,7 @@ end
 function CodeTab:reset(puzzle)
     self.term:reset_lines(puzzle.lines_on_terminal)
     self.term:typeString(puzzle.code)
+    self.term:clearBackups()
     self.renames = puzzle.renames
     -- resetting locks to terminal
     self.lock = 0
