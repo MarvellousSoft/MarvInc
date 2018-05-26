@@ -623,13 +623,9 @@ function TextBox:mouseScroll(x, y)
 end
 
 function TextBox:typeString(str)
-    for c in str:gmatch(".") do
-        if c == '\n' then
-            self:keyPressed('return')
-        elseif c == ' ' then
-            self:keyPressed('space')
-        else
-            self:textInput(c)
-        end
-    end
+    str = str:gsub('.',
+        function (c)
+            return c == '\n' and c or self.accepted_chars[c] or ''
+        end)
+    self:tryWrite(str)
 end
