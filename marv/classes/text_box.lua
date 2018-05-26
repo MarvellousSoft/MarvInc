@@ -107,8 +107,7 @@ function TextBox:reset_lines(line_total)
     self.cursor2 = nil
 
     -- used for ctrl-z, ctrl-y
-    self.backups = {first = 0, last = -1, cur = -1}
-    self:pushBackup()
+    self:clearBackups()
 end
 
 -- adds backup to backup list
@@ -125,6 +124,11 @@ function TextBox:pushBackup(bak)
         b[b.first] = nil
         b.first = b.first + 1
     end
+end
+
+function TextBox:clearBackups()
+    self.backups = {first = 0, last = -1, cur = -1}
+    self:pushBackup()
 end
 
 -- undoes last action, returns whether successful
@@ -447,7 +451,7 @@ function TextBox:keyPressed(key)
         self:tryWrite('')
 
     elseif key == 'v' and ctrl then
-        self:typeString(love.system.getClipboardText())
+        self:putString(love.system.getClipboardText())
 
     end
 
@@ -620,6 +624,14 @@ function TextBox:mouseScroll(x, y)
     end
     self.dy = math.min(self.dy, self.line_cur - 1)
     self.dy = math.max(self.dy, -self.lines_on_screen + 1)
+end
+
+function TextBox:putString(str)
+    str = str:gsub('.',
+        function (c)
+            return c == '\n' and c or self.accepted_chars[c] or ''
+        end)
+    self:tryWrite(str)
 end
 
 function TextBox:typeString(str)
