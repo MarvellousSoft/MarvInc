@@ -317,8 +317,11 @@ end
 
 function TextBox:keyPressed(key)
     local c = self.cursor
+    local ctrl = love.keyboard.isDown('lctrl', 'rctrl')
+    local shift = love.keyboard.isDown('lshift', 'rshift')
+
     if change_cursor[key] then
-        if love.keyboard.isDown("lshift", "rshift") then
+        if shift then
             -- allows multiple selection
             self.cursor2 = self.cursor2 or {i = c.i, p = c.p}
         else
@@ -327,7 +330,6 @@ function TextBox:keyPressed(key)
     end
     if key == 'escape' then self.cursor2 = nil end
 
-    local ctrl = love.keyboard.isDown('lctrl', 'rctrl')
 
     local c2 = self.cursor2
     if not c2 and key == 'backspace' then
@@ -361,8 +363,21 @@ function TextBox:keyPressed(key)
         end
         self:pushBackup()
 
-    elseif c2 and (key == 'delete' or key == 'backspace') then
+    elseif c2 and key == 'backspace' then
         self:tryWrite('')
+
+    elseif c2 and key == 'delete' then
+        if shift then
+            love.system.setClipboardText(intervalAsString(self, c, c2))
+        end
+        self:tryWrite('')
+
+    elseif key == 'insert' then
+        if c2 and ctrl then
+            love.system.setClipboardText(intervalAsString(self, c, c2))
+        elseif shift then
+            self:typeString(love.system.getClipboardText())
+        end
 
     elseif key == 'return' then
         self:tryWrite('\n')
