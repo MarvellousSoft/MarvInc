@@ -18,7 +18,7 @@ If you could {red}erase it{end} and pretend that it never happened, I would be g
 
 But at least the record shows you have completed the beta version of our latest {purple}Navigation System{end} test room with perfection. I think you can handle the {red}real deal{end} now. Please let me know if you are willing to try it.
 
-Once again, I'm sorry for my lack of profissionalism, it will not happen again.
+Once again, I'm sorry for my lack of professionalism, it will not happen again.
 {gray}And please call me {red}Janine{gray} at the work enviroment.{end}
 
 Suit up and carry on.

@@ -24,7 +24,7 @@ Example where the bot will keep reading the input from the {orange}console {end}
 
 With the {inst}read {end}command you can read inputs from the {orange}consoles{end}, while with the {inst}write {end}you can output to the {orange}consoles{end}.
 
-Use the {red}conditional jumps {end}to make logical loops for your programs. Understanding all this is essencial for every member of our company.
+Use the {red}conditional jumps {end}to make logical loops for your programs. Understanding all this is essential for every member of our company.
 
 Follow you dreams, and carry on.
 ]],
