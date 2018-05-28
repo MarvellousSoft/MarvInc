@@ -22,6 +22,8 @@ As we said before, you should use it just like any text editor. To mention some 
 
 - Use {red}ctrl-c{end}, {blue}ctrl-x{end} and {yellow}ctrl-v{end} to {red}copy{end}, {blue}cut{end} and {yellow}paste text{end}
 
+- Alternatively {red}ctrl-insert{end}, {blue}shift-delete{end} and {yellow}shift-insert{end} to {red}copy{end}, {blue}cut{end} and {yellow}paste text{end}
+
 - Use {red}ctrl-z{end} and {blue}ctrl-y{end} to {red}undo{end} or {blue}redo{end} actions
 
 - {purple}And much more!{end}
