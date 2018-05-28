@@ -18,7 +18,7 @@ They all receive three arguments: two {num}values {end}and a {lab}label{end}. If
 
 For instance, the {inst}jgt {end}command is the {red}Greater Than Jump{end}. So if the first {num}value {end}received is greater than the {num}second one{end}, it will jump to the {lab}label {end}given as a third argument.
 
-Example where the bot will increase the {num}value {end}of the {addr}register #1 {end}until its greater than the {num}value {end}of the {addr}register #2{end}. Only then it will walk {num}7 {end}tiles.
+Example where the bot will increase the {num}value {end}of the {addr}register #1 {end}until it's greater than the {num}value {end}of the {addr}register #2{end}. Only then it will walk {num}7 {end}tiles.
       {lab}omar: {inst}add {num}[1] 1 {addr}1 {end}
       {inst}jgt {num}[2] [1] {lab}omar {end}
       {inst}walk {num}7 {end}

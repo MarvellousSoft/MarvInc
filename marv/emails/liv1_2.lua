@@ -18,7 +18,7 @@ Be polite, and carry on.
 
 
 
-* A note has been added to you {blue}personal {end}file
+* A note has been added to your {blue}personal {end}file
 ]],
     author = "Auto Mod (noreply@marv.com)",
     can_be_deleted = true

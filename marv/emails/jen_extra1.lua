@@ -12,9 +12,9 @@ return {
     text = [[
 I've just received notification of your performance in the binary puzzle, and I must say... I'm actually {blue}impressed!!{end}
 
-{gray}notice how I just used double exclamation marks to emphasize my emotions. I seldom do that. You can enjoy the moment now.{end}
+{gray}Notice how I just used double exclamation marks to emphasize my emotions. I seldom do that. You can enjoy the moment now.{end}
 
-You created a very robust algorithm to that task, something I should have expected from someone at your position, so I share with you one of the hardest puzzles I've come across during my carrer.
+You created a very robust algorithm to that task, something I should have expected from someone at your position, so I share with you one of the hardest puzzles I've come across during my career.
 
 Consider it as a {green}special optional challenge{end}. Do you have what it takes to create a short but efficient program to solve it?
 

@@ -14,7 +14,7 @@ Here are some useful shortcuts to enhance your working experience here at Marvel
 
 - {blue}Ctrl + Enter{end}: Starts the simulation.
 
-- {blue}Space{end}: Toggle play or pause for the simulation if its already running.
+- {blue}Space{end}: Toggle play or pause for the simulation if it's already running.
 
 - {blue}PageDown{end}/{blue}PageUp{end}: Move between tabs.
 

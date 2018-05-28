@@ -10,11 +10,11 @@ See full license in file LICENSE.txt
 return {
     title = "Never Gonna Give Binaries Up",
     text = [[
-  Hey there {purple}wannabe hacker{end}, you know whats {orange}major rad{end}? No, not The Goonies you dweeb, {yellow}binary numbers{end}! {pink}:-){end}
+  Hey there {purple}wannabe hacker{end}, you know what's {orange}major rad{end}? No, not The Goonies you dweeb, {yellow}binary numbers{end}! {pink}:-){end}
 
   This eletronic mail (or as we in the tech department like to call, {brown}e-mail{end} {pink};-D{end}) will teach all about those before you can call Ghostbusters.
 
-  First things first, how do we write {pink}three hundred and forty two{end} in our usual numerical system? Well, thats major easy, it's {blue}342{end}, which means
+  First things first, how do we write {pink}three hundred and forty two{end} in our usual numerical system? Well, that's major easy, it's {blue}342{end}, which means
 
   {blue}3{end}x{purple}100{end} + {blue}4{end}x{purple}10{end} + {blue}2{end}x{purple}1{end}
 
@@ -34,7 +34,7 @@ return {
 
   We call our numerical system the {red}Decimal Numerical System{end}! You don't have to be no Emmet Brown from Back to the Future to see that, ain't I right doc? {pink};-P{end}
 
-  Ok, lets take it to the max, I can tell you are getting stoked about this. What if, instead of using all our {blue}10{end} digits, we just used {blue}0{end} and {blue}1{end}. Could we write any number just those? Yes! We just have to use a {red}Binary Numerical System{end}! Cowabunga!
+  Ok, let's take it to the max, I can tell you are getting stoked about this. What if, instead of using all our {blue}10{end} digits, we just used {blue}0{end} and {blue}1{end}. Could we write any number just those? Yes! We just have to use a {red}Binary Numerical System{end}! Cowabunga!
 
   So, for instace, the number {pink}342{end} in binary would be {blue}101010110{end}, which means
 
