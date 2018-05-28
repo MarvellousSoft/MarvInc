@@ -88,7 +88,6 @@ function lore.mark_completed(puzzle)
     else
         lore.puzzle_done[puzzle.id] = true
         puzzle.first_completed()
-
         lore.check_all()
     end
 end
