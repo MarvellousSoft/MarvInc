@@ -85,6 +85,14 @@ local function stepCallback()
         end
     end
 
+    if not sm.cmd then
+        -- check if we hit a breakpoint
+        local next_line = sm.code.real_line[sm.code.cur]
+        if Util.findId("code_tab"):isBreakPoint(next_line) then
+            sm.pause()
+        end
+    end
+
     -- Creates 1-turn stuff (lasers) (after action)
     ROOM:createEphemeral()
 
@@ -210,10 +218,11 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
         sm.clear(false)
         -- Just to be sure we aren't forgetting to clean anything
         -- And this should be a pretty fast procedure
-        local bk = Util.findId('code_tab').term.backups -- does not loose history
+        local term = Util.findId('code_tab').term
+        local bk, breakpoints = term.backups, term.breakpoints -- preserve history and breakpoints
         ROOM:connect(ROOM.puzzle_id, false)
         if replay_speed then doPlay(replay_speed) end
-        Util.findId('code_tab').term.backups = bk
+        term.backups, term.breakpoints = bk, breakpoints
     end
 
     if show_popup == false or fail_title == 'no kill' then

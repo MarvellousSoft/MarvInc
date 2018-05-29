@@ -191,7 +191,13 @@ function CodeTab:mousePressed(x, y, but)
     if TABS_LOCK > 0 then return end
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
 
-    if self.lock > 0 then return end
+    if self.lock > 0 then
+        if not typingRegister(self) then
+            self.term:mousePressed(x, y, but, true)
+        end
+        return
+    end
+
     local t = typingRegister(self) and self.memory.tbox or self.term
     t:mousePressed(x, y, but)
     self:checkErrors()
@@ -208,6 +214,7 @@ function CodeTab:mouseReleased(x, y, but)
 end
 
 function CodeTab:mouseMoved(x, y)
+    self.term:mouseMoved(x, y)
     self.memory:mouseMoved(x, y)
 end
 
@@ -256,6 +263,10 @@ end
 
 function CodeTab:showLine(i)
     self.term.exec_line = i
+end
+
+function CodeTab:isBreakPoint(i)
+    return self.term.breakpoints[i]
 end
 
 function CodeTab:saveCurrentCode()
