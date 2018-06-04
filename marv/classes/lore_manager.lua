@@ -8,7 +8,6 @@ See full license in file LICENSE.txt
 ]]--
 
 local Color = require "classes.color.color"
-local StepManager = require "classes.step_manager"
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
 local Info = require "classes.tabs.info"
@@ -81,7 +80,6 @@ end
 
 -- Marks that a puzzle was completed
 function lore.mark_completed(puzzle)
-    StepManager.pause()
     if lore.puzzle_done[puzzle.id] then
         puzzle.already_completed()
         lore.check_all()

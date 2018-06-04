@@ -9,6 +9,8 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local LoreManager = require "classes.lore_manager"
+local StepManager = require "classes.step_manager"
+
 
 -- Puzzle stores the values for a new room.
 
@@ -72,6 +74,7 @@ Puzzle = Class{
 function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
+        StepManager.pause()
         if not self.is_custom then
             LoreManager.mark_completed(self)
         else
