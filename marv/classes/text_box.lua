@@ -345,7 +345,7 @@ end
 
 function TextBox:keyPressed(key)
     local c = self.cursor
-    local ctrl = love.keyboard.isDown('lctrl', 'rctrl')
+    local ctrl = love.keyboard.isDown('lctrl', 'rctrl', 'lgui', 'rgui')
     local shift = love.keyboard.isDown('lshift', 'rshift')
 
     if change_cursor[key] then
