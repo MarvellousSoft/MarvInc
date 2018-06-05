@@ -256,9 +256,15 @@ function TextBox:draw(bad_lines)
         local x = self.pos.x + (self.max_char + (self.show_line_num and 4 or 0)) * self.font_w
         local y = self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h
         local dy = (self.line_h - h) / 2
-        love.graphics.polygon("fill", x, y + dy + h / 2, x + h, y + dy, x + h, y + dy + h)
-        love.graphics.setLineWidth(.1)
-        love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
+        if not self.breakpoints[self.exec_line+1] then
+            local w = x - self.pos.x + (self.show_line_num and 4 or 0) * self.font_w
+            local x = self.pos.x + (self.show_line_num and 4 or 0) * self.font_w
+            love.graphics.setLineWidth(.2)
+            love.graphics.rectangle("line", x, y, w, self.line_h, 1)
+        else
+            love.graphics.setLineWidth(.1)
+            love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
+        end
     end
 
     -- Remove stencil
