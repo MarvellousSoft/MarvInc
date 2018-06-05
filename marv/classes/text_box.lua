@@ -202,13 +202,13 @@ function TextBox:draw(bad_lines)
         end
 
         -- Draw active breakpoint or breakpoint hover effect for current line
-        if self.show_line_num and (self.breakpoints[i + 1] or (i + 1) == self.hover_breakpoint) then
+        if (ROOM and ROOM.version >= "1.0") and self.show_line_num and (self.breakpoints[i + 1] or (i + 1) == self.hover_breakpoint) then
             local c = Color.red()
             if not self.breakpoints[i + 1] then
                 c.a = 100
             end
             Color.set(c)
-            local x = self.pos.x + dx - self.font_w
+            local x = self.pos.x + dx - self.font_w + 2
             local y = self.pos.y + (i - self.dy + 0.5) * self.line_h
             love.graphics.circle("fill", x, y, 0.4 * self.font_w)
         end
@@ -661,7 +661,7 @@ function TextBox:mousePressed(x, y, but, locked)
 
     local i, p, is_lineno = getCursorOnClick(self, x, y)
     if i <= 0 or p <= 0 then return end
-    if is_lineno then
+    if is_lineno and ROOM.version >= "1.0" then
         self.breakpoints[i] = not self.breakpoints[i]
         return
     end
