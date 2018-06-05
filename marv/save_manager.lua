@@ -23,6 +23,9 @@ function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
         f.createDirectory('saves/'.. user)
     end
+    if not f.exists('saves/' .. user .. '/custom_puzzles') then
+        f.createDirectory('saves/' .. user .. '/custom_puzzles')
+    end
     f.write('saves/' .. user .. '/version', current_save_version)
 end
 
@@ -210,6 +213,9 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
             if ver ~= current_save_version then
                 -- deal with old save versions
             end
+            if not f.exists("saves/".. user .. "/custom_puzzles") then
+                f.createDirectory("saves/".. user .. "/custom_puzzles")
+            end
         end
     end
 
@@ -234,9 +240,14 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
     return uppercase_users_warning
 end
 
-function sm.load_code(puzzle)
+function sm.load_code(puzzle, is_custom)
     local code, rnm = "", {}
-    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    local basename
+    if not is_custom then
+        basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    else
+        basename = 'saves/' .. sm.current_user .. '/custom_puzzles/' .. puzzle
+    end
     if f.exists(basename .. '.code') then code = f.read(basename .. '.code') end
     if f.exists(basename .. '.renames') then
         for line in f.read(basename .. '.renames'):gmatch("[^\n]+") do
@@ -249,9 +260,14 @@ function sm.load_code(puzzle)
     return code, rnm
 end
 
-function sm.save_code(puzzle, str, renames)
+function sm.save_code(puzzle, str, renames, is_custom)
     sm.base_user_save(sm.current_user)
-    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    local basename
+    if not is_custom then
+        basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    else
+        basename = 'saves/' .. sm.current_user .. '/custom_puzzles/' .. puzzle
+    end
     f.write(basename .. '.code', str)
     local rnm = ""
     for str, num in pairs(renames) do

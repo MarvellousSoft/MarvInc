@@ -303,6 +303,15 @@ function setup.config()
         end
     end
 
+    --CUSTOM PUZZLES FOLDER--
+    if not love.filesystem.exists("custom") then
+        if not love.filesystem.createDirectory("custom") then
+            print("Couldn't create custom puzzles directory")
+        else
+            print("Created custom puzzles directory")
+        end
+    end
+
     --RANDOM SEED--
     love.math.setRandomSeed( os.time() )
 

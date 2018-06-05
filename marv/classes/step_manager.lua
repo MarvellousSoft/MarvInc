@@ -64,7 +64,7 @@ local function stepCallback()
     end
 
     local code_over = false
-
+    
     if sm.cmd then
         local func = sm.cmd
         sm.cmd = nil
@@ -220,7 +220,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup)
         -- And this should be a pretty fast procedure
         local term = Util.findId('code_tab').term
         local bk, breakpoints = term.backups, term.breakpoints -- preserve history and breakpoints
-        ROOM:connect(ROOM.puzzle_id, false)
+        ROOM:connect(ROOM.puzzle_id, false, ROOM.is_custom)
         if replay_speed then doPlay(replay_speed) end
         term.backups, term.breakpoints = bk, breakpoints
     end
