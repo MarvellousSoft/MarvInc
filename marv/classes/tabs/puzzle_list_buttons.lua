@@ -81,7 +81,10 @@ local circles_w = 25
 function PuzzleButton:init(x, y, w, h, puzzle)
     RECT.init(self, x, y, w, h)
     self.puzzle = puzzle
-    self.has_challenge = self.puzzle.id:find("extra") or self.puzzle.id == "spam"
+    self.is_custom = puzzle.status == "custom"
+    if not self.is_custom then
+        self.has_challenge = self.puzzle.id:find("extra") or self.puzzle.id == "spam"
+    end
     local width = self.has_challenge and self.w - circles_w or self.w
     local sz = 30
     while sz > 2 and FONTS.fira(sz):getWidth(puzzle.name) > width do
@@ -99,13 +102,14 @@ function PuzzleButton:checkCollides(x, y)
             SFX.buzz:play()
             return
         end
-        ROOM:connect(self.puzzle.id)
+        ROOM:connect(self.puzzle.id, nil, self.is_custom)
     end
 end
 
 local color_table = {
     completed = Color.new(70, 150, 160),
     open = Color.new(250, 140, 200),
+    custom = Color.new(130, 140, 200),
 }
 
 function PuzzleButton:draw(mx, my)

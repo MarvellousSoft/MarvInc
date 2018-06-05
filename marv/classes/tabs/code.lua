@@ -275,5 +275,5 @@ end
 
 function CodeTab:saveCurrentCode()
     if not ROOM:connected() then return end
-    SaveManager.save_code(ROOM.puzzle_id, table.concat(self:getLines(), "\n"), self.renames)
+    SaveManager.save_code(ROOM.puzzle_id, table.concat(self:getLines(), "\n"), self.renames, ROOM.is_custom)
 end

@@ -16,9 +16,14 @@ require "classes.console"
 local reader = {}
 
 -- Reads and returns the puzzle with id puzzle_id
-function reader.read(puzzle_id)
+function reader.read(puzzle_id, is_custom)
     -- Loads lua file and adds contents to table _t
-    local _f, err = love.filesystem.load("puzzles/" .. puzzle_id .. ".lua")
+    local _f, err
+    if not is_custom then
+        _f, err = love.filesystem.load("puzzles/" .. puzzle_id .. ".lua")
+    else
+        _f, err = love.filesystem.load("custom/" .. puzzle_id .. ".lua")
+    end
     if err then print(err) end
     local _t = {}
     setfenv(_f, _t)
@@ -35,6 +40,7 @@ function reader.read(puzzle_id)
     local puz = Puzzle()
     puz.name = _t.name
     puz.id = puzzle_id
+    puz.is_custom = is_custom
     puz.n = _t.n
     puz.postDraw = _t.postDraw
     puz.update = _t.update
@@ -135,8 +141,12 @@ function reader.read(puzzle_id)
 
     puz.objective_text = _t.objective_text
     puz.objective_checker = _t.objective_checker
-    puz.first_completed = _t.first_completed
-    puz.already_completed = _t.already_completed
+    if not is_custom then
+        puz.first_completed = _t.first_completed
+        puz.already_completed = _t.already_completed
+    else
+        puz.custom_completed =_t.completed
+    end
 
     puz.lines_on_terminal = _t.lines_on_terminal
     puz.memory_slots = _t.memory_slots
@@ -145,7 +155,7 @@ function reader.read(puzzle_id)
     puz.on_start = _t.on_start
     puz.on_end = _t.on_end
 
-    puz.code, puz.renames = SaveManager.load_code(puzzle_id)
+    puz.code, puz.renames = SaveManager.load_code(puzzle_id, is_custom)
 
     return puz
 end
