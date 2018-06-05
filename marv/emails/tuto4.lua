@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 return {
-    title = "Lets use some loops",
+    title = "Let's use some loops",
     text = [[
 Remember loops from Hacking101 classes? Well, you better.
 

@@ -18,7 +18,7 @@ There is a {inst}loop structure {end}in {blue}brainfuck{end}. It can be done usi
 
 More formally, imagine there is an {blue}instruction pointer{end}, that points to the instruction that is currently executing (not unlike the white indicator you see on the right when running some L++ code). Excluding the loop, all instructions just make the {blue}IP (instruction pointer) {end}increment by one. When the {blue}IP {end}is pointing to a {inst}[{end}, it will skip to the matching {inst}] {end}if the {num}value {end}pointed by the {addr}DP (data pointer) {end}is 0, otherwise it will just increment as usual. In the same manner, when the {blue}IP {end}is at a {inst}]{end}, it will skip to the matching {inst}[ {end}if the {num}value {end}pointed by the {addr}DP {end}is non-zero.
 
-A simple example: suppose the value pointed by the {addr}DP {end}is non-negative*, then the example code {blue}[-] {end}will subtract 1 from that value until it becones 0. From this, you can see that {blue}brainfuck {end}is much simpler than L++, since you need an algorithm just to make a position become 0.
+A simple example: suppose the value pointed by the {addr}DP {end}is non-negative*, then the example code {blue}[-] {end}will subtract 1 from that value until it becomes 0. From this, you can see that {blue}brainfuck {end}is much simpler than L++, since you need an algorithm just to make a position become 0.
 
 Please notice that there may be {gray}loops inside loops{end}, which will surely make the job of implementing the interpreter significantly harder than the last task.
 
