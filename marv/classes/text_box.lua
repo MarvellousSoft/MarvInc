@@ -225,27 +225,29 @@ function TextBox:draw(bad_lines)
         love.graphics.line(x, self.pos.y, x, self.pos.y + self.h)
     end
 
-    -- Draw cursor
-    c.a = 150 * self.cursor_mult
-    Color.set(c)
-    local w = self.font_w
-    local cu = self.cursor
-    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
-
-    -- Drawing selection -- ugly code :(
-    c.a = 80
-    Color.set(c)
-    local c1, c2 = self.cursor, self.cursor2 or self.cursor
-    if c1.i > c2.i or (c1.i == c2.i and c1.p > c2.p) then
-        c1, c2 = c2, c1
-    end
-    cu = {i = c1.i, p = c1.p}
-    while cu.i ~= c2.i or cu.p ~= c2.p do
+    if not self.hide_cursor then
+        -- Draw cursor
+        c.a = 150 * self.cursor_mult
+        Color.set(c)
+        local w = self.font_w
+        local cu = self.cursor
         love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
-        cu.p = cu.p + 1
-        if cu.p == #self.lines[cu.i] + 2 then
-            cu.p = 1
-            cu.i = cu.i + 1
+
+        -- Drawing selection -- ugly code :(
+        c.a = 80
+        Color.set(c)
+        local c1, c2 = self.cursor, self.cursor2 or self.cursor
+        if c1.i > c2.i or (c1.i == c2.i and c1.p > c2.p) then
+            c1, c2 = c2, c1
+        end
+        cu = {i = c1.i, p = c1.p}
+        while cu.i ~= c2.i or cu.p ~= c2.p do
+            love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+            cu.p = cu.p + 1
+            if cu.p == #self.lines[cu.i] + 2 then
+                cu.p = 1
+                cu.i = cu.i + 1
+            end
         end
     end
 
@@ -263,7 +265,8 @@ function TextBox:draw(bad_lines)
             love.graphics.rectangle("line", x, y, w, self.line_h, 1)
         else
             love.graphics.setLineWidth(.1)
-            love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
+            local gap = 2
+            love.graphics.line(x, y + self.line_h + gap, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h + gap)
         end
     end
 

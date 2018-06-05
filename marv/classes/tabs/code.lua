@@ -101,6 +101,8 @@ function CodeTab:deactivate()
 end
 
 function CodeTab:update(dt)
+    --Hide cursor while code is running
+    self.term.hide_cursor = StepManager.state ~= 'stopped'
     self.term:update(dt)
     self.memory:update(dt)
 end
@@ -144,7 +146,9 @@ function CodeTab:keyPressed(key)
             return
         end
     end
+
     local isRunning = StepManager.state ~= 'stopped'
+
     if key == 'space' then
         if StepManager.state == 'playing' then
             StepManager.pause()
