@@ -227,7 +227,7 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         local plural = #uppercase_users > 1 and "s" or ""
         local title = "Warning: Username"..plural.." with uppercase letters"
         local message = "The username"..plural.." "..users.." contains uppercase letters, and we no longer support this type of username since it can create conflicts on certain OS. Please rename the user folder"..plural.." in the save directory folder so you can access it and supress this warning."
-
+        Gamestate.switch(GS.BLANK)
         WarningWindow.show(title, message, {"OKAY", function()Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH)end, enter = 1, escape = 1}, true)
     end
 
