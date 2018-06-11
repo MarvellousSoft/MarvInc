@@ -89,7 +89,6 @@ local function create_vecs()
     end
     ins(v_code, "<<<[.<]")
     ins(v_code, 0)
-    print(#v_code)
     create_ans()
 end
 

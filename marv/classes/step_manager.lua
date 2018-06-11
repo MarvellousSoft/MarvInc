@@ -86,9 +86,11 @@ local function stepCallback()
     end
 
     if not sm.cmd then
-        -- check if we hit a breakpoint
+        -- highlight next pending line, check if we hit a breakpoint
         local next_line = sm.code.real_line[sm.code.cur]
-        if Util.findId("code_tab"):isBreakPoint(next_line) then
+        local code_tab = Util.findId("code_tab")
+        code_tab:showLine(next_line)
+        if code_tab:isBreakPoint(next_line) then
             sm.pause()
         end
     end
