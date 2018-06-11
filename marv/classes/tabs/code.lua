@@ -266,7 +266,8 @@ function CodeTab:getLines()
 end
 
 function CodeTab:showLine(i)
-    self.term.exec_line = i
+    self.term.exec_line_prev = self.term.exec_line_next
+    self.term.exec_line_next = i
 end
 
 function CodeTab:isBreakPoint(i)
