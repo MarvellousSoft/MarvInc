@@ -9,6 +9,8 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local LoreManager = require "classes.lore_manager"
+local StepManager = require "classes.step_manager"
+
 
 -- Puzzle stores the values for a new room.
 
@@ -23,6 +25,8 @@ Puzzle = Class{
     n = nil,
     -- Extra info
     extra_info = "",
+    -- If puzzle is a custom puzzle
+    is_custom = nil,
 
     -- Puzzle object grid
     grid_obj = nil,
@@ -60,6 +64,8 @@ Puzzle = Class{
     first_completed = LoreManager.default_completed,
     -- called subsequent times
     already_completed = LoreManager.already_completed,
+    -- called only in custom puzzles
+    custom_completed = LoreManager.completed,
 
     -- End turn Signal function handler. Remove on disconnection.
     turn_handler = nil
@@ -68,7 +74,12 @@ Puzzle = Class{
 function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
-        LoreManager.mark_completed(self)
+        StepManager.pause()
+        if not self.is_custom then
+            LoreManager.mark_completed(self)
+        else
+            self.custom_completed()
+        end
         self.completed = true
         SFX.win_puzzle:stop()
         SFX.win_puzzle:play()
