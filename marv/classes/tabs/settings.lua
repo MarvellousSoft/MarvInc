@@ -51,7 +51,9 @@ SettingsTab = Class {
                 MUSIC_MOD = value
                 GS['GAME'].getBGMManager():updateVolume()
             end, function() return MUSIC_MOD end),
-            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, function() return SOUND_EFFECT_MOD == 1 end),
+            ["Sound Effects"] = Slider(0, 0, 400, function(value)
+                 SOUND_EFFECT_MOD = value
+            end, function() return SOUND_EFFECT_MOD end),
             ["Fullscreen (F11)"] = ToggleButton(0, 0, 20, 20, function()
                 PREV_WINDOW = {love.window.getMode()}
                 love.window.setFullscreen(true, "desktop")
@@ -111,15 +113,15 @@ function SettingsTab:trueDraw()
             love.graphics.print(name, but.pos.x + but.w + 20, but.pos.y + but.h / 2 - self.options_font:getHeight() / 2)
             -- collision rectangle (includes text)
             but.col_x = but.pos.x - 10
-            but.col_y = -10 + but.pos.y + but.h / 2 - self.options_font:getHeight() / 2
+            but.col_y = -1 + but.pos.y + but.h / 2 - self.options_font:getHeight() / 2
             but.col_w = 10 + but.w + 20 + self.options_font:getWidth(name) + 10
-            but.col_h = 10 + self.options_font:getHeight() + 10
+            but.col_h = 1 + self.options_font:getHeight() + 1
         else
-            love.graphics.print(name, but.pos.x, but.pos.y - self.options_font:getHeight() / 2)
+            love.graphics.print(name, but.pos.x, but.pos.y)
         end
 
-
-        h = h + but.h * 3
+        local margin = 32
+        h = h + but:height() + margin
     end
 end
 
@@ -210,6 +212,10 @@ function ToggleButton:refresh()
     end
 end
 
+function ToggleButton:height()
+    return self.h
+end
+
 --SLIDER--
 function Slider:init(x, y, size, callback, get_value)
     --Slider box dimensions
@@ -225,7 +231,7 @@ function Slider:init(x, y, size, callback, get_value)
     self.hover = false --If mouse is over slider box
     self.is_sliding = false
 
-    self.slider_gap = 45 --Vertical gap to draw slider below name
+    self.slider_gap = 55 --Vertical gap to draw slider below name
 
     self.type = "slider"
 end
@@ -258,12 +264,13 @@ end
 
 function Slider:draw()
     --Draw slider box background
-    local margin = 8
+    local x_margin = 12
+    local y_margin = 5
     love.graphics.setColor(255, 255, 255, 130)
-    love.graphics.rectangle('fill', self.pos.x-margin, self.pos.y - 20, self.size+2*margin, self.h + self.slider_gap + 15, 5)
+    love.graphics.rectangle('fill', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
     love.graphics.setColor(0, 0, 0, 60)
     love.graphics.setLineWidth(3)
-    love.graphics.rectangle('line', self.pos.x-margin, self.pos.y - 20, self.size+2*margin, self.h + self.slider_gap + 15, 5)
+    love.graphics.rectangle('line', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
 
     --Draw slider line
     love.graphics.setColor(30, 30, 30)
@@ -293,6 +300,9 @@ function Slider:refresh()
     self.value = self.get_value()
 end
 
+function Slider:height()
+    return self.h + self.slider_gap
+end
 
 -----------------------------
 
