@@ -137,19 +137,20 @@ function ScrollWindow:mouseReleased(x, y, but)
     if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h)
         and not Util.pointInRect(x, y, scrollBarBounds(self)) then return end
     if self.obj.mouseReleased then
+        local oh = self.obj:getHeight()
         if oh <= self.h then self.obj:mouseReleased(x, y, but)
         else self.obj:mouseReleased(x, y + self.scrolled * (oh - self.h), but) end
     end
 end
 
-function ScrollWindow:mouseMoved(x, y)
+function ScrollWindow:mouseMoved(x, y, dx, dy)
     local oh = self.obj:getHeight()
     if oh > self.h and Util.pointInRect(x, y, scrollBarBounds(self)) then self.on_hover = true
     else self.on_hover = false end
     if not Util.pointInRect(x, y, self.obj.pos.x, self.obj.pos.y, self.w, self.h) then return end
     if self.obj.mouseMoved then
-        if oh <= self.h then self.obj:mouseMoved(x, y, but)
-        else self.obj:mouseMoved(x, y + self.scrolled * (oh - self.h), but) end
+        if oh <= self.h then self.obj:mouseMoved(x, y, dx, dy)
+        else self.obj:mouseMoved(x, y + self.scrolled * (oh - self.h), dx, dy) end
     end
 end
 

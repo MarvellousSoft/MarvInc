@@ -30,7 +30,6 @@ function state:init()
     room = Rooms.create()
     pc_box = PcBox.create()
     bgmmanager = BGMManager()
-
     LoreManager.init()
     FX.intro()
 
@@ -147,10 +146,10 @@ function state:mousereleased(x, y, button, touch)
     pc_box:mouseReleased(x, y, button)
 end
 
-function state:mousemoved(x, y)
+function state:mousemoved(...)
     if IS_EXITING then return end
-    pc_box:mouseMoved(x, y)
-    room:mouseMoved(x, y)
+    pc_box:mouseMoved(...)
+    room:mouseMoved(...)
 end
 
 function state:textinput(t)
