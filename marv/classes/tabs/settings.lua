@@ -232,6 +232,7 @@ function Slider:init(x, y, size, callback, get_value)
     self.is_sliding = false
 
     self.slider_gap = 55 --Vertical gap to draw slider below name
+    self.slider_line_h = 14 --Height of slider tray line
 
     self.type = "slider"
 end
@@ -239,6 +240,11 @@ end
 function Slider:mousePressed(x, y, but)
     if but == 1 and Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h) then
         self.is_sliding = true
+        SFX.click:stop()
+        SFX.click:play()
+    elseif but == 1 and Util.pointInRect(x, y, self.pos.x, self.pos.y-self.slider_line_h/2 + self.slider_gap, self.size, self.slider_line_h) then
+        self.is_sliding = true
+        self:mouseMoved(x,y,x-self:getSliderX(),0)
         SFX.click:stop()
         SFX.click:play()
     end
@@ -251,7 +257,7 @@ function Slider:mouseReleased(x, y, but)
 end
 
 function Slider:mouseMoved(x, y, dx, dy)
-    if self.is_sliding then
+    if self.is_sliding and x >= self.pos.x and x <= self.pos.x + self.size then
          --Clamp pos
         local slider_x = math.max(self.pos.x, math.min(self.pos.x+self.size, self:getSliderX() + dx))
         --Update value
@@ -273,7 +279,7 @@ function Slider:draw()
     love.graphics.rectangle('line', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
 
     --Draw slider line
-    local h = 14
+    local h = self.slider_line_h
     love.graphics.setColor(140, 191, 255)
     love.graphics.rectangle('fill', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size*self.value, h)
     love.graphics.setColor(196, 214, 237)
