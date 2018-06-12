@@ -64,8 +64,9 @@ SoundEffect = Class {
     __includes = {Audio}
 }
 
-function SoundEffect:play()
-    self.source:setVolume(self.base_volume * SOUND_EFFECT_MOD)
+function SoundEffect:play(mod)
+    mod = mod or 1
+    self.source:setVolume(self.base_volume * SOUND_EFFECT_MOD * mod)
     self.source:play()
 end
 
