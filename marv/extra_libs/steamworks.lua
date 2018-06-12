@@ -2356,7 +2356,7 @@ if jit.os == "Windows" then
 		lib = ffi.load("steam_api")
 	end
 else
-	lib = ffi.load("libsteam_api")
+	lib = ffi.load("./libsteam_api.so")
 end
 
 assert(lib, "Steam api not found")
