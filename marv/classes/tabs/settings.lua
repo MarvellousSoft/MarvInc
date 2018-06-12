@@ -273,12 +273,17 @@ function Slider:draw()
     love.graphics.rectangle('line', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
 
     --Draw slider line
+    local h = 14
+    love.graphics.setColor(140, 191, 255)
+    love.graphics.rectangle('fill', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size*self.value, h)
+    love.graphics.setColor(196, 214, 237)
+    love.graphics.rectangle('fill', self.pos.x+self.size*self.value, self.pos.y-h/2 + self.slider_gap, self.size*(1-self.value), h)
+    love.graphics.setLineWidth(3)
     love.graphics.setColor(30, 30, 30)
-    local h = 4
-    love.graphics.rectangle('fill', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size, h)
+    love.graphics.rectangle('line', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size, h)
 
     --Draw slider box
-    love.graphics.setColor(136, 178, 39)
+    love.graphics.setColor(37, 123, 237)
     love.graphics.rectangle('fill', self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h, 5)
     love.graphics.setLineWidth(3)
     love.graphics.setColor(0, 0, 0)
