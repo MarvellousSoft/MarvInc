@@ -2355,6 +2355,8 @@ if jit.os == "Windows" then
 	elseif jit.arch == "x86" then
 		lib = ffi.load("steam_api")
 	end
+elseif jit.os == "OSX" then
+	lib = ffi.load("./libsteam_api.dylib")
 else
 	lib = ffi.load("./libsteam_api.so")
 end
