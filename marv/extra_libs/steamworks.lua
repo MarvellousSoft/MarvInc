@@ -2383,13 +2383,6 @@ if not lib.SteamAPI_Init() then
 end
 
 steamworks = {}
-steamworks.unifiedmessages = {}
-steamworks.unifiedmessages_ptr = lib.SteamUnifiedMessages()
-function steamworks.unifiedmessages.SendMethod(pchServiceMethod, pRequestBuffer, unRequestBufferSize, unContext) return lib.SteamAPI_ISteamUnifiedMessages_SendMethod(steamworks.unifiedmessages_ptr, pchServiceMethod, pRequestBuffer, unRequestBufferSize, unContext) end
-function steamworks.unifiedmessages.GetMethodResponseInfo(hHandle, punResponseSize, peResult) return lib.SteamAPI_ISteamUnifiedMessages_GetMethodResponseInfo(steamworks.unifiedmessages_ptr, hHandle, punResponseSize, peResult) end
-function steamworks.unifiedmessages.GetMethodResponseData(hHandle, pResponseBuffer, unResponseBufferSize, bAutoRelease) return lib.SteamAPI_ISteamUnifiedMessages_GetMethodResponseData(steamworks.unifiedmessages_ptr, hHandle, pResponseBuffer, unResponseBufferSize, bAutoRelease) end
-function steamworks.unifiedmessages.ReleaseMethod(hHandle) return lib.SteamAPI_ISteamUnifiedMessages_ReleaseMethod(steamworks.unifiedmessages_ptr, hHandle) end
-function steamworks.unifiedmessages.SendNotification(pchServiceNotification, pNotificationBuffer, unNotificationBufferSize) return lib.SteamAPI_ISteamUnifiedMessages_SendNotification(steamworks.unifiedmessages_ptr, pchServiceNotification, pNotificationBuffer, unNotificationBufferSize) end
 steamworks.friends = {}
 steamworks.friends_ptr = lib.SteamFriends()
 function steamworks.friends.GetPersonaName()local str = lib.SteamAPI_ISteamFriends_GetPersonaName(steamworks.friends_ptr) if str ~= nil then return ffi.string(str) end end
