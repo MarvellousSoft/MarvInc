@@ -113,6 +113,7 @@ BUTS_IMG["exit_hover"] = love.graphics.newImage("assets/images/exit_button_mouse
 BUTS_IMG["reboot"] = love.graphics.newImage("assets/images/reboot_button_regular.png")
 BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_mouse_over.png")
 BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
+BUTS_IMG["achievements"] = love.graphics.newImage("assets/images/achievements.png")
 
 --Icons
 ICON_IMG = {}
@@ -336,10 +337,9 @@ function setup.config()
     ACHIEVEMENT_DATABASE = {
         {"Test","Description", ACHV_IMG["locked"], ACHV_IMG["completed"]}
     }
-    --Reset achievements progress
+    --Initialize achievements progress
     ACHIEVEMENT_PROGRESS = {}
     AchManager.reset()
-    AchManager.print()
 
     -- Current room
     ROOM = nil
