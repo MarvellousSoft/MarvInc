@@ -65,6 +65,7 @@ StepManager = require "classes.step_manager"
 LoreManager = require "classes.lore_manager"
 PopManager  = require "classes.pop_manager"
 SaveManager = require "save_manager"
+AchManager = require "achievement_manager"
 ResManager = require "res_manager"
 
 --GAMESTATES
@@ -187,5 +188,15 @@ function love.quit()
     local bgmm = GS['GAME'].getBGMManager()
     if bgmm then
         bgmm.current_bgm:fadeout()
+    end
+end
+
+function love.keypressed(key, scancode, isrepeat)
+    if key == 'm' then
+        AchManager.complete("Test")
+    elseif key == 'b' then
+        AchManager.reset()
+    elseif key == 'n' then
+        AchManager.print()
     end
 end

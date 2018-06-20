@@ -212,6 +212,12 @@ ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
 -- Background
 BG_IMG = love.graphics.newImage("assets/images/background.png")
 
+--Achievements images
+ACHV_IMG = {}
+ACHV_IMG["locked"] = love.graphics.newImage("assets/images/arrow.png")
+ACHV_IMG["completed"] = love.graphics.newImage("assets/images/arrow.png")
+
+
 -- Miscellaneous images
 MISC_IMG = {}
 MISC_IMG["reg_static"] = love.graphics.newImage("assets/images/static.png")
@@ -324,6 +330,16 @@ function setup.config()
     EMPLOYEE_NUMBER = love.math.random(200, 2000)
 
     UNREAD_EMAILS = 0 -- Number of unread emails
+
+    --Achievements Stuff
+    --First is title, then description, then incompleted image, then completed imaged
+    ACHIEVEMENT_DATABASE = {
+        {"Test","Description", ACHV_IMG["locked"], ACHV_IMG["completed"]}
+    }
+    --Reset achievements progress
+    ACHIEVEMENT_PROGRESS = {}
+    AchManager.reset()
+    AchManager.print()
 
     -- Current room
     ROOM = nil

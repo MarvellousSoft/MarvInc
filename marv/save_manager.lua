@@ -98,6 +98,8 @@ function sm.save()
     data.static_screen = SETTINGS["static"]
 
     data.employee_id = EMPLOYEE_NUMBER
+    data.achievement_progress = ACHIEVEMENT_PROGRESS
+
     -- whether to draw star on the corner of the screen
     data.draw_star = ROOM.draw_star
     -- Marvellous OS version
@@ -117,6 +119,10 @@ function sm.login(user)
     local data = sm.user_data[user]
     if data then
         EMPLOYEE_NUMBER = data.employee_id
+
+        --Load achievements
+        AchManager.load(data.achievement_progress)
+        AchManager.print()
 
         LoreManager.puzzle_done = data.puzzle_done
         LoreManager.set_done_events(data.done_events)
