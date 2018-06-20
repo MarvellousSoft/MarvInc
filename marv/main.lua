@@ -191,13 +191,3 @@ function love.quit()
         bgmm.current_bgm:fadeout()
     end
 end
-
-function love.keypressed(key, scancode, isrepeat)
-    if key == 'm' then
-        AchManager.complete("Test")
-    elseif key == 'b' then
-        AchManager.reset()
-    elseif key == 'n' then
-        AchManager.print()
-    end
-end

@@ -214,9 +214,9 @@ ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
 BG_IMG = love.graphics.newImage("assets/images/background.png")
 
 --Achievements images
-ACHV_IMG = {}
-ACHV_IMG["locked"] = love.graphics.newImage("assets/images/arrow.png")
-ACHV_IMG["completed"] = love.graphics.newImage("assets/images/arrow.png")
+ACH_IMG = {}
+ACH_IMG["incompleted"] = love.graphics.newImage("assets/images/achievements/incompleted.png")
+ACH_IMG["completed"] = love.graphics.newImage("assets/images/achievements/completed.png")
 
 
 -- Miscellaneous images
@@ -335,7 +335,18 @@ function setup.config()
     --Achievements Stuff
     --First is title, then description, then incompleted image, then completed imaged
     ACHIEVEMENT_DATABASE = {
-        {"Test","Description", ACHV_IMG["locked"], ACHV_IMG["completed"]}
+        {"Test","Description", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest2","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest3","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest4","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest5","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest6","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest7","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest8","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest9","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Hardest10","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+
     }
     --Initialize achievements progress
     ACHIEVEMENT_PROGRESS = {}

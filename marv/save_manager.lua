@@ -122,7 +122,6 @@ function sm.login(user)
 
         --Load achievements
         AchManager.load(data.achievement_progress)
-        AchManager.print()
 
         LoreManager.puzzle_done = data.puzzle_done
         LoreManager.set_done_events(data.done_events)
