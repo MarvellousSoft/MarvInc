@@ -35,11 +35,11 @@ InfoTab = Class{
         end)
 
         -- Id file for showing the bot
-        self.id_file_color = Color.new(70, 90, 240, 110)
+        self.id_file_color = Color.new(70, 90, 215)
         self.id_file_text_color = Color.new(0, 80, 10)
         self.id_file_x = 10
         self.id_file_y = 10
-        self.id_file_w = self.w - 2*self.id_file_x
+        self.id_file_w = self.w - 4*self.id_file_x
         self.id_file_h = 200
 
         -- Portrat of bot
@@ -138,6 +138,9 @@ function InfoTab:trueDraw()
 
     -- Print bot id file
     if ROOM:connected() then
+        local offset = 4
+        love.graphics.setColor(0,0,0,180)
+        love.graphics.rectangle("fill", self.pos.x + self.id_file_x - offset, self.pos.y + self.id_file_y + offset, self.id_file_w, self.id_file_h, 10)
         Color.set(self.id_file_color)
         love.graphics.rectangle("fill", self.pos.x + self.id_file_x, self.pos.y + self.id_file_y, self.id_file_w, self.id_file_h, 10)
 
@@ -158,6 +161,9 @@ function InfoTab:trueDraw()
         love.graphics.print(ROOM.bot.name, self.pos.x + self.id_file_x + 310, self.pos.y + self.id_file_y + 35)
 
         -- Bot portrait
+        local offset = 3
+        love.graphics.setColor(0,0,0,180)
+        love.graphics.rectangle("fill", self.pos.x + self.portrait_x + 20-offset, self.pos.y + self.portrait_y + 28+offset, self.portrait_w, self.portrait_h, 5)
         Color.set(self.portrait_color)
         love.graphics.rectangle("fill", self.pos.x + self.portrait_x + 20, self.pos.y + self.portrait_y + 28, self.portrait_w, self.portrait_h, 5)
         Color.set(ROOM.bot.body_clr)
@@ -201,7 +207,10 @@ function InfoTab:trueDraw()
         font = FONTS.fira(24)
         love.graphics.setFont(font)
         Color.set(self.text_color2)
-        love.graphics.print("Objective:", self.pos.x + 10, self.pos.y + self.id_file_y + 300)
+        local txt = "Objective:"
+        love.graphics.print(txt, self.pos.x + 10, self.pos.y + self.id_file_y + 300)
+        local line_y = self.pos.y + self.id_file_y + 300 + font:getHeight() + 2
+        love.graphics.line(self.pos.x + 10, line_y, self.pos.x + 10 + font:getWidth(txt),line_y)
         font = FONTS.fira(18)
         love.graphics.setFont(font)
         local h = 0
@@ -217,7 +226,9 @@ function InfoTab:trueDraw()
         font = FONTS.fira(20)
         love.graphics.setFont(font)
         Color.set(self.maximum_number_lines_color)
-        love.graphics.print("Lines available for puzzle: " .. ROOM.puzzle.lines_on_terminal, self.pos.x + 10, self.pos.y + self.id_file_y + 370 + h)
+        local txt = "Lines available for puzzle: " .. ROOM.puzzle.lines_on_terminal
+        love.graphics.print(txt, self.pos.x + 10, self.pos.y + self.id_file_y + 370 + h)
+
         h = h + font:getHeight() + 20
 
         -- Extra Info
@@ -225,7 +236,10 @@ function InfoTab:trueDraw()
             font = FONTS.fira(24)
             love.graphics.setFont(font)
             Color.set(self.text_color2)
-            love.graphics.print("Extra info:", self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
+            local txt = "Extra info:"
+            love.graphics.print(txt, self.pos.x + 10, self.pos.y + self.id_file_y + 360 + h)
+            local line_y = self.pos.y + self.id_file_y + 360 + h + font:getHeight() + 2
+            love.graphics.line(self.pos.x + 10, line_y, self.pos.x + 10 + font:getWidth(txt),line_y)
             font = FONTS.fira(18)
             love.graphics.setFont(font)
             Color.set(self.text_color3)
