@@ -21,22 +21,24 @@ SideMessage = Class{
 
     block_extra_bot_messages = false,
 
-    init = function(self, name, message, hair, face, height)
+    init = function(self, name, message, hair, face, height, type)
 
         local width = 280
         height = height or 100
         RECT.init(self, W, H - height - 160, width, height)
 
         self.name = name
-
         self.message = message
+        self.type = type or "bot"
 
         self.name_font = FONTS.fira(16)
         self.body_font = FONTS.fira(13)
 
-        self.hair, self.face = hair[1], face[1]
-        self.hair_clr = hair[2] or Color.white
-        self.face_clr = face[2] or Color.white
+        if self.type == "bot" then
+            self.hair, self.face = hair[1], face[1]
+            self.hair_clr = hair[2] or Color.white
+            self.face_clr = face[2] or Color.white
+        end
 
         --Portrait values
         self.portrait_offset_x = 0
@@ -55,7 +57,11 @@ function SideMessage:draw()
     --Draw the background
     Color.set(Color.new(206,83,31,255,'hsl', true))
     love.graphics.rectangle("fill", self.pos.x-7, self.pos.y+7, self.w, self.h,5)
-    Color.set(Color.white())
+    if self.type == "bot" then
+        Color.set(Color.white())
+    elseif self.type == "achievement" then
+        Color.set(Color.new(127,100,80,255,'hsl', true))
+    end
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h,5)
 
     --Draw Portrait Background
@@ -68,10 +74,25 @@ function SideMessage:draw()
 
     --Draw portrait
     local pt_x, pt_y = portrait_x + self.portrait_offset_x, portrait_y + self.portrait_offset_y
-    Color.set(self.face_clr)
-    love.graphics.draw(self.face, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
-    Color.set(self.hair_clr)
-    love.graphics.draw(self.hair, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+    if self.type == "bot" then
+        Color.set(self.face_clr)
+        love.graphics.draw(self.face, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+        Color.set(self.hair_clr)
+        love.graphics.draw(self.hair, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+    elseif self.type == "achievement" then
+        --Checks if can find achievement image
+        local ach = nil
+        for _,k in ipairs(ACHIEVEMENT_DATABASE) do
+            if k[1] == self.name then
+                ach = k
+                break
+            end
+        end
+        if ach then
+            Color.set(Color.white())
+            love.graphics.draw(ach[4], pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+        end
+    end
 
     local text_h = 20 + self.body_font:getHeight() * #select(2, self.body_font:getWrap(self.message, self.w - portrait_w - 25))
     local text_y = self.pos.y + self.h / 2 - text_h / 2
@@ -79,13 +100,16 @@ function SideMessage:draw()
     --Draw message author
     love.graphics.setFont(self.name_font)
     Color.set(Color.black())
-    love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, text_y)
+    if self.type == "bot" then
+        love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, text_y)
+    elseif self.type == "achievement" then
+        love.graphics.print(self.name, portrait_x + portrait_w + 10, text_y)
+    end
 
     --Draw message content
     love.graphics.setFont(self.body_font)
     Color.set(Color.black())
     love.graphics.printf(self.message, portrait_x + portrait_w + 10, text_y + 20, self.w - portrait_w - 25)
-
 end
 
 function SideMessage:setPortraitOffset(x,y)
@@ -162,7 +186,7 @@ Signal.register("new_bot_message",
     function(text, height)
         local bot = ROOM.bot
         if not bot then return end
-        local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height)
+        local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height, "bot")
 
         if not message.message then return nil end
 
@@ -176,23 +200,17 @@ Signal.register("new_bot_message",
     end
 )
 
---Register signal to create a custom side message
-Signal.register("new_side_message",
-    function(name, text, hair, face, offset, scale)
-
-        local message = SideMessage(name, text, hair or {}, face or {}, Color.white())
+--Register signal to create a achievement
+Signal.register("new_achievement_message",
+    function(achievement, height)
+        local message = SideMessage(achievement, "Achievement unlocked!", nil, nil, height, "achievement")
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
+        message:setPortraitOffset(3,3) --Offset for achievement image
+        message:setPortraitScale(.42,.42) --Scale for achievement image
+
         message:activate()
-
-        if offset then
-            message:setPortraitOffset(unpack(offset))
-        end
-
-        if scale then
-            message:setPortraitScale(unpack(scale))
-        end
 
         return message
     end

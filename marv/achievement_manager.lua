@@ -26,9 +26,12 @@ function manager.load(data)
     end
 end
 
---Sets an achievement to true
+--Completes an achievement and sends side message
 function manager.complete(name)
-    ACHIEVEMENT_PROGRESS[name] = true
+    if not ACHIEVEMENT_PROGRESS[name] then
+        ACHIEVEMENT_PROGRESS[name] = true
+        Signal.emit("new_achievement_message", name)
+    end
 end
 
 --Sets all achievements to false
