@@ -13,6 +13,7 @@ local Color = require "classes.color.color"
 --Local Functions--
 
 local getDialog
+local _id_count = 0
 
 --Side Message Class
 
@@ -30,6 +31,10 @@ SideMessage = Class{
         self.name = name
         self.message = message
         self.type = type or "bot"
+
+        --Store id and bump counter
+        self.id_count = _id_count
+        _id_count = _id_count + 1
 
         self.name_font = FONTS.fira(16)
         self.body_font = FONTS.fira(13)
@@ -167,6 +172,15 @@ function SideMessage:deactivate()
             self.death = true
         end
     )
+
+    --Move all other above messages down
+    local all_messages = Util.findSbTp("side_message")
+    for bot_m in pairs(all_messages) do
+        if bot_m.id_count < self.id_count then
+            local handle = MAIN_TIMER:tween(.2, bot_m.pos, {y = bot_m.pos.y + bot_m.h + 10}, 'in-out-quad')
+            table.insert(bot_m.handles, handle)
+        end
+    end
 
 end
 
