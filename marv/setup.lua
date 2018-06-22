@@ -335,17 +335,18 @@ function setup.config()
     --Achievements Stuff
     --First is title, then description, then incompleted image, then completed imaged
     ACHIEVEMENT_DATABASE = {
-        {"Test","Description", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest2","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest3","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest4","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest5","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest6","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest7","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest8","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest9","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Hardest10","You have to hardest goat", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"first","Finish your first puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"1","Take an innocent robot's life away", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"10","Kill 10 robots dead", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"100","Brutally murder 100 robots", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Golden Star","Complete the tutorial", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Senior Employee","Complete act 1", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Complete2","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Complete3","Hack", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Complete4","Throw", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Complete5","Jump", ACH_IMG["incompleted"], ACH_IMG["completed"]},
 
     }
     --Initialize achievements progress

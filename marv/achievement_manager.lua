@@ -40,4 +40,39 @@ function manager.reset()
         ACHIEVEMENT_PROGRESS[achievement[1]] = false
     end
 end
+
+--Check most achievements for completion
+function manager.checkAchievements()
+    --Lore progress
+    if ROOM.version > "0.1" then
+        manager.complete("Golden Star")
+    end
+    if ROOM.version > "1.0" then
+        manager.complete("Senior Employee")
+    end
+    if ROOM.version > "2.0" then
+        manager.complete("The Price of Progress")
+    end
+    if LoreManager.puzzle_done.ryr then
+        manager.complete("Complete")
+    end
+    --Puzzle progress
+    if LoreManager.puzzle_done.tuto1 then
+        manager.complete("first")
+    end
+    --Dead bots
+    local info_tab = Util.findId("info_tab")
+    if info_tab then
+        if info_tab.dead >= 1 then
+            manager.complete("1")
+        end
+        if info_tab.dead >= 10 then
+            manager.complete("10")
+        end
+        if info_tab.dead >= 100 then
+            manager.complete("100")
+        end
+    end
+end
+
 return manager
