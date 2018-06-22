@@ -325,6 +325,8 @@ function setup.config()
     --GLOBAL VARIABLES--
     DEBUG = true --DEBUG mode status
 
+    TOTAL_PUZZLES_N = 48 --Total number of puzzles so far
+
     TABS_LOCK = 0 -- If the tabs cant be clicked
     EVENTS_LOCK = 0 -- All events but popup mouse pressed are locked
 
@@ -347,6 +349,10 @@ function setup.config()
         {"Complete3","Hack", ACH_IMG["incompleted"], ACH_IMG["completed"]},
         {"Complete4","Throw", ACH_IMG["incompleted"], ACH_IMG["completed"]},
         {"Complete5","Jump", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"jen extra","jen extra puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"liv extra 1","liv extra 1 puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"liv extra 2","liv extra 2 puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"all puzzles","solve all puzzles", ACH_IMG["incompleted"], ACH_IMG["completed"]},
 
     }
     --Initialize achievements progress

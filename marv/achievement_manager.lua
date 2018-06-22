@@ -60,6 +60,22 @@ function manager.checkAchievements()
     if LoreManager.puzzle_done.tuto1 then
         manager.complete("first")
     end
+    if LoreManager.puzzle_done.jen_extra1 then
+        manager.complete("jen extra")
+    end
+    if LoreManager.puzzle_done.liv_extra1 then
+        manager.complete("liv extra 1")
+    end
+    if LoreManager.puzzle_done.liv_extra2 then
+        manager.complete("liv extra 2")
+    end
+    if LoreManager.totalPuzzlesDone() >= TOTAL_PUZZLES_N then
+        manager.complete("all puzzles")
+    end
+    print(LoreManager.puzzle_done.liv_extra1)
+    print(LoreManager.totalPuzzlesDone())
+    print(LoreManager.puzzle_done.jen_extra1)
+
     --Dead bots
     local info_tab = Util.findId("info_tab")
     if info_tab then

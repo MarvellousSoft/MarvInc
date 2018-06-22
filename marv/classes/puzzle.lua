@@ -75,7 +75,6 @@ function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
         StepManager.pause()
-        AchManager.checkAchievements()
         if not self.is_custom then
             LoreManager.mark_completed(self)
         else
@@ -84,5 +83,6 @@ function Puzzle:manage_objectives(auto_win)
         self.completed = true
         SFX.win_puzzle:stop()
         SFX.win_puzzle:play()
+        AchManager.checkAchievements()
     end
 end
