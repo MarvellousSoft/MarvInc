@@ -17,7 +17,7 @@ local ScrollWindow = require "classes.scroll_window"
 AchievementsTab = Class {
     __includes = {Tab},
 
-    button_color = 230,
+    button_color = 160,
 
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
@@ -38,14 +38,16 @@ AchievementsTab = Class {
         self.box.sw = 13
         self.box.color = {12, 30, 10}
 
-        self.title_font = FONTS.firaBold(50)
+        self.title_font = FONTS.firaBold(40)
         self.title_gap = 70 --Gap between title and achievements
         self.ach_name_font = FONTS.firaBold(25)
         self.ach_descr_font = FONTS.fira(20)
         self.ach_image_scale = .5 --Scale to apply on achievement image
-        self.ach_gap = 30 --Gap between each achievement
+        self.ach_gap = 38 --Gap between each achievement
 
         self.text_color = {0, 0, 0}
+        self.title_color = {255, 255, 255}
+
 
         self:updateTrueH()
 
@@ -55,39 +57,68 @@ AchievementsTab = Class {
 }
 
 function AchievementsTab:trueDraw()
-    love.graphics.setColor(self.text_color)
 
     local h = 0
      -- Draw Title
+    love.graphics.setColor(self.title_color)
     love.graphics.setFont(self.title_font)
-    love.graphics.printf("Achievements", self.pos.x, self.pos.y + self.title_font:getHeight() * .2, self.w, 'center')
+    local y = self.pos.y + self.title_font:getHeight() * .2
+    love.graphics.printf("Achievements", self.pos.x, y, self.w, 'center')
+    love.graphics.setLineWidth(6)
+    y = y + self.title_font:getHeight() + 4
+    x = self.pos.x + self.w/2 - self.title_font:getWidth("Achievements")/2
+    love.graphics.line(x, y, x + self.title_font:getWidth("Achievements"), y)
     h = h + self.title_font:getHeight() * 2 + self.title_gap
 
+    love.graphics.setColor(self.text_color)
     local x = 50
     local scale = self.ach_image_scale
+    local completed
     --Draw Achievements
     for _, ach in ipairs(ACHIEVEMENT_DATABASE) do
         local image
         if ACHIEVEMENT_PROGRESS[ach[1]] then
+            completed = true
             image = ach[4] --completed
         else
+            completed = false
             image = ach[3] --incompleted
         end
+
+        --Draw background
+        local gap_x = 12
+        local gap_y = 12
+        local offset = 5
+        love.graphics.setColor(0, 0, 0, 190)
+        love.graphics.rectangle("fill", x - gap_x - offset, h - gap_y + offset, self.w - 5, image:getHeight()*scale+2*gap_y, 7)
+        if completed then
+            love.graphics.setColor(200, 240, 200, 220)
+        else
+            love.graphics.setColor(240, 200, 200, 220)
+        end
+        love.graphics.rectangle("fill", x - gap_x, h - gap_y, self.w - 5, image:getHeight()*scale+2*gap_y, 8)
+
         --Draw image
+        offset = 4
+        love.graphics.setColor(0, 0, 0, 180, 4)
+        love.graphics.rectangle("fill", x - offset, h + offset, image:getWidth()*scale, image:getHeight()*scale)
         love.graphics.setColor(255, 255, 255)
         love.graphics.draw(image, x, h, nil, scale)
+
         --Draw achievement name
         local name_font = self.ach_name_font
         local descr_font = self.ach_descr_font
-        local text_x = x + image:getWidth()*scale + 20
+        local text_x = x + image:getWidth()*scale + 15
         local small_gap = 3
         local name_y = h + image:getHeight()*scale/2 - (name_font:getHeight(ach[1]) + small_gap + descr_font:getHeight(ach[2]))/2
         love.graphics.setColor(self.text_color)
         love.graphics.setFont(name_font)
         love.graphics.print(ach[1], text_x, name_y)
+
         --Draw achievement description
+        local text = completed and ach[2] or "???"
         love.graphics.setFont(descr_font)
-        love.graphics.print(ach[2], text_x, name_y + name_font:getHeight(ach[1]) + small_gap)
+        love.graphics.print(text, text_x, name_y + name_font:getHeight(ach[1]) + small_gap)
 
         h = h + image:getHeight()*scale + self.ach_gap
     end
