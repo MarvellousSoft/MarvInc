@@ -26,6 +26,7 @@ function paul.after(email)
     email.can_be_deleted = true
     local lore = require "classes.lore_manager"
     lore.puzzle_done.paul_invite = true
+    AchManager.checkAchievements()
     lore.check_all()
 end
 
