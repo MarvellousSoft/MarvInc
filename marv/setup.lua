@@ -233,6 +233,7 @@ ACH_IMG["completed_pro"] = love.graphics.newImage("assets/images/achievements/co
 ACH_IMG["jen_extra"] = love.graphics.newImage("assets/images/achievements/completed.png")
 ACH_IMG["liv_extra1"] = love.graphics.newImage("assets/images/achievements/completed.png")
 ACH_IMG["liv_extra2"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["party"] = love.graphics.newImage("assets/images/achievements/completed.png")
 
 
 -- Miscellaneous images
@@ -362,7 +363,8 @@ function setup.config()
         {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["complete_act2"]},
         {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["complete_game"]},
         {"CompleteBad","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed_against"]},
-        {"CompleteGood","Show eveidence", ACH_IMG["incompleted"], ACH_IMG["completed_pro"]},
+        {"CompleteGood","Show evidence", ACH_IMG["incompleted"], ACH_IMG["completed_pro"]},
+        {"Party Boy","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["party"]},
         {"Home Decor","Complete puzzle 'Home Improvement'", ACH_IMG["incompleted"], ACH_IMG["blaze_it"]},
         {"One of a Kind","Receive a most peculiar robot", ACH_IMG["incompleted"], ACH_IMG["unique_robot"]},
         {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["jen_extra"]},
