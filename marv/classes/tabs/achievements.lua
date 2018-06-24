@@ -34,7 +34,7 @@ AchievementsTab = Class {
             mouseMoved = function(obj, ...) self:trueMouseMoved(...) end,
             mouseScroll = function(obj, ...) self:trueMouseScroll(...) end
         }
-        self.box = ScrollWindow(self.w + 5, self.h, obj)
+        self.box = ScrollWindow(self.w + 5, self.h, obj, nil, 35)
         self.box.sw = 13
         self.box.color = {12, 30, 10}
 

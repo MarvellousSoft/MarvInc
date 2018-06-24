@@ -255,6 +255,9 @@ getDialog = function(bot)
     local shy = false
     local sexual_innuendos = false
     local pirate = false
+    local ambidextrous = false
+    local left_handed = false
+    local moby_dick
 
     --Get all dialogs related to bot traits
     for _,traits in ipairs(TRAITS) do
@@ -308,6 +311,12 @@ getDialog = function(bot)
         pirate = true
       elseif bot_traits == "terribly shy" then
         shy = true
+      elseif bot_traits == "ambidextrous" then
+        ambidextrous = true
+      elseif bot_traits == "left-handed" then
+        left_handed = true
+      elseif bot_traits == "memorized Moby Dick" then
+        moby_dick = true
       end
     end
 
@@ -320,7 +329,8 @@ getDialog = function(bot)
       table.insert(special_messages, "Come to think of it, I hated bears long after the eye accident...huh")
     end
 
-    if overachiever and underachiever then
+    if (overachiever and underachiever) or
+       (ambidextrous and left_handed) then
       table.insert(special_messages, "I'm living a paradox!!")
       table.insert(special_messages, "I'm living a paradox!!")
     end
@@ -340,6 +350,13 @@ getDialog = function(bot)
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+    end
+
+    if moby_dick and bot.first_time then
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
     end
 
     if bot.name == "Gerry" then

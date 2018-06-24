@@ -60,6 +60,9 @@ function manager.checkAchievements()
     if LoreManager.puzzle_done.tuto1 then
         manager.complete("first")
     end
+    if LoreManager.puzzle_done.paul5 then
+        manager.complete("Home Decor")
+    end
     if LoreManager.puzzle_done.jen_extra1 then
         manager.complete("Master of Optimization")
     end
@@ -72,7 +75,7 @@ function manager.checkAchievements()
     if LoreManager.totalPuzzlesDone() >= TOTAL_PUZZLES_N then
         manager.complete("Best Programmer in the World")
     end
-    
+
     --Dead bots
     local info_tab = Util.findId("info_tab")
     if info_tab then

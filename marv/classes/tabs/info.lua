@@ -185,6 +185,14 @@ function InfoTab:trueDraw()
                 text = text..", " ..trait
             end
         end
+        local font
+        local size = 20
+        repeat -- reduces font until all text fits
+            font = FONTS.fira(size)
+            size = size - 1
+            _, t = font:getWrap(text, self.id_file_w - 20)
+        until #t <= 3
+        love.graphics.setFont(font)
         love.graphics.printf(text, self.pos.x + self.id_file_x + 10, self.pos.y + self.id_file_y + 120, self.id_file_w - 20, "center")
 
         -- Room number

@@ -217,6 +217,8 @@ BG_IMG = love.graphics.newImage("assets/images/background.png")
 ACH_IMG = {}
 ACH_IMG["incompleted"] = love.graphics.newImage("assets/images/achievements/incompleted.png")
 ACH_IMG["completed"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["unique_robot"] = love.graphics.newImage("assets/images/achievements/unique_robot.png")
+ACH_IMG["blaze_it"] = love.graphics.newImage("assets/images/achievements/blaze_it.png")
 ACH_IMG["first"] = love.graphics.newImage("assets/images/achievements/completed.png")
 ACH_IMG["all_puzzles"] = love.graphics.newImage("assets/images/achievements/all_puzzles.png")
 ACH_IMG["kill1"] = love.graphics.newImage("assets/images/achievements/kill_1.png")
@@ -226,6 +228,11 @@ ACH_IMG["complete_tut"] = love.graphics.newImage("assets/images/achievements/com
 ACH_IMG["complete_act1"] = love.graphics.newImage("assets/images/achievements/completed_act1.png")
 ACH_IMG["complete_act2"] = love.graphics.newImage("assets/images/achievements/completed_act2.png")
 ACH_IMG["complete_game"] = love.graphics.newImage("assets/images/achievements/completed_game.png")
+ACH_IMG["completed_against"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["completed_pro"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["jen_extra"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["liv_extra1"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["liv_extra2"] = love.graphics.newImage("assets/images/achievements/completed.png")
 
 
 -- Miscellaneous images
@@ -354,13 +361,13 @@ function setup.config()
         {"Senior Employee","Complete act 1", ACH_IMG["incompleted"], ACH_IMG["complete_act1"]},
         {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["complete_act2"]},
         {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["complete_game"]},
-        {"Complete2","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Complete3","Hack", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Complete4","Throw", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Complete5","Jump", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Lord Commander of the Division's Watch","Complete puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Sorting Doctor","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"CompleteBad","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed_against"]},
+        {"CompleteGood","Show eveidence", ACH_IMG["incompleted"], ACH_IMG["completed_pro"]},
+        {"Home Decor","Complete puzzle 'Home Improvement'", ACH_IMG["incompleted"], ACH_IMG["blaze_it"]},
+        {"One of a Kind","Receive a most peculiar robot", ACH_IMG["incompleted"], ACH_IMG["unique_robot"]},
+        {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["jen_extra"]},
+        {"Lord Commander of the Division's Watch","Complete puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["liv_extra1"]},
+        {"Sorting Doctor","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["liv_extra2"]},
         {"Best Programmer in the World","Complete every puzzle in the game", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"]},
 
     }
@@ -430,12 +437,12 @@ function setup.config()
       {"hears voices", {"DON'T TELL ME WHAT TO DO", "Of course not.", "Hahaha, no. That would be silly", "What?", "Why?", "Okay okay! I'll do it! Just shut up!"}, {"They warned me! They warned me not to trust you!"}},
       {"terribly shy", {"...", "please... don't...", "*looks away*"}, {"...oh no..."}},
       {"blinks furiously when lying", {}, {}},
-      {"memorized Moby Dick", {}, {}},
+      {"memorized Moby Dick", {"I try all things, I achieve what I can."}, {}},
       {"lost an eye in a bear accident", {"An eye for an eye... That bear sure showed me."}, {}},
       {"hates bears", {"Goddamn bears stealing our honeykeeping jobs!"}, {}},
       {"never finished a game without a walkthrough", {"You should look for the solution to this puzzle on the internet!"}, {}},
       {"overachiever", {"I've solved a similar puzzle when I was five."}, {}},
-      {"underachiever", {}, {}},
+      {"underachiever", {"I don't think I could ever solve this one =("}, {}},
       {"always drunk", {"Jsut one moer drink..."}, {}},
       {"addicted to HIMYM", {"This puzzle is LEGEN --wait for it-- DARY!! hahaha"}, {}},
       {"vegan without the powers", {}, {"Wait... Chicken isn't vegan?"}},
@@ -455,7 +462,7 @@ function setup.config()
       {"can correctly give current latitude and longitude at all times", {}, {}},
       {"accidently makes sexual innuendos", {"This is too hard and long! I can't take it anymore. Just finish already!"}, {}},
       {"has a catchphrase", {"Wubba lubba dub dub", "Wubba lubba dub dub", "Wubba lubba dub dub", "AIDS!",  "Ands that's the wayyyyy the news goes!", "GRASSSS... tastes bad!", "Lick, lick, lick my BALLS!"}, {}},
-      {"has an unhealthy obession with Kermit the Frog", {}, {}},
+      {"has an unhealthy obession with Kermit the Frog", {"...did you see Muppets from Space?"}, {}},
       {"can't ride a bike", {}, {}},
       {"is always seen wearing pajamas", {}, {}},
       {"afraid of the internet", {"They say you can catch a virus in this Internet!"}, {"I told you to disconnect!"}},
@@ -466,7 +473,7 @@ function setup.config()
       {"never showers", {"I prefer to think I'm SAVING our precious planet's resource"}, {}},
       {"sweats profusely", {"Oh man, did someone up the heat? I'm feeling like a pig down here."}, {}},
       {"chews ice cubes for dinner", {}, {}},
-      {"heavy sleeper", {}, {}},
+      {"heavy sleeper", {}, {"zzzzZZZZZzzz"}},
       {"fear of closed doors", {"I don't care about lava or buckets, just don't leave any door closed okay?", "Lets leave all door open, please."}, {}},
       {"stores their urine in a jar", {"Everyone has a hobby :)", "Are you on fire? I can help."}, {}},
       {"kleptomaniac", {"Can I borrow your computer when I leave this place?"}, {}},
@@ -486,12 +493,12 @@ function setup.config()
       {"has the Disco Fever", {"The boogie's gonna start to explode any time now, baby...", "I'm gettin' loose y'all!", "Gotta fight with expert timing, baby!", "Gotta feel the city breakin' and everybody shakin'!", "I'm stayin' alive!", "Baby, that's the way, uh-huh uh-huh, I like it!", "Let's get the boogie started!", "Let's do the Freak! I've heard it's quite chic!", "Do you remember the 21st of September?", "Baby, give it up! Give it up, baby give it up!"}, {}},
       {"1/128 irish", {"I can't wait for St. Pattys day!"}, {}},
       {"german", {"Das ist nicht effizient. You should optimize your code."}, {}},
-      {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {}},
+      {"spanish", {"Oye chico! When I can do the siesta, eh?"}, {"Dios mio!!"}},
       {"hypochondriac", {"Oh man, I'm not feeling really well...", "Was this bruise here before?! Shit! It could be rhabdomyolysis!", "Feeling a little dizzy..."}, {"I literally feel like I'm dying, man!"}},
       {"game developer", {"Art of Game Design is the best book ever written!", "Let's make a Game Design Document to solve this!"}, {"I'm fairly sure that part was a bug."}},
       {"never-nude", {"There are dozens of us!"}, {}},
       {"magician", {"It's not a trick. It's an ILLUSION.", "You like magic? SAME", "But where did the lighter fluid come from?"}, {"Want to see a cool trick?"}},
-      {"ambidextrous", {}, {}},
+      {"ambidextrous", {"Can you type with both hands? I can :)"}, {}},
       {"left-handed", {}, {}},
       {"procrastinator", {"Why don't you solve another puzzle?", "You should watch some TV first... Just to unwind."}, {}},
       {"national spelling bee winner", {"You are D-E-F-I-N-I-T-E-L-Y solving this task."}, {"D-E-A-D"}},
@@ -508,8 +515,9 @@ function setup.config()
       {"likes new technologies", {"Have you bought bitcoin yet?", "VR is the future!", "Augmented Reality is here to stay."}, {"Am I obsolete already?"}},
       {"watches youtube hits", {"OPPA GANGNAM STYLE", "TURN DOWN FOR WHAT?", "DO THE HARLEM SHAKE"}, {}},
       {"meme guy", {"*trollface*", "Forever Alone."}, {}},
-      {"lana del rey fan", {"You want to be my sugar daddy?", "*smokes*"}, {}},
-      {"likes small talk", {"What a weather, huh?"}, {}},
+      {"Lana Del Rey fan", {"You want to be my sugar daddy?", "*smokes*"}, {}},
+      {"likes small talk", {"What a weather, huh?", "How are the kids?"}, {}},
+      {"plays Melee", {"Mang0nation", "Fox McCloud", "Wombooo Combooo! Where you at??"}, {"Damn, missed an l-cancel..."}},
     }
 
     --Regular dialogs any robot can say
