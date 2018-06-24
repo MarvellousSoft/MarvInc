@@ -61,21 +61,18 @@ function manager.checkAchievements()
         manager.complete("first")
     end
     if LoreManager.puzzle_done.jen_extra1 then
-        manager.complete("jen extra")
+        manager.complete("Master of Optimization")
     end
     if LoreManager.puzzle_done.liv_extra1 then
-        manager.complete("liv extra 1")
+        manager.complete("Lord Commander of the Division's Watch")
     end
     if LoreManager.puzzle_done.liv_extra2 then
-        manager.complete("liv extra 2")
+        manager.complete("Sorting Doctor")
     end
     if LoreManager.totalPuzzlesDone() >= TOTAL_PUZZLES_N then
-        manager.complete("all puzzles")
+        manager.complete("Best Programmer in the World")
     end
-    print(LoreManager.puzzle_done.liv_extra1)
-    print(LoreManager.totalPuzzlesDone())
-    print(LoreManager.puzzle_done.jen_extra1)
-
+    
     --Dead bots
     local info_tab = Util.findId("info_tab")
     if info_tab then

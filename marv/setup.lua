@@ -217,6 +217,15 @@ BG_IMG = love.graphics.newImage("assets/images/background.png")
 ACH_IMG = {}
 ACH_IMG["incompleted"] = love.graphics.newImage("assets/images/achievements/incompleted.png")
 ACH_IMG["completed"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["first"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["all_puzzles"] = love.graphics.newImage("assets/images/achievements/all_puzzles.png")
+ACH_IMG["kill1"] = love.graphics.newImage("assets/images/achievements/kill_1.png")
+ACH_IMG["kill10"] = love.graphics.newImage("assets/images/achievements/kill_10.png")
+ACH_IMG["kill100"] = love.graphics.newImage("assets/images/achievements/kill_100.png")
+ACH_IMG["complete_tut"] = love.graphics.newImage("assets/images/achievements/completed_tut.png")
+ACH_IMG["complete_act1"] = love.graphics.newImage("assets/images/achievements/completed_act1.png")
+ACH_IMG["complete_act2"] = love.graphics.newImage("assets/images/achievements/completed_act2.png")
+ACH_IMG["complete_game"] = love.graphics.newImage("assets/images/achievements/completed_game.png")
 
 
 -- Miscellaneous images
@@ -337,22 +346,22 @@ function setup.config()
     --Achievements Stuff
     --First is title, then description, then incompleted image, then completed imaged
     ACHIEVEMENT_DATABASE = {
-        {"first","Finish your first puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"1","Take an innocent robot's life away", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"10","Kill 10 robots dead", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"100","Brutally murder 100 robots", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Golden Star","Complete the tutorial", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Senior Employee","Complete act 1", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"first","Finish your first puzzle", ACH_IMG["incompleted"], ACH_IMG["first"]},
+        {"1","Take an innocent robot's life away", ACH_IMG["incompleted"], ACH_IMG["kill1"]},
+        {"10","Kill 10 robots dead", ACH_IMG["incompleted"], ACH_IMG["kill10"]},
+        {"100","Brutally murder 100 robots", ACH_IMG["incompleted"], ACH_IMG["kill100"]},
+        {"Golden Star","Complete the tutorial", ACH_IMG["incompleted"], ACH_IMG["complete_tut"]},
+        {"Senior Employee","Complete act 1", ACH_IMG["incompleted"], ACH_IMG["complete_act1"]},
+        {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["complete_act2"]},
+        {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["complete_game"]},
         {"Complete2","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed"]},
         {"Complete3","Hack", ACH_IMG["incompleted"], ACH_IMG["completed"]},
         {"Complete4","Throw", ACH_IMG["incompleted"], ACH_IMG["completed"]},
         {"Complete5","Jump", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"jen extra","jen extra puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"liv extra 1","liv extra 1 puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"liv extra 2","liv extra 2 puzzle", ACH_IMG["incompleted"], ACH_IMG["completed"]},
-        {"all puzzles","solve all puzzles", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Lord Commander of the Division's Watch","Complete puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Sorting Doctor","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["completed"]},
+        {"Best Programmer in the World","Complete every puzzle in the game", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"]},
 
     }
     --Initialize achievements progress

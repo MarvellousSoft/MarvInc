@@ -65,7 +65,7 @@ function SideMessage:draw()
     if self.type == "bot" then
         Color.set(Color.white())
     elseif self.type == "achievement" then
-        Color.set(Color.new(127,100,80,255,'hsl', true))
+        Color.set(Color.new(127,100,95,255,'hsl', true))
     end
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h,5)
 
@@ -108,7 +108,15 @@ function SideMessage:draw()
     if self.type == "bot" then
         love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, text_y)
     elseif self.type == "achievement" then
-        love.graphics.print(self.name, portrait_x + portrait_w + 10, text_y)
+        local txt = self.name
+        local max_size = 180
+        if self.name_font:getWidth(txt) > max_size then
+            while self.name_font:getWidth(txt.."...") > max_size do
+                txt = string.sub(txt, 1, -2)
+            end
+            txt = txt.."..."
+        end
+        love.graphics.print(txt, portrait_x + portrait_w + 10, text_y)
     end
 
     --Draw message content
@@ -221,8 +229,8 @@ Signal.register("new_achievement_message",
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
-        message:setPortraitOffset(3,3) --Offset for achievement image
-        message:setPortraitScale(.42,.42) --Scale for achievement image
+        message:setPortraitOffset(0,0) --Offset for achievement image
+        message:setPortraitScale(.47,.47) --Scale for achievement image
 
         message:activate()
 

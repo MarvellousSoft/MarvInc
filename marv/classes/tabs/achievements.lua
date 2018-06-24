@@ -40,7 +40,8 @@ AchievementsTab = Class {
 
         self.title_font = FONTS.firaBold(40)
         self.title_gap = 70 --Gap between title and achievements
-        self.ach_name_font = FONTS.firaBold(25)
+        self.ach_name_font_f = FONTS.firaBold
+        self.ach_name_font_start_size = 25
         self.ach_descr_font = FONTS.fira(20)
         self.ach_image_scale = .5 --Scale to apply on achievement image
         self.ach_gap = 38 --Gap between each achievement
@@ -106,9 +107,15 @@ function AchievementsTab:trueDraw()
         love.graphics.draw(image, x, h, nil, scale)
 
         --Draw achievement name
-        local name_font = self.ach_name_font
         local descr_font = self.ach_descr_font
         local text_x = x + image:getWidth()*scale + 15
+        -- reduce name font until it fits
+        local name_font = self.ach_name_font_f(self.ach_name_font_start_size)
+        local i = 0
+        while name_font:getWidth(ach[1]) > self.w - 90 do
+            i = i + 1
+            name_font = self.ach_name_font_f(self.ach_name_font_start_size-i)
+        end
         local small_gap = 3
         local name_y = h + image:getHeight()*scale/2 - (name_font:getHeight(ach[1]) + small_gap + descr_font:getHeight(ach[2]))/2
         love.graphics.setColor(self.text_color)
