@@ -233,7 +233,8 @@ ACH_IMG["completed_pro"] = love.graphics.newImage("assets/images/achievements/co
 ACH_IMG["jen_extra"] = love.graphics.newImage("assets/images/achievements/completed.png")
 ACH_IMG["liv_extra1"] = love.graphics.newImage("assets/images/achievements/completed.png")
 ACH_IMG["liv_extra2"] = love.graphics.newImage("assets/images/achievements/completed.png")
-ACH_IMG["party"] = love.graphics.newImage("assets/images/achievements/completed.png")
+ACH_IMG["party"] = love.graphics.newImage("assets/images/achievements/party.png")
+ACH_IMG["bro"] = love.graphics.newImage("assets/images/achievements/bro.png")
 
 
 -- Miscellaneous images
@@ -365,6 +366,7 @@ function setup.config()
         {"CompleteBad","Hide any trails", ACH_IMG["incompleted"], ACH_IMG["completed_against"]},
         {"CompleteGood","Show evidence", ACH_IMG["incompleted"], ACH_IMG["completed_pro"]},
         {"Party Boy","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["party"]},
+        {"I Got You Bro","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["bro"]},
         {"Home Decor","Complete puzzle 'Home Improvement'", ACH_IMG["incompleted"], ACH_IMG["blaze_it"]},
         {"One of a Kind","Receive a most peculiar robot", ACH_IMG["incompleted"], ACH_IMG["unique_robot"]},
         {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["jen_extra"]},

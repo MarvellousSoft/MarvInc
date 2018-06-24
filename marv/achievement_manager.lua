@@ -75,6 +75,9 @@ function manager.checkAchievements()
     if LoreManager.puzzle_done.paul_invite then
         manager.complete("Party Boy")
     end
+    if LoreManager.puzzle_done.liv3b then
+        manager.complete("I Got You Bro")
+    end
     if LoreManager.totalPuzzlesDone() >= TOTAL_PUZZLES_N then
         manager.complete("Best Programmer in the World")
     end
