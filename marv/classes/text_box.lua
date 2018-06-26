@@ -95,7 +95,11 @@ function TextBox:reset_lines(line_total)
     self.line_total = line_total -- maximum number of lines
     self.line_cur = 1 -- current number of lines
     self.lines = {}
-    for i = 1, self.line_total do self.lines[i] = "" end
+    self.breakpoints = {}
+    for i = 1, self.line_total do
+        self.lines[i] = ""
+        self.breakpoints[i] = false
+    end
 
     --[[Cursor stuff
        i - line number
@@ -107,8 +111,7 @@ function TextBox:reset_lines(line_total)
     self.cursor2 = nil
 
     -- used for ctrl-z, ctrl-y
-    self.backups = {first = 0, last = -1, cur = -1}
-    self:pushBackup()
+    self:clearBackups()
 end
 
 -- adds backup to backup list
@@ -125,6 +128,11 @@ function TextBox:pushBackup(bak)
         b[b.first] = nil
         b.first = b.first + 1
     end
+end
+
+function TextBox:clearBackups()
+    self.backups = {first = 0, last = -1, cur = -1}
+    self:pushBackup()
 end
 
 -- undoes last action, returns whether successful
@@ -181,16 +189,28 @@ function TextBox:draw(bad_lines)
     -- Draw lines
     love.graphics.setFont(self.font)
     love.graphics.setLineWidth(.2)
-    local dx = (self.show_line_num and self.font:getWidth("20: ") or 0) + 5
+    local dx = (self.show_line_num and self.font:getWidth("20  ") or 0) + 5
     for i = 0, self.line_cur - 1 do
         Color.set(self.text_color)
-        local line = self.show_line_num and string.format("%2d: %s", i + 1, self.lines[i + 1]) or self.lines[i + 1]
+        local line = self.show_line_num and string.format("%2d  %s", i + 1, self.lines[i + 1]) or self.lines[i + 1]
         love.graphics.print(line, self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
 
         if bad_lines and bad_lines[i + 1] and self.cursor.i ~= i + 1 then
             Color.set(self.err_color)
             local y = self.pos.y - self.line_h * self.dy + (i + 0.9) * self.line_h
             love.graphics.line(self.pos.x + dx, y, self.pos.x + self.font:getWidth(line), y)
+        end
+
+        -- Draw active breakpoint or breakpoint hover effect for current line
+        if (ROOM and ROOM.version >= "1.0") and self.show_line_num and (self.breakpoints[i + 1] or (i + 1) == self.hover_breakpoint) then
+            local c = Color.red()
+            if not self.breakpoints[i + 1] then
+                c.a = 100
+            end
+            Color.set(c)
+            local x = self.pos.x + dx - self.font_w + 1
+            local y = self.pos.y + (i - self.dy + 0.5) * self.line_h
+            love.graphics.circle("fill", x, y, 0.4 * self.font_w)
         end
     end
 
@@ -200,46 +220,58 @@ function TextBox:draw(bad_lines)
     if self.show_line_num then
         Color.set(c)
         -- line number + vertical line size
+        local x = self.pos.x + 2 * self.font_w + 10
         love.graphics.setLineWidth(.5)
-        love.graphics.line(self.pos.x + dx - self.font_w, self.pos.y, self.pos.x + dx - self.font_w, self.pos.y + self.h)
+        love.graphics.line(x, self.pos.y, x, self.pos.y + self.h)
     end
 
-    -- Draw cursor
-    c.a = 150 * self.cursor_mult
-    Color.set(c)
-    local w = self.font_w
-    local cu = self.cursor
-    love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
-
-    -- Drawing selection -- ugly code :(
-    c.a = 80
-    Color.set(c)
-    local c1, c2 = self.cursor, self.cursor2 or self.cursor
-    if c1.i > c2.i or (c1.i == c2.i and c1.p > c2.p) then
-        c1, c2 = c2, c1
-    end
-    cu = {i = c1.i, p = c1.p}
-    while cu.i ~= c2.i or cu.p ~= c2.p do
+    if not self.hide_cursor then
+        -- Draw cursor
+        c.a = 150 * self.cursor_mult
+        Color.set(c)
+        local w = self.font_w
+        local cu = self.cursor
         love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
-        cu.p = cu.p + 1
-        if cu.p == #self.lines[cu.i] + 2 then
-            cu.p = 1
-            cu.i = cu.i + 1
+
+        -- Drawing selection -- ugly code :(
+        c.a = 80
+        Color.set(c)
+        local c1, c2 = self.cursor, self.cursor2 or self.cursor
+        if c1.i > c2.i or (c1.i == c2.i and c1.p > c2.p) then
+            c1, c2 = c2, c1
+        end
+        cu = {i = c1.i, p = c1.p}
+        while cu.i ~= c2.i or cu.p ~= c2.p do
+            love.graphics.rectangle("fill", self.pos.x + dx - 2 + w * (cu.p - 1), self.pos.y - self.dy * self.line_h + (cu.i - 1) * self.line_h + (self.line_h - self.font_h) / 2, w, self.font_h)
+            cu.p = cu.p + 1
+            if cu.p == #self.lines[cu.i] + 2 then
+                cu.p = 1
+                cu.i = cu.i + 1
+            end
         end
     end
 
-    -- Drawing current line -- maybe remove this
-    if self.exec_line then
+    -- Draw code flow markers
+    if self.exec_line_prev and self.hide_cursor then
         Color.set(Color.white())
         local h = self.line_h / 2
-        local x = self.pos.x + (self.max_char + (self.show_line_num and 4 or 0)) * self.font_w
-        local y = self.pos.y - self.dy * self.line_h + (self.exec_line - 1) * self.line_h
+        local x = self.pos.x + (self.show_line_num and 4 or 0) * self.font_w
+        local y = self.pos.y - self.dy * self.line_h + (self.exec_line_prev - 1) * self.line_h
+        local w = self.max_char* self.font_w
         local dy = (self.line_h - h) / 2
-        love.graphics.polygon("fill", x, y + dy + h / 2, x + h, y + dy, x + h, y + dy + h)
-        love.graphics.setLineWidth(.1)
-        love.graphics.line(x, y + self.line_h, self.pos.x + (self.show_line_num and 4 or 0) * self.font_w, y + self.line_h)
-    end
+        love.graphics.setLineWidth(.2)
+        love.graphics.rectangle("line", x, y, w, self.line_h, 1)
 
+        if self.exec_line_next and self.exec_line_next ~= self.exec_line then
+            local y2 = self.pos.y - self.dy * self.line_h + (self.exec_line_next - 1) * self.line_h
+            x = x + 5
+            love.graphics.polygon("fill", x + w, y2 + h, x + w + 12, y2 + h/2, x + w + 12, y2 + h + h/2)
+            x = x + 3
+            love.graphics.line(x + w, y + h, x + w + 15, y + h)
+            love.graphics.line(x + w + 15, y + h, x + w + 15, y2 + h)
+            love.graphics.line(x + w, y2 + h, x + w + 15, y2 + h)
+        end
+    end
     -- Remove stencil
     love.graphics.setStencilTest()
 end
@@ -276,9 +308,11 @@ local function deleteInterval(self, c, c2)
         local rem = b.i - a.i
         for i = a.i + 1, self.line_total - rem do
             self.lines[i] = self.lines[i + rem]
+            self.breakpoints[i] = self.breakpoints[i + rem]
         end
         for i = self.line_total - rem + 1, self.line_total do
             self.lines[i] = ""
+            self.breakpoints[i] = false
         end
 
         self.cursor = a
@@ -313,8 +347,11 @@ end
 
 function TextBox:keyPressed(key)
     local c = self.cursor
+    local ctrl = love.keyboard.isDown('lctrl', 'rctrl', 'lgui', 'rgui')
+    local shift = love.keyboard.isDown('lshift', 'rshift')
+
     if change_cursor[key] then
-        if love.keyboard.isDown("lshift", "rshift") then
+        if shift then
             -- allows multiple selection
             self.cursor2 = self.cursor2 or {i = c.i, p = c.p}
         else
@@ -323,7 +360,6 @@ function TextBox:keyPressed(key)
     end
     if key == 'escape' then self.cursor2 = nil end
 
-    local ctrl = love.keyboard.isDown('lctrl', 'rctrl')
 
     local c2 = self.cursor2
     if not c2 and key == 'backspace' then
@@ -332,7 +368,10 @@ function TextBox:keyPressed(key)
             if #self.lines[c.i - 1] + #self.lines[c.i] > self.max_char then buzz() return end
             c.p = #self.lines[c.i - 1] + 1
             self.lines[c.i - 1] = self.lines[c.i - 1] .. self.lines[c.i]
-            for i = c.i, self.line_total - 1 do self.lines[i] = self.lines[i + 1] end
+            for i = c.i, self.line_total - 1 do
+                self.lines[i] = self.lines[i + 1]
+                self.breakpoints[i] = self.breakpoints[i + 1]
+            end
             self.lines[self.line_total] = ""
             self.line_cur = self.line_cur - 1
             c.i = c.i - 1
@@ -350,6 +389,7 @@ function TextBox:keyPressed(key)
             self.lines[c.i] = self.lines[c.i]  .. self.lines[c.i + 1]
             for i = c.i + 1, self.line_total - 1 do
                 self.lines[i] = self.lines[i + 1]
+                self.breakpoints[i] = self.breakpoints[i + 1]
             end
             self.lines[self.line_total] = ""
         else
@@ -357,8 +397,21 @@ function TextBox:keyPressed(key)
         end
         self:pushBackup()
 
-    elseif c2 and (key == 'delete' or key == 'backspace') then
+    elseif c2 and key == 'backspace' then
         self:tryWrite('')
+
+    elseif c2 and key == 'delete' then
+        if shift then
+            love.system.setClipboardText(intervalAsString(self, c, c2))
+        end
+        self:tryWrite('')
+
+    elseif key == 'insert' then
+        if c2 and ctrl then
+            love.system.setClipboardText(intervalAsString(self, c, c2))
+        elseif shift then
+            self:typeString(love.system.getClipboardText())
+        end
 
     elseif key == 'return' then
         self:tryWrite('\n')
@@ -447,7 +500,7 @@ function TextBox:keyPressed(key)
         self:tryWrite('')
 
     elseif key == 'v' and ctrl then
-        self:typeString(love.system.getClipboardText())
+        self:putString(love.system.getClipboardText())
 
     end
 
@@ -487,6 +540,7 @@ end
 function TextBox:getBackup()
     return {
         lines = shallowCopy(self.lines),
+        breakpoints = shallowCopy(self.breakpoints),
         line_cur = self.line_cur,
         c = shallowCopy(self.cursor),
         c2 = shallowCopy(self.cursor2)
@@ -495,6 +549,7 @@ end
 
 function TextBox:recoverBackup(bak)
     self.lines = shallowCopy(bak.lines)
+    self.breakpoints = shallowCopy(bak.breakpoints)
     self.line_cur = bak.line_cur
     self.cursor = shallowCopy(bak.c)
     self.cursor2 = shallowCopy(bak.c2)
@@ -527,12 +582,14 @@ function TextBox:tryWrite(t)
     if self.line_cur + #l - 1 <= self.line_total then
         for i = self.line_total, c.i + #l, -1 do
             self.lines[i] = self.lines[i - #l + 1]
+            self.breakpoints[i] = self.breakpoints[i - #l + 1]
         end
         for i = 1, #l do
             local cur = l[i]
             if i == 1 then cur = pref .. cur end
             if i == #l then cur = cur .. suf end
             self.lines[c.i + i - 1] = cur
+            if i > 1 then self.breakpoints[c.i + i - 1] = false end
         end
         self.line_cur = self.line_cur + #l - 1
         c.i = c.i + #l - 1
@@ -562,12 +619,18 @@ end
 local function getCursorOnClick(self, x, y)
     -- mouse click on editor
     y = y + self.dy * self.line_h
-    local dx = (self.show_line_num and self.font:getWidth("20: ") or 0) + 5
+    local dx = (self.show_line_num and self.font:getWidth("20  ") or 0) + 5
     -- if x < self.pos.x + dx - 2 then return end
     local w = self.font_w
     local i = math.floor((y - self.pos.y) / self.line_h) + 1
-    local p = math.max(1, math.floor((x - self.pos.x - dx + 2) / w) + 1)
-    return i, p
+    local p = math.floor((x - self.pos.x - 3) / w) + 1
+    local is_lineno = false
+    if self.show_line_num then
+        is_lineno = p < 4
+        p = p - 4
+    end
+    p = math.max(1, p)
+    return i, p, is_lineno
 end
 
 function TextBox:update(dt)
@@ -595,12 +658,19 @@ function TextBox:update(dt)
     end
 end
 
-
-function TextBox:mousePressed(x, y, but)
+function TextBox:mousePressed(x, y, but, locked)
     if but ~= 1 or not Util.pointInRect(x, y, self) then return end
 
-    local i, p = getCursorOnClick(self, x, y)
+    local i, p, is_lineno = getCursorOnClick(self, x, y)
     if i <= 0 or p <= 0 then return end
+    if is_lineno and ROOM.version >= "1.0" then
+        self.breakpoints[i] = not self.breakpoints[i]
+        return
+    end
+
+    -- if locked, allow breakpoints to be toggled but no other operations
+    if locked then return end
+
     self.cursor.i = math.min(i, self.line_cur)
     self.cursor.p = math.min(p, #self.lines[self.cursor.i] + 1)
     self.cursor2 = nil
@@ -620,6 +690,23 @@ function TextBox:mouseScroll(x, y)
     end
     self.dy = math.min(self.dy, self.line_cur - 1)
     self.dy = math.max(self.dy, -self.lines_on_screen + 1)
+end
+
+function TextBox:mouseMoved(x, y)
+    local i, p, is_lineno = getCursorOnClick(self, x, y)
+    if is_lineno then
+        self.hover_breakpoint = i
+    else
+        self.hover_breakpoint = nil
+    end
+end
+
+function TextBox:putString(str)
+    str = str:gsub('.',
+        function (c)
+            return c == '\n' and c or self.accepted_chars[c] or ''
+        end)
+    self:tryWrite(str)
 end
 
 function TextBox:typeString(str)

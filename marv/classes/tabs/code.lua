@@ -101,6 +101,8 @@ function CodeTab:deactivate()
 end
 
 function CodeTab:update(dt)
+    --Hide cursor while code is running
+    self.term.hide_cursor = StepManager.state ~= 'stopped'
     self.term:update(dt)
     self.memory:update(dt)
 end
@@ -144,7 +146,9 @@ function CodeTab:keyPressed(key)
             return
         end
     end
+
     local isRunning = StepManager.state ~= 'stopped'
+
     if key == 'space' then
         if StepManager.state == 'playing' then
             StepManager.pause()
@@ -191,7 +195,13 @@ function CodeTab:mousePressed(x, y, but)
     if TABS_LOCK > 0 then return end
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
 
-    if self.lock > 0 then return end
+    if self.lock > 0 then
+        if not typingRegister(self) then
+            self.term:mousePressed(x, y, but, true)
+        end
+        return
+    end
+
     local t = typingRegister(self) and self.memory.tbox or self.term
     t:mousePressed(x, y, but)
     self:checkErrors()
@@ -208,6 +218,7 @@ function CodeTab:mouseReleased(x, y, but)
 end
 
 function CodeTab:mouseMoved(x, y)
+    self.term:mouseMoved(x, y)
     self.memory:mouseMoved(x, y)
 end
 
@@ -229,6 +240,7 @@ end
 function CodeTab:reset(puzzle)
     self.term:reset_lines(puzzle.lines_on_terminal)
     self.term:typeString(puzzle.code)
+    self.term:clearBackups()
     self.renames = puzzle.renames
     -- resetting locks to terminal
     self.lock = 0
@@ -254,10 +266,15 @@ function CodeTab:getLines()
 end
 
 function CodeTab:showLine(i)
-    self.term.exec_line = i
+    self.term.exec_line_prev = self.term.exec_line_next
+    self.term.exec_line_next = i
+end
+
+function CodeTab:isBreakPoint(i)
+    return self.term.breakpoints[i]
 end
 
 function CodeTab:saveCurrentCode()
     if not ROOM:connected() then return end
-    SaveManager.save_code(ROOM.puzzle_id, table.concat(self:getLines(), "\n"), self.renames)
+    SaveManager.save_code(ROOM.puzzle_id, table.concat(self:getLines(), "\n"), self.renames, ROOM.is_custom)
 end

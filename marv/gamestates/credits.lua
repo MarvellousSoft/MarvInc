@@ -31,14 +31,18 @@ Ricardo Lira da Fonseca
 
 
 
-THANKS TO:
+SPECIAL THANKS TO:
 
 Yan's Mom
 Mayte
 Maria Clara
 Fast Food
 Cotuba
-You <3
+inguin
+pgimeno
+Renantc
+
+~ You <3 ~
 
 
 

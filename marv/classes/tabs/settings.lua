@@ -18,6 +18,10 @@ local ToggleButton = Class { -- functions defined below
     __includes = {RECT}
 }
 
+local Slider = Class { -- functions defined below
+    __includes = {RECT}
+}
+
 SettingsTab = Class {
     __includes = {Tab},
 
@@ -34,6 +38,7 @@ SettingsTab = Class {
             getHeight = function() return self.true_h end,
             draw = function() self:trueDraw() end,
             mousePressed = function(obj, ...) self:trueMousePressed(...) end,
+            mouseReleased = function(obj, ...) self:trueMouseReleased(...) end,
             mouseMoved = function(obj, ...) self:trueMouseMoved(...) end,
             mouseScroll = function(obj, ...) self:trueMouseScroll(...) end
         }
@@ -42,14 +47,13 @@ SettingsTab = Class {
         self.box.color = {12, 30, 10}
 
         self.options = {
-            ["Background Music"] = ToggleButton(0, 0, 20, 20, function()
-                MUSIC_MOD = 1
+            ["Background Music"] = Slider(0, 0, 400, function(value)
+                MUSIC_MOD = value
                 GS['GAME'].getBGMManager():updateVolume()
-            end, function()
-                MUSIC_MOD = 0
-                GS['GAME'].getBGMManager():updateVolume()
-            end, function() return MUSIC_MOD == 1 end),
-            ["Sound Effects"] = ToggleButton(0, 0, 20, 20, function() SOUND_EFFECT_MOD = 1 end, function() SOUND_EFFECT_MOD = 0 end, function() return SOUND_EFFECT_MOD == 1 end),
+            end, function() return MUSIC_MOD end),
+            ["Sound Effects"] = Slider(0, 0, 400, function(value)
+                 SOUND_EFFECT_MOD = value
+            end, function() return SOUND_EFFECT_MOD end),
             ["Fullscreen (F11)"] = ToggleButton(0, 0, 20, 20, function()
                 PREV_WINDOW = {love.window.getMode()}
                 love.window.setFullscreen(true, "desktop")
@@ -91,7 +95,6 @@ SettingsTab = Class {
 }
 
 function SettingsTab:trueDraw()
-    -- Possible future improvement: Avoid calling Util.stylizeText all the time, since the output is always the same.
     love.graphics.setColor(self.text_color)
 
     local h = 0
@@ -106,15 +109,19 @@ function SettingsTab:trueDraw()
         but.pos.y = self.pos.y + h
         but:draw()
         love.graphics.setColor(0, 0, 0)
-        love.graphics.print(name, but.pos.x + but.w + 20, but.pos.y + but.h / 2 - self.options_font:getHeight() / 2)
+        if but.type == "toggle" then
+            love.graphics.print(name, but.pos.x + but.w + 20, but.pos.y + but.h / 2 - self.options_font:getHeight() / 2)
+            -- collision rectangle (includes text)
+            but.col_x = but.pos.x - 10
+            but.col_y = -1 + but.pos.y + but.h / 2 - self.options_font:getHeight() / 2
+            but.col_w = 10 + but.w + 20 + self.options_font:getWidth(name) + 10
+            but.col_h = 1 + self.options_font:getHeight() + 1
+        else
+            love.graphics.print(name, but.pos.x, but.pos.y)
+        end
 
-        -- collision rectangle (includes text)
-        but.col_x = but.pos.x - 10
-        but.col_y = -10 + but.pos.y + but.h / 2 - self.options_font:getHeight() / 2
-        but.col_w = 10 + but.w + 20 + self.options_font:getWidth(name) + 10
-        but.col_h = 10 + self.options_font:getHeight() + 10
-
-        h = h + but.h * 3
+        local margin = 32
+        h = h + but:height() + margin
     end
 end
 
@@ -124,14 +131,23 @@ function SettingsTab:trueMousePressed(x, y, but)
     end
 end
 
-function SettingsTab:trueMouseMoved(x, y)
+function SettingsTab:trueMouseReleased(x, y, but)
     for _, b in pairs(self.options) do
-        b:mouseMoved(x, y)
+        b:mouseReleased(x, y, but)
+    end
+end
+
+
+function SettingsTab:trueMouseMoved(...)
+    for _, b in pairs(self.options) do
+        b:mouseMoved(...)
     end
 end
 
 function SettingsTab:trueMouseScroll(x, y)
 end
+
+--TOGGLE BUTTON--
 
 function ToggleButton:init(x, y, w, h, on_callback, off_callback, is_on)
     RECT.init(self, x, y, w, h)
@@ -146,6 +162,8 @@ function ToggleButton:init(x, y, w, h, on_callback, off_callback, is_on)
     end
     self.hover = false
     self.col_x, self.col_y, self.col_w, self.col_h = 0, 0, 0, 0
+
+    self.type = "toggle"
 end
 
 function ToggleButton:mousePressed(x, y, but)
@@ -163,12 +181,14 @@ function ToggleButton:mousePressed(x, y, but)
     end
 end
 
+function ToggleButton:mouseReleased(x, y, but)
+end
+
 function ToggleButton:mouseMoved(x, y)
     self.hover = Util.pointInRect(x, y, self.col_x, self.col_y, self.col_w, self.col_h)
 end
 
 function ToggleButton:draw()
-    love.graphics.setColor(10, 10, 70)
     love.graphics.setColor(30, 30, 30)
     love.graphics.setLineWidth(4)
     love.graphics.rectangle('line', self.pos.x, self.pos.y, self.w, self.h)
@@ -192,12 +212,117 @@ function ToggleButton:refresh()
     end
 end
 
+function ToggleButton:height()
+    return self.h
+end
+
+--SLIDER--
+function Slider:init(x, y, size, callback, get_value)
+    --Slider box dimensions
+    w = 20
+    h = 30
+
+    RECT.init(self, x, y, w, h)
+
+    self.callback = callback --Called everytime you move the slider
+    self.get_value = get_value --Function to get slider value
+    self.value = get_value() --Value [0,1] the slider is in
+    self.size = size --Width of slider tray
+    self.hover = false --If mouse is over slider box
+    self.is_sliding = false
+
+    self.slider_gap = 55 --Vertical gap to draw slider below name
+    self.slider_line_h = 14 --Height of slider tray line
+
+    self.type = "slider"
+end
+
+function Slider:mousePressed(x, y, but)
+    if but == 1 and Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h) then
+        self.is_sliding = true
+        SFX.click:stop()
+        SFX.click:play()
+    elseif but == 1 and Util.pointInRect(x, y, self.pos.x, self.pos.y-self.slider_line_h/2 + self.slider_gap, self.size, self.slider_line_h) then
+        self.is_sliding = true
+        self:mouseMoved(x,y,x-self:getSliderX(),0)
+        SFX.click:stop()
+        SFX.click:play()
+    end
+end
+
+function Slider:mouseReleased(x, y, but)
+    if but == 1 then
+        self.is_sliding = false
+    end
+end
+
+function Slider:mouseMoved(x, y, dx, dy)
+    if self.is_sliding and x >= self.pos.x and x <= self.pos.x + self.size then
+         --Clamp pos
+        local slider_x = math.max(self.pos.x, math.min(self.pos.x+self.size, self:getSliderX() + dx))
+        --Update value
+        self.value = (slider_x - self.pos.x)/self.size
+        --Call callback
+        self.callback(self.value)
+    end
+    self.hover = Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h)
+end
+
+function Slider:draw()
+    --Draw slider box background
+    local x_margin = 12
+    local y_margin = 5
+    love.graphics.setColor(255, 255, 255, 130)
+    love.graphics.rectangle('fill', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
+    love.graphics.setColor(0, 0, 0, 60)
+    love.graphics.setLineWidth(3)
+    love.graphics.rectangle('line', self.pos.x-x_margin, self.pos.y - y_margin, self.size+2*x_margin, self:height()+2*y_margin, 5)
+
+    --Draw slider line
+    local h = self.slider_line_h
+    love.graphics.setColor(140, 191, 255)
+    love.graphics.rectangle('fill', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size*self.value, h)
+    love.graphics.setColor(196, 214, 237)
+    love.graphics.rectangle('fill', self.pos.x+self.size*self.value, self.pos.y-h/2 + self.slider_gap, self.size*(1-self.value), h)
+    love.graphics.setLineWidth(3)
+    love.graphics.setColor(30, 30, 30)
+    love.graphics.rectangle('line', self.pos.x, self.pos.y-h/2 + self.slider_gap, self.size, h)
+
+    --Draw slider box
+    love.graphics.setColor(37, 123, 237)
+    love.graphics.rectangle('fill', self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h, 5)
+    love.graphics.setLineWidth(3)
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle('line', self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h, 5)
+    if self.hover then
+        love.graphics.setColor(200, 200, 200, 80)
+        love.graphics.rectangle('fill', self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h, 7)
+    end
+end
+
+function Slider:getSliderX()
+    return self.pos.x + self.size * self.value
+end
+function Slider:getSliderY()
+    return self.pos.y-self.h/2 + self.slider_gap
+end
+
+function Slider:refresh()
+    self.value = self.get_value()
+end
+
+function Slider:height()
+    return self.h + self.slider_gap
+end
+
+-----------------------------
+
 function SettingsTab:mousePressed(x, y, but)
     self.box:mousePressed(x, y, but)
 end
 
-function SettingsTab:mouseMoved(x, y)
-    self.box:mouseMoved(x, y)
+function SettingsTab:mouseMoved(...)
+    self.box:mouseMoved(...)
 end
 
 function SettingsTab:mouseReleased(x, y, but)

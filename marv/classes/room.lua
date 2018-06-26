@@ -136,6 +136,8 @@ Room = Class{
 
         -- Current puzzle id
         self.puzzle_id = nil
+        -- If current puzzle is custom
+        self.is_custom = nil
 
         -- Death
 
@@ -198,13 +200,13 @@ function Room:clear()
     StepManager.clear()
 end
 
-function Room:connect(id, changeToInfo)
+function Room:connect(id, changeToInfo, is_custom)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:stop()
     SFX.loud_static:play()
-
     self.puzzle_id = id
-    if id == 'ryr' then
+    self.is_custom = is_custom
+    if not is_custom and id == 'ryr' then
         GS['GAME'].getBGMManager():stopBGM()
         GS['GAME'].getBGMManager():newBGM(MUSIC.final_puzzle)
     end
@@ -218,7 +220,7 @@ function Room:connect(id, changeToInfo)
         self.static_r = self.static_r + math.pi/2
     end)
 
-    self:from(Reader.read(id))
+    self:from(Reader.read(id, is_custom))
     if self.turn_handler then
         Signal.register(SIGEND, self.turn_handler)
     end
@@ -242,12 +244,12 @@ function Room:disconnect(wait)
     self.prev_puzzle_id = self.puzzle_id
     self.mode = "offline"
 
-    if self.puzzle_id == 'franz1' then
+    if not self.is_custom and self.puzzle_id == 'franz1' then
         local Mail = require 'classes.tabs.email'
         if not Mail.exists('Tread very carefully') and not LoreManager.puzzle_done.franz1 then
             Mail.new('franz1_1')
         end
-    elseif self.puzzle_id == 'ryr' then
+    elseif not self.is_custom and self.puzzle_id == 'ryr' then
         GS['GAME'].getBGMManager():stopBGM()
         GS['GAME'].getBGMManager():newBGM()
     end
@@ -271,6 +273,7 @@ function Room:disconnect(wait)
         self.puzzle.on_end(self)
     end
     self.puzzle_id = nil
+    self.is_custom = nil
 
     --Handle bots messages--
 

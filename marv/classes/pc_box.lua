@@ -33,6 +33,7 @@ PcBox = Class{
             {"email", EmailTab(inner_tab_border, button_tab_height)},
             {"manual", ManualTab(inner_tab_border, button_tab_height)},
             {"puzzles", PuzzleListTab(inner_tab_border, button_tab_height)},
+            {"achievements", AchievementsTab(inner_tab_border, button_tab_height)},
             {"settings", SettingsTab(inner_tab_border, button_tab_height)},
         }
         PcBox.puzzle_tabs = {
@@ -41,6 +42,7 @@ PcBox = Class{
             {"info", InfoTab(inner_tab_border, button_tab_height)},
             PcBox.menu_tabs[2],
             PcBox.menu_tabs[4],
+            PcBox.menu_tabs[5],
         }
 
         --Saturation and lightness when a tab is focused
@@ -171,12 +173,14 @@ function PcBox:changeTabs(new_tabs, default)
     local set_size = 28
     for _, t in ipairs(tabs_raw) do
         tabs[t[1]] = t[2]
-        if _ == #tabs_raw then
-            self.buttons[t[1]] = ImgButton(x, self.pos.y, set_size, BUTS_IMG.settings, function() self:changeTo(t[1]) end)
+        if _ == #tabs_raw-1 then
+            self.buttons[t[1]] = ImgButton(x, self.pos.y, set_size, BUTS_IMG.achievements, function() self:changeTo(t[1]) end)
+        elseif _ == #tabs_raw then
+            self.buttons[t[1]] = ImgButton(x+set_size, self.pos.y, set_size, BUTS_IMG.settings, function() self:changeTo(t[1]) end)
         else
-            self.buttons[t[1]] = But.create_tab(x, self.pos.y, (self.w - set_size) / (#tabs_raw - 1), h, function() self:changeTo(t[1]) end,
+            self.buttons[t[1]] = But.create_tab(x, self.pos.y, (self.w - 2*set_size) / (#tabs_raw - 2), h, function() self:changeTo(t[1]) end,
                 t[1], FONTS.fira(20), nil, nil, Color.new(t[2].button_color, self.unfocus_saturation, self.unfocus_lightness, 80))
-            x = x + (self.w - set_size) / (#tabs_raw - 1)
+            x = x + (self.w - 2*set_size) / (#tabs_raw - 2)
         end
     end
 
@@ -250,8 +254,8 @@ function PcBox:update(dt)
     self.buttons.email:update(dt) --Update "new email" notification effect
 end
 
-function PcBox:mouseMoved(x, y)
-    tabs[self.cur_tab]:mouseMoved(x, y)
+function PcBox:mouseMoved(...)
+    tabs[self.cur_tab]:mouseMoved(...)
 end
 
 --UTILITY FUNCTIONS--

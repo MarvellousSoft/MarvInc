@@ -27,7 +27,7 @@ A shortage of food has caused a massive famine in the Republic of Zuniza, with e
 Technology giant Marvellous Inc. revealed its ambitious new project: building the biggest, most expensive amusement park ever created. The company promises full digital integration for visitors during their stay in the park via a new augmented reality headset. "The MARV [Marvellous Augmented Reality Visor] signals a new age for human-computer integration!", promises CEO Rick Fonseca. Both MARV and the MarvPark are scheduled to be released to the public in the next two years.
 {blue}[More...]{end}
 
-{blue}Unidentified body found dead under mysterious circunstances{end}
+{blue}Unidentified body found dead under mysterious circumstances{end}
 ]]..div..[[
 Last week, a caucasian male body was found under a bridge in the outskirts of Naomi, PA. In a scene straight out of a horror movie, the body appeared to have its hands and feet cut off and have been positioned in a frog-like squatting position by the murderer. Authorities reported several drug vials were found on the murder site.
 {blue}[More...]{end}

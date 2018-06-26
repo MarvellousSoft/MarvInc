@@ -16,9 +16,9 @@ Here is a list of all {red}conditional jumps {end}and their meaning. You can als
 
 - {inst}jge {end}- {red}Greater or Equal{end}, jumps if {num}first value {end}is greater than or equal to the {num}second{end}.
 
-- {inst}jlt {end}- {red}Lesser Than{end}, jumps if {num}first value {end}is less than the {num}second{end}.
+- {inst}jlt {end}- {red}Less Than{end}, jumps if {num}first value {end}is less than the {num}second{end}.
 
-- {inst}jle {end}- {red}Lesser or Equal{end}, jumps if {num}first value {end}is less than or equal to the {num}second{end}.
+- {inst}jle {end}- {red}Less or Equal{end}, jumps if {num}first value {end}is less than or equal to the {num}second{end}.
 
 - {inst}jeq {end}- {red}Equal{end}, jumps if {num}first value {end}is equal to the {num}second{end}.
 

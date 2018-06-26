@@ -28,7 +28,7 @@ PuzzleListTab = Class {
         Tab.init(self, eps, dy)
 
 
-        local categories = {"main game"}
+        local categories = {"main game", "custom"}
         local button_w = 130
 
         self.title_font = FONTS.firaBold(40)
@@ -109,9 +109,10 @@ end
 function PuzzleListTab:activate() self:refresh() end
 
 function PuzzleListTab:refresh()
-    -- refresh the puzzle list
+
+    -- refresh main game puzzle list --
     -- for now just checks the emails for available puzzles
-    local l = self.active_list
+    local l = self.lists[1]
     l.buttons = {}
     local puzzles = {}
     local has_diego = false
@@ -150,6 +151,23 @@ function PuzzleListTab:refresh()
             table.insert(list, {name = pu.name, id = p, status = LoreManager.puzzle_done[p] and "completed" or "open"})
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, author, list))
+    end
+
+    -- refresh custom puzzles list --
+    local l = self.lists[2]
+    l.buttons = {}
+    if love.filesystem.exists("custom") then
+        local list = {}
+        for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
+            local path = 'custom/'..file
+            local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G}
+            local f, err = love.filesystem.load(path)
+            setfenv(f, pu)
+            f()
+            local id = file:sub(1,-5) --Remove the ".lua"
+            table.insert(list, {name = pu.name, id = id, status = "custom"})
+        end
+        table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Custom Puzzles", list))
     end
 end
 

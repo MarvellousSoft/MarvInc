@@ -56,7 +56,9 @@ Bot = Class{
             self.first_time = true
 
             -- Number of traits
-            local trait_n = love.math.random(3)
+            local trait_n = love.math.random(5)
+            if trait_n >= 4 then trait_n = love.math.random(5) end
+            if trait_n == 5 then AchManager.complete("One of a Kind") end
 
             -- beginning of a knuth shuffle
             while #self.traits < trait_n do

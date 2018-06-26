@@ -24,7 +24,7 @@ The unidentified woman that caused the massive shooting last month, also known a
 
 {blue}Wave of pickpocketing increases exponentially in Far Heights, CA{end}
 ]]..div..[[
-Local FHPD reported an unexplained recent surge on pickpocketing in the city of Far Heights. Although pickpocketing has been an usual occurrence in the state, what puzzles local authorities the most is the fact victims are often pickpocketed in private parties. "I suspect a band of cleptomaniacs has arrived to Far Heights", suggests Sheriff Samuel Kurtz.
+Local FHPD reported an unexplained recent surge on pickpocketing in the city of Far Heights. Although pickpocketing has been a usual occurrence in the state, what puzzles local authorities the most is the fact victims are often pickpocketed in private parties. "I suspect a band of cleptomaniacs has arrived to Far Heights", suggests Sheriff Samuel Kurtz.
 {blue}[More...]{end}
 
 {blue}MarvBot: the future is now{end}
@@ -34,7 +34,7 @@ Marvellous Inc. has announced its next product will be called MarvBot, a new Art
 
 {blue}Marvellous Inc. under FBI investigation{end}
 ]]..div..[[
-The Federal Bureau of Investigation has confirmed rumors that Marvellous Inc, the tech giant, is being investigated for ethical misconduct and dangerous mishandling of biohazards. The FBI has refused to comment more on the ongoing investigation.
+The Federal Bureau of Investigation has confirmed rumors that Marvellous Inc., the tech giant, is being investigated for ethical misconduct and dangerous mishandling of biohazards. The FBI has refused to comment more on the ongoing investigation.
 {blue}[More...]{end}
 
 {blue}"The End is Nigh!", says local cult leader{end}

@@ -122,7 +122,7 @@ function build_appimage {
   chmod +x "$APP_TOOL_NAME"
   printf "Creating new AppImage...\n"
   ./"$APP_TOOL_NAME" squashfs-root
-  BUILD_NAME="Marvellous_Inc-x86-64.AppImage"
+  BUILD_NAME="Marvellous_Inc-x86_64.AppImage"
   mv "Marvellous_Inc.-x86_64.AppImage" "$BUILD_NAME"
   popd
   cp "${TMP_PATH}${BUILD_NAME}" ./build/"$BUILD_NAME"

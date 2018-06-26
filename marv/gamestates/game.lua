@@ -30,7 +30,6 @@ function state:init()
     room = Rooms.create()
     pc_box = PcBox.create()
     bgmmanager = BGMManager()
-
     LoreManager.init()
     FX.intro()
 
@@ -61,11 +60,16 @@ end
 function state:enter(prev, user)
     SaveManager.login(user)
     SettingsTab:refresh()
+    AchManager.checkAchievements()
     bgmmanager:newBGM()
 
     if START_PUZZLE then
         ROOM:connect(START_PUZZLE)
     end
+end
+
+function state:resume()
+    AchManager.checkAchievements()
 end
 
 function state:leave()
@@ -147,10 +151,10 @@ function state:mousereleased(x, y, button, touch)
     pc_box:mouseReleased(x, y, button)
 end
 
-function state:mousemoved(x, y)
+function state:mousemoved(...)
     if IS_EXITING then return end
-    pc_box:mouseMoved(x, y)
-    room:mouseMoved(x, y)
+    pc_box:mouseMoved(...)
+    room:mouseMoved(...)
 end
 
 function state:textinput(t)

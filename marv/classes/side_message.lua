@@ -13,6 +13,7 @@ local Color = require "classes.color.color"
 --Local Functions--
 
 local getDialog
+local _id_count = 0
 
 --Side Message Class
 
@@ -21,22 +22,28 @@ SideMessage = Class{
 
     block_extra_bot_messages = false,
 
-    init = function(self, name, message, hair, face, height)
+    init = function(self, name, message, hair, face, height, type)
 
         local width = 280
         height = height or 100
         RECT.init(self, W, H - height - 160, width, height)
 
         self.name = name
-
         self.message = message
+        self.type = type or "bot"
+
+        --Store id and bump counter
+        self.id_count = _id_count
+        _id_count = _id_count + 1
 
         self.name_font = FONTS.fira(16)
         self.body_font = FONTS.fira(13)
 
-        self.hair, self.face = hair[1], face[1]
-        self.hair_clr = hair[2] or Color.white
-        self.face_clr = face[2] or Color.white
+        if self.type == "bot" then
+            self.hair, self.face = hair[1], face[1]
+            self.hair_clr = hair[2] or Color.white
+            self.face_clr = face[2] or Color.white
+        end
 
         --Portrait values
         self.portrait_offset_x = 0
@@ -55,7 +62,11 @@ function SideMessage:draw()
     --Draw the background
     Color.set(Color.new(206,83,31,255,'hsl', true))
     love.graphics.rectangle("fill", self.pos.x-7, self.pos.y+7, self.w, self.h,5)
-    Color.set(Color.white())
+    if self.type == "bot" then
+        Color.set(Color.white())
+    elseif self.type == "achievement" then
+        Color.set(Color.new(127,100,95,255,'hsl', true))
+    end
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h,5)
 
     --Draw Portrait Background
@@ -68,10 +79,25 @@ function SideMessage:draw()
 
     --Draw portrait
     local pt_x, pt_y = portrait_x + self.portrait_offset_x, portrait_y + self.portrait_offset_y
-    Color.set(self.face_clr)
-    love.graphics.draw(self.face, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
-    Color.set(self.hair_clr)
-    love.graphics.draw(self.hair, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+    if self.type == "bot" then
+        Color.set(self.face_clr)
+        love.graphics.draw(self.face, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+        Color.set(self.hair_clr)
+        love.graphics.draw(self.hair, pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+    elseif self.type == "achievement" then
+        --Checks if can find achievement image
+        local ach = nil
+        for _,k in ipairs(ACHIEVEMENT_DATABASE) do
+            if k[1] == self.name then
+                ach = k
+                break
+            end
+        end
+        if ach then
+            Color.set(Color.white())
+            love.graphics.draw(ach[4], pt_x, pt_y, 0, self.portrait_scale_x, self.portrait_scale_y)
+        end
+    end
 
     local text_h = 20 + self.body_font:getHeight() * #select(2, self.body_font:getWrap(self.message, self.w - portrait_w - 25))
     local text_y = self.pos.y + self.h / 2 - text_h / 2
@@ -79,13 +105,24 @@ function SideMessage:draw()
     --Draw message author
     love.graphics.setFont(self.name_font)
     Color.set(Color.black())
-    love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, text_y)
+    if self.type == "bot" then
+        love.graphics.print("Bot "..self.name..":", portrait_x + portrait_w + 10, text_y)
+    elseif self.type == "achievement" then
+        local txt = self.name
+        local max_size = 180
+        if self.name_font:getWidth(txt) > max_size then
+            while self.name_font:getWidth(txt.."...") > max_size do
+                txt = string.sub(txt, 1, -2)
+            end
+            txt = txt.."..."
+        end
+        love.graphics.print(txt, portrait_x + portrait_w + 10, text_y)
+    end
 
     --Draw message content
     love.graphics.setFont(self.body_font)
     Color.set(Color.black())
     love.graphics.printf(self.message, portrait_x + portrait_w + 10, text_y + 20, self.w - portrait_w - 25)
-
 end
 
 function SideMessage:setPortraitOffset(x,y)
@@ -144,6 +181,15 @@ function SideMessage:deactivate()
         end
     )
 
+    --Move all other above messages down
+    local all_messages = Util.findSbTp("side_message")
+    for bot_m in pairs(all_messages) do
+        if bot_m.id_count < self.id_count then
+            local handle = MAIN_TIMER:tween(.2, bot_m.pos, {y = bot_m.pos.y + bot_m.h + 10}, 'in-out-quad')
+            table.insert(bot_m.handles, handle)
+        end
+    end
+
 end
 
 --Deactivates a message if its clicked upon
@@ -162,7 +208,7 @@ Signal.register("new_bot_message",
     function(text, height)
         local bot = ROOM.bot
         if not bot then return end
-        local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height)
+        local message = SideMessage(bot.name, text or getDialog(bot), {bot.hair, bot.hair_clr}, {bot.head, bot.head_clr}, height, "bot")
 
         if not message.message then return nil end
 
@@ -176,23 +222,17 @@ Signal.register("new_bot_message",
     end
 )
 
---Register signal to create a custom side message
-Signal.register("new_side_message",
-    function(name, text, hair, face, offset, scale)
-
-        local message = SideMessage(name, text, hair or {}, face or {}, Color.white())
+--Register signal to create a achievement
+Signal.register("new_achievement_message",
+    function(achievement, height)
+        local message = SideMessage(achievement, "Achievement unlocked!", nil, nil, height, "achievement")
 
         --Add message to the game
         message:addElement(DRAW_TABLE.GUI, "side_message")
+        message:setPortraitOffset(0,0) --Offset for achievement image
+        message:setPortraitScale(.47,.47) --Scale for achievement image
+
         message:activate()
-
-        if offset then
-            message:setPortraitOffset(unpack(offset))
-        end
-
-        if scale then
-            message:setPortraitScale(unpack(scale))
-        end
 
         return message
     end
@@ -215,6 +255,9 @@ getDialog = function(bot)
     local shy = false
     local sexual_innuendos = false
     local pirate = false
+    local ambidextrous = false
+    local left_handed = false
+    local moby_dick
 
     --Get all dialogs related to bot traits
     for _,traits in ipairs(TRAITS) do
@@ -268,6 +311,12 @@ getDialog = function(bot)
         pirate = true
       elseif bot_traits == "terribly shy" then
         shy = true
+      elseif bot_traits == "ambidextrous" then
+        ambidextrous = true
+      elseif bot_traits == "left-handed" then
+        left_handed = true
+      elseif bot_traits == "memorized Moby Dick" then
+        moby_dick = true
       end
     end
 
@@ -280,7 +329,8 @@ getDialog = function(bot)
       table.insert(special_messages, "Come to think of it, I hated bears long after the eye accident...huh")
     end
 
-    if overachiever and underachiever then
+    if (overachiever and underachiever) or
+       (ambidextrous and left_handed) then
       table.insert(special_messages, "I'm living a paradox!!")
       table.insert(special_messages, "I'm living a paradox!!")
     end
@@ -300,6 +350,13 @@ getDialog = function(bot)
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
       table.insert(intro_messages, "Ahoy matey! Call me captain "..bot.name..".")
+    end
+
+    if moby_dick and bot.first_time then
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
+      table.insert(intro_messages, "My name is "..bot.name..", but you can call me Ishmael.")
     end
 
     if bot.name == "Gerry" then

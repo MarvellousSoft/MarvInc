@@ -112,9 +112,11 @@ function EmailTab:drawMailBox(box)
         --Draw the email box
         if not e.was_read then
             color = Color.new(e.email_color)
-        elseif not e.puzzle_id then
+        elseif not e.puzzle_id and not (e.reply_func and e.can_reply) then
             color = Color.new(e.email_read_color)
-        elseif LoreManager.puzzle_done[e.puzzle_id] then
+        elseif not e.puzzle_id and e.reply_func and e.can_reply then
+            color = Color.new(e.email_reply_color)
+        elseif e.puzzle_id and LoreManager.puzzle_done[e.puzzle_id] then
             color = Color.new(e.email_puzzle_complete_color)
         else
             color = Color.new(e.email_puzzle_uncompleted_color)
@@ -297,6 +299,7 @@ EmailObject = Class{
         self.alpha = 0 -- Alpha value of email color
         self.email_color = Color.new(0,0,240) -- Color of a new email
         self.email_read_color = Color.new(150, 30, 170) -- Color of a already read email
+        self.email_reply_color = Color.new(46, 100, 80, 255, "hsl", true) -- Color of an important email with reply
         self.email_puzzle_complete_color = Color.new(70, 150, 200) -- Color of an completed puzzle
         self.email_puzzle_uncompleted_color = Color.new(250, 140, 200) -- Color of an uncompleted puzzle
 

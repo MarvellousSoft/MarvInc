@@ -23,6 +23,9 @@ function sm.base_user_save(user)
     if not f.exists('saves/' .. user) then
         f.createDirectory('saves/'.. user)
     end
+    if not f.exists('saves/' .. user .. '/custom_puzzles') then
+        f.createDirectory('saves/' .. user .. '/custom_puzzles')
+    end
     f.write('saves/' .. user .. '/version', current_save_version)
 end
 
@@ -95,6 +98,8 @@ function sm.save()
     data.static_screen = SETTINGS["static"]
 
     data.employee_id = EMPLOYEE_NUMBER
+    data.achievement_progress = ACHIEVEMENT_PROGRESS
+
     -- whether to draw star on the corner of the screen
     data.draw_star = ROOM.draw_star
     -- Marvellous OS version
@@ -114,6 +119,9 @@ function sm.login(user)
     local data = sm.user_data[user]
     if data then
         EMPLOYEE_NUMBER = data.employee_id
+
+        --Load achievements
+        AchManager.load(data.achievement_progress)
 
         LoreManager.puzzle_done = data.puzzle_done
         LoreManager.set_done_events(data.done_events)
@@ -210,6 +218,9 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
             if ver ~= current_save_version then
                 -- deal with old save versions
             end
+            if not f.exists("saves/".. user .. "/custom_puzzles") then
+                f.createDirectory("saves/".. user .. "/custom_puzzles")
+            end
         end
     end
 
@@ -227,16 +238,21 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         local plural = #uppercase_users > 1 and "s" or ""
         local title = "Warning: Username"..plural.." with uppercase letters"
         local message = "The username"..plural.." "..users.." contains uppercase letters, and we no longer support this type of username since it can create conflicts on certain OS. Please rename the user folder"..plural.." in the save directory folder so you can access it and supress this warning."
-
+        Gamestate.switch(GS.BLANK)
         WarningWindow.show(title, message, {"OKAY", function()Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH)end, enter = 1, escape = 1}, true)
     end
 
     return uppercase_users_warning
 end
 
-function sm.load_code(puzzle)
+function sm.load_code(puzzle, is_custom)
     local code, rnm = "", {}
-    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    local basename
+    if not is_custom then
+        basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    else
+        basename = 'saves/' .. sm.current_user .. '/custom_puzzles/' .. puzzle
+    end
     if f.exists(basename .. '.code') then code = f.read(basename .. '.code') end
     if f.exists(basename .. '.renames') then
         for line in f.read(basename .. '.renames'):gmatch("[^\n]+") do
@@ -249,9 +265,14 @@ function sm.load_code(puzzle)
     return code, rnm
 end
 
-function sm.save_code(puzzle, str, renames)
+function sm.save_code(puzzle, str, renames, is_custom)
     sm.base_user_save(sm.current_user)
-    local basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    local basename
+    if not is_custom then
+        basename = 'saves/' .. sm.current_user .. '/' .. puzzle
+    else
+        basename = 'saves/' .. sm.current_user .. '/custom_puzzles/' .. puzzle
+    end
     f.write(basename .. '.code', str)
     local rnm = ""
     for str, num in pairs(renames) do

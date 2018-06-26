@@ -39,6 +39,7 @@ require "classes.tabs.code"
 require "classes.tabs.info"
 require "classes.tabs.manual"
 require "classes.tabs.settings"
+require "classes.tabs.achievements"
 require "classes.tabs.puzzle_list"
 
 require "classes.side_message"
@@ -65,6 +66,7 @@ StepManager = require "classes.step_manager"
 LoreManager = require "classes.lore_manager"
 PopManager  = require "classes.pop_manager"
 SaveManager = require "save_manager"
+AchManager = require "achievement_manager"
 ResManager = require "res_manager"
 
 --GAMESTATES
@@ -80,7 +82,8 @@ FIREPLACE = require "gamestates.fireplace",
 NEWS = require "gamestates.news",
 CREDITS = require "gamestates.credits",
 COMP = require "gamestates.computer",
-WARNINGWIN = require "gamestates.warning_window"
+WARNINGWIN = require "gamestates.warning_window",
+BLANK = require "gamestates.blank"
 }
 
 -- When game starts, automatically changes to this puzzle

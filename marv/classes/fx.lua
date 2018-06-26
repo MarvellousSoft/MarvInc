@@ -20,7 +20,7 @@ function fx.full_static(gamestate)
     EVENTS_LOCK = EVENTS_LOCK + 1
     CLOSE_LOCK = true
     SFX.loud_static:stop()
-    SFX.loud_static:play()
+    SFX.loud_static:play(SETTINGS["static"] == "mild_static" and .2)
     fx.ang = 0
     fx.h = H
     fx.w = W
@@ -50,7 +50,7 @@ function fx.quick_static(time, callback, timer)
     fx.h = H
     fx.w = W
     SFX.loud_static:stop()
-    SFX.loud_static:play()
+    SFX.loud_static:play(SETTINGS["static"] == "mild_static" and .2)
     timer:after(time, function()
         quick_s = false
         SFX.loud_static:stop()

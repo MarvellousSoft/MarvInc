@@ -8,7 +8,6 @@ See full license in file LICENSE.txt
 ]]--
 
 local Color = require "classes.color.color"
-local StepManager = require "classes.step_manager"
 local Mail = require "classes.tabs.email"
 local OpenedMail = require "classes.opened_email"
 local Info = require "classes.tabs.info"
@@ -81,14 +80,12 @@ end
 
 -- Marks that a puzzle was completed
 function lore.mark_completed(puzzle)
-    StepManager.pause()
     if lore.puzzle_done[puzzle.id] then
         puzzle.already_completed()
         lore.check_all()
     else
         lore.puzzle_done[puzzle.id] = true
         puzzle.first_completed()
-
         lore.check_all()
     end
 end
@@ -121,6 +118,21 @@ end
 
 function lore.update(dt)
     timer:update(dt)
+end
+
+--returns the total number of puzzles done
+function lore.totalPuzzlesDone()
+    local count = 0
+    local pzl = love.filesystem.getDirectoryItems("puzzles")
+    for _, file in ipairs(pzl) do
+        if #file > 4 and file:sub(-4) == '.lua' then
+            file = file:sub(1, -5)
+            if lore.puzzle_done[file] then
+                count = count + 1
+            end
+        end
+    end
+    return count
 end
 
 return lore

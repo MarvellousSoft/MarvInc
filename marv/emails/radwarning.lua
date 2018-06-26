@@ -22,7 +22,7 @@ Once in the extraction zone, please report to the nearest:
   2. {purple}[EMT]{end} for {purple}[MEDICAL]{end}.
   3. {green}[MARV INC LAWYER]{end} for {green}[SETTLEMENT]{end}.
 
-Refer to your MarvInc handbook for {blue}Section [N-25]{end} for more information on how to take the appropriate safety measures.
+Refer to your MarvInc handbook {blue}Section [N-25]{end} for more information on how to take the appropriate safety measures.
 
 {gray}This is an automated emergency service e-mail. Do not reply{end}.
 {orange}-------------------------------------------------------------------------------------------------{end}

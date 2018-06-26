@@ -79,13 +79,17 @@ function objective_checker(room)
     if papers.delivered_to_feds then
         print("FEDS via " .. papers.delivered_to_feds)
         if papers.delivered_to_feds == 'jump' then
+            _G.AchManager.complete("Better Years to Come...")
             _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/body_drop.png", 12, 15, 8)
         elseif papers.delivered_to_feds == 'computer' then
+            _G.AchManager.complete("Better Years to Come...")
             _G.Gamestate.push(_G.GS.COMP)
         else
+            _G.AchManager.complete("Better Years to Come...")
             _G.Gamestate.push(_G.GS.CUTSCENE, "assets/cutscenes/paper_drop.png", 12, 15, 8)
         end
     else
+        _G.AchManager.complete("A New Dawn")
         _G.Gamestate.push(_G.GS.FIREPLACE)
     end
     return true

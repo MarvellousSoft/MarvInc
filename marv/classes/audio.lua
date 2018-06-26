@@ -64,8 +64,9 @@ SoundEffect = Class {
     __includes = {Audio}
 }
 
-function SoundEffect:play()
-    self.source:setVolume(self.base_volume * SOUND_EFFECT_MOD)
+function SoundEffect:play(mod)
+    mod = mod or 1
+    self.source:setVolume(self.base_volume * SOUND_EFFECT_MOD * mod)
     self.source:play()
 end
 
@@ -96,12 +97,16 @@ function Music:fadein(duration)
 
     --Create fadein effect
     local delay = 0.1
-    local rate = self.base_volume/(duration/delay)
     AUDIO_TIMER:every(delay,
         function()
-            self.source:setVolume((self.source:getVolume() + rate) * MUSIC_MOD)
+            local rate = (self.base_volume * MUSIC_MOD)/(duration/delay)
+            self.source:setVolume((self.source:getVolume() + rate))
         end,
     duration/delay)
+    AUDIO_TIMER:after(duration,
+        function()
+            self.source:setVolume(self.base_volume * MUSIC_MOD)
+        end)
 end
 
 function Music:fadeout(duration)
@@ -141,6 +146,7 @@ function BGMManager:newBGM(optional_bgm)
     else
         self.current_bgm = GetNextBGM(self.current_bgm)
     end
+
     self.current_bgm:fadein()
 end
 
