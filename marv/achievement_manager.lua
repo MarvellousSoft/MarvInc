@@ -43,6 +43,7 @@ end
 
 --Check most achievements for completion
 function manager.checkAchievements()
+    print(COMPLETED_AGAINST, COMPLETED_PRO, "test")
     --Lore progress
     if ROOM.version > "0.1" then
         manager.complete("Golden Star")
@@ -58,7 +59,7 @@ function manager.checkAchievements()
     end
     --Puzzle progress
     if LoreManager.puzzle_done.tuto1 then
-        manager.complete("first")
+        manager.complete("Baby Robot Steps")
     end
     if LoreManager.puzzle_done.paul5 then
         manager.complete("Home Decor")
