@@ -43,7 +43,7 @@ end
 
 --Check most achievements for completion
 function manager.checkAchievements()
-    print(COMPLETED_AGAINST, COMPLETED_PRO, "test")
+
     --Lore progress
     if ROOM.version > "0.1" then
         manager.complete("Golden Star")
@@ -55,8 +55,9 @@ function manager.checkAchievements()
         manager.complete("The Price of Progress")
     end
     if LoreManager.puzzle_done.ryr then
-        manager.complete("Complete")
+        manager.complete("EOF")
     end
+
     --Puzzle progress
     if LoreManager.puzzle_done.tuto1 then
         manager.complete("Baby Robot Steps")
@@ -87,13 +88,13 @@ function manager.checkAchievements()
     local info_tab = Util.findId("info_tab")
     if info_tab then
         if info_tab.dead >= 1 then
-            manager.complete("1")
+            manager.complete("I, Dead Robot")
         end
         if info_tab.dead >= 10 then
-            manager.complete("10")
+            manager.complete("Spilling Oil")
         end
         if info_tab.dead >= 100 then
-            manager.complete("100")
+            manager.complete("Mechanical Genocide")
         end
     end
 end

@@ -220,7 +220,7 @@ ACH_IMG["completed"] = love.graphics.newImage("assets/images/achievements/comple
 ACH_IMG["unique_robot"] = love.graphics.newImage("assets/images/achievements/unique_robot.png")
 ACH_IMG["blaze_it"] = love.graphics.newImage("assets/images/achievements/blaze_it.png")
 ACH_IMG["first"] = love.graphics.newImage("assets/images/achievements/first.png")
-ACH_IMG["all_puzzles"] = love.graphics.newImage("assets/images/achievements/all_puzzles_g.png")
+ACH_IMG["all_puzzles"] = love.graphics.newImage("assets/images/achievements/all_puzzles.png")
 ACH_IMG["kill1"] = love.graphics.newImage("assets/images/achievements/kill_1.png")
 ACH_IMG["kill10"] = love.graphics.newImage("assets/images/achievements/kill_10.png")
 ACH_IMG["kill100"] = love.graphics.newImage("assets/images/achievements/kill_100.png")
@@ -357,23 +357,23 @@ function setup.config()
     --First is title, then description, then incompleted image, then completed imaged
     ACHIEVEMENT_DATABASE = {
         {"Baby Robot Steps","Finish your first puzzle", ACH_IMG["incompleted"], ACH_IMG["first"]},
-        {"1","Take an innocent robot's life away", ACH_IMG["incompleted"], ACH_IMG["kill1"]},
-        {"10","Kill 10 robots dead", ACH_IMG["incompleted"], ACH_IMG["kill10"]},
-        {"100","Brutally murder 100 robots", ACH_IMG["incompleted"], ACH_IMG["kill100"]},
+        {"Party Boy","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["party"]},
+        {"Home Decor","Complete puzzle 'Home Improvement'", ACH_IMG["incompleted"], ACH_IMG["blaze_it"]},
+        {"I Got You Bro","Complete puzzle 'Simple Sort'", ACH_IMG["incompleted"], ACH_IMG["bro"]},
+        {"I, Dead Robot","Take an innocent robot's life away", ACH_IMG["incompleted"], ACH_IMG["kill1"]},
+        {"Spilling Oil","Kill 10 robots dead", ACH_IMG["incompleted"], ACH_IMG["kill10"]},
+        {"Mechanical Genocide","Brutally murder 100 robots", ACH_IMG["incompleted"], ACH_IMG["kill100"]},
+        {"One of a Kind","Receive a most peculiar robot", ACH_IMG["incompleted"], ACH_IMG["unique_robot"]},
         {"Golden Star","Complete the tutorial", ACH_IMG["incompleted"], ACH_IMG["complete_tut"]},
         {"Senior Employee","Complete act 1", ACH_IMG["incompleted"], ACH_IMG["complete_act1"]},
         {"The Price of Progress","Complete act 2", ACH_IMG["incompleted"], ACH_IMG["complete_act2"]},
-        {"Complete","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["complete_game"]},
+        {"EOF","Complete the main game", ACH_IMG["incompleted"], ACH_IMG["complete_game"]},
         {"A New Dawn","Burn the evidence", ACH_IMG["incompleted"], ACH_IMG["completed_against"]},
         {"Better Years to Come...","Send proof from the inside", ACH_IMG["incompleted"], ACH_IMG["completed_pro"]},
-        {"Party Boy","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["party"]},
-        {"I Got You Bro","Attend Paul's houseparty", ACH_IMG["incompleted"], ACH_IMG["bro"]},
-        {"Home Decor","Complete puzzle 'Home Improvement'", ACH_IMG["incompleted"], ACH_IMG["blaze_it"]},
-        {"One of a Kind","Receive a most peculiar robot", ACH_IMG["incompleted"], ACH_IMG["unique_robot"]},
-        {"Master of Optimization","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["jen_extra"]},
-        {"Lord Commander of the Division's Watch","Complete puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["liv_extra1"]},
-        {"Sorting Doctor","Complete puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["liv_extra2"]},
-        {"Best Programmer in the World","Complete every puzzle in the game", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"]},
+        {"Master of Optimization","Complete challenge puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["jen_extra"]},
+        {"Lord Commander of the Division's Watch","Complete challenge puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["liv_extra1"]},
+        {"Sorting Doctor","Complete challenge puzzle 'Division II'", ACH_IMG["incompleted"], ACH_IMG["liv_extra2"]},
+        {"Best Programmer in the World","Complete every puzzle in the game. Congratulations!", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"]},
 
     }
     --Initialize achievements progress

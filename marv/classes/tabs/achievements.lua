@@ -42,7 +42,8 @@ AchievementsTab = Class {
         self.title_gap = 70 --Gap between title and achievements
         self.ach_name_font_f = FONTS.firaBold
         self.ach_name_font_start_size = 25
-        self.ach_descr_font = FONTS.fira(20)
+        self.ach_descr_font_f = FONTS.fira
+        self.ach_descr_font_start_size = 20
         self.ach_image_scale = .5 --Scale to apply on achievement image
         self.ach_gap = 38 --Gap between each achievement
 
@@ -107,25 +108,33 @@ function AchievementsTab:trueDraw()
         love.graphics.draw(image, x, h, nil, scale)
 
         --Draw achievement name
-        local descr_font = self.ach_descr_font
-        local text_x = x + image:getWidth()*scale + 15
-        -- reduce name font until it fits
+        local text_x = x + image:getWidth()*scale + 10
+        -- Get name font
         local name_font = self.ach_name_font_f(self.ach_name_font_start_size)
         local i = 0
-        while name_font:getWidth(ach[1]) > self.w - 90 do
+        while name_font:getWidth(ach[1]) > self.w - 95 do
             i = i + 1
             name_font = self.ach_name_font_f(self.ach_name_font_start_size-i)
         end
+        --Get description font
+        local descr_font = self.ach_descr_font_f(self.ach_descr_font_start_size)
+        local descr_text = completed and ach[2] or "???"
+        local i = 0
+        while descr_font:getWidth(descr_text) > self.w - 95 do
+            i = i + 1
+            descr_font = self.ach_descr_font_f(self.ach_descr_font_start_size-i)
+        end
+
         local small_gap = 3
-        local name_y = h + image:getHeight()*scale/2 - (name_font:getHeight(ach[1]) + small_gap + descr_font:getHeight(ach[2]))/2
+        local name_y = h + image:getHeight()*scale/2 - (name_font:getHeight(ach[1]) + small_gap + descr_font:getHeight(descr_text))/2
         love.graphics.setColor(self.text_color)
         love.graphics.setFont(name_font)
         love.graphics.print(ach[1], text_x, name_y)
 
         --Draw achievement description
-        local text = completed and ach[2] or "???"
+
         love.graphics.setFont(descr_font)
-        love.graphics.print(text, text_x, name_y + name_font:getHeight(ach[1]) + small_gap)
+        love.graphics.print(descr_text, text_x, name_y + name_font:getHeight(ach[1]) + small_gap)
 
         h = h + image:getHeight()*scale + self.ach_gap
     end
