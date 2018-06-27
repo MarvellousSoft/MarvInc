@@ -169,6 +169,8 @@ function build_appimage {
   ./"$APP_NAME" --appimage-extract
   printf "Replacing old .love with new .love...\n"
   cp "./Marvellous_Inc.love" "./squashfs-root/MarvInc.love"
+  printf "Adding run permission to AppRun...\n"
+  chmod +x ./squashfs-root/AppRun
   printf "Downloading latest AppImage Tool...\n"
   APP_TOOL_URL="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
   APP_TOOL_NAME="appimagetool-x86_64.AppImage"
