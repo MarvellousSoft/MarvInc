@@ -1,6 +1,7 @@
 #!/bin/bash
 
 NULL=255
+LOVE_RELEASE='love-release -a MarvellousSoft -t Marvellous_Inc -u https://github.com/marvelloussoft/marvinc'
 
 # Returns whether an array contains an element.
 # Arguments: array element
@@ -60,6 +61,7 @@ any_contains args "--clean" "-c"
 rval=$?
 if [ "$rval" -ne $NULL ]; then
   rm ./build/ -rf
+  rm /tmp/MarvInc_deploy/ -rf
   exit
 fi
 
@@ -78,13 +80,65 @@ function build_platform {
   printf "Building release for platform $1...\n"
   cd ./marv/
   if [ "$1" == "L" ]; then
-    love-release .
+    $LOVE_RELEASE .
   else
-    love-release . "${PLATFORM_CMD[$q]}"
+    $LOVE_RELEASE . "${PLATFORM_CMD[$q]}"
   fi
   cd ..
   printf "Done!\n"
   return 0
+}
+
+# Post-build.
+function post_build_platform {
+  _plt="$1"
+  TMP_PATH="/tmp/MarvInc_deploy/"
+  printf "Post-build for %s.\n" "${_plt}"
+  if [ "${_plt}" == "W32" ]; then
+    printf "Adding custom icon to Win32 build.\n"
+    pushd .
+    mkdir -p $TMP_PATH/win
+    cp ./build/Marvellous_Inc-win32.zip $TMP_PATH/win/
+    cp ./Marvellous_Inc.ico $TMP_PATH/win/
+    cd $TMP_PATH/win
+    unzip Marvellous_Inc-win32.zip
+    cp ./Marvellous_Inc.ico ./Marvellous_Inc-win32/game.ico
+    rm ./Marvellous_Inc-win32.zip
+    zip Marvellous_Inc-win32.zip ./Marvellous_Inc-win32/ -r
+    popd
+    rm ./build/Marvellous_Inc-win32.zip
+    cp $TMP_PATH/win/Marvellous_Inc-win32.zip ./build/
+  elif [ "${_plt}" == "W64" ]; then
+    printf "Adding custom icon to Win64 build.\n"
+    pushd .
+    mkdir -p $TMP_PATH/win
+    cp ./build/Marvellous_Inc-win64.zip $TMP_PATH/win/
+    cp ./Marvellous_Inc.ico $TMP_PATH/win/
+    cd $TMP_PATH/win
+    unzip Marvellous_Inc-win64.zip
+    cp ./Marvellous_Inc.ico ./Marvellous_Inc-win64/game.ico
+    rm Marvellous_Inc-win64.zip
+    zip Marvellous_Inc-win64.zip ./Marvellous_Inc-win64/ -r
+    popd
+    rm ./build/Marvellous_Inc-win64.zip
+    cp $TMP_PATH/win/Marvellous_Inc-win64.zip ./build/
+  elif [ "${_plt}" == "M" ]; then
+    printf "Adding custom icon to MAC OS X build.\n"
+    pushd .
+    mkdir -p $TMP_PATH/mac
+    cp ./build/Marvellous_Inc-macos.zip $TMP_PATH/mac/
+    cp ./Marvellous_Inc.icns $TMP_PATH/mac/
+    cd $TMP_PATH/mac
+    unzip Marvellous_Inc-macos.zip
+    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns
+    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns
+    rm Marvellous_Inc-macos.zip
+    zip Marvellous_Inc-macos.zip ./Marvellous_Inc.app -r
+    popd
+    rm ./build/Marvellous_Inc-macos.zip
+    cp $TMP_PATH/mac/Marvellous_Inc-macos.zip ./build/
+  fi
+  printf "Finished post-build.\n"
 }
 
 # Build AppImage.
@@ -100,7 +154,7 @@ function build_appimage {
   printf "Last version: $v\n"
   LAST_URL="https://github.com/MarvellousSoft/MarvInc/releases/download/v${v}/Marvellous_Inc-x86_64.AppImage"
   APP_NAME="Marvellous_Inc-x86_64.AppImage"
-  TMP_PATH="/tmp/MarvInc_deploy/"
+  TMP_PATH="/tmp/MarvInc_deploy/AppImage/"
   printf "Creating temporary path at \"$TMP_PATH\"...\n"
   mkdir -p "$TMP_PATH"
   pushd .
@@ -135,7 +189,9 @@ any_contains args "--all" "-a"
 rval=$?
 if [ "$rval" -ne $NULL ]; then
   for q in "${!PLATFORMS[@]}"; do
-    build_platform "$q"
+    _plt="$q"
+    build_platform "${_plt}"
+    post_build_platform "${_plt}"
     rval=$?
     if [ "$rval" -ne 0 ]; then
       printf "Error: $rval\n"
@@ -173,6 +229,7 @@ if [ "$p" == "A" ]; then
 # Any other.
 else
   build_platform "$p"
+  post_build_platform "$p"
   rval=$?
   exit $rval
 fi
