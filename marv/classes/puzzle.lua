@@ -83,5 +83,6 @@ function Puzzle:manage_objectives(auto_win)
         self.completed = true
         SFX.win_puzzle:stop()
         SFX.win_puzzle:play()
+        AchManager.checkAchievements()
     end
 end

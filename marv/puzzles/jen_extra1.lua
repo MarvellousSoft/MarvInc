@@ -146,6 +146,12 @@ I'm... proud of you.
 
 And I will never repeat that and deny ever saying it.
 
+Please send your solution to the big bosses, they will certainly congratulate your efforts:
+
+marvellous.amoeba@gmail.com
+
+Carry on, until the end of times.
+
 -Janine]],
         _G.CHR_CLR['jen'],{
             func = function()

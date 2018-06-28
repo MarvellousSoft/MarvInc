@@ -60,11 +60,16 @@ end
 function state:enter(prev, user)
     SaveManager.login(user)
     SettingsTab:refresh()
+    AchManager.checkAchievements()
     bgmmanager:newBGM()
 
     if START_PUZZLE then
         ROOM:connect(START_PUZZLE)
     end
+end
+
+function state:resume()
+    AchManager.checkAchievements()
 end
 
 function state:leave()
