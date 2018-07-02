@@ -159,13 +159,15 @@ function PuzzleListTab:refresh()
     if love.filesystem.exists("custom") then
         local list = {}
         for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
-            local path = 'custom/'..file
-            local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G}
-            local f, err = love.filesystem.load(path)
-            setfenv(f, pu)
-            f()
-            local id = file:sub(1,-5) --Remove the ".lua"
-            table.insert(list, {name = pu.name, id = id, status = "custom"})
+            if file:match("[.]lua$") then
+                local path = 'custom/'..file
+                local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G}
+                local f, err = love.filesystem.load(path)
+                setfenv(f, pu)
+                f()
+                local id = file:sub(1,-5) --Remove the ".lua"
+                table.insert(list, {name = pu.name, id = id, status = "custom"})
+            end
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Custom Puzzles", list))
     end
