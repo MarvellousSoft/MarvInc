@@ -253,19 +253,26 @@ end
 function Slider:mouseReleased(x, y, but)
     if but == 1 then
         self.is_sliding = false
+        -- reset hovering
+        self.hover = Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h)
     end
 end
 
 function Slider:mouseMoved(x, y, dx, dy)
-    if self.is_sliding and x >= self.pos.x and x <= self.pos.x + self.size then
+    if self.is_sliding then
          --Clamp pos
-        local slider_x = math.max(self.pos.x, math.min(self.pos.x+self.size, self:getSliderX() + dx))
+        local slider_x = math.max(self.pos.x, math.min(self.pos.x+self.size, x))
         --Update value
+        local old_value = self.value
         self.value = (slider_x - self.pos.x)/self.size
         --Call callback
-        self.callback(self.value)
+        if old_value ~= self.value then
+            self.callback(self.value)
+        end
+        self.hover = true -- should show as hovering if you're sliding it
+    else
+        self.hover = Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h)
     end
-    self.hover = Util.pointInRect(x, y, self:getSliderX() - self.w/2, self:getSliderY(), self.w, self.h)
 end
 
 function Slider:draw()
