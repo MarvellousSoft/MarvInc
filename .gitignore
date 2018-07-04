@@ -3,3 +3,4 @@ build/
 *.vim
 *.lvimrc
 *.directory
+steam_appid.txt

@@ -15,7 +15,7 @@ local setup = {}
 --SETUP FUNCTIONS
 --------------------
 
-VERSION = "1.3.2"
+VERSION = "1.3.3"
 
 --GLOBAL VARIABLES--
 W = love.graphics.getWidth() --Current width of the game window

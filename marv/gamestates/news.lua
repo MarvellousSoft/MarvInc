@@ -90,6 +90,14 @@ function state:draw()
     love.graphics.rectangle('fill', 0, 0, W, H)
 end
 
+function state:mousepressed(x, y, button, isTouch)
+    if not on_leave then
+        on_leave = true
+        time = 4
+        sx, sy = rnd(), rnd()
+    end
+end
+
 function state:leave()
     Gamestate.push(GS.CREDITS)
 end

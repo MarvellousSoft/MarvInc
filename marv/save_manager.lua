@@ -199,7 +199,6 @@ Feel free to mess up the files here, but if the game crashes it is not our respo
         end
         if f.exists('saves/' .. user .. '/save_file') then
             local ver = f.read('saves/' .. user .. '/version')
-            print(user .. " has version " .. ver)
             sm.user_data[user] = binser.deserializeN(f.read('saves/' .. user .. '/save_file'), 1)
             if ver == "1" then -- 1 --> 2
                 local bot = sm.user_data[user].last_bot
