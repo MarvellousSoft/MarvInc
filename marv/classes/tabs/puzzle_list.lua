@@ -90,7 +90,7 @@ function PuzzleListTab:draw()
     love.graphics.setFont(FONTS.fira(18))
     love.graphics.print(" = challenge puzzle", self.pos.x + sz + 170, self.pos.y + title_h + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 1)
 
-    --Draw nottom separator
+    --Draw bottom separator
     Color.set(Color.black())
     love.graphics.setFont(self.separator_font)
     love.graphics.print("--------------------------", self.pos.x, self.pos.y + title_h + button_dy + button_h + (detail_h - FONTS.fira(18):getHeight()) / 2 + 9)
