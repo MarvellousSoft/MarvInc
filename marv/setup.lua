@@ -387,7 +387,7 @@ function setup.config()
              "Harry", "Carie", "Perry", "Sally", "Abby", "Genny", "Figgy", "Ginnie", "Jenny",
              "Nancy", "Manny", "Ellie", "Lenny", "Ziggy", "Tammy", "Kerry", "Gerry", "Bonnie",
              "Tony", "Jammy", "Fanny", "Yammy", "Jerry", "Omarry", "Ury", "Lilly", "Nelly",
-             "Annie",
+             "Annie", "Groove", "Waluigi", "Setzer", "Neymarry", "Lana del Robot", "Taylor Swiftly"
             }
     --Traits table composed of tuples, where the first position is a trait, second a table containing specific dialog options for this trait and third table containing specific last words options for this trait.
     TRAITS = {
@@ -550,12 +550,15 @@ function setup.config()
       "What are you doing?",
       "This is hopeless. Just try another task.",
       "Is there a 'dance' command?",
+      "Is there a 'barreroll' command?",
+      "Is there a 'wah' command?",
       "Can you make me somersault?",
       "What can I do for you?",
       "Where's the afterparty at?",
       "Let me know if you need anything.",
       "All my hopes lie with you.",
       "I trust you.",
+      "Are you stuck?",
       "I'm hungry.",
       "I'm tired.",
       "Staying still is a bit boring.",
@@ -613,7 +616,6 @@ function setup.config()
             "Your bot scorched to death.",
             "Your robot fell in a lava pit. I don't think it's coming back.",
             "Your robot got head first in a lava pit.",
-
         }
       },
       laser =
@@ -631,8 +633,17 @@ function setup.config()
     FAILED_POPUP_BUTTON_TEXT =
     {
       " I'm sorry ",
+      " It won't happen again ",
+      " It won't happen again. Probably ",
+      " This will be my last mistake ",
       " I will be more careful next time ",
       " Frankly it was his fault ",
+      " Better him than me ",
+      " I will miss him ",
+      " He was my favorite... ",
+      " Good riddance ",
+      " Hit me another one ",
+      " I think it was malfunctioning ",
       " It won't happen again ",
       " Ooops ",
       " I will be more successful next time ",
