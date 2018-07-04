@@ -2379,7 +2379,7 @@ if CREATE_APPID_FILE then
 end
 print(lib)
 if not lib.SteamAPI_Init() then
-	error("failed to initialize steamworks")
+	error("Failed to initialize steamworks. Do you have steam on?")
 end
 
 steamworks = {}
