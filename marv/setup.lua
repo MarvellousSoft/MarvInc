@@ -642,8 +642,14 @@ function setup.config()
     {
       "AAAAAaaaaAAAaaaAAAaaaAAaAAAaAAaAAAaaAAAAAaaaaAAAAaaaaAAAaaaAAaAAAaaA",
       "Hey did you know today is my birthd-",
+      "Something tells me this is going to hurt.",
       "Argh!",
-      "Wait, is that?! Oh shit!",
+      "I'm disappointed in you",
+      "Don't worry, I'm ready to die. Goodbye master.",
+      "I had a good run.",
+      "I guess this is it...",
+      "I will haunt your soul.",
+      "Wait, is that... Oh shit!",
       "Oh no, shit! Argh!",
       "WHAT THE FUCK?!",
       "#YOLO"

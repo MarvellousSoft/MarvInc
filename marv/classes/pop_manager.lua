@@ -222,7 +222,7 @@ PopupFailed = Class{
 
     local _h = self.buttons[1].pos.y - 115
     --Draw bot last words "preview"
-    Color.set(self.text_clr)
+    love.graphics.setColor(5,0,155)
     love.graphics.setFont(FONTS.fira(14))
     love.graphics.printf("Bot #" .. self.bot_n .. " " .. self.bot.name.. " last words:", self.pos.x + self.border,
         _h - 45, self.w - self.border, "left")
@@ -230,9 +230,11 @@ PopupFailed = Class{
     --Draw bot
     local off = 8
     local i_x, i_y = self.pos.x + self.border + off, _h - 20 + off
+    local box_h = self.bot.body:getHeight() + off
+    local box_y = i_y - off/2
     Color.set(Color.black())
     love.graphics.setLineWidth(3)
-    love.graphics.rectangle("line", i_x - off/2, i_y - off/2, self.w - 2*self.border, self.bot.body:getHeight() + off, 5)
+    love.graphics.rectangle("line", i_x - off/2, box_y, self.w - 2*self.border, box_h, 5)
     Color.set(self.bot.body_clr)
     love.graphics.draw(self.bot.body, i_x, i_y + off)
     Color.set(self.bot.head_clr)
@@ -240,12 +242,21 @@ PopupFailed = Class{
     Color.set(self.bot.hair_clr)
     love.graphics.draw(self.bot.hair, i_x, i_y + off)
 
-    --Draw last words
-    local t_x, t_y = i_x + self.bot.body:getWidth() + 20, i_y + self.bot.body:getHeight()/2 - 20
+    --Draw last words, scaling font down until it fits
+    local t_x = i_x + self.bot.body:getWidth() + 20
     Color.set(self.text_clr)
-    love.graphics.setFont(FONTS.fira(18))
+    local wrap
+    local wraplimit = self.w - 150
+    local font_s = 25
+    repeat
+        font_s = font_s - 1
+        _, wrap = FONTS.fira(font_s):getWrap(self.last_words, wraplimit)
+    until #wrap <= 2
+    local font = FONTS.fira(font_s)
+    local t_y = box_y + box_h/2 - font:getHeight()*#wrap/2
+    love.graphics.setFont(font)
     love.graphics.printf(self.last_words, t_x,
-        t_y, self.w - 150, "left")
+        t_y, wraplimit, "left")
 
     --Draw last sentence
     Color.set(self.text_clr)
