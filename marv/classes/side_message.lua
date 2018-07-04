@@ -340,6 +340,11 @@ getDialog = function(bot)
       table.insert(special_messages, "Mother would always say how her little Fanny was the most beautiful thing.")
     end
 
+    if bot.name == "Waluigi" then
+        table.insert(special_messages, "Is there a \"WAH\" command?")
+        table.insert(special_messages, "Is there a \"WAH\" command?")
+    end
+
     if pirate and lost_an_eye then
       table.insert(special_messages, "Funny thing is I was already wearing an eye patch before the accident!")
       table.insert(special_messages, "Funny thing is I was already wearing an eye patch before the accident!")
