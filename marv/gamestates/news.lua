@@ -40,7 +40,7 @@ end
 
 local fade_in = 255
 local on_leave = false
-local times = {0, 7, 15, 15}
+local times = {0, 8, 16, 16}
 local sx, sy = 0, 0
 function state:update(dt)
     AUDIO_TIMER:update(dt)
