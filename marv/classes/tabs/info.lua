@@ -30,8 +30,8 @@ InfoTab = Class{
         self.dead = 0
 
         Signal.register("death", function()
-            AchManager.checkAchievements()
             self.dead = self.dead + 1
+            AchManager.checkAchievements()
         end)
 
         -- Id file for showing the bot
