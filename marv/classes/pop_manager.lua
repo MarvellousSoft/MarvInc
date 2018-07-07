@@ -110,7 +110,7 @@ function Popup:mousereleased(x, y, button, touch)
 end
 
 function Popup:keypressed(key)
-    if key == "return" and not self.buttons[2] then
+    if (key == "return" or key == "escape") and not self.buttons[2] then
         PopManager.quit()
         self.buttons[1].callback()
     end

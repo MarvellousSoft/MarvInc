@@ -339,7 +339,7 @@ function OpenedEmail:mousePressed(x, y, but)
 end
 
 function OpenedEmail:keyPressed(key)
-    if key == "return" then
+    if key == "return" or key == "escape" then
         opened_email_funcs.close()
     end
 end

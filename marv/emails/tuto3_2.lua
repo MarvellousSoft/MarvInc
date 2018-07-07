@@ -22,7 +22,9 @@ Here are some useful shortcuts to enhance your working experience here at Marvel
 
 - {blue}Ctrl + Right{end}/{blue}Left Arrow{end}: Increase/Decrease simulation speed.
 
-- {blue}Enter{end}: Close pop-ups or opened emails.
+- {blue}Escape{end}: Stop simulation when running.
+
+- {blue}Enter{end} or {blue}Escape{end}: Close pop-ups or opened emails.
 
 Remember them all. As we say here in Marvellous Inc. {purple}"Mice are for chumps and Larry from accounting"{end}.
 
