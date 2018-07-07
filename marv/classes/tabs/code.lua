@@ -157,7 +157,7 @@ function CodeTab:keyPressed(key)
         end
     end
     if key == 'escape' and StepManager.state ~= 'stopped' then
-        StepManager.stop()
+        StepManager.stop('no kill')
     end
     if isRunning and (key == 'up' or key == 'down' or key == 'left' or key == 'right') then
         -- Moving cursor while code is playing
