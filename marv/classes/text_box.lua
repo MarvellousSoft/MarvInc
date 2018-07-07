@@ -413,7 +413,7 @@ function TextBox:keyPressed(key)
             self:typeString(love.system.getClipboardText())
         end
 
-    elseif key == 'return' then
+    elseif key == 'return' or key == "kpenter" then
         self:tryWrite('\n')
 
     elseif key == 'left' then

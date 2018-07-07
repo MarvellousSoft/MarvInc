@@ -65,7 +65,7 @@ function state:keypressed(key)
     elseif key == "escape" and _window.escape and _window.buttons[_window.escape] then
         _window.buttons[_window.escape]:callback()
         WarningWindow.deactivate(_dont_pop)
-    elseif key == "return" and _window.enter and _window.buttons[_window.enter] then
+    elseif (key == "return" or key == "kpenter") and _window.enter and _window.buttons[_window.enter] then
         _window.buttons[_window.enter]:callback()
         WarningWindow.deactivate(_dont_pop)
     end

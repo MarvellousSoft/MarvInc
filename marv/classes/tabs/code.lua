@@ -166,7 +166,7 @@ function CodeTab:keyPressed(key)
     end
     if isRunning then return end
     if love.keyboard.isDown("lctrl", "rctrl") then
-        if key == 'return' then
+        if key == 'return' or key == "kpenter" then
             if StepManager.running then
                 StepManager.pause()
             else
