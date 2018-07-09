@@ -21,7 +21,7 @@ Look at the following examples:
       
       {inst}add {num}[2] [5] {addr}2{cmnt} #adds register #2 contents to register #5 contents and stores it at register #2 again.{end}
 
-({blue}Note:{end} Everything written in the same line after a {cmnt}hashtag '#'{end} are {cmnt}comments{end} and will be ignored when running a code. You can use it to make your code clearer)
+{blue}Note:{end} Everything written in the same line after a {cmnt}hashtag '#'{end} are {cmnt}comments{end} and will be ignored when running a code. You can use it to make your code clearer.
 
 Finally, the {inst}write {end}command receives a {num}value {end}argument, and a second optional {dir}direction {end}argument. You'll use the {inst}write {end}command to write {num}values {end}in a {orange}console{end}, which are the big colorful computer objects in the room. The {dir}direction {end}determines which direction the {orange}console {end}is. If not provided, as usual, the robot will try to write in the direction he is facing.
 
