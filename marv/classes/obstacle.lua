@@ -21,7 +21,7 @@ Obstacle = Class{
             SpriteObject.init(self, grid, i, j, key, bg, delay, "obst", clr)
         else
             Object.init(self, grid, i, j, "obst", bg)
-            self.img = OBJS_IMG[key]
+            self.img = PULL_ASSET(key)
             self.sx = ROOM_CW/self.img:getWidth()
             self.sy = ROOM_CH/self.img:getHeight()
         end

@@ -11,6 +11,7 @@ require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.console"
 local md5 = require "extra_libs.md5"
+local LParser = require "lparser.parser"
 
 -- Reader reads a .lua level and converts it into a Puzzle
 
@@ -23,7 +24,7 @@ function reader.read(puzzle_id, is_custom, random_seed_mod)
     if not is_custom then
         _f, err = love.filesystem.load("puzzles/" .. puzzle_id .. ".lua")
     else
-        _f, err = love.filesystem.load("custom/" .. puzzle_id .. ".lua")
+        return LParser.read(puzzle_id)
     end
     if err then print(err) end
     local _t = {}

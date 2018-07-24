@@ -18,7 +18,7 @@ Console = Class{
     init = function(self, grid, i, j, key, bg, color, __, ___, args)
         Object.init(self, grid, i, j, "console", bg)
         self.color = Color[color or "white"](Color)
-        self.img = OBJS_IMG[key]
+        self.img = PULL_ASSET(key)
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
 

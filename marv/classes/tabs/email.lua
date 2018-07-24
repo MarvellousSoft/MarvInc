@@ -290,6 +290,9 @@ EmailObject = Class{
 
         self.number = _number
         self.id = _id
+        if _id == "custom" then
+            self.is_custom = true
+        end
 
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
@@ -333,6 +336,35 @@ function email_funcs.get_raw_email(id, number)
     local e = require('emails.' .. id)
 
     local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number, e.image)
+
+    return email
+end
+
+-- Creates a new custom email and adds it to the mail list.
+function email_funcs.new_custom(silent, title, text, author, delete, p_id, open_f, reply_f, img)
+    local mail_list, number, tab
+
+    tab = Util.findId("email_tab")
+
+    mail_list = tab.email_list
+
+    -- Increase number of current emails and update number for new email
+    tab.email_cur = tab.email_cur + 1
+    n = tab.email_cur
+
+    local email = EmailObject('custom', title, text, author, delete, p_id, open_f, reply_f, n, img)
+
+    -- Add fade-in effect to email
+    email.handles["fadein"] = MAIN_TIMER:tween(.5, email, {alpha = 255, juicy_bump = 0}, 'out-quad')
+
+    table.insert(mail_list, email)
+
+    UNREAD_EMAILS = UNREAD_EMAILS + 1
+
+    if not silent then
+        SFX.new_email:stop()
+        SFX.new_email:play()
+    end
 
     return email
 end

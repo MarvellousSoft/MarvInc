@@ -314,7 +314,7 @@ function OpenedEmail:checkButtonClick(x, y, but)
         --Clicked on the reply button
         e.reply_func(e)
         if e.referenced_email.puzzle_id then
-            ROOM:connect(e.referenced_email.puzzle_id)
+            ROOM:connect(e.referenced_email.puzzle_id, nil, e.referenced_email.is_custom)
             opened_email_funcs.close()
         end
      end
