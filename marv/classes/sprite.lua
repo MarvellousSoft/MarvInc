@@ -17,7 +17,7 @@ Sprite = Class{
     init = function(self, x, y, key, delay, clr)
         RECT.init(self, x, y, -1, -1, clr)
         -- key is image trail
-        self.sheet = SHEET_IMG[key]
+        self.sheet = PULL_ASSET(key, "sprite")
         self.img = self.sheet[1]
         self.n = self.sheet[2]
         self.w = math.floor(self.img:getWidth()/self.n)

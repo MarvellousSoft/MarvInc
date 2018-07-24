@@ -306,6 +306,11 @@ function Room:disconnect(wait)
       end
     end
 
+    -- If custom puzzle, remove assets.
+    CUST_OBJS_IMG = {}
+    CUST_TILES_IMG = {}
+    CUST_SHEET_IMG = {}
+
     self:clear()
 end
 
@@ -352,7 +357,10 @@ function Room:draw()
                 end
                 local cell = self.grid_floor[i][j]
                 if cell ~= nil and _bg then
-                    local img = TILES_IMG[cell]
+                    local img = CUST_TILES_IMG[cell]
+                    if img == nil then
+                        img = TILES_IMG[cell]
+                    end
                     local _y = (j-1)*self.grid_ch
                     local _sx, _sy = self.grid_cw/img:getWidth(), self.grid_ch/img:getHeight()
                     Color.set(self.color_floor[i][j] or Color.white())

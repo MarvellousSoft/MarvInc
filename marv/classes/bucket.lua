@@ -19,7 +19,7 @@ Bucket = Class{
     __includes = {Object},
     init = function(self, grid, i, j, key, bg, _, __, ___, args)
         Object.init(self, grid, i, j, "bucket", bg)
-        self.img = OBJS_IMG[key]
+        self.img = PULL_ASSET(key)
         self.content = contents[args.content](args.content_args)
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()

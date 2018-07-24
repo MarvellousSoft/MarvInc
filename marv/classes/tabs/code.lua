@@ -248,6 +248,7 @@ end
 
 -- Resets screen for a new puzzle
 function CodeTab:reset(puzzle)
+    print(puzzle.lines_on_terminal, puzzle.code)
     self.term:reset_lines(puzzle.lines_on_terminal)
     self.term:typeString(puzzle.code)
     self.term:clearBackups()
