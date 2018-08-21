@@ -115,6 +115,30 @@ function love.load(args)
         end
     end
 
+    --Steam Integration Stuff
+    if USING_STEAM then
+        Steam = require "steam"
+        if CREATE_APPID_FILE then
+        	local file = io.open("steam_appid.txt")
+        	if file then
+        		io.close(file)
+        	else
+        		local file, err = io.open("steam_appid.txt", "w")
+        		if file then
+        			file:write("827940") -- appid
+        			io.close(file)
+        		else
+        			error("Failed to write steam_appid.txt (because it's needed) in cd : " .. err)
+        		end
+        	end
+        end
+        if Steam.init() then
+            print("Successfully connected to Steam!")
+        else
+            print("Could not connect to steam...")
+        end
+    end
+
     Setup.config() --Configure your game
 
     local callbacks = {'errhand', 'update'}
@@ -201,5 +225,5 @@ function love.quit()
     if bgmm then
         bgmm.current_bgm:fadeout()
     end
-
+    if Steam then Steam.shutdown() end
 end
