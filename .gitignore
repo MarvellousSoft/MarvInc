@@ -4,3 +4,5 @@ steam_appid.txt
 *.vim
 *.lvimrc
 *.directory
+libsteam_api.dylib
+libsteam_api.so
