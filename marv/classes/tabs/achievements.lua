@@ -94,9 +94,9 @@ function AchievementsTab:trueDraw()
         love.graphics.setColor(0, 0, 0, 190)
         love.graphics.rectangle("fill", x - gap_x - offset, h - gap_y + offset, self.w - 5, image:getHeight()*scale+2*gap_y, 7)
         if completed then
-            love.graphics.setColor(200, 240, 200, 220)
+            love.graphics.setColor(200, 250, 200, 220)
         else
-            love.graphics.setColor(240, 200, 200, 220)
+            love.graphics.setColor(200, 200, 200, 220)
         end
         love.graphics.rectangle("fill", x - gap_x, h - gap_y, self.w - 5, image:getHeight()*scale+2*gap_y, 8)
 

@@ -97,7 +97,23 @@ SKIP_SPLASH = nil
 --STEAM STUFF
 -- Whether the game is running with steam (for steam integration)
 USING_STEAM = true
+CREATE_APPID_FILE = true
 if USING_STEAM then
+    if CREATE_APPID_FILE then
+    	local file = io.open("steam_appid.txt")
+    	if file then
+    		io.close(file)
+    	else
+    		local file, err = io.open("steam_appid.txt", "w")
+    		if file then
+    			file:write("827940") -- appid
+    			io.close(file)
+    		else
+    			error("Failed to write steam_appid.txt (because it's needed) in cd : " .. err)
+    		end
+    	end
+    end
+
     Steam = require "steam"
 end
 function love.load(args)
@@ -123,12 +139,15 @@ function love.load(args)
     -- mousemoved is ignored
     Gamestate.registerEvents(callbacks) --Overwrites love callbacks to call Gamestate as well
 
+    --Steam stuff
+    if USING_STEAM then
+        Steam.requestCurrentStats()
+        --Steam.resetAllStats(true) --this is here just to debug
+    end
+
     local got_warning = SaveManager.load()
     if not got_warning then
         Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH) --Jump to the initial state
-    end
-    if USING_STEAM then
-        print(Steam.getAchievement("ACH_COMPLETED_TUT"))
     end
 end
 
