@@ -18,10 +18,22 @@ function manager.print()
     print("-----------------------------")
 end
 
+function manager.updateSteamAchievements()
+    for _,k in ipairs(ACHIEVEMENT_DATABASE) do
+        if ACHIEVEMENT_PROGRESS[k[1]] then
+            Steam.setAchievement(k[5])
+        end
+    end
+    Steam.storeStats()
+end
+
 function manager.load(data)
     if data then
         for i,k in pairs(ACHIEVEMENT_PROGRESS) do
             ACHIEVEMENT_PROGRESS[i] = data[i] or false
+        end
+        if USING_STEAM then
+            manager.updateSteamAchievements()
         end
     end
 end
@@ -30,6 +42,17 @@ end
 function manager.complete(name)
     if not ACHIEVEMENT_PROGRESS[name] then
         ACHIEVEMENT_PROGRESS[name] = true
+
+        if USING_STEAM then
+            for _,k in ipairs(ACHIEVEMENT_DATABASE) do
+                if k[1] == name then
+                    Steam.setAchievement(k[5])
+                    print(Steam.storeStats())
+                    break
+                end
+            end
+        end
+
         Signal.emit("new_achievement_message", name)
     end
 end
