@@ -15,6 +15,7 @@ Camera    = require "extra_libs.hump.camera"
 Vector    = require "extra_libs.hump.vector"
 Signal    = require "extra_libs.hump.signal"
 
+
 --OTHER EXTRA LIBS
 require "extra_libs.slam"
 
@@ -93,12 +94,12 @@ START_USER = nil
 -- Whether the game shows the splash screen
 SKIP_SPLASH = nil
 
+--STEAM STUFF
 -- Whether the game is running with steam (for steam integration)
-USING_STEAM = false
-STEAMWORKS = nil
-STEAMWORKS_API = nil
-CREATE_APPID_FILE = nil
-
+USING_STEAM = true
+if USING_STEAM then
+    Steam = require "steam"
+end
 function love.load(args)
     for i, cmd in ipairs(args) do
         if cmd:sub(1, 9) == "--puzzle=" then
@@ -107,35 +108,6 @@ function love.load(args)
             START_USER = cmd:sub(8)
         elseif cmd == "--no-splash" or cmd == "--skip-splash" then
             SKIP_SPLASH = true
-        elseif cmd == "--steam" then
-            USING_STEAM = true
-        elseif cmd == "--steamdev" then
-            USING_STEAM = true
-            CREATE_APPID_FILE = true
-        end
-    end
-
-    --Steam Integration Stuff
-    if USING_STEAM then
-        Steam = require "steam"
-        if CREATE_APPID_FILE then
-        	local file = io.open("steam_appid.txt")
-        	if file then
-        		io.close(file)
-        	else
-        		local file, err = io.open("steam_appid.txt", "w")
-        		if file then
-        			file:write("827940") -- appid
-        			io.close(file)
-        		else
-        			error("Failed to write steam_appid.txt (because it's needed) in cd : " .. err)
-        		end
-        	end
-        end
-        if Steam.init() then
-            print("Successfully connected to Steam!")
-        else
-            print("Could not connect to steam...")
         end
     end
 
@@ -154,6 +126,9 @@ function love.load(args)
     local got_warning = SaveManager.load()
     if not got_warning then
         Gamestate.switch(SKIP_SPLASH and GS.MENU or GS.SPLASH) --Jump to the initial state
+    end
+    if USING_STEAM then
+        print(Steam.getAchievement("ACH_COMPLETED_TUT"))
     end
 end
 
@@ -225,5 +200,5 @@ function love.quit()
     if bgmm then
         bgmm.current_bgm:fadeout()
     end
-    if Steam then Steam.shutdown() end
+    if USING_STEAM then Steam.shutdown() end
 end
