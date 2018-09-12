@@ -285,14 +285,12 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number, _image)
+    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number, _image, _custom)
         local time
 
         self.number = _number
         self.id = _id
-        if _id == "custom" then
-            self.is_custom = true
-        end
+        self.is_custom = _custom
 
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
@@ -341,7 +339,7 @@ function email_funcs.get_raw_email(id, number)
 end
 
 -- Creates a new custom email and adds it to the mail list.
-function email_funcs.new_custom(silent, title, text, author, delete, p_id, open_f, reply_f, img)
+function email_funcs.new_custom(silent, id, title, text, author, delete, p_id, open_f, reply_f, img)
     local mail_list, number, tab
 
     tab = Util.findId("email_tab")
@@ -352,7 +350,7 @@ function email_funcs.new_custom(silent, title, text, author, delete, p_id, open_
     tab.email_cur = tab.email_cur + 1
     n = tab.email_cur
 
-    local email = EmailObject('custom', title, text, author, delete, p_id, open_f, reply_f, n, img)
+    local email = EmailObject(id, title, text, author, delete, p_id, open_f, reply_f, n, img, true)
 
     -- Add fade-in effect to email
     email.handles["fadein"] = MAIN_TIMER:tween(.5, email, {alpha = 255, juicy_bump = 0}, 'out-quad')

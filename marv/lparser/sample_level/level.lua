@@ -305,8 +305,8 @@ function create_numbers()
     return v
 end
 
-C1 = Console("console", "green", create_numbers)
-C2 = Console("console", "blue", nil)
+C1 = Console("console", "green", true, create_numbers, 5)
+C2 = Console("console", "blue", true, nil, 5)
 Objects:Register(C1, "c")
 Objects:Register(C2, "z")
 Objects:PlaceAt(C1, 15, 5)
