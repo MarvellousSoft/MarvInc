@@ -96,26 +96,44 @@ SKIP_SPLASH = nil
 
 --STEAM STUFF
 -- Whether the game is running with steam (for steam integration)
-USING_STEAM = true
-CREATE_APPID_FILE = true
+USING_STEAM = false
+CREATE_APPID_FILE = false
+for i, cmd in ipairs(arg) do
+    if cmd == "--steam" then
+        USING_STEAM = true
+    elseif cmd == "--steam-dev" then
+        USING_STEAM = true
+        CREATE_APPID_FILE = true
+    end
+end
+
 if USING_STEAM then
     if CREATE_APPID_FILE then
-    	local file = io.open("steam_appid.txt")
-    	if file then
-    		io.close(file)
-    	else
-    		local file, err = io.open("steam_appid.txt", "w")
-    		if file then
-    			file:write("827940") -- appid
-    			io.close(file)
-    		else
-    			error("Failed to write steam_appid.txt (because it's needed) in cd : " .. err)
-    		end
-    	end
+        local file = io.open("steam_appid.txt")
+        if file then
+            io.close(file)
+        else
+            local file, err = io.open("steam_appid.txt", "w")
+            if file then
+                file:write("827940") -- appid
+                io.close(file)
+            else
+                error("Failed to write steam_appid.txt (because it's needed) in cd : " .. err)
+            end
+        end
     end
 
     Steam = require "steam"
+
+    if Steam == false then
+        error("Steam is not running. Closing game.")
+    end
+else
+    Steam = setmetatable({}, { __index = function(table, name)
+        error('Trying to call Steam.' .. name .. ' on a game with disabled Steam')
+    end })
 end
+
 function love.load(args)
     for i, cmd in ipairs(args) do
         if cmd:sub(1, 9) == "--puzzle=" then
