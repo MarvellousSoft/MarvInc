@@ -41,12 +41,12 @@ args=( "$@" )
 any_contains args "--help" "-h"
 rval=$?
 if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
-  printf "Usage: $0 [--help | -h] [--release <platform>| -r <platform>] [--all | -a] [--clear | -c]\n"
+  printf "Usage: $0 [--help | -h] [--release <platform>| -r <platform>] [--all | -a] [--clear | -c] [--steam | -s]\n"
   printf "Automagically deploys release binaries for different platforms.\n\n"
   printf "  --release,  -r   specifies the platform: M for Mac OS X, W32 and W64 for Windows 32 and 64, L for Love and A for AppImage.\n"
-  printf "  --lversion, -lv  if building an AppImage, you need to specify the last (not current) version of the game.\n"
   printf "  --all,      -a   deploys for all platforms, ignoring the -r option.\n"
   printf "  --clean,    -c   removes output files (use with care!). Ignores all tags above if used.\n"
+  print  "  --steam,    -s   builds the steam version of the binaries.\n"
   printf "  --help,     -h   display this help and exit\n\n"
   printf "Examples:\n"
   printf "  $0 --release A     Generates a Mac OS X binary in the build dir.\n"
@@ -64,6 +64,9 @@ if [ "$rval" -ne $NULL ]; then
   rm /tmp/MarvInc_deploy/ -rf
   exit
 fi
+
+any_contains args "--steam" "-s"
+STEAM=$?
 
 # Platforms.
 declare -A PLATFORMS=( ["M"]=0 ["W32"]=1 ["W64"]=2 ["L"]=3 )
@@ -138,19 +141,23 @@ function post_build_platform {
     rm ./build/Marvellous_Inc-macos.zip
     cp $TMP_PATH/mac/Marvellous_Inc-macos.zip ./build/
   fi
+  if [ "$STEAM" -ne $NULL ]; then
+    printf "Steam mode not supported for ${_plt}.\n"
+    exit 1
+  fi
+
   printf "Finished post-build.\n"
+}
+
+get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+  grep '"tag_name":' |                                            # Get tag line
+  sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
 }
 
 # Build AppImage.
 function build_appimage {
-  any_contains args "--lversion" "-lv"
-  rval=$?
-  if [ "$rval" -eq $NULL ]; then
-    printf "You must specify the last (not current) game version when building an AppImage. Try:\n"
-    printf "  $0 --help\n"
-    return 3
-  fi
-  v=${args[$(( rval+1 ))]}
+  v=`get_latest_release "MarvellousSoft/MarvInc"`
   printf "Last version: $v\n"
   LAST_URL="https://github.com/MarvellousSoft/MarvInc/releases/download/v${v}/Marvellous_Inc-x86_64.AppImage"
   APP_NAME="Marvellous_Inc-x86_64.AppImage"
@@ -171,6 +178,11 @@ function build_appimage {
   cp "./Marvellous_Inc.love" "./squashfs-root/MarvInc.love"
   printf "Adding run permission to AppRun...\n"
   chmod +x ./squashfs-root/AppRun
+  if [ "$STEAM" -ne $NULL ]; then
+    luasteam_v=`get_latest_release "uspgamedev/luasteam"`
+    printf "Steam mode not supported.\n"
+    exit 1
+  fi
   printf "Downloading latest AppImage Tool...\n"
   APP_TOOL_URL="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
   APP_TOOL_NAME="appimagetool-x86_64.AppImage"
