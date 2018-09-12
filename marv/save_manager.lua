@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 local LoreManager = require "classes.lore_manager"
 local BotManager = require 'classes.bot'
+local LParser = require "lparser.parser"
 binser = require "binser"
 
 local sm = {}
@@ -82,7 +83,8 @@ function sm.save()
             read = email.was_read,
             can_reply = email.can_reply,
             can_be_deleted = email.can_be_deleted,
-            time_received = email.time
+            time_received = email.time,
+            custom = email.is_custom
         })
     end
 
@@ -128,7 +130,12 @@ function sm.login(user)
 
         -- loading emails
         for _, email in ipairs(data.emails) do
-            local e = Mail.new(email.id, true)
+            local e
+            if email.custom then
+                e = LParser.load_email(email.id)
+            else
+                e = Mail.new(email.id, true)
+            end
             e.was_read = email.read
             e.can_reply = email.can_reply
             e.can_be_deleted = email.can_be_deleted

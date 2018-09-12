@@ -84,7 +84,7 @@ function Puzzle:manage_objectives(auto_win)
             if not self.is_custom then
                 LoreManager.mark_completed(self)
                 ScoreManager.uploadCompletedStats(self)
-            else
+            elseif self.custom_completed then
                 self.custom_completed()
             end
             self.completed = true

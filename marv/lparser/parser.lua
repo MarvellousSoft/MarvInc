@@ -9,7 +9,6 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
-require "classes.console"
 
 local parser = {}
 
@@ -49,22 +48,8 @@ local new_safe_env = function(...)
     return E
 end
 
-local retrieve_asset = function(key)
-    if key == nil then return nil, "Expected reference key to asset. Got nil value!" end
-    local a = CUST_SHEET_IMG[key]
-    if a ~= nil then return a, "sprite" end
-    a = CUST_OBJS_IMG[key]
-    if a ~= nil then return a, "image" end
-    a = SHEET_IMG[key]
-    if a ~= nil then return a, "sprite" end
-    a = OBJS_IMG[key]
-    if a ~= nil then return a, "image" end
-    return nil, "Asset "..key.." not found!"
-end
-
-function parser.prepare(puz_f, t)
-    -- Functions and tables allowed by the environment (considered safe-ish).
-    _E = new_safe_env(
+function parser.safe_env()
+    local E = new_safe_env(
         "assert",
         "error",
         "ipairs",
@@ -85,6 +70,25 @@ function parser.prepare(puz_f, t)
             "math",
         }
     )
+    return E
+end
+
+local retrieve_asset = function(key)
+    if key == nil then return nil, "Expected reference key to asset. Got nil value!" end
+    local a = CUST_SHEET_IMG[key]
+    if a ~= nil then return a, "sprite" end
+    a = CUST_OBJS_IMG[key]
+    if a ~= nil then return a, "image" end
+    a = SHEET_IMG[key]
+    if a ~= nil then return a, "sprite" end
+    a = OBJS_IMG[key]
+    if a ~= nil then return a, "image" end
+    return nil, "Asset "..key.." not found!"
+end
+
+function parser.prepare(puz_f, t)
+    -- Functions and tables allowed by the environment (considered safe-ish).
+    local _E = parser.safe_env()
     setfenv(puz_f, _E)
     if t == "level" then
         -- Constants
@@ -197,6 +201,9 @@ function parser.prepare(puz_f, t)
 
         _E.Bot = {}
         _E.Bot.Position = {0, 0}
+        _E.Bot.GetPosition = function()
+            return ROOM.bot.pos.x, ROOM.bot.pos.y
+        end
         _E.Bot.Orientation = "NORTH"
 
     elseif t == "email" then
@@ -226,12 +233,17 @@ function parser.prepare(puz_f, t)
     return _E
 end
 
-function parser.parse(id)
+function parser.parse(id, noload)
     local f, err
     f, err = love.filesystem.load("custom/" .. id .. "/level.lua")
     if err then print(err) end
     local E = parser.prepare(f, "level")
-    f()
+    local s, err = pcall(f)
+    if not s then
+        print("Custom level "..id.." has failed to compile!")
+        print(err)
+        return nil
+    end
     local P = Puzzle()
     P.name = E.Meta.Name
     P.id = id
@@ -331,14 +343,15 @@ function parser.parse(id)
     P.extra_info = E.Meta.Info
     P.on_start = E.Game.OnStart
     P.on_end = E.Game.OnDeath
-    P.first_completed = function()
+    P.custom_completed = function()
         local title, text, c, o1, c1, o2, c2 = E.Game.OnEnd()
         PopManager.new(title, text, c,
-            {func = function() ROOM:disconnect() end, text = o1, clr = c1},
-            {func = function() ROOM:disconnect() end, text = o2, clr = c2})
+            {func = function() ROOM:disconnect() end, text = o1, clr = Color[c1]()},
+            {func = function() ROOM:disconnect() end, text = o2, clr = Color[c2]()})
     end
-    P.code, P.renames = SaveManager.load_code(id, true)
-    print(P.code)
+    if not noload then
+        P.code, P.renames = SaveManager.load_code(id, true)
+    end
 
     return P
 end
@@ -364,11 +377,15 @@ function parser.load_email(id)
     for k, v in pairs(E.Import.__ref_imgs) do
         CUST_OBJS_IMG[k] = love.graphics.newImage(cpath .. v)
     end
-    Mail.new_custom(false, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.Portrait])
+    if not Mail.exists(me.Title) then
+        return Mail.new_custom(false, id, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.Portrait])
+    end
 end
 
 function parser.read(id)
-    parser.load_email(id)
+    if love.filesystem.exists("custom/"..id.."/email.lua") then
+        parser.load_email(id)
+    end
     return parser.parse(id)
 end
 
