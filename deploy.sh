@@ -159,13 +159,21 @@ get_latest_release() {
 function build_appimage {
   v=`get_latest_release "MarvellousSoft/MarvInc"`
   printf "Last version: $v\n"
-  LAST_URL="https://github.com/MarvellousSoft/MarvInc/releases/download/v${v}/Marvellous_Inc-x86_64.AppImage"
+  LAST_URL="https://github.com/MarvellousSoft/MarvInc/releases/download/${v}/Marvellous_Inc-x86_64.AppImage"
   APP_NAME="Marvellous_Inc-x86_64.AppImage"
   TMP_PATH="/tmp/MarvInc_deploy/AppImage/"
+  BUILD_NAME="Marvellous_Inc-x86_64.AppImage"
   printf "Creating temporary path at \"$TMP_PATH\"...\n"
   mkdir -p "$TMP_PATH"
+  if [ "$STEAM" -ne $NULL ]; then
+    if [ ! -f ./lib/libsteam_api.so ]; then
+      printf "Missing libsteam_api.so on a Steam build. Please download that file and place it in the ./lib directory.\n"
+      exit 1
+    fi
+    cp ./lib/libsteam_api.so "${TMP_PATH}"
+  fi
   pushd .
-  printf "Copying .love build to temp dir..."
+  printf "Copying .love build to temp dir...\n"
   cp "./build/Marvellous_Inc.love" "$TMP_PATH"
   cd "$TMP_PATH"
   printf "Downloading last built AppImage from repo...\n"
@@ -180,8 +188,11 @@ function build_appimage {
   chmod +x ./squashfs-root/AppRun
   if [ "$STEAM" -ne $NULL ]; then
     luasteam_v=`get_latest_release "uspgamedev/luasteam"`
-    printf "Steam mode not supported.\n"
-    exit 1
+    printf "LuaSteam version: ${luasteam_v}\n"
+    curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/linux_steam.so" -o "steam.so"
+    printf "Copying steam.so and libsteam_api.so to AppImage...\n"
+    cp ./steam.so ./libsteam_api.so "./squashfs-root/usr/lib/"
+    BUILD_NAME="Marvellous_Inc-x86_64-Steam.AppImage"
   fi
   printf "Downloading latest AppImage Tool...\n"
   APP_TOOL_URL="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
@@ -190,7 +201,6 @@ function build_appimage {
   chmod +x "$APP_TOOL_NAME"
   printf "Creating new AppImage...\n"
   ./"$APP_TOOL_NAME" squashfs-root
-  BUILD_NAME="Marvellous_Inc-x86_64.AppImage"
   mv "Marvellous_Inc.-x86_64.AppImage" "$BUILD_NAME"
   popd
   cp "${TMP_PATH}${BUILD_NAME}" ./build/"$BUILD_NAME"
