@@ -129,17 +129,17 @@ function post_build_platform {
     printf "Adding custom icon to MAC OS X build.\n"
     pushd .
     mkdir -p $TMP_PATH/mac
-    cp ./build/Marvellous_Inc-macos.zip $TMP_PATH/mac/
+    cp ./build/Marvellous_Inc-macosx.zip $TMP_PATH/mac/
     cp ./Marvellous_Inc.icns $TMP_PATH/mac/
     cd $TMP_PATH/mac
-    unzip Marvellous_Inc-macos.zip
+    unzip Marvellous_Inc-macosx.zip
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns
-    rm Marvellous_Inc-macos.zip
-    zip Marvellous_Inc-macos.zip ./Marvellous_Inc.app -r
+    rm Marvellous_Inc-macosx.zip
+    zip Marvellous_Inc-macosx.zip ./Marvellous_Inc.app -r
     popd
-    rm ./build/Marvellous_Inc-macos.zip
-    cp $TMP_PATH/mac/Marvellous_Inc-macos.zip ./build/
+    rm ./build/Marvellous_Inc-macosx.zip
+    cp $TMP_PATH/mac/Marvellous_Inc-macosx.zip ./build/
   fi
   if [ "$STEAM" -ne $NULL ]; then
     printf "Steam mode not supported for ${_plt}.\n"
