@@ -104,6 +104,7 @@ function post_build_platform {
     cp ./build/Marvellous_Inc-win32.zip $TMP_PATH/win/
     cp ./Marvellous_Inc.ico $TMP_PATH/win/
     cd $TMP_PATH/win
+    rm -rf ./Marvellous_Inc-win32/
     unzip Marvellous_Inc-win32.zip
     cp ./Marvellous_Inc.ico ./Marvellous_Inc-win32/game.ico
     rm ./Marvellous_Inc-win32.zip
@@ -118,6 +119,7 @@ function post_build_platform {
     cp ./build/Marvellous_Inc-win64.zip $TMP_PATH/win/
     cp ./Marvellous_Inc.ico $TMP_PATH/win/
     cd $TMP_PATH/win
+    rm -rf ./Marvellous_Inc-win64/
     unzip Marvellous_Inc-win64.zip
     cp ./Marvellous_Inc.ico ./Marvellous_Inc-win64/game.ico
     rm Marvellous_Inc-win64.zip
