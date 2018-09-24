@@ -1,8 +1,7 @@
-build/
+/build/
 steam_appid.txt
 *.swp
 *.vim
 *.lvimrc
 *.directory
-libsteam_api.dylib
-libsteam_api.so
+/sdk/

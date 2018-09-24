@@ -67,10 +67,7 @@ Found any bugs? Loved the game? Contact us at our [itch.io community](https://ma
 
 ## Building
 
-To build Marvellous Inc. from scratch, use the `deploy.sh` script. Use `deploy.sh --help` for instructions. For the steam version of the game, follow these extra instructions:
-- Linux: Download the SDK and copy `sdk/redistributable_bin/linux64/libsteam_api.so` to `./lib` before running the deploy script.
-- Mac: **TODO**
-- Windows: **TODO**
+To build Marvellous Inc. from scratch, use the `deploy.sh` script. Use `deploy.sh --help` for instructions. For the steam version of the game, download the SteamWorks SDK and unzip it in this directory.
 
 ----------------------------------------------------
 

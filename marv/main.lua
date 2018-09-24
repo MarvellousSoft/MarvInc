@@ -123,7 +123,7 @@ if USING_STEAM then
         end
     end
 
-    Steam = require "steam"
+    Steam = require "luasteam"
 
     if Steam == false then
         error("Steam is not running. Closing game.")
