@@ -46,7 +46,7 @@ if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
   printf "  --release,  -r   specifies the platform: M for Mac OS X, W32 and W64 for Windows 32 and 64, L for Love and A for AppImage.\n"
   printf "  --all,      -a   deploys for all platforms, ignoring the -r option.\n"
   printf "  --clean,    -c   removes output files (use with care!). Ignores all tags above if used.\n"
-  print  "  --steam,    -s   builds the steam version of the binaries.\n"
+  printf "  --steam,    -s   builds the steam version of the binaries. Please have the sdk unzipped in this directory.\n"
   printf "  --help,     -h   display this help and exit\n\n"
   printf "Examples:\n"
   printf "  $0 --release A     Generates a Mac OS X binary in the build dir.\n"
@@ -68,6 +68,11 @@ fi
 any_contains args "--steam" "-s"
 STEAM=$?
 
+if [ "$STEAM" -ne $NULL ] && [ ! -d ./sdk ]; then
+  printf "Missing SteamWorks SDK on a Steam build. Please unzip it in this directory.\n"
+  exit 1
+fi
+
 # Platforms.
 declare -A PLATFORMS=( ["M"]=0 ["W32"]=1 ["W64"]=2 ["L"]=3 )
 PLATFORM_CMD=("-M" "-W 32" "-W 64" " ")
@@ -85,11 +90,25 @@ function build_platform {
   if [ "$1" == "L" ]; then
     $LOVE_RELEASE .
   else
-    $LOVE_RELEASE . "${PLATFORM_CMD[$q]}"
+    $LOVE_RELEASE . ${PLATFORM_CMD[$q]}
   fi
   cd ..
   printf "Done!\n"
   return 0
+}
+
+# retuns latest release of given git repository
+get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+  grep '"tag_name":' |                                            # Get tag line
+  sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
+
+# Downloads latest luasteam lib for platform $1 into file $2
+download_luasteam() {
+  luasteam_v=`get_latest_release "uspgamedev/luasteam"`
+  printf "LuaSteam version: ${luasteam_v}\n"
+  curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2"
 }
 
 # Post-build.
@@ -97,37 +116,46 @@ function post_build_platform {
   _plt="$1"
   TMP_PATH="/tmp/MarvInc_deploy/"
   printf "Post-build for %s.\n" "${_plt}"
-  if [ "${_plt}" == "W32" ]; then
-    printf "Adding custom icon to Win32 build.\n"
+  if [ "${_plt}" == "W32" ] || [ "${_plt}" == "W64" ]; then
+    if [ "${_plt}" == "W64" ]; then
+      WIN=win64
+    else
+      WIN=win32
+    fi
+    printf "Adding custom icon to $WIN build.\n"
     pushd .
     mkdir -p $TMP_PATH/win
-    cp ./build/Marvellous_Inc-win32.zip $TMP_PATH/win/
+    cp ./build/Marvellous_Inc-$WIN.zip $TMP_PATH/win/
     cp ./Marvellous_Inc.ico $TMP_PATH/win/
+    if [ "$STEAM" -ne $NULL ]; then
+      if [ "${_plt}" == "W64" ]; then
+        SAPI_NAME=steam_api64.dll
+        cp ./sdk/redistributable_bin/win64/$SAPI_NAME $TMP_PATH/win
+      else
+        SAPI_NAME=steam_api.dll
+        cp ./sdk/redistributable_bin/$SAPI_NAME $TMP_PATH/win
+      fi
+    fi
     cd $TMP_PATH/win
-    rm -rf ./Marvellous_Inc-win32/
-    unzip Marvellous_Inc-win32.zip
-    cp ./Marvellous_Inc.ico ./Marvellous_Inc-win32/game.ico
-    rm ./Marvellous_Inc-win32.zip
-    zip Marvellous_Inc-win32.zip ./Marvellous_Inc-win32/ -r
+    rm -rf ./Marvellous_Inc-$WIN/
+    unzip Marvellous_Inc-$WIN.zip
+    cp ./Marvellous_Inc.ico ./Marvellous_Inc-$WIN/game.ico
+    if [ "$STEAM" -ne $NULL ]; then
+      download_luasteam "$WIN" "luasteam.dll"
+      printf "Copying luasteam.dll and $SAPI_NAME to $WIN zip...\n"
+      cp ./$SAPI_NAME ./Marvellous_Inc-$WIN/
+      cp ./luasteam.dll ./Marvellous_Inc-$WIN/
+    fi
+    rm ./Marvellous_Inc-$WIN.zip
+    zip Marvellous_Inc-$WIN.zip ./Marvellous_Inc-$WIN/ -r
     popd
-    rm ./build/Marvellous_Inc-win32.zip
-    cp $TMP_PATH/win/Marvellous_Inc-win32.zip ./build/
-  elif [ "${_plt}" == "W64" ]; then
-    printf "Adding custom icon to Win64 build.\n"
-    pushd .
-    mkdir -p $TMP_PATH/win
-    cp ./build/Marvellous_Inc-win64.zip $TMP_PATH/win/
-    cp ./Marvellous_Inc.ico $TMP_PATH/win/
-    cd $TMP_PATH/win
-    rm -rf ./Marvellous_Inc-win64/
-    unzip Marvellous_Inc-win64.zip
-    cp ./Marvellous_Inc.ico ./Marvellous_Inc-win64/game.ico
-    rm Marvellous_Inc-win64.zip
-    zip Marvellous_Inc-win64.zip ./Marvellous_Inc-win64/ -r
-    popd
-    rm ./build/Marvellous_Inc-win64.zip
-    cp $TMP_PATH/win/Marvellous_Inc-win64.zip ./build/
+    rm ./build/Marvellous_Inc-$WIN.zip
+    cp $TMP_PATH/win/Marvellous_Inc-$WIN.zip ./build/
   elif [ "${_plt}" == "M" ]; then
+    if [ "$STEAM" -ne $NULL ]; then
+      printf "Steam mode not supported for OSX.\n"
+      exit 1
+    fi
     printf "Adding custom icon to MAC OS X build.\n"
     pushd .
     mkdir -p $TMP_PATH/mac
@@ -143,18 +171,8 @@ function post_build_platform {
     rm ./build/Marvellous_Inc-macosx.zip
     cp $TMP_PATH/mac/Marvellous_Inc-macosx.zip ./build/
   fi
-  if [ "$STEAM" -ne $NULL ]; then
-    printf "Steam mode not supported for ${_plt}.\n"
-    exit 1
-  fi
 
   printf "Finished post-build.\n"
-}
-
-get_latest_release() {
-  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
-  grep '"tag_name":' |                                            # Get tag line
-  sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
 }
 
 # Build AppImage.
@@ -168,11 +186,7 @@ function build_appimage {
   printf "Creating temporary path at \"$TMP_PATH\"...\n"
   mkdir -p "$TMP_PATH"
   if [ "$STEAM" -ne $NULL ]; then
-    if [ ! -f ./lib/libsteam_api.so ]; then
-      printf "Missing libsteam_api.so on a Steam build. Please download that file and place it in the ./lib directory.\n"
-      exit 1
-    fi
-    cp ./lib/libsteam_api.so "${TMP_PATH}"
+    cp ./sdk/redistributable_bin/linux64/libsteam_api.so "${TMP_PATH}"
   fi
   pushd .
   printf "Copying .love build to temp dir...\n"
@@ -189,11 +203,10 @@ function build_appimage {
   printf "Adding run permission to AppRun...\n"
   chmod +x ./squashfs-root/AppRun
   if [ "$STEAM" -ne $NULL ]; then
-    luasteam_v=`get_latest_release "uspgamedev/luasteam"`
-    printf "LuaSteam version: ${luasteam_v}\n"
-    curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/linux_steam.so" -o "steam.so"
-    printf "Copying steam.so and libsteam_api.so to AppImage...\n"
-    cp ./steam.so ./libsteam_api.so "./squashfs-root/usr/lib/"
+    download_luasteam "linux64" "luasteam.so"
+    printf "Copying luasteam.so and libsteam_api.so to AppImage...\n"
+    cp ./libsteam_api.so "./squashfs-root/usr/lib/"
+    cp ./luasteam.so "./squashfs-root/"
     BUILD_NAME="Marvellous_Inc-x86_64-Steam.AppImage"
   fi
   printf "Downloading latest AppImage Tool...\n"
