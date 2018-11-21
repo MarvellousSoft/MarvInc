@@ -52,7 +52,6 @@ if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
   printf "  $0 --release A     Generates a Mac OS X binary in the build dir.\n"
   printf "  $0 -h              Outputs this help text.\n"
   printf "  $0 --clean         Removes the build directory and AppImage debris.\n"
-  printf "  $0 -a -lv \"1.2.1\"  Generates binaries for all platforms inside the build dir.\n"
   exit
 fi
 
@@ -153,8 +152,7 @@ function post_build_platform {
     cp $TMP_PATH/win/Marvellous_Inc-$WIN.zip ./build/
   elif [ "${_plt}" == "M" ]; then
     if [ "$STEAM" -ne $NULL ]; then
-      printf "Steam mode not supported for OSX.\n"
-      exit 1
+      cp ./sdk/redistributable_bin/osx32/libsteam_api.dylib $TMP_PATH/mac/
     fi
     printf "Adding custom icon to MAC OS X build.\n"
     pushd .
@@ -162,11 +160,18 @@ function post_build_platform {
     cp ./build/Marvellous_Inc-macosx.zip $TMP_PATH/mac/
     cp ./Marvellous_Inc.icns $TMP_PATH/mac/
     cd $TMP_PATH/mac
+    rm -rf ./Marvellous_Inc.app
     unzip Marvellous_Inc-macosx.zip
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns
     rm Marvellous_Inc-macosx.zip
-    zip Marvellous_Inc-macosx.zip ./Marvellous_Inc.app -r
+    if [ "$STEAM" -ne $NULL ]; then
+      download_luasteam "osx" "luasteam.so"
+      printf "Copying luasteam.so and libsteam_apy.dylib with MacOS App...\n"
+      zip Marvellous_Inc-macosx.zip -r ./Marvellous_Inc.app libsteam_api.dylib luasteam.so
+    else
+      zip Marvellous_Inc-macosx.zip -r ./Marvellous_Inc.app
+    fi
     popd
     rm ./build/Marvellous_Inc-macosx.zip
     cp $TMP_PATH/mac/Marvellous_Inc-macosx.zip ./build/
