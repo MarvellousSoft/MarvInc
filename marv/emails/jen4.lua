@@ -18,7 +18,7 @@ Actually that's just too long of a title to write everytime. I'll just call you 
 
 Honestly I haven't fired him yet only because of the cat images. I really like cats.
 
-Anyway, here is your first {purple}Senior task{end}. I want you to read several numbers and write them on the floor in {orange}binary{end}. You got this far without any problems, so I'm pretty sure you already now what binary numbers are and how to change between numeral systems... however, after I got a CS1 email asking how to {pink}"emulate doom in mah pc so i can rekt som n00bs"{end}, I have lowered my standards for all employees. But I'm a busy person, so I'm just forwarding you an old automated email we used to send interns back in the early MarvInc days. Just ignore the 80's references and you'll be fine.
+Anyway, here is your first {purple}Senior task{end}. I want you to read several numbers and write them on the floor in {orange}binary{end}. You got this far without any problems, so I'm pretty sure you already know what binary numbers are and how to convert between numeral systems... however, after I got a CS1 email asking how to {pink}"emulate doom in mah pc so i can rekt som n00bs"{end}, I have lowered my standards for all employees. But I'm a busy person, so I'm just forwarding you an old automated email we used to send interns back in the early MarvInc days. Just ignore the 80's references and you'll be fine.
 
 Carry on {blue}CS2{end}, now and forever.
 

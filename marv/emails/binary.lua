@@ -36,7 +36,7 @@ return {
 
   Ok, let's take it to the max, I can tell you are getting stoked about this. What if, instead of using all our {blue}10{end} digits, we just used {blue}0{end} and {blue}1{end}. Could we write any number just those? Yes! We just have to use a {red}Binary Numerical System{end}! Cowabunga!
 
-  So, for instace, the number {pink}342{end} in binary would be {blue}101010110{end}, which means
+  So, for instance, the number {pink}342{end} in binary would be {blue}101010110{end}, which means
 
   {blue}1{end}x{green}2{end}^{orange}8{end} + {blue}0{end}x{green}2{end}^{orange}7{end} + {blue}1{end}x{green}2{end}^{orange}6{end} + {blue}0{end}x{green}2{end}^{orange}5{end} +     {blue}1{end}x{green}2{end}^{orange}4{end} + {blue}0{end}x{green}2{end}^{orange}3{end} + {blue}1{end}x{green}2{end}^{orange}2{end} + {blue}1{end}x{green}2{end}^{orange}1{end} + {blue}0{end}x{green}2{end}^{orange}0{end}
 

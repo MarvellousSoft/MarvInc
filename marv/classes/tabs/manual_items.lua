@@ -50,7 +50,7 @@ t.turn = {
     text = [[The bot will turn to {dirm}<direction>{end}. In this command, direction may assume two extra values: {dirm}clock{end} and {dirm}counter{end}, if one of these are given, the bot will turn clockwise or counterclockwise, respectively.]],
     examples = {{[[
 {instm}turn {dirm}clock
-{instm}turn {dirm}clock]], "This code will turn the robot to the oposite direnction it is facing"}}
+{instm}turn {dirm}clock]], "This code will turn the robot to the oposite direction it is facing"}}
 }
 
 t.jmp1 = {
