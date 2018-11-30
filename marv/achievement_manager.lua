@@ -21,10 +21,10 @@ end
 function manager.updateSteamAchievements()
     for _,k in ipairs(ACHIEVEMENT_DATABASE) do
         if ACHIEVEMENT_PROGRESS[k[1]] then
-            Steam.setAchievement(k[5])
+            Steam.userStats.setAchievement(k[5])
         end
     end
-    Steam.storeStats()
+    Steam.userStats.storeStats()
 end
 
 function manager.load(data)
@@ -46,8 +46,8 @@ function manager.complete(name)
         if USING_STEAM then
             for _,k in ipairs(ACHIEVEMENT_DATABASE) do
                 if k[1] == name then
-                    Steam.setAchievement(k[5])
-                    print(Steam.storeStats())
+                    Steam.userStats.setAchievement(k[5])
+                    print(Steam.userStats.storeStats())
                     break
                 end
             end

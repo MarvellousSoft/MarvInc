@@ -159,7 +159,7 @@ function love.load(args)
 
     --Steam stuff
     if USING_STEAM then
-        Steam.requestCurrentStats()
+        Steam.userStats.requestCurrentStats()
         --Steam.resetAllStats(true) --this is here just to debug
     end
 
