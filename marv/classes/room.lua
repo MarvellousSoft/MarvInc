@@ -303,6 +303,21 @@ function Room:disconnect(wait)
     self:clear()
 end
 
+function Room:upload_completed_stats()
+    if not USING_STEAM then return end
+    local line_count = Util.findId('code_tab'):countLines()
+    if line_count <= 0 then return end
+    Steam.userStats.findOrCreateLeaderboard(self.puzzle.id .. '_linecount', "Ascending", "Numeric", function (info, err)
+        if err or info == nil then return end
+        Steam.userStats.uploadLeaderboardScore(info.steamLeaderboard, "KeepBest", line_count, nil, function(_, err2)
+            if not err2 then
+                print('Stats uploaded to leaderboard: completed with ' .. line_count .. ' lines')
+            end
+        end)
+
+    end)
+end
+
 function Room:connected()
     return self.mode == "online"
 end

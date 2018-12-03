@@ -177,6 +177,9 @@ CUR_TIME = 0
 
 function love.update(dt)
     CUR_TIME = CUR_TIME + dt
+    if USING_STEAM then
+        Steam.runCallbacks()
+    end
 end
 
 function love.draw()

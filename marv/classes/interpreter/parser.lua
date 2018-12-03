@@ -50,7 +50,8 @@ function parser.parseAll(lines, renames)
     local bad_lines = {}
     local err_line, err_msg
     for i, line in ipairs(lines) do
-        if line ~= "" then
+        -- ignoring whitespaces and comments line
+        if line:match("%s*") ~= line and line:match("%s*#.*") ~= line then
             local op, lab = parser.parseLine(line, renames)
             if type(op) ~= "table" then
                 err_line, err_msg = err_line or i, err_msg or (op or "compilation error")

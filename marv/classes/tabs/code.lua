@@ -265,6 +265,17 @@ function CodeTab:getLines()
     return l
 end
 
+function CodeTab:countLines()
+    local count = 0
+    for i, line in ipairs(self.term.lines) do
+        -- ignoring whitespaces and comments line
+        if line:match("%s*") ~= line and line:match("%s*#.*") ~= line then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 function CodeTab:showLine(i)
     self.term.exec_line_prev = self.term.exec_line_next
     self.term.exec_line_next = i
