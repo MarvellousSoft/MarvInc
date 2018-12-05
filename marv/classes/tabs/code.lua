@@ -24,6 +24,8 @@ CodeTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        self.name = "code"
+
         -- chars accepted in terminal
         local acc = {}
         for i = 32, 126 do

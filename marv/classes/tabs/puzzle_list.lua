@@ -27,6 +27,8 @@ PuzzleListTab = Class {
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        self.name = "puzzles"
+
 
         local categories = {"main game", "custom"}
         local button_w = 130

@@ -30,6 +30,8 @@ SettingsTab = Class {
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
         self.w = self.w - 13 / 2
+        self.image = BUTS_IMG.settings
+        self.name = "settings"
 
         self.true_h = self.h
         local obj = { -- scroll bar in case some day we have too many options

@@ -27,6 +27,8 @@ ManualTab = Class {
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        self.name = "manual"
+
         -- list of buttons
         self.expand_buts = {}
         self.collapse_buts = {}

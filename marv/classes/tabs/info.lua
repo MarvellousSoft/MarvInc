@@ -24,6 +24,8 @@ InfoTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        self.name = "info"
+
         self.main_color =  Color.new(70, 100, 180, 60)
         self.tp = "info_tab"
 

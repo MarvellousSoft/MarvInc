@@ -30,19 +30,21 @@ PcBox = Class{
     init = function(self)
         local b = WIN_BORD
         PcBox.menu_tabs = {
-            {"email", EmailTab(inner_tab_border, button_tab_height)},
-            {"manual", ManualTab(inner_tab_border, button_tab_height)},
-            {"puzzles", PuzzleListTab(inner_tab_border, button_tab_height)},
-            {"achievements", AchievementsTab(inner_tab_border, button_tab_height)},
-            {"settings", SettingsTab(inner_tab_border, button_tab_height)},
+            EmailTab(inner_tab_border, button_tab_height),
+            ManualTab(inner_tab_border, button_tab_height),
+            PuzzleListTab(inner_tab_border, button_tab_height),
+            AchievementsTab(inner_tab_border, button_tab_height),
+            SettingsTab(inner_tab_border, button_tab_height),
+            small_buttons = 2
         }
         PcBox.puzzle_tabs = {
             PcBox.menu_tabs[1],
-            {"code", CodeTab(inner_tab_border, button_tab_height)},
-            {"info", InfoTab(inner_tab_border, button_tab_height)},
+            CodeTab(inner_tab_border, button_tab_height),
+            InfoTab(inner_tab_border, button_tab_height),
             PcBox.menu_tabs[2],
             PcBox.menu_tabs[4],
             PcBox.menu_tabs[5],
+            small_buttons = 2
         }
 
         --Saturation and lightness when a tab is focused
@@ -171,17 +173,18 @@ function PcBox:changeTabs(new_tabs, default)
     self.buttons = {}
     local x = self.pos.x
     local set_size = 28
-    for _, t in ipairs(tabs_raw) do
-        tabs[t[1]] = t[2]
-        if _ == #tabs_raw-1 then
-            self.buttons[t[1]] = ImgButton(x, self.pos.y, set_size, BUTS_IMG.achievements, function() self:changeTo(t[1]) end)
-        elseif _ == #tabs_raw then
-            self.buttons[t[1]] = ImgButton(x+set_size, self.pos.y, set_size, BUTS_IMG.settings, function() self:changeTo(t[1]) end)
-        else
-            self.buttons[t[1]] = But.create_tab(x, self.pos.y, (self.w - 2*set_size) / (#tabs_raw - 2), h, function() self:changeTo(t[1]) end,
-                t[1], FONTS.fira(20), nil, nil, Color.new(t[2].button_color, self.unfocus_saturation, self.unfocus_lightness, 80))
-            x = x + (self.w - 2*set_size) / (#tabs_raw - 2)
-        end
+    local sm = new_tabs.small_buttons
+    for i = 1, #new_tabs - sm do
+        local t = new_tabs[i]
+        tabs[t.name] = t
+        self.buttons[t.name] = But.create_tab(x, self.pos.y, (self.w - sm * set_size) / (#tabs_raw - sm), h, function() self:changeTo(t.name) end, t.name, FONTS.fira(20), nil, nil, Color.new(t.button_color, self.unfocus_saturation, self.unfocus_lightness, 80))
+        x = x + (self.w - sm * set_size) / (#tabs_raw - sm)
+    end
+    for i = #new_tabs - sm + 1, #new_tabs, 1 do
+        local t = new_tabs[i]
+        tabs[t.name] = t
+        self.buttons[t.name] = ImgButton(x, self.pos.y, set_size, t.image, function() self:changeTo(t.name) end)
+        x = x + set_size
     end
 
     self.cur_tab = nil
@@ -211,15 +214,15 @@ end
 function PcBox:keyPressed(key)
     if key == 'pagedown' then
         for i = 1, #tabs_raw do
-            if tabs_raw[i][1] == self.cur_tab then
-                self:changeTo(tabs_raw[(i % #tabs_raw) + 1][1])
+            if tabs_raw[i].name == self.cur_tab then
+                self:changeTo(tabs_raw[(i % #tabs_raw) + 1].name)
                 break
             end
         end
     elseif key == 'pageup' then
         for i = 1, #tabs_raw do
-            if tabs_raw[i][1] == self.cur_tab then
-                self:changeTo(tabs_raw[((i + #tabs_raw - 2) % #tabs_raw) + 1][1])
+            if tabs_raw[i].name == self.cur_tab then
+                self:changeTo(tabs_raw[((i + #tabs_raw - 2) % #tabs_raw) + 1].name)
                 break
             end
         end

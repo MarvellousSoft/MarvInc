@@ -26,6 +26,8 @@ EmailTab = Class{
     init = function(self, eps, dy)
         Tab.init(self, eps, dy)
 
+        self.name = "email"
+
         self.email_list = {} -- List of email inbox
 
         self.email_opened = nil -- If an email is opened
