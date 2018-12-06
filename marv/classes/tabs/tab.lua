@@ -65,3 +65,7 @@ end
 function Tab:mouseMoved(x, y)
 
 end
+
+function Tab:preload()
+
+end

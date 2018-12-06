@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
+local Leaderboards = require "classes.tabs.leaderboards"
 
 --PC_BOX CLASS--
 -- Supposes only one instance is created
@@ -46,6 +47,11 @@ PcBox = Class{
             PcBox.menu_tabs[5],
             small_buttons = 2
         }
+
+        if USING_STEAM then
+            table.insert(PcBox.puzzle_tabs, 5, Leaderboards(inner_tab_border, button_tab_height))
+            PcBox.puzzle_tabs.small_buttons = PcBox.puzzle_tabs.small_buttons + 1
+        end
 
         --Saturation and lightness when a tab is focused
         self.focus_saturation = 250
@@ -186,6 +192,8 @@ function PcBox:changeTabs(new_tabs, default)
         self.buttons[t.name] = ImgButton(x, self.pos.y, set_size, t.image, function() self:changeTo(t.name) end)
         x = x + set_size
     end
+
+    for _, t in ipairs(new_tabs) do t:preload() end
 
     self.cur_tab = nil
     self:changeTo(default)
