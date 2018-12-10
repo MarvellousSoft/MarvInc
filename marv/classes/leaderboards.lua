@@ -138,7 +138,7 @@ function Leaderboards:draw()
     --Draw player score line
     y = y - 3
     if l.player_score then
-        x = l.pos.x + l.graph_w * (l.player_score/(l.max - l.min))
+        x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
         Color.set(l.player_line_color)
         g.setLineWidth(5)
         g.line(x, y, x, y - l.max_bar_h)
