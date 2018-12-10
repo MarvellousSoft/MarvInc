@@ -16,12 +16,14 @@ local funcs = {}
 Leaderboards = Class{
     __includes = {RECT},
     init = function(self, x, y, title, scores, player)
-        RECT.init(self, x, y, 500, 400, Color.white())
+        RECT.init(self, x, y, 450, 350, Color.white())
 
         self.divisions = 10
         self.min = 0
         self.max = 100
         self.step = math.ceil((self.max - self.min)/self.divisions)
+
+        self.handles = {}
 
         self.title = title
 
@@ -53,10 +55,13 @@ Leaderboards = Class{
         self.graph_border_color = Color.white()
 
         self.bar_w = self.graph_w/self.divisions
-        self.max_bar_h = 180
+        max_bar_h = 180
         self.bar_h = {}
         for i = 1, self.divisions do
-            self.bar_h[i] = self.max_bar_h * self.graph[i]/max_value
+            self.bar_h[i] = 0
+            local target = max_bar_h * self.graph[i]/max_value
+            local h = MAIN_TIMER:tween(1, self.bar_h, {[i] = target}, 'out-quad')
+            table.insert(self.handles, h)
         end
         self.bar_border_color = self.graph_border_color
         self.bar_border_width = 3
@@ -67,6 +72,9 @@ Leaderboards = Class{
 
         self.player_line_font = FONTS.robotoBold(25)
         self.player_line_color = Color.new(0, 240, 180)
+        self.player_line_h = 0
+        local h = MAIN_TIMER:tween(1, self, {player_line_h = max_bar_h}, 'out-quad')
+        table.insert(self.handles, h)
 
         self.bg_color = Color.new(120, 30, 40)
         self.border_color = Color.black()
@@ -141,19 +149,24 @@ function Leaderboards:draw()
         x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
         Color.set(l.player_line_color)
         g.setLineWidth(5)
-        g.line(x, y, x, y - l.max_bar_h)
+        g.line(x, y, x, y - l.player_line_h)
         local text = 'YOU'
         local tx = x - l.player_line_font:getWidth(text)/2 + 10
-        local ty = y - l.max_bar_h - l.player_line_font:getHeight(text) + 12
+        local ty = y - l.player_line_h - l.player_line_font:getHeight(text) + 12
         g.print(text, tx, ty)
     end
+end
 
-
+function Leaderboards:kill()
+    for _,h in pairs(self.handles) do
+        MAIN_TIMER:cancel(h) --Stops any timers this object has
+    end
+    self.death = true
 end
 
 function funcs.create(x, y, title, scores,focused)
     local l = Leaderboards(x,y,title,scores,focused)
-    l:addElement(DRAW_TABLE.L2, nil, "leaderboards")
+    l:addElement(DRAW_TABLE.L2u, nil, "leaderboards")
 
     return l
 end

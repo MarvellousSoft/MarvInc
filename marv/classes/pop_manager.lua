@@ -97,6 +97,16 @@ function Popup:draw()
     end
 end
 
+function Popup:translate(dx, dy)
+    self.pos.x = self.pos.x + dx
+    self.pos.y = self.pos.y + dy
+    for _, b in ipairs(self.buttons) do
+        b.pos.x = b.pos.x + dx
+        b.pos.y = b.pos.y + dy
+        b:centralize()
+    end
+end
+
 function Popup:mousereleased(x, y, button, touch)
     if button == 1 then
         for _, v in ipairs(self.buttons) do
@@ -297,6 +307,8 @@ end
 function PopManager.quit()
     PopManager.pop.death = true
     PopManager.pop = nil
+    local ld = Util.findId("leaderboards")
+    if ld then ld:kill() end
     TABS_LOCK = TABS_LOCK - 1
     EVENTS_LOCK = EVENTS_LOCK - 1
 end

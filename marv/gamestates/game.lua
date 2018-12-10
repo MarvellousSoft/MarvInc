@@ -13,7 +13,6 @@ local Rooms = require "classes.room"
 local PcBox = require "classes.pc_box"
 local Button = require "classes.button"
 local Mail = require "classes.tabs.email"
-local Leaderboards = require "classes.leaderboards"
 local LoreManager = require "classes.lore_manager"
 local PopManager = require "classes.pop_manager"
 local FX = require "classes.fx"
@@ -63,8 +62,6 @@ function state:enter(prev, user)
     SettingsTab:refresh()
     AchManager.checkAchievements()
     bgmmanager:newBGM()
-
-    Leaderboards.create(400, 200, "LINES", {rica = 60, test = 55, testt = 40, yan = 50}, 'rica')
 
     if START_PUZZLE then
         ROOM:connect(START_PUZZLE)

@@ -673,6 +673,7 @@ function setup.config()
         L1   = {}, --Layer 1
         L1u  = {}, --Layer 1 upper
         L2   = {}, --Layer 2
+        L2u  = {}, --Layer 2 upper
         GUI  = {}, --Graphic User Interface (top layer, last to draw)
     }
 

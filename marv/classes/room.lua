@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 require "classes.primitive"
 local Color = require "classes.color.color"
 local Reader = require "classes.reader"
+local Leaderboards = require "classes.leaderboards"
 
 --LOCAL VARIABLES--
 
@@ -316,6 +317,9 @@ function Room:upload_completed_stats()
         end)
 
     end)
+    local pop = Util.findId("popup")
+    if pop then pop:translate(-260,0) end
+    Leaderboards.create(710, 250, "LINES", {rica = 45, test = 55, testt = 40, yan = 50}, 'rica')
 end
 
 function Room:connected()
