@@ -308,18 +308,24 @@ function Room:upload_completed_stats()
     if not USING_STEAM then return end
     local line_count = Util.findId('code_tab'):countLines()
     if line_count <= 0 then return end
+    local id = self.puzzle.id
     Steam.userStats.findOrCreateLeaderboard(self.puzzle.id .. '_linecount', "Ascending", "Numeric", function (info, err)
         if err or info == nil then return end
         Steam.userStats.uploadLeaderboardScore(info.steamLeaderboard, "KeepBest", line_count, nil, function(_, err2)
-            if not err2 then
-                print('Stats uploaded to leaderboard: completed with ' .. line_count .. ' lines')
-            end
+            if err2 then return end
+            print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. line_count .. ' lines')
+            Steam.userStats.downloadLeaderboardEntries(info.steamLeaderboard, "Global", 1, 10000, function(results, err3)
+                if err3 or results == nil then return end
+                local pop = Util.findId("popup")
+                if not pop then return end
+                pop:translate(-260,0)
+                for i, r in ipairs(results) do
+                    results[i] = r.score
+                end
+                Leaderboards.create(710, 250, "LINES", results, line_count)
+            end)
         end)
-
     end)
-    local pop = Util.findId("popup")
-    if pop then pop:translate(-260,0) end
-    Leaderboards.create(710, 250, "LINES", {rica = 45, test = 55, testt = 40, yan = 50}, 'rica')
 end
 
 function Room:connected()

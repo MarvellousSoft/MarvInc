@@ -15,7 +15,7 @@ local funcs = {}
 
 Leaderboards = Class{
     __includes = {RECT},
-    init = function(self, x, y, title, scores, player)
+    init = function(self, x, y, title, scores, player_score)
         RECT.init(self, x, y, 450, 350, Color.white())
 
         self.divisions = 10
@@ -27,7 +27,7 @@ Leaderboards = Class{
 
         self.title = title
 
-        self.player = player
+        self.player_score = player_score
 
         --Init graph
         self.graph = {}
@@ -36,14 +36,11 @@ Leaderboards = Class{
         end
         local max_value = 0
         --Populate with scores
-        for name, score in pairs(scores) do
+        for _, score in pairs(scores) do
             local i = math.ceil(score/self.step)
             self.graph[i] = self.graph[i] + 1
             if self.graph[i] > max_value then
                 max_value = self.graph[i]
-            end
-            if name == self.player then
-                self.player_score = score
             end
         end
 
@@ -164,8 +161,8 @@ function Leaderboards:kill()
     self.death = true
 end
 
-function funcs.create(x, y, title, scores,focused)
-    local l = Leaderboards(x,y,title,scores,focused)
+function funcs.create(x, y, title, scores,player_score)
+    local l = Leaderboards(x,y,title,scores,player_score)
     l:addElement(DRAW_TABLE.L2u, nil, "leaderboards")
 
     return l

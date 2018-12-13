@@ -9,7 +9,6 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
-local Leaderboards = require "classes.tabs.leaderboards"
 
 --PC_BOX CLASS--
 -- Supposes only one instance is created
@@ -47,11 +46,6 @@ PcBox = Class{
             PcBox.menu_tabs[5],
             small_buttons = 2
         }
-
-        if USING_STEAM then
-            table.insert(PcBox.puzzle_tabs, 5, Leaderboards(inner_tab_border, button_tab_height))
-            PcBox.puzzle_tabs.small_buttons = PcBox.puzzle_tabs.small_buttons + 1
-        end
 
         --Saturation and lightness when a tab is focused
         self.focus_saturation = 250
