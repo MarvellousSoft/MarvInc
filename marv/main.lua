@@ -126,7 +126,7 @@ if USING_STEAM then
 
     Steam = require "luasteam"
 
-    if Steam == false then
+    if not Steam.init() then
         error("Steam is not running. Closing game.")
     end
 else
