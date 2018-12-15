@@ -129,6 +129,12 @@ if USING_STEAM then
     if not Steam.init() then
         error("Steam is not running. Closing game.")
     end
+    -- We're gonna need this anyway, let's be quick
+    CAN_USE_STEAM_STATS = false
+    function Steam.userStats.onUserStatsReceived(data)
+        CAN_USE_STEAM_STATS = true
+    end
+    Steam.userStats.requestCurrentStats()
 else
     Steam = setmetatable({}, { __index = function(table, name)
         error('Trying to call Steam.' .. name .. ' on a game with disabled Steam')
@@ -157,12 +163,6 @@ function love.load(args)
     -- draw, mousereleased and mousepressed are called manually
     -- mousemoved is ignored
     Gamestate.registerEvents(callbacks) --Overwrites love callbacks to call Gamestate as well
-
-    --Steam stuff
-    if USING_STEAM then
-        Steam.userStats.requestCurrentStats()
-        --Steam.resetAllStats(true) --this is here just to debug
-    end
 
     local got_warning = SaveManager.load()
     if not got_warning then

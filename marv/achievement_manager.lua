@@ -18,7 +18,21 @@ function manager.print()
     print("-----------------------------")
 end
 
+local scheduled_update = false
+
 function manager.updateSteamAchievements()
+    if not CAN_USE_STEAM_STATS then
+        print("Can't use steam stats right now.")
+        if not scheduled_update then
+            scheduled_update = true
+            print('Scheduling in 2s.')
+            MAIN_TIMER:after(2, function()
+                scheduled_update = false
+                manager.updateSteamAchievements()
+            end)
+        end
+        return
+    end
     for _,k in ipairs(ACHIEVEMENT_DATABASE) do
         if ACHIEVEMENT_PROGRESS[k[1]] then
             Steam.userStats.setAchievement(k[5])
@@ -43,7 +57,10 @@ function manager.complete(name)
     if not ACHIEVEMENT_PROGRESS[name] then
         ACHIEVEMENT_PROGRESS[name] = true
 
-        if USING_STEAM then
+        if USING_STEAM and not CAN_USE_STEAM_STATS then
+            -- schedule for later
+            manager.updateSteamAchievements()
+        elseif USING_STEAM then
             for _,k in ipairs(ACHIEVEMENT_DATABASE) do
                 if k[1] == name then
                     Steam.userStats.setAchievement(k[5])
