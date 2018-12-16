@@ -10,13 +10,14 @@ See full license in file LICENSE.txt
 require "classes.primitive"
 local Color = require "classes.color.color"
 require "classes.console"
+local md5 = require "extra_libs.md5"
 
 -- Reader reads a .lua level and converts it into a Puzzle
 
 local reader = {}
 
 -- Reads and returns the puzzle with id puzzle_id
-function reader.read(puzzle_id, is_custom, random_seed)
+function reader.read(puzzle_id, is_custom, random_seed_mod)
     -- Loads lua file and adds contents to table _t
     local _f, err
     if not is_custom then
@@ -33,7 +34,8 @@ function reader.read(puzzle_id, is_custom, random_seed)
     _t.COLS = COLS
     _t.print = print
     _t._G = _G
-    local rd = love.math.newRandomGenerator(random_seed or 10)
+    local seed = tonumber(md5.sumhexa(puzzle_id .. (random_seed_mod or '')):sub(1, 8), 16)
+    local rd = love.math.newRandomGenerator(seed)
     _t.random = function(...) return rd:random(...) end
 
     -- Runs the puzzle script
