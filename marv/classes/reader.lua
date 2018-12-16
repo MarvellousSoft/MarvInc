@@ -48,6 +48,7 @@ function reader.read(puzzle_id, is_custom, random_seed_mod)
     puz.n = _t.n
     puz.postDraw = _t.postDraw
     puz.update = _t.update
+    puz.test_count = _t.test_count
 
     -- If you want to do something on each turn, create a function onTurn(ic), where ic is the
     -- instruction counter.

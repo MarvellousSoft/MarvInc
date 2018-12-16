@@ -69,22 +69,29 @@ Puzzle = Class{
     custom_completed = LoreManager.completed,
 
     -- End turn Signal function handler. Remove on disconnection.
-    turn_handler = nil
+    turn_handler = nil,
+
+    -- total number of tests to run
+    test_count = 5
 }
 
 function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
-        StepManager.pause()
-        if not self.is_custom then
-            LoreManager.mark_completed(self)
-            ScoreManager.uploadCompletedStats(self)
+        if ROOM.test_i == self.test_count then
+            StepManager.pause()
+            if not self.is_custom then
+                LoreManager.mark_completed(self)
+                ScoreManager.uploadCompletedStats(self)
+            else
+                self.custom_completed()
+            end
+            self.completed = true
+            SFX.win_puzzle:stop()
+            SFX.win_puzzle:play()
+            AchManager.checkAchievements()
         else
-            self.custom_completed()
+            StepManager.stop('no kill', nil, nil, 3, nil, ROOM.test_i + 1)
         end
-        self.completed = true
-        SFX.win_puzzle:stop()
-        SFX.win_puzzle:play()
-        AchManager.checkAchievements()
     end
 end

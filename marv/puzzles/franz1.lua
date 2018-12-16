@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Would you kindly?"
 -- Puzzle number
 n = 'F.1'
+test_count = 1
 
 lines_on_terminal = 1
 memory_slots = 0

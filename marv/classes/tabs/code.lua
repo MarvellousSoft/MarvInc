@@ -83,6 +83,8 @@ CodeTab = Class{
         self.inv_txt_w = self.inv_fnt:getWidth(self.inv_txt)
         self.inv_txt_h = self.inv_fnt:getHeight()
 
+        self.test_font = FONTS.fira(18)
+
         self:setId "code_tab"
         -- Memory
         self.memory = Memory(self.pos.x, self.pos.y + self.term.h + 10, self.w, by - 10 - (self.pos.y + self.term.h + 10), 12)
@@ -132,6 +134,12 @@ function CodeTab:draw()
 
     -- Draw memory
     self.memory:draw()
+
+    if ROOM.test_i and ROOM.puzzle.test_count > 1 then
+        love.graphics.setFont(self.test_font)
+        love.graphics.setColor(255, 255, 255, 160)
+        love.graphics.print("Test " .. ROOM.test_i .. "/" .. ROOM.puzzle.test_count, self.pos.x, self.pos.y + self.h - 25)
+    end
 end
 
 local function typingRegister(self)

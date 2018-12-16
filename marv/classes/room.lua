@@ -153,11 +153,17 @@ Room = Class{
     end
 }
 
-function Room:from(puzzle)
+function Room:from(id, is_custom, test_i)
+    if self.turn_handler then
+        Signal.remove(SIGEND, self.turn_handler)
+    end
+
+    local puzzle = Reader.read(id, is_custom, test_i)
     self:clear()
     self.puzzle = puzzle
     self.mode = "online"
     INIT_POS = puzzle.init_pos
+    self.test_i = test_i
 
     self.grid_obj = puzzle.grid_obj
     self.grid_floor = puzzle.grid_floor
@@ -173,8 +179,10 @@ function Room:from(puzzle)
 
     self.extra_info = puzzle.extra_info
     Util.findId("code_tab"):reset(puzzle)
-
     self.turn_handler = puzzle.turn_handler
+    if self.turn_handler then
+        Signal.register(SIGEND, self.turn_handler)
+    end
     self.block_bot_messages = false
 
     StepManager.only_play_button = false
@@ -201,7 +209,7 @@ function Room:clear()
     StepManager.clear()
 end
 
-function Room:connect(id, changeToInfo, is_custom)
+function Room:connect(id, changeToInfo, is_custom, test_i)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:stop()
     SFX.loud_static:play()
@@ -221,10 +229,7 @@ function Room:connect(id, changeToInfo, is_custom)
         self.static_r = self.static_r + math.pi/2
     end)
 
-    self:from(Reader.read(id, is_custom))
-    if self.turn_handler then
-        Signal.register(SIGEND, self.turn_handler)
-    end
+    self:from(id, is_custom, test_i or 1)
 
     local pc = Util.findId("pcbox")
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end
@@ -239,6 +244,7 @@ function Room:disconnect(wait)
 
     if self.turn_handler then
         Signal.remove(SIGEND, self.turn_handler)
+        self.turn_handler = nil
     end
 
     Util.findId('code_tab'):saveCurrentCode()
