@@ -11,6 +11,7 @@ See full license in file LICENSE.txt
 
 name = "Kind of even more messed up"
 n = "A.2"
+test_count = 1
 
 lines_on_terminal = 15
 memory_slots = 5

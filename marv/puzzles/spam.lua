@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Decryptor"
 -- Puzzle number
 n = "???"
+test_count = 1
 
 lines_on_terminal = 50
 memory_slots = 30

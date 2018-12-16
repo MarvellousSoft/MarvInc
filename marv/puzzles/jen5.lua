@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Maze Sprinter"
 -- Puzzle number
 n = "A.5"
+-- TODO: LET'S DO DIFFERENT MAZES
+test_count = 1
 
 lines_on_terminal = 30
 memory_slots = 6

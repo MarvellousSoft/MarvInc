@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Hacking Forensics"
 -- Puzzle number
 n = "F.2"
+-- TODO: Better cases
+test_count = 10
 
 lines_on_terminal = 40
 memory_slots = 5

@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Basic Programming"
 -- Puzzle number
 n = 6
+test_count = 1
 
 lines_on_terminal = 20
 memory_slots = 3

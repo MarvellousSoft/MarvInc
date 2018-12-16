@@ -12,6 +12,7 @@ See full license in file LICENSE.txt
 name = "DO YOU EVEN LIFT?"
 -- Puzzle number
 n = 4
+test_count = 1
 
 lines_on_terminal = 10
 memory_slots = 0

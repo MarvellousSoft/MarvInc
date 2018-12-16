@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 name = "Cleaner II"
 n = "A.7"
+test_count = 1
 
 lines_on_terminal = 60
 memory_slots = 6

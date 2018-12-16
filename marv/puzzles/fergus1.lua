@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Bucket Mover"
 -- Puzzle number
 n = "D.1"
+test_count = 1
 
 lines_on_terminal = 99
 memory_slots = 100

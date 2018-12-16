@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 name = "Advanced Firefighting"
 n = "B.4"
+test_count = 1
 
 lines_on_terminal = 30
 memory_slots = 7

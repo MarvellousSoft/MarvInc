@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Stacker"
 -- Puzzle number
 n = "C.3C"
+-- this is long
+test_count = 3
 
 lines_on_terminal = 35
 memory_slots = 30

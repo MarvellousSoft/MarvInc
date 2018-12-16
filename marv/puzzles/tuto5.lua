@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Basic Firefighting"
 -- Puzzle number
 n = 5
+test_count = 1
 
 lines_on_terminal = 20
 memory_slots = 0

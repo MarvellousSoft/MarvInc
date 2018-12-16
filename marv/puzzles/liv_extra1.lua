@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Small Division"
 -- Puzzle number
 n = "C.extra.1"
+-- The test cases are the same. The order changes.
+test_count = 3
 
 lines_on_terminal = 10
 memory_slots = 1

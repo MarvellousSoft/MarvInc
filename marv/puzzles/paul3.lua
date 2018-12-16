@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Cleanup on Aisle 5"
 -- Puzzle number
 n = "B.3"
+-- TODO: All bodies are above or all bodies are below
 
 lines_on_terminal = 12
 memory_slots = 4

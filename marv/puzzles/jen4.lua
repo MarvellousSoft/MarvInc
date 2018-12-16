@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Binary Painting"
 -- Puzzle number
 n = "A.4"
+-- TOO LONG
+test_count = 2
 
 lines_on_terminal = 40
 memory_slots = 20

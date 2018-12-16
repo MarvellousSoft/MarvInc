@@ -11,6 +11,7 @@ See full license in file LICENSE.txt
 
 name = "Guess the Password"
 n = "B.1"
+test_count = 1
 
 lines_on_terminal=30
 memory_slots=4

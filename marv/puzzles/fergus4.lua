@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Firefighting"
 -- Puzzle number
 n = "D.4"
+test_count = 1
 
 lines_on_terminal = 20
 memory_slots = 5

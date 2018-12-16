@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Home Improvement"
 -- Puzzle number
 n = "B.5"
+-- TODO: Different drawing?
+test_count = 1
 
 lines_on_terminal = 40
 memory_slots = 5

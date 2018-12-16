@@ -9,6 +9,8 @@ See full license in file LICENSE.txt
 
 name = "Tile Organizer"
 n = "C.3A"
+-- unless we want to shuffle the buckets
+test_count = 1
 
 lines_on_terminal = 40
 memory_slots = 5

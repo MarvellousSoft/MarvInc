@@ -10,6 +10,8 @@ See full license in file LICENSE.txt
 name = "Cleaner I"
 -- Puzzle number
 n = "A.6"
+-- TODO: Different drawing?
+test_count = 1
 
 lines_on_terminal = 20
 memory_slots = 5

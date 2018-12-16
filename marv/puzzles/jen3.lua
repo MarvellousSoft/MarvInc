@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 name = "Clever Cleaning"
 -- Puzzle number
 n = "A.3"
+test_count = 1
 
 lines_on_terminal = 15
 memory_slots = 4
