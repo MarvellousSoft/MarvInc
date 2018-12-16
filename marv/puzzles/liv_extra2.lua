@@ -25,7 +25,7 @@ local function create_vec()
     for t = 1, 6 do
         local v2 = {}
         for x = 1, 4 do
-            local k = _G.love.math.random(0, 3)
+            local k = random(0, 3)
             for g = 1, k do
                 _G.table.insert(v2, x)
                 _G.table.insert(ans, x)
@@ -33,7 +33,7 @@ local function create_vec()
         end
         if #v2 == 0 then _G.table.insert(v2, 1) end
         for i = 1, #v2 - 1 do
-            local j = _G.love.math.random(i, #v2)
+            local j = random(i, #v2)
             v2[i], v2[j] = v2[j], v2[i]
         end
         for i = 1, #v2 do

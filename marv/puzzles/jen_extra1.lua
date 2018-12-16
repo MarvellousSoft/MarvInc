@@ -20,14 +20,14 @@ bot = {'b', "WEST"}
 local function create_vec()
     local v = {}
     for i = 1, 5 do
-        _G.table.insert(v, _G.love.math.random(-200, 200))
+        _G.table.insert(v, random(-200, 200))
     end
     _G.table.insert(v, 0)
     _G.table.insert(v, -742)
     _G.table.insert(v, -683)
     _G.table.insert(v, 900)
     for i = 1, 10 do
-        _G.table.insert(v, _G.love.math.random(-899, 899))
+        _G.table.insert(v, random(-899, 899))
     end
     _G.table.insert(v, 627)
     _G.table.insert(v, -855)

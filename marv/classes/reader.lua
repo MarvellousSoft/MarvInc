@@ -16,7 +16,7 @@ require "classes.console"
 local reader = {}
 
 -- Reads and returns the puzzle with id puzzle_id
-function reader.read(puzzle_id, is_custom)
+function reader.read(puzzle_id, is_custom, random_seed)
     -- Loads lua file and adds contents to table _t
     local _f, err
     if not is_custom then
@@ -33,6 +33,8 @@ function reader.read(puzzle_id, is_custom)
     _t.COLS = COLS
     _t.print = print
     _t._G = _G
+    local rd = love.math.newRandomGenerator(random_seed or 10)
+    _t.random = function(...) return rd:random(...) end
 
     -- Runs the puzzle script
     _f()

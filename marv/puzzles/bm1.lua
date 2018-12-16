@@ -28,9 +28,9 @@ local function create_vec()
     local tim = {5, 5, 5, 4, 2}
     for i = 1, #tim do
         for j = 1, tim[i] do
-            local x = _G.love.math.random(lim[i][1], lim[i][2])
-            _G.table.insert(v, x * _G.love.math.random(1, _G.math.floor(mx[i] / x)))
-            _G.table.insert(v, x * _G.love.math.random(1, _G.math.floor(mx[i] / x)))
+            local x = random(lim[i][1], lim[i][2])
+            _G.table.insert(v, x * random(1, _G.math.floor(mx[i] / x)))
+            _G.table.insert(v, x * random(1, _G.math.floor(mx[i] / x)))
             _G.table.insert(ans, gcd(v[#v], v[#v - 1]))
         end
     end

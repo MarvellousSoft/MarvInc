@@ -54,31 +54,31 @@ local function create_vecs()
     v_code, v_in = {}, {}
     for i = 1, 2 do
         ins(v_code, ',')
-        _G.table.insert(v_in, _G.love.math.random(-99, 99))
-        add(v_code, _G.love.math.random(-2, 2))
+        _G.table.insert(v_in, random(-99, 99))
+        add(v_code, random(-2, 2))
         if i == 1 then ins(v_code, '>') end
     end
     ins(v_code, '.<.')
     for i = 1, 20 do
         ins(v_code, '<')
-        if _G.love.math.random() < .2  then
+        if random() < .2  then
             ins(v_code, ',')
-            _G.table.insert(v_in, _G.love.math.random(-99, 99))
+            _G.table.insert(v_in, random(-99, 99))
         end
-        if _G.love.math.random() < .25 then ins(v_code, '+') end
-        if _G.love.math.random() < .25 then ins(v_code, '-') end
-        if _G.love.math.random() < .25 then ins(v_code, '.') end
-        add(v_code, _G.love.math.random(-2, 2))
+        if random() < .25 then ins(v_code, '+') end
+        if random() < .25 then ins(v_code, '-') end
+        if random() < .25 then ins(v_code, '.') end
+        add(v_code, random(-2, 2))
     end
     for i = 1, 23 do
         ins(v_code, '.>')
-        if _G.love.math.random() < .2 then ins(v_code, '-') end
+        if random() < .2 then ins(v_code, '-') end
     end
     local pos = {'<', '>', '+', '-', '.', ',', '.', '.'}
     for i = 1, 32 do
-        local op = pos[_G.love.math.random(1, #pos)]
+        local op = pos[random(1, #pos)]
         ins(v_code, op)
-        if op == ',' then _G.table.insert(v_in, _G.love.math.random(-99, 99)) end
+        if op == ',' then _G.table.insert(v_in, random(-99, 99)) end
     end
     ins(v_code, '.')
     create_ans()

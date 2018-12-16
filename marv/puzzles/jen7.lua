@@ -25,9 +25,9 @@ local dirs = {'east', 'west', 'north', 'south'}
 for i = 1, 17 do
     local c = _G.string.char(_G.string.byte('b') + i)
     if c == 'n' then c = 'y' end
-    local img = 'dead_body' .. _G.love.math.random(1, 3)
-    local color = _G.Color.new(_G.love.math.random() * 256, 200, 150)
-    local dir = dirs[_G.love.math.random(1, 4)]
+    local img = 'dead_body' .. random(1, 3)
+    local color = _G.Color.new(random() * 256, 200, 150)
+    local dir = dirs[random(1, 4)]
     env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'dead_body_hair'}}, dir = dir}
 end
 

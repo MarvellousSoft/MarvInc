@@ -19,10 +19,10 @@ bot = {'b', "SOUTH"}
 
 local vec = {1, 0, 999, 512, 511, 12}
 while #vec < 21 do
-    _G.table.insert(vec, _G.love.math.random(2, 998))
+    _G.table.insert(vec, random(2, 998))
 end
 for i = 1, #vec do
-    local j = _G.love.math.random(i, #vec)
+    local j = random(i, #vec)
     vec[i], vec[j] = vec[j], vec[i]
     end
 local function create_vec(x, y)

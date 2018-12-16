@@ -22,10 +22,10 @@ local ans = {}
 local function add_op(v, dq, x)
     _G.table.insert(v, x)
     if x == '+' then
-        if _G.love.math.random() <= .1 then
+        if random() <= .1 then
             _G.table.insert(v, 0)
         else
-            _G.table.insert(v, _G.love.math.random(1, 999))
+            _G.table.insert(v, random(1, 999))
         end
         dq.r = dq.r + 1
         dq[dq.r] = v[#v]
@@ -41,21 +41,21 @@ end
 local function create_vec()
     local v, dq = {}, {l = 1, r = 0}
     for i = 1, 30 do
-        local m = _G.love.math.random() <= .5 and '<' or '>'
-        local x = _G.love.math.random() <= .85 and '+' or m
+        local m = random() <= .5 and '<' or '>'
+        local x = random() <= .85 and '+' or m
         if dq.r < dq.l then x = '+' end
         if dq.r - dq.l + 1 == 20 then x = m end
         add_op(v, dq, x)
     end
     local ops = 30
     while dq.r >= dq.l do
-        local x = _G.love.math.random() <= .5 and '<' or '>'
+        local x = random() <= .5 and '<' or '>'
         add_op(v, dq, x)
         ops = ops + 1
     end
     while ops < 100 do
-        local m = _G.love.math.random() <= .5 and '<' or '>'
-        local x = _G.love.math.random() <= (1 - .6 * ops / 100) and '+' or m
+        local m = random() <= .5 and '<' or '>'
+        local x = random() <= (1 - .6 * ops / 100) and '+' or m
         if dq.r < dq.l then x = '+' end
         if dq.r - dq.l + 1 == 20 then x = m end
         add_op(v, dq, x)

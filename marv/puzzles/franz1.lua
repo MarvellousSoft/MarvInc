@@ -61,7 +61,7 @@ local msg_list = {
 }
 
 local cur_msg = 0
-local function rnd_delay() return _G.love.math.random(2, 6) end
+local function rnd_delay() return random(2, 6) end
 
 local handle = nil
 

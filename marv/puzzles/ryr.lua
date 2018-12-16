@@ -172,16 +172,16 @@ local TW = _G.ROOM_CW * COLS
 local TH = _G.ROOM_CH * ROWS
 
 local function rnd_vel()
-    local v = _G.love.math.random() * 5 + 5
-    if _G.love.math.random() < .5 then v = -v end
+    local v = random() * 5 + 5
+    if random() < .5 then v = -v end
     return v
 end
 
 
 for i = 1, 4 do
     clouds[i] = {
-        x = _G.love.math.random() * TW / 2 + TW / 2,
-        y = _G.love.math.random() * TH,
+        x = random() * TW / 2 + TW / 2,
+        y = random() * TH,
         sx = rnd_vel(),
         sy = rnd_vel(),
         img = _G.OBJS_IMG.cloud_1
@@ -202,7 +202,7 @@ function update(dt)
             local mnx, mxx = 0, TW
             if c.sx > 0 then mxx = mxx / 2
             else mnx = mxx / 2 end
-            c.x = _G.love.math.random() * (mxx - mnx) + mnx
+            c.x = random() * (mxx - mnx) + mnx
             if c.sy > 0 then
                 c.y = -c.img:getWidth()
             else

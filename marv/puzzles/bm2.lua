@@ -31,15 +31,15 @@ local function create_vec()
     _G.table.insert(ans, 1)
     for i = 1, #tim do
         for j = 1, tim[i] do
-            local x = _G.love.math.random(lim[i][1], lim[i][2])
+            local x = random(lim[i][1], lim[i][2])
             local pos = {}
             for k = 1, x do
                 if (x % k) == 0 then
                     _G.table.insert(pos, k)
                 end
             end
-            _G.table.insert(v, _G.math.max(_G.love.math.random(1, #pos), _G.love.math.random(1, #pos)))
-            _G.table.insert(v, _G.math.max(_G.love.math.random(1, #pos), _G.love.math.random(1, #pos)))
+            _G.table.insert(v, _G.math.max(random(1, #pos), random(1, #pos)))
+            _G.table.insert(v, _G.math.max(random(1, #pos), random(1, #pos)))
             _G.table.insert(ans, v[#v] * v[#v - 1] / gcd(v[#v], v[#v - 1]))
         end
     end

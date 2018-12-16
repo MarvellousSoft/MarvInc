@@ -30,7 +30,7 @@ local function add(v, x, p, m)
     end
     _G.table.insert(ans, a)
 end
-local function rnd(l, r) return _G.love.math.random(l, r) end
+local function rnd(l, r) return random(l, r) end
 local function create_vec()
     local v = {}
     add(v, 3, 4, 10)
@@ -61,9 +61,9 @@ local gr, bl
 
 local function rnd(l, r)
     if l then
-        return _G.love.math.random() * (r - l) + l
+        return random() * (r - l) + l
     else
-        return _G.love.math.random()
+        return random()
     end
 end
 

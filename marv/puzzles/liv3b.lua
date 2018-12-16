@@ -54,7 +54,7 @@ c = {"console", false, "console", "green", args = {vec = function()
     for i = 1, 6 do
         vs[i] = {}
         for j = 1, 3 do
-            vec[(i - 1) * 3 + j] = _G.love.math.random(1, 10)
+            vec[(i - 1) * 3 + j] = random(1, 10)
             vs[i][j] = vec[(i - 1) * 3 + j]
         end
         _G.table.sort(vs[i])

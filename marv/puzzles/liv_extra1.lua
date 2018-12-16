@@ -23,7 +23,7 @@ local function create_vec()
         _G.table.insert(v, i)
     end
     for i = 1, #v do
-        local j = _G.love.math.random(i, #v)
+        local j = random(i, #v)
         v[i], v[j] = v[j], v[i]
     end
     return v

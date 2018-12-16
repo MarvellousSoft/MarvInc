@@ -24,7 +24,7 @@ local function create_vec()
     _G.table.insert(v, 3 + 25 + 4 + 10 + 1 + 0 + 2 + 5)
     local tmp = {}
     for i = 1, 8 do
-        local j = _G.love.math.random(i, 8)
+        local j = random(i, 8)
         sz[i], sz[j] = sz[j], sz[i]
         if i == 7 and sz[8] == 0 then
             -- empty list can't be the last, or some faulty code might get AC
@@ -37,10 +37,10 @@ local function create_vec()
     local seq = {}
     for i = 1, 8 do seq[i] = {} end
     for i = 1, #tmp do
-        local j = _G.love.math.random(i, #tmp)
+        local j = random(i, #tmp)
         tmp[i], tmp[j] = tmp[j], tmp[i]
         _G.table.insert(v, tmp[i])
-        _G.table.insert(v, _G.love.math.random(-99, 99))
+        _G.table.insert(v, random(-99, 99))
         _G.table.insert(seq[tmp[i]], v[#v])
     end
     for i = 1, 8 do

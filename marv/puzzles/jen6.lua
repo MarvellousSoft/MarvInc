@@ -30,7 +30,7 @@ local function create_vec()
     end
     local v = {}
     for i = 1, #tmp do
-        local j = _G.love.math.random(i, #tmp)
+        local j = random(i, #tmp)
         tmp[i], tmp[j] = tmp[j], tmp[i]
         _G.table.insert(v, tmp[i][1])
         _G.table.insert(v, tmp[i][2])

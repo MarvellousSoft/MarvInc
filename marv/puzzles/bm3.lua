@@ -22,11 +22,11 @@ local function create_vec()
     ans = {}
     local v = {2, 3, 4, 5, 6, 7, 100, 99, 97, 64, 90, 49, 81}
     for i = 1, 10 do
-        _G.table.insert(v, _G.love.math.random(8, 96))
+        _G.table.insert(v, random(8, 96))
     end
     -- maybe there are too many numbers
     for i = 1, #v do
-        local j = _G.love.math.random(i, #v)
+        local j = random(i, #v)
         v[i], v[j] = v[j], v[i]
         x = v[i]
         y = 2

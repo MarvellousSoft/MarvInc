@@ -51,7 +51,7 @@ c = {"console", false, "console", "green", args = {vec = function()
         elseif i == 10 then
             vec[i] = 30
         else
-            vec[i] = _G.love.math.random(1, 30)
+            vec[i] = random(1, 30)
         end
         bk[i] = vec[i]
     end

@@ -17,7 +17,7 @@ memory_slots = 5
 -- Bot
 bot = {'b', "WEST"}
 
-local function rnd(l, r) return _G.love.math.random(l, r) end
+local function rnd(l, r) return random(l, r) end
 
 local perm = {}
 for i = 1, 21 do perm[i] = i end

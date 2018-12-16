@@ -70,18 +70,18 @@ local function ins(code, str)
     end
 end
 
-local function rnd() return _G.love.math.random(5, 10) end
+local function rnd() return random(5, 10) end
 
 local function create_vecs()
     v_code, v_in = {}, {}
     ins(v_code, ",[>,][+]<[->+++<<++>]<.>>.>")
-    for i = 1, _G.love.math.random(5, 9) do ins(v_in, rnd()) end
+    for i = 1, random(5, 9) do ins(v_in, rnd()) end
     ins(v_in, 0)
     add(v_code, 2)
     ins(v_code, ">[]<.")
     for i = 1, 5 do
         ins(v_code, '[->')
-        add(v_code, _G.love.math.random() < .6 and 1 or 2)
+        add(v_code, random() < .6 and 1 or 2)
     end
     ins(v_code, '.')
     for i = 1, 5 do

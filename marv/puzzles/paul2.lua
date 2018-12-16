@@ -27,7 +27,7 @@ local function create_votes()
     local p1  = {.5, .6, .25, -1, .7, .35, .3, 0, .3, .2, .2, .05}
     -- randomizing order, except the first
     for i = 2, #szs do
-        local j = _G.love.math.random(i, #szs)
+        local j = random(i, #szs)
         szs[i], szs[j] = szs[j], szs[i]
         p0[i], p0[j] = p0[j], p0[i]
         p1[i], p1[j] = p1[j], p1[i]
@@ -40,12 +40,12 @@ local function create_votes()
         add(v, sz)
         if sz == 40 then
             -- size 40 should be a tie
-            local eq = _G.love.math.random(10, 18)
+            local eq = random(10, 18)
             local vot = {}
             for i = 1, eq do add(vot, 0); add(vot, 1); end
             while #vot < sz do add(vot, -1) end
             for i = 1, sz do
-                local j = _G.love.math.random(i, sz)
+                local j = random(i, sz)
                 vot[i], vot[j] = vot[j], vot[i]
                 add(v, vot[i])
             end
@@ -53,7 +53,7 @@ local function create_votes()
         else
             local c0, c1 = 0, 0
             for i = 1, sz do
-                local r = _G.love.math.random()
+                local r = random()
                 if r <= p0[si] then
                     add(v, 0)
                     c0 = c0 + 1

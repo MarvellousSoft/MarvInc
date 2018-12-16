@@ -26,7 +26,7 @@ local function create_vec()
     for _, sz in _G.ipairs(szs) do
         _G.table.insert(v, sz)
         for i = 1, sz do
-            _G.table.insert(v, _G.love.math.random(-100, 100))
+            _G.table.insert(v, random(-100, 100))
             _G.table.insert(ans, v[#v])
         end
     end

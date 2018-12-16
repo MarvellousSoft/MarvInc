@@ -25,7 +25,7 @@ local function create_vec()
     local tmp = {}
     local rem = 50 - (3 + 19 + 3 + 10 + 1 + 0 + 2 + 5)
     for i = 1, 8 do
-        local j = _G.love.math.random(i, 8)
+        local j = random(i, 8)
         sz[i], sz[j] = sz[j], sz[i]
         for x = 1, sz[i] do
             _G.table.insert(tmp, i)
@@ -34,15 +34,15 @@ local function create_vec()
     local seq = {}
     for i = 1, 8 do seq[i] = {} end
     for i = 1, #tmp do
-        local j = _G.love.math.random(i, #tmp)
+        local j = random(i, #tmp)
         tmp[i], tmp[j] = tmp[j], tmp[i]
         _G.table.insert(v, tmp[i])
-        _G.table.insert(v, _G.love.math.random(-99, 99))
+        _G.table.insert(v, random(-99, 99))
         _G.table.insert(seq[tmp[i]], v[#v])
-        if rem > 0 and _G.love.math.random() <= .1 then
+        if rem > 0 and random() <= .1 then
             local pos = {}
             for x = 1, 8 do if #seq[x] > 0 then _G.table.insert(pos, x) end end
-            j = pos[_G.love.math.random(1, #pos)]
+            j = pos[random(1, #pos)]
             _G.table.insert(v, -1)
             _G.table.insert(v, j)
             seq[j][#seq[j]] = nil
@@ -52,7 +52,7 @@ local function create_vec()
     while rem > 0 do
         local pos = {}
         for x = 1, 8 do if #seq[x] > 0 then _G.table.insert(pos, x) end end
-        j = pos[_G.love.math.random(1, #pos)]
+        j = pos[random(1, #pos)]
         _G.table.insert(v, -1)
         _G.table.insert(v, j)
         seq[j][#seq[j]] = nil

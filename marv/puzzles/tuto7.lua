@@ -76,7 +76,7 @@ c = {"console", false, "console", "green", args = {vec = function()
         if i == 17 then
             vec[i] = 0
         else
-            vec[i] = _G.love.math.random(-99, 99)
+            vec[i] = random(-99, 99)
         end
         freq[vec[i]] = (freq[vec[i]] or 0) + 1
     end
