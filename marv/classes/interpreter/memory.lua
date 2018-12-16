@@ -58,23 +58,42 @@ function Memory:setSlots(slots)
 
     -- actual memory
     self.vec = {}
-    for i = 1, self.slots do self.vec[i] = 0 end
+    self.used = {}
+    for i = 1, self.slots do
+        self.vec[i] = 0
+        self.used[i] = false
+    end
 
     self.str_to_num = Util.findId('code_tab').renames
     self.num_to_str = Util.findId('code_tab').inv_renames
 end
 
 function Memory:reset()
-    for i = 1, self.slots do self.vec[i] = 0 end
+    for i = 1, self.slots do
+        self.vec[i] = 0
+        self.used[i] = false
+    end
 end
 
 function Memory:get(pos)
-    return type(pos) == 'number'and ((pos >= 0 and pos < self.slots) and self.vec[pos + 1] or ("Trying to access invalid register " .. pos)) or pos
+    if type(pos) ~= 'number' then return pos end
+    if pos < 0 or pos >= self.slots then return "Trying to access invalid register " .. pos end
+    self.used[pos + 1] = true
+    return self.vec[pos + 1]
+end
+
+function Memory:countUsed()
+    local count = 0
+    for i = 1, self.slots do
+        count = count + (self.used[i] and 1 or 0)
+    end
+    return count
 end
 
 function Memory:set(dst, src)
     if type(dst) == 'string' then return dst end
     if not dst or type(dst) ~= 'number' or dst < 0 or dst > self.slots then return "Trying to set register " .. (dst or 'nil') end
+    self.used[dst + 1] = true
     self.vec[dst + 1] = src
 end
 

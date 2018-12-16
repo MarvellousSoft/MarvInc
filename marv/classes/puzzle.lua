@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 require "classes.primitive"
 local LoreManager = require "classes.lore_manager"
 local StepManager = require "classes.step_manager"
+local ScoreManager = require "classes.score_manager"
 
 
 -- Puzzle stores the values for a new room.
@@ -77,7 +78,7 @@ function Puzzle:manage_objectives(auto_win)
         StepManager.pause()
         if not self.is_custom then
             LoreManager.mark_completed(self)
-            ROOM:upload_completed_stats();
+            ScoreManager.uploadCompletedStats(self)
         else
             self.custom_completed()
         end
