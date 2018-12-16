@@ -44,7 +44,7 @@ local sm = {
     -- 2 is fast
     -- 3 is very fast
     how_fast = 0,
-    speeds = {.5, .05, .001, [0] = 0}
+    speeds = {.5, .05, .001, .000001, [0] = 0}
 }
 
 -- BUTTONS/STATE COMMANDS
@@ -100,8 +100,7 @@ local function stepCallback()
 
     ROOM.bot:dieIfStay(ROOM.grid_obj)
 
-    ROOM.puzzle:manage_objectives()
-    if sm.state ~= 'playing' then return end
+    if ROOM.puzzle:manage_objectives() or sm.state ~= 'playing' then return end
     if code_over then
         sm.stop("code_over")
         return

@@ -91,7 +91,9 @@ function Puzzle:manage_objectives(auto_win)
             SFX.win_puzzle:play()
             AchManager.checkAchievements()
         else
-            StepManager.stop('no kill', nil, nil, 3, nil, ROOM.test_i + 1)
+            StepManager.stop('no kill', nil, nil, 4, nil, ROOM.test_i + 1)
         end
+        return true
     end
+    return false
 end
