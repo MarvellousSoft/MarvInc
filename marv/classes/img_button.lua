@@ -63,15 +63,36 @@ function ImgButton:draw()
     end
 end
 
+function ImgButton:block(block_img)
+    assert(not self.blocked)
+    self.blocked = true
+    self.unblocked_img = self.img
+    self.img = block_img
+end
+
+function ImgButton:unblock()
+    if not self.blocked then return end
+    self.blocked = false
+    self.img = self.unblocked_img
+end
+
 function ImgButton:checkCollides(x, y)
     if Util.pointInRect(x, y, self) then
-        self.call()
+        if self.blocked then
+            SFX.buzz:play()
+        else
+            self.call()
+        end
     end
 end
 
 function ImgButton:mousePressed(x, y, but)
     if Util.findId("opened_email") then return end
     if but == 1 and Util.pointInRect(x, y, self) then
-        self.call()
+        if self.blocked then
+            SFX.buzz:play()
+        else
+            self.call()
+        end
     end
 end

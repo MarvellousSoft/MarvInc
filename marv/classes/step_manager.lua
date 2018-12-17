@@ -49,9 +49,13 @@ local sm = {
 
 -- BUTTONS/STATE COMMANDS
 
+local speed_4_frames = 0
+
 local function stepCallback()
     sm.ic = sm.ic + 1
-    SFX.click:play()
+    if sm.how_fast ~= 4 then
+        SFX.click:play()
+    end
 
     -- deletes 1-turn stuff (lasers)
     ROOM:deleteEphemeral()
@@ -64,7 +68,7 @@ local function stepCallback()
     end
 
     local code_over = false
-    
+
     if sm.cmd then
         local func = sm.cmd
         sm.cmd = nil
@@ -106,7 +110,17 @@ local function stepCallback()
         return
     end
 
-    sm.timer:after(sm.delay, stepCallback)
+    if sm.how_fast == 4 then
+        speed_4_frames = speed_4_frames + 1
+        if speed_4_frames >= 10 then
+            speed_4_frames = 0
+            sm.timer:after(sm.delay, stepCallback)
+        else
+            stepCallback()
+        end
+    else
+        sm.timer:after(sm.delay, stepCallback)
+    end
 end
 
 -- Plays a set of instructions until step can no longer parse.
@@ -134,6 +148,9 @@ local function doPlay(how_fast)
 
     sm.state = how_fast == 0 and 'paused' or 'playing'
     sm.how_fast = how_fast
+    if how_fast == 4 then
+        speed_4_frames = 0
+    end
     sm.delay = sm.speeds[how_fast]
     sm.timer:after(sm.delay, stepCallback)
 end

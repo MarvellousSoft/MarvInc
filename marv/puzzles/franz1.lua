@@ -76,10 +76,10 @@ function on_start(room)
     local ct = _G.Util.findId('code_tab')
     ct.lock = ct.lock + 1 -- will reset automatically
     ct.term.lines = {"walk right"} -- fixed text
-    ct.fast_b.img = _G.BUTS_IMG.fast_blocked
-    ct.superfast_b.img = _G.BUTS_IMG.superfast_blocked
-    ct.pause_b.img = _G.BUTS_IMG.pause_blocked
-    ct.stop_b.img = _G.BUTS_IMG.stop_blocked
+    ct.fast_b:block(_G.BUTS_IMG.fast_blocked)
+    ct.superfast_b:block(_G.BUTS_IMG.superfast_blocked)
+    ct.pause_b:block(_G.BUTS_IMG.pause_blocked)
+    ct.stop_b:block(_G.BUTS_IMG.stop_blocked)
     _G.StepManager.only_play_button = true
     _G.ROOM.block_bot_messages = true
     handle = _G.MAIN_TIMER:after(rnd_delay(), function(self)

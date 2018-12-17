@@ -157,12 +157,12 @@ function Room:from(id, is_custom, test_i)
         Signal.remove(SIGEND, self.turn_handler)
     end
 
-    local puzzle = Reader.read(id, is_custom, test_i)
+    local puzzle = Reader.read(id, is_custom, test_i or 1)
     self:clear()
     self.puzzle = puzzle
     self.mode = "online"
     INIT_POS = puzzle.init_pos
-    self.test_i = test_i
+    self.test_i = test_i or 1
 
     self.grid_obj = puzzle.grid_obj
     self.grid_floor = puzzle.grid_floor
@@ -177,7 +177,16 @@ function Room:from(id, is_custom, test_i)
     self.bot:turn(self.default_bot_turn)
 
     self.extra_info = puzzle.extra_info
-    Util.findId("code_tab"):reset(puzzle)
+    local ct = Util.findId("code_tab")
+    ct:reset(puzzle)
+    -- running a mega fast test
+    if test_i ~= nil then
+        ct.fast_b:block(BUTS_IMG.fast_blocked)
+        ct.superfast_b:block(BUTS_IMG.superfast_blocked)
+        ct.pause_b:block(BUTS_IMG.pause_blocked)
+        ct.play_b:block(BUTS_IMG.play_blocked)
+    end
+
     self.turn_handler = puzzle.turn_handler
     if self.turn_handler then
         Signal.register(SIGEND, self.turn_handler)
@@ -228,7 +237,7 @@ function Room:connect(id, changeToInfo, is_custom, test_i)
         self.static_r = self.static_r + math.pi/2
     end)
 
-    self:from(id, is_custom, test_i or 1)
+    self:from(id, is_custom, test_i)
 
     local pc = Util.findId("pcbox")
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end

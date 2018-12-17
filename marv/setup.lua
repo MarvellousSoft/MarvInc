@@ -99,6 +99,7 @@ end
 -- Buttons Images
 BUTS_IMG = {}
 BUTS_IMG["play"] = love.graphics.newImage("assets/images/button_play.png")
+BUTS_IMG["play_blocked"] = love.graphics.newImage("assets/images/button_play_blocked.png")
 BUTS_IMG["fast"] = love.graphics.newImage("assets/images/button_fast.png")
 BUTS_IMG["fast_blocked"] = love.graphics.newImage("assets/images/button_fast_blocked.png")
 BUTS_IMG["superfast"] = love.graphics.newImage("assets/images/button_superfast.png")

@@ -51,7 +51,7 @@ CodeTab = Class{
             end, "pause/step")
         self.pause_b.draw = function(self)
             self.img = StepManager.state == 'playing' and BUTS_IMG.pause or BUTS_IMG.step
-            if StepManager.only_play_button then self.img = BUTS_IMG.pause_blocked end
+            if self.blocked then self.img = BUTS_IMG.pause_blocked end
             ImgButton.draw(self)
         end
 
@@ -256,10 +256,11 @@ function CodeTab:reset(puzzle)
     -- resetting locks to terminal
     self.lock = 0
     -- resetting button images (changed in franz1)
-    self.fast_b.img = BUTS_IMG.fast
-    self.superfast_b.img = BUTS_IMG.superfast
-    self.pause_b.img = BUTS_IMG.pause
-    self.stop_b.img = BUTS_IMG.stop
+    self.fast_b:unblock()
+    self.superfast_b:unblock()
+    self.pause_b:unblock()
+    self.play_b:unblock()
+    self.stop_b:unblock()
 
     self.inv_renames = {}
     for a, b in pairs(self.renames) do
