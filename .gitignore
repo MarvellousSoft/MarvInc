@@ -3,5 +3,6 @@ steam_appid.txt
 *.swp
 *.vim
 *.lvimrc
+*.so
 *.directory
 /sdk/
