@@ -297,9 +297,11 @@ function Leaderboards:showResults(scores, player_score, friends_scores)
     self.loading = false
 end
 
-function funcs.create(x, y, title)
+function funcs.create(x, y, title, dont_register)
     local l = Leaderboards(x,y,title)
-    l:addElement(DRAW_TABLE.L2u, "leaderboard")
+    if not dont_register then
+        l:addElement(DRAW_TABLE.L2u, "leaderboard")
+    end
 
     return l
 end

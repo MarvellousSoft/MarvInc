@@ -1,3 +1,12 @@
+--[[
+#####################################
+Marvellous Inc.
+Copyright (C) 2017  MarvellousSoft & USPGameDev
+See full license in file LICENSE.txt
+(https://github.com/MarvellousSoft/MarvInc/blob/dev/LICENSE.txt)
+#####################################
+]]--
+
 local AuthorButton = Class {
     __includes = {RECT}
 }
@@ -96,7 +105,7 @@ function PuzzleButton:init(x, y, w, h, puzzle)
     local size = self.h
     self.leaderboards_button = ImgButton(x + w + 10, y + h/2 - size/2, size, BUTS_IMG.leaderboards,
         function()
-            print("hi")
+            Gamestate.push(GS.LEADERBOARDS, puzzle.id)
         end
     )
 end

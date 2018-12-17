@@ -86,7 +86,8 @@ NEWS = require "gamestates.news",
 CREDITS = require "gamestates.credits",
 COMP = require "gamestates.computer",
 WARNINGWIN = require "gamestates.warning_window",
-BLANK = require "gamestates.blank"
+BLANK = require "gamestates.blank",
+LEADERBOARDS = require "gamestates.leaderboards"
 }
 
 -- When game starts, automatically changes to this puzzle
