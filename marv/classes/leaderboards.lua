@@ -19,6 +19,7 @@ Leaderboards = Class{
         RECT.init(self, x, y, 350, 480, Color.white())
 
         self.loading = true --If its loading stats
+        self.loading_dots = 0 --Number between 0 and 3
         self.error = false --If has reached some error trying to get stats
 
         self.handles = {}
@@ -34,6 +35,7 @@ Leaderboards = Class{
         self.graph_w = self.w - 2*self.h_margin
         self.graph_h = 140
         self.graph_bg_color = Color.new(120, 30, 50)
+        self.graph_bg_color_shadow = Color.new(120, 30, 0, 200)
         self.graph_border_color = Color.white()
 
         self.bar_h = {}
@@ -51,15 +53,17 @@ Leaderboards = Class{
         self.player_line_h = 0
 
         self.bg_color = Color.new(120, 30, 40)
-        self.border_color = Color.black()
+        self.bg_color_shadow = Color.new(120, 0, 0, 200)
+        self.border_color = Color.new(0,0,10)
 
-        self.title_font = FONTS.fira(30)
-        self.title_bg_color = Color.new(0, 30, 10)
+        self.title_font = FONTS.robotoBold(30)
+        self.title_bg_color = Color.new(0, 30, 50)
         self.title_color = Color.white()
+        self.title_color_shadow = Color.new(0, 0, 0, 200)
 
         self.loading_font = FONTS.fira(30)
         self.loading_color = Color.white()
-        self.loading_text = "Loading stats..."
+        self.loading_text = "Loading stats"
 
         self.error_font = FONTS.fira(30)
         self.error_color = Color.red()
@@ -88,6 +92,10 @@ function Leaderboards:draw()
     local l = self
 
     --Draw window
+    local ox = 5
+    local oy = 2
+    Color.set(l.bg_color_shadow)
+    g.rectangle("fill", l.pos.x + ox, l.pos.y + oy, l.w, l.h, 5)
     Color.set(l.bg_color)
     g.rectangle("fill", l.pos.x, l.pos.y, l.w, l.h, 5)
     g.setLineWidth(3)
@@ -102,13 +110,19 @@ function Leaderboards:draw()
     g.rectangle("line", l.pos.x, l.pos.y, l.w, th + 2*title_margin)
 
     --Draw title
-    Color.set(l.title_color)
     love.graphics.setFont(l.title_font)
+    local ox, oy = 4, 4
+    Color.set(l.title_color_shadow)
+    love.graphics.print(l.title, l.pos.x + l.w/2 - tw/2 + ox, l.pos.y + title_margin + oy)
+    Color.set(l.title_color)
     love.graphics.print(l.title, l.pos.x + l.w/2 - tw/2, l.pos.y + title_margin)
 
     --Draw graph bg
     local x = l.pos.x + l.h_margin
     local y = l.pos.y + 3*title_margin + th
+    local ox, oy = 8, 8
+    Color.set(l.graph_bg_color_shadow)
+    g.rectangle("fill", x + ox, y + oy, l.graph_w, l.graph_h)
     Color.set(l.graph_bg_color)
     g.rectangle("fill", x, y, l.graph_w, l.graph_h)
     g.setLineWidth(3)
@@ -123,7 +137,11 @@ function Leaderboards:draw()
         local ty = y + l.graph_h/2 - l.error_font:getHeight(text)/2
         g.print(text, tx, ty)
     elseif self.loading then
+        self.loading_dots = love.timer.getTime()%4
         local text = l.loading_text
+        for i = 1, self.loading_dots do
+            text = text .. '.'
+        end
         Color.set(l.loading_color)
         g.setFont(l.loading_font)
         local tx = x + l.graph_w/2 - l.loading_font:getWidth(text)/2
