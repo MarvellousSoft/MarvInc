@@ -152,7 +152,7 @@ Room = Class{
     end
 }
 
-function Room:from(id, is_custom, test_i)
+function Room:from(id, is_custom, test_i, megafast)
     if self.turn_handler then
         Signal.remove(SIGEND, self.turn_handler)
     end
@@ -180,12 +180,13 @@ function Room:from(id, is_custom, test_i)
     local ct = Util.findId("code_tab")
     ct:reset(puzzle)
     -- running a mega fast test
-    if test_i ~= nil then
+    if megafast then
         ct.fast_b:block(BUTS_IMG.fast_blocked)
         ct.superfast_b:block(BUTS_IMG.superfast_blocked)
         ct.pause_b:block(BUTS_IMG.pause_blocked)
         ct.play_b:block(BUTS_IMG.play_blocked)
     end
+    ROOM.megafast = megafast or false
 
     self.turn_handler = puzzle.turn_handler
     if self.turn_handler then
@@ -217,7 +218,7 @@ function Room:clear()
     StepManager.clear()
 end
 
-function Room:connect(id, changeToInfo, is_custom, test_i)
+function Room:connect(id, changeToInfo, is_custom, test_i, megafast)
     if self.mode ~= "offline" then self:disconnect(false) end
     SFX.loud_static:stop()
     SFX.loud_static:play()
@@ -237,7 +238,7 @@ function Room:connect(id, changeToInfo, is_custom, test_i)
         self.static_r = self.static_r + math.pi/2
     end)
 
-    self:from(id, is_custom, test_i)
+    self:from(id, is_custom, test_i or 1, megafast)
 
     local pc = Util.findId("pcbox")
     if changeToInfo == nil or changeToInfo == true then pc:changeTabs(pc.puzzle_tabs, "info") end

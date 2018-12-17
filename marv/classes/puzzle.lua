@@ -79,7 +79,7 @@ function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
         ScoreManager.getStatsForTest(ROOM.test_i)
-        if ROOM.test_i == self.test_count then
+        if self.test_count == 1 or (ROOM.megafast and ROOM.test_i == self.test_count) then
             StepManager.pause()
             if not self.is_custom then
                 LoreManager.mark_completed(self)
@@ -92,7 +92,13 @@ function Puzzle:manage_objectives(auto_win)
             SFX.win_puzzle:play()
             AchManager.checkAchievements()
         else
-            StepManager.stop('no kill', nil, nil, 4, nil, ROOM.test_i + 1)
+            local nx_level
+            if ROOM.megafast or ROOM.test_i == 1 then
+                nx_level = ROOM.test_i + 1
+            else
+                nx_level = 1
+            end
+            StepManager.stop('no kill', nil, nil, 4, nil, nx_level , true)
         end
         return true
     end

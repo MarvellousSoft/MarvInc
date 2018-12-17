@@ -220,9 +220,9 @@ function sm.pause()
     end
 end
 
-function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup, test_i)
+function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup, test_i, megafast, force)
     if PopManager.pop then return end
-    if sm.state == 'stopped' or not ROOM:connected() or sm.only_play_button then
+    if not force and (sm.state == 'stopped' or not ROOM:connected() or sm.only_play_button) then
         SFX.buzz:play()
         return
     end
@@ -237,7 +237,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup, t
         -- And this should be a pretty fast procedure
         local term = Util.findId('code_tab').term
         local bk, breakpoints = term.backups, term.breakpoints -- preserve history and breakpoints
-        ROOM:connect(ROOM.puzzle_id, false, ROOM.is_custom, test_i)
+        ROOM:connect(ROOM.puzzle_id, false, ROOM.is_custom, test_i, megafast)
         if replay_speed then doPlay(replay_speed) end
         term.backups, term.breakpoints = bk, breakpoints
     end

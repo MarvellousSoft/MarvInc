@@ -71,6 +71,10 @@ CodeTab = Class{
 
         self.buttons = {self.stop_b, self.pause_b, self.play_b, self.fast_b, self.superfast_b}
 
+        local tx, ty = self.pos.x + 20, self.pos.y + self.h - 45
+        self.left_test_b = ImgButton(tx - 20, ty + 10, 20, BUTS_IMG.prev_test, function() self:goToPrevTest() end)
+        self.right_test_b = ImgButton(tx + 50, ty + 10, 20, BUTS_IMG.next_test, function() self:goToNextTest() end)
+
         -- Inventory slot
         self.inv_slot = nil
         self.inv_x = bx + bsz + 40
@@ -138,8 +142,31 @@ function CodeTab:draw()
     if ROOM.test_i and ROOM.puzzle.test_count > 1 then
         love.graphics.setFont(self.test_font)
         love.graphics.setColor(255, 255, 255, 160)
-        love.graphics.print("Test " .. ROOM.test_i .. "/" .. ROOM.puzzle.test_count, self.pos.x, self.pos.y + self.h - 25)
+        local tx, ty = self.pos.x + 20, self.pos.y + self.h - 45
+        love.graphics.setLineWidth(0.5)
+        love.graphics.rectangle('line', tx - 5, ty - 5, 60, 55, 5)
+        love.graphics.print("Test\n " .. ROOM.test_i .. "/" .. ROOM.puzzle.test_count, tx, ty)
+        self.left_test_b:draw()
+        self.right_test_b:draw()
     end
+end
+
+function CodeTab:goToPrevTest()
+    if ROOM.puzzle.test_count == 1 then return end
+    if ROOM.test_i == 1 or ROOM.megafast then
+        SFX.buzz:play()
+        return
+    end
+    StepManager.stop('no kill', nil, nil, nil, nil, ROOM.test_i - 1, false, true)
+end
+
+function CodeTab:goToNextTest()
+    if ROOM.puzzle.test_count == 1 then return end
+    if ROOM.test_i == ROOM.puzzle.test_count or ROOM.megafast then
+        SFX.buzz:play()
+        return
+    end
+    StepManager.stop('no kill', nil, nil, nil, nil, ROOM.test_i + 1, false, true)
 end
 
 local function typingRegister(self)
@@ -204,6 +231,8 @@ end
 function CodeTab:mousePressed(x, y, but)
     if TABS_LOCK > 0 then return end
     for _, b in ipairs(self.buttons) do b:mousePressed(x, y, but) end
+    self.left_test_b:mousePressed(x, y, but)
+    self.right_test_b:mousePressed(x, y, but)
 
     if self.lock > 0 then
         if not typingRegister(self) then
