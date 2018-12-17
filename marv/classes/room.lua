@@ -10,7 +10,6 @@ See full license in file LICENSE.txt
 require "classes.primitive"
 local Color = require "classes.color.color"
 local Reader = require "classes.reader"
-local Leaderboards = require "classes.leaderboards"
 
 --LOCAL VARIABLES--
 

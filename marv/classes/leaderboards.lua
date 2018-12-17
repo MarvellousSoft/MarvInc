@@ -15,8 +15,10 @@ local funcs = {}
 
 Leaderboards = Class{
     __includes = {RECT},
-    init = function(self, x, y, title, scores, player_score)
+    init = function(self, x, y, title)
         RECT.init(self, x, y, 450, 350, Color.white())
+
+        self.loading = true --If its loading stats
 
         self.divisions = 10
         self.min = 0
@@ -27,21 +29,10 @@ Leaderboards = Class{
 
         self.title = title
 
-        self.player_score = player_score
-
         --Init graph
         self.graph = {}
         for i = 1, self.divisions do
             self.graph[i] = 0
-        end
-        local max_value = 0
-        --Populate with scores
-        for _, score in pairs(scores) do
-            local i = math.ceil(score/self.step)
-            self.graph[i] = self.graph[i] + 1
-            if self.graph[i] > max_value then
-                max_value = self.graph[i]
-            end
         end
 
         --Graphics stuff
@@ -52,14 +43,9 @@ Leaderboards = Class{
         self.graph_border_color = Color.white()
 
         self.bar_w = self.graph_w/self.divisions
-        max_bar_h = 180
         self.bar_h = {}
-        for i = 1, self.divisions do
-            self.bar_h[i] = 0
-            local target = max_bar_h * self.graph[i]/max_value
-            local h = MAIN_TIMER:tween(1, self.bar_h, {[i] = target}, 'out-quad')
-            table.insert(self.handles, h)
-        end
+        self.max_bar_h = 180
+
         self.bar_border_color = self.graph_border_color
         self.bar_border_width = 3
         self.bar_bg_color = Color.new(0, 15, 60)
@@ -70,8 +56,6 @@ Leaderboards = Class{
         self.player_line_font = FONTS.robotoBold(25)
         self.player_line_color = Color.new(0, 240, 180)
         self.player_line_h = 0
-        local h = MAIN_TIMER:tween(1, self, {player_line_h = max_bar_h}, 'out-quad')
-        table.insert(self.handles, h)
 
         self.bg_color = Color.new(120, 30, 40)
         self.border_color = Color.black()
@@ -115,42 +99,45 @@ function Leaderboards:draw()
     Color.set(l.graph_border_color)
     g.rectangle("line", x, y, l.graph_w, l.graph_h)
 
-    --Draw bars
-    y = y + l.graph_h
-    for i = 1, l.divisions do
-        Color.set(l.bar_bg_color)
-        g.rectangle("fill", x, y - l.bar_h[i], l.bar_w, l.bar_h[i])
-        Color.set(l.bar_border_color)
-        g.rectangle("line", x, y - l.bar_h[i], l.bar_w, l.bar_h[i])
-        x = x + l.bar_w
-    end
+    if not self.loading then
 
-    --Draw division
-    love.graphics.setFont(l.division_font)
-    Color.set(l.graph_border_color)
-    g.setLineWidth(3)
-    x = l.pos.x + l.h_margin
-    y = y + 1
-    for i = 0, l.divisions do
-        g.line(x,y,x,y+self.division_h)
-        if  i%2 == 0 then
-            local value = self.min + i*self.step
-            g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+        --Draw bars
+        y = y + l.graph_h
+        for i = 1, l.divisions do
+            Color.set(l.bar_bg_color)
+            g.rectangle("fill", x, y - l.bar_h[i], l.bar_w, l.bar_h[i])
+            Color.set(l.bar_border_color)
+            g.rectangle("line", x, y - l.bar_h[i], l.bar_w, l.bar_h[i])
+            x = x + l.bar_w
         end
-        x = x + l.bar_w
-    end
 
-    --Draw player score line
-    y = y - 3
-    if l.player_score then
-        x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
-        Color.set(l.player_line_color)
-        g.setLineWidth(5)
-        g.line(x, y, x, y - l.player_line_h)
-        local text = 'YOU'
-        local tx = x - l.player_line_font:getWidth(text)/2 + 10
-        local ty = y - l.player_line_h - l.player_line_font:getHeight(text) + 12
-        g.print(text, tx, ty)
+        --Draw division
+        love.graphics.setFont(l.division_font)
+        Color.set(l.graph_border_color)
+        g.setLineWidth(3)
+        x = l.pos.x + l.h_margin
+        y = y + 1
+        for i = 0, l.divisions do
+            g.line(x,y,x,y+self.division_h)
+            if  i%2 == 0 then
+                local value = self.min + i*self.step
+                g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+            end
+            x = x + l.bar_w
+        end
+
+        --Draw player score line
+        y = y - 3
+        if l.player_score then
+            x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
+            Color.set(l.player_line_color)
+            g.setLineWidth(5)
+            g.line(x, y, x, y - l.player_line_h)
+            local text = 'YOU'
+            local tx = x - l.player_line_font:getWidth(text)/2 + 10
+            local ty = y - l.player_line_h - l.player_line_font:getHeight(text) + 12
+            g.print(text, tx, ty)
+        end
     end
 end
 
@@ -161,8 +148,36 @@ function Leaderboards:kill()
     self.death = true
 end
 
-function funcs.create(x, y, title, scores,player_score)
-    local l = Leaderboards(x,y,title,scores,player_score)
+function Leaderboards:showResults(scores, player_score)
+    local max_value = 0
+    --Populate with scores
+    for _, score in pairs(scores) do
+        local i = math.ceil(score/self.step)
+        self.graph[i] = self.graph[i] + 1
+        if self.graph[i] > max_value then
+            max_value = self.graph[i]
+        end
+    end
+
+    --Initialize bars
+    for i = 1, self.divisions do
+        self.bar_h[i] = 0
+        local target = self.max_bar_h * self.graph[i]/max_value
+        local h = MAIN_TIMER:tween(1, self.bar_h, {[i] = target}, 'out-quad')
+        table.insert(self.handles, h)
+    end
+
+    --Initialize player score
+    self.player_score = player_score
+    self.player_line_h = 0
+    local h = MAIN_TIMER:tween(1, self, {player_line_h = self.max_bar_h}, 'out-quad')
+    table.insert(self.handles, h)
+
+    self.loading = false
+end
+
+function funcs.create(x, y, title)
+    local l = Leaderboards(x,y,title)
     l:addElement(DRAW_TABLE.L2u, nil, "leaderboards")
 
     return l
