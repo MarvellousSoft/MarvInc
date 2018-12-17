@@ -115,6 +115,7 @@ BUTS_IMG["reboot"] = love.graphics.newImage("assets/images/reboot_button_regular
 BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_mouse_over.png")
 BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
 BUTS_IMG["achievements"] = love.graphics.newImage("assets/images/achievements.png")
+BUTS_IMG["leaderboards"] = love.graphics.newImage("assets/images/leaderboards.png")
 
 --Icons
 ICON_IMG = {}
