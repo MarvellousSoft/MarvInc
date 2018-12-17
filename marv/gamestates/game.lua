@@ -64,7 +64,7 @@ function state:enter(prev, user)
     bgmmanager:newBGM()
 
     if START_PUZZLE then
-        ROOM:connect(START_PUZZLE)
+        ROOM:connect(START_PUZZLE, nil, START_PUZZLE_CUSTOM)
     end
 end
 

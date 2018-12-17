@@ -212,7 +212,7 @@ function OpenedEmail:draw()
     -- DRAW EMAIL CONTENT --
 
     -- Draw author image
-    local img = Util.getAuthorImage(self.author)
+    local img = Util.getAuthorImage(self.author, self.is_custom)
     local pic_w, pic_h = 110, 110 --Size of author pic
     Color.set(Color.white())
     love.graphics.draw(img, e.pos.x + 10, e.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
@@ -314,7 +314,7 @@ function OpenedEmail:checkButtonClick(x, y, but)
         --Clicked on the reply button
         e.reply_func(e)
         if e.referenced_email.puzzle_id then
-            ROOM:connect(e.referenced_email.puzzle_id)
+            ROOM:connect(e.referenced_email.puzzle_id, nil, e.referenced_email.is_custom)
             opened_email_funcs.close()
         end
      end

@@ -165,6 +165,12 @@ OBJS_IMG["dead_body2"] = love.graphics.newImage("assets/images/dead_body_2.png")
 OBJS_IMG["dead_body3"] = love.graphics.newImage("assets/images/dead_body_3.png")
 OBJS_IMG["dead_body_hair"] = love.graphics.newImage("assets/images/dead_hair_1.png")
 
+-- Custom puzzle assets.
+CUST_OBJS_IMG = {}
+CUST_TILES_IMG = {}
+CUST_SHEET_IMG = {}
+CUST_AUTHOR_IMG = {}
+
 -- Character colors
 Color = require "classes.color.color"
 CHR_CLR = {}
@@ -190,6 +196,36 @@ SHEET_IMG["ray"] = {love.graphics.newImage("assets/images/ray_sheet.png"), 2}
 SHEET_IMG["lava"] = {love.graphics.newImage("assets/images/lava_sheet.png"), 4}
 SHEET_IMG["paint"] = {love.graphics.newImage("assets/images/paint_sheet.png"), 4}
 SHEET_IMG["fireplace"] = {love.graphics.newImage("assets/images/fireplace_sheet.png"), 6}
+
+-- Asset reference table
+local ASSET_TABLE_REFS = {image={CUST_OBJS_IMGS, OBJS_IMGS}, sprite={CUST_SHEET_IMG, SHEET_IMG}}
+
+-- Pulls an asset from the asset tables. Argument key is the reference key. Optional argument t
+-- explicits whether key is a sprite or image.
+function PULL_ASSET(key, t)
+    if key == nil then
+        print("Expected reference key to asset. Got nil value!")
+        return nil
+    end
+    if t ~= nil then
+        for _, T in ipairs(ASSET_TABLE_REFS[t]) do
+            local a = T[key]
+            if a ~= nil then return a end
+        end
+        print("Asset "..key.." not found!")
+        return nil
+    end
+    local a = CUST_OBJS_IMG[key]
+    if a ~= nil then return a end
+    a = OBJS_IMG[key]
+    if a ~= nil then return a end
+    a = CUST_SHEET_IMG[key]
+    if a ~= nil then return a end
+    a = SHEET_IMG[key]
+    if a ~= nil then return a end
+    print("Asset "..key.." not found!")
+    return nil
+end
 
 -- Author Images
 AUTHOR_IMG = {}

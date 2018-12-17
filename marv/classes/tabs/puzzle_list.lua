@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 local ScrollWindow = require "classes.scroll_window"
 require "classes.tabs.tab"
 local AuthorButton = require "classes.tabs.puzzle_list_buttons"
+local LParser = require "lparser.parser"
 
 local border_w = 20
 local button_dy = 20
@@ -117,21 +118,24 @@ function PuzzleListTab:refresh()
     local l = self.lists[1]
     l.buttons = {}
     local puzzles = {}
+    local custom_puzzles = {}
     local has_diego = false
     for _, email in ipairs(Util.findId('email_tab').email_list) do
         if email.puzzle_id and email.was_read then
-            local a = email.author
-            if a:find("Richard Black") then
-                a = "Olivia Kavanagh"
+            if not email.is_custom then
+                local a = email.author
+                if a:find("Richard Black") then
+                    a = "Olivia Kavanagh"
+                end
+                if a:find("[(]") then
+                    a = a:sub(1, a:find("[(]") - 2)
+                end
+                if email.puzzle_id:find("diego") then
+                    has_diego = true
+                end
+                puzzles[a] = puzzles[a] or {}
+                table.insert(puzzles[a], email.puzzle_id)
             end
-            if a:find("[(]") then
-                a = a:sub(1, a:find("[(]") - 2)
-            end
-            if email.puzzle_id:find("diego") then
-                has_diego = true
-            end
-            puzzles[a] = puzzles[a] or {}
-            table.insert(puzzles[a], email.puzzle_id)
         end
     end
     if not has_diego then
@@ -161,14 +165,11 @@ function PuzzleListTab:refresh()
     if love.filesystem.exists("custom") then
         local list = {}
         for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
-            if file:match("[.]lua$") then
-                local path = 'custom/'..file
-                local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G}
-                local f, err = love.filesystem.load(path)
-                setfenv(f, pu)
-                f()
-                local id = file:sub(1,-5) --Remove the ".lua"
-                table.insert(list, {name = pu.name, id = id, status = "custom"})
+            if love.filesystem.isFile("custom/"..file.."/level.lua") then
+                local P = LParser.parse(file, true)
+                if P ~= nil then
+                    table.insert(list, {name = P.name, id = file, status = "custom"})
+                end
             end
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Custom Puzzles", list))

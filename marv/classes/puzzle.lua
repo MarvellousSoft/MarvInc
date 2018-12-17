@@ -78,12 +78,13 @@ Puzzle = Class{
 function Puzzle:manage_objectives(auto_win)
     if self.completed then return end
     if auto_win or self.objective_checker(ROOM) --[[or love.keyboard.isDown("f10")  REMOVE IN RELEASE]] then
+        ScoreManager.getStatsForTest(ROOM.test_i)
         if ROOM.test_i == self.test_count then
             StepManager.pause()
             if not self.is_custom then
                 LoreManager.mark_completed(self)
                 ScoreManager.uploadCompletedStats(self)
-            else
+            elseif self.custom_completed then
                 self.custom_completed()
             end
             self.completed = true

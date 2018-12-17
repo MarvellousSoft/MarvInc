@@ -53,6 +53,7 @@ require "classes.leaderboards"
 require "classes.dead"
 require "classes.bucket"
 require "classes.computer"
+require "classes.console"
 require "classes.container"
 require "classes.dead_switch"
 require "classes.emitter"
@@ -149,6 +150,8 @@ function love.load(args)
             START_USER = cmd:sub(8)
         elseif cmd == "--no-splash" or cmd == "--skip-splash" then
             SKIP_SPLASH = true
+        elseif cmd == "--custom" then
+            START_PUZZLE_CUSTOM = true
         end
     end
 

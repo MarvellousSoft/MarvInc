@@ -20,7 +20,7 @@ Emitter = Class{
 
         self.r = _G[dir:upper() .. '_R']
 
-        self.img = OBJS_IMG[key]
+        self.img = PULL_ASSET(key)
         self.sx = ROOM_CW/self.img:getWidth()
         self.sy = ROOM_CH/self.img:getHeight()
 

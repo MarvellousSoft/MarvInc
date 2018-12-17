@@ -230,6 +230,7 @@ function EmailTab:openEmail(mail)
     TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
 
     e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.image)
+    e.email_opened.is_custom = mail.is_custom
     if not mail.was_read then
         -- this needs to be done after the email is 'registered' or it won't be able to access it.
         if mail.open_func then mail:open_func() end
@@ -285,11 +286,12 @@ end
 EmailObject = Class{
     __includes = {},
 
-    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number, _image)
+    init = function(self, _id, _title, _text, _author, _can_be_deleted, _puzzle_id, _open_func, _reply_func, _number, _image, _custom)
         local time
 
         self.number = _number
         self.id = _id
+        self.is_custom = _custom
 
         self.title = _title -- Title of the email
         self.text = _text -- Body of email
@@ -333,6 +335,35 @@ function email_funcs.get_raw_email(id, number)
     local e = require('emails.' .. id)
 
     local email = EmailObject(id, e.title, e.text, e.author, e.can_be_deleted, e.puzzle_id, e.open_func, e.reply_func, number, e.image)
+
+    return email
+end
+
+-- Creates a new custom email and adds it to the mail list.
+function email_funcs.new_custom(silent, id, title, text, author, delete, p_id, open_f, reply_f, img)
+    local mail_list, number, tab
+
+    tab = Util.findId("email_tab")
+
+    mail_list = tab.email_list
+
+    -- Increase number of current emails and update number for new email
+    tab.email_cur = tab.email_cur + 1
+    n = tab.email_cur
+
+    local email = EmailObject(id, title, text, author, delete, p_id, open_f, reply_f, n, img, true)
+
+    -- Add fade-in effect to email
+    email.handles["fadein"] = MAIN_TIMER:tween(.5, email, {alpha = 255, juicy_bump = 0}, 'out-quad')
+
+    table.insert(mail_list, email)
+
+    UNREAD_EMAILS = UNREAD_EMAILS + 1
+
+    if not silent then
+        SFX.new_email:stop()
+        SFX.new_email:play()
+    end
 
     return email
 end
