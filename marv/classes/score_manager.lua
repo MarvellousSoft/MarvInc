@@ -30,7 +30,7 @@ local function uploadScoreAndShow(id, score, mult, score_type, lb)
                 for i, r in ipairs(results) do
                     results[i] = r.score / mult
                 end
-                local friends = {{rank = 33, name = 'robert jones', score = 12}, {rank = 1, name = 'rica the great', score = 12000}, {rank = 90, name = 'tame impala', score = 0}}
+                local friends = {{rank = 33, name = 'robert jones', score = 12}, {rank = 1, name = 'rica the great', score = 12000}, {rank = 90, name = 'this is a very long name', score = 0}}
                 lb:showResults(results, score, friends)
             end)
         end)

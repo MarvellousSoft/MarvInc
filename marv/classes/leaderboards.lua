@@ -65,15 +65,19 @@ Leaderboards = Class{
         self.error_color = Color.red()
         self.error_text = "ERROR LOADING STATS"
 
-        self.headline_font = FONTS.robotoBold(25)
+        self.headline_font = FONTS.robotoBold(20)
         self.headline_color = Color.white()
-        self.friends_font = FONTS.fira(20)
+        self.rank_font = FONTS.fira(18)
+        self.max_name_size = 16
+        self.friends_font = FONTS.fira(17)
         self.friends_color = Color.white()
+        self.friends_division_line_color = Color.new(120, 30, 60)
+        self.friends_division_line_width = 2
 
         self.rank_headline = "RANK"
         self.rank_x = self.pos.x + self.h_margin
         self.name_headline = "NAME"
-        self.name_x = self.pos.x + self.w/2 - self.headline_font:getWidth(self.name_headline)/2
+        self.name_x = self.rank_x + self.headline_font:getWidth(self.rank_headline) + 20
         self.score_headline = "SCORE"
         self.score_x = self.pos.x + self.w - self.h_margin - self.headline_font:getWidth(self.name_headline)
     end
@@ -192,13 +196,29 @@ function Leaderboards:draw()
             g.line(x, y, x, y - l.player_line_h)
         end
 
-        --Draw friends score
-        y = y + 30
+        --Draw friends score headlines
+        y = y + 40
         Color.set(l.headline_color)
         g.setFont(l.headline_font)
         g.print(l.rank_headline,self.rank_x, y)
         g.print(l.name_headline,self.name_x, y)
         g.print(l.score_headline,self.score_x, y)
+
+        --Draw friends scores
+        y = y + 30
+        local gap = 30
+        g.setLineWidth(l.friends_division_line_width)
+        for i, data in ipairs(self.friends_scores) do
+            Color.set(l.friends_color)
+            g.setFont(l.rank_font)
+            g.print(data.rank..'.',self.rank_x, y)
+            g.setFont(l.friends_font)
+            g.print(data.name,self.name_x, y)
+            g.print(data.score,self.score_x, y)
+            Color.set(l.friends_division_line_color)
+            y = y + gap
+            g.line(l.pos.x + l.h_margin, y - 3, l.pos.x + l.w - l.h_margin, y - 3)
+        end
 
     end
 end
@@ -230,7 +250,6 @@ function Leaderboards:showResults(scores, player_score, friends_scores)
     --Set divisions
     self.divisions = math.min(10, self.max - self.min + 1)
     self.step = math.ceil((self.max - self.min + 1)/self.divisions)
-    print(self.step, self.divisions)
 
     --Init graph
     for i = 1, self.divisions do
@@ -268,6 +287,12 @@ function Leaderboards:showResults(scores, player_score, friends_scores)
     --Get friends scores
     self.friends_scores = friends_scores
     table.sort(self.friends_scores, function(a,b) return a.rank < b.rank end)
+    --Fix names of players to fit inside the window
+    for _, data in ipairs(self.friends_scores) do
+        if #data.name > self.max_name_size then
+            data.name = data.name:sub(1,self.max_name_size-3) .. "..."
+        end
+    end
 
     self.loading = false
 end
