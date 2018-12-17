@@ -67,7 +67,7 @@ Leaderboards = Class{
 
         self.error_font = FONTS.fira(30)
         self.error_color = Color.red()
-        self.error_text = "ERROR LOADING STATS"
+        self.error_text = "ERROR LOADING"
 
         self.headline_font = FONTS.robotoBold(20)
         self.headline_color = Color.white()
@@ -120,7 +120,7 @@ function Leaderboards:draw()
     --Draw graph bg
     local x = l.pos.x + l.h_margin
     local y = l.pos.y + 3*title_margin + th
-    local ox, oy = 8, 8
+    local ox, oy = 8, 0
     Color.set(l.graph_bg_color_shadow)
     g.rectangle("fill", x + ox, y + oy, l.graph_w, l.graph_h)
     Color.set(l.graph_bg_color)
