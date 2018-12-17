@@ -230,6 +230,7 @@ function EmailTab:openEmail(mail)
     TABS_LOCK = TABS_LOCK + 1 -- Lock tabs until email is closed
 
     e.email_opened = Opened.create(mail.number, mail.title, mail.text, mail.author, mail.time, mail.can_be_deleted, mail.reply_func, mail.can_reply, mail.image)
+    e.email_opened.is_custom = mail.is_custom
     if not mail.was_read then
         -- this needs to be done after the email is 'registered' or it won't be able to access it.
         if mail.open_func then mail:open_func() end

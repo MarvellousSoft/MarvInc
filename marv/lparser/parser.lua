@@ -377,8 +377,11 @@ function parser.load_email(id)
     for k, v in pairs(E.Import.__ref_imgs) do
         CUST_OBJS_IMG[k] = love.graphics.newImage(cpath .. v)
     end
+    if me.__portrait then
+        CUST_AUTHOR_IMG[me.Authors] = love.graphics.newImage(cpath .. E.Import.__ref_imgs[me.__portrait])
+    end
     if not Mail.exists(me.Title) then
-        return Mail.new_custom(false, id, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.Portrait])
+        return Mail.new_custom(false, id, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.__img])
     end
 end
 
