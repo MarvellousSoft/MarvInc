@@ -16,7 +16,7 @@ local funcs = {}
 Leaderboards = Class{
     __includes = {RECT},
     init = function(self, x, y, title)
-        RECT.init(self, x, y, 450, 350, Color.white())
+        RECT.init(self, x, y, 350, 480, Color.white())
 
         self.loading = true --If its loading stats
         self.error = false --If has reached some error trying to get stats
@@ -27,15 +27,17 @@ Leaderboards = Class{
 
         self.graph = {}
 
+        self.friends_scores = {}
+
         --Graphics stuff
         self.h_margin = 25
         self.graph_w = self.w - 2*self.h_margin
-        self.graph_h = 200
+        self.graph_h = 140
         self.graph_bg_color = Color.new(120, 30, 50)
         self.graph_border_color = Color.white()
 
         self.bar_h = {}
-        self.max_bar_h = 180
+        self.max_bar_h = self.graph_h - 20
 
         self.bar_border_color = self.graph_border_color
         self.bar_border_width = 3
@@ -63,7 +65,17 @@ Leaderboards = Class{
         self.error_color = Color.red()
         self.error_text = "ERROR LOADING STATS"
 
+        self.headline_font = FONTS.robotoBold(25)
+        self.headline_color = Color.white()
+        self.friends_font = FONTS.fira(20)
+        self.friends_color = Color.white()
 
+        self.rank_headline = "RANK"
+        self.rank_x = self.pos.x + self.h_margin
+        self.name_headline = "NAME"
+        self.name_x = self.pos.x + self.w/2 - self.headline_font:getWidth(self.name_headline)/2
+        self.score_headline = "SCORE"
+        self.score_x = self.pos.x + self.w - self.h_margin - self.headline_font:getWidth(self.name_headline)
     end
 }
 
@@ -175,10 +187,19 @@ function Leaderboards:draw()
             Color.set(l.player_line_color)
             g.setFont(l.player_line_font)
             g.print(text, tx, ty)
-            --Draw line
             g.setLineWidth(5)
+            --Draw line
             g.line(x, y, x, y - l.player_line_h)
         end
+
+        --Draw friends score
+        y = y + 30
+        Color.set(l.headline_color)
+        g.setFont(l.headline_font)
+        g.print(l.rank_headline,self.rank_x, y)
+        g.print(l.name_headline,self.name_x, y)
+        g.print(l.score_headline,self.score_x, y)
+
     end
 end
 
@@ -193,7 +214,7 @@ function Leaderboards:gotError()
     self.error = true
 end
 
-function Leaderboards:showResults(scores, player_score)
+function Leaderboards:showResults(scores, player_score, friends_scores)
     --Get min and max value from scores
     self.min = scores[1]
     self.max = scores[1]
@@ -243,6 +264,10 @@ function Leaderboards:showResults(scores, player_score)
         local h = MAIN_TIMER:tween(1, self, {player_line_h = self.max_bar_h}, 'out-quad')
         table.insert(self.handles, h)
     end))
+
+    --Get friends scores
+    self.friends_scores = friends_scores
+    table.sort(self.friends_scores, function(a,b) return a.rank < b.rank end)
 
     self.loading = false
 end
