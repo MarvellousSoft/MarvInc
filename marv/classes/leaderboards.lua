@@ -21,20 +21,11 @@ Leaderboards = Class{
         self.loading = true --If its loading stats
         self.error = false --If has reached some error trying to get stats
 
-        self.divisions = 10
-        self.min = 0
-        self.max = 100
-        self.step = math.ceil((self.max - self.min)/self.divisions)
-
         self.handles = {}
 
         self.title = title
 
-        --Init graph
         self.graph = {}
-        for i = 1, self.divisions do
-            self.graph[i] = 0
-        end
 
         --Graphics stuff
         self.h_margin = 25
@@ -43,7 +34,6 @@ Leaderboards = Class{
         self.graph_bg_color = Color.new(120, 30, 50)
         self.graph_border_color = Color.white()
 
-        self.bar_w = self.graph_w/self.divisions
         self.bar_h = {}
         self.max_bar_h = 180
 
@@ -138,21 +128,40 @@ function Leaderboards:draw()
         g.setFont(l.division_font)
         Color.set(l.graph_border_color)
         g.setLineWidth(3)
-        x = l.pos.x + l.h_margin
         y = y + 1
-        for i = 0, l.divisions do
-            g.line(x,y,x,y+self.division_h)
-            if  i%2 == 0 then
+        if self.step == 1 then
+            --Draw numbers
+            x = l.pos.x + l.h_margin + l.bar_w/2
+            for i = 1, l.divisions do
+                local value = self.min + (i-1)*self.step
+                g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+                x = x + l.bar_w
+            end
+            --Draw lines
+            x = l.pos.x + l.h_margin
+            for i = 0, l.divisions do
+                g.line(x,y,x,y+self.division_h)
+                x = x + l.bar_w
+            end
+        else
+            --Draw numbers and lines
+            x = l.pos.x + l.h_margin
+            for i = 0, l.divisions do
+                g.line(x,y,x,y+self.division_h)
                 local value = self.min + i*self.step
                 g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+                x = x + l.bar_w
             end
-            x = x + l.bar_w
         end
 
         --Draw player score line
         y = y - 3
         if l.player_score then
-            x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
+            if self.step > 1 then
+                x = l.pos.x + l.h_margin + l.graph_w * ((l.player_score - l.min)/(l.max - l.min))
+            else
+                x = l.pos.x + l.h_margin + l.bar_w/2 + l.bar_w * (l.player_score - l.min)
+            end
             local margin = 2
             local text = 'YOU'
             local tw = l.player_line_font:getWidth(text)
@@ -185,11 +194,33 @@ function Leaderboards:gotError()
 end
 
 function Leaderboards:showResults(scores, player_score)
-    local max_value = 0
+    --Get min and max value from scores
+    self.min = scores[1]
+    self.max = scores[1]
+    for _, score in pairs(scores) do
+        if score < self.min then
+            self.min = score
+        end
+        if score > self.max then
+            self.max = score
+        end
+    end
+
+    --Set divisions
+    self.divisions = math.min(10, self.max - self.min + 1)
+    self.step = math.ceil((self.max - self.min + 1)/self.divisions)
+    print(self.step, self.divisions)
+
+    --Init graph
+    for i = 1, self.divisions do
+        self.graph[i] = 0
+    end
 
     --Populate with scores
+    local max_value = 0
     for _, score in pairs(scores) do
-        local i = math.ceil(score/self.step)
+        local i = math.floor((score-self.min)/self.step) + 1
+        i = math.min(i, self.divisions)
         self.graph[i] = self.graph[i] + 1
         if self.graph[i] > max_value then
             max_value = self.graph[i]
@@ -197,6 +228,7 @@ function Leaderboards:showResults(scores, player_score)
     end
 
     --Initialize bars
+    self.bar_w = self.graph_w/self.divisions
     for i = 1, self.divisions do
         self.bar_h[i] = 0
         local target = self.max_bar_h * self.graph[i]/max_value

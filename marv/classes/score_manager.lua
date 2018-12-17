@@ -22,7 +22,7 @@ function sm.uploadCompletedStats(puzzle)
             if err2 then lb:gotError(); return end
             print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. line_count .. ' lines')
             Steam.userStats.downloadLeaderboardEntries(info.steamLeaderboard, "Global", 1, 10000, function(results, err3)
-                if err3 or results == nil then lb:gotError(); return end
+                if err3 or results == nil or #results <= 0 then lb:gotError(); return end
                 for i, r in ipairs(results) do
                     results[i] = r.score
                 end
