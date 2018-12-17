@@ -92,6 +92,13 @@ function PuzzleButton:init(x, y, w, h, puzzle)
     end
     self.font = FONTS.fira(sz)
     self.stats_font = FONTS.fira(15)
+
+    local size = self.h
+    self.leaderboards_button = ImgButton(x + w + 10, y + h/2 - size/2, size, BUTS_IMG.leaderboards,
+        function()
+            print("hi")
+        end
+    )
 end
 
 function PuzzleButton:checkCollides(x, y)
@@ -104,6 +111,7 @@ function PuzzleButton:checkCollides(x, y)
         end
         ROOM:connect(self.puzzle.id, nil, self.is_custom)
     end
+    self.leaderboards_button:checkCollides(x,y)
 end
 
 local color_table = {
@@ -148,6 +156,11 @@ function PuzzleButton:draw(mx, my)
     love.graphics.setColor(0, 0, 0)
     local shift = self.has_challenge and circles_w or 0
     love.graphics.print(self.puzzle.name, self.pos.x + shift + (self.w - shift - self.font:getWidth(self.puzzle.name)) / 2, self.pos.y + (self.h - self.font:getHeight()) / 2)
+
+    -- leaderboards button
+    self.leaderboards_button.pos.x = self.pos.x + self.w
+    self.leaderboards_button.pos.y = self.pos.y
+    self.leaderboards_button:draw()
 
     return self.h
 end
