@@ -217,7 +217,7 @@ end
 
 function funcs.create(x, y, title)
     local l = Leaderboards(x,y,title)
-    l:addElement(DRAW_TABLE.L2u, nil, "leaderboards")
+    l:addElement(DRAW_TABLE.L2u, "leaderboard")
 
     return l
 end

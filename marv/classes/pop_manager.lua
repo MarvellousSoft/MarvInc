@@ -307,8 +307,12 @@ end
 function PopManager.quit()
     PopManager.pop.death = true
     PopManager.pop = nil
-    local ld = Util.findId("leaderboards")
-    if ld then ld:kill() end
+    local lbs = Util.findSbTp('leaderboard')
+    if lbs then
+        for lb in pairs(lbs) do
+            lb:kill()
+        end
+    end
     TABS_LOCK = TABS_LOCK - 1
     EVENTS_LOCK = EVENTS_LOCK - 1
 end
