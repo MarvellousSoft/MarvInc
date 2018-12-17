@@ -19,6 +19,7 @@ Leaderboards = Class{
         RECT.init(self, x, y, 450, 350, Color.white())
 
         self.loading = true --If its loading stats
+        self.error = false --If has reached some error trying to get stats
 
         self.divisions = 10
         self.min = 0
@@ -53,7 +54,7 @@ Leaderboards = Class{
         self.division_font = FONTS.fira(15)
         self.division_h = 8
 
-        self.player_line_font = FONTS.robotoBold(25)
+        self.player_line_font = FONTS.robotoBold(19)
         self.player_line_color = Color.new(0, 240, 180)
         self.player_line_h = 0
 
@@ -63,6 +64,15 @@ Leaderboards = Class{
         self.title_font = FONTS.fira(30)
         self.title_bg_color = Color.new(0, 30, 10)
         self.title_color = Color.white()
+
+        self.loading_font = FONTS.fira(30)
+        self.loading_color = Color.white()
+        self.loading_text = "Loading stats..."
+
+        self.error_font = FONTS.fira(30)
+        self.error_color = Color.red()
+        self.error_text = "ERROR LOADING STATS"
+
 
     end
 }
@@ -99,8 +109,21 @@ function Leaderboards:draw()
     Color.set(l.graph_border_color)
     g.rectangle("line", x, y, l.graph_w, l.graph_h)
 
-    if not self.loading then
-
+    if self.error then
+        local text = l.error_text
+        Color.set(l.error_color)
+        g.setFont(l.error_font)
+        local tx = x + l.graph_w/2 - l.error_font:getWidth(text)/2
+        local ty = y + l.graph_h/2 - l.error_font:getHeight(text)/2
+        g.print(text, tx, ty)
+    elseif self.loading then
+        local text = l.loading_text
+        Color.set(l.loading_color)
+        g.setFont(l.loading_font)
+        local tx = x + l.graph_w/2 - l.loading_font:getWidth(text)/2
+        local ty = y + l.graph_h/2 - l.loading_font:getHeight(text)/2
+        g.print(text, tx, ty)
+    else
         --Draw bars
         y = y + l.graph_h
         for i = 1, l.divisions do
@@ -112,7 +135,7 @@ function Leaderboards:draw()
         end
 
         --Draw division
-        love.graphics.setFont(l.division_font)
+        g.setFont(l.division_font)
         Color.set(l.graph_border_color)
         g.setLineWidth(3)
         x = l.pos.x + l.h_margin
@@ -130,13 +153,22 @@ function Leaderboards:draw()
         y = y - 3
         if l.player_score then
             x = l.pos.x + l.h_margin + l.graph_w * (l.player_score/(l.max - l.min))
+            local margin = 2
+            local text = 'YOU'
+            local tw = l.player_line_font:getWidth(text)
+            local th = l.player_line_font:getHeight(text)
+            local tx = x - tw/2
+            local ty = y - l.player_line_h - th - 4
+            --Draw bg
+            g.setColor(255,255,255,235)
+            g.rectangle("fill",tx-margin,ty-margin,tw+2*margin,th+2*margin,5)
+            --Draw text
             Color.set(l.player_line_color)
+            g.setFont(l.player_line_font)
+            g.print(text, tx, ty)
+            --Draw line
             g.setLineWidth(5)
             g.line(x, y, x, y - l.player_line_h)
-            local text = 'YOU'
-            local tx = x - l.player_line_font:getWidth(text)/2 + 10
-            local ty = y - l.player_line_h - l.player_line_font:getHeight(text) + 12
-            g.print(text, tx, ty)
         end
     end
 end
@@ -148,8 +180,13 @@ function Leaderboards:kill()
     self.death = true
 end
 
+function Leaderboards:gotError()
+    self.error = true
+end
+
 function Leaderboards:showResults(scores, player_score)
     local max_value = 0
+
     --Populate with scores
     for _, score in pairs(scores) do
         local i = math.ceil(score/self.step)
@@ -168,10 +205,12 @@ function Leaderboards:showResults(scores, player_score)
     end
 
     --Initialize player score
-    self.player_score = player_score
-    self.player_line_h = 0
-    local h = MAIN_TIMER:tween(1, self, {player_line_h = self.max_bar_h}, 'out-quad')
-    table.insert(self.handles, h)
+    table.insert(self.handles, MAIN_TIMER:after(.8, function()
+        self.player_score = player_score
+        self.player_line_h = 0
+        local h = MAIN_TIMER:tween(1, self, {player_line_h = self.max_bar_h}, 'out-quad')
+        table.insert(self.handles, h)
+    end))
 
     self.loading = false
 end
