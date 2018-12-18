@@ -88,13 +88,33 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
         end)
         return
     end
-    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Global", 1, 10000, function(results, err)
-        if err or results == nil or #results <= 0  then return lb:gotError() end
-        for i, r in ipairs(results) do
-            results[i] = r.score / multiplier[type]
+    local global, friends
+    local function testFinish()
+        if global and friends then
+            -- TODO get score using this players steam id
+            lb:showResults(global, friends)
         end
-        local friends = {{rank = 33, name = 'robert jones', score = 12}, {rank = 1, name = 'rica the great', score = 12000}, {rank = 90, name = 'this is a very long name', score = 0}}
-        lb:showResults(results, score, friends)
+    end
+    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Global", 1, 10000, function(results, err)
+        if err or results == nil or #results <= 0 then return lb:gotError() end
+        global = {}
+        for i, r in ipairs(results) do
+            global[i] = r.score / multiplier[type]
+        end
+        testFinish()
+        -- XXX Once luasteam is fixed, this should be parallel instead of sequential
+        Steam.userStats.downloadLeaderboardEntries(lb_handle, "Friends", function(results, err)
+            if err or results == nil or #results <= 0 then return lb:gotError() end
+            friends = {}
+            for i, r in ipairs(results) do
+                friends[i] = {
+                    name = Steam.friends.getFriendPersonaName(r.steamIDUser),
+                    rank = r.globalRank,
+                    score = r.score / multiplier[type],
+                }
+            end
+            testFinish()
+        end)
     end)
 end
 

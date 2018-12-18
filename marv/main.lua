@@ -213,7 +213,7 @@ function love.resize(w, h)
     ResManager.adjustWindow(w, h)
 end
 
-local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true, [GS.WARNINGWIN] = true}
+local ok_state = {[GS.SPLASH] = true, [GS.GAME] = true, [GS.MENU] = true, [GS.WARNINGWIN] = true, [GS.LEADERBOARDS] = true}
 local _force = false
 function love.quit()
     local room = GS['GAME'].getRoom()

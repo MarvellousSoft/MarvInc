@@ -252,7 +252,7 @@ function Leaderboards:gotError()
     self.error = true
 end
 
-function Leaderboards:showResults(scores, player_score, friends_scores)
+function Leaderboards:showResults(scores, friends_scores, player_score)
     --Get min and max value from scores
     self.min = scores[1]
     self.max = scores[1]
