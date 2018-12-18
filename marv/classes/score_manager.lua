@@ -23,25 +23,23 @@ local function avg(tab, n)
     return sum / n
 end
 
+local multiplier = {
+    linecount = 1,
+    cycles = 100
+}
+
 function sm.getStatsForTest(i)
     steps_vec[i] = StepManager.ic
     line_count_vec[i] = Util.findId('code_tab'):countLines()
 end
 
-local function uploadScoreAndShow(id, score, mult, score_type, lb)
-    Steam.userStats.findOrCreateLeaderboard(id .. '_' .. score_type, "Ascending", "Numeric", function (info, err)
-        if err or info == nil then return lb:gotError() end
-        Steam.userStats.uploadLeaderboardScore(info.steamLeaderboard, "KeepBest", math.floor(score * mult), nil, function(_, err2)
+local function uploadScoreAndShow(lb, id, type, score)
+    sm.findHandle(id, type, function(handle, err)
+        if err then return lb:gotError() end
+        Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(_, err2)
             if err2 then return lb:gotError() end
-            print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. score .. ' ' .. score_type)
-            Steam.userStats.downloadLeaderboardEntries(info.steamLeaderboard, "Global", 1, 10000, function(results, err3)
-                if err3 or results == nil or #results <= 0  then return lb:gotError() end
-                for i, r in ipairs(results) do
-                    results[i] = r.score / mult
-                end
-                local friends = {{rank = 33, name = 'robert jones', score = 12}, {rank = 1, name = 'rica the great', score = 12000}, {rank = 90, name = 'this is a very long name', score = 0}}
-                lb:showResults(results, score, friends)
-            end)
+            print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. score .. ' ' .. type)
+            sm.populateLeaderboard(lb, id, type, handle)
         end)
     end)
 end
@@ -63,10 +61,41 @@ function sm.uploadCompletedStats(puzzle)
     local lb_line = Leaderboards.create(x, y, "LINES")
     local lb_cycles = Leaderboards.create(x + lb_line.w + 15, y, "CYCLES")
     pop:translate(-390,0)
-    uploadScoreAndShow(id, line_count, 1, 'linecount', lb_line)
+    uploadScoreAndShow(lb_line, id, 'linecount', line_count)
     -- not working properly. Luasteam should be improved.
-    uploadScoreAndShow(id, steps, 100, 'cycles', lb_cycles)
+    uploadScoreAndShow(lb_cycles, id, 'cycles', steps)
 end
 
+function sm.findHandle(puzzle_id, type, callback)
+    Steam.userStats.findOrCreateLeaderboard(puzzle_id .. '_' .. type, "Ascending", "Numeric", function (info, err)
+        if err or info == nil then
+            callback(nil, err)
+        else
+            callback(info.steamLeaderboard, err)
+        end
+    end)
+end
+
+-- Download scores from
+function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
+    if not lb_handle then
+        sm.findHandle(puzzle_id, type, function(handle, err)
+            if err then
+                lb:gotError()
+            else
+                sm.populateLeaderboard(lb, puzzle_id, type, handle)
+            end
+        end)
+        return
+    end
+    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Global", 1, 10000, function(results, err)
+        if err or results == nil or #results <= 0  then return lb:gotError() end
+        for i, r in ipairs(results) do
+            results[i] = r.score / multiplier[type]
+        end
+        local friends = {{rank = 33, name = 'robert jones', score = 12}, {rank = 1, name = 'rica the great', score = 12000}, {rank = 90, name = 'this is a very long name', score = 0}}
+        lb:showResults(results, score, friends)
+    end)
+end
 
 return sm

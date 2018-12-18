@@ -8,6 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 local Leaderboards = require "classes.leaderboards"
+local ScoreManager = require "classes.score_manager"
 
 local state = {}
 
@@ -18,11 +19,14 @@ local _lb_cycles
 function state:enter(previous, puzzle_id)
     local x, y = 230, 200
     _lb_line = Leaderboards.create(x, y, "LINES", true)
+    ScoreManager.populateLeaderboard(_lb_line, puzzle_id, 'linecount')
     _lb_cycles = Leaderboards.create(x + _lb_line.w + 160, y, "CYCLES", true)
+    ScoreManager.populateLeaderboard(_lb_cycles, puzzle_id, 'cycles')
     _switch = false
 end
 
 function state:update(dt)
+    Util.updateTimers(dt)
     if _switch then
         Gamestate.pop()
     end
