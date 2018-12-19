@@ -62,7 +62,6 @@ function sm.uploadCompletedStats(puzzle)
     local lb_cycles = Leaderboards.create(x + lb_line.w + 15, y, "CYCLES")
     pop:translate(-390,0)
     uploadScoreAndShow(lb_line, id, 'linecount', line_count)
-    -- not working properly. Luasteam should be improved.
     uploadScoreAndShow(lb_cycles, id, 'cycles', steps)
 end
 
@@ -102,19 +101,18 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
             global[i] = r.score / multiplier[type]
         end
         testFinish()
-        -- XXX Once luasteam is fixed, this should be parallel instead of sequential
-        Steam.userStats.downloadLeaderboardEntries(lb_handle, "Friends", function(results, err)
-            if err or results == nil or #results <= 0 then return lb:gotError() end
-            friends = {}
-            for i, r in ipairs(results) do
-                friends[i] = {
-                    name = Steam.friends.getFriendPersonaName(r.steamIDUser),
-                    rank = r.globalRank,
-                    score = r.score / multiplier[type],
-                }
-            end
-            testFinish()
-        end)
+    end)
+    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Friends", function(results, err)
+        if err or results == nil or #results <= 0 then return lb:gotError() end
+        friends = {}
+        for i, r in ipairs(results) do
+            friends[i] = {
+                name = Steam.friends.getFriendPersonaName(r.steamIDUser),
+                rank = r.globalRank,
+                score = r.score / multiplier[type],
+            }
+        end
+        testFinish()
     end)
 end
 
