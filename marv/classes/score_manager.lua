@@ -87,11 +87,11 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
         end)
         return
     end
-    local global, friends
+    local global, friends, my_score
     local function testFinish()
         if global and friends then
             -- TODO get score using this players steam id
-            lb:showResults(global, friends)
+            lb:showResults(global, friends, my_score)
         end
     end
     Steam.userStats.downloadLeaderboardEntries(lb_handle, "Global", 1, 10000, function(results, err)
@@ -105,7 +105,11 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
     Steam.userStats.downloadLeaderboardEntries(lb_handle, "Friends", function(results, err)
         if err or results == nil or #results <= 0 then return lb:gotError() end
         friends = {}
+        local my_id = Steam.user.getSteamID()
         for i, r in ipairs(results) do
+            if r.steamIDUser == my_id then
+                my_score = r.score / multiplier[type]
+            end
             friends[i] = {
                 name = Steam.friends.getFriendPersonaName(r.steamIDUser),
                 rank = r.globalRank,
