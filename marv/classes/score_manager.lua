@@ -90,7 +90,6 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
     local global, friends, my_score
     local function testFinish()
         if global and friends then
-            -- TODO get score using this players steam id
             lb:showResults(global, friends, my_score)
         end
     end

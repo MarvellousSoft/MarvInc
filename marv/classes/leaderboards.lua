@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
+local ScrollWindow = require "classes.scroll_window"
 
 -- Leaderboards class
 local funcs = {}
@@ -84,6 +85,14 @@ Leaderboards = Class{
         self.name_x = self.rank_x + self.headline_font:getWidth(self.rank_headline) + 20
         self.score_headline = "SCORE"
         self.score_x = self.pos.x + self.w - self.h_margin - self.headline_font:getWidth(self.name_headline)
+
+        self.friends_score = {
+            last_y = self.pos.y + self.graph_h,
+            pos = self.pos:clone(), -- updated in draw
+            draw = function() self:drawFriends() end,
+            getHeight = function(obj) return obj.last_y - obj.pos.y end
+        }
+        self.friends_scroll = ScrollWindow(self.w - ScrollWindow.default_width - 10, 0 --[[set in draw]], self.friends_score, 30)
     end
 }
 
@@ -221,24 +230,35 @@ function Leaderboards:draw()
         g.print(l.rank_headline,self.rank_x, y)
         g.print(l.name_headline,self.name_x, y)
         g.print(l.score_headline,self.score_x, y)
-
-        --Draw friends scores
         y = y + 30
-        local gap = 30
-        g.setLineWidth(l.friends_division_line_width)
-        for i, data in ipairs(self.friends_scores) do
-            Color.set(l.friends_color)
-            g.setFont(l.rank_font)
-            g.print(data.rank..'.',self.rank_x, y)
-            g.setFont(l.friends_font)
-            g.print(data.name,self.name_x, y)
-            g.print(data.score,self.score_x, y)
-            Color.set(l.friends_division_line_color)
-            y = y + gap
-            g.line(l.pos.x + l.h_margin, y - 3, l.pos.x + l.w - l.h_margin, y - 3)
-        end
 
+        local s_h = self.pos.y + self.h - y - 3
+        self.friends_scroll.h = math.floor(s_h / 30) * 30
+        self.friends_score.pos.y = y
+        self.friends_scroll:draw()
     end
+end
+
+function Leaderboards:drawFriends()
+    local l = self
+    local y = l.friends_score.pos.y
+    local g = love.graphics
+
+    --Draw friends scores
+    local gap = 30
+    g.setLineWidth(l.friends_division_line_width)
+    for i, data in ipairs(self.friends_scores) do
+        Color.set(l.friends_color)
+        g.setFont(l.rank_font)
+        g.print(data.rank..'.',self.rank_x, y)
+        g.setFont(l.friends_font)
+        g.print(data.name,self.name_x, y)
+        g.print(data.score,self.score_x, y)
+        Color.set(l.friends_division_line_color)
+        y = y + gap
+        g.line(l.pos.x + l.h_margin, y - 3, l.pos.x + l.w - l.h_margin, y - 3)
+    end
+    l.friends_score.last_y = y
 end
 
 function Leaderboards:kill()
@@ -315,6 +335,12 @@ function Leaderboards:showResults(scores, friends_scores, player_score)
     self.loading = false
 end
 
+local redirect = {'mousePressed', 'mouseReleased', 'mouseScroll', 'mouseMoved', 'update'}
+
+for _, name in ipairs(redirect) do
+    Leaderboards[name] = function(self, ...) self.friends_scroll[name](self.friends_scroll, ...) end
+end
+
 function funcs.create(x, y, title, dont_register)
     local l = Leaderboards(x,y,title)
     if not dont_register then
@@ -323,4 +349,5 @@ function funcs.create(x, y, title, dont_register)
 
     return l
 end
+
 return funcs
