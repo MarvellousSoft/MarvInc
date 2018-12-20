@@ -29,7 +29,7 @@ Yesterday, after the massive stampeding caused by crazed Apple fans due to this 
 
 {blue}Marvellous Inc. CEOs ask for peace{end}
 ]]..div..[[
-After the increase in tensions in world geopolitics, the three Marvellous Inc. CEOs asked for a cooling between the four superpowers. "We have to put our differences aside and work towards the same goal", asked the letter signed by the three heads of the multinational. However, it appears this attempt at appeasement has fallen on deaf ears, as new provocations on both sides arise.
+After the increase in tensions in world geopolitics, the three Marvellous Inc. CEOs asked for a cooling between the four superpowers. "We have to put our differences aside and work towards the same goal", asked the letter signed by the three heads of the multinational. However, it appears this attempt at appeasement has fallen on deaf ears, as new provocations on all sides arise.
 {blue}[More...]{end}
 
 {blue}Unidentified Foreign Objects in Uranus{end}

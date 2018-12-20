@@ -10,7 +10,7 @@ See full license in file LICENSE.txt
 return {
     title = "I'm done",
     text = [[
-{red}Holy fuck{end}. Corporate are really, {red}really{end} fucking stupid.
+{red}Holy fuck{end}. Corporate is really, {red}really{end} fucking stupid.
 
 As you can see, everything is fucking falling apart, but they still think my {purple}Project Brainfuck{end} will be a game-changer hahahahaha. They are sending all their (unfrozen) resources here. I got 100 new servers, and I'm running some stupid busy loop on them to pretend they are being used to their full power.
 

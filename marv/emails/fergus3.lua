@@ -18,7 +18,7 @@ I was gonna say it was just some innocent joke, but let's face it, it wasn't. {o
 
 The bosses, however, are not very forgiving, and are demanding {orange}a lot{end} of me. They've sent me more tasks this week than I've received for the last 3 months. And they want it done {red}fast{end}.
 
-I know I shouldn't be doing this, but you're the last person I have to turn too, and {orange}it's my own fault{end}. If you could help me in this, I would be very grateful. Reply this email and I will send you the task. I've already done some of it, so you just need to do the end. It is about painting the floor, I've updated your manual so the {inst}pickup{end} and {inst}drop{end} commands now explain this better.
+I know I shouldn't be doing this, but you're the last person I have to turn to, and {orange}it's my own fault{end}. If you could help me in this, I would be very grateful. Reply this email and I will send you the task. I've already done some of it, so you just need to do the end. It is about painting the floor, I've updated your manual so the {inst}pickup{end} and {inst}drop{end} commands now explain this better.
 
 Thank you anyway!
 

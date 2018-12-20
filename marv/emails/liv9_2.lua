@@ -29,7 +29,7 @@ I'll send you some more examples shortly. Carry on.
 Richard Black
 Programmer intern at Marvellous Inc. Software Development Department
 
-* If you're really an L++ expert, you'll realize that this works even if the value is negative, since -999 - 1 = 999 (it will take a long of time, for sure).]],
+* If you're really an L++ expert, you'll realize that this works even if the value is negative, since -999 - 1 = 999 (it will take a long time, for sure).]],
     author = "Richard Black (rick.black@sdd.marv.com)",
     puzzle_id = 'liv9'
 }

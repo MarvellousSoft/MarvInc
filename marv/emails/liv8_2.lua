@@ -20,7 +20,7 @@ This example will print 1, -1, 2, -2, 3, -3, using two array positions as well.
 
 Hope you got it. If you need more help, {red}Google {end}it.
 
-Nice to see you again, carry on.
+Nice to see talk to you again, carry on.
 
 Richard Black
 Programmer intern at Marvellous Inc. Software Development Department]],
