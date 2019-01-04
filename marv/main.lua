@@ -7,6 +7,11 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
+-- This allows placing the library binaries next to the .love bundle on ALL platforms
+-- TODO: Test if it really works
+local windows = package.config:sub(1, 1) == '\\'
+package.cpath = string.format("%s;%s/?.%s", package.cpath, love.filesystem.getSourceBaseDirectory(), (windows and "dll" or "so"))
+
 --HUMP STUFF
 Gamestate = require "extra_libs.hump.gamestate"
 Timer     = require "extra_libs.hump.timer"
