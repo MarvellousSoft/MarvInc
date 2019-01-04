@@ -233,15 +233,38 @@ function parser.prepare(puz_f, t)
     return _E
 end
 
+local function getAbsolutePath(id)
+    if love.filesystem.isDirectory("custom/" .. id) then
+        return love.filesystem.getSaveDirectory() .. "/custom/" .. id .. "/"
+    elseif USING_STEAM then
+        local file_id = Steam.extra.uint64FromString(id)
+        local ok, _, dir = Steam.UGC.getItemInstallInfo(file_id)
+        if ok then
+            return dir .. "/"
+        end
+    end
+end
+
+-- Image from absolute path (can't use love.graphics.newImage directly)
+local function newImage(path)
+    local f = io.open(path, "rb")
+    if not f then
+        error("Could not find file " .. path)
+    end
+    local data = f:read("*all")
+    f:close()
+    return love.graphics.newImage(love.filesystem.newFileData(data, path))
+end
+
+
 function parser.parse(id, noload)
-    local f, err
-    f, err = love.filesystem.load("custom/" .. id .. "/level.lua")
-    if err then print(err) end
-    local E = parser.prepare(f, "level")
-    local s, err = pcall(f)
-    if not s then
+    -- Can't use most love.filesystem stuff since it may be outside of save dir
+    local path = getAbsolutePath(id)
+    local f = path and loadfile(path .. "level.lua")
+    local E = f and parser.prepare(f, "level")
+    local s = f and pcall(f)
+    if not path or not f or not s then
         print("Custom level "..id.." has failed to compile!")
-        print(err)
         return nil
     end
     local P = Puzzle()
@@ -274,15 +297,14 @@ function parser.parse(id, noload)
         return nil
     end
 
-    local cpath = "custom/"..id.."/"
     for k, v in pairs(E.Import.__ref_imgs) do
-        CUST_OBJS_IMG[k] = love.graphics.newImage(cpath .. v)
+        CUST_OBJS_IMG[k] = newImage(path .. v)
     end
     for k, v in pairs(E.Import.__ref_tiles) do
-        CUST_TILES_IMG[k] = love.graphics.newImage(cpath .. v)
+        CUST_TILES_IMG[k] = newImage(path .. v)
     end
     for k, v in pairs(E.Import.__ref_sprites) do
-        CUST_SHEET_IMG[k] = {love.graphics.newImage(cpath .. v[2]), v[1]}
+        CUST_SHEET_IMG[k] = {newImage(path .. v[2]), v[1]}
     end
 
     for i=1, COLS do
@@ -357,9 +379,12 @@ function parser.parse(id, noload)
 end
 
 function parser.load_email(id)
-    local f, err
-    f, err = love.filesystem.load("custom/" .. id .. "/email.lua")
-    if err then print(err) end
+    local path = getAbsolutePath(id)
+    local f = path and loadfile(path .. "email.lua")
+    if not path or not f then
+        print("Custom Level " .. id .. " has no emails")
+        return
+    end
     local E = parser.prepare(f, "email")
     f()
     local me = nil
@@ -371,14 +396,13 @@ function parser.load_email(id)
     end
     if me == nil and #E.__emails ~= 0 then
         print("There must be at least one main email!")
-        return nil
+        return
     end
-    local cpath = "custom/"..id.."/"
     for k, v in pairs(E.Import.__ref_imgs) do
-        CUST_OBJS_IMG[k] = love.graphics.newImage(cpath .. v)
+        CUST_OBJS_IMG[k] = newImage(path .. v)
     end
     if me.__portrait then
-        CUST_AUTHOR_IMG[me.Authors] = love.graphics.newImage(cpath .. E.Import.__ref_imgs[me.__portrait])
+        CUST_AUTHOR_IMG[me.Authors] = newImage(path .. E.Import.__ref_imgs[me.__portrait])
     end
     if not Mail.exists(me.Title) then
         return Mail.new_custom(false, id, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.__img])
@@ -386,9 +410,7 @@ function parser.load_email(id)
 end
 
 function parser.read(id)
-    if love.filesystem.exists("custom/"..id.."/email.lua") then
-        parser.load_email(id)
-    end
+    parser.load_email(id)
     return parser.parse(id)
 end
 

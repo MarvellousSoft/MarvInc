@@ -174,6 +174,18 @@ function PuzzleListTab:refresh()
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Custom Puzzles", list))
     end
+    if USING_STEAM then
+        local list = {}
+        for _, id in ipairs(Steam.UGC.getSubscribedItems()) do
+            if Steam.UGC.getItemState(id).installed then
+                local P = LParser.parse(tostring(id), true)
+                if P ~= nil then
+                    table.insert(list, {name = P.name, id = P.id, status = "custom"})
+                end
+            end
+        end
+        table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Steam Puzzles", list))
+    end
 end
 
 function PuzzleListTab:mouseMoved(x, y)
