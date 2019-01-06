@@ -11,6 +11,7 @@ local ScrollWindow = require "classes.scroll_window"
 require "classes.tabs.tab"
 local AuthorButton = require "classes.tabs.puzzle_list_buttons"
 local LParser = require "lparser.parser"
+local WorkshopManager = require "classes.workshop_manager"
 
 local border_w = 20
 local button_dy = 20
@@ -176,13 +177,8 @@ function PuzzleListTab:refresh()
     end
     if USING_STEAM then
         local list = {}
-        for _, id in ipairs(Steam.UGC.getSubscribedItems()) do
-            if Steam.UGC.getItemState(id).installed then
-                local P = LParser.parse(tostring(id), true)
-                if P ~= nil then
-                    table.insert(list, {name = P.name, id = P.id, status = "custom"})
-                end
-            end
+        for _, P in ipairs(WorkshopManager.getAllDownloadedPuzzles()) do
+            table.insert(list, {name = P.name, id = P.id, status = "custom", is_workshop = true})
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Steam Puzzles", list))
     end

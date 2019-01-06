@@ -7,6 +7,8 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
+local WorkshopManager = require "classes.workshop_manager"
+
 local AuthorButton = Class {
     __includes = {RECT}
 }
@@ -104,11 +106,21 @@ function PuzzleButton:init(x, y, w, h, puzzle)
 
     local size = self.h
     if USING_STEAM then
-        self.leaderboards_button = ImgButton(x + w + 10, y + h/2 - size/2, size, BUTS_IMG.leaderboards,
-            function()
+        local icon, on_click
+        if self.is_custom and not puzzle.is_workshop then
+            -- upload button in custom levels
+            icon = BUTS_IMG.leaderboards
+            on_click = function()
+                WorkshopManager.uploadPuzzle(puzzle.id)
+            end
+        else
+            -- leaderboards on workshop items and normal levels
+            icon = BUTS_IMG.leaderboards
+            on_click = function()
                 Gamestate.push(GS.LEADERBOARDS, puzzle.id)
             end
-        )
+        end
+        self.steam_button = ImgButton(x + w + 10, y + h/2 - size/2, size, icon, on_click)
     end
 end
 
@@ -123,7 +135,7 @@ function PuzzleButton:checkCollides(x, y)
         ROOM:connect(self.puzzle.id, nil, self.is_custom)
     end
     if USING_STEAM then
-        self.leaderboards_button:checkCollides(x,y)
+        self.steam_button:checkCollides(x,y)
     end
 end
 
@@ -172,9 +184,9 @@ function PuzzleButton:draw(mx, my)
 
     if USING_STEAM then
         -- leaderboards button
-        self.leaderboards_button.pos.x = self.pos.x + self.w
-        self.leaderboards_button.pos.y = self.pos.y
-        self.leaderboards_button:draw()
+        self.steam_button.pos.x = self.pos.x + self.w
+        self.steam_button.pos.y = self.pos.y
+        self.steam_button:draw()
     end
 
     return self.h
