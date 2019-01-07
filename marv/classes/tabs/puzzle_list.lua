@@ -102,14 +102,6 @@ function PuzzleListTab:draw()
     self.active_list:draw()
 end
 
-function PuzzleListTab:mousePressed(x, y, but)
-    if but ~= 1 then return end
-    for _, b in ipairs(self.buttons) do
-        b:checkCollides(x, y)
-    end
-    self.active_list:mousePressed(x, y, but)
-end
-
 function PuzzleListTab:activate() self:refresh() end
 
 function PuzzleListTab:refresh()
@@ -185,14 +177,28 @@ function PuzzleListTab:refresh()
 end
 
 function PuzzleListTab:mouseMoved(x, y)
+    if TABS_LOCK > 0 then return end
     local o = self.active_list.obj
     if not Util.pointInRect(x, y, o.pos.x, o.pos.y, self.active_list.w, self.active_list.h) then
         o.mx, o.my = 0, 0
     end
     self.active_list:mouseMoved(x, y)
 end
-function PuzzleListTab:mouseReleased(...) self.active_list:mouseReleased(...) end
-function PuzzleListTab:mouseScroll(...) self.active_list:mouseScroll(...) end
+function PuzzleListTab:mouseReleased(...)
+    if TABS_LOCK > 0 then return end
+    self.active_list:mouseReleased(...)
+end
+function PuzzleListTab:mousePressed(x, y, but)
+    if but ~= 1 or TABS_LOCK > 0 then return end
+    for _, b in ipairs(self.buttons) do
+        b:checkCollides(x, y)
+    end
+    self.active_list:mousePressed(x, y, but)
+end
+function PuzzleListTab:mouseScroll(...)
+    if TABS_LOCK > 0 then return end
+    self.active_list:mouseScroll(...)
+end
 function PuzzleListTab:update(...) self.active_list:update(...) end
 
 function PuzzleListTab:list_draw()

@@ -36,25 +36,26 @@ Popup = Class{
 
         self.buttons = {}
         local _bbord = 5 -- button border
-        local _w1, _h = 2*_bbord + self.fnt:getWidth(b1.text), self.fnt:getHeight() + _bbord
-        -- Relative to popup box
-        local _x1 = (self.w - _w1)/2
+        local _h = self.fnt:getHeight() + _bbord
         local _, _wh = self.fnt:getWrap(self.text, self.w - self.border)
         self.h = #_wh*self.fnt:getHeight() + self.title_fnt:getHeight() + _h + self.border + 100
-        local _y = self.h - _h - self.border
-        local _w2 = _w1
-        if b2 then _w2 = 2*_bbord + self.fnt:getWidth(b2.text) end
-
         self.pos.y = (H - self.h)/2
-
-        if b2 then
-            _x1 = (w/2 - _w1)/2
-            local _x2 = _w1 + _x1 + (w-_w1-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
-            table.insert(self.buttons, Button(_x2 + self.pos.x, _y + self.pos.y, _w2, _h, b2.func, b2.text, self.fnt, nil,
-                nil, b2.clr))
+        if b1 then
+            local _w1 = 2*_bbord + self.fnt:getWidth(b1.text)
+            -- Relative to popup box
+            local _x1 = (self.w - _w1)/2
+            local _y = self.h - _h - self.border
+            local _w2 = _w1
+            if b2 then
+                _w2 = 2*_bbord + self.fnt:getWidth(b2.text)
+                _x1 = (w/2 - _w1)/2
+                local _x2 = _w1 + _x1 + (w-_w1-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
+                table.insert(self.buttons, Button(_x2 + self.pos.x, _y + self.pos.y, _w2, _h, b2.func, b2.text, self.fnt, nil,
+                    nil, b2.clr))
+            end
+            table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
+                b1.clr))
         end
-        table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,
-            b1.clr))
 
         for _, b in ipairs(self.buttons) do b.border_clr = Color.black() end
 
@@ -69,7 +70,7 @@ Popup = Class{
 
 function Popup:draw()
     Color.set(self.back_clr)
-    love.graphics.rectangle("fill", -5, -5, W+5, W+5)
+    love.graphics.rectangle("fill", -5, -5, W+5, H+5)
 
     Color.set(self.color)
     love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.w, self.h)
@@ -120,7 +121,7 @@ function Popup:mousereleased(x, y, button, touch)
 end
 
 function Popup:keypressed(key)
-    if (key == "return" or key == "escape" or key == "kpenter") and not self.buttons[2] then
+    if (key == "return" or key == "escape" or key == "kpenter") and self.buttons[1] and not self.buttons[2] then
         PopManager.quit()
         self.buttons[1].callback()
     end
@@ -140,6 +141,9 @@ function PopManager.new(title, text, clr, b1, b2)
     OpenedEmail.close()
     local pop = Popup(title, text, clr, b1, b2)
     -- Pop the old pop. Stick with the new pop.
+    if PopManager.pop then
+        print("WARNING: Another popup was open. This will probably break the game.")
+    end
     PopManager.pop = pop
     TABS_LOCK = TABS_LOCK + 1
     EVENTS_LOCK = EVENTS_LOCK + 1
@@ -287,6 +291,46 @@ function PopManager.newFailed(title, sentence, b, bot, bot_n)
     -- close email if any is open, to avoid getting stuck because of our ugly code.
     OpenedEmail.close()
     local pop = PopupFailed(title, sentence, b, bot, bot_n)
+    if PopManager.pop then
+        print("WARNING: Another popup was open. This will probably break the game.")
+    end
+    -- Pop the old pop. Stick with the new pop.
+    PopManager.pop = pop
+    TABS_LOCK = TABS_LOCK + 1
+    EVENTS_LOCK = EVENTS_LOCK + 1
+end
+
+PopupProgress = Class {
+    __includes = Popup,
+}
+
+-- get_progress is a function that returns how much progress (a number in [0, 1])
+-- This popup should be manually closed using PopManager.quit
+function PopupProgress:init(text, clr, get_progress)
+    Popup.init(self, text, "", clr)
+    self.get_progress = get_progress
+end
+
+function PopupProgress:draw()
+    Popup.draw(self)
+    local p = self.get_progress()
+    -- Drawing progress bar
+    local b_w, b_h = self.w * 0.6, 40
+    local b_x, b_y = self.pos.x + (self.w - b_w) / 2, self.pos.y + (self.h - b_h) / 2
+    local bb = 5 -- border
+    love.graphics.setLineWidth(1)
+    Color.set(self.title_clr)
+    love.graphics.rectangle('line', b_x, b_y, b_w, b_h)
+    love.graphics.rectangle('fill', b_x + bb, b_y + bb, (b_w - 2 * bb) * p, b_h - 2 * bb)
+end
+
+function PopManager.newProgress(...)
+    -- close email if any is open, to avoid getting stuck because of our ugly code.
+    OpenedEmail.close()
+    local pop = PopupProgress(...)
+    if PopManager.pop then
+        print("WARNING: Another popup was open. This will probably break the game.")
+    end
     -- Pop the old pop. Stick with the new pop.
     PopManager.pop = pop
     TABS_LOCK = TABS_LOCK + 1
@@ -305,16 +349,18 @@ function PopManager.keypressed(key)
 end
 
 function PopManager.quit()
-    PopManager.pop.death = true
-    PopManager.pop = nil
     local lbs = Util.findSbTp('leaderboard')
     if lbs then
         for lb in pairs(lbs) do
             lb:kill()
         end
     end
-    TABS_LOCK = TABS_LOCK - 1
-    EVENTS_LOCK = EVENTS_LOCK - 1
+    if PopManager.pop then
+        PopManager.pop.death = true
+        PopManager.pop = nil
+        TABS_LOCK = TABS_LOCK - 1
+        EVENTS_LOCK = EVENTS_LOCK - 1
+    end
 end
 
 function getFinalWords(popup,bot)

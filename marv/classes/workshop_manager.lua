@@ -17,11 +17,16 @@ function workshop.getAllDownloadedPuzzles()
 end
 
 local function fail(err)
-    print("Could not upload puzzle.")
+    local str = "Could not upload workshop puzzle."
     if err then
-        io.write("Error: ", err, "\n")
+        str = string.format("%s\nError: %s", str, tostring(err))
     end
-    -- some popup?
+    PopManager.new(
+        "Error",
+        str,
+        Color.red(),
+        {func = function() end, text = "Ok", clr = Color.black()}
+    )
 end
 
 local function submitUpdate(info, id)
@@ -37,13 +42,41 @@ local function submitUpdate(info, id)
         assert(Steam.UGC.setItemPreview(handle, path .. info.preview))
     end
     assert(Steam.UGC.setItemContent(handle, path))
-    -- show progress using getItemUpdateProgress (missing in luateam)
+    -- show progress using getItemUpdateProgress
+    local rev = {
+        PreparingConfig = 0,
+        PreparingContent = 1,
+        UploadingContent = 2,
+        UploadingPreviewFile = 3,
+        CommittingChanges = 4,
+        Invalid = 5, -- also Invalid when the job is finished
+    }
+    PopManager.newProgress(
+        "Uploading to Steam Workshop",
+        Color.black(),
+        function()
+            local st, uploaded, total = Steam.UGC.getItemUpdateProgress(handle)
+            local p = rev[st] / 5
+            -- total may be 0 depending on the status
+            if total ~= 0 then
+                p = p + 0.2 * (uploaded / total)
+            end
+            return p
+        end
+    )
+    -- Actually submit
     Steam.UGC.submitItemUpdate(handle, nil, function(data, err)
         if err or data.result ~= 1 then
             if not err then print(data.result) end
             fail("Could not upload changes.")
         else
-            print("Upload successful!")
+            PopManager.quit()
+            PopManager.new(
+                "Success",
+                "Level successfully uploaded to Steam Workshop!",
+                Color.green(),
+                {func = function() end, text = "Ok", clr = Color.black()}
+            )
             Steam.friends.activateGameOverlayToWebPage("steam://url/CommunityFilePage/" .. info.id)
         end
     end)

@@ -112,9 +112,9 @@ function PuzzleButton:init(x, y, w, h, puzzle)
             icon = BUTS_IMG.leaderboards
             on_click = function()
                 PopManager.new(
-                    "Confirmation", -- title
+                    "Steam Workshop upload", -- title
                     string.format("Are you sure you want to upload the puzzle '%s' to Steam Workshop?", puzzle.id), -- desc
-                    Color.red(), -- color
+                    Color.black(), -- color
                     {func = function()
                         WorkshopManager.uploadPuzzle(puzzle.id)
                     end, text = "Yes", clr = Color.black()},
