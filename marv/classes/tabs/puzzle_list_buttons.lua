@@ -111,7 +111,15 @@ function PuzzleButton:init(x, y, w, h, puzzle)
             -- upload button in custom levels
             icon = BUTS_IMG.leaderboards
             on_click = function()
-                WorkshopManager.uploadPuzzle(puzzle.id)
+                PopManager.new(
+                    "Confirmation", -- title
+                    string.format("Are you sure you want to upload the puzzle '%s' to Steam Workshop?", puzzle.id), -- desc
+                    Color.red(), -- color
+                    {func = function()
+                        WorkshopManager.uploadPuzzle(puzzle.id)
+                    end, text = "Yes", clr = Color.black()},
+                    {func = function() end, text = "No", clr = Color.black()}
+                )
             end
         else
             -- leaderboards on workshop items and normal levels
