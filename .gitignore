@@ -6,3 +6,4 @@ steam_appid.txt
 *.so
 *.directory
 /sdk/
+.vscode

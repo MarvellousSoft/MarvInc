@@ -30,7 +30,7 @@ local function fail(err)
 end
 
 local function submitUpdate(info, id)
-    local handle = Steam.UGC.startItemUpdate(Steam.utils.getAppID(), Steam.extra.uint64FromString(info.id))
+    local handle = Steam.UGC.startItemUpdate(Steam.utils.getAppID(), Steam.extra.parseUint64(info.id))
     local path = love.filesystem.getSaveDirectory() .. "/custom/" .. id .. "/"
     if info.title then
         assert(Steam.UGC.setItemTitle(handle, info.title))
