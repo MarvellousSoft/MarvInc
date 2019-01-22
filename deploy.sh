@@ -103,9 +103,9 @@ get_latest_release() {
   sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
 }
 
-# Downloads latest luasteam lib for platform $1 into file $2
+# Downloads correct luasteam lib for platform $1 into file $2
 download_luasteam() {
-  luasteam_v=`get_latest_release "uspgamedev/luasteam"`
+  luasteam_v="v1.0.0"
   printf "LuaSteam version: ${luasteam_v}\n"
   curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2"
 }
