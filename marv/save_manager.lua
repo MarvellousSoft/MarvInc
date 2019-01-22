@@ -136,10 +136,12 @@ function sm.login(user)
             else
                 e = Mail.new(email.id, true)
             end
-            e.was_read = email.read
-            e.can_reply = email.can_reply
-            e.can_be_deleted = email.can_be_deleted
-            e.time = email.time_received
+            if e then
+                e.was_read = email.read
+                e.can_reply = email.can_reply
+                e.can_be_deleted = email.can_be_deleted
+                e.time = email.time_received
+            end
         end
         UNREAD_EMAILS = Mail.getUnreadEmails() --Update UNREAD_EMAILS variable
 
