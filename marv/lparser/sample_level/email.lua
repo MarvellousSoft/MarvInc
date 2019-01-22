@@ -53,11 +53,8 @@
 -- However, writing your own emails gives your puzzles their own personality. You get the chance to
 -- create exciting new stories and characters, making your levels much more attractive.
 
--- Create a new email.
-local main = Email:New()
-
-main.Title = "Email subject."
-main.Text = [[
+Email.Title = "Email subject."
+Email.Text = [[
 This is the body of the email. You can use {green}tags{end} to give {pink}f{gray}l{blue}a{purple}i{orange}r{end} and {cyan}color{end} to your emails.
 
 You may also add {red}one{end} (and only one) image to your email. For this use self.Attach.
@@ -66,10 +63,10 @@ You may also add {red}one{end} (and only one) image to your email. For this use 
 -- Imports image asset.
 Import:Image("my_img", "example.png")
 -- Attaches to main email.
-main:Attach("my_img")
+Email:Attach("my_img")
 
 --[[
-Below is a list of tags you can use on the body of your email.
+Below is a list of tags you can use on the body of your email to change the text color.
     {end} - Stop previous tag and start using default_color
     {red} - Red color
     {blue} - Blue color
@@ -91,18 +88,7 @@ Below is a list of tags you can use on the body of your email.
 ]]
 
 -- Author lists the authors of the email.
-main.Authors = "Jerome Jebediah Jenkins Junior II (j42@marv.com)"
+Email.Authors = "Jerome Jebediah Jenkins Junior II (j42@marv.com)"
 -- Your email sender may also have a portrait of themselves.
 Import:Image("j42", "j42.png")
-main:Portrait("j42")
-
--- Your emails should eventually lead to you puzzle. An email that contains a "reply" button to
--- send the player to the puzzle is called the "main email".
-main:SetMain(true)
-
--- You may also want a particular email to be deletable. Note that even though a main email can be
--- deleted, it will always show under the custom Puzzle tab.
-main:SetDeletable(true)
-
--- We plan on adding support for reply emails (once the player completes the puzzle) and email
--- chaining.
+Email:Portrait("j42")
