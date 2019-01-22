@@ -359,15 +359,11 @@ function util.getAuthorColor(author)
     return CHR_CLR["spam"]
 end
 
-function util.getAuthorImage(author, custom)
-    if custom then
-        portrait = CUST_AUTHOR_IMG[author]
-        if not portrait then
-            return AUTHOR_IMG.unknown
-        end
-        return portrait
+function util.getAuthorImage(email)
+    if email.is_custom then
+        return email.referenced_email.portrait or AUTHOR_IMG.unknown
     end
-    author = author:lower()
+    local author = email.author:lower()
     for key, img in pairs(AUTHOR_IMG) do
         if author:find(key) then
             return img

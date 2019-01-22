@@ -212,7 +212,7 @@ function OpenedEmail:draw()
     -- DRAW EMAIL CONTENT --
 
     -- Draw author image
-    local img = Util.getAuthorImage(self.author, self.is_custom)
+    local img = Util.getAuthorImage(self)
     local pic_w, pic_h = 110, 110 --Size of author pic
     Color.set(Color.white())
     love.graphics.draw(img, e.pos.x + 10, e.pos.y + 10, 0, pic_w / img:getWidth(), pic_h / img:getHeight())
