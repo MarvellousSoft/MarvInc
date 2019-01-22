@@ -207,21 +207,13 @@ function parser.prepare(puz_f, t)
         _E.Bot.Orientation = "NORTH"
 
     elseif t == "email" then
-        _E.__emails = {}
-        _E.Email = {}
-        _E.Email.New = function()
-            local _e = {
-                Title = "Untitled",
-                Text = "Your email text here.",
-                Attach = function(self, key) self.__img = key end,
-                Authors = "Author Name (author@email.com)",
-                Portrait = function(self, key) self.__portrait = key end,
-                SetMain = function(self, b) self.__main = b end,
-                SetDeletable = function(self, b) self.__deletable = b end,
-            }
-            table.insert(_E.__emails, _e)
-            return _e
-        end
+        _E.Email = {
+            Title = "Untitled",
+            Text = "Your email text here.",
+            Attach = function(self, key) self.__img = key end,
+            Authors = "Author Name (author@email.com)",
+            Portrait = function(self, key) self.__portrait = key end,
+        }
         -- Importing assets
         _E.Import = {}
         _E.Import.__ref_imgs = {}
@@ -387,15 +379,9 @@ function parser.load_email(id)
     end
     local E = parser.prepare(f, "email")
     f()
-    local me = nil
-    for k, v in ipairs(E.__emails) do
-        if v.__main then
-            me = v
-            break
-        end
-    end
-    if me == nil and #E.__emails ~= 0 then
-        print("There must be at least one main email!")
+    local me = E.Email
+    if me == nil then
+        print("There must be one email!")
         return
     end
     for k, v in pairs(E.Import.__ref_imgs) do
