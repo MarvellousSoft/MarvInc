@@ -109,7 +109,7 @@ function PuzzleButton:init(x, y, w, h, puzzle)
         local icon, on_click
         if self.is_custom and not puzzle.is_workshop then
             -- upload button in custom levels
-            icon = BUTS_IMG.leaderboards
+            icon = BUTS_IMG.upload
             on_click = function()
                 PopManager.new(
                     "Steam Workshop upload", -- title

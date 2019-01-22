@@ -116,6 +116,7 @@ BUTS_IMG["reboot_hover"] = love.graphics.newImage("assets/images/reboot_button_m
 BUTS_IMG["settings"] = love.graphics.newImage("assets/images/settings.png")
 BUTS_IMG["achievements"] = love.graphics.newImage("assets/images/achievements.png")
 BUTS_IMG["leaderboards"] = love.graphics.newImage("assets/images/leaderboards.png")
+BUTS_IMG["upload"] = love.graphics.newImage("assets/images/leaderboards.png")
 BUTS_IMG["next_test"] = BUTS_IMG.play
 BUTS_IMG["prev_test"] = love.graphics.newImage("assets/images/button_play_mirror.png")
 
