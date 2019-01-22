@@ -53,17 +53,15 @@
 -- However, writing your own emails gives your puzzles their own personality. You get the chance to
 -- create exciting new stories and characters, making your levels much more attractive.
 
-Email.Title = "Email subject."
-Email.Text = [[
+Email.SetTitle "Email subject."
+Email.SetText [[
 This is the body of the email. You can use {green}tags{end} to give {pink}f{gray}l{blue}a{purple}i{orange}r{end} and {cyan}color{end} to your emails.
 
 You may also add {red}one{end} (and only one) image to your email. For this use self.Attach.
 ]]
 
--- Imports image asset.
-Import:Image("my_img", "example.png")
--- Attaches to main email.
-Email:Attach("my_img")
+-- Attaches image to main email.
+Email.SetAttachment "example.png"
 
 --[[
 Below is a list of tags you can use on the body of your email to change the text color.
@@ -88,7 +86,7 @@ Below is a list of tags you can use on the body of your email to change the text
 ]]
 
 -- Author lists the authors of the email.
-Email.Authors = "Jerome Jebediah Jenkins Junior II (j42@marv.com)"
+Email.SetAuthors "Jerome Jebediah Jenkins Junior II (j42@marv.com)"
+
 -- Your email sender may also have a portrait of themselves.
-Import:Image("j42", "j42.png")
-Email:Portrait("j42")
+Email.SetPortrait "j42.png"

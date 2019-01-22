@@ -173,7 +173,6 @@ OBJS_IMG["dead_body_hair"] = love.graphics.newImage("assets/images/dead_hair_1.p
 CUST_OBJS_IMG = {}
 CUST_TILES_IMG = {}
 CUST_SHEET_IMG = {}
-CUST_AUTHOR_IMG = {}
 
 -- Character colors
 Color = require "classes.color.color"

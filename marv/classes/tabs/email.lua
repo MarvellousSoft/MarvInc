@@ -432,6 +432,17 @@ function email_funcs.exists(title)
     return false
 end
 
+-- Returns whether an email with given Id exists.
+function email_funcs.existsId(id)
+    local list = Util.findId('email_tab').email_list
+    for _, e in pairs(list) do
+        if e.id == id then
+            return true
+        end
+    end
+    return false
+end
+
 -- Get an email given his number
 function email_funcs.get(number)
     return Util.findId("email_tab").email_list[number]

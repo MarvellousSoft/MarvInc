@@ -89,6 +89,7 @@ end
 function parser.prepare(puz_f, t)
     -- Functions and tables allowed by the environment (considered safe-ish).
     local _E = parser.safe_env()
+    local extra = {}
     setfenv(puz_f, _E)
     if t == "level" then
         -- Constants
@@ -207,22 +208,29 @@ function parser.prepare(puz_f, t)
         _E.Bot.Orientation = "NORTH"
 
     elseif t == "email" then
-        _E.Email = {
-            Title = "Untitled",
-            Text = "Your email text here.",
-            Attach = function(self, key) self.__img = key end,
-            Authors = "Author Name (author@email.com)",
-            Portrait = function(self, key) self.__portrait = key end,
+        local e = {
+            title = "Untitled",
+            text  = "Missing email text.",
+            authors = "Missing author",
         }
-        -- Importing assets
-        _E.Import = {}
-        _E.Import.__ref_imgs = {}
-        _E.Import.Image = function(self, key, path)
-            _E.Import.__ref_imgs[key] = path
+        local function addSetter(var, setter)
+            _E.Email[setter] = function(str)
+                if type(str) ~= 'string' then
+                    error(setter .. " called with non-string argument.", 2)
+                end
+                e[var] = str
+            end
         end
+        _E.Email = {}
+        addSetter('title', 'SetTitle')
+        addSetter('text', 'SetText')
+        addSetter('authors', 'SetAuthors')
+        addSetter('portrait', 'SetPortrait')
+        addSetter('attachment', 'SetAttachment')
+        extra.email = e
     end
 
-    return _E
+    return _E, extra
 end
 
 local function getAbsolutePath(id)
@@ -238,14 +246,18 @@ local function getAbsolutePath(id)
 end
 
 -- Image from absolute path (can't use love.graphics.newImage directly)
+local memo = {}
 local function newImage(path)
-    local f = io.open(path, "rb")
-    if not f then
-        error("Could not find file " .. path)
+    if not memo[path] then
+        local f = io.open(path, "rb")
+        if not f then
+            error("Could not find file " .. path, 2)
+        end
+        local data = f:read("*all")
+        f:close()
+        memo[path] = love.graphics.newImage(love.filesystem.newFileData(data, path))
     end
-    local data = f:read("*all")
-    f:close()
-    return love.graphics.newImage(love.filesystem.newFileData(data, path))
+    return memo[path]
 end
 
 
@@ -370,28 +382,31 @@ function parser.parse(id, noload)
     return P
 end
 
-function parser.load_email(id)
+local function load_email(id)
     local path = getAbsolutePath(id)
     local f = path and loadfile(path .. "email.lua")
     if not path or not f then
         print("Custom Level " .. id .. " has no emails")
         return
     end
-    local E = parser.prepare(f, "email")
+    local E, extra = parser.prepare(f, "email")
     f()
-    local me = E.Email
-    if me == nil then
-        print("There must be one email!")
-        return
+    local me = extra.email
+    local portrait = me.portrait and newImage(path .. me.portrait) or nil
+    if not Mail.existsId(me.id) then
+        local e = Mail.new_custom(false, id, me.title, me.text, me.authors, false, id, nil, nil, me.attachment and newImage(path .. me.attachment))
+        e.portrait = portrait
+        return e
     end
-    for k, v in pairs(E.Import.__ref_imgs) do
-        CUST_OBJS_IMG[k] = newImage(path .. v)
-    end
-    if me.__portrait then
-        CUST_AUTHOR_IMG[me.Authors] = newImage(path .. E.Import.__ref_imgs[me.__portrait])
-    end
-    if not Mail.exists(me.Title) then
-        return Mail.new_custom(false, id, me.Title, me.Text, me.Authors, me.__deletable, id, nil, nil, CUST_OBJS_IMG[me.__img])
+end
+
+function parser.load_email(...)
+    local ok, email = pcall(load_email, ...)
+    if ok then
+        return email
+    else
+        print('Error while loading email: ' .. tostring(email))
+        return nil
     end
 end
 
