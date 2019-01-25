@@ -13,14 +13,12 @@ local Color = require "classes.color.color"
 local parser = {}
 
 local str_subchar = function(str, i, c)
-    local n = str:len()
-    if i < 1 or i > n then return str end
-    if c == nil then return str.sub(1, i-1)..' '..str:sub(i+1) end
-    return str:sub(1, i-1)..c..str:sub(i+1)
+    if i < 1 or i > str:len() then return str end
+    return str:sub(1, i-1) .. (c or ' ') .. str:sub(i+1)
 end
 
 local init_map = function(c)
-    c = c==nil and ' ' or c
+    c = c or ' '
     local M = ""
     for i = 1, ROWS*COLS do
         M = M..c
@@ -96,116 +94,195 @@ function parser.prepare(puz_f, t)
         _E.ROWS = ROWS
         _E.COLS = COLS
 
+        local function checkType(val, typestr, depth)
+            if type(val) ~= typestr then error("Invalid non-" .. typestr .. " parameter", depth or 3) end
+        end
+        local function checkNumber(num, from, to, depth)
+            checkType(num, 'number', (depth or 3) + 1)
+            if num < from or num > to then
+                error("Number not in range [" .. from .. ", " .. to .. "]", depth or 3)
+            end
+        end
+        local function checkString(str, from, to)
+            checkType(str, 'string', 4)
+            if str:len() < from or str:len() > to then
+                error("String length not in range [" .. from .. ", " .. to .. "]", 3)
+            end
+        end
+        local function checkGrid(i, j, depth)
+            checkNumber(i, 1, ROWS, (depth or 3) + 1)
+            checkNumber(j, 1, COLS, (depth or 3) + 1)
+            return (i - 1) * COLS + j
+        end
+        local function getSetter(meta, var, check, ...)
+            local wrap = {...} -- assuming nothing in ... is nil
+            return function(val)
+                check(val, unpack(wrap))
+                meta[var] = val
+            end
+        end
+
+        extra.meta = {
+            name   = "Untitled",
+            id     = "??",
+            lines  = 99,
+            memory = 10,
+            info   = "Missing info.",
+        }
         -- Meta table
         _E.Meta = {
-            Name = "Untitled",
-            ID = "U.0",
-            Lines = -1,
-            Memory = 10,
-            Info = "No info.",
+            SetName   = getSetter(extra.meta, 'name', checkType, 'string'),
+            SetID     = getSetter(extra.meta, 'id', checkType, 'string'),
+            SetLines  = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
+            SetMemory = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
+            SetInfo   = getSetter(extra.meta, 'info', checkType, 'string'),
         }
 
+        extra.objective = {
+            text  = "No objectives listed.",
+            check = function() return false end,
+        }
         -- Objective table
         _E.Objective = {
-            Text = "No objectives listed.",
-            Check = function() return false end,
+            SetText  = getSetter(extra.objective, 'text', checkType, 'string'),
+            SetCheck = getSetter(extra.objective, 'check', checkType, 'function'),
         }
 
+        local floor = {
+            L    = init_map(),
+            ref  = {},
+            iref = {}
+        }
         -- Floor
-        _E.Floor = {}
-        _E.Floor.L = init_map()
-        _E.Floor.__ref_table = {}
-        _E.Floor.__iref_table = {}
-        _E.Floor.Register = function(self, key, c)
-            self.__ref_table[c] = key
-            self.__iref_table[key] = c
-        end
-        _E.Floor.PlaceAt = function(self, key, i, j)
-            local p = i+j*COLS + 1
-            self.L = str_subchar(self.L, p, self.__iref_table[key])
-        end
+        _E.Floor = {
+            SetAll   = getSetter(floor, 'L', checkString, ROWS * COLS, ROWS * COLS),
+            Register = function(key, c)
+                checkType(key, 'string')
+                checkString(c, 1, 1)
+                floor.ref[c] = key
+                floor.iref[key] = c
+            end,
+            PlaceAt = function(key, i, j)
+                checkType(key, 'string')
+                local p = checkGrid(i, j)
+                floor.L = str_subchar(floor.L, p, floor.iref[key])
+            end
+        }
+        extra.floor = floor
 
+        local objs = {
+            L    = init_map(),
+            ref  = {},
+            iref = {},
+        }
         -- Objects
-        _E.Objects = {}
-        _E.Objects.L = init_map()
-        _E.Objects.__ref_table = {}
-        _E.Objects.__iref_table = {}
-        _E.Objects.Register = function(self, obj, c)
-            self.__ref_table[c] = obj
-            self.__iref_table[obj] = c
-        end
-        _E.Objects.PlaceAt = function(self, obj, i, j)
-            local p = i+j*COLS + 1
-            self.L = str_subchar(self.L, p, self.__iref_table[obj])
-        end
+        _E.Objects = {
+            SetAll   = getSetter(objs, 'L', checkString, ROWS * COLS, ROWS * COLS),
+            Register = function(obj, c)
+                checkType(obj, 'table') -- check if it is an object
+                checkString(c, 1, 1)
+                objs.ref[c] = obj
+                objs.iref[obj] = c
+            end,
+            PlaceAt = function(obj, i, j)
+                checkType(obj, 'table') -- check if it is an object
+                local p = checkGrid(i, j)
+                objs.L = str_subchar(objs.L, p, objs.iref[obj])
+            end
+        }
+        extra.objects = objs
 
+        local wall = {
+            L = init_map()
+        }
         -- Invisible Wall
-        _E.InvWall = {}
-        _E.InvWall.L = init_map(0)
-        _E.InvWall.Wall = function(self, i, j)
-            local p = j*COLS+i+1
-            str_subchar(self.L, p, 1)
-        end
-        _E.InvWall.NoWall = function(self, i, j)
-            local p = j*COLS+i+1
-            str_subchar(self.L, p, 0)
-        end
+        _E.InvWall = {
+            SetAll = getSetter(wall, "L", checkString, ROWS * COLS, ROWS * COLS),
+            Wall   = function(i, j)
+                local p = checkGrid(i, j)
+                wall.L = str_subchar(wall.L, p, '*')
+            end,
+            NoWall = function(i, j)
+                local p = checkGrid(i, j)
+                wall.L = str_subchar(wall.L, p, ' ')
+            end
+        }
+        extra.inv_wall = wall
 
+        local import = {
+            ref_imgs    = {},
+            ref_sprites = {},
+            ref_tiles   = {},
+        }
         -- Importing assets
-        _E.Import = {}
-        _E.Import.__ref_imgs = {}
-        _E.Import.__ref_sprites = {}
-        _E.Import.__ref_tiles = {}
-        _E.Import.Image = function(self, key, path)
-            _E.Import.__ref_imgs[key] = path
-        end
-        _E.Import.Sprite = function(self, key, d, path)
-            _E.Import.__ref_sprites[key] = {d, path}
-        end
-        _E.Import.Tile = function(self, key, path)
-            _E.Import.__ref_tiles[key] = path
-        end
+        _E.Import = {
+            Image = function(key, path)
+                import.ref_imgs[key] = path
+            end,
+            Sprite = function(key, d, path)
+                import.ref_sprites[key] = {d, path}
+            end,
+            Tile = function(key, path)
+                import.ref_tiles[key] = path
+            end,
+        }
+        extra.import = import
 
         -- Constructors
-        _E.Bucket = function(cnt, clr)
+        function _E.Bucket(cnt, clr)
             return {id = "bucket", cnt = cnt, c = clr}
         end
-        _E.Obstacle = function(bg, key, d, clr)
+        function _E.Obstacle(bg, key, d, clr)
             return {id = "obstacle", bg = bg, key = key, d = d, c = clr}
         end
-        _E.Dead = function(bg, key, bg, c, d)
+        function _E.Dead(bg, key, bg, c, d)
             if d == nil then return {id = "dead", bg = bg, key = key, c = c} end
             return {id = "dead", bg = bg, c = c, key = key, d = d}
         end
-        _E.DeadSwitch = function(bg, key_on, d, c, img_off, bckt)
+        function _E.DeadSwitch(bg, key_on, d, c, img_off, bckt)
             return {id = "dead_switch", key_on = key_on, d = d, c = c, img_off = img_off, bckt = bckt}
         end
-        _E.Container = function(bg, key, d, c, cnt, cnt_c)
+        function _E.Container(bg, key, d, c, cnt, cnt_c)
             return {id = "container", bg = bg, key = key, d = d, c = c, cnt = cnt, cnt_c = cnt_c}
         end
-        _E.Emitter = function(img, bg, c, r_key, r_bg, r_d, r_c)
+        function _E.Emitter(img, bg, c, r_key, r_bg, r_d, r_c)
             return {id = "emitter", key = img, c = c, r = {key = r_key, bg = r_bg, d = r_d, c = r_c}}
         end
-        _E.Lava = function()
+        function _E.Lava()
             return {id = "dead_switch", key_on = "lava", d = 0.2, bg = true, c = "white", img_off = "solid_lava", bckt = true}
         end
-        _E.Console = function(img, c, bg, data, n)
+        function _E.Console(img, c, bg, data, n)
             return {id = "console", img = img, c = c, bg = bg, data = data, n = n}
         end
 
+        local game = {
+            onStart = function() end,
+            onEnd   = function() end,
+            onDeath = function() end,
+            onTurn  = function() end,
+        }
         -- Game
-        _E.Game = {}
-        _E.Game.OnStart = function() end
-        _E.Game.OnEnd = function() end
-        _E.Game.OnDeath = function() end
-        _E.Game.OnTurn = function() end
+        _E.Game = {
+            SetOnStart = getSetter(game, 'onStart', checkType, 'function'),
+            SetOnEnd   = getSetter(game, 'onEnd', checkType, 'function'),
+            SetOnDeath = getSetter(game, 'onDeath', checkType, 'function'),
+            SetOnTurn  = getSetter(game, 'onTurn', checkType, 'function'),
+        }
+        extra.game = game
 
-        _E.Bot = {}
-        _E.Bot.Position = {0, 0}
-        _E.Bot.GetPosition = function()
-            return ROOM.bot.pos.x, ROOM.bot.pos.y
-        end
-        _E.Bot.Orientation = "NORTH"
+        local bot = {
+            position    = {1, 1},
+            orientation = "NORTH",
+        }
+        local ors = {NORTH = true, SOUTH = true, EAST = true, WEST = true}
+        _E.Bot = {
+            SetPosition    = getSetter(bot, 'position', function(val) checkType(val, 'table'); checkGrid(val[1], val[2], 4) end),
+            SetOrientation = getSetter(bot, 'orientation', function(val) if not ors[val] then error("Invalid orientation", 2) end end),
+            GetPosition = function()
+                return ROOM.bot.pos.x, ROOM.bot.pos.y
+            end
+        }
+        extra.bot = bot
 
     elseif t == "email" then
         local e = {
@@ -265,20 +342,21 @@ function parser.parse(id, noload)
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
     local f = path and loadfile(path .. "level.lua")
-    local E = f and parser.prepare(f, "level")
-    local s = f and pcall(f)
+    if not f then print("Custom level " .. id .. " not found") return nil end
+    local E, extra = parser.prepare(f, "level")
+    local s, err = pcall(f)
     if not path or not f or not s then
-        print("Custom level "..id.." has failed to compile!")
+        print("Custom level "..id.." has failed to compile! " .. tostring(err))
         return nil
     end
     local P = Puzzle()
-    P.name = E.Meta.Name
+    P.name = extra.meta.name
     P.id = id
     P.is_custom = true
-    P.n = E.Meta.ID
-    P.turn_handler = E.Game.OnTurn
-    P.orient = E.Bot.Orientation
-    P.init_pos = Vector(E.Bot.Position[1], E.Bot.Position[2])
+    P.n = extra.meta.id
+    P.turn_handler = extra.game.onTurn
+    P.orient = extra.bot.orientation
+    P.init_pos = Vector(extra.bot.position[1], extra.bot.position[2])
     P.grid_floor = {}
     P.grid_obj = {}
     P.inv_wall = {}
@@ -288,42 +366,42 @@ function parser.parse(id, noload)
         P.inv_wall[i] = {}
     end
 
-    if E.Floor.L:len() ~= COLS*ROWS then
+    if extra.floor.L:len() ~= COLS*ROWS then
         print("Floor layer incomplete!")
         return nil
     end
-    if E.Objects.L:len() ~= COLS*ROWS then
+    if extra.objects.L:len() ~= COLS*ROWS then
         print("Objects layer incomplete!")
         return nil
     end
-    if E.InvWall.L:len() ~= 0 and E.InvWall.L:len() ~= COLS*ROWS then
+    if extra.inv_wall.L:len() ~= COLS*ROWS then
         print("InvWall was not properly declared! May be incomplete.")
         return nil
     end
 
-    for k, v in pairs(E.Import.__ref_imgs) do
+    for k, v in pairs(extra.import.ref_imgs) do
         CUST_OBJS_IMG[k] = newImage(path .. v)
     end
-    for k, v in pairs(E.Import.__ref_tiles) do
+    for k, v in pairs(extra.import.ref_tiles) do
         CUST_TILES_IMG[k] = newImage(path .. v)
     end
-    for k, v in pairs(E.Import.__ref_sprites) do
+    for k, v in pairs(extra.import.ref_sprites) do
         CUST_SHEET_IMG[k] = {newImage(path .. v[2]), v[1]}
     end
 
     for i=1, COLS do
         for j=1, ROWS do
-            local p = i+j*COLS
-            local k = E.Floor.L:sub(p, p)
-            P.grid_floor[i][j] = E.Floor.__ref_table[k]
+            local p = i + (j - 1) * COLS
+            local k = extra.floor.L:sub(p, p)
+            P.grid_floor[i][j] = extra.floor.ref[k]
         end
     end
 
     for i=1, COLS do
         for j=1, ROWS do
-            local p = i+j*COLS
-            local k = E.InvWall.L:sub(p, p)
-            if k == "1" then
+            local p = i + (j - 1) * COLS
+            local k = extra.inv_wall.L:sub(p, p)
+            if k == '*' then
                 P.inv_wall[i][j] = '1'
             end
         end
@@ -331,9 +409,9 @@ function parser.parse(id, noload)
 
     for i=1, COLS do
         for j=1, ROWS do
-            local p = i+j*COLS
-            local r = E.Objects.L:sub(p, p)
-            local o = E.Objects.__ref_table[r]
+            local p = i + (j - 1) * COLS
+            local r = extra.objects.L:sub(p, p)
+            local o = extra.objects.ref[r]
             if o ~= nil then
                 local id = o.id
                 local O = nil
@@ -362,15 +440,16 @@ function parser.parse(id, noload)
         end
     end
 
-    P.objective_text = E.Objective.Text
-    P.objective_checker = E.Objective.Check
-    P.lines_on_terminal = E.Meta.Lines <= 0 and 99 or E.Meta.Lines
-    P.memory_slots = E.Meta.Memory
-    P.extra_info = E.Meta.Info
-    P.on_start = E.Game.OnStart
-    P.on_end = E.Game.OnDeath
+    P.objective_text = extra.objective.text
+    P.objective_checker = extra.objective.check
+    P.lines_on_terminal = extra.meta.lines <= 0 and 99 or extra.meta.lines
+    P.memory_slots = extra.meta.memory
+    P.extra_info = extra.meta.info
+    P.on_start = extra.game.onStart
+    P.on_end = extra.game.onDeath
     P.custom_completed = function()
-        local title, text, c, o1, c1, o2, c2 = E.Game.OnEnd()
+        -- improve this
+        local title, text, c, o1, c1, o2, c2 = extra.game.onEnd()
         PopManager.new(title, text, c,
             {func = function() ROOM:disconnect() end, text = o1, clr = Color[c1]()},
             {func = function() ROOM:disconnect() end, text = o2, clr = Color[c2]()})

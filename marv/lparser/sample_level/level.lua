@@ -53,15 +53,15 @@
 -- below:
 
 -- The puzzle's title (string). This should appear in the info tab.
-Meta.Name = "Puzzle name"
+Meta.SetName "Puzzle name"
 -- Its unique numbering (string). Usually it follows a certain pattern related to the email chain.
-Meta.ID = "S.1"
+Meta.SetID "S.1"
 -- The number of lines of code available for the user (int). If <= 0, sets it to 99.
-Meta.Lines = 0
+Meta.SetLines(30)
 -- The number of registers available for the user (int). Must be >= 0.
-Meta.Memory = 10
+Meta.SetMemory(12)
 -- A description of this puzzle's objectives (string).
-Objective.Text = [[
+Objective.SetText [[
 These are the objectives for this puzzle:
 - Write code.
 - Be efficient.
@@ -69,7 +69,7 @@ These are the objectives for this puzzle:
 - Have fun.
 ]]
 -- Extra information you might want to inform the user of (string).
-Meta.Info = [[
+Meta.SetInfo [[
 Share us your solutions!
 ]]
 
@@ -82,42 +82,41 @@ Share us your solutions!
 -- it comes with restrictions: objects must be represented by a single character.
 
 -- The Floor Layer (string).
-Floor.L = "....................."..
-          "....................."..
-          "......*.......*......"..
-          "......***...***......"..
-          "......*..*.*.**......"..
-          "......*...*...*......"..
-          "......*.......*......"..
-          "....................."..
-          ".......@..@..@......."..
-          "........@.@.@........"..
-          "......@@@@@@@@@......"..
-          "........@.@.@........"..
-          ".......@..@..@......."..
-          "....................."..
-          "......=========......"..
-          "..........=.........."..
-          "..........=.........."..
-          "..........=.........."..
-          "..........=.........."..
-          "......=========......"..
-          "....................."
+Floor.SetAll("....................."..
+             "....................."..
+             "......*.......*......"..
+             "......***...***......"..
+             "......*..*.*..*......"..
+             "......*...*...*......"..
+             "......*.......*......"..
+             "....................."..
+             ".......@..@..@......."..
+             "........@.@.@........"..
+             "......@@@@@@@@@......"..
+             "........@.@.@........"..
+             ".......@..@..@......."..
+             "....................."..
+             "......=========......"..
+             "..........=.........."..
+             "..........=.........."..
+             "..........=.........."..
+             "..........=.........."..
+             "......=========......"..
+             ".....................")
 
 -- Each character in the string Floor.L is a tile sprite. To register a tile sprite to a character,
 -- use the function Floor:Register.
-Floor:Register("white_floor", '.')
-Floor:Register("red_tile", '*')
-Floor:Register("green_tile", '@')
-Floor:Register("blue_tile", '=')
+Floor.Register("white_floor", '.')
+Floor.Register("red_tile",    '*')
+Floor.Register("green_tile",  '@')
+Floor.Register("blue_tile",   '=')
 
 -- Alternatively, if you want to generate a floor map procedurally, it can be easier to just give
--- the tile positions. Lua starts array indexing on index 1. However for Floor:PlaceAt and
--- Object:PlaceAt, we index from 0. PS: Remember to register the tiles before placing them!
-Floor:Register("blood_splat_1", 'b')
-Floor:Register("blood_splat_2", 'd')
-Floor:PlaceAt("blood_splat_1", 0, 0)
-Floor:PlaceAt("blood_splat_2", ROWS-1, COLS-1)
+-- the tile positions. Indexing starts at 1. PS: Remember to register the tiles before placing them!
+Floor.Register("blood_splat_1", 'b')
+Floor.Register("blood_splat_2", 'd')
+Floor.PlaceAt("blood_splat_1", 1, 1)
+Floor.PlaceAt("blood_splat_2", ROWS, COLS)
 
 -- The following are keywords for constants:
 -- ROWS: number of rows
@@ -130,84 +129,84 @@ Floor:PlaceAt("blood_splat_2", ROWS-1, COLS-1)
 -- For both Object and Floor maps, unregistered characters are set to nothing.
 
 -- The Object Layer (string).
-Objects.L = "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "--------------b------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"..
-            "---------------------"
+Objects.SetAll("---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "--------------b------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------"..
+               "---------------------")
 
 -- The Object map works the same way as the Floor map. To register an object, you must first
 -- construct a new object instance and link a character to it.
 
 b = Bucket("paint", "blue")
-Objects:Register(b, 'b')
+Objects.Register(b, 'b')
 
 -- You can also use PlaceAt the same way.
 d = Bucket("paint", "red")
-Objects:Register(d, 'd')
-Objects:PlaceAt(d, 10, 10)
+Objects.Register(d, 'd')
+Objects.PlaceAt(d, 10, 10)
 
 -- If you want to limit the player's range without having to place a bunch of objects as obstacles,
 -- you can simply use InvWall to set invisible walls throughout the map. Just like Floor and
 -- Objects, InvWall uses similar syntax and functions. However, it can be kept undeclared and
--- the game will assume there are no invisible walls. Each position in the InvWall can either be 0
--- (no invisible wall) or 1 (invisible wall).
+-- the game will assume there are no invisible walls. Each position in the InvWall can either be ' '
+-- (no invisible wall) or '*' (invisible wall).
 
-InvWall.L = "000000000000000000000"..
-            "000111111111111111000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000100000000000001000"..
-            "000111111111111111000"..
-            "000000000000000000000"
+InvWall.SetAll("                     "..
+               "   ***************   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   *             *   "..
+               "   ***************   "..
+               "                     ")
 
-InvWall:Wall(3, 2)
-InvWall:NoWall(0, 0)
+InvWall.Wall(3, 2)
+InvWall.NoWall(1, 1)
 
 -- If you want to use a custom image, you can import it using the builtin function Import:Image. It
 -- accepts two arguments. The first is a key you want to refer the image as. The second is its
 -- relative path (to this .lua file). This image will then be imported to an image table, and can
 -- be referred later through its key.
-Import:Image("my_img", "example.png")
+Import.Image("my_img", "example.png")
 
 -- If you want to use a sprite (an animated image), you can import a spritesheet. We only accept
 -- horizontal spritesheets, meaning the spritesheet must contain one line. To import a spritesheet,
 -- use the builtin function Import:Sprite. This function accepts three arguments: its reference key,
 -- the number of frames in the spritesheet and its path.
-Import:Sprite("my_sprite", 3, "example_sheet.png")
+Import.Sprite("my_sprite", 3, "example_sheet.png")
 
 -- You can add a new floor tile image using the function below.
-Import:Tile("my_tile", "tile.png")
+Import.Tile("my_tile", "tile.png")
 
 -- And place the new tile using Floor:Register. Note that Floor gives preference to custom tiles.
 -- So if you name your new tile "white_floor", all "white_floor" tiles placed in this puzzle will
@@ -307,10 +306,10 @@ end
 
 C1 = Console("console", "green", true, create_numbers, 5)
 C2 = Console("console", "blue", true, nil, 5)
-Objects:Register(C1, "c")
-Objects:Register(C2, "z")
-Objects:PlaceAt(C1, 15, 5)
-Objects:PlaceAt(C2, 5, 15)
+Objects.Register(C1, "c")
+Objects.Register(C2, "z")
+Objects.PlaceAt(C1, 15, 5)
+Objects.PlaceAt(C2, 5, 15)
 
 -- When you create a new object from one of the constructors above, you're not actually creating
 -- the game object itself, but just a prototype so that the game engine knows what to create and
@@ -319,13 +318,13 @@ Objects:PlaceAt(C2, 5, 15)
 -- builtin function OnStart() is then called. You can use this function for more complex
 -- initializations.
 
-Game.OnStart = function()
+Game.SetOnStart(function()
     print("This should print right after the puzzle is loaded.")
-end
+end)
 
 -- A second Game function is Game.OnEnd(). It runs as soon as the puzzle is completed. You can use
 -- this function to send a message to the player.
-Game.OnEnd = function()
+Game.SetOnEnd(function()
     -- The return value of OnEnd generates a Popup window for the user. You may want to give
     -- different popup options depending on the outcome of the puzzle. Return order is:
     --   title - Popup window title
@@ -336,7 +335,7 @@ Game.OnEnd = function()
     --   s_msg - Second button text
     --   s_clr - Second button color
     return "Title", "Text", "blue", "Option 1", "red", "Option 2", "green"
-end
+end)
 
 -- A third Game function is Game.OnDeath(). This function triggers anytime the bot dies. You can use
 -- this function to count how many times the player killed bots in this puzzle, and later remind
@@ -345,19 +344,19 @@ end
 kill_count = 0
 best_time = 0
 
-Game.OnDeath = function()
+Game.SetOnDeath(function()
     kill_count = kill_count + 1
     best_time = 0
-end
+end)
 
 -- The Game function Game.OnTurn triggers on every instruction counter (every tick). Use this to
 -- update or handle any objects that may change at every turn.
-Game.OnTurn = function()
+Game.SetOnTurn(function()
     best_time = best_time + 1
-end
+end)
 
 
--- Function Objective.Check() is run at every end of tick (each turn, command instruction) so that
+-- Function set by Objective.SetCheck() is run at every end of tick (each turn, command instruction) so that
 -- you can check for any objectives being met. It returns true when all objectives have been
 -- completed.
 
@@ -371,16 +370,17 @@ v_pairs = (function()
     return v
 end)()
 
-Objective.Check = function()
+Objective.SetCheck(function()
     v = C2.Object.inp
     if #v ~= #v_pairs then return false end
     for i, n in ipairs(v) do
         if n ~= v_pairs[i] then return false end
     end
     return true
-end
+end)
 
 -- The bot's initial position (pair of int).
-Bot.Position = {math.floor(ROWS/2), math.floor(COLS/2)}
+Bot.SetPosition {math.floor(ROWS/2), math.floor(COLS/2)}
+Bot.SetPosition {1, 1}
 -- The bot's initial orientation (string: 'WEST', 'NORTH', 'EAST' or 'SOUTH').
-Bot.Orientation = "SOUTH"
+Bot.SetOrientation "SOUTH"
