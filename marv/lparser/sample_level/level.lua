@@ -380,7 +380,7 @@ Objective.SetCheck(function()
 end)
 
 -- The bot's initial position (pair of int).
-Bot.SetPosition {math.floor(ROWS/2), math.floor(COLS/2)}
-Bot.SetPosition {1, 1}
+Bot.SetPosition(math.floor(ROWS/2), math.floor(COLS/2))
+Bot.SetPosition(3, 5)
 -- The bot's initial orientation (string: 'WEST', 'NORTH', 'EAST' or 'SOUTH').
 Bot.SetOrientation "SOUTH"

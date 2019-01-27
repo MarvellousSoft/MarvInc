@@ -276,10 +276,10 @@ function parser.prepare(puz_f, t)
         }
         local ors = {NORTH = true, SOUTH = true, EAST = true, WEST = true}
         _E.Bot = {
-            SetPosition    = getSetter(bot, 'position', function(val) checkType(val, 'table'); checkGrid(val[1], val[2], 4) end),
+            SetPosition    = function(i, j) checkGrid(i, j, 4) bot.position = {j, i} end,
             SetOrientation = getSetter(bot, 'orientation', function(val) if not ors[val] then error("Invalid orientation", 2) end end),
             GetPosition = function()
-                return ROOM.bot.pos.x, ROOM.bot.pos.y
+                return ROOM.bot.pos.y, ROOM.bot.pos.x
             end
         }
         extra.bot = bot
@@ -472,7 +472,7 @@ local function load_email(id)
     f()
     local me = extra.email
     local portrait = me.portrait and newImage(path .. me.portrait) or nil
-    if not Mail.existsId(me.id) then
+    if not Mail.existsId(id) then
         local e = Mail.new_custom(false, id, me.title, me.text, me.authors, false, id, nil, nil, me.attachment and newImage(path .. me.attachment))
         e.portrait = portrait
         return e
