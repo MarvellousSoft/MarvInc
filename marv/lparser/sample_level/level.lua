@@ -370,9 +370,9 @@ v_pairs = (function()
     return v
 end)()
 
-Objective.SetCheck(function()
-    v = C2.Object.inp
-    if #v ~= #v_pairs then return false end
+Objective.SetCheck(function(grid)
+    local v = grid[5][15].vec
+    if table.getn(v) ~= table.getn(v_pairs) then return false end
     for i, n in ipairs(v) do
         if n ~= v_pairs[i] then return false end
     end

@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
+local Util = require "util"
 
 local parser = {}
 
@@ -68,6 +69,39 @@ function parser.safe_env()
             "math",
         }
     )
+    -- exceptions
+    -- pairs/ipairs will try to use metamethods
+    E.next = function(t, k)
+        local m = getmetatable(t)
+        local nx = m and m.__next or next
+        return nx(t, k)
+    end
+    E.pairs = function(t)
+        return E.next, t, nil
+    end
+    local function _ipairs(t, var)
+        var = var + 1
+        local value = t[var]
+        if value == nil then return end
+        return var, value
+    end
+    -- these will work even when the table uses __index metamethods
+    E.ipairs = function(t) return _ipairs, t, 0 end
+    E.table.getn = function(t)
+        if type(t) ~= 'table' then return #t end
+        local l, r = 0, 1000000
+        while l < r do
+            local m = math.floor((l + r) / 2)
+            if t[m + 1] == nil then
+                r = m
+            else
+                l = m + 1
+            end
+        end
+        return l
+    end
+    -- unsafe because of memory usage
+    E.string.rep = nil
     return E
 end
 
@@ -435,13 +469,47 @@ function parser.parse(id, noload)
                 else
                     print("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
                 end
-                o.Object = O
             end
         end
     end
 
+    -- Grid accessor
+    local grid = {}
+    local memo = setmetatable({}, {__mode = 'k'})
+    for i = 1, ROWS do
+        grid[i] = setmetatable({}, {
+            __index = function(tab, j)
+                if type(j) ~= 'number' or j < 1 or j > COLS then return nil end
+                local obj = ROOM.grid_obj[j][i]
+                if obj and not memo[obj] then
+                    local o = {type = obj.tp}
+                    if o.type == 'console' then
+                        o.console_type = obj.ctype
+                        o.vec = obj.ctype == 'output' and obj.inp or obj.out
+                        if obj.ctype ~= 'output' then
+                            setmetatable(o, {__index = function(_, key)
+                                if key == 'first_unread' then
+                                    return obj.i
+                                end
+                            end})
+                        end
+                    end
+                    memo[obj] = o
+                end
+                return obj and memo[obj] or nil
+            end,
+            __newindex = function()
+                error("Cannot modify grid manually", 2)
+            end
+        })
+    end
+    grid = Util.deepReadOnly(grid)
+
     P.objective_text = extra.objective.text
-    P.objective_checker = extra.objective.check
+    local check = extra.objective.check
+    P.objective_checker = function()
+        return check(grid)
+    end
     P.lines_on_terminal = extra.meta.lines <= 0 and 99 or extra.meta.lines
     P.memory_slots = extra.meta.memory
     P.extra_info = extra.meta.info
