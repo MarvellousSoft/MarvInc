@@ -334,6 +334,7 @@ C3 = Console {
 }
 Objects.Register(C3, "y")
 Objects.PlaceAt(C3, 15, 15)
+Objects.PlaceAt(C3, 15, 14)
 
 -- When you create a new object from one of the constructors above, you're not actually creating
 -- the game object itself, but just a prototype so that the game engine knows what to create and
