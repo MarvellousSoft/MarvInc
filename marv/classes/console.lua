@@ -28,7 +28,7 @@ Console = Class{
 
         if type(args.vec) == 'table' then
             self.out = args.vec
-            self.ctype = 'input'
+            self.ctype = args.ctype or 'input'
         elseif type(args.vec) == 'function' then
             self.out = args.vec(i, j)
             self.ctype = 'input'
