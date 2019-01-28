@@ -59,6 +59,15 @@ function util.deepReadOnly(obj)
     return memo[obj]
 end
 
+function util.shallowCopy(t)
+    if type(t) ~= 'table' then return t end
+    local cp = {}
+    for a, b in pairs(t) do
+        cp[a] = b
+    end
+    return cp
+end
+
 --Return a random element from a given table.
 --You can give an optional table argument 'tp', so it only returns elements that share a type with the table strings
 --Obs: if you provide a tp table, and there isn't any suitable element available, the program will be trapped here forever (FIX THIS SOMETIME)

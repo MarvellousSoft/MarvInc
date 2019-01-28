@@ -9,6 +9,7 @@ See full license in file LICENSE.txt
 
 require "classes.primitive"
 local Color = require "classes.color.color"
+local Util = require "util"
 
 -- Console class
 
@@ -27,7 +28,7 @@ Console = Class{
         self.clients_awake = true
 
         if type(args.vec) == 'table' then
-            self.out = args.vec
+            self.out = Util.shallowCopy(args.vec)
             self.ctype = args.ctype or 'input'
         elseif type(args.vec) == 'function' then
             self.out = args.vec(i, j)
