@@ -140,7 +140,7 @@ Objects.SetAll("---------------------"..
                "---------------------"..
                "---------------------"..
                "--------------b------"..
-               "---------------------"..
+               "--------------l------"..
                "---------------------"..
                "---------------------"..
                "---------------------"..
@@ -166,6 +166,8 @@ d = Bucket {
 }
 Objects.Register(d, 'd')
 Objects.PlaceAt(d, 10, 10)
+
+Objects.Register(Lava {}, 'l')
 
 -- If you want to limit the player's range without having to place a bunch of objects as obstacles,
 -- you can simply use InvWall to set invisible walls throughout the map. Just like Floor and

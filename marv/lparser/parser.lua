@@ -506,7 +506,7 @@ function parser.parse(id, noload)
                 elseif id == "dead" then
                     Dead(P.grid_obj, i, j, o.key, o.bg, o.d, o.c)
                 elseif id == "dead_switch" then
-                    DeadSwitch(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, o.img_off, {bucketable=o.bckt})
+                    DeadSwitch(P.grid_obj, i, j, o.key_on, o.bg, o.d, o.c, o.img_off, {bucketable=o.bckt})
                 elseif id == "container" then
                     Container(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, {content=o.cnt, content_color=o.cnt_c})
                 elseif id == "emitter" then
