@@ -148,6 +148,19 @@ function parser.prepare(puz_f, t)
             checkNumber(j, 1, COLS, (depth or 3) + 1)
             return (i - 1) * COLS + j
         end
+        local colors = {red = true, green = true, blue = true, white = true, orange = true}
+        local function checkColor(clr, depth)
+            if not colors[clr] then
+                error("Non-existent color '" .. tostring(clr) .. "'", depth or 3)
+            end
+            return Color[clr]()
+        end
+        local dirs = {north = true, south = true, west = true, east = true}
+        local function checkDir(dir, depth)
+            checkType(dir, 'string', (depth or 3) + 1)
+            if not dirs[dir:lower()] then error("Invalid direction '" .. dir .. "'", depth or 3) end
+            return _G[dir:upper() .. "_R"]
+        end
         local function getSetter(meta, var, check, ...)
             local wrap = {...} -- assuming nothing in ... is nil
             return function(val)
@@ -263,30 +276,66 @@ function parser.prepare(puz_f, t)
         extra.import = import
 
         -- Constructors
-        function _E.Bucket(cnt, clr)
-            return {id = "bucket", cnt = cnt, c = clr}
+        local contents = {water = true, paint = true, empty = true}
+        function _E.Bucket(args)
+            checkType(args, 'table')
+            if not contents[args.content] then
+                error("content must be one of ['water', 'empty', 'paint']", 2)
+            end
+            local o = {id = "bucket", content = args.content}
+            if args.content == 'paint' then
+                o.color = checkColor(args.color)
+            end
+            return setmetatable({}, o)
         end
         function _E.Obstacle(bg, key, d, clr)
-            return {id = "obstacle", bg = bg, key = key, d = d, c = clr}
+            return setmetatable({}, {id = "obstacle", bg = bg, key = key, d = d, c = clr})
         end
         function _E.Dead(bg, key, bg, c, d)
-            if d == nil then return {id = "dead", bg = bg, key = key, c = c} end
-            return {id = "dead", bg = bg, c = c, key = key, d = d}
+            if d == nil then return setmetatable({}, {id = "dead", bg = bg, key = key, c = c}) end
+            return setmetatable({}, {id = "dead", bg = bg, c = c, key = key, d = d})
         end
         function _E.DeadSwitch(bg, key_on, d, c, img_off, bckt)
-            return {id = "dead_switch", key_on = key_on, d = d, c = c, img_off = img_off, bckt = bckt}
+            return setmetatable({}, {id = "dead_switch", key_on = key_on, d = d, c = c, img_off = img_off, bckt = bckt})
         end
         function _E.Container(bg, key, d, c, cnt, cnt_c)
-            return {id = "container", bg = bg, key = key, d = d, c = c, cnt = cnt, cnt_c = cnt_c}
+            return setmetatable({}, {id = "container", bg = bg, key = key, d = d, c = c, cnt = cnt, cnt_c = cnt_c})
         end
         function _E.Emitter(img, bg, c, r_key, r_bg, r_d, r_c)
-            return {id = "emitter", key = img, c = c, r = {key = r_key, bg = r_bg, d = r_d, c = r_c}}
+            return setmetatable({}, {id = "emitter", key = img, c = c, r = {key = r_key, bg = r_bg, d = r_d, c = r_c}})
         end
         function _E.Lava()
-            return {id = "dead_switch", key_on = "lava", d = 0.2, bg = true, c = "white", img_off = "solid_lava", bckt = true}
+            return setmetatable({}, {id = "dead_switch", key_on = "lava", d = 0.2, bg = true, c = "white", img_off = "solid_lava", bckt = true})
         end
-        function _E.Console(img, c, bg, data, n)
-            return {id = "console", img = img, c = c, bg = bg, data = data, n = n}
+        local ctypes = {input = true, output = true, IO = true}
+        function _E.Console(args)
+            checkType(args, 'table')
+            checkColor(args.color)
+            if not ctypes[args.type] then error("Console type must be one of ['input', 'output', 'IO']", 2) end
+            local dir = checkDir(args.dir)
+            if args.preview_numbers ~= nil then checkNumber(args.preview_numbers, 0, 50) end
+            if args.type == 'output' and args.data ~= nil then error("Output console can't have data", 2) end
+            if args.type == 'input' and args.data == nil then error("Input console must have data", 2) end
+            local data = {}
+            if args.data ~= nil then
+                checkType(args.data, 'table')
+                for i, v in ipairs(args.data) do
+                    if type(v) == 'number' then
+                        checkNumber(v, -999, 999)
+                    elseif type(v) ~= 'string' or #v ~= 1 then
+                        error("Index " .. i .. " of data must be a number or a single character", 2)
+                    end
+                    data[i] = v
+                end
+            end
+            return setmetatable({}, {
+                id = "console",
+                color = args.color, -- this is a string
+                ctype = args.type,
+                dir = dir,
+                data = data,
+                preview_numbers = args.preview_numbers or 3
+            })
         end
 
         local game = {
@@ -445,27 +494,27 @@ function parser.parse(id, noload)
         for j=1, ROWS do
             local p = i + (j - 1) * COLS
             local r = extra.objects.L:sub(p, p)
-            local o = extra.objects.ref[r]
+            local o = getmetatable(extra.objects.ref[r])
             if o ~= nil then
                 local id = o.id
-                local O = nil
                 if id == "bucket" then
-                    O = Bucket(P.grid_obj, i, j, "bucket", true, nil, nil, nil,
-                        {pickable=true, color=o.clr, content=o.cnt})
+                    Bucket(P.grid_obj, i, j, "bucket", true, nil, nil, nil,
+                        {pickable=true, content_color=o.color, content=o.content})
                 elseif id == "obstacle" then
                     -- Implement safe onInventoryDrop and onWalk later?
-                    O = Obstacle(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, nil)
+                    Obstacle(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, nil)
                 elseif id == "dead" then
-                    O = Dead(P.grid_obj, i, j, o.key, o.bg, o.d, o.c)
+                    Dead(P.grid_obj, i, j, o.key, o.bg, o.d, o.c)
                 elseif id == "dead_switch" then
-                    O = DeadSwitch(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, o.img_off, {bucketable=o.bckt})
+                    DeadSwitch(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, o.img_off, {bucketable=o.bckt})
                 elseif id == "container" then
-                    O = Container(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, {content=o.cnt, content_color=o.cnt_c})
+                    Container(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, {content=o.cnt, content_color=o.cnt_c})
                 elseif id == "emitter" then
-                    O = Emitter(P.grid_obj, i, j, o.key, o.bg, o.c, nil, nil, {o.r.key, o.r.bg, o.r.d, o.r.c})
+                    Emitter(P.grid_obj, i, j, o.key, o.bg, o.c, nil, nil, {o.r.key, o.r.bg, o.r.d, o.r.c})
                 elseif id == "console" then
-                    local _d = (o.d == nil) and "output" or o.d
-                    O = Console(P.grid_obj, i, j, o.img, o.bg, o.c, nil, nil, {vec=_d, show_nums=o.n})
+                    local vec = (o.ctype == 'output') and 'output' or o.data
+                    local c = Console(P.grid_obj, i, j, 'console', true, o.color, nil, nil, {vec = vec, show_nums = o.preview_numbers, ctype = o.ctype})
+                    c.r = o.dir
                 else
                     print("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
                 end

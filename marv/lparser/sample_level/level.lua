@@ -154,11 +154,16 @@ Objects.SetAll("---------------------"..
 -- The Object map works the same way as the Floor map. To register an object, you must first
 -- construct a new object instance and link a character to it.
 
-b = Bucket("paint", "blue")
+b = Bucket {
+    content = "water"
+}
 Objects.Register(b, 'b')
 
 -- You can also use PlaceAt the same way.
-d = Bucket("paint", "red")
+d = Bucket {
+    content = "paint",
+    color = "red"
+}
 Objects.Register(d, 'd')
 Objects.PlaceAt(d, 10, 10)
 
@@ -296,20 +301,39 @@ Emitter(img, bg, c, r_key, r_bg, r_d, r_c)
 
 N = 20
 
-function create_numbers()
+local nums = (function()
     local v = {}
     for i = 0, N-1 do
         table.insert(v, i)
     end
     return v
-end
+end)()
 
-C1 = Console("console", "green", true, create_numbers, 5)
-C2 = Console("console", "blue", true, nil, 5)
+C1 = Console {
+    color           = "green",
+    type            = "input",
+    dir             = "east",
+    data            = nums,
+    preview_numbers = 5,
+}
+C2 = Console {
+    color           = "blue",
+    type            = "output",
+    dir             = "south",
+}
 Objects.Register(C1, "c")
 Objects.Register(C2, "z")
 Objects.PlaceAt(C1, 15, 5)
 Objects.PlaceAt(C2, 5, 15)
+
+C3 = Console {
+    color = "orange",
+    type  = "IO",
+    dir   = "north",
+    data  = {1, 2}
+}
+Objects.Register(C3, "y")
+Objects.PlaceAt(C3, 15, 15)
 
 -- When you create a new object from one of the constructors above, you're not actually creating
 -- the game object itself, but just a prototype so that the game engine knows what to create and
