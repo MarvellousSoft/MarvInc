@@ -143,6 +143,15 @@ function sm.login(user)
                 e.time = email.time_received
             end
         end
+        -- load custom emails
+        if love.filesystem.exists("custom") then
+            local list = {}
+            for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
+                if love.filesystem.isFile("custom/"..file.."/email.lua") then
+                    LParser.load_email(file)
+                end
+            end
+        end
         UNREAD_EMAILS = Mail.getUnreadEmails() --Update UNREAD_EMAILS variable
 
         -- Other stuff
