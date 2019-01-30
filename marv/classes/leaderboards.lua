@@ -14,6 +14,10 @@ local ScrollWindow = require "classes.scroll_window"
 -- Leaderboards class
 local funcs = {}
 
+-- Local functions declarations
+
+local drawScoreIndicator
+
 Leaderboards = Class{
     __includes = {RECT},
     init = function(self, x, y, title)
@@ -200,27 +204,12 @@ function Leaderboards:draw()
         --Draw player score line
         y = y - 3
         if l.player_score then
-            if self.step > 1 then
-                x = l.pos.x + l.h_margin + l.graph_w * ((l.player_score - l.min)/(l.max - l.min))
+            if l.player_score == l.best_score then
+                drawScoreIndicator(l, l.player_score, "YOU", y)
             else
-                x = l.pos.x + l.h_margin + l.bar_w/2 + l.bar_w * (l.player_score - l.min)
+                drawScoreIndicator(l, l.best_score, "BEST", y, -30)
+                drawScoreIndicator(l, l.player_score, "CUR", y)
             end
-            local margin = 2
-            local text = 'YOU'
-            local tw = l.player_line_font:getWidth(text)
-            local th = l.player_line_font:getHeight(text)
-            local tx = x - tw/2
-            local ty = y - l.player_line_h - th - 4
-            --Draw bg
-            g.setColor(255,255,255,235)
-            g.rectangle("fill",tx-margin,ty-margin,tw+2*margin,th+2*margin,5)
-            --Draw text
-            Color.set(l.player_line_color)
-            g.setFont(l.player_line_font)
-            g.print(text, tx, ty)
-            g.setLineWidth(5)
-            --Draw line
-            g.line(x, y, x, y - l.player_line_h)
         end
 
         --Draw friends score headlines
@@ -272,7 +261,7 @@ function Leaderboards:gotError()
     self.error = true
 end
 
-function Leaderboards:showResults(scores, friends_scores, player_score)
+function Leaderboards:showResults(scores, friends_scores, player_score, best_score)
     --Get min and max value from scores
     self.min = scores[1]
     self.max = scores[1]
@@ -317,6 +306,7 @@ function Leaderboards:showResults(scores, friends_scores, player_score)
     --Initialize player score
     table.insert(self.handles, MAIN_TIMER:after(.8, function()
         self.player_score = player_score
+        self.best_score = best_score
         self.player_line_h = 0
         local h = MAIN_TIMER:tween(1, self, {player_line_h = self.max_bar_h}, 'out-quad')
         table.insert(self.handles, h)
@@ -350,4 +340,30 @@ function funcs.create(x, y, title, dont_register)
     return l
 end
 
+--LOCAL FUNCTIONS--
+function drawScoreIndicator(self, score, text, y, offset)
+    local l, g = self, love.graphics
+    local x
+    offset = offset or 0
+    if l.step > 1 then
+        x = l.pos.x + l.h_margin + l.graph_w * ((score - l.min)/(l.max - l.min))
+    else
+        x = l.pos.x + l.h_margin + l.bar_w/2 + l.bar_w * (l.player_score - l.min)
+    end
+    local margin = 2
+    local tw = l.player_line_font:getWidth(text)
+    local th = l.player_line_font:getHeight(text)
+    local tx = x - tw/2
+    local ty = y - l.player_line_h - th - 4 + offset
+    --Draw bg
+    g.setColor(255,255,255,235)
+    g.rectangle("fill",tx-margin,ty-margin,tw+2*margin,th+2*margin,5)
+    --Draw text
+    Color.set(l.player_line_color)
+    g.setFont(l.player_line_font)
+    g.print(text, tx, ty)
+    g.setLineWidth(5)
+    --Draw line
+    g.line(x, y, x, y - l.player_line_h + offset)
+end
 return funcs
