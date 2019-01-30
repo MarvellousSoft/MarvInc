@@ -6,10 +6,10 @@ Meta.SetMemory(0)
 Objective.SetText "Just get to the red tile. It's not that hard."
 
 Objective.SetCheck(function(grid)
+    return grid[1][21] and grid[1][21].type == 'bot'
+    -- This also works
     -- local i, j = Bot.GetPosition()
     -- return i == 1 and j == 21
-    -- This also works
-    return grid[1][21] and grid[1][21].type == 'bot'
 end)
 
 Floor.Register('red_tile', 'r')
@@ -43,18 +43,16 @@ Objects.SetAll("ooooooooo------------"..
 Bot.SetPosition(21, 21)
 Bot.SetOrientation "west"
 
-Game.SetOnEnd(function()
-    return {
-        title = "Congrats",
-        text  = "You finished the custom copy of the first level.",
-        color = "blue",
-        button1 = {
-            text = "k tks",
-            color = "red",
-        },
-        button2 = {
-            text = "fuck u",
-            color = "black"
-        }
+Meta.SetCompletedPopup {
+    title = "Congrats",
+    text  = "You finished the custom copy of the first level.",
+    color = "blue",
+    button1 = {
+        text = "k tks",
+        color = "red",
+    },
+    button2 = {
+        text = "fuck u",
+        color = "black"
     }
-end)
+}

@@ -120,18 +120,21 @@ end
 
 local function checkType(val, typestr, depth)
     if type(val) ~= typestr then error("Invalid non-" .. typestr .. " parameter", depth or 3) end
+    return val
 end
 local function checkNumber(num, from, to, depth)
     checkType(num, 'number', (depth or 3) + 1)
     if num < from or num > to then
         error("Number not in range [" .. from .. ", " .. to .. "]", depth or 3)
     end
+    return num
 end
 local function checkString(str, from, to)
     checkType(str, 'string', 4)
     if str:len() < from or str:len() > to then
         error("String length not in range [" .. from .. ", " .. to .. "]", 3)
     end
+    return str
 end
 local function checkGrid(i, j, depth)
     checkNumber(i, 1, ROWS, (depth or 3) + 1)
@@ -165,8 +168,8 @@ function parser.prepare(puz_f, t)
         local function getSetter(meta, var, check, ...)
             local wrap = {...} -- assuming nothing in ... is nil
             return function(val)
-                check(val, unpack(wrap))
-                meta[var] = val
+                local obj = check(val, unpack(wrap))
+                meta[var] = obj or val
             end
         end
 
@@ -176,6 +179,16 @@ function parser.prepare(puz_f, t)
             lines  = 99,
             memory = 10,
             info   = nil,
+            popup  = {
+                title  = "Completed custom level",
+                text   = "You have completed this custom level. The author didn't create a custom completed popup. Shame.",
+                color  = Color.black(),
+                button1 = {
+                    text  = "Ok",
+                    color = Color.black()
+                }
+            },
+            onStart = function() end
         }
         -- Meta table
         _E.Meta = {
@@ -184,6 +197,25 @@ function parser.prepare(puz_f, t)
             SetLines  = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
             SetMemory = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
             SetInfo   = getSetter(extra.meta, 'info', checkType, 'string'),
+            SetCompletedPopup = getSetter(extra.meta, 'popup', function(val)
+                local popup = {}
+                checkType(val, 'table', 4)
+                popup.title = checkType(val.title, 'string', 4)
+                popup.text = checkType(val.text, 'string', 4)
+                popup.color = checkColor(val.color, 4)
+                popup.button1 = {}
+                checkType(val.button1, 'table', 4)
+                popup.button1.text = checkType(val.button1.text, 'string', 4)
+                popup.button1.color = checkColor(val.button1.color, 4)
+                if val.button2 then
+                    popup.button2 = {}
+                    checkType(val.button2, 'table', 4)
+                    popup.button2.text = checkType(val.button2.text, 'string', 4)
+                    popup.button2.color = checkColor(val.button2.color, 4)
+                end
+                return popup
+            end),
+            SetOnStart = getSetter(extra.meta, 'onStart', checkType, 'function')
         }
 
         extra.objective = {
@@ -350,21 +382,6 @@ function parser.prepare(puz_f, t)
             })
         end
 
-        local game = {
-            onStart = function() end,
-            onEnd   = function() end,
-            onDeath = function() end,
-            onTurn  = function() end,
-        }
-        -- Game
-        _E.Game = {
-            SetOnStart = getSetter(game, 'onStart', checkType, 'function'),
-            SetOnEnd   = getSetter(game, 'onEnd', checkType, 'function'),
-            SetOnDeath = getSetter(game, 'onDeath', checkType, 'function'),
-            SetOnTurn  = getSetter(game, 'onTurn', checkType, 'function'),
-        }
-        extra.game = game
-
         local bot = {
             position    = {1, 1},
             orientation = "NORTH",
@@ -449,7 +466,6 @@ function parser.parse(id, noload)
     P.id = id
     P.is_custom = true
     P.n = extra.meta.id
-    P.turn_handler = extra.game.onTurn
     P.orient = extra.bot.orientation:upper()
     P.init_pos = Vector(extra.bot.position[1], extra.bot.position[2])
     P.grid_floor = {}
@@ -581,29 +597,18 @@ function parser.parse(id, noload)
     P.lines_on_terminal = extra.meta.lines <= 0 and 99 or extra.meta.lines
     P.memory_slots = extra.meta.memory
     P.extra_info = extra.meta.info
-    P.on_start = extra.game.onStart
-    P.on_end = extra.game.onDeath
+    P.on_start = function()
+        -- pcal probably
+        extra.meta.onStart(grid)
+    end
     P.custom_completed = function()
         -- improve this
-        local popup = extra.game.onEnd and extra.game.onEnd() or nil
+        local popup = extra.meta.popup
         if popup then
-            checkType(popup, 'table', 2)
-            checkType(popup.title, 'string', 2)
-            checkType(popup.text, 'string', 2)
-            local clr = checkColor(popup.color, 2)
-            checkType(popup.button1, 'table', 2)
-            checkType(popup.button1.text, 'string', 2)
-            local c1 = checkColor(popup.button1.color, 2)
             local disc = function() ROOM:disconnect() end
-            local b2 = nil
-            if popup.button2 then
-                checkType(popup.button2.text, 'string', 2)
-                local c2 = checkColor(popup.button2.color, 2)
-                b2 = {func = disc, text = popup.button2.text, clr = c2}
-            end
-            PopManager.new(popup.title, popup.text, clr,
-                {func = disc, text = popup.button1.text, clr = c1},
-                b2)
+            PopManager.new(popup.title, popup.text, popup.color,
+                {func = disc, text = popup.button1.text, clr = popup.button1.color},
+                popup.button2 and {func = disc, text = popup.button2.text, clr = popup.button2.color} or nil)
         end
     end
     if not noload then
