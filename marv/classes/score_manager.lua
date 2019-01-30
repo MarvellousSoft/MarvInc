@@ -8,7 +8,6 @@ See full license in file LICENSE.txt
 ]]--
 
 local StepManager = require "classes.step_manager"
-local Leaderboards = require "classes.leaderboards"
 
 local sm = {}
 

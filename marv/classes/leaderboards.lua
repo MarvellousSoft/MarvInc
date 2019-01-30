@@ -20,8 +20,8 @@ local drawScoreIndicator
 
 Leaderboards = Class{
     __includes = {RECT},
-    init = function(self, x, y, title)
-        RECT.init(self, x, y, 350, 480, Color.white())
+    init = function(self, x, y, w, h, title)
+        RECT.init(self, x, y, w, h, Color.white())
 
         self.loading = true --If its loading stats
         self.loading_dots = 0 --Number between 0 and 3
@@ -331,8 +331,8 @@ for _, name in ipairs(redirect) do
     Leaderboards[name] = function(self, ...) self.friends_scroll[name](self.friends_scroll, ...) end
 end
 
-function funcs.create(x, y, title, dont_register)
-    local l = Leaderboards(x,y,title)
+function funcs.create(x, y, w, h, title, dont_register)
+    local l = Leaderboards(x, y, w, h, title)
     if not dont_register then
         l:addElement(DRAW_TABLE.L2u, "leaderboard")
     end

@@ -13,17 +13,23 @@ local ScoreManager = require "classes.score_manager"
 local state = {}
 
 local _switch
-local _lb_line
-local _lb_cycles
+local _name_chart = {
+    linecount = 'LINES',
+    cycles = 'CYCLES',
+}
 
 function state:enter(previous, puzzle_id, metrics)
-    local x, y = 230, 200
-    _lb_line = Leaderboards.create(x, y, "LINES", true)
-    ScoreManager.populateLeaderboard(_lb_line, puzzle_id, 'linecount')
-    _lb_cycles = Leaderboards.create(x + _lb_line.w + 160, y, "CYCLES", true)
-    ScoreManager.populateLeaderboard(_lb_cycles, puzzle_id, 'cycles')
-
-    self.leaderboards = {_lb_line, _lb_cycles}
+    local w, h = 350, 480
+    local step = W/(#metrics + 1)
+    local x, y = step - w/2, H/2 - h/2
+    self.leaderboards = {}
+    for _,metric in ipairs(metrics) do
+        local name = _name_chart[metric] or "METRIC"
+        local lb = Leaderboards.create(x, y, w, h, name, true)
+        ScoreManager.populateLeaderboard(lb, puzzle_id, metric)
+        table.insert(self.leaderboards, lb)
+        x = x + step
+    end
     _switch = false
 end
 
@@ -42,8 +48,9 @@ function state:draw()
     Draw.allTables()
     love.graphics.setColor(20, 20, 20, 230)
     love.graphics.rectangle("fill", 0, 0, W, H)
-    _lb_line:draw()
-    _lb_cycles:draw()
+    for _,lb in ipairs(self.leaderboards) do
+        lb:draw()
+    end
 
 end
 
@@ -83,8 +90,9 @@ function state:keypressed(key, scancode, isrepeat)
 end
 
 function state:leave()
-    _lb_line:kill()
-    _lb_line:kill()
+    for _,lb in ipairs(self.leaderboards) do
+        lb:kill()
+    end
 end
 
 return state
