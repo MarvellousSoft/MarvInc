@@ -57,12 +57,7 @@ function sm.uploadCompletedStats(puzzle)
     local id = ROOM.puzzle.id
     local pop = Util.findId("popup")
     if not pop then return end
-    local x, y = 590, 100
-    local lb_line = Leaderboards.create(x, y, "LINES")
-    local lb_cycles = Leaderboards.create(x + lb_line.w + 15, y, "CYCLES")
-    pop:translate(-390,0)
-    uploadScoreAndShow(lb_line, id, 'linecount', line_count)
-    uploadScoreAndShow(lb_cycles, id, 'cycles', steps)
+    pop:addLeaderboardsButton(puzzle.id, {"linecount", "cycles"})
 end
 
 function sm.findHandle(puzzle_id, type, callback)

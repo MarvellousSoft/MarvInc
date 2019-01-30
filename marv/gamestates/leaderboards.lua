@@ -16,7 +16,7 @@ local _switch
 local _lb_line
 local _lb_cycles
 
-function state:enter(previous, puzzle_id)
+function state:enter(previous, puzzle_id, metrics)
     local x, y = 230, 200
     _lb_line = Leaderboards.create(x, y, "LINES", true)
     ScoreManager.populateLeaderboard(_lb_line, puzzle_id, 'linecount')

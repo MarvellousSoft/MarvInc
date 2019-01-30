@@ -88,6 +88,10 @@ function Popup:draw()
     love.graphics.printf(self.title, self.pos.x + self.border, self.pos.y + self.border,
         self.w - self.border, "center")
 
+    if self.leaderboard_button then
+        self.leaderboard_button:draw()
+    end
+
     Color.set(self.text_clr)
     love.graphics.setFont(self.fnt)
     love.graphics.printf(self.text, self.pos.x + self.border, self.pos.y +
@@ -117,6 +121,9 @@ function Popup:mousereleased(x, y, button, touch)
                 return
             end
         end
+        if self.leaderboard_button then
+            self.leaderboard_button:checkCollides(x,y)
+        end
     end
 end
 
@@ -125,6 +132,16 @@ function Popup:keypressed(key)
         PopManager.quit()
         self.buttons[1].callback()
     end
+end
+
+function Popup:addLeaderboardsButton(puzzle_id, metrics)
+    -- leaderboards on workshop items and normal levels
+    local icon = BUTS_IMG.leaderboards
+    local on_click = function()
+        Gamestate.push(GS.LEADERBOARDS, puzzle_id, {"linecount", "cycles"})
+    end
+    local size, margin_x, margin_y = 30, 10, 12
+    self.leaderboard_button = ImgButton(self.pos.x + self.w - size - margin_x, self.pos.y + margin_y, size, icon, on_click)
 end
 
 PopManager = {
@@ -349,12 +366,6 @@ function PopManager.keypressed(key)
 end
 
 function PopManager.quit()
-    local lbs = Util.findSbTp('leaderboard')
-    if lbs then
-        for lb in pairs(lbs) do
-            lb:kill()
-        end
-    end
     if PopManager.pop then
         PopManager.pop.death = true
         PopManager.pop = nil
