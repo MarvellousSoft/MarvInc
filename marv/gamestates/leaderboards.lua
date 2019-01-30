@@ -73,9 +73,14 @@ function state:wheelmoved(...)
 end
 
 function state:mousepressed(x, y, but, ...)
-    local any = false
     for _, l in ipairs(self.leaderboards) do
         l:mousePressed(x, y, but, ...)
+    end
+end
+
+function state:mousereleased(x, y, but, ...)
+    local any = false
+    for _, l in ipairs(self.leaderboards) do
         any = any or Util.pointInRect(x, y, l)
     end
     if but == 1 and not any then
