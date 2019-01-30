@@ -121,14 +121,15 @@ function PuzzleButton:init(x, y, w, h, puzzle)
                     {func = function() end, text = "No", clr = Color.black()}
                 )
             end
-        else
+            self.steam_button = ImgButton(x + w + 10, y + h/2 - size/2, size, icon, on_click)
+        elseif self.puzzle.status == "completed" then
             -- leaderboards on workshop items and normal levels
             icon = BUTS_IMG.leaderboards
             on_click = function()
                 Gamestate.push(GS.LEADERBOARDS, puzzle.id)
             end
+            self.steam_button = ImgButton(x + w + 10, y + h/2 - size/2, size, icon, on_click)
         end
-        self.steam_button = ImgButton(x + w + 10, y + h/2 - size/2, size, icon, on_click)
     end
 end
 
@@ -142,7 +143,7 @@ function PuzzleButton:checkCollides(x, y)
         end
         ROOM:connect(self.puzzle.id, nil, self.is_custom)
     end
-    if USING_STEAM then
+    if USING_STEAM and self.steam_button then
         self.steam_button:checkCollides(x,y)
     end
 end
@@ -190,8 +191,8 @@ function PuzzleButton:draw(mx, my)
     local shift = self.has_challenge and circles_w or 0
     love.graphics.print(self.puzzle.name, self.pos.x + shift + (self.w - shift - self.font:getWidth(self.puzzle.name)) / 2, self.pos.y + (self.h - self.font:getHeight()) / 2)
 
-    if USING_STEAM then
-        -- leaderboards button
+    if USING_STEAM and self.steam_button then
+        -- leaderboards or upload button
         self.steam_button.pos.x = self.pos.x + self.w
         self.steam_button.pos.y = self.pos.y
         self.steam_button:draw()
