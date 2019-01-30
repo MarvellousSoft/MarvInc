@@ -88,6 +88,12 @@ function AuthorButton:checkCollides(x, y)
     end
 end
 
+function AuthorButton:mouseMoved(x, y)
+    for _, but in ipairs(self.puzzle_list) do
+        but:mouseMoved(x, y)
+    end
+end
+
 local circles_w = 25
 function PuzzleButton:init(x, y, w, h, puzzle)
     RECT.init(self, x, y, w, h)
@@ -145,6 +151,13 @@ function PuzzleButton:checkCollides(x, y)
     end
     if USING_STEAM and self.steam_button then
         self.steam_button:checkCollides(x,y)
+    end
+end
+
+function PuzzleButton:mouseMoved(x, y)
+    if USING_STEAM and self.steam_button then
+        self.steam_button.mx = x
+        self.steam_button.my = y
     end
 end
 

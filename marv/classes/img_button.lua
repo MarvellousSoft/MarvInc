@@ -29,7 +29,7 @@ ImgButton = Class{
 
 function ImgButton:draw()
     local mx, my = love.mouse.getPosition()
-    local hover = Util.pointInRect(mx, my, self)
+    local hover = Util.pointInRect(self.mx or mx, self.my or my, self)
 
 
     if self.highlight and self:highlight() then

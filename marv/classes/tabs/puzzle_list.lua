@@ -49,7 +49,7 @@ PuzzleListTab = Class {
                 getHeight = function(obj) return obj.true_h end,
                 draw = function() self:list_draw() end,
                 mousePressed = function(obj, ...) self:list_mousePressed(...) end,
-                mouseMoved = function(obj, x, y) obj.mx, obj.my = x, y end,
+                mouseMoved = function(obj, x, y) obj.mx, obj.my = x, y self:list_mouseMoved(x, y) end,
                 true_h = 0, mx = 0, my = 0
             }
             table.insert(self.lists, ScrollWindow(self.w - 2 * border_w, self.pos.y + self.h - obj.pos.y, obj, nil, 35))
@@ -215,5 +215,11 @@ end
 function PuzzleListTab:list_mousePressed(x, y, but)
     for _, b in ipairs(self.active_list.buttons) do
         b:checkCollides(x, y)
+    end
+end
+
+function PuzzleListTab:list_mouseMoved(x, y)
+    for _, b in ipairs(self.active_list.buttons) do
+        b:mouseMoved(x, y)
     end
 end
