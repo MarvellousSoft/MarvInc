@@ -398,7 +398,7 @@ v_pairs = (function()
 end)()
 
 Objective.SetCheck(function(grid)
-    local v = grid[5][15].vec
+    local v = grid[5][15].list
     if table.getn(v) ~= table.getn(v_pairs) then return false end
     for i, n in ipairs(v) do
         if n ~= v_pairs[i] then return false end

@@ -118,6 +118,40 @@ local retrieve_asset = function(key)
     return nil, "Asset "..key.." not found!"
 end
 
+local function checkType(val, typestr, depth)
+    if type(val) ~= typestr then error("Invalid non-" .. typestr .. " parameter", depth or 3) end
+end
+local function checkNumber(num, from, to, depth)
+    checkType(num, 'number', (depth or 3) + 1)
+    if num < from or num > to then
+        error("Number not in range [" .. from .. ", " .. to .. "]", depth or 3)
+    end
+end
+local function checkString(str, from, to)
+    checkType(str, 'string', 4)
+    if str:len() < from or str:len() > to then
+        error("String length not in range [" .. from .. ", " .. to .. "]", 3)
+    end
+end
+local function checkGrid(i, j, depth)
+    checkNumber(i, 1, ROWS, (depth or 3) + 1)
+    checkNumber(j, 1, COLS, (depth or 3) + 1)
+    return (i - 1) * COLS + j
+end
+local colors = {red = true, green = true, blue = true, white = true, orange = true, black = true}
+local function checkColor(clr, depth)
+    if not colors[clr] then
+        error("Non-existent color '" .. tostring(clr) .. "'", depth or 3)
+    end
+    return Color[clr]()
+end
+local dirs = {north = true, south = true, west = true, east = true}
+local function checkDir(dir, depth)
+    checkType(dir, 'string', (depth or 3) + 1)
+    if not dirs[dir:lower()] then error("Invalid direction '" .. dir .. "'", depth or 3) end
+    return _G[dir:upper() .. "_R"]
+end
+
 function parser.prepare(puz_f, t)
     -- Functions and tables allowed by the environment (considered safe-ish).
     local _E = parser.safe_env()
@@ -128,39 +162,6 @@ function parser.prepare(puz_f, t)
         _E.ROWS = ROWS
         _E.COLS = COLS
 
-        local function checkType(val, typestr, depth)
-            if type(val) ~= typestr then error("Invalid non-" .. typestr .. " parameter", depth or 3) end
-        end
-        local function checkNumber(num, from, to, depth)
-            checkType(num, 'number', (depth or 3) + 1)
-            if num < from or num > to then
-                error("Number not in range [" .. from .. ", " .. to .. "]", depth or 3)
-            end
-        end
-        local function checkString(str, from, to)
-            checkType(str, 'string', 4)
-            if str:len() < from or str:len() > to then
-                error("String length not in range [" .. from .. ", " .. to .. "]", 3)
-            end
-        end
-        local function checkGrid(i, j, depth)
-            checkNumber(i, 1, ROWS, (depth or 3) + 1)
-            checkNumber(j, 1, COLS, (depth or 3) + 1)
-            return (i - 1) * COLS + j
-        end
-        local colors = {red = true, green = true, blue = true, white = true, orange = true}
-        local function checkColor(clr, depth)
-            if not colors[clr] then
-                error("Non-existent color '" .. tostring(clr) .. "'", depth or 3)
-            end
-            return Color[clr]()
-        end
-        local dirs = {north = true, south = true, west = true, east = true}
-        local function checkDir(dir, depth)
-            checkType(dir, 'string', (depth or 3) + 1)
-            if not dirs[dir:lower()] then error("Invalid direction '" .. dir .. "'", depth or 3) end
-            return _G[dir:upper() .. "_R"]
-        end
         local function getSetter(meta, var, check, ...)
             local wrap = {...} -- assuming nothing in ... is nil
             return function(val)
@@ -174,7 +175,7 @@ function parser.prepare(puz_f, t)
             id     = "??",
             lines  = 99,
             memory = 10,
-            info   = "Missing info.",
+            info   = nil,
         }
         -- Meta table
         _E.Meta = {
@@ -209,10 +210,10 @@ function parser.prepare(puz_f, t)
                 floor.ref[c] = key
                 floor.iref[key] = c
             end,
-            PlaceAt = function(key, i, j)
-                checkType(key, 'string')
+            PlaceAt = function(ch, i, j)
+                checkString(ch, 1, 1)
                 local p = checkGrid(i, j)
-                floor.L = str_subchar(floor.L, p, floor.iref[key])
+                floor.L = str_subchar(floor.L, p, ch)
             end
         }
         extra.floor = floor
@@ -288,22 +289,33 @@ function parser.prepare(puz_f, t)
             end
             return setmetatable({}, o)
         end
-        function _E.Obstacle(bg, key, d, clr)
-            return setmetatable({}, {id = "obstacle", bg = bg, key = key, d = d, c = clr})
+        function _E.Wall(args)
+            local o = {id = "wall", img = 'wall_none'}
+            if args then
+                checkType(args, 'table')
+                if args.img then
+                    checkType(args.img, 'string')
+                    o.img = args.img
+                end
+            end
+            return setmetatable({}, o)
         end
-        function _E.Dead(bg, key, bg, c, d)
-            if d == nil then return setmetatable({}, {id = "dead", bg = bg, key = key, c = c}) end
-            return setmetatable({}, {id = "dead", bg = bg, c = c, key = key, d = d})
-        end
-        function _E.DeadSwitch(bg, key_on, d, c, img_off, bckt)
-            return setmetatable({}, {id = "dead_switch", key_on = key_on, d = d, c = c, img_off = img_off, bckt = bckt})
-        end
-        function _E.Container(bg, key, d, c, cnt, cnt_c)
-            return setmetatable({}, {id = "container", bg = bg, key = key, d = d, c = c, cnt = cnt, cnt_c = cnt_c})
-        end
-        function _E.Emitter(img, bg, c, r_key, r_bg, r_d, r_c)
-            return setmetatable({}, {id = "emitter", key = img, c = c, r = {key = r_key, bg = r_bg, d = r_d, c = r_c}})
-        end
+        --function _E.Obstacle(bg, key, d, clr)
+        --    return setmetatable({}, {id = "obstacle", bg = bg, key = key, d = d, c = clr})
+        --end
+        --function _E.Dead(bg, key, bg, c, d)
+        --    if d == nil then return setmetatable({}, {id = "dead", bg = bg, key = key, c = c}) end
+        --    return setmetatable({}, {id = "dead", bg = bg, c = c, key = key, d = d})
+        --end
+        --function _E.DeadSwitch(bg, key_on, d, c, img_off, bckt)
+        --    return setmetatable({}, {id = "dead_switch", key_on = key_on, d = d, c = c, img_off = img_off, bckt = bckt})
+        --end
+        --function _E.Container(bg, key, d, c, cnt, cnt_c)
+        --    return setmetatable({}, {id = "container", bg = bg, key = key, d = d, c = c, cnt = cnt, cnt_c = cnt_c})
+        --end
+        --function _E.Emitter(img, bg, c, r_key, r_bg, r_d, r_c)
+        --    return setmetatable({}, {id = "emitter", key = img, c = c, r = {key = r_key, bg = r_bg, d = r_d, c = r_c}})
+        --end
         function _E.Lava()
             return setmetatable({}, {id = "dead_switch", key_on = "lava", d = 0.2, bg = true, c = "white", img_off = "solid_lava", bckt = true})
         end
@@ -360,7 +372,7 @@ function parser.prepare(puz_f, t)
         local ors = {NORTH = true, SOUTH = true, EAST = true, WEST = true}
         _E.Bot = {
             SetPosition    = function(i, j) checkGrid(i, j, 4) bot.position = {j, i} end,
-            SetOrientation = getSetter(bot, 'orientation', function(val) if not ors[val] then error("Invalid orientation", 2) end end),
+            SetOrientation = getSetter(bot, 'orientation', function(val) if not ors[val:upper()] then error("Invalid orientation", 2) end end),
             GetPosition = function()
                 return ROOM.bot.pos.y, ROOM.bot.pos.x
             end
@@ -438,7 +450,7 @@ function parser.parse(id, noload)
     P.is_custom = true
     P.n = extra.meta.id
     P.turn_handler = extra.game.onTurn
-    P.orient = extra.bot.orientation
+    P.orient = extra.bot.orientation:upper()
     P.init_pos = Vector(extra.bot.position[1], extra.bot.position[2])
     P.grid_floor = {}
     P.grid_obj = {}
@@ -476,7 +488,7 @@ function parser.parse(id, noload)
         for j=1, ROWS do
             local p = i + (j - 1) * COLS
             local k = extra.floor.L:sub(p, p)
-            P.grid_floor[i][j] = extra.floor.ref[k]
+            P.grid_floor[i][j] = extra.floor.ref[k] or 'white_floor'
         end
     end
 
@@ -501,20 +513,27 @@ function parser.parse(id, noload)
                     Bucket(P.grid_obj, i, j, "bucket", true, nil, nil, nil,
                         {pickable=true, content_color=o.color, content=o.content})
                 elseif id == "obstacle" then
+                    -- disabled for now
                     -- Implement safe onInventoryDrop and onWalk later?
                     Obstacle(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, nil)
                 elseif id == "dead" then
+                    -- disabled for now
                     Dead(P.grid_obj, i, j, o.key, o.bg, o.d, o.c)
                 elseif id == "dead_switch" then
+                    -- disabled for now
                     DeadSwitch(P.grid_obj, i, j, o.key_on, o.bg, o.d, o.c, o.img_off, {bucketable=o.bckt})
                 elseif id == "container" then
+                    -- disabled for now
                     Container(P.grid_obj, i, j, o.key, o.bg, o.d, o.c, nil, {content=o.cnt, content_color=o.cnt_c})
                 elseif id == "emitter" then
+                    -- disabled for now
                     Emitter(P.grid_obj, i, j, o.key, o.bg, o.c, nil, nil, {o.r.key, o.r.bg, o.r.d, o.r.c})
                 elseif id == "console" then
                     local vec = (o.ctype == 'output') and 'output' or o.data
                     local c = Console(P.grid_obj, i, j, 'console', true, o.color, nil, nil, {vec = vec, show_nums = o.preview_numbers, ctype = o.ctype})
                     c.r = o.dir
+                elseif id == 'wall' then
+                    Obstacle(P.grid_obj, i, j, o.img)
                 else
                     print("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
                 end
@@ -534,7 +553,7 @@ function parser.parse(id, noload)
                     local o = {type = obj.tp}
                     if o.type == 'console' then
                         o.console_type = obj.ctype
-                        o.vec = obj.ctype == 'output' and obj.inp or obj.out
+                        o.list = obj.ctype == 'output' and obj.inp or obj.out
                         if obj.ctype ~= 'output' then
                             setmetatable(o, {__index = function(_, key)
                                 if key == 'first_unread' then
@@ -566,10 +585,26 @@ function parser.parse(id, noload)
     P.on_end = extra.game.onDeath
     P.custom_completed = function()
         -- improve this
-        local title, text, c, o1, c1, o2, c2 = extra.game.onEnd()
-        PopManager.new(title, text, c,
-            {func = function() ROOM:disconnect() end, text = o1, clr = Color[c1]()},
-            {func = function() ROOM:disconnect() end, text = o2, clr = Color[c2]()})
+        local popup = extra.game.onEnd and extra.game.onEnd() or nil
+        if popup then
+            checkType(popup, 'table', 2)
+            checkType(popup.title, 'string', 2)
+            checkType(popup.text, 'string', 2)
+            local clr = checkColor(popup.color, 2)
+            checkType(popup.button1, 'table', 2)
+            checkType(popup.button1.text, 'string', 2)
+            local c1 = checkColor(popup.button1.color, 2)
+            local disc = function() ROOM:disconnect() end
+            local b2 = nil
+            if popup.button2 then
+                checkType(popup.button2.text, 'string', 2)
+                local c2 = checkColor(popup.button2.color, 2)
+                b2 = {func = disc, text = popup.button2.text, clr = c2}
+            end
+            PopManager.new(popup.title, popup.text, clr,
+                {func = disc, text = popup.button1.text, clr = c1},
+                b2)
+        end
     end
     if not noload then
         P.code, P.renames = SaveManager.load_code(id, true)
