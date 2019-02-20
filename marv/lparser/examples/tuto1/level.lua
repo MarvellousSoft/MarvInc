@@ -1,11 +1,11 @@
 Meta.SetName "Hello World"
-Meta.SetID "1"
+Meta.SetRoomName "1"
 Meta.SetLines(99)
 Meta.SetMemory(0)
 
-Objective.SetText "Just get to the red tile. It's not that hard."
+Meta.SetObjectiveText "Just get to the red tile. It's not that hard."
 
-Objective.SetCheck(function(grid)
+Meta.SetObjectiveCheck(function(grid)
     return grid[1][21] and grid[1][21].type == 'bot'
     -- This also works
     -- local i, j = Bot.GetPosition()

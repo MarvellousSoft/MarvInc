@@ -190,13 +190,26 @@ function parser.prepare(puz_f, t)
             },
             onStart = function() end
         }
+
+        extra.objective = {
+            text  = "No objectives listed.",
+            check = function() return false end,
+        }
         -- Meta table
         _E.Meta = {
-            SetName   = getSetter(extra.meta, 'name', checkType, 'string'),
-            SetID     = getSetter(extra.meta, 'id', checkType, 'string'),
-            SetLines  = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
-            SetMemory = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
-            SetInfo   = getSetter(extra.meta, 'info', checkType, 'string'),
+            SetName      = getSetter(extra.meta, 'name', checkType, 'string'),
+            SetRoomName  = getSetter(extra.meta, 'id', checkType, 'string'),
+            SetLines     = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
+            SetMemory    = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
+            SetExtraInfo = getSetter(extra.meta, 'info', function(val)
+              if type(val) == 'string' then return val end
+              local tab = {}
+              checkType(val, 'table', 4)
+              for i, v in ipairs(val) do
+                table.insert(tab, checkType(v, 'string', 4))
+              end
+              return table.concat(tab, "\n- ")
+            end),
             SetCompletedPopup = getSetter(extra.meta, 'popup', function(val)
                 local popup = {}
                 checkType(val, 'table', 4)
@@ -215,17 +228,9 @@ function parser.prepare(puz_f, t)
                 end
                 return popup
             end),
-            SetOnStart = getSetter(extra.meta, 'onStart', checkType, 'function')
-        }
-
-        extra.objective = {
-            text  = "No objectives listed.",
-            check = function() return false end,
-        }
-        -- Objective table
-        _E.Objective = {
-            SetText  = getSetter(extra.objective, 'text', checkType, 'string'),
-            SetCheck = getSetter(extra.objective, 'check', checkType, 'function'),
+            SetOnStart        = getSetter(extra.meta, 'onStart', checkType, 'function'),
+            SetObjectiveText  = getSetter(extra.objective, 'text', checkType, 'string'),
+            SetObjectiveCheck = getSetter(extra.objective, 'check', checkType, 'function'),
         }
 
         local floor = {
@@ -307,6 +312,30 @@ function parser.prepare(puz_f, t)
             end,
         }
         extra.import = import
+
+        -- Util functions
+        _E.Util = {
+            CheckConsoleOutput = function(console, desired)
+                checkType(console, 'table', 3)
+                if console.type ~= 'console' or console.console_type ~= 'output' then
+                    error("Invalid call. Object must be an output console.", 2)
+                end
+                checkType(desired, 'table', 3)
+                for i, v in ipairs(desired) do
+                  checkType(v, 'number', 3)
+                end
+                local out = console.list
+                if _E.table.getn(out) > #desired then
+                    return "Console has " .. _E.table.getn(out) .. " numbers, only " .. #desired .. " expected"
+                end
+                for i, v in _E.ipairs(out) do
+                  if desired[i] ~= v then
+                    return "At position #" .. i .. ": Expected " .. tostring(desired[i]) .. ", got " .. tostring(v) .. "."
+                  end
+                end
+                return _E.table.getn(out) == #desired
+            end
+        }
 
         -- Constructors
         local contents = {water = true, paint = true, empty = true}
@@ -592,7 +621,13 @@ function parser.parse(id, noload)
     P.objective_text = extra.objective.text
     local check = extra.objective.check
     P.objective_checker = function()
-        return check(grid)
+        -- protect this call
+        local ret = check(grid)
+        if type(ret) == 'string' then
+            StepManager.stop("Error", ret)
+            return false
+        end
+        return ret == true
     end
     P.lines_on_terminal = extra.meta.lines <= 0 and 99 or extra.meta.lines
     P.memory_slots = extra.meta.memory

@@ -55,7 +55,7 @@
 -- The puzzle's title (string). This should appear in the info tab.
 Meta.SetName "Puzzle name"
 -- Its unique numbering (string). Usually it follows a certain pattern related to the email chain.
-Meta.SetID "S.1"
+Meta.SetRoomName "S.1"
 -- The number of lines of code available for the user (int). If <= 0, sets it to 99.
 Meta.SetLines(30)
 -- The number of registers available for the user (int). Must be >= 0.
