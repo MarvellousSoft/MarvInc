@@ -203,13 +203,14 @@ function Leaderboards:draw()
 
         --Draw player score line
         y = y - 3
+        if not l.player_score then l.player_score = l.best_score end
         if l.player_score then
-            if l.player_score == l.best_score then
-                drawScoreIndicator(l, l.player_score, "YOU", y)
-            else
-                drawScoreIndicator(l, l.best_score, "BEST", y, -30)
-                drawScoreIndicator(l, l.player_score, "CUR", y)
-            end
+          if l.player_score == l.best_score then
+              drawScoreIndicator(l, l.player_score, "YOU", y)
+          else
+              drawScoreIndicator(l, l.best_score, "BEST", y, -30)
+              drawScoreIndicator(l, l.player_score, "CUR", y)
+          end
         end
 
         --Draw friends score headlines

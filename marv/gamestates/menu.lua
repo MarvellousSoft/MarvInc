@@ -277,6 +277,9 @@ end
 
 function state:leave()
     Util.findId("logo"):kill()
+    if USING_STEAM then
+      Util.findId("steam_logo"):kill()
+    end
     self.box:deactivate()
 end
 
