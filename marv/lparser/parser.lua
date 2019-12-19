@@ -105,19 +105,6 @@ function parser.safe_env()
     return E
 end
 
-local retrieve_asset = function(key)
-    if key == nil then return nil, "Expected reference key to asset. Got nil value!" end
-    local a = CUST_SHEET_IMG[key]
-    if a ~= nil then return a, "sprite" end
-    a = CUST_OBJS_IMG[key]
-    if a ~= nil then return a, "image" end
-    a = SHEET_IMG[key]
-    if a ~= nil then return a, "sprite" end
-    a = OBJS_IMG[key]
-    if a ~= nil then return a, "image" end
-    return nil, "Asset "..key.." not found!"
-end
-
 local function checkType(val, typestr, depth)
     if type(val) ~= typestr then error("Invalid non-" .. typestr .. " parameter", depth or 3) end
     return val
@@ -307,12 +294,17 @@ function parser.prepare(puz_f, t)
         -- Importing assets
         _E.Import = {
             Image = function(key, path)
+                checkType(key, 'string')
+                checkType(path, 'string')
                 import.ref_imgs[key] = path
             end,
-            Sprite = function(key, d, path)
-                import.ref_sprites[key] = {d, path}
-            end,
+            -- Let's keep this out for now
+            -- Sprite = function(key, d, path)
+            --     import.ref_sprites[key] = {d, path}
+            -- end,
             Tile = function(key, path)
+                checkType(key, 'string')
+                checkType(path, 'string')
                 import.ref_tiles[key] = path
             end,
         }
