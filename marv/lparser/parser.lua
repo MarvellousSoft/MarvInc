@@ -579,6 +579,7 @@ function parser.parse(id, noload)
                     Obstacle(P.grid_obj, i, j, o.img)
                 else
                     print("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
+                    return nil
                 end
             end
         end
@@ -586,6 +587,7 @@ function parser.parse(id, noload)
 
     -- Grid accessor
     local grid = {}
+    -- memoization table with weak keys
     local memo = setmetatable({}, {__mode = 'k'})
     for i = 1, ROWS do
         grid[i] = setmetatable({}, {
@@ -636,14 +638,11 @@ function parser.parse(id, noload)
         extra.meta.onStart(grid)
     end
     P.custom_completed = function()
-        -- improve this
         local popup = extra.meta.popup
-        if popup then
-            local disc = function() ROOM:disconnect() end
-            PopManager.new(popup.title, popup.text, popup.color,
-                {func = disc, text = popup.button1.text, clr = popup.button1.color},
-                popup.button2 and {func = disc, text = popup.button2.text, clr = popup.button2.color} or nil)
-        end
+        local disc = function() ROOM:disconnect() end
+        PopManager.new(popup.title, popup.text, popup.color,
+            {func = disc, text = popup.button1.text, clr = popup.button1.color},
+            popup.button2 and {func = disc, text = popup.button2.text, clr = popup.button2.color} or nil)
     end
     if not noload then
         P.code, P.renames = SaveManager.load_code(id, true)
