@@ -138,7 +138,7 @@ function Popup:addLeaderboardsButton(puzzle_id, metrics)
     -- leaderboards on workshop items and normal levels
     local icon = BUTS_IMG.leaderboards_bg
     local on_click = function()
-        Gamestate.push(GS.LEADERBOARDS, puzzle_id, {"linecount", "cycles"})
+        Gamestate.push(GS.LEADERBOARDS, puzzle_id, {"linecount", "cycles"}, true)
     end
     local size, margin_x, margin_y = 30, 10, 12
     self.leaderboard_button = ImgButton(self.pos.x + self.w - size - margin_x, self.pos.y + margin_y, size, icon, on_click)

@@ -27,12 +27,18 @@ local multiplier = {
     cycles = 100
 }
 
+local last_score = {
+    linecount = nil,
+    cycles = nil
+}
+
 function sm.getStatsForTest(i)
     steps_vec[i] = StepManager.ic
     line_count_vec[i] = Util.findId('code_tab'):countLines()
 end
 
 local function uploadScoreAndShow(id, type, score)
+    last_score[type] = math.floor(score * multiplier[type]) / multiplier[type]
     sm.findHandle(id, type, function(handle, err)
         if err then print("Could not find leaderboard handle") return end
         Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(_, err2)
@@ -71,18 +77,21 @@ function sm.findHandle(puzzle_id, type, callback)
 end
 
 -- Download scores from
-function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
+function sm.populateLeaderboard(lb, puzzle_id, type, use_player_score, lb_handle)
     if not lb_handle then
         sm.findHandle(puzzle_id, type, function(handle, err)
             if err then
                 lb:gotError()
             else
-                sm.populateLeaderboard(lb, puzzle_id, type, handle)
+                sm.populateLeaderboard(lb, puzzle_id, type, use_player_score, handle)
             end
         end)
         return
     end
     local global, friends, my_score, my_best
+    if use_player_score then
+        my_score = last_score[type]
+    end
     local function testFinish()
         if global and friends then
             lb:showResults(global, friends, my_score, my_best)
@@ -102,8 +111,7 @@ function sm.populateLeaderboard(lb, puzzle_id, type, lb_handle)
         local my_id = Steam.user.getSteamID()
         for i, r in ipairs(results) do
             if r.steamIDUser == my_id then
-                my_score = r.score / multiplier[type]
-                my_best = my_score + 1
+                my_best = r.score / multiplier[type]
             end
             friends[i] = {
                 name = Steam.friends.getFriendPersonaName(r.steamIDUser),

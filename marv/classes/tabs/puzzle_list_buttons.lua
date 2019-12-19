@@ -132,7 +132,7 @@ function PuzzleButton:init(x, y, w, h, puzzle)
             -- leaderboards on workshop items and normal levels
             icon = BUTS_IMG.leaderboards
             on_click = function()
-                Gamestate.push(GS.LEADERBOARDS, puzzle.id, {"linecount", "cycles"})
+                Gamestate.push(GS.LEADERBOARDS, puzzle.id, {"linecount", "cycles"}, false)
             end
             self.steam_button = ImgButton(x + w + 10, y + h/2 - size/2, size, icon, on_click)
         end
