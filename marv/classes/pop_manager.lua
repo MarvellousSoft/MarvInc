@@ -31,6 +31,7 @@ Popup = Class{
         self.title = title
         self.text = text
         self.text_clr = Color.black()
+        self.info_text = nil
 
         self.border_clr = Color.black()
 
@@ -97,6 +98,21 @@ function Popup:draw()
     love.graphics.printf(self.text, self.pos.x + self.border, self.pos.y +
         self.title_fnt:getHeight() + 30, self.w - self.border, "left")
 
+    --Draw info text
+    if self.info_text then
+      love.graphics.setFont(self.fnt)
+      local tx, ty = self.fnt:getWidth(self.info_text), self.fnt:getHeight()
+      local x, y = self.pos.x + self.w + 10, self.pos.y + self.title_h/2 - ty/2 + 10
+      --Draw bg
+      Color.set(self.color)
+      local mx, my = 5, 4
+      love.graphics.rectangle("fill", x - mx, y - my, tx + 2*mx, ty + 2*my, 15)
+      --Draw text
+      Color.set(self.text_clr)
+      love.graphics.print(self.info_text, x, y)
+
+    end
+
     for _, v in ipairs(self.buttons) do
         v:draw()
     end
@@ -110,6 +126,10 @@ function Popup:translate(dx, dy)
         b.pos.y = b.pos.y + dy
         b:centralize()
     end
+end
+
+function Popup:showInfo(text)
+  self.info_text = text
 end
 
 function Popup:mousereleased(x, y, button, touch)
@@ -142,6 +162,22 @@ function Popup:addLeaderboardsButton(puzzle_id, metrics)
     end
     local size, margin_x, margin_y = 30, 10, 12
     self.leaderboard_button = ImgButton(self.pos.x + self.w - size - margin_x, self.pos.y + margin_y, size, icon, on_click)
+    self.leaderboard_button:block(BUTS_IMG["leaderboards_upload"])
+end
+
+function Popup:enableLeaderboardsButton()
+  if not self.leaderboard_button then
+    print("error in leaderboards")
+  end
+  self.leaderboard_button:unblock()
+end
+
+function Popup:errorLeaderboardsButton()
+  if not self.leaderboard_button then
+    print("error in leaderboards")
+  end
+  self.leaderboard_button:unblock() --Must be called before because we sucked at programming
+  self.leaderboard_button:block(BUTS_IMG["leaderboards_blocked"])
 end
 
 PopManager = {

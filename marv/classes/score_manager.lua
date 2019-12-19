@@ -13,6 +13,8 @@ local sm = {}
 
 local steps_vec = {}
 local line_count_vec = {}
+local _stats_uploaded
+local _number_of_stats = 2
 
 local function avg(tab, n)
     local sum = 0
@@ -40,10 +42,34 @@ end
 local function uploadScoreAndShow(id, type, score)
     last_score[type] = math.floor(score * multiplier[type]) / multiplier[type]
     sm.findHandle(id, type, function(handle, err)
-        if err then print("Could not find leaderboard handle") return end
+        if err then
+           print("Could not find leaderboard handle")
+           local pop = Util.findId("popup")
+           if pop then
+             pop:showInfo("Couldn't upload stats.")
+             pop:errorLeaderboardsButton()
+           end
+           return
+        end
         Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(_, err2)
-            if err2 then print("Could not upload score") return end
+            if err2 then
+              print("Could not upload score")
+              local pop = Util.findId("popup")
+              if pop then
+                pop:showInfo("Couldn't upload stats.")
+                pop:errorLeaderboardsButton()
+              end
+              return
+            end
             print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. score .. ' ' .. type)
+            _stats_uploaded = _stats_uploaded + 1
+            if _stats_uploaded >= _number_of_stats then
+              local pop = Util.findId("popup")
+              if pop then
+                pop:showInfo("Leaderboards ready!")
+                pop:enableLeaderboardsButton()
+              end
+            end
         end)
     end)
 end
@@ -61,6 +87,8 @@ function sm.uploadCompletedStats(puzzle)
     local id = ROOM.puzzle.id
     local pop = Util.findId("popup")
     if not pop then return end
+    pop:showInfo("Uploading stats...")
+    _stats_uploaded = 0
     uploadScoreAndShow(id, 'linecount', line_count)
     uploadScoreAndShow(id, 'cycles', steps)
     pop:addLeaderboardsButton(puzzle.id, {"linecount", "cycles"})
