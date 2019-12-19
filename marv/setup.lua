@@ -280,6 +280,7 @@ ACH_IMG["bro"] = love.graphics.newImage("assets/images/achievements/bro.png")
 
 -- Miscellaneous images
 MISC_IMG = {}
+MISC_IMG["steam"] = love.graphics.newImage("assets/images/vapor.png")
 MISC_IMG["reg_static"] = love.graphics.newImage("assets/images/static.png")
 MISC_IMG["mild_static"] = love.graphics.newImage("assets/images/static_mild.png")
 MISC_IMG["static"] = MISC_IMG["reg_static"]

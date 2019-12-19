@@ -11,6 +11,7 @@ local Timer = require "extra_libs.hump.timer"
 require "classes.text_box"
 require "classes.button"
 local ScrollWindow = require "classes.scroll_window"
+local Color = require "classes.color.color"
 local state = {}
 local bgm
 local user_font = FONTS.fira(22)
@@ -41,6 +42,14 @@ function state:enter()
     -- Create background
     local bg = IMAGE(0, 0, BG_IMG)
     bg:addElement(DRAW_TABLE.BG, nil, "background")
+
+    local steam_logo
+    if USING_STEAM then
+      local scale, margin = .3, 10
+      steam_logo = IMAGE(margin, H - MISC_IMG["steam"]:getHeight()*scale - margin,
+                         MISC_IMG["steam"], Color.new(255,255,255,80), scale)
+      steam_logo:addElement(DRAW_TABLE.GUI, nil, "steam_logo")
+    end
 
     -- Create logo
     local logo = IMAGE(W / 2 - MISC_IMG.logo:getWidth() * .75 / 2, 150, MISC_IMG.logo, Color.white(), .75)
