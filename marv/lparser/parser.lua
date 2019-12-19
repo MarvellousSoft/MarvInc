@@ -129,7 +129,7 @@ local function checkGrid(i, j, depth)
     return (i - 1) * COLS + j
 end
 local colors = {
-    black = true
+    black = true,
     white = true,
     red = true,
     green = true,
