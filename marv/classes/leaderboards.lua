@@ -74,6 +74,10 @@ Leaderboards = Class{
         self.error_color = Color.red()
         self.error_text = "ERROR LOADING"
 
+        self.timeout = false
+        self.timeout_handle = MAIN_TIMER:after(12, function() self.timeout = true end)
+        self.timeout_text = "TIMEOUT"
+
         self.headline_font = FONTS.robotoBold(20)
         self.headline_color = Color.white()
         self.rank_font = FONTS.fira(18)
@@ -144,6 +148,13 @@ function Leaderboards:draw()
 
     if self.error then
         local text = l.error_text
+        Color.set(l.error_color)
+        g.setFont(l.error_font)
+        local tx = x + l.graph_w/2 - l.error_font:getWidth(text)/2
+        local ty = y + l.graph_h/2 - l.error_font:getHeight(text)/2
+        g.print(text, tx, ty)
+    elseif self.timeout then
+        local text = l.timeout_text
         Color.set(l.error_color)
         g.setFont(l.error_font)
         local tx = x + l.graph_w/2 - l.error_font:getWidth(text)/2
@@ -260,9 +271,12 @@ end
 
 function Leaderboards:gotError()
     self.error = true
+    MAIN_TIMER:cancel(self.timeout_handle)
 end
 
 function Leaderboards:showResults(scores, friends_scores, player_score, best_score)
+    MAIN_TIMER:cancel(self.timeout_handle)
+
     --Get min and max value from scores
     self.min = scores[1]
     self.max = scores[1]

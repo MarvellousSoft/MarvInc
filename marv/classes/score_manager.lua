@@ -39,7 +39,7 @@ function sm.getStatsForTest(i)
     line_count_vec[i] = Util.findId('code_tab'):countLines()
 end
 
-local function uploadScoreAndShow(id, type, score)
+local function uploadScore(id, type, score)
     last_score[type] = math.floor(score * multiplier[type]) / multiplier[type]
     sm.findHandle(id, type, function(handle, err)
         if err then
@@ -51,8 +51,8 @@ local function uploadScoreAndShow(id, type, score)
            end
            return
         end
-        Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(_, err2)
-            if err2 then
+        Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(data, err2)
+            if err2 or not data.success then
               print("Could not upload score")
               local pop = Util.findId("popup")
               if pop then
@@ -89,8 +89,8 @@ function sm.uploadCompletedStats(puzzle)
     if not pop then return end
     pop:showInfo("Uploading stats...")
     _stats_uploaded = 0
-    uploadScoreAndShow(id, 'linecount', line_count)
-    uploadScoreAndShow(id, 'cycles', steps)
+    uploadScore(id, 'linecount', line_count)
+    uploadScore(id, 'cycles', steps)
     pop:addLeaderboardsButton(puzzle.id, {"linecount", "cycles"})
 end
 
