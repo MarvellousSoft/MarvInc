@@ -195,21 +195,24 @@ function parser.prepare(puz_f, t)
             text  = "No objectives listed.",
             check = function() return false end,
         }
+
+        local checkList= function (val)
+            if type(val) == 'string' then return val end
+            local tab = {}
+            checkType(val, 'table', 4)
+            for i, v in ipairs(val) do
+                table.insert(tab, checkType(v, 'string', 4))
+            end
+            return table.concat(tab, "\n- ")
+        end
+
         -- Meta table
         _E.Meta = {
             SetName      = getSetter(extra.meta, 'name', checkType, 'string'),
             SetRoomName  = getSetter(extra.meta, 'id', checkType, 'string'),
             SetLines     = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
             SetMemory    = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
-            SetExtraInfo = getSetter(extra.meta, 'info', function(val)
-              if type(val) == 'string' then return val end
-              local tab = {}
-              checkType(val, 'table', 4)
-              for i, v in ipairs(val) do
-                table.insert(tab, checkType(v, 'string', 4))
-              end
-              return table.concat(tab, "\n- ")
-            end),
+            SetExtraInfo = getSetter(extra.meta, 'info', checkList),
             SetCompletedPopup = getSetter(extra.meta, 'popup', function(val)
                 local popup = {}
                 checkType(val, 'table', 4)
@@ -229,7 +232,7 @@ function parser.prepare(puz_f, t)
                 return popup
             end),
             SetOnStart        = getSetter(extra.meta, 'onStart', checkType, 'function'),
-            SetObjectiveText  = getSetter(extra.objective, 'text', checkType, 'string'),
+            SetObjectiveText  = getSetter(extra.objective, 'text', checkList),
             SetObjectiveCheck = getSetter(extra.objective, 'check', checkType, 'function'),
         }
 
@@ -269,10 +272,10 @@ function parser.prepare(puz_f, t)
                 objs.ref[c] = obj
                 objs.iref[obj] = c
             end,
-            PlaceAt = function(obj, i, j)
-                checkType(obj, 'table') -- check if it is an object
+            PlaceAt = function(ch, i, j)
+                checkString(ch, 1, 1)
                 local p = checkGrid(i, j)
-                objs.L = str_subchar(objs.L, p, objs.iref[obj])
+                objs.L = str_subchar(objs.L, p, ch)
             end
         }
         extra.objects = objs

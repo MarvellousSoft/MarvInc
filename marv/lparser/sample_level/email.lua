@@ -57,7 +57,7 @@ Email.SetTitle "Email subject."
 Email.SetText [[
 This is the body of the email. You can use {green}tags{end} to give {pink}f{gray}l{blue}a{purple}i{orange}r{end} and {cyan}color{end} to your emails.
 
-You may also add {red}one{end} (and only one) image to your email. For this use self.Attach.
+You may also add {red}one{end} (and only one) image to your email. For this use Email.SetAttachment.
 ]]
 
 -- Attaches image to main email.
