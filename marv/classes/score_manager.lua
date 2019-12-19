@@ -57,6 +57,8 @@ function sm.uploadCompletedStats(puzzle)
     local pop = Util.findId("popup")
     if not pop then return end
     pop:addLeaderboardsButton(puzzle.id, {"linecount", "cycles"})
+    uploadScoreAndShow(lb_line, id, 'linecount', line_count)
+    uploadScoreAndShow(lb_cycles, id, 'cycles', steps)
 end
 
 function sm.findHandle(puzzle_id, type, callback)
