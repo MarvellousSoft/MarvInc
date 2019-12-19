@@ -172,7 +172,7 @@ function PuzzleListTab:refresh()
         for _, P in ipairs(WorkshopManager.getAllDownloadedPuzzles()) do
             table.insert(list, {name = P.name, id = P.id, status = "custom", is_workshop = true})
         end
-        table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Steam Puzzles", list))
+        table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Steam Workshop", list))
     end
 end
 
