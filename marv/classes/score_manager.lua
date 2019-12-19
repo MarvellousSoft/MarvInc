@@ -32,13 +32,12 @@ function sm.getStatsForTest(i)
     line_count_vec[i] = Util.findId('code_tab'):countLines()
 end
 
-local function uploadScoreAndShow(lb, id, type, score)
+local function uploadScoreAndShow(id, type, score)
     sm.findHandle(id, type, function(handle, err)
-        if err then return lb:gotError() end
+        if err then print("Could not find leaderboard handle") return end
         Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(_, err2)
-            if err2 then return lb:gotError() end
+            if err2 then print("Could not upload score") return end
             print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. score .. ' ' .. type)
-            sm.populateLeaderboard(lb, id, type, handle)
         end)
     end)
 end
@@ -56,9 +55,9 @@ function sm.uploadCompletedStats(puzzle)
     local id = ROOM.puzzle.id
     local pop = Util.findId("popup")
     if not pop then return end
+    uploadScoreAndShow(id, 'linecount', line_count)
+    uploadScoreAndShow(id, 'cycles', steps)
     pop:addLeaderboardsButton(puzzle.id, {"linecount", "cycles"})
-    uploadScoreAndShow(lb_line, id, 'linecount', line_count)
-    uploadScoreAndShow(lb_cycles, id, 'cycles', steps)
 end
 
 function sm.findHandle(puzzle_id, type, callback)
