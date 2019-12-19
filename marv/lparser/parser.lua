@@ -482,8 +482,8 @@ function parser.parse(id, noload)
     local f = path and loadfile(path .. "level.lua")
     if not f then print("Custom level " .. id .. " not found") return nil end
     local E, extra = parser.prepare(f, "level")
-    local s, err = pcall(f)
-    if not path or not f or not s then
+    local ok, err = pcall(f)
+    if not path or not f or not ok then
         print("Custom level "..id.." has failed to compile! " .. tostring(err))
         return nil
     end
@@ -621,8 +621,20 @@ function parser.parse(id, noload)
     P.objective_text = extra.objective.text
     local check = extra.objective.check
     P.objective_checker = function()
-        -- protect this call
-        local ret = check(grid)
+        local ok, ret = pcall(check, grid)
+        if ok and type(ret) ~= 'string' and type(ret) ~= 'boolean' and type(ret) ~= 'nil' then
+            ok = false
+            ret = "Invalid objective checker return type. " ..
+            "Must be string or boolean, was " .. type(ret) .. "."
+        end
+        if not ok then
+            print(ret)
+            StepManager.stop(
+                "Custom level error",
+                "The custom level crashed while checking for objective.\n" ..
+                "Error: " .. tostring(ret)
+            )
+        end
         if type(ret) == 'string' then
             StepManager.stop("Error", ret)
             return false
