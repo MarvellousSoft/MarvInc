@@ -128,7 +128,23 @@ local function checkGrid(i, j, depth)
     checkNumber(j, 1, COLS, (depth or 3) + 1)
     return (i - 1) * COLS + j
 end
-local colors = {red = true, green = true, blue = true, white = true, orange = true, black = true}
+local colors = {
+    black = true
+    white = true,
+    red = true,
+    green = true,
+    blue = true,
+    orange = true,
+    yellow = true,
+    purple = true,
+    pink = true,
+    transp = true,
+    brown = true,
+    gray = true,
+    teal = true,
+    magenta = true,
+    violet = true,
+}
 local function checkColor(clr, depth)
     if not colors[clr] then
         error("Non-existent color '" .. tostring(clr) .. "'", depth or 3)
