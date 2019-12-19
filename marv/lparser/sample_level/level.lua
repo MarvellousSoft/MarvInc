@@ -60,6 +60,8 @@ Meta.SetRoomName "S.1"
 Meta.SetLines(30)
 -- The number of registers available for the user (int). Must be >= 0 and <= 200.
 Meta.SetMemory(12)
+-- The number of test cases to run. Must be >= 1 and <= 10.
+Meta.SetTestCount(1)
 -- A description of this puzzle's objectives (string).
 Meta.SetObjectiveText {
     "Take all even numbers from the green console and place them on the blue console.",

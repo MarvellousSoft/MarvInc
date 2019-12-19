@@ -178,6 +178,7 @@ function parser.prepare(puz_f, t)
             id     = "??",
             lines  = 99,
             memory = 10,
+            tests  = 1,
             info   = nil,
             popup  = {
                 title  = "Completed custom level",
@@ -212,6 +213,7 @@ function parser.prepare(puz_f, t)
             SetRoomName  = getSetter(extra.meta, 'id', checkType, 'string'),
             SetLines     = getSetter(extra.meta, 'lines', checkNumber, 1, 99),
             SetMemory    = getSetter(extra.meta, 'memory', checkNumber, 0, 200),
+            SetTestCount = getSetter(extra.meta, 'tests', checkNumber, 1, 10),
             SetExtraInfo = getSetter(extra.meta, 'info', checkList),
             SetCompletedPopup = getSetter(extra.meta, 'popup', function(val)
                 local popup = {}
@@ -498,6 +500,7 @@ function parser.parse(id, noload)
     P.id = id
     P.is_custom = true
     P.n = extra.meta.id
+    P.test_count = extra.meta.tests
     P.orient = extra.bot.orientation:upper()
     P.init_pos = Vector(extra.bot.position[1], extra.bot.position[2])
     P.grid_floor = {}
@@ -634,6 +637,7 @@ function parser.parse(id, noload)
     end
     P.lines_on_terminal = extra.meta.lines <= 0 and 99 or extra.meta.lines
     P.memory_slots = extra.meta.memory
+    P.test_count = extra.meta.tests
     P.extra_info = extra.meta.info
     P.on_start = function()
         -- pcal probably
