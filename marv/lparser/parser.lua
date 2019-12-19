@@ -628,7 +628,6 @@ function parser.parse(id, noload)
             "Must be string or boolean, was " .. type(ret) .. "."
         end
         if not ok then
-            print(ret)
             StepManager.stop(
                 "Custom level error",
                 "The custom level crashed while checking for objective.\n" ..
@@ -646,8 +645,11 @@ function parser.parse(id, noload)
     P.test_count = extra.meta.tests
     P.extra_info = extra.meta.info
     P.on_start = function()
-        -- pcal probably
-        extra.meta.onStart(grid)
+        local ok, err = pcall(extra.meta.onStart, grid)
+        if not ok then
+            print("The custom level crashed while starting up. Error: " .. tostring(err))
+            print("Ignoring this error and moving on.")
+        end
     end
     P.custom_completed = function()
         local popup = extra.meta.popup
