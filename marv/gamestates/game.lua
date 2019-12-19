@@ -38,11 +38,10 @@ function state:init()
     -- WARNING: saving may trigger unwanted events so we have to handle that case
     MAIN_TIMER:after(120, function(itself)
         if SaveManager.safeToSave() then
-            print("Autosaving...")
             SaveManager.save()
             MAIN_TIMER:after(120, itself)
         else
-            print("Not safe to autosave now. Scheduling for later...")
+            --Not safe to autosave now. Scheduling for later...
             MAIN_TIMER:after(10, itself)
         end
     end)

@@ -19,7 +19,7 @@ local _name_chart = {
 }
 
 function state:enter(previous, puzzle_id, metrics, use_player_score)
-    local w, h = 350, 480
+    local w, h = 350, 530
     local step = W/(#metrics + 1)
     local x, y = step - w/2, H/2 - h/2
     self.leaderboards = {}

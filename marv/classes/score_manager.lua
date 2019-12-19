@@ -61,7 +61,7 @@ local function uploadScore(id, type, score)
               end
               return
             end
-            print('Stats uploaded to leaderboard: completed ' .. id .. ' with ' .. score .. ' ' .. type)
+            --Stats uploaded sucessfully
             _stats_uploaded = _stats_uploaded + 1
             if _stats_uploaded >= _number_of_stats then
               local pop = Util.findId("popup")
@@ -81,7 +81,7 @@ function sm.uploadCompletedStats(puzzle)
     -- maybe register accesses total instead of just count?
     -- ignore this for now
     --local reg_used = Util.findId('code_tab').memory:countUsed()
-    print('Stats for ' .. puzzle.id .. ': Lines=' .. line_count .. ' Steps=' .. steps)
+    
     if not USING_STEAM then return end
     if line_count <= 0 then return end
     local id = ROOM.puzzle.id

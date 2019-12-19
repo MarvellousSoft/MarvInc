@@ -67,7 +67,6 @@ local function submitUpdate(info, id)
     -- Actually submit
     Steam.UGC.submitItemUpdate(handle, nil, function(data, err)
         if err or data.result ~= 1 then
-            if not err then print(data.result) end
             fail("Could not upload changes.")
         else
             PopManager.quit()

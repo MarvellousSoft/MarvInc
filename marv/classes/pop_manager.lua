@@ -102,7 +102,7 @@ function Popup:draw()
     if self.info_text then
       love.graphics.setFont(self.fnt)
       local tx, ty = self.fnt:getWidth(self.info_text), self.fnt:getHeight()
-      local x, y = self.pos.x + self.w + 10, self.pos.y + self.title_h/2 - ty/2 + 10
+      local x, y = self.pos.x + self.w + 50, self.pos.y + self.title_h/2 - ty/2 + 10
       --Draw bg
       Color.set(self.color)
       local mx, my = 5, 4
@@ -161,7 +161,7 @@ function Popup:addLeaderboardsButton(puzzle_id, metrics)
         Gamestate.push(GS.LEADERBOARDS, puzzle_id, {"linecount", "cycles"}, true)
     end
     local size, margin_x, margin_y = 30, 10, 12
-    self.leaderboard_button = ImgButton(self.pos.x + self.w - size - margin_x, self.pos.y + margin_y, size, icon, on_click)
+    self.leaderboard_button = ImgButton(self.pos.x + self.w + margin_x - 3, self.pos.y + margin_y, size, icon, on_click)
     self.leaderboard_button:block(BUTS_IMG["leaderboards_upload"])
 end
 

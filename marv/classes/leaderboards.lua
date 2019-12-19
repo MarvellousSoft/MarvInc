@@ -82,6 +82,7 @@ Leaderboards = Class{
         self.headline_color = Color.white()
         self.rank_font = FONTS.fira(18)
         self.max_name_size = 16
+        self.mode_font = FONTS.robotoBold(26)
         self.friends_font = FONTS.fira(17)
         self.friends_color = Color.white()
         self.friends_division_line_color = Color.new(120, 30, 60)
@@ -134,9 +135,20 @@ function Leaderboards:draw()
     Color.set(l.title_color)
     love.graphics.print(l.title, l.pos.x + l.w/2 - tw/2, l.pos.y + title_margin)
 
-    --Draw graph bg
     local x = l.pos.x + l.h_margin
     local y = l.pos.y + 3*title_margin + th
+
+    if not self.error or self.timeout then
+      --Draw "global" text
+      g.setFont(l.mode_font)
+      Color.set(l.graph_bg_color_shadow)
+      g.print("Global",self.rank_x+3, y+3)
+      Color.set(l.headline_color)
+      g.print("Global",self.rank_x, y)
+    end
+
+    --Draw graph bg
+    y = y + 70
     local ox, oy = 8, 0
     Color.set(l.graph_bg_color_shadow)
     g.rectangle("fill", x + ox, y + oy, l.graph_w, l.graph_h)
@@ -187,11 +199,11 @@ function Leaderboards:draw()
         Color.set(l.graph_border_color)
         g.setLineWidth(3)
         y = y + 1
-        if self.step == 1 then
+        if self.step <= 1  then
             --Draw numbers
             x = l.pos.x + l.h_margin + l.bar_w/2
             for i = 1, l.divisions do
-                local value = self.min + (i-1)*self.step
+                local value = math.floor(self.min + (i-1)*self.step)
                 g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
                 x = x + l.bar_w
             end
@@ -206,8 +218,10 @@ function Leaderboards:draw()
             x = l.pos.x + l.h_margin
             for i = 0, l.divisions do
                 g.line(x,y,x,y+self.division_h)
-                local value = self.min + i*self.step
-                g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+                local value = math.floor(self.min + i*self.step)
+                if value <= 999 or i%2 == 0 then
+                  g.print(value, x - l.division_font:getWidth(value)/2, y + self.division_h + 2)
+                end
                 x = x + l.bar_w
             end
         end
@@ -223,6 +237,14 @@ function Leaderboards:draw()
               drawScoreIndicator(l, l.player_score, "CUR", y)
           end
         end
+
+        --Draw "friends" text
+        y = y + 40
+        g.setFont(l.mode_font)
+        Color.set(l.graph_bg_color_shadow)
+        g.print("Friends",self.rank_x+3, y+3)
+        Color.set(l.headline_color)
+        g.print("Friends",self.rank_x, y)
 
         --Draw friends score headlines
         y = y + 40
@@ -278,8 +300,8 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
     MAIN_TIMER:cancel(self.timeout_handle)
 
     --Get min and max value from scores
-    self.min = scores[1]
-    self.max = scores[1]
+    self.min = player_score or scores[1]
+    self.max = player_score or scores[1]
     for _, score in pairs(scores) do
         if score < self.min then
             self.min = score
@@ -290,8 +312,13 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
     end
 
     --Set divisions
-    self.divisions = math.min(10, self.max - self.min + 1)
-    self.step = math.ceil((self.max - self.min + 1)/self.divisions)
+    self.divisions = math.min(10, self.max - self.min)
+    self.divisions = self.divisions + 1
+    self.divisions = math.max(1, self.divisions)
+    self.step = math.ceil((self.max - self.min)/self.divisions)
+    if self.step > 1 then
+      self.divisions = self.divisions - 1
+    end
 
     --Init graph
     for i = 1, self.divisions do
@@ -338,6 +365,9 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
     end
 
     self.loading = false
+    if player_score then
+      self.title = self.title..": "..player_score
+    end
 end
 
 local redirect = {'mousePressed', 'mouseReleased', 'mouseScroll', 'mouseMoved', 'update'}
@@ -363,7 +393,7 @@ function drawScoreIndicator(self, score, text, y, offset)
     if l.step > 1 then
         x = l.pos.x + l.h_margin + l.graph_w * ((score - l.min)/(l.max - l.min))
     else
-        x = l.pos.x + l.h_margin + l.bar_w/2 + l.bar_w * (l.player_score - l.min)
+        x = l.pos.x + l.h_margin + l.bar_w/2 + l.bar_w * (score - l.min)
     end
     local margin = 2
     local tw = l.player_line_font:getWidth(text)

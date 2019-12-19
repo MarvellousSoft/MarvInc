@@ -159,7 +159,7 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " I AM A GOD OF PROGRAMMING ",
+            text = " I'M GOD OF PROGRAMMING ",
             clr = _G.Color.black()
         })
 end
