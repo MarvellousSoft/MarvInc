@@ -495,8 +495,9 @@ end
 function parser.parse(id, noload)
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
-    local f = path and loadfile(path .. "level.lua")
-    if not f then print("Custom level " .. id .. " not found") return nil end
+    if not path then print("Custom level " .. id .. " not found") return nil end
+    local f, err = loadfile(path .. "level.lua")
+    if not f then print("Failed to parse level " .. id .. ": " .. tostring(err)) return nil end
     local E, extra = parser.prepare(f, "level")
     local ok, err = pcall(f)
     if not path or not f or not ok then
