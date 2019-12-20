@@ -302,7 +302,7 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
     --Get min and max value from scores
     self.min = player_score or scores[1]
     self.max = player_score or scores[1]
-    for _, score in pairs(scores) do
+    for _, score in ipairs(scores) do
         if score < self.min then
             self.min = score
         end
@@ -311,14 +311,17 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
         end
     end
 
+    --Let's turn max and min into integers
+    self.min = math.floor(self.min)
+    self.max = math.ceil(self.max)
+
     --Set divisions
-    self.divisions = math.min(10, self.max - self.min)
-    self.divisions = self.divisions + 1
-    self.divisions = math.max(1, self.divisions)
-    self.step = math.ceil((self.max - self.min)/self.divisions)
-    if self.step > 1 then
-      self.divisions = self.divisions - 1
-    end
+    self.divisions = math.min(10, self.max - self.min + 1)
+    self.step = math.ceil((self.max - self.min + 1)/self.divisions)
+    --Since self.step is always an integer, we will sometimes draw past
+    --self.max, so let's update that value.
+    --Example: min=0, max=12, then step=2 and we will actually draw until 20
+    self.max = self.min + self.step * self.divisions
 
     --Init graph
     for i = 1, self.divisions do
@@ -327,7 +330,7 @@ function Leaderboards:showResults(scores, friends_scores, player_score, best_sco
 
     --Populate with scores
     local max_value = 0
-    for _, score in pairs(scores) do
+    for _, score in ipairs(scores) do
         local i = math.floor((score-self.min)/self.step) + 1
         i = math.min(i, self.divisions)
         self.graph[i] = self.graph[i] + 1
