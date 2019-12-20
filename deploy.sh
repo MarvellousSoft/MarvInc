@@ -105,7 +105,7 @@ get_latest_release() {
 
 # Downloads correct luasteam lib for platform $1 into file $2
 download_luasteam() {
-  luasteam_v="v1.0.0"
+  luasteam_v="v1.0.2"
   printf "LuaSteam version: ${luasteam_v}\n"
   curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2"
 }
