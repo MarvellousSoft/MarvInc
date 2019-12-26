@@ -47,7 +47,7 @@ local new_safe_env = function(...)
     return E
 end
 
-function parser.safe_env()
+function parser.safe_env(seed)
     local E = new_safe_env(
         "assert",
         "error",
@@ -102,6 +102,10 @@ function parser.safe_env()
     end
     -- unsafe because of memory usage
     E.string.rep = nil
+    -- Fixing random
+    local rd = love.math.newRandomGenerator(seed or 42)
+    E.math.random = function(...) return rd:random(...) end
+    E.math.randomseed = function(...) return rd:setSeed(...) end
     return E
 end
 
@@ -158,9 +162,9 @@ local function checkDir(dir, depth)
     return _G[dir:upper() .. "_R"]
 end
 
-function parser.prepare(puz_f, t)
+function parser.prepare(puz_f, t, seed)
     -- Functions and tables allowed by the environment (considered safe-ish).
-    local _E = parser.safe_env()
+    local _E = parser.safe_env(seed)
     local extra = {}
     setfenv(puz_f, _E)
     if t == "level" then
@@ -492,13 +496,13 @@ local function newImage(path)
 end
 
 
-function parser.parse(id, noload)
+function parser.parse(id, noload, seed)
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
     if not path then print("Custom level " .. id .. " not found") return nil end
     local f, err = loadfile(path .. "level.lua")
     if not f then print("Failed to parse level " .. id .. ": " .. tostring(err)) return nil end
-    local E, extra = parser.prepare(f, "level")
+    local E, extra = parser.prepare(f, "level", seed)
     local ok, err = pcall(f)
     if not path or not f or not ok then
         print("Custom level "..id.." has failed to compile! " .. tostring(err))
