@@ -47,12 +47,23 @@ if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
   printf "  --all,      -a   deploys for all platforms, ignoring the -r option.\n"
   printf "  --clean,    -c   removes output files (use with care!). Ignores all tags above if used.\n"
   printf "  --steam,    -s   builds the steam version of the binaries. Please have the sdk unzipped in this directory.\n"
-  printf "  --help,     -h   display this help and exit\n\n"
+  printf "  --help,     -h   display this help and exit\n"
+  printf "  --prefix,   -p   changes love-release prefix (for old version compatibility)\n\n"
   printf "Examples:\n"
   printf "  $0 --release A     Generates a Mac OS X binary in the build dir.\n"
   printf "  $0 -h              Outputs this help text.\n"
   printf "  $0 --clean         Removes the build directory and AppImage debris.\n"
   exit
+fi
+
+# Check for prefix.
+any_contains args "--prefix" "-p"
+rval=$?
+if [ "$rval" -ne $NULL ]; then
+  p=${args[$(( rval+1 ))]}
+  printf "Prefix: $p\n"
+  LOVE_RELEASE=$p/$LOVE_RELEASE
+  printf "LOVE_RELEASE: $LOVE_RELEASE"
 fi
 
 # Clear.
