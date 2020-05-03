@@ -25,7 +25,7 @@ function reader.read(puzzle_id, is_custom, random_seed_mod)
     if not is_custom then
         _f, err = love.filesystem.load("puzzles/" .. puzzle_id .. ".lua")
     else
-        return LParser.read(puzzle_id, false, seed)
+        return LParser.read(puzzle_id, false, random_seed_mod)
     end
     if err then print(err) end
     local _t = {}

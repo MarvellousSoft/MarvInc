@@ -159,7 +159,7 @@ function PuzzleListTab:refresh()
         local list = {}
         for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
             if love.filesystem.isFile("custom/"..file.."/level.lua") then
-                local P = LParser.parse(file, true)
+                local P = LParser.parse(file, true, 1)
                 if P ~= nil then
                     table.insert(list, {name = P.name, id = file, status = "custom"})
                 end

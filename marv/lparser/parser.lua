@@ -10,6 +10,7 @@ See full license in file LICENSE.txt
 require "classes.primitive"
 local Color = require "classes.color.color"
 local Util = require "util"
+local md5 = require "extra_libs.md5"
 
 local parser = {}
 
@@ -496,12 +497,15 @@ local function newImage(path)
 end
 
 
-function parser.parse(id, noload, seed)
+function parser.parse(id, noload, test_i)
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
     if not path then print("Custom level " .. id .. " not found") return nil end
     local f, err = loadfile(path .. "level.lua")
     if not f then print("Failed to parse level " .. id .. ": " .. tostring(err)) return nil end
+    -- let's not use the id here since it will change when uploading to steam, which confuses creators
+    -- This does mean all levels get the same random, which shouldn't be a big problem, since at least different test cases will get different ones.
+    local seed = tonumber(md5.sumhexa('custom' .. tostring(test_i or 1)):sub(1, 8), 16)
     local E, extra = parser.prepare(f, "level", seed)
     local ok, err = pcall(f)
     if not path or not f or not ok then
@@ -714,9 +718,9 @@ function parser.load_email(...)
     end
 end
 
-function parser.read(id)
+function parser.read(id, ...)
     parser.load_email(id)
-    return parser.parse(id)
+    return parser.parse(id, ...)
 end
 
 return parser
