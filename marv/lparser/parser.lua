@@ -163,7 +163,7 @@ local function checkDir(dir, depth)
     return _G[dir:upper() .. "_R"]
 end
 
-function parser.prepare(puz_f, t, seed)
+function parser.prepare(puz_f, t, seed, test_i)
     -- Functions and tables allowed by the environment (considered safe-ish).
     local _E = parser.safe_env(seed)
     local extra = {}
@@ -172,6 +172,9 @@ function parser.prepare(puz_f, t, seed)
         -- Constants
         _E.ROWS = ROWS
         _E.COLS = COLS
+        if test_i then
+            _E.TEST_CASE = test_i
+        end
 
         local function getSetter(meta, var, check, ...)
             local wrap = {...} -- assuming nothing in ... is nil
@@ -498,27 +501,27 @@ end
 
 
 local function showFailPopup(str)
-	print(str)
-	PopManager.new(
-		"Error",
-		str,
-		Color.red(),
-		{func = function() end, text = "Ok", clr = Color.black()}
-	)
+    print(str)
+    PopManager.new(
+        "Error",
+        str,
+        Color.red(),
+        {func = function() end, text = "Ok", clr = Color.black()}
+    )
 end
 
 function parser.parse(id, noload, test_i, surface_errors)
-	local function fail(err)
-		local str = "Failed to parse level " .. id .. "."
-		if err then
-			str = string.format("%s\nError: %s", str, tostring(err))
-		end
-		if surface_errors then
-			showFailPopup(str)
-		else
-			print(str)
-		end
-	end
+    local function fail(err)
+        local str = "Failed to parse level " .. id .. "."
+        if err then
+            str = string.format("%s\nError: %s", str, tostring(err))
+        end
+        if surface_errors then
+            showFailPopup(str)
+        else
+            print(str)
+        end
+    end
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
     if not path then fail("Custom level " .. id .. " not found") return nil end
@@ -527,7 +530,7 @@ function parser.parse(id, noload, test_i, surface_errors)
     -- let's not use the id here since it will change when uploading to steam, which confuses creators
     -- This does mean all levels get the same random, which shouldn't be a big problem, since at least different test cases will get different ones.
     local seed = tonumber(md5.sumhexa('custom' .. tostring(test_i or 1)):sub(1, 8), 16)
-    local E, extra = parser.prepare(f, "level", seed)
+    local E, extra = parser.prepare(f, "level", seed, test_i)
     local ok, err = pcall(f)
     if not path or not f or not ok then
         fail("Compile error: " .. tostring(err))
