@@ -114,7 +114,7 @@ function EmailTab:drawMailBox(box)
         --Draw the email box
         if not e.was_read then
             color = Color.new(e.email_color)
-        elseif not e.puzzle_id and not (e.reply_func and e.can_reply) then
+        elseif (not e.puzzle_id and not (e.reply_func and e.can_reply)) or (e.puzzle_id and e.is_custom) then
             color = Color.new(e.email_read_color)
         elseif not e.puzzle_id and e.reply_func and e.can_reply then
             color = Color.new(e.email_reply_color)
@@ -186,7 +186,7 @@ function EmailTab:drawMailBox(box)
         if not e.was_read then
             text = "new"
             Color.set(Color.new(240, 180, 120, e.alpha))
-        elseif e.puzzle_id then
+        elseif e.puzzle_id and not e.is_custom then
             Color.set(Color.new(150, 140, 60, e.alpha))
             if LoreManager.puzzle_done[e.puzzle_id] then
                 text = "completed"
