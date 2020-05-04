@@ -57,7 +57,7 @@ function love.conf(t)
         title = "Marvellous_Inc",                          -- The project title (string)
         package = "marvellous",                             -- The project command and package name (string)
         loveVersion = t.version,                            -- The project LÖVE version
-        version = "1.4.0",                                  -- The project version
+        version = "1.4.1",                                  -- The project version
         author = "Marvellous Soft",                         -- Your name (string)
         email = "marvellous.amoeba@gmail.com",              -- Your email (string)
         description = "Zachlike with an immersive storyline told through emails.", -- The project description (string)
