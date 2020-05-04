@@ -3,11 +3,11 @@ local inifile = require "extra_libs.inifile"
 
 local workshop = {}
 
-function workshop.getAllDownloadedPuzzles()
+function workshop.getAllDownloadedPuzzles(surface_errors)
     local all = {}
     for _, id in ipairs(Steam.UGC.getSubscribedItems()) do
         if Steam.UGC.getItemState(id).installed then
-            local P = LParser.parse(tostring(id), true)
+            local P = LParser.parse(tostring(id), true, 1, surface_errors)
             if P ~= nil then
                 table.insert(all, P)
             end

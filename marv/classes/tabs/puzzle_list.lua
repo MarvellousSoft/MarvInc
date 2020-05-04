@@ -56,7 +56,7 @@ PuzzleListTab = Class {
         end
         self.active_list = self.lists[1]
 
-        self:refresh()
+        self:refresh(true)
 
         self.tp = "puzzle_list_tab"
         self:setId("puzzle_list_tab")
@@ -104,7 +104,7 @@ end
 
 function PuzzleListTab:activate() self:refresh() end
 
-function PuzzleListTab:refresh()
+function PuzzleListTab:refresh(surface_errors)
 
     -- refresh main game puzzle list --
     -- for now just checks the emails for available puzzles
@@ -159,7 +159,7 @@ function PuzzleListTab:refresh()
         local list = {}
         for _, file in ipairs(love.filesystem.getDirectoryItems("custom")) do
             if love.filesystem.isFile("custom/"..file.."/level.lua") then
-                local P = LParser.parse(file, true, 1)
+                local P = LParser.parse(file, true, 1, surface_errors)
                 if P ~= nil then
                     table.insert(list, {name = P.name, id = file, status = "custom"})
                 end
@@ -169,7 +169,7 @@ function PuzzleListTab:refresh()
     end
     if USING_STEAM then
         local list = {}
-        for _, P in ipairs(WorkshopManager.getAllDownloadedPuzzles()) do
+        for _, P in ipairs(WorkshopManager.getAllDownloadedPuzzles(surface_errors)) do
             table.insert(list, {name = P.name, id = P.id, status = "custom", is_workshop = true})
         end
         table.insert(l.buttons, AuthorButton(self.pos.x + border_w, 0, self.w - 2 * border_w, 40, "Steam Workshop", list))

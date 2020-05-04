@@ -497,19 +497,40 @@ local function newImage(path)
 end
 
 
-function parser.parse(id, noload, test_i)
+local function showFailPopup(str)
+	print(str)
+	PopManager.new(
+		"Error",
+		str,
+		Color.red(),
+		{func = function() end, text = "Ok", clr = Color.black()}
+	)
+end
+
+function parser.parse(id, noload, test_i, surface_errors)
+	local function fail(err)
+		local str = "Failed to parse level " .. id .. "."
+		if err then
+			str = string.format("%s\nError: %s", str, tostring(err))
+		end
+		if surface_errors then
+			showFailPopup(str)
+		else
+			print(str)
+		end
+	end
     -- Can't use most love.filesystem stuff since it may be outside of save dir
     local path = getAbsolutePath(id)
-    if not path then print("Custom level " .. id .. " not found") return nil end
+    if not path then fail("Custom level " .. id .. " not found") return nil end
     local f, err = loadfile(path .. "level.lua")
-    if not f then print("Failed to parse level " .. id .. ": " .. tostring(err)) return nil end
+    if not f then fail("Can't parse: " .. tostring(err)) return nil end
     -- let's not use the id here since it will change when uploading to steam, which confuses creators
     -- This does mean all levels get the same random, which shouldn't be a big problem, since at least different test cases will get different ones.
     local seed = tonumber(md5.sumhexa('custom' .. tostring(test_i or 1)):sub(1, 8), 16)
     local E, extra = parser.prepare(f, "level", seed)
     local ok, err = pcall(f)
     if not path or not f or not ok then
-        print("Custom level "..id.." has failed to compile! " .. tostring(err))
+        fail("Compile error: " .. tostring(err))
         return nil
     end
     local P = Puzzle()
@@ -530,15 +551,15 @@ function parser.parse(id, noload, test_i)
     end
 
     if extra.floor.L:len() ~= COLS*ROWS then
-        print("Floor layer incomplete!")
+        fail("Floor layer incomplete!")
         return nil
     end
     if extra.objects.L:len() ~= COLS*ROWS then
-        print("Objects layer incomplete!")
+        fail("Objects layer incomplete!")
         return nil
     end
     if extra.inv_wall.L:len() ~= COLS*ROWS then
-        print("InvWall was not properly declared! May be incomplete.")
+        fail("InvWall was not properly declared! May be incomplete.")
         return nil
     end
 
@@ -603,7 +624,7 @@ function parser.parse(id, noload, test_i)
                 elseif id == 'wall' then
                     Obstacle(P.grid_obj, i, j, o.img)
                 else
-                    print("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
+                    fail("Unrecognized object "..tostring(id).." at position ("..tostring(j)..", "..tostring(i)..").")
                     return nil
                 end
             end
@@ -672,8 +693,9 @@ function parser.parse(id, noload, test_i)
     P.on_start = function()
         local ok, err = pcall(extra.meta.onStart, grid)
         if not ok then
-            print("The custom level crashed while starting up. Error: " .. tostring(err))
-            print("Ignoring this error and moving on.")
+            local str = "The custom level crashed while starting up. Error: " .. tostring(err)
+            str = str .. "\nIgnoring this error and moving on."
+            showFailPopup(str)
         end
     end
     P.custom_completed = function()
@@ -713,7 +735,7 @@ function parser.load_email(...)
     if ok then
         return email
     else
-        print('Error while loading email: ' .. tostring(email))
+        showFailPopup('Error while loading email: ' .. tostring(email))
         return nil
     end
 end
