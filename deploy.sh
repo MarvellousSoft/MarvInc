@@ -3,6 +3,11 @@
 NULL=255
 LOVE_RELEASE='love-release -a MarvellousSoft -t Marvellous_Inc -u https://github.com/marvelloussoft/marvinc'
 
+function exit_with_error {
+  echo "Error at [${BASH_SOURCE[1]##*/}]->${FUNCNAME[1]}:${BASH_LINENO[0]}"
+  exit 1
+}
+
 # Returns whether an array contains an element.
 # Arguments: array element
 # Returns: 1 if found, 0 otherwise.
@@ -14,7 +19,7 @@ function contains {
     if [ "$f" == "$e" ]; then
       return $i
     fi
-    let i=i+1
+    i=$(( i+1 ))
   done
   return $NULL
 }
@@ -23,12 +28,12 @@ function contains {
 # Arguments: array e1 e2
 # Returns: 1 if found, 0 otherwise.
 function any_contains {
-  contains $1 $2
+  contains "$1" "$2"
   local r1=$?
   if [ "$r1" -ne $NULL ]; then
     return $r1
   fi
-  contains $1 $3
+  contains "$1" "$3"
   local r2=$?
   if [ "$r2" -ne $NULL ]; then
     return $r2
@@ -41,7 +46,7 @@ args=( "$@" )
 any_contains args "--help" "-h"
 rval=$?
 if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
-  printf "Usage: $0 [--help | -h] [--release <platform>| -r <platform>] [--all | -a] [--clear | -c] [--steam | -s]\n"
+  printf "Usage: %s [--help | -h] [--release <platform>| -r <platform>] [--all | -a] [--clear | -c] [--steam | -s]\n" "$0"
   printf "Automagically deploys release binaries for different platforms.\n\n"
   printf "  --release,  -r   specifies the platform: M for Mac OS X, W32 and W64 for Windows 32 and 64, L for Love and A for AppImage.\n"
   printf "  --all,      -a   deploys for all platforms, ignoring the -r option.\n"
@@ -50,9 +55,9 @@ if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
   printf "  --help,     -h   display this help and exit\n"
   printf "  --prefix,   -p   changes love-release prefix (for old version compatibility)\n\n"
   printf "Examples:\n"
-  printf "  $0 --release A     Generates a Mac OS X binary in the build dir.\n"
-  printf "  $0 -h              Outputs this help text.\n"
-  printf "  $0 --clean         Removes the build directory and AppImage debris.\n"
+  printf "  %s --release A     Generates a Mac OS X binary in the build dir.\n" "$0"
+  printf "  %s -h              Outputs this help text.\n" "$0"
+  printf "  %s --clean         Removes the build directory and AppImage debris.\n" "$0"
   exit
 fi
 
@@ -61,9 +66,9 @@ any_contains args "--prefix" "-p"
 rval=$?
 if [ "$rval" -ne $NULL ]; then
   p=${args[$(( rval+1 ))]}
-  printf "Prefix: $p\n"
+  printf "Prefix: %s\n" "$p"
   LOVE_RELEASE=$p/$LOVE_RELEASE
-  printf "LOVE_RELEASE: $LOVE_RELEASE"
+  printf "LOVE_RELEASE: %s" "$LOVE_RELEASE"
 fi
 
 # Clear.
@@ -92,15 +97,15 @@ function build_platform {
   q=${PLATFORMS[$1]}
   if [ -z "$q" ]; then
     printf "Invalid platform. Try:\n"
-    printf "  $0 --help\n"
+    printf "  %s --help\n" "$0"
     return 2
   fi
-  printf "Building release for platform $1...\n"
-  cd ./marv/
+  printf "Building release for platform %s...\n" "$1"
+  cd ./marv/ || exit 1
   if [ "$1" == "L" ]; then
-    $LOVE_RELEASE .
+    $LOVE_RELEASE . || exit_with_error
   else
-    $LOVE_RELEASE . ${PLATFORM_CMD[$q]}
+    $LOVE_RELEASE . "${PLATFORM_CMD[$q]}" || exit_with_error
   fi
   cd ..
   printf "Done!\n"
@@ -109,16 +114,16 @@ function build_platform {
 
 # retuns latest release of given git repository
 get_latest_release() {
-  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
-  grep '"tag_name":' |                                            # Get tag line
-  sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+  curl --fail --silent "https://api.github.com/repos/$1/releases/latest" |  # Get latest release from GitHub api
+  grep '"tag_name":' |                                                      # Get tag line
+  sed -E 's/.*"([^"]+)".*/\1/' || exit_with_error                           # Pluck JSON value
 }
 
 # Downloads correct luasteam lib for platform $1 into file $2
 download_luasteam() {
   luasteam_v="v1.0.3"
-  printf "LuaSteam version: ${luasteam_v}\n"
-  curl -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2"
+  printf "LuaSteam version: %s\n" "${luasteam_v}"
+  curl --fail -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2" || exit_with_error
 }
 
 # Post-build.
@@ -132,60 +137,60 @@ function post_build_platform {
     else
       WIN=win32
     fi
-    printf "Adding custom icon to $WIN build.\n"
+    printf "Adding custom icon to %s build.\n" "$WIN"
     pushd .
-    mkdir -p $TMP_PATH/win
-    cp ./build/Marvellous_Inc-$WIN.zip $TMP_PATH/win/
-    cp ./Marvellous_Inc.ico $TMP_PATH/win/
+    mkdir -p $TMP_PATH/win || exit_with_error
+    cp ./build/Marvellous_Inc-$WIN.zip $TMP_PATH/win/ || exit_with_error
+    cp ./Marvellous_Inc.ico $TMP_PATH/win/ || exit_with_error
     if [ "$STEAM" -ne $NULL ]; then
       if [ "${_plt}" == "W64" ]; then
         SAPI_NAME=steam_api64.dll
-        cp ./sdk/redistributable_bin/win64/$SAPI_NAME $TMP_PATH/win
+        cp ./sdk/redistributable_bin/win64/$SAPI_NAME $TMP_PATH/win || exit_with_error
       else
         SAPI_NAME=steam_api.dll
-        cp ./sdk/redistributable_bin/$SAPI_NAME $TMP_PATH/win
+        cp ./sdk/redistributable_bin/$SAPI_NAME $TMP_PATH/win || exit_with_error
       fi
     fi
-    cd $TMP_PATH/win
-    rm -rf ./Marvellous_Inc-$WIN/
-    unzip Marvellous_Inc-$WIN.zip
-    cp ./Marvellous_Inc.ico ./Marvellous_Inc-$WIN/game.ico
+    cd $TMP_PATH/win || exit_with_error
+    rm -rf ./Marvellous_Inc-$WIN/ || exit_with_error
+    unzip Marvellous_Inc-$WIN.zip || exit_with_error
+    cp ./Marvellous_Inc.ico ./Marvellous_Inc-$WIN/game.ico || exit_with_error
     if [ "$STEAM" -ne $NULL ]; then
-      download_luasteam "$WIN" "luasteam.dll"
-      printf "Copying luasteam.dll and $SAPI_NAME to $WIN zip...\n"
-      cp ./$SAPI_NAME ./Marvellous_Inc-$WIN/
-      cp ./luasteam.dll ./Marvellous_Inc-$WIN/
+      download_luasteam "$WIN" "luasteam.dll" || exit_with_error
+      printf "Copying luasteam.dll and %s to %s zip...\n" "$SAPI_NAME" "$WIN"
+      cp ./$SAPI_NAME ./Marvellous_Inc-$WIN/ || exit_with_error
+      cp ./luasteam.dll ./Marvellous_Inc-$WIN/ || exit_with_error
     fi
-    rm ./Marvellous_Inc-$WIN.zip
-    zip Marvellous_Inc-$WIN.zip ./Marvellous_Inc-$WIN/ -r
-    popd
+    rm ./Marvellous_Inc-$WIN.zip || exit_with_error
+    zip Marvellous_Inc-$WIN.zip ./Marvellous_Inc-$WIN/ -r || exit_with_error
+    popd || exit_with_error
     rm ./build/Marvellous_Inc-$WIN.zip
-    cp $TMP_PATH/win/Marvellous_Inc-$WIN.zip ./build/
+    cp $TMP_PATH/win/Marvellous_Inc-$WIN.zip ./build/ || exit_with_error
   elif [ "${_plt}" == "M" ]; then
     printf "Adding custom icon to MAC OS X build.\n"
     pushd .
     mkdir -p $TMP_PATH/mac
     if [ "$STEAM" -ne $NULL ]; then
-      cp ./sdk/redistributable_bin/osx/libsteam_api.dylib $TMP_PATH/mac/
+      cp ./sdk/redistributable_bin/osx/libsteam_api.dylib $TMP_PATH/mac/ || exit_with_error
     fi
-    cp ./build/Marvellous_Inc-macos.zip $TMP_PATH/mac/
-    cp ./Marvellous_Inc.icns $TMP_PATH/mac/
-    cd $TMP_PATH/mac
+    cp ./build/Marvellous_Inc-macos.zip $TMP_PATH/mac/ || exit_with_error
+    cp ./Marvellous_Inc.icns $TMP_PATH/mac/ || exit_with_error
+    cd $TMP_PATH/mac || exit_with_error
     rm -rf ./Marvellous_Inc.app
-    unzip Marvellous_Inc-macos.zip
-    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns
-    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns
+    unzip Marvellous_Inc-macos.zip || exit_with_error
+    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns || exit_with_error
+    cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns || exit_with_error
     rm Marvellous_Inc-macos.zip
     if [ "$STEAM" -ne $NULL ]; then
       download_luasteam "osx" "luasteam.so"
       printf "Copying luasteam.so and libsteam_apy.dylib with MacOS App...\n"
-      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app libsteam_api.dylib luasteam.so
+      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app libsteam_api.dylib luasteam.so || exit_with_error
     else
-      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app
+      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app || exit_with_error
     fi
-    popd
+    popd || exit_with_error
     rm ./build/Marvellous_Inc-macos.zip
-    cp $TMP_PATH/mac/Marvellous_Inc-macos.zip ./build/
+    cp $TMP_PATH/mac/Marvellous_Inc-macos.zip ./build/ || exit_with_error
   fi
 
   printf "Finished post-build.\n"
@@ -193,47 +198,46 @@ function post_build_platform {
 
 # Build AppImage.
 function build_appimage {
-  v=`get_latest_release "MarvellousSoft/MarvInc"`
-  printf "Last version: $v\n"
+  v=$(get_latest_release "MarvellousSoft/MarvInc")
+  printf "Last version: %s\n" "$v"
   LAST_URL="https://github.com/MarvellousSoft/MarvInc/releases/download/${v}/Marvellous_Inc-x86_64.AppImage"
   APP_NAME="Marvellous_Inc-x86_64.AppImage"
   TMP_PATH="/tmp/MarvInc_deploy/AppImage/"
   BUILD_NAME="Marvellous_Inc-x86_64.AppImage"
-  printf "Creating temporary path at \"$TMP_PATH\"...\n"
+  printf "Creating temporary path at \"%s\"...\n" "$TMP_PATH"
   mkdir -p "$TMP_PATH"
   if [ "$STEAM" -ne $NULL ]; then
-    cp ./sdk/redistributable_bin/linux64/libsteam_api.so "${TMP_PATH}"
+    cp ./sdk/redistributable_bin/linux64/libsteam_api.so "${TMP_PATH}" || exit_with_error
   fi
   pushd .
   printf "Copying .love build to temp dir...\n"
   cp "./build/Marvellous_Inc.love" "$TMP_PATH"
-  cd "$TMP_PATH"
+  cd "$TMP_PATH" || exit_with_error
   printf "Downloading last built AppImage from repo...\n"
-  curl -L "$LAST_URL" -o "$APP_NAME"
+  curl --fail -L "$LAST_URL" -o "$APP_NAME" || exit_with_error
   printf "Adding run permission to AppImage...\n"
-  chmod +x "$APP_NAME"
+  chmod +x "$APP_NAME" || exit_with_error
   printf "Extracting AppImage...\n"
-  ./"$APP_NAME" --appimage-extract
+  ./"$APP_NAME" --appimage-extract || exit_with_error
   printf "Replacing old .love with new .love...\n"
-  cp "./Marvellous_Inc.love" "./squashfs-root/MarvInc.love"
+  cp "./Marvellous_Inc.love" "./squashfs-root/MarvInc.love" || exit_with_error
   printf "Adding run permission to AppRun...\n"
-  chmod +x ./squashfs-root/AppRun
+  chmod +x ./squashfs-root/AppRun || exit_with_error
   if [ "$STEAM" -ne $NULL ]; then
     download_luasteam "linux64" "luasteam.so"
     printf "Copying luasteam.so and libsteam_api.so to AppImage...\n"
-    cp ./libsteam_api.so "./squashfs-root/usr/lib/"
-    cp ./luasteam.so "./squashfs-root/"
-    BUILD_NAME="Marvellous_Inc-x86_64-Steam.AppImage"
+    cp ./libsteam_api.so "./squashfs-root/usr/lib/" || exit_with_error
+    cp ./luasteam.so "./squashfs-root/" || exit_with_error
   fi
   printf "Downloading latest AppImage Tool...\n"
   APP_TOOL_URL="https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
   APP_TOOL_NAME="appimagetool-x86_64.AppImage"
-  curl -L "$APP_TOOL_URL" -o "$APP_TOOL_NAME"
-  chmod +x "$APP_TOOL_NAME"
+  curl --fail -L "$APP_TOOL_URL" -o "$APP_TOOL_NAME" || exit_with_error
+  chmod +x "$APP_TOOL_NAME" || exit_with_error
   printf "Creating new AppImage...\n"
-  ./"$APP_TOOL_NAME" squashfs-root
-  mv "Marvellous_Inc.-x86_64.AppImage" "$BUILD_NAME"
-  popd
+  ./"$APP_TOOL_NAME" squashfs-root || exit_with_error
+  mv "Marvellous_Inc.-x86_64.AppImage" "$BUILD_NAME" || exit_with_error
+  popd || exit_with_error
   cp "${TMP_PATH}${BUILD_NAME}" ./build/"$BUILD_NAME"
   printf "Done!\n"
   return 0
@@ -249,14 +253,14 @@ if [ "$rval" -ne $NULL ]; then
     post_build_platform "${_plt}"
     rval=$?
     if [ "$rval" -ne 0 ]; then
-      printf "Error: $rval\n"
+      printf "Error: %s\n" "$rval"
       exit $rval
     fi
   done
   build_appimage
   rval=$?
   if [ "$rval" -ne 0 ]; then
-    printf "Error: $rval\n"
+    printf "Error: %s\n" "$rval"
     exit $rval
   fi
   exit 0
@@ -268,7 +272,7 @@ any_contains args "--release" "-r"
 rval=$?
 if [ "$rval" -eq $NULL ]; then
   printf "You must specify a platform. Try:\n"
-  printf "  $0 --help\n"
+  printf "  %s --help\n" "$0"
   exit 1
 fi
 
