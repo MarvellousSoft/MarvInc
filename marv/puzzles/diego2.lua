@@ -12,6 +12,7 @@ n = "D.2"
 
 lines_on_terminal=30
 memory_slots=4
+test_count = 1
 
 -- Bot
 bot = {'b', "EAST"}
