@@ -48,7 +48,7 @@ rval=$?
 if [ "${#args[@]}" -eq 0 ] || [ "$rval" -ne $NULL ]; then
   printf "Usage: %s [--help | -h] [--release <platform>| -r <platform>] [--all | -a] [--clear | -c] [--steam | -s]\n" "$0"
   printf "Automagically deploys release binaries for different platforms.\n\n"
-  printf "  --release,  -r   specifies the platform: M for Mac OS X, W32 and W64 for Windows 32 and 64, L for Love and A for AppImage.\n"
+  printf "  --release,  -r   specifies the platform: M for Mac OS X, W32 and W64 for Windows 32 and 64, L for Love, A for AppImage, and F for Flatpak.\n"
   printf "  --all,      -a   deploys for all platforms, ignoring the -r option.\n"
   printf "  --clean,    -c   removes output files (use with care!). Ignores all tags above if used.\n"
   printf "  --steam,    -s   builds the steam version of the binaries. Please have the sdk unzipped in this directory.\n"
@@ -243,6 +243,41 @@ function build_appimage {
   return 0
 }
 
+function build_flatpak {
+  APP="io.itch.marvellous-inc"
+  FLATPAK_ROOT="dist/flatpak"
+  FLATPAK_BUILDDIR="/tmp/MarvInc_deploy/flatpak"
+  
+  cd "${FLATPAK_ROOT}"
+  # Make sure flathub is available so Freedesktop SDK can be installed
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+  mkdir -p "${FLATPAK_BUILDDIR}"
+
+  # https://docs.flatpak.org/de/latest/flatpak-builder-command-reference.html
+  flatpak-builder --user \
+                  --install-deps-from=flathub \
+                  --state-dir="${FLATPAK_BUILDDIR}/.flatpak-builder" \
+                  --force-clean \
+                  "${FLATPAK_BUILDDIR}/_build" \
+                  --repo="${FLATPAK_BUILDDIR}/_repo" \
+                 "${APP}.yml"
+
+  cd - > /dev/null
+
+  mkdir -p ./build
+
+  flatpak build-bundle \
+          --arch=x86_64 \
+          "${FLATPAK_BUILDDIR}/_repo" \
+          "build/${APP}-x86_64.flatpak" \
+          "${APP}" \
+          stable
+
+  printf "Done!\n"
+  return 0
+}
+
 # Build all.
 any_contains args "--all" "-a"
 rval=$?
@@ -258,6 +293,7 @@ if [ "$rval" -ne $NULL ]; then
     fi
   done
   build_appimage
+  build_flatpak
   rval=$?
   if [ "$rval" -ne 0 ]; then
     printf "Error: %s\n" "$rval"
@@ -285,6 +321,8 @@ if [ "$p" == "A" ]; then
   build_appimage
   rval=$?
   exit $rval
+elif [ "$p" == "F" ]; then
+  build_flatpak
 # Any other.
 else
   build_platform "$p"
