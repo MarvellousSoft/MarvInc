@@ -7,3 +7,6 @@ steam_appid.txt
 *.directory
 /sdk/
 .vscode
+.flatpak-builder
+_repo
+_build
