@@ -8,15 +8,6 @@ finish-args:
   - --socket=x11
   - --socket=pulseaudio
   - --device=dri
-cleanup:
-  - "/include"
-  - "/lib/debug"
-  - "/lib/lua'"
-  - "/lib/pkgconfig"
-  - "/share/lua"
-  - "/share/man"
-  - "*.la"
-  - "*.a"
 modules:
   - love2d-0.10.3.json
   - name: marvinc

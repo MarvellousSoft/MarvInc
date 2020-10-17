@@ -270,7 +270,7 @@ function build_flatpak {
   flatpak build-bundle \
           --arch=x86_64 \
           "${FLATPAK_BUILDDIR}/_repo" \
-          "build/${APP}-x86_64.flatpak" \
+          "build/Marvellous_Inc-x86_64.flatpak" \
           "${APP}" \
           stable
 
