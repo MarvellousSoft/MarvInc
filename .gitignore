@@ -10,3 +10,4 @@ steam_appid.txt
 .flatpak-builder
 _repo
 _build
+*.flatpak
