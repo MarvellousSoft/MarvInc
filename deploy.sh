@@ -250,7 +250,7 @@ function build_flatpak {
   SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" 
 
   # Make sure flathub is available so Freedesktop SDK can be installed
-  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo || exit_with_error
 
   mkdir -p "${FLATPAK_BUILDDIR}"
 
@@ -261,7 +261,7 @@ function build_flatpak {
                   --force-clean \
                   "${FLATPAK_BUILDDIR}/_build" \
                   --repo="${FLATPAK_BUILDDIR}/_repo" \
-                  "${SCRIPT_DIR}/dist/flatpak/${APP}.yml"
+                  "${SCRIPT_DIR}/dist/flatpak/${APP}.yml" || exit_with_error
 
   mkdir -p ./build
 
@@ -270,7 +270,7 @@ function build_flatpak {
           "${FLATPAK_BUILDDIR}/_repo" \
           "build/Marvellous_Inc-x86_64.flatpak" \
           "${APP}" \
-          stable
+          stable || exit_with_error
 
   printf "Done!\n"
   return 0
