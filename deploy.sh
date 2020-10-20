@@ -261,7 +261,7 @@ function build_flatpak {
                   --force-clean \
                   "${FLATPAK_BUILDDIR}/_build" \
                   --repo="${FLATPAK_BUILDDIR}/_repo" \
-                 "${SCRIPT_DIR}/dist/flatpak/${APP}.yml"
+                  "${SCRIPT_DIR}/dist/flatpak/${APP}.yml"
 
   mkdir -p ./build
 
