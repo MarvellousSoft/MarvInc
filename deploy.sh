@@ -247,8 +247,8 @@ function build_flatpak {
   APP="io.itch.marvellous-inc"
   FLATPAK_ROOT="dist/flatpak"
   FLATPAK_BUILDDIR="/tmp/MarvInc_deploy/flatpak"
-  
-  cd "${FLATPAK_ROOT}"
+  SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" 
+
   # Make sure flathub is available so Freedesktop SDK can be installed
   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
@@ -261,9 +261,7 @@ function build_flatpak {
                   --force-clean \
                   "${FLATPAK_BUILDDIR}/_build" \
                   --repo="${FLATPAK_BUILDDIR}/_repo" \
-                 "${APP}.yml"
-
-  cd - > /dev/null
+                 "${SCRIPT_DIR}/dist/flatpak/${APP}.yml"
 
   mkdir -p ./build
 
