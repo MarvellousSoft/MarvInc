@@ -1,0 +1,33 @@
+app-id: io.itch.marvellous-inc
+default-branch: stable
+runtime: org.freedesktop.Platform
+runtime-version: '20.08'
+sdk: org.freedesktop.Sdk
+command: marvellous-inc
+finish-args:
+  - --socket=x11
+  - --socket=pulseaudio
+  - --device=dri
+modules:
+  - love2d-0.10.2.json
+  - name: marvinc
+    buildsystem: simple
+    build-commands:
+      - install -Dm644 marv/assets/icons/96x96.png ${FLATPAK_DEST}/share/icons/hicolor/96x96/apps/io.itch.marvellous-inc.png
+      - install -Dm644 io.itch.marvellous-inc.desktop ${FLATPAK_DEST}/share/applications/io.itch.marvellous-inc.desktop
+      - install -Dm644 io.itch.marvellous-inc.appdata.xml ${FLATPAK_DEST}/share/appdata/io.itch.marvellous-inc.appdata.xml 
+      - cd marv && zip -r ${FLATPAK_DEST}/bin/marvellous-inc.love *
+      - cp marvellous-inc ${FLATPAK_DEST}/bin/marvellous-inc
+    sources:
+      - type: git
+        url: https://github.com/MarvellousSoft/MarvInc
+        tag: v1.4.1
+        commit: 6acf76cbb7102df4efcc314c14ec026049d42336
+      - type: file
+        path: io.itch.marvellous-inc.desktop
+      - type: file
+        path: io.itch.marvellous-inc.appdata.xml
+      - type: script
+        dest-filename: marvellous-inc
+        commands:
+          - /app/bin/love /app/bin/marvellous-inc.love

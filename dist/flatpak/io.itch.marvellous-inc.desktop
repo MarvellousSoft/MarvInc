@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Marvellous Inc.
+Exec=marvellous-inc
+Terminal=false
+Type=Application
+Icon=io.itch.marvellous-inc
+StartupWMClass=marvellous-inc
+Comment=Marvellous Inc.
+Categories=Game;
