@@ -75,9 +75,6 @@ t.jmp = {
     command = t.jmp2.command,
     text = t.jmp2.text,
     examples = {t.jmp2.examples[1], t.jmp2.examples[2], {[[
-{labm}lp: {instm}turn {dirm}counter
-{instm}walk {numm}1
-{instm}jmp {labm}lp]], "This code will make the bot walk endlessly in a 2x2 square, in counterclockwise direction."}, {[[
 {cmntm}# Advanced Example
 {labm}func: {instm}walkc {numm}1
 {instm}turn {dirm}clock
