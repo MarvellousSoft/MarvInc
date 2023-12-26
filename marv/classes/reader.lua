@@ -36,6 +36,9 @@ function reader.read(puzzle_id, is_custom, random_seed_mod)
     _t.COLS = COLS
     _t.print = print
     _t._G = _G
+    if tonumber(random_seed_mod) then
+        _t.current_test = tonumber(random_seed_mod)
+    end
     local rd = love.math.newRandomGenerator(seed)
     _t.random = function(...) return rd:random(...) end
 
