@@ -13,7 +13,7 @@ local Color = require "classes.color.color"
 --[[ TEXT BOX -- How to use
 
 First, create a textbox object, the arguments are the following, in order:
-x position, y position, width, maximum number of chars per line, number of lines that will be printed to the screen, maximum number of lines of the text box, whether or not to show line numbers (works only with <100 lines), font for the text, a table where each accepted character is set to nil if it is not accepted or the character it should be translated to (usually itself), color of the background, color of the text, and color of the error lines (more on that later)
+x position, y position, width, maximum number of chars per line, number of lines that will be printed to the screen, maximum number of lines of the text box, whether or not to show line numbers (works only with <1000 lines), font for the text, a table where each accepted character is set to nil if it is not accepted or the character it should be translated to (usually itself), color of the background, color of the text, and color of the error lines (more on that later)
 
 accepted_chars defaults to lower and uppercase characters only
 The color arguments are optional and already have some pretty default values.
@@ -192,7 +192,17 @@ function TextBox:draw(bad_lines)
     local dx = (self.show_line_num and self.font:getWidth("20  ") or 0) + 5
     for i = 0, self.line_cur - 1 do
         Color.set(self.text_color)
-        local line = self.show_line_num and string.format("%2d  %s", i + 1, self.lines[i + 1]) or self.lines[i + 1]
+        local line
+        if self.show_line_num then
+            if i + 1 >= 100 then
+                -- A bit hacky, the number will cross the vertical line a little
+                line = string.format("%3d %s", i + 1, self.lines[i + 1])
+            else
+                line = string.format("%2d  %s", i + 1, self.lines[i + 1])
+            end
+        else
+            line = self.lines[i + 1]
+        end
         love.graphics.print(line, self.pos.x + 3, self.pos.y - self.line_h * self.dy + i * self.line_h + (self.line_h - self.font_h) / 2)
 
         if bad_lines and bad_lines[i + 1] and self.cursor.i ~= i + 1 then
@@ -220,7 +230,7 @@ function TextBox:draw(bad_lines)
     if self.show_line_num then
         Color.set(c)
         -- line number + vertical line size
-        local x = self.pos.x + 2 * self.font_w + 10
+        local x = self.pos.x + 2 * self.font_w + ((self.line_total >= 100) and 15 or 10)
         love.graphics.setLineWidth(.5)
         love.graphics.line(x, self.pos.y, x, self.pos.y + self.h)
     end

@@ -22,15 +22,15 @@ env['-'] = {"obst", false, "wall_none"}
 
 -- Objective
 objective_text = [[
-Each console represents a node, and as input hhas a number N and then N instructions that are contained in that node.
+Each console represents a node, and as input has a number N and then N instructions that are contained in that node.
 Each node has a list of instructions it executes in order (except in the case of instruction 'j'), and two registers: ACC and BAK, that store two numbers and are initialized with 0's.
 The instructions are:
     + X: Add X to the number in ACC.
     s: Swap the number in ACC with the number in BAK.
     j X: If ACC is not 0, jump to the X-th instruction. Otherwise, continue normally.
-    m A B: Move the number from direction A to direction B. Both A and B might be either '.', meaning this console's ACC, or '<>^v', meaning another console in the given direction.
-    r: Read a number from the green console and write it to ACC.
+    m A B: Move the number from direction A to direction B. Both A and B might be either '.', meaning this node's ACC, or '<>^v', meaning the node in the given direction.
     w: Write the value of ACC to the blue console.
+    e: Stop executing this node
 After reading the instructions, execute them on all nodes in parallel.]]
 
 function objective_checker(room)
@@ -48,15 +48,18 @@ end
 
 local scenarios = {}
 _G.table.insert(scenarios, {
-    inp = {1, 10, 20, 43},
-    out = {7, 16, 26, 49},
+    out = {21, 30, 63},
     consoles = {
         {
             { -- 1.1
-                3,
-                "r",
+                7,
                 "+", 1,
                 "m", ".", ">",
+                "+", 9,
+                "m", ".", ">",
+                "+", 33,
+                "m", ".", ">",
+                "e",
             }, { -- 1.2
                 3,
                 "m", "<", ".",
@@ -64,7 +67,7 @@ _G.table.insert(scenarios, {
                 "m", ".", ">",
             }, { -- 1.3
                 1,
-                "m < v", 
+                "m", "<", "v",
             }
         },
         {
@@ -102,54 +105,84 @@ _G.table.insert(scenarios, {
     }
 })
 _G.table.insert(scenarios, {
-    inp = {1, 2, 5, 7, 13, 9},
-    out = {3, 10, 12, 20, 22, 30},
+    out = {3, 10, 10, 20, 13, 30},
     consoles = {
-        {{0}, { -- 1.2
-            9,
-            "r", "s", "r",
+        {{ -- 1.1
+            7,
+            "+", 2,
+            "m", ".", ">",
+            "+", 5,
+            "m", ".", ">",
+            "+", 4,
+            "m", ".", ">",
+            "e",
+        }, { -- 1.2
+            10,
+            "m", "<", ".",
+            "s",
+            "m", ">", ".",
             "+", -1,
             "s",
             "+", 1,
             "s",
             "j", 3,
+            "s",
             "m", ".", "v",
-        }, {0}},
+        }, {
+            7,
+            "+", 1,
+            "m", ".", "<",
+            "+", 2,
+            "m", ".", "<",
+            "+", -1,
+            "m", ".", "<",
+            "e",
+        }},
         {{0}, { -- 2.2
             4,
             "m", "^", ".",
             "w",
-            "m", ">", ".",
+            "m", "v", ".",
             "w"
-        }, {}},
+        }, {0}},
         {{0}, { -- 3.2
             3,
             "+", 10,
             "m", ".", ".", -- trick, should do nothing
             "m", ".", "^",
-        }, {0}}
+        }, {
+            2,
+            "e",
+            "w", -- never reached
+        }}
     }
 })
 _G.table.insert(scenarios, {
-    inp = {100, 200, 300, 400},
-    out = {10, 101, 7, 301},
+    out = {0, 401, 11, 201, 15},
     consoles = {
         {{ -- 1.1
-            2,
+            6,
             "+", 1,
             "m", ".", ">",
+            "+", 9,
+            "m", ".", ">",
+            "j", 0,
+            "e", -- never reached
         }, { -- 1.2
             6,
             "m", "<", ".",
             "m", "<", ".",
             "+", 5,
             "s",
-            "m", ">", "v",
             "m", ".", "v",
+            "m", "<", "v",
         }, { -- 1.3
-            2,
-            "+", 10,
-            "m", ".", "<",
+            5,
+            "+", 400,
+            "m", ".", "v",
+            "+", -100,
+            "j", 1,
+            "e",
         }}, {{ -- 2.1
             2,
             "+", 500,
@@ -162,9 +195,9 @@ _G.table.insert(scenarios, {
             "w"
         }, { --2.3
             8,
-            "r",
+            "m", "^", ".",
             "s",
-            "r",
+            "m", "^", ".",
             "s",
             "+", 1,
             "m", ".", "<",
@@ -196,9 +229,8 @@ local function create_vec(j, i)
     return scenario.consoles[ci][cj]
 end
 
-i = {"console", false, "console", "green", args = {vec = scenario.inp, show_nums = 2}, dir = "south"}
-c = {"console", false, "console", "gray", args = {vec = create_vec, show_nums = 0}, dir = "south"}
-o = {"console", false, "console", "red", args = {vec = "output"}, dir = "north"}
+c = {"console", false, "console", "gray", args = {vec = create_vec, show_nums = 1}, dir = "south"}
+o = {"console", false, "console", "blue", args = {vec = "output"}, dir = "north"}
 
 
 extra_info =[[
@@ -206,7 +238,18 @@ The instruction 'm' blocks execution until a matching 'm' instruction from the o
 - All 'm' instructions point to valid nodes.
 - After the last instruction, a node goes back automatically to the first instruction.
 - For the 'j' instruction, consider instructions start at 0.
-- There are at most 30 instructions in total.
+- There are at most 33 instructions in total on all nodes.
+
+Test case 1:
+Node (1, 1) = (+ 1) (m . >) (+ 9) (m . >) (+ 33) (m . >) (e)
+Node (1, 2) = (m < .) (+ 2) (m . >)
+Node (1, 3) = (m < v)
+Node (2, 1) = (m v .) (+ 5) (m . >)
+Node (2, 2) = (m < .) (+ 6) (w)
+Node (2, 3) = (m ^ .) (+ 3) (m . v)
+Node (3, 1) = (m > ^)
+Node (3, 2) = (m > .) (+ 4) (m . <)
+Node (3, 3) = (m ^ <)
 ]]
 
 grid_obj =   "---------------------"..
@@ -215,7 +258,7 @@ grid_obj =   "---------------------"..
              "---...............---"..
              "---...............---"..
              "---...............---"..
-             "---.......i.......---"..
+             "---...............---"..
              "---...............---"..
              "---.....c.c.c.....---"..
              "---.....b.........---"..
