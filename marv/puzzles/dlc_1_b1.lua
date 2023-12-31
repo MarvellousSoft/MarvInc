@@ -7,7 +7,7 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "DLC I"
+name = "GPT Cleaner I"
 n = "X.1"
 test_count = 1
 

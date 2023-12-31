@@ -7,8 +7,8 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "DLC VI"
-n = "X.6"
+name = "GPT Xmas I"
+n = "X.3"
 test_count = 5
 
 lines_on_terminal = 60

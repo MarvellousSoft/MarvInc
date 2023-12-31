@@ -7,8 +7,8 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "TIS-9"
-n = "X.3"
+name = "GPTIS-9"
+n = "X.2"
 test_count = 5
 
 lines_on_terminal = 60
