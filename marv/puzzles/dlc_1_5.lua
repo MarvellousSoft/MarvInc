@@ -140,7 +140,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwww,,w,ww,w,,wwwwww"..
              "wwwww,,wwwwww,,wwwwww"..
              "wwwwww,,,,,,,,wwwwwww"..
-             "wwwwww,,,,,,,,wwwwwww"..
+             "wwwwww,,,ww,,,wwwwwww"..
              "wwwwwww,,,,,,wwwwwwww"..
              "wwwwwwww,,,,wwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
