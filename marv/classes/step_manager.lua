@@ -237,6 +237,7 @@ function sm.stop(fail_title, fail_text, fail_button, replay_speed, show_popup, t
         -- And this should be a pretty fast procedure
         local term = Util.findId('code_tab').term
         local bk, breakpoints = term.backups, term.breakpoints -- preserve history and breakpoints
+        test_i = test_i or ROOM.test_i
         ROOM:connect(ROOM.puzzle_id, false, ROOM.is_custom, test_i, megafast)
         if replay_speed then doPlay(replay_speed) end
         term.backups, term.breakpoints = bk, breakpoints
