@@ -196,6 +196,7 @@ CHR_CLR['emergency'] = Color.magenta()
 CHR_CLR['ryr'] = Color.add3(Color.blue(), Color.purple(), Color.orange())
 CHR_CLR['spam'] = Color.violet()
 CHR_CLR['black'] = Color.black()
+CHR_CLR['marvgpt'] = Color.black() -- TODO: Finalise
 
 -- Spritesheets
 SHEET_IMG = {}

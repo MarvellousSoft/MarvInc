@@ -150,3 +150,15 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
+
+function first_completed()
+    _G.PopManager.new("title placeholder",
+        [[completed placeholder]],
+        _G.CHR_CLR['marvgpt'], {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " option 1 placeholder ",
+            clr = _G.Color.black()
+        })
+end
