@@ -7,15 +7,11 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-local Mail = require "classes.tabs.email"
-
-local dlc1 = {}
-
-dlc1.require_puzzles = {'dlc_1_0'}
-dlc1.wait = 5
-
-function dlc1.run()
-    Mail.new('dlc_1_1')
-end
-
-return dlc1
+return {
+    title = "DLC 1.0 placeholder title",
+    text = [[
+DLC 1.0 placeholder text
+]],
+    author = "DLC AUTHOR PLACEHOLDER",
+    puzzle_id = 'dlc_1_0'
+}

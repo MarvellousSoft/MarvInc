@@ -9,13 +9,13 @@ See full license in file LICENSE.txt
 
 local Mail = require "classes.tabs.email"
 
-local dlc1 = {}
+local dlc0 = {}
 
-dlc1.require_puzzles = {'dlc_1_0'}
-dlc1.wait = 5
+dlc0.require_puzzles = {'act1'}
+dlc0.wait = 5
 
-function dlc1.run()
-    Mail.new('dlc_1_1')
+function dlc0.run()
+    Mail.new('dlc_1_0')
 end
 
-return dlc1
+return dlc0
