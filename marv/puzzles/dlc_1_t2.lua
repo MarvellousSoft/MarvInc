@@ -28,7 +28,7 @@ The instructions are:
     + X: Add X to the number in ACC.
     s: Swap the number in ACC with the number in BAK.
     j X: If ACC is not 0, jump to the X-th instruction. Otherwise, continue normally.
-    m A B: Move the number from direction A to direction B. Both A and B might be either '.', meaning this node's ACC, or '<>^v', meaning the node in the given direction.
+    m A B: Move the number from direction A to direction B. Both A and B might be either '.', meaning this node's ACC, or 'uldr', meaning the node in the given direction.
     w: Write the value of ACC to the blue console.
     e: Stop executing this node
 After reading the instructions, execute them on all nodes in parallel.]]
@@ -54,52 +54,52 @@ _G.table.insert(scenarios, {
             { -- 1.1
                 7,
                 "+", 1,
-                "m", ".", ">",
+                "m", ".", "r",
                 "+", 9,
-                "m", ".", ">",
+                "m", ".", "r",
                 "+", 33,
-                "m", ".", ">",
+                "m", ".", "r",
                 "e",
             }, { -- 1.2
                 3,
-                "m", "<", ".",
+                "m", "l", ".",
                 "+", 2,
-                "m", ".", ">",
+                "m", ".", "r",
             }, { -- 1.3
                 1,
-                "m", "<", "v",
+                "m", "l", "d",
             }
         },
         {
             { -- 2.1
                 3,
-                "m", "v", ".",
+                "m", "d", ".",
                 "+", 5,
-                "m", ".", ">"
+                "m", ".", "r"
             }, { -- 2.2
                 3,
-                "m", "<", ".",
+                "m", "l", ".",
                 "+", 6,
                 "w",
             }, { -- 2.3
                 3,
-                "m", "^", ".",
+                "m", "u", ".",
                 "+", 3,
-                "m", ".", "v",
+                "m", ".", "d",
             }
         },
         {
             { -- 3.1
                 1,
-                "m", ">", "^",
+                "m", "r", "u",
             }, { -- 3.2
                 3,
-                "m", ">", ".",
+                "m", "r", ".",
                 "+", 4,
-                "m", ".", "<",
+                "m", ".", "l",
             }, { -- 3.3
                 1,
-                "m", "^", "<",
+                "m", "u", "l",
             }
         }
     }
@@ -110,46 +110,46 @@ _G.table.insert(scenarios, {
         {{ -- 1.1
             7,
             "+", 2,
-            "m", ".", ">",
+            "m", ".", "r",
             "+", 5,
-            "m", ".", ">",
+            "m", ".", "r",
             "+", 4,
-            "m", ".", ">",
+            "m", ".", "r",
             "e",
         }, { -- 1.2
             10,
-            "m", "<", ".",
+            "m", "l", ".",
             "s",
-            "m", ">", ".",
+            "m", "r", ".",
             "+", -1,
             "s",
             "+", 1,
             "s",
             "j", 3,
             "s",
-            "m", ".", "v",
+            "m", ".", "d",
         }, {
             7,
             "+", 1,
-            "m", ".", "<",
+            "m", ".", "l",
             "+", 2,
-            "m", ".", "<",
+            "m", ".", "l",
             "+", -1,
-            "m", ".", "<",
+            "m", ".", "l",
             "e",
         }},
         {{0}, { -- 2.2
             4,
-            "m", "^", ".",
+            "m", "u", ".",
             "w",
-            "m", "v", ".",
+            "m", "d", ".",
             "w"
         }, {0}},
         {{0}, { -- 3.2
             3,
             "+", 10,
             "m", ".", ".", -- trick, should do nothing
-            "m", ".", "^",
+            "m", ".", "u",
         }, {
             2,
             "e",
@@ -163,60 +163,60 @@ _G.table.insert(scenarios, {
         {{ -- 1.1
             6,
             "+", 1,
-            "m", ".", ">",
+            "m", ".", "r",
             "+", 9,
-            "m", ".", ">",
+            "m", ".", "r",
             "j", 0,
             "e", -- never reached
         }, { -- 1.2
             6,
-            "m", "<", ".",
-            "m", "<", ".",
+            "m", "l", ".",
+            "m", "l", ".",
             "+", 5,
             "s",
-            "m", ".", "v",
-            "m", "<", "v",
+            "m", ".", "d",
+            "m", "l", "d",
         }, { -- 1.3
             5,
             "+", 400,
-            "m", ".", "v",
+            "m", ".", "d",
             "+", -100,
             "j", 1,
             "e",
         }}, {{ -- 2.1
             2,
             "+", 500,
-            "m", ".", ">"
+            "m", ".", "r"
         }, { -- 2.2
             4,
-            "m", "^", ".",
+            "m", "u", ".",
             "w",
-            "m", ">", ".",
+            "m", "r", ".",
             "w"
         }, { --2.3
             8,
-            "m", "^", ".",
+            "m", "u", ".",
             "s",
-            "m", "^", ".",
+            "m", "u", ".",
             "s",
             "+", 1,
-            "m", ".", "<",
+            "m", ".", "l",
             "s",
-            "m", ".", "v",
+            "m", ".", "d",
         }}, {{ -- 3.1
             1,
-            "m", ".", ">"
+            "m", ".", "r"
         }, { -- 3.2
             4,
-            "m", ">", ".",
+            "m", "r", ".",
             "j", 3,
             "w",
-            "m", "<", ".",
+            "m", "l", ".",
         }, { -- 3.3
             3,
-            "m", "^", ".",
+            "m", "u", ".",
             "+", 50,
-            "m", ".", "<",
+            "m", ".", "l",
         }}
     }
 })
@@ -241,15 +241,15 @@ The instruction 'm' blocks execution until a matching 'm' instruction from the o
 - There are at most 33 instructions in total on all nodes.
 
 Test case 1:
-Node (1, 1) = (+ 1) (m . >) (+ 9) (m . >) (+ 33) (m . >) (e)
-Node (1, 2) = (m < .) (+ 2) (m . >)
-Node (1, 3) = (m < v)
-Node (2, 1) = (m v .) (+ 5) (m . >)
-Node (2, 2) = (m < .) (+ 6) (w)
-Node (2, 3) = (m ^ .) (+ 3) (m . v)
-Node (3, 1) = (m > ^)
-Node (3, 2) = (m > .) (+ 4) (m . <)
-Node (3, 3) = (m ^ <)
+Node (1, 1) = (+ 1) (m . r) (+ 9) (m . r) (+ 33) (m . r) (e)
+Node (1, 2) = (m l .) (+ 2) (m . r)
+Node (1, 3) = (m l d)
+Node (2, 1) = (m d .) (+ 5) (m . r)
+Node (2, 2) = (m l .) (+ 6) (w)
+Node (2, 3) = (m u .) (+ 3) (m . d)
+Node (3, 1) = (m r u)
+Node (3, 2) = (m r .) (+ 4) (m . l)
+Node (3, 3) = (m u l)
 ]]
 
 grid_obj =   "---------------------"..
