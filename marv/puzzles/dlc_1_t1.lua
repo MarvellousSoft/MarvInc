@@ -23,7 +23,8 @@ env['-'] = {"obst", false, "wall_none"}
 -- Objective
 objective_text = [[
 Start at the top left console and follow the clues given in the consoles.
-- The rules are ^v>< and point to the next console with a clue.
+- The clues are a single character, one of 'ulrd', and point to the next console with a clue.
+- u = up, l = left, d = down, r = right
 - When you read a 0 instead of a clue, write the total number of clues to the red console.]]
 
 function objective_checker(room)
@@ -40,11 +41,11 @@ function objective_checker(room)
 end
 
 local all_clues = {
-    ">>vv<<^><v>>^^<<",
-    "><><><><vv",
+    "rrddllurldrruull",
+    "rlrlrlrldd",
     "",
-    ">vv>^^<vv<^^>v",
-    "v>v",
+    "rddruulddluurd",
+    "drd",
 }
 _G.assert(#all_clues == test_count)
 local clues = {
@@ -56,15 +57,15 @@ local clue_str = all_clues[current_test]
 local ci, cj = 1, 1
 for c in clue_str:gmatch "." do
     _G.table.insert(clues[ci][cj], c)
-    if c == '^' then
+    if c == 'u' then
         ci = ci - 1
-    elseif c == '<' then
+    elseif c == 'l' then
         cj = cj - 1
-    elseif c == '>' then
+    elseif c == 'r' then
         cj = cj + 1
     else
         ci = ci + 1
-        _G.assert(c == 'v')
+        _G.assert(c == 'd')
     end
 end
 _G.table.insert(clues[ci][cj], 0)
@@ -80,7 +81,7 @@ r = {"console", false, "console", "red", args = {vec = "output"}, dir = "north"}
 
 extra_info =[[
 Clues never tell you to go to an invalid console.
-- Clues might loop and visit the same console again.
+- Clues might loop and visit the same console again, to get the next clue from it.
 ]]
 
 grid_obj =   "---------------------"..

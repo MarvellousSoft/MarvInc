@@ -143,7 +143,7 @@ function PuzzleListTab:refresh(surface_errors)
     for author, puzzle_list in pairs(puzzles) do
         local list = {}
         for _, p in ipairs(puzzle_list) do
-            local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G, random = love.math.random}
+            local pu = {ROWS = ROWS, COLS = COLS, print = print, _G = _G, random = love.math.random, current_test=1}
             local f = love.filesystem.load('puzzles/' .. p .. '.lua')
             setfenv(f, pu)
             f()
