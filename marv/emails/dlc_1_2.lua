@@ -13,5 +13,5 @@ return {
 DLC 1.2 placeholder text
 ]],
     author = "DLC AUTHOR PLACEHOLDER",
-    puzzle_id = 'dlc_1_t1'
+    puzzle_id = 'dlc_1_m'
 }

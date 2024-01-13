@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 name = "GPT Xmas I"
-n = "X.3"
+n = "X.4"
 test_count = 5
 
 lines_on_terminal = 60

@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 name = "GPTIS-81"
-n = "X.6"
+n = "X.7"
 test_count = 3
 
 lines_on_terminal = 200

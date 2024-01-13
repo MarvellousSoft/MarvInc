@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 name = "GPT Cleaner II"
-n = "X.4"
+n = "X.6"
 test_count = 3
 
 lines_on_terminal = 60

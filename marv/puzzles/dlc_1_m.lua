@@ -9,7 +9,7 @@ See full license in file LICENSE.txt
 
 name = "MarvGPT Test"
 -- Puzzle number
-n = "X.0"
+n = "X.3"
 test_count = 1
 
 lines_on_terminal = 30

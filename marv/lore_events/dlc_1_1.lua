@@ -11,7 +11,7 @@ local Mail = require "classes.tabs.email"
 
 local dlc1 = {}
 
-dlc1.require_puzzles = {'dlc_1_0'}
+dlc1.require_puzzles = {'dlc_1_b1'}
 dlc1.wait = 5
 
 function dlc1.run()
