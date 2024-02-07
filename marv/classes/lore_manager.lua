@@ -121,7 +121,7 @@ function lore.update(dt)
 end
 
 --returns the total number of puzzles done
-function lore.totalPuzzlesDone()
+function lore.totalCampaignPuzzlesDone()
     local count = 0
     local pzl = love.filesystem.getDirectoryItems("puzzles")
     for _, file in ipairs(pzl) do

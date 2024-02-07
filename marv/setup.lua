@@ -419,7 +419,7 @@ function setup.config()
         {"Lord Commander of the Division's Watch","Complete challenge puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["liv_extra1"], "ACH_SMALLDIV"},
         {"Sorting Doctor","Complete challenge puzzle 'Hardester Sort'", ACH_IMG["incompleted"], ACH_IMG["liv_extra2"], "ACH_HARDSORT"},
         {"Best Programmer in the World","Complete every puzzle in the game. Congratulations!", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"], "ACH_COMPLETE_ALL"},
-
+        {"Zero to AI Hero", "Complete every puzzle in the MarvGPT DLC.", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"], "ACH_COMPLETE_DLC1"},
     }
     --Initialize achievements progress
     ACHIEVEMENT_PROGRESS = {}
