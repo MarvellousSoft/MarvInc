@@ -124,7 +124,7 @@ function manager.checkAchievements()
         manager.complete("Best Programmer in the World")
     end
     if LoreManager.puzzle_done.dlc_1_t2 then
-        manager.complete("AI Hero")
+        manager.complete("Zero to AI Hero")
     end
 
     --Dead bots

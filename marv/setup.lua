@@ -279,6 +279,7 @@ ACH_IMG["liv_extra1"] = love.graphics.newImage("assets/images/achievements/liv_e
 ACH_IMG["liv_extra2"] = love.graphics.newImage("assets/images/achievements/liv_extra2.png")
 ACH_IMG["party"] = love.graphics.newImage("assets/images/achievements/party.png")
 ACH_IMG["bro"] = love.graphics.newImage("assets/images/achievements/bro.png")
+ACH_IMG["dlc1"] = love.graphics.newImage("assets/images/achievements/dlc1_completed.png")
 
 
 -- Miscellaneous images
@@ -419,7 +420,7 @@ function setup.config()
         {"Lord Commander of the Division's Watch","Complete challenge puzzle 'Small Division'", ACH_IMG["incompleted"], ACH_IMG["liv_extra1"], "ACH_SMALLDIV"},
         {"Sorting Doctor","Complete challenge puzzle 'Hardester Sort'", ACH_IMG["incompleted"], ACH_IMG["liv_extra2"], "ACH_HARDSORT"},
         {"Best Programmer in the World","Complete every puzzle in the game. Congratulations!", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"], "ACH_COMPLETE_ALL"},
-        {"Zero to AI Hero", "Complete every puzzle in the MarvGPT DLC.", ACH_IMG["incompleted"], ACH_IMG["all_puzzles"], "ACH_COMPLETE_DLC1"},
+        {"Zero to AI Hero", "Complete every puzzle in the MarvGPT DLC.", ACH_IMG["incompleted"], ACH_IMG["dlc1"], "ACH_COMPLETE_DLC1"},
     }
     --Initialize achievements progress
     ACHIEVEMENT_PROGRESS = {}
