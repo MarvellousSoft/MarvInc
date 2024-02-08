@@ -19,6 +19,7 @@ bot = {'b', "NORTH"}
 
 local env = _G.getfenv()
 env['-'] = {"obst", false, "wall_none"}
+m = {"obst", false, "dead_body_hair"}
 
 local function char_for(i)
     local c = _G.string.char(_G.string.byte('b') + i)
@@ -37,7 +38,7 @@ end
 
 
 -- Objective
-objective_text = "Santa's elf has been naughty. Read 9 numbers from the console, indicating how many presents should be given for each kid (on each row), and rearrange the current presents."
+objective_text = "Santa's elf has been naughty. Read 9 numbers from the console, indicating how many presents should be given for each child (on each row), and rearrange the current presents."
 
 
 extra_info =[[
@@ -54,15 +55,15 @@ grid_obj =   "---------------------"..
              "---------....--------"..
              "--------......-------"..
              "-------...x..-.------"..
-             "-.........b.........-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
-             "-...................-"..
+             "m.........b.........-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
+             "m...................-"..
              "---------------------"..
              "---------------------"..
              "---------------------"..

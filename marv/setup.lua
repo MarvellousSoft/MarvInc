@@ -253,6 +253,7 @@ AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/franz.png")
 AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/news.png")
 AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/ryr.png")
 AUTHOR_IMG["marvgpt"] = love.graphics.newImage("assets/images/authors/marvgpt.png")
+AUTHOR_IMG["kar3n"] = love.graphics.newImage("assets/images/authors/kar3n.png")
 AUTHOR_IMG["karen"] = love.graphics.newImage("assets/images/authors/karen.png")
 
 -- Room Img

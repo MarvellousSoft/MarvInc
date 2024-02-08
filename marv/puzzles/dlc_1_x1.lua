@@ -19,6 +19,7 @@ bot = {'b', "SOUTH"}
 
 local env = _G.getfenv()
 env['-'] = {"obst", false, "wall_none"}
+m = {"obst", false, "dead_body_hair"}
 
 local function char_for(i)
     local c = _G.string.char(_G.string.byte('b') + i)
@@ -38,15 +39,15 @@ end
 
 -- Objective
 objective_text = [[
-This is a game of secret santa. There are 9 presents, one on each column, and each of them should go to another person.
-- The console has 9 numbers, each X_i between 1 and 9 telling the i-th present should go to X_i.
+This is a game of secret santa. There are 9 presents, one in front of each children, and each of them should go to another child.
+- The console has 9 numbers, each X_i between 1 and 9 telling the i-th present should go to child X_i.
 - Shuffle the presents according to the consoles.
 ]]
 
 
 extra_info =[[
-Each person gives one present and gets one present.
-- A person never gives a present to themselves.
+Each child gives one present and gets one present.
+- A child never gives a present to themselves.
 - You have few registers.
 ]]
 
@@ -65,7 +66,7 @@ grid_obj =   "---------------------"..
              "---------------------"..
              "---------------------"..
              "---------------------"..
-             "---------------------"..
+             "------mmmmmmmmm------"..
              "------cdefghijk------"..
              "-----.....b.....-----"..
              "----------x----------"..
