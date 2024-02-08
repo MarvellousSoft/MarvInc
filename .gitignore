@@ -4,6 +4,7 @@ steam_appid.txt
 *.vim
 *.lvimrc
 *.so
+*.dll
 *.directory
 /sdk/
 .vscode

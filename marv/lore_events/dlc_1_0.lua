@@ -13,6 +13,7 @@ local dlc0 = {}
 
 dlc0.require_puzzles = {'paul3'}
 dlc0.wait = 5
+dlc0.dlc_needed = 2764520
 
 function dlc0.run()
     Mail.new('dlc_1_0')

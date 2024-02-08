@@ -70,6 +70,9 @@ function lore.check_all()
                 ok = ok and checkTable(t)
             end
         else ok = checkTable(tab) end
+        if ok and evt.dlc_needed then
+            ok = Steam.apps.isDlcInstalled(evt.dlc_needed)
+        end
         if ok then
             events[id] = nil
             table.insert(lore.done_events, id)
