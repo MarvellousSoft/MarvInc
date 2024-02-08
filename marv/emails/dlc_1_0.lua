@@ -12,6 +12,6 @@ return {
     text = [[
 DLC 1.0 placeholder text
 ]],
-    author = "DLC AUTHOR PLACEHOLDER",
+    author = "Karen Bakshi (kbakshi@aid.marv.com)",
     puzzle_id = 'dlc_1_b1'
 }

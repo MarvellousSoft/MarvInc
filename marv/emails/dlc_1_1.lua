@@ -12,6 +12,6 @@ return {
     text = [[
 DLC 1.1 placeholder text
 ]],
-    author = "DLC AUTHOR PLACEHOLDER",
+    author = "MarvGPT (gpt@marv.com)",
     puzzle_id = 'dlc_1_t1'
 }

@@ -120,6 +120,9 @@ function PuzzleListTab:refresh(surface_errors)
                 if a:find("Richard Black") then
                     a = "Olivia Kavanagh"
                 end
+                if a:find("Karen") then
+                    a = "MarvGPT"
+                end
                 if a:find("[(]") then
                     a = a:sub(1, a:find("[(]") - 2)
                 end

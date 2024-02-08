@@ -12,6 +12,6 @@ return {
     text = [[
 DLC completed placeholder text
 ]],
-    author = "DLC AUTHOR PLACEHOLDER",
+    author = "MarvGPT (gpt@marv.com)",
     can_be_deleted = true,
 }

@@ -196,7 +196,8 @@ CHR_CLR['emergency'] = Color.magenta()
 CHR_CLR['ryr'] = Color.add3(Color.blue(), Color.purple(), Color.orange())
 CHR_CLR['spam'] = Color.violet()
 CHR_CLR['black'] = Color.black()
-CHR_CLR['marvgpt'] = Color.black() -- TODO: Finalise
+CHR_CLR['marvgpt'] = Color.white()
+CHR_CLR['karen'] = Color.new(79, 140, 168, 255, 'rgb')
 
 -- Spritesheets
 SHEET_IMG = {}
@@ -251,6 +252,8 @@ AUTHOR_IMG["miles"] = love.graphics.newImage("assets/images/authors/miles.png")
 AUTHOR_IMG["franz"] = love.graphics.newImage("assets/images/authors/franz.png")
 AUTHOR_IMG["newsletter"] = love.graphics.newImage("assets/images/authors/news.png")
 AUTHOR_IMG["renato"] = love.graphics.newImage("assets/images/authors/ryr.png")
+AUTHOR_IMG["marvgpt"] = love.graphics.newImage("assets/images/authors/marvgpt.png")
+AUTHOR_IMG["karen"] = love.graphics.newImage("assets/images/authors/karen.png")
 
 -- Room Img
 ROOM_CAMERA_IMG = love.graphics.newImage("assets/images/room_camera.png")
