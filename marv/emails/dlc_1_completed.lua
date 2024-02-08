@@ -12,6 +12,6 @@ return {
     text = [[
 DLC completed placeholder text
 ]],
-    author = "Karen Bakshi (kar3n.b@aid.marv.com)",
+    author = "Karen Bakshi (kar3n.b@hid.marv.com)",
     can_be_deleted = true,
 }
