@@ -12,7 +12,7 @@ return {
     text = [[
 Dear, employee #]] .. EMPLOYEE_NUMBER .. [[,
 
-Your swift and adept handling of the UO has not only garnered admiration but has significantly contributed to the smooth transition we were hoping in our department after the latest... MEM (Mass-Employee Malfunction).
+Your swift and adept handling of the UO has not only garnered admiration but has significantly contributed to the smooth transition we were hoping in our department after the latest... MEM {gray}(Mass-Employee Malfunction){end}.
 You see, we are constantly operating with BET {red}(Bleeding Edge Technologies){end}, and sometimes that edge is just a tiny bit too sharp.
 
 Speaking of, let me share a bit more on our work:

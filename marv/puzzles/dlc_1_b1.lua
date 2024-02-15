@@ -117,13 +117,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
+    _G.PopManager.new("SC! (Sucessful Cleaning)",
+        [[They should call you a CP expert! (Cleanliness Professional)]],
         _G.CHR_CLR['marvgpt'], {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
+            text = " ...glad to help ",
             clr = _G.Color.black()
         })
 end

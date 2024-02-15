@@ -10,7 +10,7 @@ See full license in file LICENSE.txt
 return {
     title = "Exciting Opportunity for Collaboration",
     text = [[
-Dear, employee #]] .. EMPLOYEE_NUMBER .. [[,
+Dear employee #]] .. EMPLOYEE_NUMBER .. [[,
 
 I trust this message finds you in GS {gray}(Great Spirits){end} and enjoying the dynamic challenges that come with our innovative work at MarvInc (Marvellous Incorporated).
 

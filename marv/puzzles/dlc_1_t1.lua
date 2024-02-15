@@ -151,13 +151,13 @@ function objective_checker(room)
 end
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
+    _G.PopManager.new("I think you DI!! (Did It)",
+        [[The HI automaton has kickstarted, you should recieve some sort of contact from it ASAP.]],
         _G.CHR_CLR['marvgpt'], {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
-            clr = _G.Color.black()
+            text = " I'll be waiting ",
+            clr = _G.Color.blue()
         })
 end
