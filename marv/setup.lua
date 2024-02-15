@@ -172,6 +172,8 @@ OBJS_IMG["dead_body1"] = love.graphics.newImage("assets/images/dead_body_1.png")
 OBJS_IMG["dead_body2"] = love.graphics.newImage("assets/images/dead_body_2.png")
 OBJS_IMG["dead_body3"] = love.graphics.newImage("assets/images/dead_body_3.png")
 OBJS_IMG["dead_body_hair"] = love.graphics.newImage("assets/images/dead_hair_1.png")
+OBJS_IMG["present_bottom"] = love.graphics.newImage("assets/images/dlc1/present_bottom.png")
+OBJS_IMG["present_top"] = love.graphics.newImage("assets/images/dlc1/present_top.png")
 
 -- Custom puzzle assets.
 CUST_OBJS_IMG = {}

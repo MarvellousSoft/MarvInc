@@ -27,13 +27,12 @@ local function char_for(i)
     return c
 end
 
-local dirs = {'east', 'west', 'north', 'south'}
 for i = 1, 9 do
     local c = char_for(i)
-    local img = 'dead_body' .. random(1, 3)
+    local img = 'present_bottom'
     local color = _G.Color.new((i - 1) * 256 / 9, 200, 150)
-    local dir = dirs[random(1, 4)]
-    env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'dead_body_hair'}}, dir = dir}
+    local dir = 'south'
+    env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'present_top'}}, dir = dir}
 end
 
 
