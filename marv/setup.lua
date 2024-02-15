@@ -174,6 +174,12 @@ OBJS_IMG["dead_body3"] = love.graphics.newImage("assets/images/dead_body_3.png")
 OBJS_IMG["dead_body_hair"] = love.graphics.newImage("assets/images/dead_hair_1.png")
 OBJS_IMG["present_bottom"] = love.graphics.newImage("assets/images/dlc1/present_bottom.png")
 OBJS_IMG["present_top"] = love.graphics.newImage("assets/images/dlc1/present_top.png")
+OBJS_IMG["kid_1"] = love.graphics.newImage("assets/images/dlc1/kid_01.png")
+OBJS_IMG["kid_2"] = love.graphics.newImage("assets/images/dlc1/kid_02.png")
+OBJS_IMG["kid_3"] = love.graphics.newImage("assets/images/dlc1/kid_03.png")
+OBJS_IMG["kid_4"] = love.graphics.newImage("assets/images/dlc1/kid_04.png")
+OBJS_IMG["transparent"] = love.graphics.newImage("assets/images/transparent.png")
+
 
 -- Custom puzzle assets.
 CUST_OBJS_IMG = {}

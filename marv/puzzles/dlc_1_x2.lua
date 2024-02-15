@@ -19,7 +19,6 @@ bot = {'b', "NORTH"}
 
 local env = _G.getfenv()
 env['-'] = {"obst", false, "wall_none"}
-m = {"obst", false, "dead_body_hair"}
 
 local function char_for(i)
     local c = _G.string.char(_G.string.byte('b') + i)
@@ -33,6 +32,10 @@ for i = 1, 17 do
     local color = _G.Color.new(random() * 256, 200, 150)
     local dir = 'south'
     env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'present_top'}}, dir = dir}
+end
+local chrs = {'1', '2', '3', '4'}
+for i = 1, 4 do
+    env[chrs[i]] = {'bucket', true, 'kid_' .. i, args = {pickable = false, content = 'empty', content_args = {img = 'transparent'}}, dir = 'south'}
 end
 
 
@@ -54,15 +57,15 @@ grid_obj =   "---------------------"..
              "---------....--------"..
              "--------......-------"..
              "-------...x..-.------"..
-             "m.........b.........-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
-             "m...................-"..
+             "1.........b.........-"..
+             "2...................-"..
+             "3...................-"..
+             "4...................-"..
+             "1...................-"..
+             "3...................-"..
+             "2...................-"..
+             "4...................-"..
+             "3...................-"..
              "---------------------"..
              "---------------------"..
              "---------------------"..
@@ -91,6 +94,7 @@ local function split_presents(tot)
     return pres
 end
 
+random()
 local total_presents = random(1, 50)
 if current_test == 3 then
     total_presents = 50

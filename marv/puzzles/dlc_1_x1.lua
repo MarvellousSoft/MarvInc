@@ -34,11 +34,15 @@ for i = 1, 9 do
     local dir = 'south'
     env[c] = {'bucket', true, img, args = {content = 'empty', content_args = {color = color, img = 'present_top'}}, dir = dir}
 end
+local chrs = {'1', '2', '3', '4'}
+for i = 1, 4 do
+    env[chrs[i]] = {'bucket', true, 'kid_' .. i, args = {pickable = false, content = 'empty', content_args = {img = 'transparent'}}, dir = 'south'}
+end
 
 
 -- Objective
 objective_text = [[
-This is a game of secret santa. There are 9 presents, one in front of each children, and each of them should go to another child.
+This is a game of secret santa. There are 9 presents, one in front of each child, and each of them should go to another child.
 - The console has 9 numbers, each X_i between 1 and 9 telling the i-th present should go to child X_i.
 - Shuffle the presents according to the consoles.
 ]]
@@ -65,7 +69,7 @@ grid_obj =   "---------------------"..
              "---------------------"..
              "---------------------"..
              "---------------------"..
-             "------mmmmmmmmm------"..
+             "------423123412------"..
              "------cdefghijk------"..
              "-----.....b.....-----"..
              "----------x----------"..
