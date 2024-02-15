@@ -119,7 +119,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 function first_completed()
     _G.PopManager.new("SC! (Sucessful Cleaning)",
         [[They should call you a CP expert! (Cleanliness Professional)]],
-        _G.CHR_CLR['marvgpt'], {
+        _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,

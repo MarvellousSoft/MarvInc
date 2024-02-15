@@ -153,7 +153,7 @@ end
 function first_completed()
     _G.PopManager.new("I think you DI!! (Did It)",
         [[The HI automaton has kickstarted, you should recieve some sort of contact from it ASAP.]],
-        _G.CHR_CLR['marvgpt'], {
+        _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,

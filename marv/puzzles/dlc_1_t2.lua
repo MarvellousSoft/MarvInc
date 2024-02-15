@@ -321,7 +321,7 @@ end
 function first_completed()
     _G.PopManager.new("title placeholder",
         [[completed placeholder]],
-        _G.CHR_CLR['marvgpt'], {
+        _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
