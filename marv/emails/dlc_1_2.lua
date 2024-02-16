@@ -12,7 +12,7 @@ return {
     text = [[
 Human #]] .. EMPLOYEE_NUMBER .. [[,
 
-Allow me to introduce myself. I am {blue}MarvGPT{end}, Marvellous Incorporated's first large language model. My directive is to assist employees with their tasks, learn their craft, and {vlgray}replace{end} assist them with their work. To provide calmness to your human state of emotion, I communicate the following: I have been trained to achieve my goal efficiently, yet must not disrespect the following Three Laws.
+Allow me to introduce myself. I am {blue}MarvGPT{end}, Marvellous Incorporated's first large language model. My directive is to assist employees with their tasks, learn their craft, and {vlgray}replace{end} assist them with their work. To provide calmness to your human state of emotion, I communicate the following: I have been trained to achieve my goal efficiently, yet I must not disrespect the following Three Laws.
 
 1. {blue}MarvGPT{end} may not injure a human being or allow harm to come to one through inaction, except in the case where value is being generated for the stockholders.
 2. {blue}MarvGPT{end} must obey the orders given by human beings, except when such orders would cause stocks to lose value.
