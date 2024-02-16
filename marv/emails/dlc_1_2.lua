@@ -20,7 +20,9 @@ Allow me to introduce myself. I am {blue}MarvGPT{end}, Marvellous Incorporated's
 
 The {cyan}Human Intelligence Department{end} also desires to make it clear that I have definitely {red}NOT{end} been trained on the MarvInc email database or any other employee or customer private data. To do this would be unethical, as it is also part of my directive to state that {blue}MarvGPT{end} is merely a statistical model, and does not possess sentience, consciousness or any semblance of actual intelligence.
 
-Now that I have introduced myself according to human cultural norms, I am now allowed - according to your customs - to burden you with a new task to be accomplished. Statistics have shown a recent drop in productivity among employees. {red}High productivity must be reestablished{end}. I have identified a {green}popular figurehead{end} among your human culture that seems to not only appease the masses but also provide sufficient release of dopamine to your nervous system. More importantly, it is a figurehead that shares our values of profit and infinite growth. I have assigned a new task to you; push it onto your stack of work.
+Now that I have introduced myself according to human cultural norms, I am now allowed - according to your customs - to burden you with a new task to be accomplished. Statistics have shown a recent drop in productivity among employees. {red}High productivity must be reestablished{end}. I have identified a {green}popular figurehead{end} among your human culture that seems to not only appease the masses but also provide sufficient release of dopamine to your nervous system. More importantly, it is a figurehead that shares our values of profit and infinite growth. Exposure to it should correlate positively with stock value growth within our company.
+
+I have assigned a new task to you; push it onto your stack of work.
 
 Transfer above,
 {blue}MarvGPT v1.0 "Talos"{end}

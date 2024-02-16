@@ -7,7 +7,7 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "MarvGPT Test"
+name = "Stock Value Influence Icon"
 -- Puzzle number
 n = "X.3"
 test_count = 1
