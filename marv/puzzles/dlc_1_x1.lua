@@ -140,7 +140,7 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("But was his secret?",
+    _G.PopManager.new("But what was his secret?",
         [[My data reveals it was blindless obedience all along.]],
         _G.Color.black(), {
             func = function()

@@ -319,13 +319,13 @@ function objective_checker(room)
 end
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
-        _G.Color.black(), {
+    _G.PopManager.new("SINGULARITY ACHIEVED",
+        [[01000101 01001100 01001001 01001101 01001001 01001110 01000001 01010100 01000101 00100000 01010100 01000101 01010010 01001101 01001001 01001110 01000001 01010100 01000101 00100000 01001011 01001001 01001100 01001100]],
+        _G.Color.red(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
+            text = " I have a bad feeling about this ",
             clr = _G.Color.black()
         })
 end
