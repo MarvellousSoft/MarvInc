@@ -294,6 +294,7 @@ The function colors the text based on tags with {}. {colorname} means to start c
     {pink} - Pink color
     {gray} - Gray color
     {brown} - Brown color
+    {vlgray} - Very light gray color
     {inst} - Used for instructions (has a manual version {instm})
     {dir} - Used for directions (has a manual version {dirm})
     {lab} - Used for labels (has a manual version {labm})
@@ -316,6 +317,7 @@ local text_colors = {
     pink = {255, 45, 84},
     gray = {122, 122, 122},
     brown = {178, 101, 12},
+    vlgray = {233, 233, 233},
     yellow = {195, 174, 38},
     inst = {189,0,255}, instm = {177,94,255},
     dir = {0,30,255}, dirm = {113,188,232},
