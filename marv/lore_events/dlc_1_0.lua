@@ -12,7 +12,8 @@ local Mail = require "classes.tabs.email"
 local dlc0 = {}
 
 dlc0.require_puzzles = {'paul3'}
-dlc0.wait = 5
+-- Fast so new players with DLC get it quick
+dlc0.wait = 1
 dlc0.dlc_needed = 2764520
 
 function dlc0.run()
