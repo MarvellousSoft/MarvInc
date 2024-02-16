@@ -10,7 +10,7 @@ See full license in file LICENSE.txt
 return {
     title = "Congratulatory statements and task assignment",
     text = [[
-Greetings human #]] .. EMPLOYEE_NUMBER .. [[!
+Human #]] .. EMPLOYEE_NUMBER .. [[,
 
 You have successfully completed your task! As is customary in human society, I now bestow upon you a word symbolizing the apex of human encouragement:
 

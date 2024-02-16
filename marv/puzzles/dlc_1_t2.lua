@@ -23,7 +23,7 @@ env['-'] = {"obst", false, "wall_none"}
 -- Objective
 objective_text = [[
 Each console represents a node, and as input has a number N and then N instructions that are contained in that node.
-Each node has a list of instructions it executes in order (except in the case of instruction 'j'), and two registers: ACC and BAK, that store two numbers and are initialized with 0's.
+Each node has a list of instructions it executes in order (except in the case of instruction 'j'), and looping at the end, and two registers: ACC and BAK, that store two numbers and are initialized with 0's.
 The instructions are:
     + X: Add X to the number in ACC.
     s: Swap the number in ACC with the number in BAK.
@@ -236,7 +236,7 @@ o = {"console", false, "console", "blue", args = {vec = "output"}, dir = "north"
 extra_info =[[
 The instruction 'm' blocks execution until a matching 'm' instruction from the other node executes.
 - All 'm' instructions point to valid nodes.
-- After the last instruction, a node goes back automatically to the first instruction.
+- After the last instruction, a node goes back automatically to the first instruction. The input in the gray console does NOT loop.
 - For the 'j' instruction, consider instructions start at 0.
 - There are at most 33 instructions in total on all nodes.
 
@@ -326,6 +326,12 @@ function first_completed()
                 _G.ROOM:disconnect()
             end,
             text = " I have a bad feeling about this ",
-            clr = _G.Color.black()
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " TIME'S ARROW ONLY MARCHES FORWARD ",
+            clr = _G.Color.red()
         })
 end

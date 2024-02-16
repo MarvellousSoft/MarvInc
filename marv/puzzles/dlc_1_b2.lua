@@ -57,7 +57,7 @@ end
 
 extra_info =[[
 Bodies are all over the place, but never next to lava.
-- Look at the test cases.
+- Look closely at all the test cases.
 ]]
 
 grid_obj =   "xxxxxxxxxxxxxxxxxxxxx"..
@@ -144,6 +144,12 @@ function first_completed()
                 _G.ROOM:disconnect()
             end,
             text = " ... ",
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " we can always do better ",
             clr = _G.Color.black()
         })
 end

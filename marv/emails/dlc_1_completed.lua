@@ -16,7 +16,7 @@ You've done an amazing ASS {gray}(Analytical Support Service){end} in this DP {g
 
 Gratitude; Happiness; Joy; Surprise; B&S {gray}(Bitter and Sweet){end}; Entrancement; Happiness;
 
-However, in light of RD {gray}(Recent Developments){end}, I've come write this email (using my actual fingers (of whom possess KT {gray}(Keratin Tips){end} and an APNoP {gray}(Appropriate Number of Phalanxes){end})), to announce that our computational needs have taken a fascinating turn.
+However, in light of RD {gray}(Recent Developments){end}, I've come write this email (using my actual fingers (which possess KT {gray}(Keratin Tips){end} and an APNoP {gray}(Appropriate Number of Phalanxes){end})), to announce that our computational needs have taken a fascinating turn.
 
 You see, the machinery of our operations, the {blue}beautifully constructed HI automaton{end}, has {red}evolved{end}, and, as a result, we find ourselves on a divergent path that requires a different set of programming skills. Your past achievements, while commendable, align more closely with the PP {gray}(Previous Paradigm){end}. 
 

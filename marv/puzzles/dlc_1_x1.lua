@@ -7,7 +7,7 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "GPT Xmas I"
+name = "Secret Santa"
 n = "X.4"
 test_count = 5
 
@@ -146,7 +146,13 @@ function first_completed()
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " Maybe it was the friends we've made ",
+            text = " maybe it was the friends we've made ",
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " surely an army under his sway ",
             clr = _G.Color.black()
         })
 end

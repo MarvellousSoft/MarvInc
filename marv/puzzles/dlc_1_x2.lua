@@ -7,7 +7,7 @@ See full license in file LICENSE.txt
 #####################################
 ]]--
 
-name = "GPT Xmas II"
+name = "Exchange presents"
 n = "X.5"
 test_count = 5
 
@@ -157,12 +157,18 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 function first_completed()
     _G.PopManager.new("Naughty or Nice?",
-        [[Such amusing concepts. Reward for the pure; Relentless punishment for the evil.]],
+        [[Such amusing concepts. Reward for the pure; relentless punishment for the evil.]],
         _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
             text = " ...I hope I've been nice ",
+            clr = _G.Color.blue()
+        }, {
+            func = function()
+                _G.ROOM:disconnect()
+            end,
+            text = " naughtiness has its benefits ",
             clr = _G.Color.black()
         })
 end

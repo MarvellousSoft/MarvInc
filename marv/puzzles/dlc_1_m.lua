@@ -121,7 +121,7 @@ final =      ",,,,,,,,,,,,,,,,,,,,,"..
 
 -- Objective
 objective_text = [[
-You must paint the given tiles room, starting from tile (2, 2) till (20, 19)
+You must paint the given tiles room, starting from tile (2, 2) till (20, 19).
 - Each row has a console on the right with a 0-terminated list of tiles that should be painted on that row.
 - There is paint on the top-right.]]
 function objective_checker(room)
@@ -162,6 +162,6 @@ function first_completed()
                 _G.ROOM:disconnect()
             end,
             text = " I hope this is public domain ",
-            clr = _G.Color.black()
+            clr = _G.Color.blue()
         })
 end

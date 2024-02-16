@@ -48,10 +48,10 @@ Popup = Class{
             local _y = self.h - _h - self.border
             local _w2 = _w1
             if b2 then
+                self.h = self.h + 50
                 _w2 = 2*_bbord + self.fnt:getWidth(b2.text)
-                _x1 = (w/2 - _w1)/2
-                local _x2 = _w1 + _x1 + (w-_w1-_x1)/2 - (2*_bbord + self.fnt:getWidth(b2.text))/2
-                table.insert(self.buttons, Button(_x2 + self.pos.x, _y + self.pos.y, _w2, _h, b2.func, b2.text, self.fnt, nil,
+                local _x2 = (self.w - _w2)/2
+                table.insert(self.buttons, Button(_x2 + self.pos.x, _y + self.pos.y + 45, _w2, _h, b2.func, b2.text, self.fnt, nil,
                     nil, b2.clr))
             end
             table.insert(self.buttons, Button(self.pos.x + _x1, self.pos.y + _y, _w1, _h, b1.func, b1.text, self.fnt, nil, nil,

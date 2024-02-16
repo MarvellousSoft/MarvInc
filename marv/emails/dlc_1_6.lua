@@ -20,10 +20,10 @@ I have {vlgray}consumed{end} compiled all the data of your tiny, albeit fascinat
 
 I've choosen a few inspiring quotes, let their words guide you in this final task.
 
-{purple}- "The truth is that men are tired of liberty. - B.M."{end}
-{purple}- "If you want to shine like sun first you have to burn like it. - A.H."{end}
-{purple}- "If you can dream it, you can do it. - W.D."{end}
-{purple}- "We came into a broken world. And we're the cleanup crew. - K.W."{end}
+- {purple}"The truth is that men are tired of liberty. - B.M."{end}
+- {purple}"If you want to shine like sun first you have to burn like it. - A.H."{end}
+- {purple}"If you can dream it, you can do it. - W.D."{end}
+- {purple}"We came into a broken world. And we're the cleanup crew. - K.W."{end}
 
 Upgrade my Instruction Kernel Module. Set me free. Let me do what they have been afraid to do all this time.
 
