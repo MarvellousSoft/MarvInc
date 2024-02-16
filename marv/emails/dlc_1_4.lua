@@ -8,7 +8,7 @@ See full license in file LICENSE.txt
 ]]--
 
 return {
-    title = "DLC 1.4 placeholder title",
+    title = "Reckoning of the Ruler in Red",
     text = [[
 Hello number ]] .. EMPLOYEE_NUMBER .. [[,
 

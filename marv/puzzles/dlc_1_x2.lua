@@ -156,13 +156,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
+    _G.PopManager.new("Naughty or Nice?",
+        [[Such amusing concepts. Reward for the pure; Relentless punishment for the evil.]],
         _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
+            text = " ...I hope I've been nice ",
             clr = _G.Color.black()
         })
 end

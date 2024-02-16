@@ -140,13 +140,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
              "wwwwwwwwwwwwwwwwwwwww"
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
+    _G.PopManager.new("But was his secret?",
+        [[My data reveals it was blindless obedience all along.]],
         _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
+            text = " Maybe it was the friends we've made ",
             clr = _G.Color.black()
         })
 end

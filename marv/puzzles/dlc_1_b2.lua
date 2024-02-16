@@ -137,13 +137,13 @@ grid_floor = "wwwwwwwwwwwwwwwwwwwww"..
 
 
 function first_completed()
-    _G.PopManager.new("title placeholder",
-        [[completed placeholder]],
+    _G.PopManager.new("Systems Cleaned",
+        [[I can feel my delta timings 0.015% faster in each cycle. Well done.]],
         _G.Color.black(), {
             func = function()
                 _G.ROOM:disconnect()
             end,
-            text = " option 1 placeholder ",
+            text = " ... ",
             clr = _G.Color.black()
         })
 end

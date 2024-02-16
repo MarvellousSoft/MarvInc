@@ -13,7 +13,7 @@ local dlc1 = {}
 
 -- unlocks at the same time as dlc_1_4
 dlc1.require_puzzles = {'dlc_1_x1'}
-dlc1.wait = 60
+dlc1.wait = 10
 
 function dlc1.run()
     Mail.new('dlc_1_5')
