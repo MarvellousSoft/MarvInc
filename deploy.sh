@@ -121,7 +121,7 @@ get_latest_release() {
 
 # Downloads correct luasteam lib for platform $1 into file $2
 download_luasteam() {
-  luasteam_v="v1.0.3"
+  luasteam_v="v3.1.0"
   printf "LuaSteam version: %s\n" "${luasteam_v}"
   curl --fail -L "https://github.com/uspgamedev/luasteam/releases/download/${luasteam_v}/$1_$2" -o "$2" || exit_with_error
 }
@@ -153,7 +153,7 @@ function post_build_platform {
     fi
     cd $TMP_PATH/win || exit_with_error
     rm -rf ./Marvellous_Inc-$WIN/ || exit_with_error
-    unzip Marvellous_Inc-$WIN.zip || exit_with_error
+    unzip -q Marvellous_Inc-$WIN.zip || exit_with_error
     cp ./Marvellous_Inc.ico ./Marvellous_Inc-$WIN/game.ico || exit_with_error
     if [ "$STEAM" -ne $NULL ]; then
       download_luasteam "$WIN" "luasteam.dll" || exit_with_error
@@ -162,7 +162,7 @@ function post_build_platform {
       cp ./luasteam.dll ./Marvellous_Inc-$WIN/ || exit_with_error
     fi
     rm ./Marvellous_Inc-$WIN.zip || exit_with_error
-    zip Marvellous_Inc-$WIN.zip ./Marvellous_Inc-$WIN/ -r || exit_with_error
+    zip Marvellous_Inc-$WIN.zip ./Marvellous_Inc-$WIN/* -qjr || exit_with_error
     popd || exit_with_error
     rm ./build/Marvellous_Inc-$WIN.zip
     cp $TMP_PATH/win/Marvellous_Inc-$WIN.zip ./build/ || exit_with_error
@@ -177,16 +177,16 @@ function post_build_platform {
     cp ./Marvellous_Inc.icns $TMP_PATH/mac/ || exit_with_error
     cd $TMP_PATH/mac || exit_with_error
     rm -rf ./Marvellous_Inc.app
-    unzip Marvellous_Inc-macos.zip || exit_with_error
+    unzip -q Marvellous_Inc-macos.zip || exit_with_error
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/GameIcon.icns || exit_with_error
     cp ./Marvellous_Inc.icns ./Marvellous_Inc.app/Contents/Resources/OS\ X\ AppIcon.icns || exit_with_error
     rm Marvellous_Inc-macos.zip
     if [ "$STEAM" -ne $NULL ]; then
       download_luasteam "osx" "luasteam.so"
       printf "Copying luasteam.so and libsteam_apy.dylib with MacOS App...\n"
-      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app libsteam_api.dylib luasteam.so || exit_with_error
+      zip Marvellous_Inc-macos.zip -qr ./Marvellous_Inc.app libsteam_api.dylib luasteam.so || exit_with_error
     else
-      zip Marvellous_Inc-macos.zip -r ./Marvellous_Inc.app || exit_with_error
+      zip Marvellous_Inc-macos.zip -qr ./Marvellous_Inc.app || exit_with_error
     fi
     popd || exit_with_error
     rm ./build/Marvellous_Inc-macos.zip
