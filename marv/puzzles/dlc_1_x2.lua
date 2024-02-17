@@ -96,7 +96,9 @@ end
 
 random()
 local total_presents = random(1, 50)
-if current_test == 3 then
+if current_test == 1 then
+    total_presents = 13
+elseif current_test == 3 then
     total_presents = 50
 elseif current_test == 5 then
     total_presents = 1
