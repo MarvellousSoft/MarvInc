@@ -133,15 +133,11 @@ if USING_STEAM then
 
     Steam = require "luasteam"
 
-    if not Steam.init() then
+    if not Steam.Init() then
         error("Steam is not running. Closing game.")
     end
-    -- We're gonna need this anyway, let's be quick
-    CAN_USE_STEAM_STATS = false
-    function Steam.userStats.onUserStatsReceived(data)
-        CAN_USE_STEAM_STATS = true
-    end
-    Steam.userStats.requestCurrentStats()
+    CAN_USE_STEAM_STATS = true
+    -- print(Steam.UserStats.ResetAllStats(true))
 else
     Steam = setmetatable({}, { __index = function(table, name)
         error('Trying to call Steam.' .. name .. ' on a game with disabled Steam')
@@ -184,11 +180,22 @@ end
 -----------------
 
 CUR_TIME = 0
+local tmp = false
 
 function love.update(dt)
     CUR_TIME = CUR_TIME + dt
+    if CUR_TIME > 5 and not tmp then
+        -- Test stuff here
+        tmp = true
+        -- Print all friends
+        local count = Steam.Friends.GetFriendCount(Steam.k_EFriendFlagAll)
+        for i = 0, count - 1 do
+            local friend_id = Steam.Friends.GetFriendByIndex(i, Steam.k_EFriendFlagAll)
+            print(Steam.Friends.GetFriendPersonaName(friend_id), " or ", Steam.Friends.GetPlayerNickname(friend_id))
+        end
+    end
     if USING_STEAM then
-        Steam.runCallbacks()
+        Steam.RunCallbacks()
     end
 end
 
@@ -250,5 +257,5 @@ function love.quit()
     if bgmm then
         bgmm.current_bgm:fadeout()
     end
-    if USING_STEAM then Steam.shutdown() end
+    if USING_STEAM then Steam.Shutdown() end
 end

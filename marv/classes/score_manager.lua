@@ -51,8 +51,8 @@ local function uploadScore(id, type, score)
            end
            return
         end
-        Steam.userStats.uploadLeaderboardScore(handle, "KeepBest", math.floor(score * multiplier[type]), nil, function(data, err2)
-            if err2 or not data.success then
+        Steam.UserStats.UploadLeaderboardScore(handle, Steam.k_ELeaderboardUploadScoreMethodKeepBest, math.floor(score * multiplier[type]), {}, 0, function(data, err2)
+            if err2 or data.m_bSuccess == 0 then
               print("Could not upload score")
               local pop = Util.findId("popup")
               if pop then
@@ -95,11 +95,12 @@ function sm.uploadCompletedStats(puzzle)
 end
 
 function sm.findHandle(puzzle_id, type, callback)
-    Steam.userStats.findOrCreateLeaderboard(puzzle_id .. '_' .. type, "Ascending", "Numeric", function (info, err)
+    Steam.UserStats.FindOrCreateLeaderboard(puzzle_id .. '_' .. type, Steam.k_ELeaderboardSortMethodAscending, Steam.k_ELeaderboardDisplayTypeNumeric, function (info, err)
+        print('FindOrCreateLeaderboard info, err:', info, err)
         if err or info == nil then
             callback(nil, err)
         else
-            callback(info.steamLeaderboard, err)
+            callback(info.m_hSteamLeaderboard, err)
         end
     end)
 end
@@ -125,27 +126,43 @@ function sm.populateLeaderboard(lb, puzzle_id, type, use_player_score, lb_handle
             lb:showResults(global, friends, my_score, my_best)
         end
     end
-    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Global", 1, 10000, function(results, err)
-        if err or results == nil or #results <= 0 then return lb:gotError() end
+    print('Requesting leaderboard entries...', lb_handle)
+    Steam.UserStats.DownloadLeaderboardEntries(lb_handle, Steam.k_ELeaderboardDataRequestGlobal, 1, 10000, function(data, err)
+        print('DownloadLeaderboardEntries global callback', data, err)
+        if err or data.m_cEntryCount <= 0 then return lb:gotError() end
         global = {}
-        for i, r in ipairs(results) do
-            global[i] = r.score / multiplier[type]
+        for i = 0, data.m_cEntryCount - 1 do
+            local ok, entry = Steam.UserStats.GetDownloadedLeaderboardEntry(data.m_hSteamLeaderboardEntries, i, 0)
+            if ok then
+                global[i + 1] = entry.m_nScore / multiplier[type]
+            end
         end
         testFinish()
     end)
-    Steam.userStats.downloadLeaderboardEntries(lb_handle, "Friends", function(results, err)
-        if err or results == nil or #results <= 0 then return lb:gotError() end
+    print("My id is", Steam.User.GetSteamID())
+    Steam.UserStats.DownloadLeaderboardEntries(lb_handle, Steam.k_ELeaderboardDataRequestFriends, 0, 0, function(data, err)
+        print('DownloadLeaderboardEntries friends callback', data, err)
+        if err or data.m_cEntryCount <= 0 then return lb:gotError() end
+        print('Got', data.m_cEntryCount, 'friend entries')
         friends = {}
-        local my_id = Steam.user.getSteamID()
-        for i, r in ipairs(results) do
-            if r.steamIDUser == my_id then
-                my_best = r.score / multiplier[type]
+        print('Getting my id ', Steam)
+        print(Steam.User, Steam.User.GetSteamID)
+        local my_id = Steam.User.GetSteamID()
+        print("Got it")
+        print('My SteamID:', my_id)
+        for i = 0, data.m_cEntryCount - 1 do
+            print('Getting entry', i, 'of', data.m_cEntryCount)
+            local ok, entry = Steam.UserStats.GetDownloadedLeaderboardEntry(data.m_hSteamLeaderboardEntries, i, 0)
+            if ok then
+                if entry.m_steamIDUser == my_id then
+                    my_best = entry.m_nScore / multiplier[type]
+                end
+                friends[i + 1] = {
+                    name = Steam.Friends.GetFriendPersonaName(entry.m_steamIDUser),
+                    rank = entry.m_nGlobalRank,
+                    score = entry.m_nScore / multiplier[type],
+                }
             end
-            friends[i] = {
-                name = Steam.friends.getFriendPersonaName(r.steamIDUser),
-                rank = r.globalRank,
-                score = r.score / multiplier[type],
-            }
         end
         testFinish()
     end)

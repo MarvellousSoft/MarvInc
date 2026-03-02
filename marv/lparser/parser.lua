@@ -476,8 +476,8 @@ local function getAbsolutePath(id)
     if love.filesystem.isDirectory("custom/" .. id) then
         return love.filesystem.getSaveDirectory() .. "/custom/" .. id .. "/"
     elseif USING_STEAM then
-        local file_id = Steam.extra.parseUint64(id)
-        local ok, _, dir = Steam.UGC.getItemInstallInfo(file_id)
+        local file_id = Steam.Extra.ParseUint64(id)
+        local ok, _, dir = Steam.UGC.GetItemInstallInfo(file_id, 512)
         if ok then
             return dir .. "/"
         end

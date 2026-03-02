@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "runtime": {
+    "version": "LuaJIT",
+    "path": ["?.lua", "?/init.lua"]
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "ignoreDir": ["levels"],
+    "library": ["../../psycho/.luals/love2d/library", "../luals"]
+  },
+  "diagnostics": {
+    "groupSeverity": {
+      "strict": "Warning",
+      "strong": "Warning"
+    }
+  },
+  "type": {
+    "weakNilCheck": false,
+    "weakUnionCheck": false
+  }
+}

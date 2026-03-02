@@ -5,8 +5,9 @@ local workshop = {}
 
 function workshop.getAllDownloadedPuzzles(surface_errors)
     local all = {}
-    for _, id in ipairs(Steam.UGC.getSubscribedItems()) do
-        if Steam.UGC.getItemState(id).installed then
+    local _, items = Steam.UGC.GetSubscribedItems(Steam.UGC.GetNumSubscribedItems(false), false)
+    for _, id in ipairs(items) do
+        if bit.band(Steam.UGC.GetItemState(id), Steam.k_EItemStateInstalled) ~= 0 then
             local P = LParser.parse(tostring(id), true, 1, surface_errors)
             if P ~= nil then
                 table.insert(all, P)
@@ -30,33 +31,33 @@ local function fail(err)
 end
 
 local function submitUpdate(info, id)
-    local handle = Steam.UGC.startItemUpdate(Steam.utils.getAppID(), Steam.extra.parseUint64(info.id))
+    local handle = Steam.UGC.StartItemUpdate(Steam.Utils.GetAppID(), Steam.Extra.ParseUint64(info.id))
     local path = love.filesystem.getSaveDirectory() .. "/custom/" .. id .. "/"
     if info.title then
-        assert(Steam.UGC.setItemTitle(handle, info.title))
+        assert(Steam.UGC.SetItemTitle(handle, info.title))
     end
     if info.description then
-        assert(Steam.UGC.setItemDescription(handle, info.description:gsub("\\n", "\n")))
+        assert(Steam.UGC.SetItemDescription(handle, info.description:gsub("\\n", "\n")))
     end
     if info.preview then
-        assert(Steam.UGC.setItemPreview(handle, path .. info.preview))
+        assert(Steam.UGC.SetItemPreview(handle, path .. info.preview))
     end
-    assert(Steam.UGC.setItemContent(handle, path))
-    -- show progress using getItemUpdateProgress
-    local rev = {
-        PreparingConfig = 0,
-        PreparingContent = 1,
-        UploadingContent = 2,
-        UploadingPreviewFile = 3,
-        CommittingChanges = 4,
-        Invalid = 5, -- also Invalid when the job is finished
+    assert(Steam.UGC.SetItemContent(handle, path))
+    -- show progress using GetItemUpdateProgress
+    local status_progress = {
+        [Steam.k_EItemUpdateStatusPreparingConfig] = 0,
+        [Steam.k_EItemUpdateStatusPreparingContent] = 1,
+        [Steam.k_EItemUpdateStatusUploadingContent] = 2,
+        [Steam.k_EItemUpdateStatusUploadingPreviewFile] = 3,
+        [Steam.k_EItemUpdateStatusCommittingChanges] = 4,
+        [Steam.k_EItemUpdateStatusInvalid] = 5, -- also Invalid when the job is finished
     }
     PopManager.newProgress(
         "Uploading to Steam Workshop",
         Color.black(),
         function()
-            local st, uploaded, total = Steam.UGC.getItemUpdateProgress(handle)
-            local p = rev[st] / 5
+            local st, uploaded, total = Steam.UGC.GetItemUpdateProgress(handle)
+            local p = (status_progress[st] or 0) / 5
             -- total may be 0 depending on the status
             if total ~= 0 then
                 p = p + 0.2 * (uploaded / total)
@@ -65,8 +66,8 @@ local function submitUpdate(info, id)
         end
     )
     -- Actually submit
-    Steam.UGC.submitItemUpdate(handle, nil, function(data, err)
-        if err or data.result ~= 1 then
+    Steam.UGC.SubmitItemUpdate(handle, "", function(data, err)
+        if err or data.m_eResult ~= 1 then
             fail("Could not upload changes.")
         else
             PopManager.quit()
@@ -76,7 +77,7 @@ local function submitUpdate(info, id)
                 Color.green(),
                 {func = function() end, text = "Ok", clr = Color.black()}
             )
-            Steam.friends.activateGameOverlayToWebPage("steam://url/CommunityFilePage/" .. info.id)
+            Steam.Friends.ActivateGameOverlayToWebPage("steam://url/CommunityFilePage/" .. info.id, Steam.k_EActivateGameOverlayToWebPageMode_Default)
         end
     end)
 end
@@ -90,11 +91,11 @@ local function uploadPuzzle(id)
     if not t.info.id then
         assert(t.info.title, "New item must have title.")
         assert(t.info.description, "New item must have description.")
-        Steam.UGC.createItem(Steam.utils.getAppID(), "Community", function(data, err)
-            if err or data.result ~= 1 then
+        Steam.UGC.CreateItem(Steam.Utils.GetAppID(), Steam.k_EWorkshopFileTypeCommunity, function(data, err)
+            if err or data.m_eResult ~= 1 then
                 fail("Could not create item.")
             else
-                t.info.id = tostring(data.publishedFileId)
+                t.info.id = tostring(data.m_nPublishedFileId)
                 if not pcall(inifile.save, "custom/" .. id .. "/workshop.ini", t) then
                     fail("Could not save .ini")
                     -- should probably delete the item, but let's ignore it now.
